@@ -1,6 +1,6 @@
-# rebricked 🧱
+# REbricked 🧱
 
-**It's not called that anymore.**
+**Databricks no longer calls it that.**
 
 A single static page that answers one question: *"What happened to the thing Databricks
 used to call X?"* It lists Databricks product and feature **renames, deprecations, and new
