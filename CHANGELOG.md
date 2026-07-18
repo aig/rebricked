@@ -3,6 +3,29 @@
 All notable changes to **rebricked**, grouped by day.
 Format loosely follows [Keep a Changelog](https://keepachangelog.com/); dates are `YYYY-MM-DD`.
 
+## 2026-07-18 (new field — funny-but-accurate pricing)
+
+### Added
+- **Every entry now carries a `price`** — a deadpan one-liner on what the thing costs,
+  rendered as a `.row-price` line on each card and appended to the "copy card" blurb. The
+  jokes are ours; the billing facts underneath are real and sourced (DBUs, SKU tiers like
+  DLT Core/Pro/Advanced and SQL Warehouse Classic/Pro/Serverless, the ~$0.70/DBU serverless
+  premium, egress, "included at no additional cost", etc.). Fact-checked against official
+  Databricks / Microsoft Learn docs and the pricing pages.
+- `price` is now a **required** field (validator enforces a non-empty string); documented in
+  [`CONTRIBUTING.md`](CONTRIBUTING.md), [`AGENTS.md`](AGENTS.md), and the
+  `add-databricks-entry` agent guide.
+
+### Changed
+- **Genie Code** pricing corrected: reflects the July 8, 2026 move of Genie products to
+  pay-as-you-go (per-user free monthly LLM allowance, then DBUs) — it is no longer "no
+  additional cost."
+- **Lakehouse//RT** pricing corrected: it has a *public* serverless-DBU rate (30% intro
+  discount through Jan 2027), not "contact your account team."
+- **Clean Rooms** pricing corrected: there is a per-collaborator platform fee on top of the
+  in-room compute — the room is not free.
+- **No isolation shared** pricing corrected: no discounted DBU rate; the DBUs cost the same.
+
 ## 2026-07-18 (new feature — Lakehouse//RT)
 
 ### Added
