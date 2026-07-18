@@ -134,30 +134,56 @@
     if (!focusId) searchEl.focus();
   }
 
-  // ---- kind filter (All / Renamed / Deprecated & removed / New features) ----
+  // Rows in the current section/category/search scope, before the kind & year
+  // filters. The kind-filter counts and the main list both start from this pool,
+  // so the counts always reflect the active sidebar section (or category/search).
+  function contextRows() {
+    if (activeSection) {
+      const ids = activeSection.ids;
+      return DATA.filter((d) => ids.includes(d.id));
+    }
+    let rows = DATA.slice();
+    if (activeCategory) rows = rows.filter((d) => d.category === activeCategory);
+    const q = searchEl.value.trim().toLowerCase();
+    if (q) rows = rows.filter((d) => haystack(d).includes(q));
+    return rows;
+  }
+
+  // ---- kind filter (New / Renamed / Deprecated) ----
   function renderFilters() {
     const el = $("#filters");
     if (!el) return;
-    const count = (key) =>
-      key === "all" ? DATA.length : DATA.filter((d) => kindOf(d) === key).length;
     el.innerHTML = FILTERS.map((f) => {
-      const active = filterOn(f.key);
-      return `<button class="filter${active ? " active" : ""}" data-kind="${escapeAttr(f.key)}" aria-pressed="${active}">${escapeHtml(f.label)}<span class="filter-count">${count(f.key)}</span></button>`;
+      return `<button class="filter" data-kind="${escapeAttr(f.key)}" aria-pressed="false">${escapeHtml(f.label)}<span class="filter-count">0</span></button>`;
     }).join("");
     el.querySelectorAll(".filter").forEach((btn) => {
       btn.addEventListener("click", () => {
         const key = btn.dataset.kind;
-        if (key === "all") {
-          resetKinds(); // "All" selects every other kind
-        } else if (activeKinds.has(key)) {
+        if (activeKinds.has(key)) {
           activeKinds.delete(key);
         } else {
           activeKinds.add(key);
         }
-        syncFilterButtons();
         writeURL();
         render();
       });
+    });
+    updateFilterCounts();
+  }
+
+  // Refresh each filter button's count (scoped to the active section/category/
+  // search) and its active/pressed state.
+  function updateFilterCounts() {
+    const el = $("#filters");
+    if (!el) return;
+    const pool = contextRows();
+    el.querySelectorAll(".filter").forEach((b) => {
+      const key = b.dataset.kind;
+      const span = b.querySelector(".filter-count");
+      if (span) span.textContent = pool.filter((d) => kindOf(d) === key).length;
+      const on = filterOn(key);
+      b.classList.toggle("active", on);
+      b.setAttribute("aria-pressed", on);
     });
   }
 
@@ -272,21 +298,11 @@
       focusId = null; // unknown id — fall through to the normal list
     }
 
-    const q = searchEl.value.trim().toLowerCase();
-    let rows = DATA.slice();
+    // The kind-filter counts must track this same scope, so update them now.
+    updateFilterCounts();
 
-    // A rail section takes precedence: show exactly that section's entries.
-    if (activeSection) {
-      const ids = activeSection.ids;
-      rows = rows.filter((d) => ids.includes(d.id));
-    } else {
-      if (activeCategory) {
-        rows = rows.filter((d) => d.category === activeCategory);
-      }
-      if (q) {
-        rows = rows.filter((d) => haystack(d).includes(q));
-      }
-    }
+    const q = searchEl.value.trim().toLowerCase();
+    let rows = contextRows();
 
     // The kind filter is orthogonal — it narrows whatever's showing.
     if (!allKindsSelected()) {
