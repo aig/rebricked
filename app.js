@@ -390,11 +390,12 @@
     const pct = 20 + (hashStr(d.id) % 61); // 20–80%
     const yr = new Date().getFullYear() + 1 + (hashStr(d.id + "y") % 2); // next 1–2 yrs
     // A button, not a blurt: the "forecast" only appears once you ask the AI for it.
-    return `<button class="odds-btn" data-pct="${pct}" data-yr="${yr}" data-pred="${escapeAttr(d.prediction || "")}" title="Ask the AI what this gets renamed to next">✨ AI prediction</button>`;
+    return `<button class="odds-btn" data-pct="${pct}" data-yr="${yr}" title="Ask the AI how likely this is to be renamed again">✨ AI prediction</button>`;
   }
 
   // The deadpan payoff for the AI-prediction button: a beat of "thinking", then the
-  // made-up forecast replaces the button in place.
+  // made-up probability replaces the button in place. (The predicted name itself lives
+  // only in the "New" gag now — the card just states the odds.)
   function revealPrediction(btn) {
     if (btn.disabled) return;
     btn.disabled = true;
@@ -403,12 +404,10 @@
     const finish = () => {
       const pct = btn.dataset.pct;
       const yr = btn.dataset.yr;
-      const pred = btn.dataset.pred;
-      const what = pred ? `it becomes “${escapeHtml(pred)}”` : "it gets another name";
       const span = document.createElement("span");
       span.className = "odds";
       span.title = "Not a real forecast. We made this up.";
-      span.innerHTML = `AI thinks there's an ${pct}% chance ${what} by ${yr}`;
+      span.textContent = `AI thinks there's an ${pct}% chance it gets renamed by ${yr}`;
       btn.replaceWith(span);
     };
     const reduced = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -671,13 +670,43 @@
       `<p class="new-suggest">May we suggest: <b>${escapeHtml(currentNameOf(pick))}</b> <span class="arrow">→</span> <b>${escapeHtml(pick.prediction)}</b></p>` +
       `<p class="new-fine">Not a real roadmap. We made this up — but give it a year.</p>` +
       `<div class="quiz-actions">` +
+      `<div class="new-links">` +
       `<button class="quiz-see" id="new-entry" data-id="${escapeAttr(pick.id)}">see the entry ↗</button>` +
+      `<button class="quiz-see" id="new-yours">suggest yours</button>` +
+      `</div>` +
       `<button class="quiz-next" id="new-again">Suggest another</button>` +
       `</div>`;
     const again = $("#new-again");
     if (again) again.addEventListener("click", renderNewSuggestion);
+    const yours = $("#new-yours");
+    if (yours) yours.addEventListener("click", renderNewRefusal);
     const see = $("#new-entry");
     if (see) see.addEventListener("click", () => { closeNewModal(); focusEntry(see.dataset.id); });
+  }
+
+  // "Suggest yours" — you can't. Naming is done to you, not by you.
+  const NO_YOURS = [
+    "Love the initiative. Sadly, naming rights require a keynote slot, a rebrand budget, and at least one acquisition — none of which you currently have.",
+    "We floated your idea to the Naming Committee. They renamed it before you finished typing.",
+    "Can't do it. Every product name here must legally contain “Lakeflow”, “Genie”, or “Unity”, and yours contains hope.",
+    "Denied. Your name is far too memorable — it would never survive next year's rebrand.",
+    "External suggestions aren't accepted. Ours have to marinate through two summits and a leadership offsite first.",
+  ];
+  let noYoursIdx = 0;
+
+  function renderNewRefusal() {
+    const body = $("#new-body");
+    if (!body) return;
+    const line = NO_YOURS[noYoursIdx++ % NO_YOURS.length];
+    body.innerHTML =
+      `<p class="new-copy"><b>Suggest your own name?</b></p>` +
+      `<p class="new-copy">${escapeHtml(line)}</p>` +
+      `<p class="new-fine">Naming is done to you, not by you.</p>` +
+      `<div class="quiz-actions end">` +
+      `<button class="quiz-next" id="new-back">Fine, you pick</button>` +
+      `</div>`;
+    const back = $("#new-back");
+    if (back) back.addEventListener("click", renderNewSuggestion);
   }
 
   function wireRows() {

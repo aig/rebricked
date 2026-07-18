@@ -1371,6 +1371,16 @@ body.modal-open {
   color: var(--faint);
 }
 
+.new-links {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.quiz-actions.end {
+  justify-content: flex-end;
+}
+
 @media (prefers-reduced-motion: reduce) {
   .brick {
     display: none;
