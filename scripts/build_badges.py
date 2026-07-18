@@ -320,7 +320,7 @@ OG_CARD = """<!DOCTYPE html>
   .score { margin-top: 16px; font-size: 24px; font-weight: 800; letter-spacing: .14em; text-transform: uppercase; color: __TIER__; }
   .name { margin-top: 4px; font-size: 74px; font-weight: 800; letter-spacing: -.03em; line-height: 1.03; }
   .blurb { margin-top: 16px; font-size: 30px; line-height: 1.4; color: #5A6472; }
-  .foot { position: absolute; left: 72px; bottom: 34px; font-size: 22px; color: #5A6472; }
+  .foot { position: absolute; right: 72px; bottom: 34px; font-size: 22px; color: #5A6472; }
   .bar { position: absolute; left: 0; right: 0; bottom: 0; height: 14px; background: __TIER__; }
 </style>
 </head>
