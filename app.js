@@ -471,16 +471,23 @@
 
     return `
       <article class="row${rowCls}" data-id="${escapeAttr(d.id)}">
-        <div class="row-meta">
-          <span class="cat">${escapeHtml(d.category || "")}</span>
-          ${badge}
-          <span class="date">${dateText}</span>
-          <div class="row-actions">
-            <button class="row-act" data-act="link" title="Copy a link to this entry" aria-label="Copy link to this entry">${ICON.link}</button>
-            <button class="row-act" data-act="share" title="Share this entry on LinkedIn" aria-label="Share this entry on LinkedIn">${ICON.linkedin}</button>
+        <div class="row-main">
+          <div class="row-head-left">
+            <div class="lineage">${trail}</div>
+            ${badge}
+            <span class="cat">${escapeHtml(d.category || "")}</span>
+          </div>
+          <div class="row-head-right">
+            ${oddsCorner}
+            <div class="row-actions">
+              <button class="row-act" data-act="link" title="Copy a link to this entry" aria-label="Copy link to this entry">${ICON.link}</button>
+              <button class="row-act" data-act="share" title="Share this entry on LinkedIn" aria-label="Share this entry on LinkedIn">${ICON.linkedin}</button>
+            </div>
           </div>
         </div>
-        <div class="row-main"><div class="lineage">${trail}</div>${oddsCorner}</div>
+        <div class="row-meta">
+          <span class="date">${dateText}</span>
+        </div>
         <p class="row-what">${escapeHtml(d.what || "")}</p>
         ${fact}
         ${rels}
