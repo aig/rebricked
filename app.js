@@ -16,7 +16,7 @@
     { label: "", items: [
       { label: "Home", icon: "home", home: true },
       { label: "Learn", icon: "learn" },
-      { label: "Workspace", icon: "workspace" },
+      { label: "Workspace", icon: "workspace", q: "Git folders" },
       { label: "Recents", icon: "recents" },
       { label: "Catalog", icon: "catalog", q: "Catalog Explorer" },
       { label: "Jobs & Pipelines", icon: "jobs", q: "Lakeflow" },
@@ -115,14 +115,12 @@
 
     nav.querySelectorAll(".nav-item").forEach((el) => {
       el.addEventListener("click", () => {
+        setActiveNav(el);
         if (el.dataset.q) {
-          setActiveNav(el);
           setQuery(el.dataset.q);
         } else if (el.dataset.home) {
-          setActiveNav(el);
           setQuery("");
         } else {
-          setActiveNav(el);
           toast(`“${el.querySelector(".label").textContent}” isn't in the dataset — only renamed things live here.`);
         }
       });
@@ -300,6 +298,7 @@
   function roulette() {
     if (DATA.length === 0) return;
     // clear filters so the pick is always visible
+    setActiveNav(null);
     searchEl.value = "";
     activeCategory = null;
     chipsEl.querySelectorAll(".chip").forEach((c) => c.classList.remove("active"));

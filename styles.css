@@ -526,6 +526,253 @@ mark {
   font-weight: inherit;
 }
 
+/* ================= Workspace view ================= */
+.ws {
+  display: flex;
+  gap: 0;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  overflow: hidden;
+  background: var(--panel);
+  min-height: 560px;
+}
+
+.ws-tree {
+  flex: 0 0 250px;
+  border-right: 1px solid var(--line);
+  padding: 10px 8px;
+  background: var(--bg);
+}
+
+.ws-row {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  padding: 6px 8px;
+  border-radius: 7px;
+  font-size: 13px;
+  color: var(--ink);
+  cursor: default;
+  white-space: nowrap;
+}
+
+.ws-row:hover {
+  background: color-mix(in srgb, var(--ink) 6%, transparent);
+}
+
+.ws-row .tw {
+  flex: 0 0 16px;
+  width: 16px;
+  color: var(--faint);
+}
+
+.ws-row .ic {
+  color: var(--muted);
+}
+
+.ws-row.child {
+  padding-left: 20px;
+}
+
+.ws-row.selected {
+  background: color-mix(in srgb, #3b82f6 14%, transparent);
+  color: var(--ink);
+  font-weight: 600;
+}
+
+.ws-row.selected .ic {
+  color: #3b82f6;
+}
+
+.ws-main {
+  flex: 1;
+  min-width: 0;
+  padding: 18px 24px 28px;
+}
+
+.ws-crumb {
+  font-size: 13px;
+  color: var(--faint);
+  margin-bottom: 4px;
+}
+
+.ws-crumb-link {
+  color: #3b82f6;
+  cursor: pointer;
+}
+
+.ws-crumb-link:hover {
+  text-decoration: underline;
+}
+
+.ws-title {
+  margin: 0 0 16px;
+  font-size: 24px;
+  font-weight: 700;
+}
+
+.ws-toolbar {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 16px;
+  flex-wrap: wrap;
+}
+
+.ws-search {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex: 1;
+  min-width: 220px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 0 12px;
+  background: var(--bg);
+}
+
+.ws-search .ic {
+  color: var(--faint);
+}
+
+.ws-search input {
+  flex: 1;
+  border: none;
+  outline: none;
+  background: transparent;
+  color: var(--ink);
+  font-family: inherit;
+  font-size: 13px;
+  padding: 9px 0;
+}
+
+.ws-search input::placeholder {
+  color: var(--faint);
+}
+
+.ws-filter {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--panel);
+  color: var(--muted);
+  font-family: inherit;
+  font-size: 13px;
+  padding: 8px 12px;
+  cursor: pointer;
+}
+
+.ws-filter:hover {
+  border-color: var(--faint);
+  color: var(--ink);
+}
+
+.ws-banner {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: color-mix(in srgb, #3b82f6 6%, var(--panel));
+  padding: 14px 16px;
+  margin-bottom: 20px;
+}
+
+.ws-banner .ic {
+  color: #3b82f6;
+  flex: 0 0 18px;
+  margin-top: 1px;
+}
+
+.ws-banner p {
+  margin: 0;
+  font-size: 13px;
+  color: var(--muted);
+  line-height: 1.6;
+}
+
+.ws-banner code {
+  font-family: var(--mono);
+  font-size: 12px;
+  background: var(--bg);
+  padding: 1px 5px;
+  border-radius: 4px;
+  color: var(--ink);
+}
+
+.ws-link {
+  color: #3b82f6;
+  cursor: pointer;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.ws-link:hover {
+  text-decoration: underline;
+}
+
+.ws-table-head {
+  display: grid;
+  grid-template-columns: 1fr 160px 160px;
+  gap: 12px;
+  padding: 10px 8px;
+  border-bottom: 1px solid var(--line);
+  font-size: 12.5px;
+  font-weight: 600;
+  color: var(--muted);
+}
+
+.ws-col-name {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.ws-col-name .ic {
+  color: var(--faint);
+}
+
+.ws-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  padding: 70px 20px;
+  color: var(--faint);
+}
+
+.ws-empty .ic {
+  color: var(--line);
+  stroke-width: 1.4;
+}
+
+.ws-empty p {
+  margin: 0;
+  font-size: 14px;
+}
+
+@media (max-width: 720px) {
+  .ws {
+    flex-direction: column;
+  }
+
+  .ws-tree {
+    flex-basis: auto;
+    border-right: none;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .ws-table-head {
+    grid-template-columns: 1fr 90px;
+  }
+
+  .ws-table-head span:last-child {
+    display: none;
+  }
+}
+
 /* empty / error */
 .empty,
 .error {
