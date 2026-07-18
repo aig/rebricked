@@ -1,5 +1,5 @@
-# Simple workflow for deploying static content to GitHub Pages
-name: Deploy static content to Pages
+# Validate databricks.json, then deploy the static site to GitHub Pages
+name: Validate and deploy to Pages
 
 on:
   # Runs on pushes targeting the default branch
@@ -22,8 +22,18 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
-  # Single deploy job since we're just deploying
+  # The schema gate — a malformed entry must never reach production.
+  # Same check contributors run locally: python scripts/validate.py
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Validate databricks.json
+        run: python3 scripts/validate.py
+
   deploy:
+    needs: validate
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}

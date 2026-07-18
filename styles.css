@@ -6,7 +6,8 @@
   --panel: #FFFFFF;
   --ink: #11171C;
   --muted: #5A6472;
-  --faint: #8A93A0;
+  /* smallest text on the page — must stay ≥4.5:1 on --bg (WCAG AA) */
+  --faint: #5F6A7A;
   --line: #E2E6EB;
   --accent: #FF3621;
   /* Databricks red */
@@ -32,7 +33,7 @@
   --panel: #141922;
   --ink: #E7ECF2;
   --muted: #97A2B0;
-  --faint: #6C7684;
+  --faint: #7E8896;
   --line: #232A34;
   --accent: #FF5A3C;
   --accent-ink: #FF7355;
@@ -635,6 +636,31 @@ body {
   color: #fff;
   background: var(--warn);
   border: 1px solid var(--warn);
+}
+
+/* "legacy": docs call it legacy/unsupported but no formal deprecation exists — quieter than amber */
+.badge-legacy {
+  color: var(--muted);
+  background: color-mix(in srgb, var(--muted) 10%, transparent);
+  border: 1px dashed color-mix(in srgb, var(--muted) 40%, transparent);
+}
+
+/* jump from a deprecation to its successor's entry */
+.rep-link {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--accent);
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.rep-link:hover {
+  text-decoration: underline;
+}
+
+.nosrc {
+  color: var(--faint);
+  font-style: italic;
 }
 
 /* new features: green accent instead of rename red / deprecation amber */
@@ -1293,6 +1319,18 @@ body.modal-open {
 }
 
 /* ================= Responsive ================= */
+/* hamburger only exists on narrow screens; the scrim sits under the open rail */
+.menu-btn {
+  display: none;
+}
+
+.scrim {
+  position: fixed;
+  inset: 0;
+  z-index: 35;
+  background: rgba(8, 11, 15, .45);
+}
+
 @media (max-width: 820px) {
   .sidebar {
     position: fixed;
@@ -1304,6 +1342,11 @@ body.modal-open {
 
   .sidebar.open {
     transform: translateX(0);
+  }
+
+  .menu-btn {
+    display: inline-flex;
+    flex: 0 0 auto;
   }
 
   .counter {

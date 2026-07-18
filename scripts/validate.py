@@ -6,6 +6,7 @@ malformed or unsourced entry from ever reaching GitHub Pages.
 
 Run locally:  python scripts/validate.py
 """
+import datetime
 import json
 import re
 import sys
@@ -13,8 +14,9 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
 DATA = ROOT / "databricks.json"
+APP_JS = ROOT / "app.js"
 
-DATE_RE = re.compile(r"^\d{4}(-\d{2})?$")            # YYYY or YYYY-MM
+DATE_RE = re.compile(r"^\d{4}(-(0[1-9]|1[0-2]))?$")  # YYYY or YYYY-MM (real months only)
 VERIFIED_RE = re.compile(r"^\d{4}-\d{2}-\d{2}$")     # YYYY-MM-DD
 URL_RE = re.compile(r"^https?://", re.IGNORECASE)
 
@@ -28,8 +30,38 @@ REQUIRED_DEPRECATION = ("name", "deprecatedAt", "status")
 REQUIRED_FEATURE = ("name", "introducedAt")
 
 VALID_KINDS = ("rename", "deprecation", "feature")
-VALID_STATUSES = ("deprecated", "retired")
+# "legacy" = docs call it legacy/unsupported but no formal deprecation date exists.
+VALID_STATUSES = ("deprecated", "retired", "legacy")
 VALID_FEATURE_STATUSES = ("ga", "preview")
+
+# The category set the UI's chips are built from. A new category is allowed —
+# add it here deliberately rather than by typo.
+VALID_CATEGORIES = (
+    "Data engineering",
+    "Compute / BI",
+    "Developer experience",
+    "Data governance",
+    "BI / Dashboards",
+    "AI / BI",
+    "AI / ML",
+)
+
+
+def ym(date_str):
+    """'2024' -> (2024, None); '2024-03' -> (2024, 3). Assumes DATE_RE matched."""
+    parts = str(date_str).split("-")
+    return int(parts[0]), (int(parts[1]) if len(parts) > 1 else None)
+
+
+def date_before(a, b):
+    """True when date a is strictly before date b, at the precision both share."""
+    ay, am = ym(a)
+    by, bm = ym(b)
+    if ay != by:
+        return ay < by
+    if am is None or bm is None:
+        return False  # same year, mixed precision — can't call it out of order
+    return am < bm
 
 errors = []
 warnings = []
@@ -97,19 +129,36 @@ def main():
         if src and not URL_RE.match(str(src)):
             err(eid, f"source is not an http(s) URL: {src!r}")
 
+        # category must come from the deliberate allow-list
+        cat = entry.get("category")
+        if cat and cat not in VALID_CATEGORIES:
+            err(eid, f"category must be one of {VALID_CATEGORIES}, got {cat!r}")
+
         # date formats (YYYY / YYYY-MM change dates; YYYY-MM-DD verified)
         for date_field in ("renamedAt", "deprecatedAt", "removedAt", "introducedAt"):
             v = entry.get(date_field)
             if v and not DATE_RE.match(str(v)):
                 err(eid, f"{date_field} must be YYYY or YYYY-MM, got {v!r}")
-        if "verified" in entry and entry["verified"] and not VERIFIED_RE.match(str(entry["verified"])):
-            err(eid, f"verified must be YYYY-MM-DD, got {entry['verified']!r}")
+        verified = entry.get("verified")
+        if verified:
+            if not VERIFIED_RE.match(str(verified)):
+                err(eid, f"verified must be YYYY-MM-DD, got {verified!r}")
+            else:
+                try:
+                    if datetime.date.fromisoformat(str(verified)) > datetime.date.today():
+                        err(eid, f"verified date {verified!r} is in the future")
+                except ValueError:
+                    err(eid, f"verified is not a real date: {verified!r}")
 
         # deprecation-specific rules
         if kind == "deprecation":
             status = entry.get("status")
             if status and status not in VALID_STATUSES:
                 err(eid, f"status must be one of {VALID_STATUSES}, got {status!r}")
+            dep_at, rem_at = entry.get("deprecatedAt"), entry.get("removedAt")
+            if dep_at and rem_at and DATE_RE.match(str(dep_at)) and DATE_RE.match(str(rem_at)):
+                if date_before(rem_at, dep_at):
+                    err(eid, f"removedAt ({rem_at}) is before deprecatedAt ({dep_at})")
             for stray in ("lineage", "current", "renamedAt"):
                 if stray in entry:
                     warn(eid, f"deprecation has rename-only field {stray!r}; it will be ignored")
@@ -134,6 +183,17 @@ def main():
                     v = step.get(k)
                     if v not in (None,) and v != "" and not DATE_RE.match(str(v)):
                         err(eid, f"lineage {k} must be YYYY/YYYY-MM or null, got {v!r}")
+                f, t = step.get("from"), step.get("to")
+                if f and t and DATE_RE.match(str(f)) and DATE_RE.match(str(t)) and date_before(t, f):
+                    err(eid, f"lineage step {step.get('name')!r}: to ({t}) is before from ({f})")
+            # steps must be chronological: a step can't start before the previous one ended
+            for prev, nxt in zip(lineage, lineage[1:]):
+                if not (isinstance(prev, dict) and isinstance(nxt, dict)):
+                    continue
+                p_to, n_from = prev.get("to"), nxt.get("from")
+                if p_to and n_from and DATE_RE.match(str(p_to)) and DATE_RE.match(str(n_from)):
+                    if date_before(n_from, p_to):
+                        err(eid, f"lineage out of order: {nxt.get('name')!r} starts ({n_from}) before {prev.get('name')!r} ends ({p_to})")
 
             last = lineage[-1]
             if isinstance(last, dict):
@@ -151,6 +211,30 @@ def main():
         # aliases shape (optional field)
         if "aliases" in entry and not isinstance(entry["aliases"], list):
             err(eid, "aliases must be an array")
+
+    # cross-entry checks
+    all_ids = {e.get("id") for e in data if isinstance(e, dict) and e.get("id")}
+    for entry in data:
+        if not isinstance(entry, dict):
+            continue
+        rid = entry.get("replacementId")
+        if rid and rid not in all_ids:
+            err(entry.get("id", "?"), f"replacementId {rid!r} does not match any entry id")
+
+    # NAV coverage: every entry must be reachable from a rail section, and every id
+    # the rail references must exist. app.js is the source of the NAV config.
+    try:
+        app_js = APP_JS.read_text(encoding="utf-8")
+    except OSError:
+        warn("nav", f"could not read {APP_JS}; skipping NAV coverage check")
+    else:
+        nav_ids = set()
+        for group in re.findall(r"ids:\s*\[([^\]]*)\]", app_js):
+            nav_ids.update(re.findall(r"\"([a-z0-9-]+)\"", group))
+        for missing in sorted(nav_ids - all_ids):
+            err(missing, "NAV in app.js references an id that is not in databricks.json")
+        for unreachable in sorted(all_ids - nav_ids):
+            err(unreachable, "entry appears in no NAV section in app.js — unreachable from the rail")
 
     # report
     for w in warnings:

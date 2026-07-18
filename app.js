@@ -40,9 +40,9 @@
     { label: "", items: [
       { label: "Home", icon: "home", home: true },
       { label: "Learn", icon: "learn" },
-      { label: "Workspace", icon: "workspace", ids: ["repos", "serverless-workspaces", "pat", "oauth-token-federation", "databricks-connect-legacy"] },
+      { label: "Workspace", icon: "workspace", ids: ["repos", "legacy-cli", "serverless-workspaces", "pat", "oauth-token-federation", "databricks-connect-legacy"] },
       { label: "Recents", icon: "recents" },
-      { label: "Catalog", icon: "catalog", ids: ["catalog-explorer", "uc-volumes", "lakehouse-federation", "delta-sharing", "hive-metastore", "abac", "uc-managed-iceberg", "clean-rooms"] },
+      { label: "Catalog", icon: "catalog", ids: ["catalog-explorer", "uc-volumes", "dbfs-mounts", "lakehouse-federation", "delta-sharing", "delta-lake", "liquid-clustering", "hive-metastore", "abac", "uc-managed-iceberg", "clean-rooms"] },
       { label: "Jobs & Pipelines", icon: "jobs", ids: ["dlt", "workflows", "bundles", "dbx", "pipelines-editor"] },
       { label: "Compute", icon: "compute", ids: ["lakebase", "access-modes", "no-isolation-shared", "dbfs-init-scripts"] },
       { label: "Discover", icon: "discover" },
@@ -52,7 +52,7 @@
       { label: "SQL Editor", icon: "sqlEditor", ids: ["databricks-sql", "legacy-sql-editor"] },
       { label: "Queries", icon: "queries" },
       { label: "Dashboards", icon: "dashboards", ids: ["dashboards", "legacy-dashboards"] },
-      { label: "Genie Agents", icon: "genie", ids: ["genie-spaces", "databricks-one"] },
+      { label: "Genie Agents", icon: "genie", ids: ["genie-spaces", "databricks-one", "genie-code"] },
       { label: "Alerts", icon: "alerts", ids: ["legacy-sql-alerts"] },
       { label: "Query History", icon: "history" },
       { label: "SQL Warehouses", icon: "warehouse", ids: ["sql-endpoint", "odbc-driver"] },
@@ -115,6 +115,7 @@
       return;
     }
     renderCounter();
+    renderFooterLine();
     renderChips();
     renderFilters();
     renderTimeline();
@@ -143,6 +144,7 @@
           b.classList.toggle("active", on);
           b.setAttribute("aria-pressed", on);
         });
+        writeURL();
         render();
       });
     });
@@ -180,6 +182,7 @@
     nav.querySelectorAll(".nav-item").forEach((el) => {
       el.addEventListener("click", () => {
         setActiveNav(el);
+        setSidebarOpen(false); // on mobile the rail overlays the content — close it after a pick
         if (el.dataset.home !== undefined) {
           goHome();
         } else {
@@ -193,6 +196,17 @@
   function setActiveNav(el) {
     document.querySelectorAll(".nav-item").forEach((n) => n.classList.remove("active"));
     if (el) el.classList.add("active");
+  }
+
+  // Mobile-only sidebar state; a no-op on desktop where the rail is always visible.
+  function setSidebarOpen(open) {
+    const sb = document.querySelector(".sidebar");
+    if (!sb) return;
+    sb.classList.toggle("open", open);
+    const scrim = $("#scrim");
+    if (scrim) scrim.hidden = !open;
+    const btn = $("#menu-toggle");
+    if (btn) btn.setAttribute("aria-expanded", String(open));
   }
 
   // Filter the list to one rail section's renames.
@@ -274,7 +288,7 @@
     }
 
     // Most recently changed first — the freshest confusion on top.
-    rows.sort((a, b) => changedAt(b).localeCompare(changedAt(a)));
+    rows.sort((a, b) => dateKey(changedAt(b)).localeCompare(dateKey(changedAt(a))));
 
     updateHomeExtras();
 
@@ -344,7 +358,8 @@
       const status = d.status || "deprecated";
       badge = `<span class="badge badge-${escapeAttr(status)}">${escapeHtml(status)}</span>`;
       const removed = d.removedAt ? ` · access ended ${escapeHtml(d.removedAt)}` : "";
-      dateText = `deprecated ${escapeHtml(d.deprecatedAt || "?")}${removed}${occasion}`;
+      const verb = status === "legacy" ? "legacy since" : "deprecated";
+      dateText = `${verb} ${escapeHtml(d.deprecatedAt || "?")}${removed}${occasion}`;
     } else {
       trail = renameTrail(d, q);
       dateText = `renamed ${escapeHtml(d.renamedAt || "?")}${occasion}`;
@@ -389,15 +404,22 @@
   // A feature renders just its current name, clickable to copy a "yes, that's real" line.
   function featureTrail(d, q) {
     const when = d.introducedAt ? escapeAttr(d.introducedAt) : "";
-    return `<span class="current feature-name" data-name="${escapeAttr(d.name)}" data-feature="1" data-when="${when}" title="click to copy">${highlight(escapeHtml(d.name), q)}</span>`;
+    return `<span class="current feature-name" data-name="${escapeAttr(d.name)}" data-feature="1" data-when="${when}" title="click to copy">${highlight(d.name, q)}</span>`;
   }
 
   // A rename renders its full lineage trail, ending in the clickable current name.
+  // A malformed entry (no lineage) degrades to just its current name — one bad row
+  // must never take the whole render down.
   function renameTrail(d, q) {
-    const chain = d.lineage.map((step, i) => {
-      const isLast = i === d.lineage.length - 1;
-      const name = highlight(escapeHtml(step.name), q);
-      const abbr = step.abbr ? ` (${highlight(escapeHtml(step.abbr), q)})` : "";
+    const steps = Array.isArray(d.lineage) && d.lineage.length ? d.lineage : null;
+    if (!steps) {
+      const name = d.current || d.name || d.id;
+      return `<span class="current" data-name="${escapeAttr(name)}" title="click to copy a correction">${highlight(name, q)}</span>`;
+    }
+    const chain = steps.map((step, i) => {
+      const isLast = i === steps.length - 1;
+      const name = highlight(step.name, q);
+      const abbr = step.abbr ? ` (${highlight(step.abbr, q)})` : "";
       if (isLast) {
         return `<span class="current" data-name="${escapeAttr(step.name)}" title="click to copy a correction">${name}${abbr}</span>`;
       }
@@ -410,10 +432,13 @@
   // A deprecation renders old-name → replacement (or "retired" when there's no successor).
   function depTrail(d, q) {
     const removedYr = d.removedAt ? `<span class="yr"> ${escapeHtml(shortYear(d.removedAt))}</span>` : "";
-    const old = `<span class="old dep-name">${highlight(escapeHtml(d.name), q)}${removedYr}</span>`;
+    const old = `<span class="old dep-name">${highlight(d.name, q)}${removedYr}</span>`;
     if (d.replacement) {
-      const rep = `<span class="current" data-name="${escapeAttr(d.replacement)}" data-old="${escapeAttr(d.name)}" data-dep="1" title="click to copy a correction">${highlight(escapeHtml(d.replacement), q)}</span>`;
-      return `${old} <span class="arrow">→</span> ${rep}`;
+      const rep = `<span class="current" data-name="${escapeAttr(d.replacement)}" data-old="${escapeAttr(d.name)}" data-dep="1" title="click to copy a correction">${highlight(d.replacement, q)}</span>`;
+      const repLink = d.replacementId && DATA.some((x) => x.id === d.replacementId)
+        ? ` <a class="rep-link" href="#${escapeAttr(encodeURIComponent(d.replacementId))}" title="Open the successor's entry">entry ↗</a>`
+        : "";
+      return `${old} <span class="arrow">→</span> ${rep}${repLink}`;
     }
     return `${old} <span class="arrow">→</span> <span class="retired">retired — no direct replacement</span>`;
   }
@@ -445,25 +470,37 @@
         chipsEl.querySelectorAll(".chip").forEach((c) =>
           c.classList.toggle("active", c.dataset.cat === activeCategory)
         );
+        writeURL();
         render();
       });
     });
   }
 
   function renderCounter() {
+    const el = $("#counter-text");
+    if (!el) return;
     // days since the most recent change (rename or deprecation) anywhere in the dataset
     const latest = DATA
       .map(changedAt)
       .filter(Boolean)
-      .sort()
+      .sort((a, b) => dateKey(a).localeCompare(dateKey(b)))
       .pop();
     const days = daysSince(latest);
-    const el = $("#counter-text");
     if (days == null) {
       el.textContent = "change date unknown";
       return;
     }
     el.innerHTML = `<b>${days}</b> day${days === 1 ? "" : "s"} since the last change`;
+  }
+
+  // The footer's freshness line comes from the data itself: the newest `verified` date.
+  function renderFooterLine() {
+    const el = $("#footer-line");
+    if (!el) return;
+    const latest = DATA.map((d) => d.verified).filter(Boolean).sort().pop();
+    if (latest) {
+      el.textContent = `Accurate as of ${latest} — the last time we checked. Given the subject, it may already be wrong.`;
+    }
   }
 
   // ---- interactions ----
@@ -490,18 +527,44 @@
     document.addEventListener("keydown", (e) => {
       if (e.key === "Escape" && quizEl && !quizEl.hidden) closeQuiz();
     });
+    // Keep Tab inside the dialog while it's open (it's aria-modal).
+    if (quizEl) quizEl.addEventListener("keydown", (e) => {
+      if (e.key !== "Tab") return;
+      const focusables = Array.from(quizEl.querySelectorAll("button:not(:disabled)"))
+        .filter((b) => !b.hidden && b.offsetParent !== null);
+      if (focusables.length === 0) return;
+      const first = focusables[0];
+      const last = focusables[focusables.length - 1];
+      if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+      else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+    });
 
-    $("#roulette").addEventListener("click", roulette);
+    const rouletteBtn = $("#roulette");
+    if (rouletteBtn) rouletteBtn.addEventListener("click", roulette);
 
     const sideNew = $("#side-new");
     if (sideNew) sideNew.addEventListener("click", goHome);
 
-    $("#theme-toggle").addEventListener("click", () => {
+    const themeToggle = $("#theme-toggle");
+    if (themeToggle) themeToggle.addEventListener("click", () => {
       const root = document.documentElement;
       const cur = root.dataset.theme || "light";
       const next = cur === "dark" ? "light" : "dark";
       root.dataset.theme = next;
       try { localStorage.setItem("rebricked-theme", next); } catch (e) {}
+    });
+
+    // Mobile: the hamburger opens the rail; the scrim, a nav pick, or Escape closes it.
+    const menuBtn = $("#menu-toggle");
+    if (menuBtn) menuBtn.addEventListener("click", () => {
+      const sb = document.querySelector(".sidebar");
+      setSidebarOpen(!(sb && sb.classList.contains("open")));
+    });
+    const scrim = $("#scrim");
+    if (scrim) scrim.addEventListener("click", () => setSidebarOpen(false));
+    document.addEventListener("keydown", (e) => {
+      const sb = document.querySelector(".sidebar");
+      if (e.key === "Escape" && sb && sb.classList.contains("open")) setSidebarOpen(false);
     });
 
     try {
@@ -591,8 +654,9 @@
         const winner = rows[(i - 1) % rows.length];
         winner.classList.add("flash");
         winner.scrollIntoView({ behavior: "smooth", block: "center" });
-        const id = winner.dataset.id;
-        if (id) { focusId = null; try { history.replaceState(null, "", entryURL(id)); } catch (e) {} }
+        // The roulette shows the full list, so the URL must reflect that state —
+        // writing the entry hash here would reload into a different (focused) view.
+        writeURL();
         brickConfetti();
       }
     };
@@ -602,6 +666,7 @@
   // ---- quiz: "guess the current name" ----
   const QUIZ_LEN = 5; // questions per round
   const quizState = { score: 0, total: 0, streak: 0, answered: false, asked: [], lastId: null };
+  let quizReturnFocus = null; // element to restore focus to when the dialog closes
 
   // Entries that pose a fair "what's it called now?" question: renames (old → current)
   // and deprecations with a named replacement.
@@ -615,7 +680,8 @@
   }
 
   function quizPrompt(d) {
-    return kindOf(d) === "deprecation" ? d.name : d.lineage[0].name;
+    if (kindOf(d) === "deprecation") return d.name;
+    return d.lineage && d.lineage[0] ? d.lineage[0].name : d.current;
   }
 
   function shuffle(arr) {
@@ -637,6 +703,9 @@
     quizState.lastId = null;
     el.hidden = false;
     document.body.classList.add("modal-open");
+    quizReturnFocus = document.activeElement;
+    const closeBtn = $("#quiz-close");
+    if (closeBtn) closeBtn.focus();
     const share = $("#quiz-share");
     if (share) {
       share.hidden = true;
@@ -704,6 +773,8 @@
     if (!el) return;
     el.hidden = true;
     document.body.classList.remove("modal-open");
+    if (quizReturnFocus && document.body.contains(quizReturnFocus)) quizReturnFocus.focus();
+    quizReturnFocus = null;
   }
 
   function updateQuizScore() {
@@ -742,8 +813,10 @@
     quizState.asked.push(correct.id);
     quizState.lastId = correct.id;
     const answer = currentNameOf(correct);
+    // Distractors come from the whole dataset (features included), not just the
+    // question pool, so there are always enough distinct names for 4 options.
     const distractors = shuffle(
-      pool.map(currentNameOf).filter((n) => n && n !== answer)
+      DATA.map(currentNameOf).filter((n) => n && n !== answer && !n.startsWith("("))
     );
     const seen = new Set([answer]);
     const options = [answer];
@@ -840,7 +913,8 @@
   }
 
   // ---- deep links / routing ----
-  // ?q=<search> reflects the search box; #<id> opens one entry on its own.
+  // #<id> opens one entry on its own; the query string carries everything else:
+  // ?q=<search>, ?s=<rail section>, ?cat=<category>, ?kind=<filter>, ?year=<year>.
   function applyRoute() {
     const hash = decodeURIComponent((location.hash || "").replace(/^#/, "")).trim();
     if (hash && DATA.some((d) => d.id === hash)) {
@@ -856,6 +930,31 @@
       activeSection = null;
       setActiveNav(null);
     }
+    const s = params.get("s");
+    if (s) {
+      const item = NAV.flatMap((g) => g.items).find((it) => it.label === s && it.ids);
+      if (item) {
+        activeSection = { label: item.label, ids: item.ids };
+        document.querySelectorAll(".nav-item").forEach((n) => {
+          const lbl = n.querySelector(".label");
+          n.classList.toggle("active", !!lbl && lbl.textContent === s);
+        });
+      }
+    }
+    const cat = params.get("cat");
+    if (cat && DATA.some((d) => d.category === cat)) {
+      activeCategory = cat;
+      chipsEl.querySelectorAll(".chip").forEach((c) =>
+        c.classList.toggle("active", c.dataset.cat === cat)
+      );
+    }
+    const kind = params.get("kind");
+    if (kind && FILTERS.some((f) => f.key === kind)) {
+      activeKind = kind;
+      syncFilterButtons();
+    }
+    const year = params.get("year");
+    if (year && /^\d{4}$/.test(year)) activeYear = year;
   }
 
   function focusEntry(id, { push = true } = {}) {
@@ -874,13 +973,21 @@
   }
 
   // Reflect current state into the address bar without spamming history.
+  // Everything applyRoute() can read must be written here, or views stop being shareable.
   function writeURL() {
     let url = location.pathname;
     if (focusId) {
       url += "#" + encodeURIComponent(focusId);
     } else {
+      const params = new URLSearchParams();
       const q = searchEl.value.trim();
-      if (q) url += "?q=" + encodeURIComponent(q);
+      if (q) params.set("q", q);
+      if (activeSection) params.set("s", activeSection.label);
+      if (activeCategory) params.set("cat", activeCategory);
+      if (activeKind !== "all") params.set("kind", activeKind);
+      if (activeYear) params.set("year", activeYear);
+      const qs = params.toString();
+      if (qs) url += "?" + qs;
     }
     try { history.replaceState(null, "", url); } catch (e) {}
   }
@@ -909,7 +1016,7 @@
         : "retired, no direct replacement";
       return `🧱 "${d.name}" is deprecated — ${successor}.\n${d.what || ""}\n${link}`;
     }
-    const first = d.lineage[0] ? d.lineage[0].name : d.current;
+    const first = d.lineage && d.lineage[0] ? d.lineage[0].name : d.current;
     return `🧱 It's not called "${first}" anymore — it's "${d.current}" now (renamed ${d.renamedAt || "?"}).\n${d.what || ""}\n${link}`;
   }
 
@@ -962,7 +1069,7 @@
     const dated = DATA.filter((d) => changedAt(d));
     let pick =
       dated.find((d) => (changedAt(d).split("-")[1] || "") === thisMonth) ||
-      dated.slice().sort((a, b) => changedAt(b).localeCompare(changedAt(a)))[0];
+      dated.slice().sort((a, b) => dateKey(changedAt(b)).localeCompare(dateKey(changedAt(a))))[0];
     if (!pick) { el.hidden = true; return; }
 
     const when = changedAt(pick);
@@ -1027,8 +1134,11 @@
     return d.kind === "deprecation" || d.kind === "feature" ? d.kind : "rename";
   }
 
-  function isDeprecation(d) {
-    return d.kind === "deprecation";
+  // Mixed-precision dates ("2025" vs "2025-06") don't compare lexicographically —
+  // "2025" < "2025-01" would make year-only entries the oldest in their year.
+  // Treat a bare year as mid-year for comparison purposes only (display stays raw).
+  function dateKey(s) {
+    return s && s.length === 4 ? s + "-06" : (s || "");
   }
 
   function daysSince(dateStr) {
@@ -1046,15 +1156,27 @@
     return (dateStr || "").split("-")[0];
   }
 
+  // Takes RAW text, matches on it, and escapes each piece separately — matching on
+  // escaped text would let a search for "amp" land inside an "&amp;" entity.
   function highlight(text, q) {
-    if (!q) return text;
-    // q and text are already escaped; match on the escaped text
+    const s = String(text ?? "");
+    if (!q) return escapeHtml(s);
     const safe = q.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+    let re;
     try {
-      return text.replace(new RegExp(safe, "gi"), (m) => `<mark>${m}</mark>`);
+      re = new RegExp(safe, "gi");
     } catch (e) {
-      return text;
+      return escapeHtml(s);
     }
+    let out = "";
+    let last = 0;
+    let m;
+    while ((m = re.exec(s)) !== null) {
+      if (m[0] === "") { re.lastIndex++; continue; }
+      out += escapeHtml(s.slice(last, m.index)) + `<mark>${escapeHtml(m[0])}</mark>`;
+      last = m.index + m[0].length;
+    }
+    return out + escapeHtml(s.slice(last));
   }
 
   async function copy(text) {
@@ -1092,9 +1214,11 @@
     return String(s ?? "")
       .replace(/&/g, "&amp;")
       .replace(/</g, "&lt;")
-      .replace(/>/g, "&gt;");
+      .replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;")
+      .replace(/'/g, "&#39;");
   }
   function escapeAttr(s) {
-    return escapeHtml(s).replace(/"/g, "&quot;");
+    return escapeHtml(s);
   }
 })();

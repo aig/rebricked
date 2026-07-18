@@ -79,8 +79,10 @@ Add one object to [`databricks.json`](databricks.json). That's the whole PR.
 
 ### Field rules
 - **Renames:** `current` must equal the last `lineage` entry (the one with `"to": null`).
-- **Deprecations:** `status` is `"deprecated"` or `"retired"`; `removedAt` is optional;
-  omit `replacement` if nothing directly replaces it (renders as "retired").
+- **Deprecations:** `status` is `"deprecated"`, `"retired"`, or `"legacy"` (docs call it
+  legacy/unsupported but no formal deprecation date exists); `removedAt` is optional;
+  omit `replacement` if nothing directly replaces it (renders as "retired"). Set
+  `replacementId` when the successor has its own entry — the card links to it.
 - **Features:** `introducedAt` (`YYYY`/`YYYY-MM`) is required; `status` is `"ga"` or
   `"preview"` (optional, defaults to `ga`). No `lineage`/`renamedAt`/`replacement` — those
   are ignored with a warning. If the thing has been renamed, use a **rename** instead.

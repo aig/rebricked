@@ -53,11 +53,11 @@
     "category": "Developer experience",
     "what": "In-workspace Git client for version-controlling notebooks and files.",
     "lineage": [
-      { "name": "Databricks Repos", "from": "2021", "to": "2023" },
-      { "name": "Git folders", "from": "2023", "to": null }
+      { "name": "Databricks Repos", "from": "2021", "to": "2024-03" },
+      { "name": "Git folders", "from": "2024-03", "to": null }
     ],
-    "renamedAt": "2023",
-    "note": "Git folders support asset types Repos didn't and require a remote repo URL.",
+    "renamedAt": "2024-03",
+    "note": "Renamed March 21, 2024 per the platform release notes. Git folders support asset types Repos didn't and require a remote repo URL.",
     "source": "https://learn.microsoft.com/en-us/azure/databricks/repos/what-happened-repos",
     "verified": "2026-07-18"
   },
@@ -99,11 +99,11 @@
     "category": "Developer experience",
     "what": "Infrastructure-as-code format for defining and deploying Databricks resources (jobs, pipelines, etc.) as a versioned bundle.",
     "lineage": [
-      { "name": "Databricks Asset Bundles", "from": "2023", "to": "2026" },
-      { "name": "Declarative Automation Bundles", "from": "2026", "to": null }
+      { "name": "Databricks Asset Bundles", "from": "2023", "to": "2026-03" },
+      { "name": "Declarative Automation Bundles", "from": "2026-03", "to": null }
     ],
-    "renamedAt": "2026",
-    "note": "Docs read \"Declarative Automation Bundles (formerly known as Databricks Asset Bundles)\"; the DABs acronym was kept. Supersedes the deprecated dbx deployment tool.",
+    "renamedAt": "2026-03",
+    "note": "Renamed March 16, 2026. Docs read \"Declarative Automation Bundles (formerly known as Databricks Asset Bundles)\"; the DABs acronym was kept. Supersedes the deprecated dbx deployment tool.",
     "source": "https://docs.databricks.com/aws/en/dev-tools/bundles/",
     "verified": "2026-07-18"
   },
@@ -151,7 +151,7 @@
       { "name": "Databricks AI Search", "from": "2026-06", "to": null }
     ],
     "renamedAt": "2026-06",
-    "note": "Renamed at GA on 2026-06-25 as the service expanded beyond pure vector search. The \"Mosaic AI\" prefix came from the 2023 MosaicML acquisition branding.",
+    "note": "Renamed in the June 2026 platform release (release note dated June 1, 2026) as the service expanded beyond pure vector search to full-text and hybrid search; the service had been GA since May 2024 as Mosaic AI Vector Search. The \"Mosaic AI\" prefix came from the 2023 MosaicML acquisition branding.",
     "source": "https://docs.databricks.com/aws/en/vector-search/vector-search",
     "verified": "2026-07-18"
   },
@@ -247,7 +247,7 @@
     "removedAt": "2026-01",
     "status": "retired",
     "occasion": "End of life January 12, 2026",
-    "note": "Superseded by AI/BI Dashboards. A dismissable warning began November 3, 2025; direct access to legacy dashboards and their APIs ended January 12, 2026, with an in-place upgrade tool available until March 2, 2026.",
+    "note": "Superseded by AI/BI Dashboards. A dismissable warning began November 3, 2025; direct access to legacy dashboards and their APIs ended January 12, 2026, with an in-place upgrade tool that remained available until March 2, 2026.",
     "source": "https://learn.microsoft.com/en-us/azure/databricks/sql/user/dashboards/",
     "verified": "2026-07-18"
   },
@@ -260,8 +260,8 @@
     "category": "Developer experience",
     "what": "The original Python-based command-line interface (versions 0.18 and below).",
     "deprecatedAt": "2023",
-    "status": "deprecated",
-    "note": "Databricks does no support or feature work on the legacy CLI and recommends the new Go-based CLI (0.205+); the legacy docs are archived. Same core concept, different implementation — but a rewrite, not a straight rename.",
+    "status": "legacy",
+    "note": "Databricks does not support or do feature work on the legacy CLI and recommends the new Go-based CLI (0.205+); the legacy docs are archived. Officially it has always been Experimental, and Databricks states it \"has not established a date or timeline for deprecating the legacy CLI\" — legacy and unsupported rather than formally deprecated. Same core concept, different implementation — a rewrite, not a straight rename.",
     "source": "https://learn.microsoft.com/en-us/azure/databricks/dev-tools/cli/migrate",
     "verified": "2026-07-18"
   },
@@ -271,6 +271,7 @@
     "name": "DBFS mounts",
     "aliases": ["/mnt", "dbutils.fs.mount", "mount points"],
     "replacement": "Unity Catalog volumes & external locations",
+    "replacementId": "uc-volumes",
     "category": "Data governance",
     "what": "Mounting cloud object storage into the DBFS namespace under /mnt.",
     "deprecatedAt": "2024",
@@ -304,8 +305,8 @@
     "category": "AI / ML",
     "what": "The legacy per-workspace MLflow model registry, including model stages (None/Staging/Production/Archived).",
     "deprecatedAt": "2024",
-    "status": "deprecated",
-    "note": "Databricks recommends Models in Unity Catalog for governing and deploying models. Stages are not supported in Unity Catalog — the three-level namespace plus aliases (e.g. @champion) replace them; migrate versions with copy_model_version(). A replacement, not a rename: different governance model and API.",
+    "status": "legacy",
+    "note": "Docs mark the page \"(legacy)\" and describe deprecation as a future event; since April 2024 the registry is disabled for workspaces in new accounts whose default catalog is in Unity Catalog, and it remains supported in MLflow 3. Databricks recommends Models in Unity Catalog. Stages are not supported there — the three-level namespace plus aliases (e.g. @champion) replace them; migrate versions with copy_model_version(). A replacement, not a rename: different governance model and API.",
     "source": "https://docs.databricks.com/aws/en/machine-learning/manage-model-lifecycle/",
     "verified": "2026-07-18"
   },
@@ -346,7 +347,7 @@
     "what": "Unity Catalog objects that govern non-tabular data (files of any format) alongside tables — the recommended replacement for DBFS mounts.",
     "introducedAt": "2023",
     "status": "ga",
-    "note": "Managed volumes use Databricks-managed storage; external volumes govern existing cloud storage. The overview doc no longer restates a single GA date; Volumes reached GA in late 2023. Pairs with the DBFS mounts deprecation.",
+    "note": "Managed volumes use Databricks-managed storage; external volumes govern existing cloud storage. Entered Public Preview July 2023 and reached GA on February 22, 2024. Pairs with the DBFS mounts deprecation.",
     "source": "https://docs.databricks.com/aws/en/volumes/",
     "verified": "2026-07-18"
   },
@@ -420,7 +421,7 @@
     "what": "The per-workspace metastore that catalogs tables and views within a single workspace, predating Unity Catalog.",
     "deprecatedAt": "2025",
     "status": "deprecated",
-    "note": "Docs state \"The per-workspace Hive metastore is a legacy feature\" and recommend migrating tables and workloads to Unity Catalog, which adds cross-workspace access, lineage, auditing, and access control. Databricks has positioned it as legacy since Unity Catalog's GA; the concrete account-level phase-out landed December 2025 (accounts created after December 18, 2025 have no Hive metastore access by default, though admins can still enable it per workspace). Tables remain reachable under the hive_metastore catalog namespace.",
+    "note": "Docs state \"The per-workspace Hive metastore is a legacy feature\" and recommend migrating tables and workloads to Unity Catalog, which adds cross-workspace access, lineage, auditing, and access control. Databricks has positioned it as legacy since Unity Catalog's GA; the concrete account-level phase-out landed December 2025 — accounts created after December 18, 2025 have no Hive metastore access and no setting to restore it, while workspace admins in older accounts can still enable legacy features per workspace. Tables remain reachable under the hive_metastore catalog namespace.",
     "source": "https://docs.databricks.com/aws/en/data-governance/unity-catalog/hive-metastore",
     "verified": "2026-07-18"
   },
@@ -462,7 +463,7 @@
     "introducedAt": "2026-04",
     "status": "ga",
     "occasion": "GA April 28, 2026",
-    "note": "Supports row filters and column masks that follow governed tags across a catalog or schema instead of per-table grants. Entered Public Preview November 2025 and reached GA April 2026; GRANT policies remain in Beta.",
+    "note": "Supports row filters and column masks that follow governed tags across a catalog or schema instead of per-table grants. Entered Public Preview November 2025 and reached GA April 2026; ABAC GRANT policies were added later, in Beta since June 2026.",
     "source": "https://docs.databricks.com/aws/en/data-governance/unity-catalog/abac/",
     "verified": "2026-07-18"
   },
@@ -516,6 +517,7 @@
     "name": "Personal access tokens (PATs)",
     "aliases": ["PAT", "personal access token", "token authentication"],
     "replacement": "OAuth (U2M/M2M) & OAuth token federation",
+    "replacementId": "oauth-token-federation",
     "category": "Developer experience",
     "what": "Long-lived bearer tokens used to authenticate to the Databricks REST API, CLI, and integrations.",
     "deprecatedAt": "2026",
@@ -533,7 +535,7 @@
     "what": "Lets external systems authenticate to Databricks using their own identity provider's OIDC/JWT tokens, exchanged for Databricks access — with no stored Databricks secrets.",
     "introducedAt": "2025-01",
     "status": "ga",
-    "note": "Docs: \"OAuth token federation eliminates the need to manage and rotate Databricks secrets such as personal access tokens and Databricks OAuth client secrets.\" The concrete replacement behind the PAT deprecation; announced in the January 2025 release notes.",
+    "note": "Docs: \"OAuth token federation eliminates the need to manage and rotate Databricks secrets such as personal access tokens and Databricks OAuth client secrets.\" The concrete replacement behind the PAT deprecation; entered Public Preview January 24, 2025 and reached GA August 26, 2025.",
     "source": "https://docs.databricks.com/aws/en/dev-tools/auth/oauth-federation",
     "verified": "2026-07-18"
   },
@@ -563,7 +565,7 @@
     "what": "The original Databricks SQL alerts that notified when a scheduled query crossed a threshold.",
     "deprecatedAt": "2025",
     "status": "deprecated",
-    "note": "Docs contrast \"legacy alerts\" with the new version, which \"unifies all aspects of creating and managing alerts in a single UI\" (OK/TRIGGERED/ERROR states, no reliance on separately saved queries). The new alerts reached Public Preview in 2025; the legacy alerts CLI command group is marked deprecated.",
+    "note": "Docs contrast \"legacy alerts\" with the new version, which \"unifies all aspects of creating and managing alerts in a single UI\" (OK/TRIGGERED/ERROR states, no reliance on separately saved queries). The new alerts reached Public Preview in November 2025 and GA in May 2026; the legacy alerts CLI command group is marked deprecated.",
     "source": "https://docs.databricks.com/aws/en/sql/user/alerts/legacy",
     "verified": "2026-07-18"
   },
@@ -573,6 +575,7 @@
     "name": "Init scripts on DBFS",
     "aliases": ["DBFS init scripts", "legacy global init scripts", "cluster-named init scripts"],
     "replacement": "Init scripts in Unity Catalog volumes or workspace files",
+    "replacementId": "uc-volumes",
     "category": "Developer experience",
     "what": "Cluster initialization shell scripts stored on DBFS, plus the older legacy global and cluster-named init-script mechanisms.",
     "deprecatedAt": "2023",
@@ -588,6 +591,7 @@
     "name": "No isolation shared access mode",
     "aliases": ["No isolation shared clusters", "no-isolation shared", "legacy shared (no isolation)"],
     "replacement": "Standard or Dedicated access mode",
+    "replacementId": "access-modes",
     "category": "Compute / BI",
     "what": "The legacy compute access mode that shares a cluster across users without process isolation or Unity Catalog governance.",
     "deprecatedAt": "2025",

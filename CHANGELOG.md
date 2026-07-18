@@ -3,6 +3,58 @@
 All notable changes to **rebricked**, grouped by day.
 Format loosely follows [Keep a Changelog](https://keepachangelog.com/); dates are `YYYY-MM-DD`.
 
+## 2026-07-18 (validation pass — fact-check fixes, CI gate restored, mobile nav)
+
+Every entry was fact-checked against live official docs (36/42 confirmed as written,
+6 corrected below), and the app/infra findings from the same audit were applied.
+
+### Fixed (data — each verified against the cited source)
+- **repos**: the Repos → Git folders rename happened **March 21, 2024**, not 2023
+  (`renamedAt` and lineage now `2024-03`, per the March 2024 platform release notes).
+- **vector-search**: the note claimed "renamed at GA on 2026-06-25" — the rename release
+  note is dated June 1, 2026 and the service had been GA since May 2024.
+- **uc-volumes**: GA was **February 22, 2024**, not "late 2023".
+- **legacy-cli**: status → `legacy` — docs explicitly state no deprecation date or
+  timeline has been established. Also fixed the "does no support" typo.
+- **workspace-model-registry**: status → `legacy` — disabled for new UC-default accounts
+  since April 2024, but docs describe deprecation as a future event.
+- **hive-metastore**: the per-workspace re-enable applies only to accounts created before
+  the December 2025 cutoff; new accounts have no restore path.
+- Freshness: new SQL alerts GA'd May 2026; OAuth token federation GA'd Aug 26, 2025;
+  ABAC GRANT policies entered Beta June 2026; bundles rename dated `2026-03`;
+  legacy-dashboards upgrade-tool window is now past tense.
+
+### Added
+- **Mobile navigation** — a hamburger button and scrim; the rail was previously
+  unreachable on narrow screens (nothing ever toggled `.sidebar.open`).
+- **`legacy` deprecation status** (badge + "legacy since" wording) for things Databricks
+  calls legacy without a formal deprecation.
+- **Successor links** — deprecation cards link to the replacement's entry via
+  `replacementId` (added the missing links: dbfs-mounts and dbfs-init-scripts →
+  uc-volumes, pat → oauth-token-federation, no-isolation-shared → access-modes).
+- **Shareable filter URLs** — rail section, category, lifecycle filter, and timeline year
+  now serialize to `?s=` / `?cat=` / `?kind=` / `?year=` and restore on load.
+- **CI validation restored** — `static.yml` runs `scripts/validate.py` before deploy
+  (the step existed once and was lost in a workflow rework; docs claimed it still ran).
+- **Validator hardening** — real month ranges, `removedAt ≥ deprecatedAt`, lineage
+  chronology, category allow-list, future-`verified` rejection, `replacementId`
+  integrity, and a NAV coverage cross-check against `app.js` (every entry must be
+  reachable from the rail; every rail id must exist).
+
+### Changed
+- Five previously unreachable entries joined the rail: delta-lake, liquid-clustering,
+  dbfs-mounts (Catalog), legacy-cli (Workspace), genie-code (Genie Agents).
+- The footer "accurate as of" line is now driven by the newest `verified` date in the
+  data instead of hardcoded prose.
+- Mixed-precision dates ("2025" vs "2025-06") now sort correctly (bare years compare as
+  mid-year); search highlighting no longer corrupts HTML entities; the quiz draws
+  distractors from the whole dataset so questions always have 4 options; the roulette no
+  longer writes an entry hash it isn't showing; the quiz dialog traps focus and restores
+  it on close; `#search` gained a proper label; low-contrast metadata text was darkened
+  to meet WCAG AA.
+- Hardened `init()` — missing DOM elements and entries without `lineage` degrade
+  gracefully instead of crashing the whole render.
+
 ## 2026-07-18 (fun pass — quiz, timeline, deep links)
 
 A round of playful, no-dependency additions on top of the same data. No schema changes;

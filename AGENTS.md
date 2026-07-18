@@ -34,7 +34,7 @@ source and current Databricks naming — not just run the schema check.
 
 | File | What it is |
 |------|------------|
-| [`databricks.json`](databricks.json) | **The data. Source of truth.** An array of rename *and* deprecation objects. |
+| [`databricks.json`](databricks.json) | **The data. Source of truth.** An array of rename, deprecation, and feature objects. |
 | [`index.html`](index.html) | The app shell: Databricks-style sidebar rail + content area. |
 | [`app.js`](app.js) | Vanilla JS (IIFE, no deps). Fetches `databricks.json`, renders sidebar + result cards, wires search/chips/roulette/theme. |
 | [`styles.css`](styles.css) | All styling. CSS variables; light default, `data-theme="dark"` toggle. Sidebar rail is always dark. Renames use the red accent; deprecations use amber. |
@@ -55,7 +55,8 @@ Each entry is one object with a `kind`. Absent `kind` means `"rename"` (back-com
 **Deprecation** (`kind: "deprecation"`) — required: `id`, `name`, `category`, `what`,
 `deprecatedAt`, `status`, `source`, `verified`. Optional: `aliases`, `replacement`,
 `replacementId` (id of the successor's entry), `removedAt`, `occasion`, `note`.
-- `status` is `"deprecated"` (still around, discouraged) or `"retired"` (access ended).
+- `status` is `"deprecated"` (still around, discouraged), `"retired"` (access ended), or
+  `"legacy"` (docs call it legacy/unsupported but no formal deprecation date exists).
 - Omit `replacement` when nothing directly replaces it — the UI shows "retired".
 
 **Feature** (`kind: "feature"`) — required: `id`, `name`, `category`, `what`,
