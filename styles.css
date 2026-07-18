@@ -434,6 +434,20 @@ body {
     padding: 0 10px;
   }
 
+  /* On phones the search shares one row with the menu button and the action
+     buttons, which squeezes it down to a sliver. Let the topbar wrap and give
+     the search its own full-width row underneath the controls. */
+  .topbar {
+    flex-wrap: wrap;
+    gap: 10px 12px;
+  }
+
+  .topsearch {
+    order: 3;
+    flex-basis: 100%;
+    max-width: none;
+  }
+
   /* On phones there isn't room for the lineage title and the wide odds pill to sit
      side-by-side — they collide. Stack the odds under the title, aligned left. */
   .row-main {
