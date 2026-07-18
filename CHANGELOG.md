@@ -14,17 +14,17 @@ Format loosely follows [Keep a Changelog](https://keepachangelog.com/); dates ar
 - **The "New" button now does the honest thing** — instead of creating anything, it opens
   an overlay explaining that around here products aren't created, they're renamed, and
   suggests a random product plus its predicted next name ("Suggest another" re-rolls,
-  "see the entry" deep-links, "suggest yours" politely explains — via a rotating deadpan
-  refusal — that naming is done to you, not by you). Focus-trapped like the quiz;
-  Escape/scrim close it.
+  "see the entry" deep-links, "suggest yours" first asks you to type a name, then — via a
+  rotating deadpan refusal — explains that naming is done to you, not by you).
+  Focus-trapped like the quiz; Escape/scrim close it.
 - **Clickable logo** — the Rebricked brand in the rail is now a button that returns Home
   (and closes the mobile rail).
 
 ### Changed
-- The odds badge is now an **"✨ AI prediction" button**: click it, it "thinks" for a beat,
-  then reveals a made-up probability — "AI thinks there's an N% chance it gets renamed by
-  <year>" (respects `prefers-reduced-motion` by skipping the delay). The predicted *name*
-  is no longer shown on the card; it now lives only in the "New" button's suggestion gag.
+- Each rename/feature card shows a static **"~N% chance of another rename by <year>"**
+  probability, plus an **"✨ AI prediction" button** that "thinks" for a beat and then
+  reveals the made-up next name — "AI predicts: <prediction>" (respects
+  `prefers-reduced-motion` by skipping the delay).
 
 ## 2026-07-18 (validation pass — fact-check fixes, CI gate restored, mobile nav)
 

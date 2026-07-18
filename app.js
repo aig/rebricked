@@ -389,25 +389,26 @@
   function oddsBadge(d) {
     const pct = 20 + (hashStr(d.id) % 61); // 20–80%
     const yr = new Date().getFullYear() + 1 + (hashStr(d.id + "y") % 2); // next 1–2 yrs
-    // A button, not a blurt: the "forecast" only appears once you ask the AI for it.
-    return `<button class="odds-btn" data-pct="${pct}" data-yr="${yr}" title="Ask the AI how likely this is to be renamed again">✨ AI prediction</button>`;
+    // The odds live on the card; the predicted name only appears when you ask the AI.
+    const odds = `<span class="odds" title="Not a real forecast. We made this up.">~${pct}% chance of another rename by ${yr}</span>`;
+    const btn = d.prediction
+      ? `<button class="odds-btn" data-pred="${escapeAttr(d.prediction)}" title="Ask the AI what it gets renamed to next">✨ AI prediction</button>`
+      : "";
+    return odds + btn;
   }
 
-  // The deadpan payoff for the AI-prediction button: a beat of "thinking", then the
-  // made-up probability replaces the button in place. (The predicted name itself lives
-  // only in the "New" gag now — the card just states the odds.)
+  // The AI-prediction button predicts the (made-up) next name: a beat of "thinking",
+  // then the name replaces the button in place.
   function revealPrediction(btn) {
     if (btn.disabled) return;
     btn.disabled = true;
     btn.classList.add("thinking");
     btn.textContent = "✨ thinking…";
     const finish = () => {
-      const pct = btn.dataset.pct;
-      const yr = btn.dataset.yr;
       const span = document.createElement("span");
-      span.className = "odds";
+      span.className = "odds odds-pred";
       span.title = "Not a real forecast. We made this up.";
-      span.textContent = `AI thinks there's an ${pct}% chance it gets renamed by ${yr}`;
+      span.textContent = `AI predicts: ${btn.dataset.pred}`;
       btn.replaceWith(span);
     };
     const reduced = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -679,7 +680,7 @@
     const again = $("#new-again");
     if (again) again.addEventListener("click", renderNewSuggestion);
     const yours = $("#new-yours");
-    if (yours) yours.addEventListener("click", renderNewRefusal);
+    if (yours) yours.addEventListener("click", renderNewNameForm);
     const see = $("#new-entry");
     if (see) see.addEventListener("click", () => { closeNewModal(); focusEntry(see.dataset.id); });
   }
@@ -694,12 +695,35 @@
   ];
   let noYoursIdx = 0;
 
-  function renderNewRefusal() {
+  // Step one of "suggest yours": let them type it in. (Step two is the polite no.)
+  function renderNewNameForm() {
+    const body = $("#new-body");
+    if (!body) return;
+    body.innerHTML =
+      `<p class="new-copy">All right, pitch us. What would <b>you</b> call it?</p>` +
+      `<input type="text" id="new-name-input" class="new-input" maxlength="60" autocomplete="off" ` +
+      `placeholder="e.g. Lakeflow Genie Unity One" aria-label="Your product name suggestion" />` +
+      `<div class="quiz-actions end">` +
+      `<button class="quiz-next" id="new-submit">Submit suggestion</button>` +
+      `</div>`;
+    const input = $("#new-name-input");
+    if (input) input.focus();
+    const go = () => renderNewRefusal(input ? input.value.trim() : "");
+    const submit = $("#new-submit");
+    if (submit) submit.addEventListener("click", go);
+    if (input) input.addEventListener("keydown", (e) => { if (e.key === "Enter") go(); });
+  }
+
+  // Step two: the polite, deadpan no — now that they've committed to a name.
+  function renderNewRefusal(name) {
     const body = $("#new-body");
     if (!body) return;
     const line = NO_YOURS[noYoursIdx++ % NO_YOURS.length];
+    const lead = name
+      ? `<p class="new-suggest">“${escapeHtml(name)}”? Bold choice.</p>`
+      : `<p class="new-suggest">A nameless product. Even bolder.</p>`;
     body.innerHTML =
-      `<p class="new-copy"><b>Suggest your own name?</b></p>` +
+      lead +
       `<p class="new-copy">${escapeHtml(line)}</p>` +
       `<p class="new-fine">Naming is done to you, not by you.</p>` +
       `<div class="quiz-actions end">` +

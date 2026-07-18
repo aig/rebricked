@@ -1381,6 +1381,24 @@ body.modal-open {
   justify-content: flex-end;
 }
 
+.new-input {
+  width: 100%;
+  margin: 14px 0 4px;
+  padding: 10px 12px;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: inherit;
+  font-size: 14px;
+}
+
+.new-input:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 14%, transparent);
+}
+
 @media (prefers-reduced-motion: reduce) {
   .brick {
     display: none;
