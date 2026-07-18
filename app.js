@@ -874,19 +874,16 @@
     nextQuestion();
   }
 
-  // LinkedIn's share dialog only accepts a URL (it scrapes the page's OG tags — it
-  // no longer honors prefilled text). So we copy a ready-to-paste brag to the
-  // clipboard first, then open the composer for the user to paste into.
-  // A link that carries the score, so whoever opens it sees a "beat this" banner.
+  // Directory of the current page, so links resolve at "/" and at "/rebricked/".
+  function pageDir() {
+    return location.pathname.replace(/[^/]*$/, "");
+  }
+
+  // The shared link is the badge page for this score (badges/<n>-of-5/) — a real page
+  // with Open Graph tags, so the badge shows in the preview. Only reachable once the
+  // round is complete, which is also the only time the share button is shown.
   function quizResultURL() {
-    return (
-      location.origin +
-      location.pathname +
-      "?quiz=" +
-      quizState.score +
-      "-" +
-      quizState.total
-    );
+    return location.origin + pageDir() + "badges/" + quizState.score + "-of-" + QUIZ_LEN + "/";
   }
 
   function shareQuizLinkedIn() {
@@ -939,8 +936,10 @@
     if (s) s.textContent = `Score ${quizState.score} / ${quizState.total}`;
     const st = $("#quiz-streak");
     if (st) st.textContent = quizState.streak >= 2 ? `🔥 ${quizState.streak} in a row` : "";
+    // Sharing sends the badge page for the finished round, so only offer it once the
+    // round is complete — a mid-round score has no badge page to link to.
     const share = $("#quiz-share");
-    if (share) share.hidden = quizState.total === 0;
+    if (share) share.hidden = quizState.total < QUIZ_LEN;
   }
 
   function nextQuestion() {
@@ -1052,8 +1051,11 @@
       `<p class="quiz-final">You scored <b>${quizState.score} / ${QUIZ_LEN}</b> <span class="quiz-pct">(${pct}%)</span></p>` +
       `<p class="quiz-verdict">${escapeHtml(verdict)}</p>` +
       `<div class="quiz-actions">` +
+      `<a class="quiz-see" id="quiz-badge" href="${escapeAttr(quizResultURL())}" target="_blank" rel="noopener">See your badge ↗</a>` +
+      `<div class="new-links">` +
       `<button class="quiz-see" id="quiz-again">Play again</button>` +
       `<button class="quiz-next" id="quiz-done">Done</button>` +
+      `</div>` +
       `</div>` +
       `</div>`;
     const again = $("#quiz-again");

@@ -1444,3 +1444,129 @@ body.modal-open {
     padding: 22px 18px 56px;
   }
 }
+
+/* ================= Shareable badge pages (badges/<n>-of-5/) ================= */
+.badge-page {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 32px 20px;
+  background:
+    radial-gradient(1200px 500px at 50% -10%, color-mix(in srgb, var(--accent) 10%, transparent), transparent),
+    var(--bg);
+}
+
+.badge-card {
+  --tier: var(--accent);
+  width: 100%;
+  max-width: 440px;
+  text-align: center;
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-top: 4px solid var(--tier);
+  border-radius: 18px;
+  padding: 34px 30px 26px;
+  box-shadow: 0 20px 60px rgba(20, 25, 35, .12);
+}
+
+.badge-emoji {
+  font-size: 60px;
+  line-height: 1;
+  filter: drop-shadow(0 4px 10px color-mix(in srgb, var(--tier) 35%, transparent));
+}
+
+.badge-score {
+  margin-top: 14px;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--tier);
+}
+
+.badge-name {
+  margin: 6px 0 0;
+  font-size: 27px;
+  font-weight: 800;
+  letter-spacing: -.02em;
+  color: var(--ink);
+}
+
+.badge-blurb {
+  margin: 12px auto 0;
+  max-width: 34ch;
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--muted);
+}
+
+.badge-meter {
+  height: 8px;
+  margin: 22px 0 6px;
+  border-radius: 999px;
+  background: var(--bg);
+  border: 1px solid var(--line);
+  overflow: hidden;
+}
+
+.badge-meter span {
+  display: block;
+  height: 100%;
+  width: var(--w);
+  border-radius: 999px;
+  background: var(--tier);
+}
+
+.badge-actions {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  margin-top: 22px;
+}
+
+.badge-btn {
+  display: inline-block;
+  padding: 10px 22px;
+  border-radius: 999px;
+  background: var(--accent);
+  border: 1px solid var(--accent);
+  color: #fff;
+  font-size: 14px;
+  font-weight: 700;
+  text-decoration: none;
+  transition: background .15s, border-color .15s;
+}
+
+.badge-btn:hover {
+  background: var(--accent-ink);
+  border-color: var(--accent-ink);
+}
+
+.badge-link {
+  font-size: 12.5px;
+  font-weight: 600;
+  color: var(--muted);
+  text-decoration: none;
+}
+
+.badge-link:hover {
+  color: var(--accent);
+  text-decoration: underline;
+}
+
+.badge-fine {
+  margin: 20px 0 0;
+  font-size: 10.5px;
+  font-style: italic;
+  color: var(--faint);
+}
+
+/* tier accents — cool/quiet at the bottom, gold at the top */
+.badge-tier-0 { --tier: #8A93A0; }
+.badge-tier-1 { --tier: #8A93A0; }
+.badge-tier-2 { --tier: #B07A46; }
+.badge-tier-3 { --tier: var(--accent); }
+.badge-tier-4 { --tier: #9AA0AA; }
+.badge-tier-5 { --tier: #C79A2E; }
