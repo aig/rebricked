@@ -4,18 +4,25 @@ Guidance for AI agents (and humans) working in the **rebricked** repo.
 
 ## What this project is
 
-A single static page that answers one question: *"What does Databricks call it now?"*
-It lists Databricks product/feature **renames** — sourced, dated, searchable — dressed
-as the Databricks console. There is no build step, no framework, no backend.
+A single static page that answers one question: *"What happened to the thing Databricks
+used to call X?"* It lists Databricks product/feature **renames and deprecations** —
+sourced, dated, searchable — dressed as the Databricks console. There is no build step,
+no framework, no backend. (rebricked = **re**named or de**pre**cated.)
 
 ## The one rule
 
-**Real, sourced renames only. Never be confidently wrong.**
+**Real, sourced changes only. Never be confidently wrong.**
 
-A rename is Databricks giving a new name to *the same thing*. Not a new product, not a
-nickname, not a deprecation. Every entry needs an official source (Databricks or Microsoft
-Learn docs) and a `verified` date. If you cannot verify a claim against a live doc, do not
-add it — flag it instead. See [CONTRIBUTING.md](CONTRIBUTING.md) for the field rules.
+Two kinds of entry, both held to the same bar:
+- A **rename** (`kind` absent or `"rename"`) is Databricks giving a new name to *the same
+  thing*. Not a new product, not a nickname.
+- A **deprecation** (`kind: "deprecation"`) is a feature Databricks retired or replaced —
+  it points at the successor (or says there's none). This is the *opposite* of a rename:
+  a different thing takes over, usually with a different API/format.
+
+Every entry needs an official source (Databricks or Microsoft Learn docs) and a `verified`
+date. If you cannot verify a claim against a live doc, do not add it — flag it instead.
+See [CONTRIBUTING.md](CONTRIBUTING.md) for the field rules.
 
 When asked to "validate" the list, that means fact-check each entry against its cited
 source and current Databricks naming — not just run the schema check.
@@ -24,22 +31,29 @@ source and current Databricks naming — not just run the schema check.
 
 | File | What it is |
 |------|------------|
-| [`renames.json`](renames.json) | **The data. Source of truth.** An array of rename objects. |
+| [`databricks.json`](databricks.json) | **The data. Source of truth.** An array of rename *and* deprecation objects. |
 | [`index.html`](index.html) | The app shell: Databricks-style sidebar rail + content area. |
-| [`app.js`](app.js) | Vanilla JS (IIFE, no deps). Fetches `renames.json`, renders sidebar + result cards, wires search/chips/roulette/theme. |
-| [`styles.css`](styles.css) | All styling. CSS variables; light default, `data-theme="dark"` toggle. Sidebar rail is always dark. |
-| [`scripts/validate.py`](scripts/validate.py) | Schema/format gate for `renames.json`. |
+| [`app.js`](app.js) | Vanilla JS (IIFE, no deps). Fetches `databricks.json`, renders sidebar + result cards, wires search/chips/roulette/theme. |
+| [`styles.css`](styles.css) | All styling. CSS variables; light default, `data-theme="dark"` toggle. Sidebar rail is always dark. Renames use the red accent; deprecations use amber. |
+| [`scripts/validate.py`](scripts/validate.py) | Schema/format gate for `databricks.json`. Branches on `kind`. |
 | [`CONTRIBUTING.md`](CONTRIBUTING.md) | The entry schema and field rules. |
 | [`.github/workflows/`](.github/workflows/) | GitHub Pages CI: validate, then deploy. |
 
-## Data shape (`renames.json`)
+## Data shape (`databricks.json`)
 
-Each entry is one object. Required: `id`, `current`, `category`, `what`, `lineage`,
-`renamedAt`, `source`, `verified`. Optional: `aliases`, `occasion`, `note`.
+Each entry is one object with a `kind`. Absent `kind` means `"rename"` (back-compat).
+`id` is kebab-case and unique across the whole file; dates are `YYYY` or `YYYY-MM`;
+`verified` is `YYYY-MM-DD`; `source` is required on every entry.
 
+**Rename** (`kind` absent or `"rename"`) — required: `id`, `current`, `category`, `what`,
+`lineage`, `renamedAt`, `source`, `verified`. Optional: `aliases`, `occasion`, `note`.
 - `current` **must equal** the last `lineage` step (the one with `"to": null`).
-- Dates are `YYYY` or `YYYY-MM`; `verified` is `YYYY-MM-DD`.
-- `id` is kebab-case and unique.
+
+**Deprecation** (`kind: "deprecation"`) — required: `id`, `name`, `category`, `what`,
+`deprecatedAt`, `status`, `source`, `verified`. Optional: `aliases`, `replacement`,
+`replacementId` (id of the successor's entry), `removedAt`, `occasion`, `note`.
+- `status` is `"deprecated"` (still around, discouraged) or `"retired"` (access ended).
+- Omit `replacement` when nothing directly replaces it — the UI shows "retired".
 
 ## Before you commit
 
@@ -47,16 +61,16 @@ Each entry is one object. Required: `id`, `current`, `category`, `what`, `lineag
    ```
    python scripts/validate.py
    ```
-2. Preview the site (it fetches `renames.json`, so serve over http — `file://` is blocked):
+2. Preview the site (it fetches `databricks.json`, so serve over http — `file://` is blocked):
    ```
    python -m http.server 8777
    ```
    then open `http://localhost:8777/`.
 3. If you changed the sidebar, keep [`app.js`](app.js)'s `NAV` config in sync: each rail
-   item maps to the renames it covers via an `ids` array (entry `id`s from `renames.json`),
-   and those items get the red "renamed" dot. Clicking a section filters to its entries;
-   sections with no `ids` show an honest empty state. Every `id` you list must exist in the
-   data, and every entry should be reachable from at least one section (Home shows all).
+   item maps to the entries it covers via an `ids` array (entry `id`s from `databricks.json`,
+   renames or deprecations), and those items get the dot. Clicking a section filters to its
+   entries; sections with no `ids` show an honest empty state. Every `id` you list must exist
+   in the data, and every entry should be reachable from at least one section (Home shows all).
 
 ## Conventions
 

@@ -12,7 +12,7 @@
   let activeSection = null; // {label, ids} when a rail section is selected
 
   // ---- sidebar config: mirrors the Databricks console rail ----
-  // Every item is clickable. `ids` lists the renames.json entries that changed under
+  // Every item is clickable. `ids` lists the databricks.json entries that changed under
   // that section; those items get a dot. Sections with no renames show an empty state.
   // Home clears the filter and shows everything.
   const NAV = [
@@ -22,7 +22,7 @@
       { label: "Workspace", icon: "workspace", ids: ["repos"] },
       { label: "Recents", icon: "recents" },
       { label: "Catalog", icon: "catalog", ids: ["catalog-explorer"] },
-      { label: "Jobs & Pipelines", icon: "jobs", ids: ["dlt", "workflows", "bundles"] },
+      { label: "Jobs & Pipelines", icon: "jobs", ids: ["dlt", "workflows", "bundles", "dbx"] },
       { label: "Compute", icon: "compute" },
       { label: "Discover", icon: "discover" },
       { label: "Marketplace", icon: "marketplace" },
@@ -30,7 +30,7 @@
     { label: "SQL", items: [
       { label: "SQL Editor", icon: "sqlEditor", ids: ["databricks-sql"] },
       { label: "Queries", icon: "queries" },
-      { label: "Dashboards", icon: "dashboards", ids: ["dashboards"] },
+      { label: "Dashboards", icon: "dashboards", ids: ["dashboards", "legacy-dashboards"] },
       { label: "Genie Agents", icon: "genie", ids: ["genie-spaces", "databricks-one"] },
       { label: "Alerts", icon: "alerts" },
       { label: "Query History", icon: "history" },
@@ -110,7 +110,7 @@
         const ids = it.ids || [];
         const renamed = ids.length > 0;
         const svg = `<svg class="ic" viewBox="0 0 24 24" width="18" height="18">${ICONS[it.icon] || ""}</svg>`;
-        const dot = renamed ? `<span class="renamed-dot" title="${ids.length} rename${ids.length === 1 ? "" : "s"} under this section"></span>` : "";
+        const dot = renamed ? `<span class="renamed-dot" title="${ids.length} change${ids.length === 1 ? "" : "s"} under this section"></span>` : "";
         const cls = "nav-item" + (renamed ? " is-renamed" : "");
         const data = it.home ? ` data-home="1"` : ` data-ids="${escapeAttr(ids.join(","))}"`;
         return `<button class="${cls}"${data}><span class="ic-wrap">${svg}</span><span class="label">${escapeHtml(it.label)}</span>${dot}</button>`;
@@ -157,7 +157,7 @@
 
   async function loadData() {
     // Primary source of truth. On GitHub Pages / any http(s) server this just works.
-    const res = await fetch("renames.json", { cache: "no-store" });
+    const res = await fetch("databricks.json", { cache: "no-store" });
     if (!res.ok) throw new Error("bad response " + res.status);
     return res.json();
   }
@@ -180,8 +180,8 @@
       }
     }
 
-    // Most recently renamed first — the freshest confusion on top.
-    rows.sort((a, b) => (b.renamedAt || "").localeCompare(a.renamedAt || ""));
+    // Most recently changed first — the freshest confusion on top.
+    rows.sort((a, b) => changedAt(b).localeCompare(changedAt(a)));
 
     if (rows.length === 0) {
       resultsEl.innerHTML = activeSection
@@ -195,6 +195,42 @@
   }
 
   function rowHTML(d, q) {
+    const dep = isDeprecation(d);
+    const trail = dep ? depTrail(d, q) : renameTrail(d, q);
+
+    const src = d.source
+      ? `<a href="${escapeAttr(d.source)}" target="_blank" rel="noopener">source ↗</a>`
+      : `<span class="nosrc">no source</span>`;
+    const note = d.note ? `<p class="row-note">${escapeHtml(d.note)}</p>` : "";
+    const occasion = d.occasion ? ` · ${escapeHtml(d.occasion)}` : "";
+
+    let badge = "";
+    let dateText;
+    if (dep) {
+      const status = d.status || "deprecated";
+      badge = `<span class="badge badge-${escapeAttr(status)}">${escapeHtml(status)}</span>`;
+      const removed = d.removedAt ? ` · access ended ${escapeHtml(d.removedAt)}` : "";
+      dateText = `deprecated ${escapeHtml(d.deprecatedAt || "?")}${removed}${occasion}`;
+    } else {
+      dateText = `renamed ${escapeHtml(d.renamedAt || "?")}${occasion}`;
+    }
+
+    return `
+      <article class="row${dep ? " is-deprecation" : ""}" data-id="${escapeAttr(d.id)}">
+        <div class="row-main"><div class="lineage">${trail}</div></div>
+        <p class="row-what">${escapeHtml(d.what || "")}</p>
+        <div class="row-meta">
+          <span class="cat">${escapeHtml(d.category || "")}</span>
+          ${badge}
+          ${src}
+          <span class="date">${dateText}</span>
+        </div>
+        ${note}
+      </article>`;
+  }
+
+  // A rename renders its full lineage trail, ending in the clickable current name.
+  function renameTrail(d, q) {
     const chain = d.lineage.map((step, i) => {
       const isLast = i === d.lineage.length - 1;
       const name = highlight(escapeHtml(step.name), q);
@@ -205,31 +241,24 @@
       const yr = step.to ? `<span class="yr"> ${escapeHtml(shortYear(step.to))}</span>` : "";
       return `<span class="old">${name}${abbr}${yr}</span>`;
     });
+    return chain.join(` <span class="arrow">→</span> `);
+  }
 
-    const trail = chain.join(` <span class="arrow">→</span> `);
-    const src = d.source
-      ? `<a href="${escapeAttr(d.source)}" target="_blank" rel="noopener">source ↗</a>`
-      : `<span class="nosrc">no source</span>`;
-    const note = d.note ? `<p class="row-note">${escapeHtml(d.note)}</p>` : "";
-    const occasion = d.occasion ? ` · ${escapeHtml(d.occasion)}` : "";
-
-    return `
-      <article class="row" data-id="${escapeAttr(d.id)}">
-        <div class="row-main"><div class="lineage">${trail}</div></div>
-        <p class="row-what">${escapeHtml(d.what || "")}</p>
-        <div class="row-meta">
-          <span class="cat">${escapeHtml(d.category || "")}</span>
-          ${src}
-          <span class="date">renamed ${escapeHtml(d.renamedAt || "?")}${occasion}</span>
-        </div>
-        ${note}
-      </article>`;
+  // A deprecation renders old-name → replacement (or "retired" when there's no successor).
+  function depTrail(d, q) {
+    const removedYr = d.removedAt ? `<span class="yr"> ${escapeHtml(shortYear(d.removedAt))}</span>` : "";
+    const old = `<span class="old dep-name">${highlight(escapeHtml(d.name), q)}${removedYr}</span>`;
+    if (d.replacement) {
+      const rep = `<span class="current" data-name="${escapeAttr(d.replacement)}" data-old="${escapeAttr(d.name)}" data-dep="1" title="click to copy a correction">${highlight(escapeHtml(d.replacement), q)}</span>`;
+      return `${old} <span class="arrow">→</span> ${rep}`;
+    }
+    return `${old} <span class="arrow">→</span> <span class="retired">retired — no direct replacement</span>`;
   }
 
   function renderError() {
     resultsEl.innerHTML = `
       <div class="error">
-        <p><strong>Couldn't load <code>renames.json</code>.</strong></p>
+        <p><strong>Couldn't load <code>databricks.json</code>.</strong></p>
         <p>If you opened this file directly, your browser blocked the fetch.<br>
         Serve it over http instead — from this folder run:</p>
         <p><code>python -m http.server</code></p>
@@ -257,19 +286,19 @@
   }
 
   function renderCounter() {
-    // days since the most recent rename anywhere in the dataset
+    // days since the most recent change (rename or deprecation) anywhere in the dataset
     const latest = DATA
-      .map((d) => d.renamedAt)
+      .map(changedAt)
       .filter(Boolean)
       .sort()
       .pop();
     const days = daysSince(latest);
     const el = $("#counter-text");
     if (days == null) {
-      el.textContent = "rename date unknown";
+      el.textContent = "change date unknown";
       return;
     }
-    el.innerHTML = `<b>${days}</b> day${days === 1 ? "" : "s"} since the last rename`;
+    el.innerHTML = `<b>${days}</b> day${days === 1 ? "" : "s"} since the last change`;
   }
 
   // ---- interactions ----
@@ -312,7 +341,9 @@
     resultsEl.querySelectorAll(".current").forEach((el) => {
       el.addEventListener("click", () => {
         const name = el.dataset.name;
-        const text = `Actually, it's called "${name}" now.`;
+        const text = el.dataset.dep
+          ? `Actually, "${el.dataset.old}" is deprecated — use "${name}" now.`
+          : `Actually, it's called "${name}" now.`;
         copy(text).then((ok) =>
           toast(ok ? `Copied: ${text}` : "Copy failed — select it manually.")
         );
@@ -356,15 +387,26 @@
   // ---- helpers ----
   function haystack(d) {
     return [
-      d.current,
+      d.current,        // renames
+      d.name,           // deprecations
+      d.replacement,    // deprecations
       d.category,
       d.what,
       ...(d.aliases || []),
-      ...d.lineage.flatMap((s) => [s.name, s.abbr]),
+      ...(d.lineage || []).flatMap((s) => [s.name, s.abbr]),
     ]
       .filter(Boolean)
       .join(" | ")
       .toLowerCase();
+  }
+
+  // A rename's "when" is renamedAt; a deprecation's is when it was removed, else deprecated.
+  function changedAt(d) {
+    return d.renamedAt || d.removedAt || d.deprecatedAt || "";
+  }
+
+  function isDeprecation(d) {
+    return d.kind === "deprecation";
   }
 
   function daysSince(dateStr) {

@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Validate renames.json against the rebricked field rules.
+"""Validate databricks.json against the rebricked field rules.
 
 The one unforgivable bug is being confidently wrong. This gate keeps a
 malformed or unsourced entry from ever reaching GitHub Pages.
@@ -12,13 +12,21 @@ import sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
-DATA = ROOT / "renames.json"
+DATA = ROOT / "databricks.json"
 
 DATE_RE = re.compile(r"^\d{4}(-\d{2})?$")            # YYYY or YYYY-MM
 VERIFIED_RE = re.compile(r"^\d{4}-\d{2}-\d{2}$")     # YYYY-MM-DD
 URL_RE = re.compile(r"^https?://", re.IGNORECASE)
 
-REQUIRED = ("id", "current", "category", "what", "lineage", "renamedAt", "source", "verified")
+# Fields every entry needs, regardless of kind.
+REQUIRED_COMMON = ("id", "category", "what", "source", "verified")
+# A rename tells a lineage story ending in the current name.
+REQUIRED_RENAME = ("current", "lineage", "renamedAt")
+# A deprecation names the retired thing and when it was deprecated.
+REQUIRED_DEPRECATION = ("name", "deprecatedAt", "status")
+
+VALID_KINDS = ("rename", "deprecation")
+VALID_STATUSES = ("deprecated", "retired")
 
 errors = []
 warnings = []
@@ -42,11 +50,11 @@ def main():
     try:
         data = json.loads(raw)
     except json.JSONDecodeError as e:
-        print(f"FATAL: renames.json is not valid JSON: {e}")
+        print(f"FATAL: databricks.json is not valid JSON: {e}")
         return 1
 
     if not isinstance(data, list):
-        print("FATAL: renames.json must be a JSON array")
+        print("FATAL: databricks.json must be a JSON array")
         return 1
 
     seen_ids = set()
@@ -58,7 +66,16 @@ def main():
             err(eid, "entry is not an object")
             continue
 
-        for field in REQUIRED:
+        # kind decides which fields are required. Default (absent) is a rename.
+        kind = entry.get("kind", "rename")
+        if kind not in VALID_KINDS:
+            err(eid, f"kind must be one of {VALID_KINDS}, got {kind!r}")
+            kind = "rename"  # validate the rest against the safest shape
+
+        required = REQUIRED_COMMON + (
+            REQUIRED_DEPRECATION if kind == "deprecation" else REQUIRED_RENAME
+        )
+        for field in required:
             if field not in entry or entry[field] in (None, "", []):
                 err(eid, f"missing required field: {field}")
 
@@ -75,13 +92,24 @@ def main():
         if src and not URL_RE.match(str(src)):
             err(eid, f"source is not an http(s) URL: {src!r}")
 
-        # date formats
-        if "renamedAt" in entry and entry["renamedAt"] and not DATE_RE.match(str(entry["renamedAt"])):
-            err(eid, f"renamedAt must be YYYY or YYYY-MM, got {entry['renamedAt']!r}")
+        # date formats (YYYY / YYYY-MM change dates; YYYY-MM-DD verified)
+        for date_field in ("renamedAt", "deprecatedAt", "removedAt"):
+            v = entry.get(date_field)
+            if v and not DATE_RE.match(str(v)):
+                err(eid, f"{date_field} must be YYYY or YYYY-MM, got {v!r}")
         if "verified" in entry and entry["verified"] and not VERIFIED_RE.match(str(entry["verified"])):
             err(eid, f"verified must be YYYY-MM-DD, got {entry['verified']!r}")
 
-        # lineage rules
+        # deprecation-specific rules
+        if kind == "deprecation":
+            status = entry.get("status")
+            if status and status not in VALID_STATUSES:
+                err(eid, f"status must be one of {VALID_STATUSES}, got {status!r}")
+            for stray in ("lineage", "current", "renamedAt"):
+                if stray in entry:
+                    warn(eid, f"deprecation has rename-only field {stray!r}; it will be ignored")
+
+        # lineage rules (renames only)
         lineage = entry.get("lineage")
         if isinstance(lineage, list) and lineage:
             for step in lineage:

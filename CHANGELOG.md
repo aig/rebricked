@@ -6,6 +6,14 @@ Format loosely follows [Keep a Changelog](https://keepachangelog.com/); dates ar
 ## 2026-07-18
 
 ### Added
+- **Deprecations are now first-class.** Entries carry a `kind`: `"rename"` (default) or
+  `"deprecation"`. A deprecation names the retired feature, its `replacement` (or none),
+  `deprecatedAt`/`removedAt`, and a `status` of `deprecated`/`retired` — the opposite of a
+  rename (a different thing takes over). Seeded with four sourced deprecations: **dbx** →
+  Declarative Automation Bundles, **Legacy (Redash) dashboards** → AI/BI Dashboards (access
+  ended Jan 12, 2026), **Legacy Databricks CLI** → the new Go-based CLI, and **DBFS mounts**
+  → Unity Catalog volumes & external locations. This is a curated, sourced seed, not an
+  exhaustive list — deprecations grow one sourced entry at a time, same as renames.
 - Four rename entries, each fact-checked against its cited source before adding:
   - **Databricks SQL** (formerly **SQL Analytics**) — the May 26, 2021 SQL release notes
     state the rename outright, including the `sql-analytics-access` → `databricks-sql-access`
@@ -20,6 +28,17 @@ Format loosely follows [Keep a Changelog](https://keepachangelog.com/); dates ar
 - Sidebar dots for the new entries where they belong: **SQL Editor** → Databricks SQL,
   **AI/ML › Agents** → Supervisor Agent. Delta Lake and Genie Code stay reachable via Home,
   category chips, and search.
+
+### Changed
+- Renamed the data file `renames.json` → **`databricks.json`** (it now holds renames *and*
+  deprecations); updated the fetch in `app.js`, the path in `validate.py`, and all docs.
+- `validate.py` branches on `kind` with per-kind required fields (rename vs deprecation) and
+  validates `deprecatedAt`/`removedAt`/`status`.
+- `app.js` renders deprecations with an amber accent, a `deprecated`/`retired` badge, and an
+  "old → replacement" (or "retired — no direct replacement") trail; search, sort, the
+  day-counter, and the copy-correction toast now span both kinds. Sidebar dots added for
+  dbx (Jobs & Pipelines) and Legacy dashboards (Dashboards).
+- Site copy reframed to "renamed **or** deprecated" (rebricked = **re**named or de**pre**cated).
 
 ### Notes
 - Triaged a large community/LinkedIn-sourced rename list. Deliberately **excluded**:
