@@ -462,6 +462,21 @@
     "verified": "2026-07-18"
   },
   {
+    "id": "lakehouse-rt",
+    "kind": "feature",
+    "name": "Lakehouse Real-Time",
+    "aliases": ["Lakehouse//RT", "Lakehouse RT", "Reyden"],
+    "category": "Compute / BI",
+    "what": "A serverless compute engine for low-latency, high-concurrency analytical queries, delivering sub-second SQL reads directly on Unity Catalog Delta and Iceberg tables.",
+    "introducedAt": "2026-06",
+    "status": "preview",
+    "occasion": "Announced June 16, 2026",
+    "note": "Brings millisecond real-time analytics directly to the lakehouse, so a separate serving database isn't needed; every query still runs under Unity Catalog governance. Powered by a new asynchronous execution engine, Reyden. In Beta for select read-only workloads — contact your Databricks account team to enable it.",
+    "prediction": ["Genie Real-Time", "Lakehouse//RT One", "Unity Real-Time"],
+    "source": "https://docs.databricks.com/aws/en/compute/sql-warehouse/real-time",
+    "verified": "2026-07-18"
+  },
+  {
     "id": "lakeflow-designer",
     "kind": "feature",
     "name": "Lakeflow Designer",

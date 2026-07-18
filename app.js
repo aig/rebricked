@@ -55,7 +55,7 @@
       { label: "Genie Agents", icon: "genie", ids: ["genie-spaces", "databricks-one", "genie-code"] },
       { label: "Alerts", icon: "alerts", ids: ["legacy-sql-alerts"] },
       { label: "Query History", icon: "history" },
-      { label: "SQL Warehouses", icon: "warehouse", ids: ["sql-endpoint", "odbc-driver"] },
+      { label: "SQL Warehouses", icon: "warehouse", ids: ["sql-endpoint", "odbc-driver", "lakehouse-rt"] },
     ]},
     { label: "Data Engineering", items: [
       { label: "Runs", icon: "runs" },

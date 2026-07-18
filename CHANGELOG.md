@@ -3,6 +3,14 @@
 All notable changes to **rebricked**, grouped by day.
 Format loosely follows [Keep a Changelog](https://keepachangelog.com/); dates are `YYYY-MM-DD`.
 
+## 2026-07-18 (new feature — Lakehouse//RT)
+
+### Added
+- **Lakehouse Real-Time (Lakehouse//RT)** — a `feature` entry for Databricks' new serverless
+  real-time analytics engine (powered by *Reyden*), delivering sub-second SQL reads on Unity
+  Catalog tables. Announced June 16, 2026; currently in Beta (`status: preview`). Filed under
+  **Compute / BI** and wired into the **SQL Warehouses** rail section.
+
 ## 2026-07-18 (harder quiz — multiple funny predictions)
 
 ### Changed
