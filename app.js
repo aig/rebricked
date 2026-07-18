@@ -4,13 +4,21 @@
   const $ = (sel) => document.querySelector(sel);
   const resultsEl = $("#results");
   const searchEl = $("#search");
-  const chipsEl = $("#chips");
+  // Chips row was removed from the DOM; fall back to a detached element so the
+  // (now inert) chip queries elsewhere stay harmless instead of throwing on null.
+  const chipsEl = $("#chips") || document.createElement("div");
   const toastEl = $("#toast");
 
   let DATA = [];
   let activeCategory = null;
   let activeSection = null; // {label, ids} when a rail section is selected
-  let activeKind = "all";   // "all" | "rename" | "deprecation" | "feature"
+  // Multi-select kind filter. "All" is derived: it's active exactly when all three
+  // kinds are selected. Toggling any kind off deselects "All" too.
+  const KIND_KEYS = ["rename", "deprecation", "feature"];
+  let activeKinds = new Set(KIND_KEYS);
+  const allKindsSelected = () => KIND_KEYS.every((k) => activeKinds.has(k));
+  const filterOn = (key) => (key === "all" ? allKindsSelected() : activeKinds.has(key));
+  const resetKinds = () => { activeKinds = new Set(KIND_KEYS); };
   let activeYear = null;    // "2025" etc. when a timeline bar is selected
   let focusId = null;       // a single deep-linked entry (#id), overrides everything
 
@@ -133,17 +141,20 @@
     const count = (key) =>
       key === "all" ? DATA.length : DATA.filter((d) => kindOf(d) === key).length;
     el.innerHTML = FILTERS.map((f) => {
-      const active = activeKind === f.key;
+      const active = filterOn(f.key);
       return `<button class="filter${active ? " active" : ""}" data-kind="${escapeAttr(f.key)}" aria-pressed="${active}">${escapeHtml(f.label)}<span class="filter-count">${count(f.key)}</span></button>`;
     }).join("");
     el.querySelectorAll(".filter").forEach((btn) => {
       btn.addEventListener("click", () => {
-        activeKind = btn.dataset.kind;
-        el.querySelectorAll(".filter").forEach((b) => {
-          const on = b.dataset.kind === activeKind;
-          b.classList.toggle("active", on);
-          b.setAttribute("aria-pressed", on);
-        });
+        const key = btn.dataset.kind;
+        if (key === "all") {
+          resetKinds(); // "All" selects every other kind
+        } else if (activeKinds.has(key)) {
+          activeKinds.delete(key);
+        } else {
+          activeKinds.add(key);
+        }
+        syncFilterButtons();
         writeURL();
         render();
       });
@@ -154,7 +165,7 @@
     const el = $("#filters");
     if (!el) return;
     el.querySelectorAll(".filter").forEach((b) => {
-      const on = b.dataset.kind === activeKind;
+      const on = filterOn(b.dataset.kind);
       b.classList.toggle("active", on);
       b.setAttribute("aria-pressed", on);
     });
@@ -228,7 +239,7 @@
     activeYear = null;
     searchEl.value = "";
     activeCategory = null;
-    activeKind = "all";
+    resetKinds();
     chipsEl.querySelectorAll(".chip").forEach((c) => c.classList.remove("active"));
     syncFilterButtons();
     writeURL();
@@ -278,8 +289,8 @@
     }
 
     // The kind filter is orthogonal — it narrows whatever's showing.
-    if (activeKind !== "all") {
-      rows = rows.filter((d) => kindOf(d) === activeKind);
+    if (!allKindsSelected()) {
+      rows = rows.filter((d) => activeKinds.has(kindOf(d)));
     }
 
     // The timeline year filter is likewise orthogonal.
@@ -293,9 +304,10 @@
     updateHomeExtras();
 
     if (rows.length === 0) {
+      const selectedKinds = FILTERS.filter((f) => f.key !== "all" && activeKinds.has(f.key));
       const kindNote =
-        activeKind !== "all"
-          ? ` matching <b>${escapeHtml(FILTERS.find((f) => f.key === activeKind).label)}</b>`
+        !allKindsSelected() && selectedKinds.length
+          ? ` matching <b>${selectedKinds.map((f) => escapeHtml(f.label)).join(", ")}</b>`
           : "";
       const yearNote = activeYear ? ` in <b>${escapeHtml(activeYear)}</b>` : "";
       const line = EMPTY_LINES[emptyIdx++ % EMPTY_LINES.length];
@@ -357,7 +369,7 @@
       !activeSection &&
       !activeCategory &&
       !activeYear &&
-      activeKind === "all" &&
+      allKindsSelected() &&
       searchEl.value.trim() === ""
     );
   }
@@ -540,10 +552,8 @@
   }
 
   function renderChips() {
-    const cats = [...new Set(DATA.map((d) => d.category).filter(Boolean))].sort();
-    chipsEl.innerHTML = cats
-      .map((c) => `<button class="chip" data-cat="${escapeAttr(c)}">${escapeHtml(c)}</button>`)
-      .join("");
+    // Category chips are hidden — the chips row renders empty.
+    chipsEl.innerHTML = "";
     chipsEl.querySelectorAll(".chip").forEach((chip) => {
       chip.addEventListener("click", () => {
         activeSection = null; // category chips override a rail-section filter
@@ -852,7 +862,7 @@
     activeYear = null;
     searchEl.value = "";
     activeCategory = null;
-    activeKind = "all";
+    resetKinds();
     chipsEl.querySelectorAll(".chip").forEach((c) => c.classList.remove("active"));
     syncFilterButtons();
     render();
@@ -1179,8 +1189,9 @@
       );
     }
     const kind = params.get("kind");
-    if (kind && FILTERS.some((f) => f.key === kind)) {
-      activeKind = kind;
+    if (kind !== null) {
+      // Comma-separated list of selected kinds; an empty value means none selected.
+      activeKinds = new Set(kind.split(",").filter((k) => KIND_KEYS.includes(k)));
       syncFilterButtons();
     }
     const year = params.get("year");
@@ -1192,7 +1203,7 @@
     activeSection = null;
     activeCategory = null;
     activeYear = null;
-    activeKind = "all";
+    resetKinds();
     searchEl.value = "";
     setActiveNav(null);
     chipsEl.querySelectorAll(".chip").forEach((c) => c.classList.remove("active"));
@@ -1214,7 +1225,7 @@
       if (q) params.set("q", q);
       if (activeSection) params.set("s", activeSection.label);
       if (activeCategory) params.set("cat", activeCategory);
-      if (activeKind !== "all") params.set("kind", activeKind);
+      if (!allKindsSelected()) params.set("kind", [...activeKinds].join(","));
       if (activeYear) params.set("year", activeYear);
       const qs = params.toString();
       if (qs) url += "?" + qs;
