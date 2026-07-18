@@ -3,6 +3,31 @@
 All notable changes to **rebricked**, grouped by day.
 Format loosely follows [Keep a Changelog](https://keepachangelog.com/); dates are `YYYY-MM-DD`.
 
+## 2026-07-19 (card header reflow; click-to-copy correction fix)
+
+### Fixed
+- **Clicking a card title no longer mislabels an old name as the current one.** A *former*
+  name (a `"renamed"` card) or a *deprecated* name used to copy "Actually, it's called
+  '<that name>' now" — presenting the superseded name as current. A former-name title now
+  copies the name it actually became (`Actually, "X" is the old name — it's "Y" now.`), and
+  deprecated titles — previously not clickable at all — now copy `Actually, "X" is
+  deprecated — use "Y" now.` (or just "…is deprecated." when nothing replaced it). Current
+  names and features are unchanged. Each former/deprecated card carries its resolved current
+  name (`data-current`, via `currentNameOf`) so the correction points forward; `.dep-name`
+  gained a pointer cursor now that it's clickable.
+
+### Changed
+- **Card header reflowed.** The title now leads the card (moved above the metadata row). Its
+  first row groups the name with its status badge (`current` / `former name`) and category
+  tag on the left, and pins the **✨ AI-guess** pill together with the copy-link and
+  share-on-LinkedIn icons to the top-right. The date / rename-history line ("current since …
+  · Renamed to …") drops to its own row beneath. Previously the meta row led and the action
+  icons sat bottom-right.
+- Rendering split into `.row-head-left` / `.row-head-right`; `.cat` was un-scoped from
+  `.row-meta` so the category tag keeps its chip styling in the header; the mobile rule that
+  stacked the odds pill under the title is gone — the pill now wraps within the header's left
+  group as the card narrows.
+
 ## 2026-07-18 (one card per name — the rename-split)
 
 ### Changed
