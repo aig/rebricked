@@ -123,7 +123,6 @@ def badge_card_html(n, title_e, blurb_e):
         f'<p class="badge-blurb">{blurb_e}</p>'
         '<div class="badge-actions">'
         f'<a class="badge-btn" href="../../?quiz={n}-{TOTAL}">Take the quiz &rarr;</a>'
-        '<a class="badge-link" href="../../">Back to REbricked</a>'
         '</div>'
         '<p class="badge-fine">A REbricked achievement. Not affiliated with Databricks; '
         'entirely made up, like the roadmap.</p>'
