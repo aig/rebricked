@@ -35,11 +35,9 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - name: Configure Pages
+        # Pages must be enabled once in repo Settings → Pages → Source:
+        # "GitHub Actions" (the default token can't create the site itself).
         uses: actions/configure-pages@v5
-        with:
-          # self-enable Pages (source = GitHub Actions) on the first run,
-          # so no manual toggle in repo Settings is needed
-          enablement: true
       - name: Upload site
         uses: actions/upload-pages-artifact@v3
         with:
