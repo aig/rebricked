@@ -980,15 +980,20 @@
     const answer = currentNameOf(correct);
     // Harder: seed distractors with THIS product's own plausible-but-fake future names
     // (the most tempting wrong answers), then fill from every other name and predicted
-    // name across the dataset.
-    const own = shuffle((correct.prediction || []).filter((n) => n && n !== answer));
+    // name across the dataset. A deprecation has no predictions of its own, so borrow
+    // the replacement's — same successor, plausible next rebrands (e.g. "DBFS mounts" →
+    // Unity Catalog volumes, decoyed by that product's "…Volumes" predictions).
+    const ownPreds = Array.isArray(correct.prediction) ? correct.prediction : [];
+    const repl = correct.replacementId && DATA.find((d) => d.id === correct.replacementId);
+    const seedPreds = repl ? [...ownPreds, ...(repl.prediction || [])] : ownPreds;
+    const own = shuffle(seedPreds.filter((n) => n && n !== answer));
     const others = shuffle(
       DATA.flatMap((d) => [currentNameOf(d), ...(d.prediction || [])])
         .filter((n) => n && n !== answer && !n.startsWith("("))
     );
     const seen = new Set([answer]);
     const options = [answer];
-    for (const n of [...own.slice(0, 2), ...others]) {
+    for (const n of [...own.slice(0, 3), ...others]) {
       if (options.length >= 4) break;
       if (!seen.has(n)) { seen.add(n); options.push(n); }
     }
