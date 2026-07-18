@@ -64,22 +64,22 @@
     { label: "", items: [
       { label: "Home", icon: "home", home: true },
       { label: "Learn", icon: "learn" },
-      { label: "Workspace", icon: "workspace", ids: ["repos", "legacy-cli", "serverless-workspaces", "pat", "oauth-token-federation", "databricks-connect-legacy"] },
+      { label: "Workspace", icon: "workspace", ids: ["repos", "databricks-repos", "legacy-cli", "databricks-cli", "serverless-workspaces", "pat", "oauth-token-federation", "databricks-connect-legacy", "databricks-connect"] },
       { label: "Recents", icon: "recents" },
-      { label: "Catalog", icon: "catalog", ids: ["catalog-explorer", "uc-volumes", "dbfs-mounts", "lakehouse-federation", "delta-sharing", "delta-lake", "liquid-clustering", "hive-metastore", "abac", "uc-managed-iceberg", "clean-rooms"] },
-      { label: "Jobs & Pipelines", icon: "jobs", ids: ["dlt", "workflows", "bundles", "dbx", "pipelines-editor"] },
-      { label: "Compute", icon: "compute", ids: ["lakebase", "access-modes", "no-isolation-shared", "dbfs-init-scripts"] },
+      { label: "Catalog", icon: "catalog", ids: ["catalog-explorer", "data-explorer", "unity-catalog", "uc-volumes", "dbfs-mounts", "lakehouse-federation", "delta-sharing", "delta-sharing-former", "delta-lake", "databricks-delta", "liquid-clustering", "hive-metastore", "abac", "uc-managed-iceberg", "clean-rooms"] },
+      { label: "Jobs & Pipelines", icon: "jobs", ids: ["dlt", "delta-live-tables", "workflows", "workflows-former", "bundles", "databricks-asset-bundles", "dbx", "pipelines-editor", "multi-file-editor"] },
+      { label: "Compute", icon: "compute", ids: ["lakebase", "access-modes", "shared-single-user-access-modes", "no-isolation-shared", "dbfs-init-scripts"] },
       { label: "Discover", icon: "discover" },
       { label: "Marketplace", icon: "marketplace" },
     ]},
     { label: "SQL", items: [
-      { label: "SQL Editor", icon: "sqlEditor", ids: ["databricks-sql", "legacy-sql-editor"] },
+      { label: "SQL Editor", icon: "sqlEditor", ids: ["databricks-sql", "sql-analytics", "legacy-sql-editor", "new-sql-editor"] },
       { label: "Queries", icon: "queries" },
-      { label: "Dashboards", icon: "dashboards", ids: ["dashboards", "legacy-dashboards"] },
-      { label: "Genie Agents", icon: "genie", ids: ["genie-spaces", "databricks-one", "genie-code"] },
-      { label: "Alerts", icon: "alerts", ids: ["legacy-sql-alerts"] },
+      { label: "Dashboards", icon: "dashboards", ids: ["dashboards", "lakeview-dashboards", "legacy-dashboards"] },
+      { label: "Genie Agents", icon: "genie", ids: ["genie-spaces", "genie-spaces-former", "databricks-one", "databricks-one-former", "genie", "genie-code", "databricks-assistant"] },
+      { label: "Alerts", icon: "alerts", ids: ["legacy-sql-alerts", "sql-alerts-new"] },
       { label: "Query History", icon: "history" },
-      { label: "SQL Warehouses", icon: "warehouse", ids: ["sql-endpoint", "odbc-driver", "lakehouse-rt"] },
+      { label: "SQL Warehouses", icon: "warehouse", ids: ["sql-endpoint", "sql-endpoint-former", "odbc-driver", "simba-spark-odbc-driver", "lakehouse-rt"] },
     ]},
     { label: "Data Engineering", items: [
       { label: "Runs", icon: "runs" },
@@ -88,12 +88,12 @@
     ]},
     { label: "AI/ML", items: [
       { label: "Playground", icon: "playground" },
-      { label: "Agents", icon: "agents", ids: ["vector-search", "supervisor-agent"] },
+      { label: "Agents", icon: "agents", ids: ["vector-search", "databricks-vector-search", "mosaic-ai-vector-search", "supervisor-agent", "agent-bricks-multi-agent-supervisor"] },
       { label: "AI Gateway", icon: "gateway" },
       { label: "Experiments", icon: "experiments" },
-      { label: "Features", icon: "features", ids: ["workspace-feature-store"] },
-      { label: "Models", icon: "models", ids: ["workspace-model-registry"] },
-      { label: "Serving", icon: "serving", ids: ["model-serving"] },
+      { label: "Features", icon: "features", ids: ["workspace-feature-store", "feature-engineering-uc"] },
+      { label: "Models", icon: "models", ids: ["workspace-model-registry", "models-in-uc"] },
+      { label: "Serving", icon: "serving", ids: ["model-serving", "serverless-real-time-inference"] },
     ]},
   ];
 
@@ -422,11 +422,6 @@
   function rowHTML(d, q) {
     const kind = kindOf(d);
 
-    // Card actions live as a compact icon toolbar in the bottom-right corner —
-    // the conventional spot for per-item controls. Source, copy-link, and share.
-    const src = d.source
-      ? `<a class="row-act" href="${escapeAttr(d.source)}" target="_blank" rel="noopener" title="Open the source ↗" aria-label="Open the source">${ICON.source}</a>`
-      : "";
     const note = d.note ? `<p class="row-note">${escapeHtml(d.note)}</p>` : "";
     // A real-but-fun fact about the feature — genuinely true, grounded in each
     // entry's history; the tone is ours.
@@ -435,26 +430,39 @@
       : "";
     const occasion = d.occasion ? ` · ${escapeHtml(d.occasion)}` : "";
 
-    let trail, badge = "", dateText, rowCls = "";
+    const badge = statusBadge(d);
+    let trail, dateText, rowCls = "";
     if (kind === "feature") {
       rowCls = " is-feature";
       trail = featureTrail(d, q);
-      const status = d.status || "ga";
-      const label = status === "preview" ? "preview" : "new";
-      badge = `<span class="badge badge-${escapeAttr(status)}">${escapeHtml(label)}</span>`;
       dateText = `introduced ${escapeHtml(d.introducedAt || "?")}${occasion}`;
     } else if (kind === "deprecation") {
       rowCls = " is-deprecation";
       trail = depTrail(d, q);
       const status = d.status || "deprecated";
-      badge = `<span class="badge badge-${escapeAttr(status)}">${escapeHtml(status)}</span>`;
       const removed = d.removedAt ? ` · access ended ${escapeHtml(d.removedAt)}` : "";
       const verb = status === "legacy" ? "legacy since" : "deprecated";
       dateText = `${verb} ${escapeHtml(d.deprecatedAt || "?")}${removed}${occasion}`;
     } else {
       trail = renameTrail(d, q);
-      dateText = `renamed ${escapeHtml(d.renamedAt || "?")}${occasion}`;
+      if ((d.state || "current") === "renamed") {
+        rowCls = " is-former";
+        const span = d.from && d.to
+          ? `${escapeHtml(d.from)}–${escapeHtml(d.to)}`
+          : d.to ? `until ${escapeHtml(d.to)}` : escapeHtml(d.from || "?");
+        dateText = `in use ${span}${occasion}`;
+      } else {
+        dateText = `current since ${escapeHtml(d.from || "?")}${occasion}`;
+      }
     }
+
+    // Successors / predecessors pulled from the linked cards — the history chain.
+    const rels =
+      relSection("Successor", successorsOf(d)) +
+      relSection("Predecessor", predecessorsOf(d));
+
+    // Classified reference links so every claim is checkable.
+    const refs = refsSection(d);
 
     const odds = kind === "deprecation" ? "" : oddsBadge(d);
 
@@ -463,9 +471,6 @@
 
     return `
       <article class="row${rowCls}" data-id="${escapeAttr(d.id)}">
-        <div class="row-main"><div class="lineage">${trail}</div>${oddsCorner}</div>
-        <p class="row-what">${escapeHtml(d.what || "")}</p>
-        ${fact}
         <div class="row-meta">
           <span class="cat">${escapeHtml(d.category || "")}</span>
           ${badge}
@@ -473,30 +478,135 @@
           <div class="row-actions">
             <button class="row-act" data-act="link" title="Copy a link to this entry" aria-label="Copy link to this entry">${ICON.link}</button>
             <button class="row-act" data-act="share" title="Share this entry on LinkedIn" aria-label="Share this entry on LinkedIn">${ICON.linkedin}</button>
-            ${src}
           </div>
         </div>
+        <div class="row-main"><div class="lineage">${trail}</div>${oddsCorner}</div>
+        <p class="row-what">${escapeHtml(d.what || "")}</p>
+        ${fact}
+        ${rels}
         ${note}
+        ${refs}
       </article>`;
   }
 
-  // A deadpan, entirely-made-up odds badge. Deterministic per entry (hashed id)
-  // so it doesn't flicker between renders — and clearly labeled as a joke.
+  // The card's "current status" badge — one per kind.
+  function statusBadge(d) {
+    const kind = kindOf(d);
+    if (kind === "deprecation") {
+      const status = d.status || "deprecated";
+      return `<span class="badge badge-${escapeAttr(status)}">${escapeHtml(status)}</span>`;
+    }
+    if (kind === "feature") {
+      const status = d.status || "ga";
+      const label = status === "preview" ? "preview" : "new";
+      return `<span class="badge badge-${escapeAttr(status)}">${escapeHtml(label)}</span>`;
+    }
+    // rename card: the name in use now vs. a superseded one
+    if ((d.state || "current") === "renamed") {
+      return `<span class="badge badge-former">former name</span>`;
+    }
+    return `<span class="badge badge-current">current</span>`;
+  }
+
+  // Cross-card links. A card points forward via `successorId` (the name it became,
+  // or the product that replaced it); predecessors are whatever points back here.
+  // Both walk the full chain so a card shows its entire history in either direction.
+  function successorsOf(d) {
+    const out = [];
+    const seen = new Set([d.id]);
+    let cur = d;
+    while (cur && cur.successorId && !seen.has(cur.successorId)) {
+      const s = DATA.find((x) => x.id === cur.successorId);
+      if (!s) break;
+      seen.add(s.id);
+      out.push(s);
+      cur = s;
+    }
+    return out;
+  }
+  function predecessorsOf(d) {
+    const out = [];
+    const seen = new Set([d.id]);
+    let frontier = DATA.filter((x) => x.successorId === d.id);
+    while (frontier.length) {
+      const next = [];
+      for (const p of frontier) {
+        if (seen.has(p.id)) continue;
+        seen.add(p.id);
+        out.push(p);
+        next.push(...DATA.filter((x) => x.successorId === p.id));
+      }
+      frontier = next;
+    }
+    return out;
+  }
+
+  // A relationship section: label + one linked mini-card per related entry, each
+  // pulling its name, status, date, and description from that other record and
+  // linking to it (click jumps to the card via the #id route).
+  function relSection(label, items) {
+    if (!items.length) return "";
+    const plural = items.length > 1 ? "s" : "";
+    const rows = items.map((x) => {
+      const nm = x.name || currentNameOf(x);
+      const when = changedAt(x);
+      return `<a class="rel-item" href="#${escapeAttr(encodeURIComponent(x.id))}" title="Open “${escapeAttr(nm)}”">` +
+        `<span class="rel-head">` +
+          `<span class="rel-name">${escapeHtml(nm)}</span>` +
+          statusBadge(x) +
+          (when ? `<span class="rel-when">${escapeHtml(shortYear(when))}</span>` : "") +
+          `<span class="rel-arrow" aria-hidden="true">↗</span>` +
+        `</span>` +
+        (x.what ? `<span class="rel-what">${escapeHtml(x.what)}</span>` : "") +
+      `</a>`;
+    }).join("");
+    return `<div class="rel-group"><span class="rel-label">${escapeHtml(label)}${plural}</span><div class="rel-items">${rows}</div></div>`;
+  }
+
+  // Classified reference links. The canonical `source` is the official link; the
+  // optional `links` array adds more, each tagged official / community / internet.
+  const REF_ORDER = { official: 0, community: 1, internet: 2 };
+  const REF_KINDS = { official: "Official", community: "Community", internet: "Internet" };
+  function refLinks(d) {
+    const out = [];
+    if (d.source) out.push({ url: d.source, kind: "official", label: "" });
+    if (Array.isArray(d.links)) {
+      for (const l of d.links) {
+        if (l && typeof l.url === "string" && REF_KINDS[l.kind]) {
+          out.push({ url: l.url, kind: l.kind, label: typeof l.label === "string" ? l.label : "" });
+        }
+      }
+    }
+    return out;
+  }
+  function hostOf(url) {
+    try { return new URL(url).hostname.replace(/^www\./, ""); } catch (e) { return ""; }
+  }
+  function refsSection(d) {
+    const links = refLinks(d);
+    if (!links.length) return "";
+    links.sort((a, b) => (REF_ORDER[a.kind] ?? 9) - (REF_ORDER[b.kind] ?? 9));
+    const chips = links.map((l) => {
+      const text = l.label || hostOf(l.url) || REF_KINDS[l.kind];
+      return `<a class="ref-chip ref-${escapeAttr(l.kind)}" href="${escapeAttr(l.url)}" target="_blank" rel="noopener" ` +
+        `title="${escapeAttr(REF_KINDS[l.kind])} · ${escapeAttr(l.url)}">` +
+        `<span class="ref-dot" aria-hidden="true"></span>` +
+        `<span class="ref-kind">${escapeHtml(REF_KINDS[l.kind])}</span>` +
+        `<span class="ref-host">${escapeHtml(text)}</span>` +
+        `<span class="ref-ext" aria-hidden="true">↗</span></a>`;
+    }).join("");
+    return `<div class="row-refs"><span class="ref-label">References</span><div class="ref-chips">${chips}</div></div>`;
+  }
+
+  // The AI-guess button. No fake odds — just an invitation to have the "AI" make up
+  // the next name. The button carries the whole made-up shortlist; the first click
+  // reveals the seeded guess and each later click rolls a new one. Seed is
+  // deterministic per entry so the first guess doesn't flicker between renders.
   function oddsBadge(d) {
-    const pct = 20 + (hashStr(d.id) % 61); // 20–80%
-    const yr = new Date().getFullYear() + 1 + (hashStr(d.id + "y") % 2); // next 1–2 yrs
-    // The odds live on the card; the AI's guesses only appear when you ask.
-    const odds = `<span class="odds" title="Not a real forecast. We made this up.">~${pct}% chance of another rename by ${yr}</span>`;
     const preds = Array.isArray(d.prediction) ? d.prediction.filter(Boolean) : [];
-    // The button carries the whole made-up shortlist; the first click reveals the
-    // seeded guess and each later click rolls a new one. Seed is deterministic per
-    // entry so the first guess doesn't flicker between renders.
-    const start = preds.length ? hashStr(d.id + "p") % preds.length : 0;
-    const btn = preds.length
-      ? `<button class="odds-btn" data-preds="${escapeAttr(JSON.stringify(preds))}" data-i="${start}" title="Ask the AI what it gets renamed to next">✨ AI guess</button>`
-      : "";
-    // Button sits to the LEFT of the odds text.
-    return btn + odds;
+    if (!preds.length) return "";
+    const start = hashStr(d.id + "p") % preds.length;
+    return `<button class="odds-btn" data-preds="${escapeAttr(JSON.stringify(preds))}" data-i="${start}" title="Ask the AI to guess the next name">✨ Guess a new name using AI</button>`;
   }
 
   // The AI-guess button reveals a made-up next name: a beat of "thinking", then the
@@ -540,40 +650,20 @@
     return `<span class="current feature-name" data-name="${escapeAttr(d.name)}" data-feature="1" data-when="${when}" title="click to copy">${highlight(d.name, q)}</span>`;
   }
 
-  // A rename renders its full lineage trail, ending in the clickable current name.
-  // A malformed entry (no lineage) degrades to just its current name — one bad row
-  // must never take the whole render down.
+  // Each name in a product's history is its own card; the title is just this card's
+  // name. Predecessors/successors are shown as their own linked cards below.
   function renameTrail(d, q) {
-    const steps = Array.isArray(d.lineage) && d.lineage.length ? d.lineage : null;
-    if (!steps) {
-      const name = d.current || d.name || d.id;
-      return `<span class="current" data-name="${escapeAttr(name)}" title="click to copy a correction">${highlight(name, q)}</span>`;
-    }
-    const chain = steps.map((step, i) => {
-      const isLast = i === steps.length - 1;
-      const name = highlight(step.name, q);
-      const abbr = step.abbr ? ` (${highlight(step.abbr, q)})` : "";
-      if (isLast) {
-        return `<span class="current" data-name="${escapeAttr(step.name)}" title="click to copy a correction">${name}${abbr}</span>`;
-      }
-      const yr = step.to ? `<span class="yr"> ${escapeHtml(shortYear(step.to))}</span>` : "";
-      return `<span class="old">${name}${abbr}${yr}</span>`;
-    });
-    return chain.join(` <span class="arrow">→</span> `);
+    const name = d.name || d.id;
+    const cls = (d.state || "current") === "renamed" ? "current former" : "current";
+    const abbr = d.abbr ? ` (${highlight(d.abbr, q)})` : "";
+    return `<span class="${cls}" data-name="${escapeAttr(name)}" title="click to copy a correction">${highlight(name, q)}${abbr}</span>`;
   }
 
-  // A deprecation renders old-name → replacement (or "retired" when there's no successor).
+  // A deprecation's title is just the deprecated name; the successor (if any) is its
+  // own linked card in the Successor section below.
   function depTrail(d, q) {
     const removedYr = d.removedAt ? `<span class="yr"> ${escapeHtml(shortYear(d.removedAt))}</span>` : "";
-    const old = `<span class="old dep-name">${highlight(d.name, q)}${removedYr}</span>`;
-    if (d.replacement) {
-      const rep = `<span class="current" data-name="${escapeAttr(d.replacement)}" data-old="${escapeAttr(d.name)}" data-dep="1" title="click to copy a correction">${highlight(d.replacement, q)}</span>`;
-      const repLink = d.replacementId && DATA.some((x) => x.id === d.replacementId)
-        ? ` <a class="rep-link" href="#${escapeAttr(encodeURIComponent(d.replacementId))}" title="Open the successor's entry">entry ↗</a>`
-        : "";
-      return `${old} <span class="arrow">→</span> ${rep}${repLink}`;
-    }
-    return `${old} <span class="arrow">→</span> <span class="retired">retired — no direct replacement</span>`;
+    return `<span class="old dep-name">${highlight(d.name, q)}${removedYr}</span>`;
   }
 
   function renderError() {
@@ -962,15 +1052,16 @@
   function quizPool() {
     return DATA.filter((d) => {
       const k = kindOf(d);
-      if (k === "rename") return d.lineage && d.lineage.length >= 2 && d.current;
-      if (k === "deprecation") return !!d.replacement;
+      // a former name whose current name is knowable, or a deprecation with a successor
+      if (k === "rename") return (d.state === "renamed") && !currentNameOf(d).startsWith("(");
+      if (k === "deprecation") return !currentNameOf(d).startsWith("(");
       return false;
     });
   }
 
+  // The prompt is the old/deprecated name; the answer is its current name.
   function quizPrompt(d) {
-    if (kindOf(d) === "deprecation") return d.name;
-    return d.lineage && d.lineage[0] ? d.lineage[0].name : d.current;
+    return d.name;
   }
 
   function shuffle(arr) {
@@ -1107,7 +1198,7 @@
     // the replacement's — same successor, plausible next rebrands (e.g. "DBFS mounts" →
     // Unity Catalog volumes, decoyed by that product's "…Volumes" predictions).
     const ownPreds = Array.isArray(correct.prediction) ? correct.prediction : [];
-    const repl = correct.replacementId && DATA.find((d) => d.id === correct.replacementId);
+    const repl = correct.successorId && DATA.find((d) => d.id === correct.successorId);
     const seedPreds = repl ? [...ownPreds, ...(repl.prediction || [])] : ownPreds;
     const own = shuffle(seedPreds.filter((n) => n && n !== answer));
     const others = shuffle(
@@ -1295,11 +1386,24 @@
     return location.origin + location.pathname + "#" + encodeURIComponent(id);
   }
 
+  // Walk the successor chain to the end — the card that nothing supersedes.
+  function headOf(d) {
+    const seen = new Set([d.id]);
+    let cur = d;
+    while (cur && cur.successorId && !seen.has(cur.successorId)) {
+      const s = DATA.find((x) => x.id === cur.successorId);
+      if (!s) break;
+      seen.add(s.id);
+      cur = s;
+    }
+    return cur;
+  }
+
   function currentNameOf(d) {
-    const kind = kindOf(d);
-    if (kind === "feature") return d.name;
-    if (kind === "deprecation") return d.replacement || "(retired — no successor)";
-    return d.current;
+    const head = headOf(d);
+    if (head && head !== d) return head.name;
+    if (kindOf(d) === "deprecation") return d.replacement || "(retired — no successor)";
+    return d.name || d.id;
   }
 
   // A tidy multi-line blurb for sharing (LinkedIn post text, Slack, chat).
@@ -1311,13 +1415,15 @@
       return `🧱 "${d.name}" — new in Databricks (${d.introducedAt || "?"}).\n${d.what || ""}${factLine}\n${link}`;
     }
     if (kind === "deprecation") {
-      const successor = d.replacement
-        ? `use "${d.replacement}" now`
-        : "retired, no direct replacement";
+      const now = currentNameOf(d);
+      const successor = now.startsWith("(") ? "retired, no direct replacement" : `use "${now}" now`;
       return `🧱 "${d.name}" is deprecated — ${successor}.\n${d.what || ""}${factLine}\n${link}`;
     }
-    const first = d.lineage && d.lineage[0] ? d.lineage[0].name : d.current;
-    return `🧱 It's not called "${first}" anymore — it's "${d.current}" now (renamed ${d.renamedAt || "?"}).\n${d.what || ""}${factLine}\n${link}`;
+    // rename card
+    if ((d.state || "current") === "renamed") {
+      return `🧱 It's not called "${d.name}" anymore — it's "${currentNameOf(d)}" now.\n${d.what || ""}${factLine}\n${link}`;
+    }
+    return `🧱 "${d.name}" — the current Databricks name (since ${d.from || "?"}).\n${d.what || ""}${factLine}\n${link}`;
   }
 
   // Share a single entry on LinkedIn. Mirrors the quiz share: copy the blurb to the
@@ -1350,14 +1456,17 @@
       .map((y, i) => {
         const n = counts[y];
         const h = Math.round((n / max) * 100);
-        const peak = n === max ? " tl-peak" : "";
-        const crown = n === max ? "👑" : "";
-        return `<button class="tl-bar${peak}" data-year="${escapeAttr(y)}" style="--h:${h}%;--i:${i}" title="${n} change${n === 1 ? "" : "s"} in ${escapeHtml(y)}"><span class="tl-cap">${crown}</span><span class="tl-h"></span><span class="tl-n">${n}</span><span class="tl-y">'${escapeHtml(y.slice(2))}</span></button>`;
+        const label = `${n} change${n === 1 ? "" : "s"} in ${escapeHtml(y)}`;
+        return `<button class="tl-bar" data-year="${escapeAttr(y)}" style="--h:${h}%;--i:${i}" title="${label}" aria-label="${label}"><span class="tl-n">${n}</span><span class="tl-h"></span></button>`;
       })
+      .join("");
+    const axis = years
+      .map((y) => `<span class="tl-y" data-year="${escapeAttr(y)}">'${escapeHtml(y.slice(2))}</span>`)
       .join("");
     el.innerHTML =
       `<div class="tl-title">The renaming, by year <span class="tl-hint">— click a bar to filter</span></div>` +
-      `<div class="tl-bars">${bars}</div>`;
+      `<div class="tl-plot">${bars}</div>` +
+      `<div class="tl-axis">${axis}</div>`;
     el.querySelectorAll(".tl-bar").forEach((b) => {
       b.addEventListener("click", () => {
         const y = b.dataset.year;
@@ -1426,23 +1535,22 @@
   // ---- helpers ----
   function haystack(d) {
     return [
-      d.current,        // renames
-      d.name,           // deprecations
-      d.replacement,    // deprecations
+      d.name,           // every card's own name
+      d.abbr,           // rename cards
+      d.replacement,    // deprecations without a successor card
       d.category,
       d.what,
       ...(d.aliases || []),
-      ...(d.lineage || []).flatMap((s) => [s.name, s.abbr]),
     ]
       .filter(Boolean)
       .join(" | ")
       .toLowerCase();
   }
 
-  // A rename's "when" is renamedAt; a deprecation's is when it was removed, else
-  // deprecated; a feature's is when it was introduced.
+  // A card's "when": a rename card's is when that name took effect (`from`); a
+  // deprecation's is when it was removed, else deprecated; a feature's is introduced.
   function changedAt(d) {
-    return d.renamedAt || d.removedAt || d.deprecatedAt || d.introducedAt || "";
+    return d.from || d.removedAt || d.deprecatedAt || d.introducedAt || "";
   }
 
   // Normalize an entry to one of the three filter buckets. Absent kind => rename.

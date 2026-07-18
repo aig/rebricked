@@ -46,9 +46,9 @@ state, not just the historical one.
 
 The investigation decides the shape — not the user's wording:
 
-- **rename** (`kind` absent) — Databricks gave a new name to *the same thing*. Tell the
-  full `lineage` story ending in the current name. This is the common case for an "old"
-  thing that's still around under a new name.
+- **rename** (`kind` absent) — Databricks gave a new name to *the same thing*. Add **one
+  card per name**: a `"current"` card plus a `"renamed"` card for each former name, chained
+  by `successorId`. This is the common case for an "old" thing still around under a new name.
 - **deprecation** (`kind: "deprecation"`) — Databricks retired or replaced it; a *different*
   thing took over (or nothing did). Different tool/API/format = deprecation, not rename
   (e.g. `dbx` → Asset Bundles).
@@ -67,23 +67,35 @@ namespace).
 
 ## Step 4 — Write the entry (shape depends on the kind)
 
-**Rename** — required `id`, `current`, `category`, `what`, `lineage`, `renamedAt`, `source`,
-`verified`. `current` **must equal** the last `lineage` step (the one with `"to": null`).
-Non-final steps need a `to` date and must be chronological.
+**Rename** — one card per name. Each card: required `id`, `name`, `category`, `what`,
+`fact`, `state`, `source`, `verified`. A `"renamed"` card also needs `to` and `successorId`
+(the next name's id); the `"current"` card has no `to`. Each `fact` is self-contained —
+about that name, never mentioning the successor. Predecessors are derived from `successorId`.
 
 ```json
 {
+  "id": "old-name-slug",
+  "name": "Old Name",
+  "abbr": "ON",
+  "category": "Data engineering",
+  "what": "One line: what the thing was under this name.",
+  "fact": "Self-contained real-but-fun one-liner about THIS name (a quirk, its origin, a detail).",
+  "from": "2021",
+  "to": "2023",
+  "successorId": "kebab-case-unique-id",
+  "state": "renamed",
+  "source": "https://docs.databricks.com/...",
+  "verified": "YYYY-MM-DD"
+},
+{
   "id": "kebab-case-unique-id",
-  "current": "The Newest Name",
+  "name": "The Newest Name",
   "aliases": ["What people type", "ABBR"],
   "category": "Data engineering",
   "what": "One line: what the thing is.",
-  "fact": "Real-but-fun one-liner about the feature (e.g. what it does, a rename quirk, a codename).",
-  "lineage": [
-    { "name": "Old Name", "abbr": "ON", "from": "2021", "to": "2023" },
-    { "name": "The Newest Name", "from": "2023", "to": null }
-  ],
-  "renamedAt": "2023",
+  "fact": "Real-but-fun one-liner about the current thing (what it does, a codename, a detail).",
+  "from": "2023",
+  "state": "current",
   "source": "https://docs.databricks.com/...",
   "verified": "YYYY-MM-DD"
 }
@@ -91,8 +103,8 @@ Non-final steps need a `to` date and must be chronological.
 
 **Deprecation** — required `id`, `name`, `category`, `what`, `deprecatedAt`, `status`,
 `source`, `verified`. `status` is `"deprecated"`, `"retired"`, or `"legacy"`. Omit
-`replacement` if nothing replaced it; set `replacementId` when the successor has its own
-entry. `removedAt` must not precede `deprecatedAt`.
+`replacement` if nothing replaced it; set `successorId` when the successor has its own
+card. `removedAt` must not precede `deprecatedAt`.
 
 ```json
 {
@@ -101,7 +113,7 @@ entry. `removedAt` must not precede `deprecatedAt`.
   "name": "The Retired Thing",
   "aliases": ["what people type", "/legacy/path"],
   "replacement": "What To Use Instead",
-  "replacementId": "id-of-successor-entry",
+  "successorId": "id-of-successor-card",
   "category": "Developer experience",
   "what": "One line: what the thing was.",
   "fact": "Real-but-fun one-liner about the feature (e.g. why it was replaced, what changed under the hood).",
@@ -114,8 +126,8 @@ entry. `removedAt` must not precede `deprecatedAt`.
 ```
 
 **Feature** — required `id`, `kind`, `name`, `category`, `what`, `introducedAt`, `source`,
-`verified`. `status` is `"ga"` or `"preview"` (defaults `ga`). No `lineage`/`renamedAt`/
-`replacement` — the validator warns and the UI ignores them.
+`verified`. `status` is `"ga"` or `"preview"` (defaults `ga`). If it later gets renamed,
+add a card for the new name and set this one's `successorId` to it.
 
 ```json
 {

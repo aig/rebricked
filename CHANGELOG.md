@@ -3,6 +3,27 @@
 All notable changes to **rebricked**, grouped by day.
 Format loosely follows [Keep a Changelog](https://keepachangelog.com/); dates are `YYYY-MM-DD`.
 
+## 2026-07-18 (one card per name — the rename-split)
+
+### Changed
+- **Every historical name is now its own card.** The `lineage` array is gone; a rename
+  creates a new `"current"` card and "freezes" the old one as a `"renamed"` card, linked by
+  a single **`successorId`**. Predecessors are derived (any card whose `successorId` points
+  here), so a card shows its whole history in both directions as linked, jump-to cards.
+  50 entries → **71 cards**.
+- **Unified link model**: `successorId` replaces both `lineage` and the deprecation
+  `replacementId`. New per-card fields: `name`, `from`, `to`, `state` (`current`/`renamed`).
+- **Cards** now show a state badge (`current` / `former name`), a **Successor** and
+  **Predecessors** section of linked cards, and self-contained facts. Every one of the 21
+  new frozen cards got its own researched, verified fun-fact and community/internet links.
+- Validator, card rendering, NAV, filters (Renamed 19→40), timeline (each name counts at
+  its own year), search, and the quiz were all migrated to the new model.
+
+### Reference links (earlier the same day)
+- **Every entry carries verified reference links** — `official` (docs), plus researched
+  `community` and `internet` links, rendered as classified chips. Nothing fabricated; each
+  URL was fetch-checked.
+
 ## 2026-07-18 (facts over pricing; icon card actions)
 
 ### Changed

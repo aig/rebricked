@@ -17,19 +17,33 @@ Add one object to [`databricks.json`](databricks.json). That's the whole PR.
 
 ## Add a rename
 
+Each name is its own card, linked by `successorId`. A rename = one `"current"` card plus
+one `"renamed"` card per former name (add another `"renamed"` card for each extra old name).
+
 ```json
 {
+  "id": "old-name-slug",
+  "name": "Old Name",
+  "abbr": "ON",
+  "category": "Data engineering",
+  "what": "One line: what the thing was under this name.",
+  "fact": "Self-contained real-but-fun one-liner about THIS name — don't mention the newer name.",
+  "from": "2021",
+  "to": "2023",
+  "successorId": "kebab-case-unique-id",
+  "state": "renamed",
+  "source": "https://docs.databricks.com/...",
+  "verified": "YYYY-MM-DD"
+},
+{
   "id": "kebab-case-unique-id",
-  "current": "The Newest Name",
+  "name": "The Newest Name",
   "aliases": ["What people actually type", "ABBR"],
   "category": "Data engineering",
   "what": "One line: what the thing is.",
-  "fact": "Real-but-fun one-liner about the feature — funny, but the fact must be true and sourceable.",
-  "lineage": [
-    { "name": "Old Name", "abbr": "ON", "from": "2021", "to": "2023" },
-    { "name": "The Newest Name", "from": "2023", "to": null }
-  ],
-  "renamedAt": "2023",
+  "fact": "Real-but-fun one-liner about the current thing — funny, but true and sourceable.",
+  "from": "2023",
+  "state": "current",
   "occasion": "Where it was announced (optional).",
   "note": "Anything an engineer needs to know — does old code still run? (optional)",
   "source": "https://docs.databricks.com/...",
@@ -46,7 +60,7 @@ Add one object to [`databricks.json`](databricks.json). That's the whole PR.
   "name": "The Retired Thing",
   "aliases": ["what people type", "/legacy/path"],
   "replacement": "What To Use Instead",
-  "replacementId": "id-of-the-successor-entry (optional)",
+  "successorId": "id-of-the-successor-card (optional)",
   "category": "Developer experience",
   "what": "One line: what the thing was.",
   "fact": "Real-but-fun one-liner about the feature — funny, but the fact must be true and sourceable.",
@@ -81,14 +95,20 @@ Add one object to [`databricks.json`](databricks.json). That's the whole PR.
 ```
 
 ### Field rules
-- **Renames:** `current` must equal the last `lineage` entry (the one with `"to": null`).
+- **Renames:** one card per name. Each `"renamed"` card needs a `to` date and a
+  `successorId`; the `"current"` card has no `to`. Predecessors are derived from
+  everyone's `successorId`, so you never store a backward link. Keep each card's `fact`
+  self-contained (about that name, not its successor).
 - **Deprecations:** `status` is `"deprecated"`, `"retired"`, or `"legacy"` (docs call it
   legacy/unsupported but no formal deprecation date exists); `removedAt` is optional;
-  omit `replacement` if nothing directly replaces it (renders as "retired"). Set
-  `replacementId` when the successor has its own entry — the card links to it.
+  omit `successorId`/`replacement` if nothing directly replaces it (renders as "retired").
+  Set `successorId` when the successor has its own card — the card links to it.
 - **Features:** `introducedAt` (`YYYY`/`YYYY-MM`) is required; `status` is `"ga"` or
-  `"preview"` (optional, defaults to `ga`). No `lineage`/`renamedAt`/`replacement` — those
-  are ignored with a warning. If the thing has been renamed, use a **rename** instead.
+  `"preview"` (optional, defaults to `ga`). If the thing later gets renamed, add a card for
+  the new name and point this one's `successorId` at it.
+- `links` (optional, every kind): additional classified references, an array of
+  `{ "url", "kind": "official"|"community"|"internet", "label" }`. Every URL must be real
+  and verified — a dead or off-topic link is worse than none.
 - `source` is **required** on every entry. No source, no entry. Prefer official Databricks /
   Microsoft Learn docs — an archived "legacy"/"migrate from X" doc is ideal for deprecations.
 - `verified` is the date a human last confirmed it. Put the day you checked.

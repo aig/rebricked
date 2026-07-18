@@ -23,8 +23,8 @@ URL_RE = re.compile(r"^https?://", re.IGNORECASE)
 # Fields every entry needs, regardless of kind. `fact` is a real-but-fun one-liner
 # about the feature — genuinely true, grounded in its history — so every entry carries one.
 REQUIRED_COMMON = ("id", "category", "what", "fact", "source", "verified")
-# A rename tells a lineage story ending in the current name.
-REQUIRED_RENAME = ("current", "lineage", "renamedAt")
+# Each name in a product's history is its own card, linked by `successorId`.
+REQUIRED_RENAME = ("name", "state")
 # A deprecation names the retired thing and when it was deprecated.
 REQUIRED_DEPRECATION = ("name", "deprecatedAt", "status")
 # A feature names a current, non-deprecated thing and when it landed.
@@ -34,6 +34,10 @@ VALID_KINDS = ("rename", "deprecation", "feature")
 # "legacy" = docs call it legacy/unsupported but no formal deprecation date exists.
 VALID_STATUSES = ("deprecated", "retired", "legacy")
 VALID_FEATURE_STATUSES = ("ga", "preview")
+# A rename card is either the name in use now ("current") or a superseded one ("renamed").
+VALID_RENAME_STATES = ("current", "renamed")
+# Classified reference links: official docs, community (blogs/forums), or wider internet.
+VALID_LINK_KINDS = ("official", "community", "internet")
 
 # The category set the UI's chips are built from. A new category is allowed —
 # add it here deliberately rather than by typo.
@@ -136,10 +140,13 @@ def main():
             err(eid, f"category must be one of {VALID_CATEGORIES}, got {cat!r}")
 
         # date formats (YYYY / YYYY-MM change dates; YYYY-MM-DD verified)
-        for date_field in ("renamedAt", "deprecatedAt", "removedAt", "introducedAt"):
+        for date_field in ("from", "to", "deprecatedAt", "removedAt", "introducedAt"):
             v = entry.get(date_field)
             if v and not DATE_RE.match(str(v)):
                 err(eid, f"{date_field} must be YYYY or YYYY-MM, got {v!r}")
+        f, t = entry.get("from"), entry.get("to")
+        if f and t and DATE_RE.match(str(f)) and DATE_RE.match(str(t)) and date_before(t, f):
+            err(eid, f"to ({t}) is before from ({f})")
         verified = entry.get("verified")
         if verified:
             if not VERIFIED_RE.match(str(verified)):
@@ -169,45 +176,26 @@ def main():
             status = entry.get("status")
             if status and status not in VALID_FEATURE_STATUSES:
                 err(eid, f"feature status must be one of {VALID_FEATURE_STATUSES}, got {status!r}")
-            for stray in ("lineage", "current", "renamedAt", "deprecatedAt", "removedAt", "replacement"):
+            for stray in ("lineage", "current", "renamedAt", "replacement"):
                 if stray in entry:
                     warn(eid, f"feature has non-feature field {stray!r}; it will be ignored")
 
-        # lineage rules (renames only)
-        lineage = entry.get("lineage")
-        if isinstance(lineage, list) and lineage:
-            for step in lineage:
-                if not isinstance(step, dict) or not step.get("name"):
-                    err(eid, "each lineage step needs a name")
-                    continue
-                for k in ("from", "to"):
-                    v = step.get(k)
-                    if v not in (None,) and v != "" and not DATE_RE.match(str(v)):
-                        err(eid, f"lineage {k} must be YYYY/YYYY-MM or null, got {v!r}")
-                f, t = step.get("from"), step.get("to")
-                if f and t and DATE_RE.match(str(f)) and DATE_RE.match(str(t)) and date_before(t, f):
-                    err(eid, f"lineage step {step.get('name')!r}: to ({t}) is before from ({f})")
-            # steps must be chronological: a step can't start before the previous one ended
-            for prev, nxt in zip(lineage, lineage[1:]):
-                if not (isinstance(prev, dict) and isinstance(nxt, dict)):
-                    continue
-                p_to, n_from = prev.get("to"), nxt.get("from")
-                if p_to and n_from and DATE_RE.match(str(p_to)) and DATE_RE.match(str(n_from)):
-                    if date_before(n_from, p_to):
-                        err(eid, f"lineage out of order: {nxt.get('name')!r} starts ({n_from}) before {prev.get('name')!r} ends ({p_to})")
-
-            last = lineage[-1]
-            if isinstance(last, dict):
-                if last.get("to") is not None:
-                    err(eid, "the last lineage step must have \"to\": null")
-                if last.get("name") != entry.get("current"):
-                    err(eid, f"current ({entry.get('current')!r}) must equal the last lineage name ({last.get('name')!r})")
-            # only the last step may be open-ended
-            for step in lineage[:-1]:
-                if isinstance(step, dict) and step.get("to") is None:
-                    err(eid, f"non-final lineage step {step.get('name')!r} must have a \"to\" date")
-        elif "lineage" in entry:
-            err(eid, "lineage must be a non-empty array")
+        # rename-specific rules: each name in a product's history is its own card
+        if kind == "rename":
+            state = entry.get("state")
+            if state and state not in VALID_RENAME_STATES:
+                err(eid, f"rename state must be one of {VALID_RENAME_STATES}, got {state!r}")
+            # a superseded name points forward; the current name does not and is open-ended
+            if state == "renamed":
+                if not entry.get("successorId"):
+                    err(eid, "a 'renamed' card needs a successorId (what it became)")
+                if entry.get("to") in (None, ""):
+                    err(eid, "a 'renamed' card needs a 'to' date (when it stopped being current)")
+            if state == "current" and entry.get("to") not in (None, ""):
+                err(eid, "a 'current' card must not have a 'to' date")
+            for stray in ("lineage", "current", "renamedAt"):
+                if stray in entry:
+                    warn(eid, f"rename card has legacy field {stray!r}; it is no longer used")
 
         # aliases shape (optional field)
         if "aliases" in entry and not isinstance(entry["aliases"], list):
@@ -216,6 +204,25 @@ def main():
         # fact must be a non-empty string (the required-field check catches absence)
         if "fact" in entry and not (isinstance(entry["fact"], str) and entry["fact"].strip()):
             err(eid, "fact must be a non-empty string")
+
+        # links (optional): extra classified references so claims are checkable.
+        # `source` stays the canonical official link; these are additional.
+        if "links" in entry:
+            links = entry["links"]
+            if not isinstance(links, list):
+                err(eid, "links must be an array")
+            else:
+                for li in links:
+                    if not isinstance(li, dict):
+                        err(eid, "each link must be an object with url and kind")
+                        continue
+                    lurl = li.get("url")
+                    if not (isinstance(lurl, str) and URL_RE.match(lurl)):
+                        err(eid, f"link url must be an http(s) URL: {lurl!r}")
+                    if li.get("kind") not in VALID_LINK_KINDS:
+                        err(eid, f"link kind must be one of {VALID_LINK_KINDS}, got {li.get('kind')!r}")
+                    if "label" in li and not isinstance(li["label"], str):
+                        err(eid, "link label must be a string")
 
         # prediction (optional, clearly-fictional next names — funny alternatives that
         # power the "New" gag, the card's AI guesses, and the quiz's hardest distractors;
@@ -233,9 +240,11 @@ def main():
     for entry in data:
         if not isinstance(entry, dict):
             continue
-        rid = entry.get("replacementId")
-        if rid and rid not in all_ids:
-            err(entry.get("id", "?"), f"replacementId {rid!r} does not match any entry id")
+        sid = entry.get("successorId")
+        if sid and sid not in all_ids:
+            err(entry.get("id", "?"), f"successorId {sid!r} does not match any entry id")
+        if sid == entry.get("id"):
+            err(entry.get("id", "?"), "successorId points at itself")
 
     # NAV coverage: every entry must be reachable from a rail section, and every id
     # the rail references must exist. app.js is the source of the NAV config.

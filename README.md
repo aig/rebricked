@@ -62,7 +62,7 @@ Then open <http://localhost:8777/>.
 ## Contributing
 
 Spotted an error, an out-of-date name, or a change we're missing? Contributions welcome:
-<https://github.com/AIDATAFAB/rebricked>.
+<https://github.com/aidatafab/rebricked>.
 
 **The one rule: real, sourced changes only. Never be confidently wrong.** Every entry needs
 an official source and a `verified` date; if you can't verify a claim against a live doc,

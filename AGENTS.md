@@ -47,36 +47,43 @@ source and current Databricks naming — not just run the schema check.
 
 ## Data shape (`databricks.json`)
 
+**One card per name.** Each name a product ever had is its own card, linked to the next
+by `successorId` — there is no `lineage` array. A rename creates a new card and "freezes"
+the old one. Predecessors are *derived* (any card whose `successorId` points here), so you
+only ever store the forward link.
+
 Each entry is one object with a `kind`. Absent `kind` means `"rename"` (back-compat).
 `id` is kebab-case and unique across the whole file; dates are `YYYY` or `YYYY-MM`;
 `verified` is `YYYY-MM-DD`; `source` and `fact` are required on every entry.
-
-**Rename** (`kind` absent or `"rename"`) — required: `id`, `current`, `category`, `what`,
-`fact`, `lineage`, `renamedAt`, `source`, `verified`. Optional: `aliases`, `occasion`,
-`note`, `prediction`.
-- `current` **must equal** the last `lineage` step (the one with `"to": null`).
-- `fact` is a real-but-fun one-liner about the feature — **funny but accurate**: the fact
-  underneath (what it does, how it works, its rename history, a documented quirk) must be
-  true and sourceable. Only the tone is ours. Unlike `prediction`, it is not fiction;
-  required on every kind. Keep it about the feature — not its pricing.
+- `fact` is a real-but-fun one-liner about **this card's** thing — **funny but accurate**,
+  true and sourceable, and **self-contained** (don't mention the successor/predecessor —
+  those are their own linked cards). Only the tone is ours. Not fiction; required on every kind.
+- `links` (optional, any kind): extra classified references — an **array** of
+  `{ "url", "kind": "official" | "community" | "internet", "label" }`. `source` stays the
+  canonical official link; these are additional and every URL must be real and verified.
+- `successorId` (optional, any kind): id of the card this became / was replaced by.
 - `prediction` is the one deliberately fictional field: an **array** of made-up *next*
-  names (funny but plausible). They power the "New" button gag, the card's "AI guess"
-  reveal, and the quiz's hardest distractors (a product's own fake future names are the
-  most tempting wrong answers). Renames/features only; the UI always labels them invented.
-  Everything else stays sourced and real.
+  names (funny but plausible). Renames/features only; the UI always labels them invented.
+
+**Rename** (`kind` absent or `"rename"`) — required: `id`, `name`, `category`, `what`,
+`fact`, `state`, `source`, `verified`. Optional: `abbr`, `aliases`, `from`, `to`,
+`successorId`, `occasion`, `note`, `prediction`, `links`.
+- `state` is `"current"` (the name in use now — no `to`) or `"renamed"` (a superseded name
+  — needs both a `to` date and a `successorId` pointing at the next name).
+- `from`/`to` are when this name took effect / stopped being current.
 
 **Deprecation** (`kind: "deprecation"`) — required: `id`, `name`, `category`, `what`,
 `fact`, `deprecatedAt`, `status`, `source`, `verified`. Optional: `aliases`, `replacement`,
-`replacementId` (id of the successor's entry), `removedAt`, `occasion`, `note`.
+`successorId` (id of the successor's card), `removedAt`, `occasion`, `note`, `links`.
 - `status` is `"deprecated"` (still around, discouraged), `"retired"` (access ended), or
   `"legacy"` (docs call it legacy/unsupported but no formal deprecation date exists).
-- Omit `replacement` when nothing directly replaces it — the UI shows "retired".
+- Omit `successorId`/`replacement` when nothing directly replaces it — the UI shows "retired".
 
 **Feature** (`kind: "feature"`) — required: `id`, `name`, `category`, `what`, `fact`,
 `introducedAt`, `source`, `verified`. Optional: `aliases`, `status` (`ga`/`preview`,
-defaults `ga`), `occasion`, `note`, `prediction`.
-- No `lineage`/`renamedAt`/`deprecatedAt`/`replacement` — the validator warns and the UI
-  ignores them. Once a feature gets renamed or retired, convert it to that kind.
+defaults `ga`), `occasion`, `note`, `prediction`, `links`.
+- No `from`/`to`/`state` needed. Once a feature gets renamed, add a new card for the new
+  name and set this one's `successorId` to it (and convert as needed).
 
 The content area has a **lifecycle filter** (All / Renamed / Deprecated & removed / New
 features) that narrows whatever's showing by `kind`. It's orthogonal to search, chips, and
