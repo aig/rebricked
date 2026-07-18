@@ -360,5 +360,136 @@
     "note": "Governed, read-only access to external data via Unity Catalog foreign catalogs. Introduced in Public Preview in 2023; the overview doc doesn't restate a single GA date.",
     "source": "https://docs.databricks.com/aws/en/query-federation/",
     "verified": "2026-07-18"
+  },
+  {
+    "id": "odbc-driver",
+    "current": "Databricks ODBC Driver",
+    "aliases": ["Simba Spark ODBC Driver", "Simba ODBC", "Spark ODBC Driver"],
+    "category": "Developer experience",
+    "what": "The ODBC driver for connecting BI tools and applications to Databricks SQL warehouses and clusters.",
+    "lineage": [
+      { "name": "Simba Spark ODBC Driver", "to": "2026-02" },
+      { "name": "Databricks ODBC Driver", "from": "2026-02", "to": null }
+    ],
+    "renamedAt": "2026-02",
+    "occasion": "Renamed February 2026",
+    "note": "Databricks renamed the driver in February 2026. Existing DSNs and code keep working while the legacy Simba-branded driver stays installed; Databricks stopped shipping new Simba versions but supports existing ones for two years. Same driver, new name.",
+    "source": "https://docs.databricks.com/aws/en/integrations/odbc/migration",
+    "verified": "2026-07-18"
+  },
+  {
+    "id": "delta-sharing",
+    "current": "OpenSharing",
+    "aliases": ["Delta Sharing", "Open Sharing"],
+    "category": "Data governance",
+    "what": "Open protocol and Databricks service for securely sharing data and AI assets across organizations and platforms, with or without Databricks.",
+    "lineage": [
+      { "name": "Delta Sharing", "from": "2021", "to": "2026-06" },
+      { "name": "OpenSharing", "from": "2026-06", "to": null }
+    ],
+    "renamedAt": "2026-06",
+    "occasion": "Open-sourcing of OpenSharing, June 2026",
+    "note": "The June 2026 release notes state \"Delta Sharing is now OpenSharing.\" The rename coincided with releasing OpenSharing as an open standard (GitHub, opensharing.io), so it is a rebrand tied to a broader open-source push rather than a cosmetic change. Delta Sharing was first announced in 2021.",
+    "source": "https://docs.databricks.com/aws/en/opensharing/",
+    "verified": "2026-07-18"
+  },
+  {
+    "id": "pipelines-editor",
+    "current": "Lakeflow Pipelines Editor",
+    "aliases": ["multi-file editor", "Lakeflow multi-file editor"],
+    "category": "Data engineering",
+    "what": "The IDE for developing Lakeflow (Spark Declarative) pipelines — code-first, folder-based, with selective execution, data previews, and pipeline graphs on one surface.",
+    "lineage": [
+      { "name": "multi-file editor", "to": "2025-09" },
+      { "name": "Lakeflow Pipelines Editor", "from": "2025-09", "to": null }
+    ],
+    "renamedAt": "2025-09",
+    "note": "The September 2025 release notes introduced it as \"the Lakeflow Pipelines Editor (previously called the multi-file editor)\"; the doc URL still ends in /multi-file-editor. Reached Public Preview September 2025 and GA May 2026.",
+    "source": "https://docs.databricks.com/aws/en/ldp/multi-file-editor",
+    "verified": "2026-07-18"
+  },
+  {
+    "id": "hive-metastore",
+    "kind": "deprecation",
+    "name": "Hive metastore",
+    "aliases": ["Hive Metastore", "HMS", "legacy metastore", "hive_metastore"],
+    "replacement": "Unity Catalog",
+    "category": "Data governance",
+    "what": "The per-workspace metastore that catalogs tables and views within a single workspace, predating Unity Catalog.",
+    "deprecatedAt": "2025",
+    "status": "deprecated",
+    "note": "Docs state \"The per-workspace Hive metastore is a legacy feature\" and recommend migrating tables and workloads to Unity Catalog, which adds cross-workspace access, lineage, auditing, and access control. Databricks has positioned it as legacy since Unity Catalog's GA; the concrete account-level phase-out landed December 2025 (accounts created after December 18, 2025 have no Hive metastore access by default, though admins can still enable it per workspace). Tables remain reachable under the hive_metastore catalog namespace.",
+    "source": "https://docs.databricks.com/aws/en/data-governance/unity-catalog/hive-metastore",
+    "verified": "2026-07-18"
+  },
+  {
+    "id": "lakebase",
+    "kind": "feature",
+    "name": "Lakebase",
+    "aliases": ["Lakebase Postgres", "OLTP Database", "Databricks Postgres"],
+    "category": "Data engineering",
+    "what": "A fully managed, serverless Postgres (OLTP) database integrated into the Databricks platform, for building real-time transactional apps alongside lakehouse data.",
+    "introducedAt": "2026-01",
+    "status": "ga",
+    "occasion": "GA January 22, 2026",
+    "note": "Brings transactional (OLTP) workloads to the lakehouse, with automatic scaling, instant branching, and native Unity Catalog integration. Entered Public Preview in mid-2025; Lakebase Autoscaling and Lakebase Provisioned were unified at GA. The Compute section's \"OLTP Database\" tab was renamed \"Lakebase Postgres\" in August 2025.",
+    "source": "https://docs.databricks.com/aws/en/oltp/",
+    "verified": "2026-07-18"
+  },
+  {
+    "id": "lakeflow-designer",
+    "kind": "feature",
+    "name": "Lakeflow Designer",
+    "aliases": ["Designer", "Visual Data Prep"],
+    "category": "Data engineering",
+    "what": "A visual, no-code, AI-native experience for building ETL pipelines with a drag-and-drop canvas and natural language, backed by production-ready Lakeflow pipeline code.",
+    "introducedAt": "2026-06",
+    "status": "ga",
+    "occasion": "GA June 16, 2026",
+    "note": "Generates governed, production-ready pipeline code from visual \"data preps,\" so prototypes move to production without a rewrite. Entered Public Preview April 2026 and reached GA June 2026.",
+    "source": "https://docs.databricks.com/aws/en/designer/",
+    "verified": "2026-07-18"
+  },
+  {
+    "id": "abac",
+    "kind": "feature",
+    "name": "Attribute-based access control (ABAC)",
+    "aliases": ["ABAC", "attribute-based access control"],
+    "category": "Data governance",
+    "what": "Unity Catalog access-control model that grants or restricts access by evaluating governed tags (attributes) on securables, so one policy on a catalog or schema applies to everything beneath it.",
+    "introducedAt": "2026-04",
+    "status": "ga",
+    "occasion": "GA April 28, 2026",
+    "note": "Supports row filters and column masks that follow governed tags across a catalog or schema instead of per-table grants. Entered Public Preview November 2025 and reached GA April 2026; GRANT policies remain in Beta.",
+    "source": "https://docs.databricks.com/aws/en/data-governance/unity-catalog/abac/",
+    "verified": "2026-07-18"
+  },
+  {
+    "id": "uc-managed-iceberg",
+    "kind": "feature",
+    "name": "Unity Catalog managed Iceberg tables",
+    "aliases": ["managed Iceberg tables", "Iceberg managed tables", "UC Iceberg"],
+    "category": "Data engineering",
+    "what": "Apache Iceberg tables created and fully managed by Unity Catalog, readable and writable by external Iceberg engines through the Unity Catalog Iceberg REST Catalog API.",
+    "introducedAt": "2026-05",
+    "status": "ga",
+    "occasion": "GA May 21, 2026",
+    "note": "Managed Iceberg tables get Databricks platform features (liquid clustering, predictive optimization, materialized views) while external engines like Spark, Flink, and Trino read/write them via the Iceberg REST Catalog with credential vending. Part of Databricks' Iceberg interoperability push.",
+    "source": "https://docs.databricks.com/aws/en/iceberg/",
+    "verified": "2026-07-18"
+  },
+  {
+    "id": "serverless-workspaces",
+    "kind": "feature",
+    "name": "Serverless workspaces",
+    "aliases": ["serverless workspace"],
+    "category": "Compute / BI",
+    "what": "A workspace preconfigured with serverless compute and default storage — a fully managed SaaS experience with no compute or storage running in your own cloud account.",
+    "introducedAt": "2026-01",
+    "status": "ga",
+    "occasion": "GA January 29, 2026",
+    "note": "Serverless compute and default storage live in the Databricks account, not the customer's cloud account, so cloud credits/discounts don't apply and billing runs through Databricks. Entered Public Preview August 2025 and reached GA January 2026.",
+    "source": "https://docs.databricks.com/aws/en/admin/workspace/serverless-workspaces",
+    "verified": "2026-07-18"
   }
 ]

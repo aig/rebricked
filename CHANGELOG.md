@@ -3,6 +3,40 @@
 All notable changes to **rebricked**, grouped by day.
 Format loosely follows [Keep a Changelog](https://keepachangelog.com/); dates are `YYYY-MM-DD`.
 
+## 2026-07-18 (platform release-notes sweep)
+
+Swept every monthly platform release-notes page from July 2025 through July 2026 and added
+nine verified entries (24 → 33). Each was fact-checked against its live source doc.
+
+### Added
+- Three renames:
+  - **OpenSharing** (formerly **Delta Sharing**) — "Delta Sharing is now OpenSharing" (June 2026),
+    a rebrand tied to open-sourcing the OpenSharing standard.
+  - **Databricks ODBC Driver** (formerly **Simba Spark ODBC Driver**) — renamed February 2026;
+    existing DSNs keep working while the legacy driver is installed.
+  - **Lakeflow Pipelines Editor** (previously the **multi-file editor**) — Public Preview
+    September 2025, GA May 2026; the doc URL still ends in `/multi-file-editor`.
+- One deprecation: **Hive metastore** → Unity Catalog. Positioned as a legacy feature; accounts
+  created after December 18, 2025 have no Hive metastore access by default.
+- Five features: **Lakebase** (managed serverless Postgres/OLTP, GA Jan 2026), **Lakeflow
+  Designer** (no-code visual ETL, GA Jun 2026), **Attribute-based access control (ABAC)** in
+  Unity Catalog (GA Apr 2026), **Unity Catalog managed Iceberg tables** (GA May 2026), and
+  **Serverless workspaces** (GA Jan 2026).
+- Sidebar dots for the new entries: **Workspace** → Serverless workspaces; **Catalog** →
+  OpenSharing + Hive metastore + ABAC + managed Iceberg; **Jobs & Pipelines** → Pipelines
+  Editor; **Compute** → Lakebase; **SQL Warehouses** → ODBC Driver; **Visual Data Prep** →
+  Lakeflow Designer.
+
+### Notes
+- Confirmed the existing **Databricks AI Search** entry against the June 2026 "Vector Search is
+  now AI Search" rename — already correct, no change.
+- Deliberately excluded from the sweep, to hold the catalog's bar: routine model-catalog
+  retirements (e.g. Gemini 2.5 Flash, Claude Sonnet 4), UI-label-only tweaks (SQL section →
+  Lakehouse), and niche schema/log-table deprecations. The "Lakeflow Declarative Pipelines →
+  Lakeflow Spark Declarative Pipelines" (Nov 2025) claim was left out: the live `/ldp/` docs use
+  fluid naming that contradicts a clean rename, and being confidently wrong is the one thing this
+  project won't do.
+
 ## 2026-07-18 (features & lifecycle filter)
 
 ### Added
