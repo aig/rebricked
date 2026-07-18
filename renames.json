@@ -91,5 +91,66 @@
     "note": "The user-facing product is \"AI/BI Dashboards\"; the underlying API still uses the \"Lakeview\" name. Distinct from the older SQL/Redash \"legacy dashboards\".",
     "source": "https://docs.databricks.com/aws/en/dashboards/",
     "verified": "2026-07-18"
+  },
+  {
+    "id": "bundles",
+    "current": "Declarative Automation Bundles",
+    "aliases": ["Databricks Asset Bundles", "DABs", "DAB"],
+    "category": "Developer experience",
+    "what": "Infrastructure-as-code format for defining and deploying Databricks resources (jobs, pipelines, etc.) as a versioned bundle.",
+    "lineage": [
+      { "name": "Databricks Asset Bundles", "from": "2023", "to": "2026" },
+      { "name": "Declarative Automation Bundles", "from": "2026", "to": null }
+    ],
+    "renamedAt": "2026",
+    "note": "Docs read \"Declarative Automation Bundles (formerly known as Databricks Asset Bundles)\"; the DABs acronym was kept. Supersedes the deprecated dbx deployment tool.",
+    "source": "https://docs.databricks.com/aws/en/dev-tools/bundles/",
+    "verified": "2026-07-18"
+  },
+  {
+    "id": "genie-spaces",
+    "current": "Genie Agents",
+    "aliases": ["Genie Spaces", "Genie"],
+    "category": "AI / BI",
+    "what": "Curated, governed conversational agents scoped to a business domain, now able to take autonomous multi-step actions.",
+    "lineage": [
+      { "name": "Genie Spaces", "from": "2024", "to": "2026-07" },
+      { "name": "Genie Agents", "from": "2026-07", "to": null }
+    ],
+    "renamedAt": "2026-07",
+    "note": "Renamed in early July 2026 to reflect the shift from conversational query spaces to autonomous agents. Shows as \"Genie Agents\" in the sidebar.",
+    "source": "https://docs.databricks.com/aws/en/genie-agents/set-up",
+    "verified": "2026-07-18"
+  },
+  {
+    "id": "databricks-one",
+    "current": "Genie One",
+    "aliases": ["Databricks One", "Genie"],
+    "category": "AI / BI",
+    "what": "Business-user-facing UI giving non-technical users a single conversational entry point to data and AI.",
+    "lineage": [
+      { "name": "Databricks One", "from": "2025", "to": "2026" },
+      { "name": "Genie One", "from": "2026", "to": null }
+    ],
+    "renamedAt": "2026",
+    "note": "Genie now includes all capabilities previously known as Databricks One, plus account-level access and native mobile apps.",
+    "source": "https://www.databricks.com/product/genie/one",
+    "verified": "2026-07-18"
+  },
+  {
+    "id": "vector-search",
+    "current": "Databricks AI Search",
+    "aliases": ["Mosaic AI Vector Search", "Databricks Vector Search", "Vector Search"],
+    "category": "AI / ML",
+    "what": "Managed search over Unity Catalog data; now supports full-text and hybrid search without pre-computed embeddings.",
+    "lineage": [
+      { "name": "Databricks Vector Search", "from": "2023", "to": "2024" },
+      { "name": "Mosaic AI Vector Search", "from": "2024", "to": "2026-06" },
+      { "name": "Databricks AI Search", "from": "2026-06", "to": null }
+    ],
+    "renamedAt": "2026-06",
+    "note": "Renamed at GA on 2026-06-25 as the service expanded beyond pure vector search. The \"Mosaic AI\" prefix came from the 2023 MosaicML acquisition branding.",
+    "source": "https://docs.databricks.com/aws/en/vector-search/vector-search",
+    "verified": "2026-07-18"
   }
 ]
