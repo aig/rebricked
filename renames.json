@@ -152,5 +152,69 @@
     "note": "Renamed at GA on 2026-06-25 as the service expanded beyond pure vector search. The \"Mosaic AI\" prefix came from the 2023 MosaicML acquisition branding.",
     "source": "https://docs.databricks.com/aws/en/vector-search/vector-search",
     "verified": "2026-07-18"
+  },
+  {
+    "id": "databricks-sql",
+    "current": "Databricks SQL",
+    "aliases": ["SQL Analytics", "DBSQL", "Databricks SQL Analytics"],
+    "category": "Compute / BI",
+    "what": "The serverless data warehouse for running SQL queries, dashboards, and BI on the lakehouse.",
+    "lineage": [
+      { "name": "SQL Analytics", "from": "2020", "to": "2021-05" },
+      { "name": "Databricks SQL", "abbr": "DBSQL", "from": "2021-05", "to": null }
+    ],
+    "renamedAt": "2021-05",
+    "occasion": "Renamed May 26, 2021; GA December 15, 2021",
+    "note": "The May 26, 2021 release notes state \"SQL Analytics is renamed to Databricks SQL\"; the access entitlement became \"Databricks SQL access\" (formerly \"SQL Analytics access\"). Distinct from the SQL Warehouse compute that powers it.",
+    "source": "https://learn.microsoft.com/en-us/azure/databricks/sql/release-notes/2021",
+    "verified": "2026-07-18"
+  },
+  {
+    "id": "delta-lake",
+    "current": "Delta Lake",
+    "aliases": ["Databricks Delta", "Delta"],
+    "category": "Data engineering",
+    "what": "The open table format that adds ACID transactions, schema enforcement, and time travel to data lakes.",
+    "lineage": [
+      { "name": "Databricks Delta", "from": "2017", "to": "2019-04" },
+      { "name": "Delta Lake", "from": "2019-04", "to": null }
+    ],
+    "renamedAt": "2019-04",
+    "occasion": "Open-sourced at Spark + AI Summit 2019",
+    "note": "The proprietary \"Databricks Delta\" feature was open-sourced as Delta Lake on April 24, 2019 and donated to the Linux Foundation; the \"Databricks Delta\" name fell out of use. Same storage layer, new (and now OSS) name.",
+    "source": "https://www.databricks.com/blog/2019/04/24/open-sourcing-delta-lake.html",
+    "verified": "2026-07-18"
+  },
+  {
+    "id": "supervisor-agent",
+    "current": "Supervisor Agent",
+    "aliases": ["Multi-Agent Supervisor", "Agent Bricks: Multi-Agent Supervisor", "MAS"],
+    "category": "AI / ML",
+    "what": "Agent Bricks capability that orchestrates multiple specialized agents, routing each request to the right one.",
+    "lineage": [
+      { "name": "Agent Bricks: Multi-Agent Supervisor", "abbr": "MAS", "from": "2025", "to": "2026-02" },
+      { "name": "Supervisor Agent", "from": "2026-02", "to": null }
+    ],
+    "renamedAt": "2026-02",
+    "occasion": "Supervisor Agent GA, February 2026",
+    "note": "Docs describe it as \"Supervisor Agent (formerly Multi-Agent Supervisor, MAS)\"; the doc URL still ends in /multi-agent-supervisor. Shortened as the Agent Bricks multi-agent framework reached GA.",
+    "source": "https://docs.databricks.com/aws/en/generative-ai/agent-bricks/multi-agent-supervisor",
+    "verified": "2026-07-18"
+  },
+  {
+    "id": "genie-code",
+    "current": "Genie Code",
+    "aliases": ["Databricks Assistant", "Assistant"],
+    "category": "AI / ML",
+    "what": "AI coding assistant that generates and fixes SQL and Python across notebooks, the SQL editor, and pipelines, grounded in Unity Catalog metadata.",
+    "lineage": [
+      { "name": "Databricks Assistant", "from": "2023", "to": "2026-03" },
+      { "name": "Genie Code", "from": "2026-03", "to": null }
+    ],
+    "renamedAt": "2026-03",
+    "occasion": "Introducing Genie Code, March 2026",
+    "note": "The Databricks Assistant docs now live under \"Get coding help from Genie Code\" at the same /notebooks/code-assistant page. Databricks' launch blog frames Genie Code as the newest member of the Genie family rather than an explicit rename, but the docs continuity and community coverage (\"Databricks Assistant is now Genie Code\") treat it as one.",
+    "source": "https://docs.databricks.com/aws/en/notebooks/code-assistant",
+    "verified": "2026-07-18"
   }
 ]

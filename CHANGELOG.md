@@ -6,6 +6,36 @@ Format loosely follows [Keep a Changelog](https://keepachangelog.com/); dates ar
 ## 2026-07-18
 
 ### Added
+- Four rename entries, each fact-checked against its cited source before adding:
+  - **Databricks SQL** (formerly **SQL Analytics**) — the May 26, 2021 SQL release notes
+    state the rename outright, including the `sql-analytics-access` → `databricks-sql-access`
+    entitlement migration.
+  - **Delta Lake** (formerly **Databricks Delta**) — the proprietary feature was
+    open-sourced under the new name at Spark + AI Summit, April 24, 2019.
+  - **Supervisor Agent** (formerly **Agent Bricks: Multi-Agent Supervisor**) — docs read
+    "Supervisor Agent (formerly Multi-Agent Supervisor, MAS)"; GA February 2026.
+  - **Genie Code** (formerly **Databricks Assistant**) — the Assistant docs now live at the
+    same `/notebooks/code-assistant` page retitled to Genie Code (March 2026). The `note`
+    flags that the launch blog frames this as a new Genie-family member, not an explicit rename.
+- Sidebar dots for the new entries where they belong: **SQL Editor** → Databricks SQL,
+  **AI/ML › Agents** → Supervisor Agent. Delta Lake and Genie Code stay reachable via Home,
+  category chips, and search.
+
+### Notes
+- Triaged a large community/LinkedIn-sourced rename list. Deliberately **excluded**:
+  Lakehouse Platform → Data Intelligence Platform (a 2023 repositioning that added the
+  DatabricksIQ engine, per Databricks' own framing — not a same-thing rename); global init
+  scripts → base environments (a deprecation/replacement); UniForm compatibility modes and
+  MLflow trace storage wording (archival/positioning, not renames). Skipped as already
+  covered: Jobs → Lakeflow Jobs, DLT, Databricks Asset Bundles → DABs, SQL Endpoint → SQL
+  Warehouse, Databricks One → Genie One, Genie → Genie Spaces.
+- Resolved from the prior "pending verification" list: SQL Analytics → Databricks SQL and
+  Databricks Assistant → Genie Code (both now added). Still pending: Feature Store → Feature
+  Engineering in Unity Catalog, OLTP Database → Lakebase Postgres.
+
+## 2026-07-18 (earlier)
+
+### Added
 - Initial project: static site (`index.html`, `app.js`, `styles.css`), `renames.json`
   dataset, `CONTRIBUTING.md`, and `LICENSE`.
 - Schema/format validator [`scripts/validate.py`](scripts/validate.py) — the CI gate that

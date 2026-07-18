@@ -28,7 +28,7 @@
       { label: "Marketplace", icon: "marketplace" },
     ]},
     { label: "SQL", items: [
-      { label: "SQL Editor", icon: "sqlEditor" },
+      { label: "SQL Editor", icon: "sqlEditor", ids: ["databricks-sql"] },
       { label: "Queries", icon: "queries" },
       { label: "Dashboards", icon: "dashboards", ids: ["dashboards"] },
       { label: "Genie Agents", icon: "genie", ids: ["genie-spaces", "databricks-one"] },
@@ -43,7 +43,7 @@
     ]},
     { label: "AI/ML", items: [
       { label: "Playground", icon: "playground" },
-      { label: "Agents", icon: "agents", ids: ["vector-search"] },
+      { label: "Agents", icon: "agents", ids: ["vector-search", "supervisor-agent"] },
       { label: "AI Gateway", icon: "gateway" },
       { label: "Experiments", icon: "experiments" },
       { label: "Features", icon: "features" },
