@@ -131,6 +131,15 @@ body {
   letter-spacing: -.01em;
 }
 
+/* the "Re" of Rebricked as an inverted chip — the whole point (re-named) */
+.brand-re {
+  background: #fff;
+  color: var(--rail);
+  border-radius: 4px;
+  padding: 0 4px;
+  margin-right: 2px;
+}
+
 .brand-edition {
   font-size: 10px;
   color: var(--rail-muted);
@@ -1446,15 +1455,24 @@ body.modal-open {
 }
 
 /* ================= Shareable badge pages (badges/<n>-of-5/) ================= */
-.badge-page {
-  min-height: 100vh;
+/* The badge is shown as a screen inside the app chrome; this stage centers the card
+   within the main content area. */
+.badge-stage {
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 32px 20px;
+  min-height: 74vh;
+  padding: 24px 4px;
   background:
-    radial-gradient(1200px 500px at 50% -10%, color-mix(in srgb, var(--accent) 10%, transparent), transparent),
-    var(--bg);
+    radial-gradient(1100px 460px at 50% -12%, color-mix(in srgb, var(--accent) 9%, transparent), transparent);
+}
+
+/* rail/new/brand are anchors on the badge page — keep them looking like the app */
+.nav-item,
+.side-new,
+.side-brand,
+.quiz-cta {
+  text-decoration: none;
 }
 
 .badge-card {
@@ -1466,14 +1484,34 @@ body.modal-open {
   border: 1px solid var(--line);
   border-top: 4px solid var(--tier);
   border-radius: 18px;
-  padding: 34px 30px 26px;
+  padding: 30px 30px 26px;
   box-shadow: 0 20px 60px rgba(20, 25, 35, .12);
 }
 
-.badge-emoji {
-  font-size: 60px;
+.badge-emblem {
+  display: flex;
+  justify-content: center;
+}
+
+.badge-emblem .emblem {
+  width: 132px;
+  height: 158px;
+  filter: drop-shadow(0 10px 20px rgba(20, 25, 35, .16));
+}
+
+.badge-stars {
+  margin-top: 12px;
+  font-size: 22px;
+  letter-spacing: 5px;
   line-height: 1;
-  filter: drop-shadow(0 4px 10px color-mix(in srgb, var(--tier) 35%, transparent));
+}
+
+.badge-stars .st {
+  color: #D7DBE0;
+}
+
+.badge-stars .st.on {
+  color: var(--tier);
 }
 
 .badge-score {
@@ -1499,23 +1537,6 @@ body.modal-open {
   font-size: 14px;
   line-height: 1.6;
   color: var(--muted);
-}
-
-.badge-meter {
-  height: 8px;
-  margin: 22px 0 6px;
-  border-radius: 999px;
-  background: var(--bg);
-  border: 1px solid var(--line);
-  overflow: hidden;
-}
-
-.badge-meter span {
-  display: block;
-  height: 100%;
-  width: var(--w);
-  border-radius: 999px;
-  background: var(--tier);
 }
 
 .badge-actions {
@@ -1563,10 +1584,11 @@ body.modal-open {
   color: var(--faint);
 }
 
-/* tier accents — cool/quiet at the bottom, gold at the top */
-.badge-tier-0 { --tier: #8A93A0; }
-.badge-tier-1 { --tier: #8A93A0; }
-.badge-tier-2 { --tier: #B07A46; }
-.badge-tier-3 { --tier: var(--accent); }
-.badge-tier-4 { --tier: #9AA0AA; }
-.badge-tier-5 { --tier: #C79A2E; }
+/* one ascending tier ladder — more correct = higher metal.
+   0 Stone · 1 Bronze · 2 Silver · 3 Gold · 4 Platinum · 5 Diamond */
+.badge-tier-0 { --tier: #7C8792; }
+.badge-tier-1 { --tier: #B87333; }
+.badge-tier-2 { --tier: #98A0AC; }
+.badge-tier-3 { --tier: #D6A419; }
+.badge-tier-4 { --tier: #4CB7C9; }
+.badge-tier-5 { --tier: #6E8BF5; }

@@ -39,8 +39,8 @@ source and current Databricks naming — not just run the schema check.
 | [`app.js`](app.js) | Vanilla JS (IIFE, no deps). Fetches `databricks.json`, renders sidebar + result cards, wires search/chips/roulette/theme. |
 | [`styles.css`](styles.css) | All styling. CSS variables; light default, `data-theme="dark"` toggle. Sidebar rail is always dark. Renames use the red accent; deprecations use amber. |
 | [`scripts/validate.py`](scripts/validate.py) | Schema/format gate for `databricks.json`. Branches on `kind`. |
-| [`scripts/build_badges.py`](scripts/build_badges.py) | Regenerates `badges/<n>-of-5/` — one shareable quiz-result page per score. Run after editing badge copy. |
-| [`badges/`](badges/) | Generated. One folder per quiz result (0–5 of 5), each an OG-tagged page the quiz's LinkedIn share links to. Don't hand-edit; run the generator. |
+| [`scripts/build_badges.py`](scripts/build_badges.py) | Regenerates `badges/<n>-of-5/` — one shareable quiz-result page per score, plus its `og.png`. Run after editing badge copy. Rendering `og.png` needs Edge/Chrome installed; the pages themselves are plain static files. |
+| [`badges/`](badges/) | Generated. One folder per quiz result (0–5 of 5): an OG-tagged `index.html` (with an absolute `og:image`) plus a 1200×630 `og.png`. The quiz's LinkedIn share links here. Don't hand-edit; run the generator. |
 | [`CONTRIBUTING.md`](CONTRIBUTING.md) | The entry schema and field rules. |
 | [`.github/workflows/`](.github/workflows/) | GitHub Pages CI: validate, then deploy. |
 
