@@ -3,6 +3,31 @@
 All notable changes to **rebricked**, grouped by day.
 Format loosely follows [Keep a Changelog](https://keepachangelog.com/); dates are `YYYY-MM-DD`.
 
+## 2026-07-18 (fun pass — quiz, timeline, deep links)
+
+A round of playful, no-dependency additions on top of the same data. No schema changes;
+`databricks.json` and the validator are untouched.
+
+### Added
+- **Quiz mode** — an advertised "Take the quiz" call-to-action in the top bar opens an
+  overlay that shows an old name and four current-name choices, tracks score + streak, and
+  links straight to the matching entry. Draws its questions from renames (old → current) and
+  deprecations that name a replacement.
+- **Share on LinkedIn** — once you've answered a question the quiz shows a LinkedIn button
+  that copies a ready-to-paste score brag and opens LinkedIn's share composer for the site.
+- **Deep links / shareable URLs** — `#<entry-id>` opens a single entry on its own; `?q=<term>`
+  reflects the search box. Each card gains a **link** action (copies the deep link) and a
+  **copy card** action (a tidy 🧱 blurb for pasting into Slack/chat).
+- **Year timeline** on Home — a small bar chart of changes per year; click a bar to filter,
+  click again to clear.
+- **"On this month" spotlight** on Home — surfaces a change from the current month (or the
+  most recent one) with a "see it →" jump.
+- **Brick confetti** 🧱 rains down when the roulette lands (respects
+  `prefers-reduced-motion`).
+- **Made-up odds gag** — each rename/feature card carries a deadpan, entirely-fictional
+  "N% chance of another name by <year>" badge (deterministic per entry).
+- **Rotating empty-state lines** so a no-results screen isn't the same joke every time.
+
 ## 2026-07-18 (auth, compute & editor entries)
 
 Follow-up pass adding smaller-but-recognizable entries and refining one existing entry (33 → 42).

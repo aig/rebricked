@@ -11,6 +11,18 @@
   let activeCategory = null;
   let activeSection = null; // {label, ids} when a rail section is selected
   let activeKind = "all";   // "all" | "rename" | "deprecation" | "feature"
+  let activeYear = null;    // "2025" etc. when a timeline bar is selected
+  let focusId = null;       // a single deep-linked entry (#id), overrides everything
+
+  // Rotated on each empty render so the deadpan doesn't get stale.
+  const EMPTY_LINES = [
+    "Either it was never renamed,<br>or it was renamed to something you haven't heard yet.",
+    "Nothing here. Check back after the next summit keynote.",
+    "No matches. It may have been renamed to a synonym of the word you typed.",
+    "Zero results — which, for Databricks, is statistically surprising.",
+    "Couldn't find it. Try the old name. Or the older name. Or the oldest name.",
+  ];
+  let emptyIdx = 0;
 
   // The kind filter (top of results). Orthogonal to section/category/search.
   const FILTERS = [
@@ -105,8 +117,11 @@
     renderCounter();
     renderChips();
     renderFilters();
+    renderTimeline();
+    renderSpotlight();
+    applyRoute();        // honor ?q= / #id from the address bar
     render();
-    searchEl.focus();
+    if (!focusId) searchEl.focus();
   }
 
   // ---- kind filter (All / Renamed / Deprecated & removed / New features) ----
@@ -182,20 +197,26 @@
   // Filter the list to one rail section's renames.
   function setSection(label, ids) {
     activeSection = { label, ids };
+    focusId = null;
+    activeYear = null;
     searchEl.value = "";
     activeCategory = null;
     chipsEl.querySelectorAll(".chip").forEach((c) => c.classList.remove("active"));
+    writeURL();
     render();
     window.scrollTo({ top: 0, behavior: "smooth" });
   }
 
   function goHome() {
     activeSection = null;
+    focusId = null;
+    activeYear = null;
     searchEl.value = "";
     activeCategory = null;
     activeKind = "all";
     chipsEl.querySelectorAll(".chip").forEach((c) => c.classList.remove("active"));
     syncFilterButtons();
+    writeURL();
     render();
     window.scrollTo({ top: 0, behavior: "smooth" });
   }
@@ -209,6 +230,22 @@
 
   // ---- rendering ----
   function render() {
+    // A single deep-linked entry (#id) shows on its own — nothing else competes.
+    if (focusId) {
+      const one = DATA.find((d) => d.id === focusId);
+      updateHomeExtras();
+      if (one) {
+        resultsEl.innerHTML = rowHTML(one, "");
+        wireRows();
+        requestAnimationFrame(() => {
+          const el = resultsEl.querySelector(".row");
+          if (el) el.classList.add("flash");
+        });
+        return;
+      }
+      focusId = null; // unknown id — fall through to the normal list
+    }
+
     const q = searchEl.value.trim().toLowerCase();
     let rows = DATA.slice();
 
@@ -230,22 +267,57 @@
       rows = rows.filter((d) => kindOf(d) === activeKind);
     }
 
+    // The timeline year filter is likewise orthogonal.
+    if (activeYear) {
+      rows = rows.filter((d) => shortYear(changedAt(d)) === activeYear);
+    }
+
     // Most recently changed first — the freshest confusion on top.
     rows.sort((a, b) => changedAt(b).localeCompare(changedAt(a)));
+
+    updateHomeExtras();
 
     if (rows.length === 0) {
       const kindNote =
         activeKind !== "all"
           ? ` matching <b>${escapeHtml(FILTERS.find((f) => f.key === activeKind).label)}</b>`
           : "";
+      const yearNote = activeYear ? ` in <b>${escapeHtml(activeYear)}</b>` : "";
+      const line = EMPTY_LINES[emptyIdx++ % EMPTY_LINES.length];
       resultsEl.innerHTML = activeSection
-        ? `<div class="empty">Nothing${kindNote} under <b>${escapeHtml(activeSection.label)}</b> — yet.<br>Either it kept its name, or Databricks hasn't gotten to it.</div>`
-        : `<p class="empty">No results${kindNote}. Either it was never renamed,<br>or it was renamed to something you haven't heard yet.</p>`;
+        ? `<div class="empty">Nothing${kindNote}${yearNote} under <b>${escapeHtml(activeSection.label)}</b> — yet.<br>Either it kept its name, or Databricks hasn't gotten to it.</div>`
+        : `<p class="empty">No results${kindNote}${yearNote}. ${line}</p>`;
       return;
     }
 
     resultsEl.innerHTML = rows.map((d) => rowHTML(d, activeSection ? "" : q)).join("");
     wireRows();
+  }
+
+  // The spotlight + timeline belong to the neutral Home view; hide them the
+  // moment any filter, search, section, or deep link is active.
+  function isHome() {
+    return (
+      !focusId &&
+      !activeSection &&
+      !activeCategory &&
+      !activeYear &&
+      activeKind === "all" &&
+      searchEl.value.trim() === ""
+    );
+  }
+
+  function updateHomeExtras() {
+    const home = isHome();
+    const tl = $("#timeline");
+    const sp = $("#spotlight");
+    if (tl) {
+      tl.hidden = !home && !activeYear; // keep it visible while a year is selected
+      tl.querySelectorAll(".tl-bar").forEach((b) =>
+        b.classList.toggle("active", b.dataset.year === activeYear)
+      );
+    }
+    if (sp) sp.hidden = !home;
   }
 
   function rowHTML(d, q) {
@@ -277,6 +349,8 @@
       dateText = `renamed ${escapeHtml(d.renamedAt || "?")}${occasion}`;
     }
 
+    const odds = kind === "deprecation" ? "" : oddsBadge(d);
+
     return `
       <article class="row${rowCls}" data-id="${escapeAttr(d.id)}">
         <div class="row-main"><div class="lineage">${trail}</div></div>
@@ -284,11 +358,31 @@
         <div class="row-meta">
           <span class="cat">${escapeHtml(d.category || "")}</span>
           ${badge}
+          ${odds}
           ${src}
+          <button class="row-act" data-act="link" title="Copy a link to this entry">link</button>
+          <button class="row-act" data-act="card" title="Copy a shareable blurb (paste into Slack)">copy card</button>
           <span class="date">${dateText}</span>
         </div>
         ${note}
       </article>`;
+  }
+
+  // A deadpan, entirely-made-up odds badge. Deterministic per entry (hashed id)
+  // so it doesn't flicker between renders — and clearly labeled as a joke.
+  function oddsBadge(d) {
+    const pct = 20 + (hashStr(d.id) % 61); // 20–80%
+    const yr = new Date().getFullYear() + 1 + (hashStr(d.id + "y") % 2); // next 1–2 yrs
+    return `<span class="odds" title="Not a real forecast. We made this number up.">${pct}% chance of another name by ${yr}</span>`;
+  }
+
+  function hashStr(s) {
+    let h = 2166136261;
+    for (let i = 0; i < s.length; i++) {
+      h ^= s.charCodeAt(i);
+      h = Math.imul(h, 16777619);
+    }
+    return Math.abs(h);
   }
 
   // A feature renders just its current name, clickable to copy a "yes, that's real" line.
@@ -342,6 +436,8 @@
     chipsEl.querySelectorAll(".chip").forEach((chip) => {
       chip.addEventListener("click", () => {
         activeSection = null; // category chips override a rail-section filter
+        focusId = null;
+        activeYear = null;
         setActiveNav(null);
         const cat = chip.dataset.cat;
         activeCategory = activeCategory === cat ? null : cat;
@@ -373,8 +469,25 @@
   function wireStaticControls() {
     searchEl.addEventListener("input", () => {
       activeSection = null; // manual typing clears any rail-section filter
+      focusId = null;
+      activeYear = null;
       setActiveNav(null);
+      writeURL();
       render();
+    });
+
+    // Back/forward and pasted-in-place links.
+    window.addEventListener("hashchange", () => { applyRoute(); render(); });
+
+    // Quiz overlay controls.
+    const quizOpen = $("#quiz-open");
+    if (quizOpen) quizOpen.addEventListener("click", openQuiz);
+    const quizClose = $("#quiz-close");
+    if (quizClose) quizClose.addEventListener("click", closeQuiz);
+    const quizEl = $("#quiz");
+    if (quizEl) quizEl.addEventListener("click", (e) => { if (e.target === quizEl) closeQuiz(); });
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape" && quizEl && !quizEl.hidden) closeQuiz();
     });
 
     $("#roulette").addEventListener("click", roulette);
@@ -405,6 +518,26 @@
   }
 
   function wireRows() {
+    // per-card actions: deep link + shareable blurb
+    resultsEl.querySelectorAll(".row-act").forEach((btn) => {
+      btn.addEventListener("click", () => {
+        const row = btn.closest(".row");
+        const d = DATA.find((x) => x.id === row.dataset.id);
+        if (!d) return;
+        if (btn.dataset.act === "link") {
+          const url = entryURL(d.id);
+          copy(url).then((ok) =>
+            toast(ok ? `Link copied — ${url}` : "Copy failed — select it manually.")
+          );
+        } else {
+          const blurb = cardBlurb(d);
+          copy(blurb).then((ok) =>
+            toast(ok ? "Card copied — paste it into Slack." : "Copy failed — select it manually.")
+          );
+        }
+      });
+    });
+
     // copy-as-you-were-wrong
     resultsEl.querySelectorAll(".current").forEach((el) => {
       el.addEventListener("click", () => {
@@ -430,6 +563,8 @@
     // clear filters so the pick is always visible
     setActiveNav(null);
     activeSection = null;
+    focusId = null;
+    activeYear = null;
     searchEl.value = "";
     activeCategory = null;
     activeKind = "all";
@@ -455,9 +590,381 @@
         const winner = rows[(i - 1) % rows.length];
         winner.classList.add("flash");
         winner.scrollIntoView({ behavior: "smooth", block: "center" });
+        const id = winner.dataset.id;
+        if (id) { focusId = null; try { history.replaceState(null, "", entryURL(id)); } catch (e) {} }
+        brickConfetti();
       }
     };
     spin();
+  }
+
+  // ---- quiz: "guess the current name" ----
+  const QUIZ_LEN = 5; // questions per round
+  const quizState = { score: 0, total: 0, streak: 0, answered: false, asked: [], lastId: null };
+
+  // Entries that pose a fair "what's it called now?" question: renames (old → current)
+  // and deprecations with a named replacement.
+  function quizPool() {
+    return DATA.filter((d) => {
+      const k = kindOf(d);
+      if (k === "rename") return d.lineage && d.lineage.length >= 2 && d.current;
+      if (k === "deprecation") return !!d.replacement;
+      return false;
+    });
+  }
+
+  function quizPrompt(d) {
+    return kindOf(d) === "deprecation" ? d.name : d.lineage[0].name;
+  }
+
+  function shuffle(arr) {
+    const a = arr.slice();
+    for (let i = a.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [a[i], a[j]] = [a[j], a[i]];
+    }
+    return a;
+  }
+
+  function openQuiz() {
+    const el = $("#quiz");
+    if (!el) return;
+    quizState.score = 0;
+    quizState.total = 0;
+    quizState.streak = 0;
+    quizState.asked = [];
+    quizState.lastId = null;
+    el.hidden = false;
+    document.body.classList.add("modal-open");
+    const share = $("#quiz-share");
+    if (share) {
+      share.hidden = true;
+      if (!share.dataset.wired) {
+        share.dataset.wired = "1";
+        share.addEventListener("click", shareQuizLinkedIn);
+      }
+    }
+    nextQuestion();
+  }
+
+  // LinkedIn's share dialog only accepts a URL (it scrapes the page's OG tags — it
+  // no longer honors prefilled text). So we copy a ready-to-paste brag to the
+  // clipboard first, then open the composer for the user to paste into.
+  function shareQuizLinkedIn() {
+    const pct = quizState.total
+      ? Math.round((quizState.score / quizState.total) * 100)
+      : 0;
+    const site = location.origin + location.pathname;
+    const text =
+      `I scored ${quizState.score}/${quizState.total} (${pct}%) on Rebricked — the quiz for ` +
+      `whether you can keep up with everything Databricks has renamed. Think you can beat me? ${site}`;
+    const shareUrl =
+      "https://www.linkedin.com/sharing/share-offsite/?url=" + encodeURIComponent(site);
+    copy(text).then((ok) => {
+      toast(ok ? "Score copied — paste it into your LinkedIn post." : "Opening LinkedIn…");
+      window.open(shareUrl, "_blank", "noopener,noreferrer");
+    });
+  }
+
+  function closeQuiz() {
+    const el = $("#quiz");
+    if (!el) return;
+    el.hidden = true;
+    document.body.classList.remove("modal-open");
+  }
+
+  function updateQuizScore() {
+    const s = $("#quiz-score");
+    if (s) s.textContent = `Score ${quizState.score} / ${quizState.total}`;
+    const st = $("#quiz-streak");
+    if (st) st.textContent = quizState.streak >= 2 ? `🔥 ${quizState.streak} in a row` : "";
+    const share = $("#quiz-share");
+    if (share) share.hidden = quizState.total === 0;
+  }
+
+  function nextQuestion() {
+    const body = $("#quiz-body");
+    const pool = quizPool();
+    if (!body || pool.length < 4) {
+      if (body) body.innerHTML = `<p class="quiz-msg">Not enough data to build a quiz yet.</p>`;
+      return;
+    }
+    // A round is exactly QUIZ_LEN questions — after the last answer, show results.
+    if (quizState.total >= QUIZ_LEN) {
+      finishQuiz();
+      return;
+    }
+    quizState.answered = false;
+    updateQuizScore();
+
+    // Cycle through the pool without repeats; once every entry has been asked,
+    // start a fresh pass but never repeat the question we just showed.
+    let candidates = pool.filter((d) => !quizState.asked.includes(d.id));
+    if (candidates.length === 0) {
+      quizState.asked = [];
+      candidates = pool.filter((d) => d.id !== quizState.lastId);
+      if (candidates.length === 0) candidates = pool;
+    }
+    const correct = candidates[Math.floor(Math.random() * candidates.length)];
+    quizState.asked.push(correct.id);
+    quizState.lastId = correct.id;
+    const answer = currentNameOf(correct);
+    const distractors = shuffle(
+      pool.map(currentNameOf).filter((n) => n && n !== answer)
+    );
+    const seen = new Set([answer]);
+    const options = [answer];
+    for (const n of distractors) {
+      if (options.length >= 4) break;
+      if (!seen.has(n)) { seen.add(n); options.push(n); }
+    }
+    const choices = shuffle(options);
+
+    body.innerHTML =
+      `<p class="quiz-progress">Question ${quizState.total + 1} of ${QUIZ_LEN}</p>` +
+      `<p class="quiz-q">What is <b>“${escapeHtml(quizPrompt(correct))}”</b> called now?</p>` +
+      `<div class="quiz-opts">` +
+      choices
+        .map(
+          (c) =>
+            `<button class="quiz-opt" data-name="${escapeAttr(c)}">${escapeHtml(c)}</button>`
+        )
+        .join("") +
+      `</div>` +
+      `<div class="quiz-foot" id="quiz-foot"></div>`;
+
+    body.querySelectorAll(".quiz-opt").forEach((btn) => {
+      btn.addEventListener("click", () => answerQuestion(btn, answer, correct));
+    });
+  }
+
+  function answerQuestion(btn, answer, entry) {
+    if (quizState.answered) return;
+    quizState.answered = true;
+    quizState.total++;
+    const opts = $("#quiz-body").querySelectorAll(".quiz-opt");
+    const chosen = btn.dataset.name;
+    const right = chosen === answer;
+    if (right) { quizState.score++; quizState.streak++; }
+    else { quizState.streak = 0; }
+
+    opts.forEach((o) => {
+      o.disabled = true;
+      if (o.dataset.name === answer) o.classList.add("correct");
+      else if (o === btn) o.classList.add("wrong");
+    });
+    updateQuizScore();
+
+    const foot = $("#quiz-foot");
+    if (foot) {
+      const verdict = right
+        ? `<span class="quiz-ok">Correct.</span>`
+        : `<span class="quiz-no">Nope — it's “${escapeHtml(answer)}”.</span>`;
+      const done = quizState.total >= QUIZ_LEN;
+      foot.innerHTML =
+        `<p class="quiz-expl">${verdict} ${escapeHtml(entry.what || "")}</p>` +
+        `<div class="quiz-actions">` +
+        `<button class="quiz-see" data-id="${escapeAttr(entry.id)}">see the entry ↗</button>` +
+        `<button class="quiz-next">${done ? "See results" : "Next →"}</button>` +
+        `</div>`;
+      const next = foot.querySelector(".quiz-next");
+      if (next) next.addEventListener("click", nextQuestion);
+      const see = foot.querySelector(".quiz-see");
+      if (see) see.addEventListener("click", () => { closeQuiz(); focusEntry(see.dataset.id); });
+    }
+  }
+
+  function finishQuiz() {
+    const body = $("#quiz-body");
+    if (!body) return;
+    const pct = Math.round((quizState.score / QUIZ_LEN) * 100);
+    let verdict;
+    if (pct === 100) verdict = "Flawless. You've been reading the release notes.";
+    else if (pct >= 60) verdict = "Not bad — you mostly kept up with the renaming.";
+    else if (pct >= 20) verdict = "Rough. In fairness, so is keeping track of this.";
+    else verdict = "It's fine. Everything got renamed since you last looked anyway.";
+
+    body.innerHTML =
+      `<div class="quiz-result">` +
+      `<p class="quiz-final">You scored <b>${quizState.score} / ${QUIZ_LEN}</b> <span class="quiz-pct">(${pct}%)</span></p>` +
+      `<p class="quiz-verdict">${escapeHtml(verdict)}</p>` +
+      `<div class="quiz-actions">` +
+      `<button class="quiz-see" id="quiz-again">Play again</button>` +
+      `<button class="quiz-next" id="quiz-done">Done</button>` +
+      `</div>` +
+      `</div>`;
+    const again = $("#quiz-again");
+    if (again) again.addEventListener("click", () => {
+      quizState.score = 0;
+      quizState.total = 0;
+      quizState.streak = 0;
+      quizState.asked = [];
+      quizState.lastId = null;
+      nextQuestion();
+    });
+    const done = $("#quiz-done");
+    if (done) done.addEventListener("click", closeQuiz);
+  }
+
+  // ---- deep links / routing ----
+  // ?q=<search> reflects the search box; #<id> opens one entry on its own.
+  function applyRoute() {
+    const hash = decodeURIComponent((location.hash || "").replace(/^#/, "")).trim();
+    if (hash && DATA.some((d) => d.id === hash)) {
+      focusEntry(hash, { push: false });
+      return;
+    }
+    // No (valid) hash — make sure we're not stuck focused on a stale entry.
+    focusId = null;
+    const params = new URLSearchParams(location.search);
+    const q = (params.get("q") || "").trim();
+    if (q) {
+      searchEl.value = q;
+      activeSection = null;
+      setActiveNav(null);
+    }
+  }
+
+  function focusEntry(id, { push = true } = {}) {
+    focusId = id;
+    activeSection = null;
+    activeCategory = null;
+    activeYear = null;
+    activeKind = "all";
+    searchEl.value = "";
+    setActiveNav(null);
+    chipsEl.querySelectorAll(".chip").forEach((c) => c.classList.remove("active"));
+    syncFilterButtons();
+    if (push) writeURL();
+    render();
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }
+
+  // Reflect current state into the address bar without spamming history.
+  function writeURL() {
+    let url = location.pathname;
+    if (focusId) {
+      url += "#" + encodeURIComponent(focusId);
+    } else {
+      const q = searchEl.value.trim();
+      if (q) url += "?q=" + encodeURIComponent(q);
+    }
+    try { history.replaceState(null, "", url); } catch (e) {}
+  }
+
+  function entryURL(id) {
+    return location.origin + location.pathname + "#" + encodeURIComponent(id);
+  }
+
+  function currentNameOf(d) {
+    const kind = kindOf(d);
+    if (kind === "feature") return d.name;
+    if (kind === "deprecation") return d.replacement || "(retired — no successor)";
+    return d.current;
+  }
+
+  // A tidy multi-line blurb for pasting into Slack / chat.
+  function cardBlurb(d) {
+    const kind = kindOf(d);
+    const link = entryURL(d.id);
+    if (kind === "feature") {
+      return `🧱 "${d.name}" — new in Databricks (${d.introducedAt || "?"}).\n${d.what || ""}\n${link}`;
+    }
+    if (kind === "deprecation") {
+      const successor = d.replacement
+        ? `use "${d.replacement}" now`
+        : "retired, no direct replacement";
+      return `🧱 "${d.name}" is deprecated — ${successor}.\n${d.what || ""}\n${link}`;
+    }
+    const first = d.lineage[0] ? d.lineage[0].name : d.current;
+    return `🧱 It's not called "${first}" anymore — it's "${d.current}" now (renamed ${d.renamedAt || "?"}).\n${d.what || ""}\n${link}`;
+  }
+
+  // ---- year timeline (Home) ----
+  function renderTimeline() {
+    const el = $("#timeline");
+    if (!el) return;
+    const counts = {};
+    DATA.forEach((d) => {
+      const y = shortYear(changedAt(d));
+      if (y) counts[y] = (counts[y] || 0) + 1;
+    });
+    const years = Object.keys(counts).sort();
+    if (years.length === 0) { el.hidden = true; return; }
+    const max = Math.max(...years.map((y) => counts[y]));
+    const bars = years
+      .map((y) => {
+        const n = counts[y];
+        const h = Math.round((n / max) * 100);
+        return `<button class="tl-bar" data-year="${escapeAttr(y)}" style="--h:${h}%" title="${n} change${n === 1 ? "" : "s"} in ${escapeHtml(y)}"><span class="tl-h"></span><span class="tl-n">${n}</span><span class="tl-y">'${escapeHtml(y.slice(2))}</span></button>`;
+      })
+      .join("");
+    el.innerHTML =
+      `<div class="tl-title">The renaming, by year <span class="tl-hint">— click a bar to filter</span></div>` +
+      `<div class="tl-bars">${bars}</div>`;
+    el.querySelectorAll(".tl-bar").forEach((b) => {
+      b.addEventListener("click", () => {
+        const y = b.dataset.year;
+        // toggle off if the same year is clicked again
+        activeYear = activeYear === y ? null : y;
+        focusId = null;
+        activeSection = null;
+        activeCategory = null;
+        searchEl.value = "";
+        setActiveNav(null);
+        chipsEl.querySelectorAll(".chip").forEach((c) => c.classList.remove("active"));
+        writeURL();
+        render();
+      });
+    });
+  }
+
+  // ---- "on this day" spotlight (Home) ----
+  function renderSpotlight() {
+    const el = $("#spotlight");
+    if (!el) return;
+    const now = new Date();
+    const thisMonth = String(now.getMonth() + 1).padStart(2, "0");
+    // Prefer a change whose month matches this month; else the most recent one.
+    const dated = DATA.filter((d) => changedAt(d));
+    let pick =
+      dated.find((d) => (changedAt(d).split("-")[1] || "") === thisMonth) ||
+      dated.slice().sort((a, b) => changedAt(b).localeCompare(changedAt(a)))[0];
+    if (!pick) { el.hidden = true; return; }
+
+    const when = changedAt(pick);
+    const yr = Number(shortYear(when));
+    const yearsAgo = now.getFullYear() - yr;
+    const ago =
+      yearsAgo <= 0 ? "this year" : `${yearsAgo} year${yearsAgo === 1 ? "" : "s"} ago`;
+    const kind = kindOf(pick);
+    const verb =
+      kind === "feature" ? "shipped" : kind === "deprecation" ? "deprecated" : "renamed";
+    el.innerHTML =
+      `<span class="sp-tag">On this month</span>` +
+      `<span class="sp-text"><b>${escapeHtml(currentNameOf(pick))}</b> was ${verb} <b>${ago}</b> (${escapeHtml(when)}). ` +
+      `<button class="sp-link" data-id="${escapeAttr(pick.id)}">see it →</button></span>`;
+    const link = el.querySelector(".sp-link");
+    if (link) link.addEventListener("click", () => focusEntry(link.dataset.id));
+  }
+
+  // ---- brick confetti (roulette landing) ----
+  function brickConfetti() {
+    if (window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    const layer = document.createElement("div");
+    layer.className = "confetti";
+    for (let i = 0; i < 18; i++) {
+      const b = document.createElement("span");
+      b.className = "brick";
+      b.textContent = "🧱";
+      b.style.left = Math.random() * 100 + "vw";
+      b.style.animationDelay = (Math.random() * 0.35).toFixed(2) + "s";
+      b.style.animationDuration = (1.1 + Math.random() * 0.9).toFixed(2) + "s";
+      b.style.fontSize = (14 + Math.random() * 16).toFixed(0) + "px";
+      layer.appendChild(b);
+    }
+    document.body.appendChild(layer);
+    setTimeout(() => layer.remove(), 2400);
   }
 
   // ---- helpers ----
