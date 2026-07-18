@@ -266,7 +266,7 @@ PAGE = """<!DOCTYPE html>
   <title>{title} — REbricked badge ({n}/{total})</title>
   <meta name="description" content="{blurb}" />
   <meta property="og:type" content="website" />
-  <meta property="og:title" content="REbricked: {title} ({n}/{total})" />
+  <meta property="og:title" content="REbricked Certified: {title} ({n}/{total})" />
   <meta property="og:description" content="{blurb}" />
   <meta property="og:url" content="{page_url}" />
   <meta property="og:image" content="{img_url}" />
