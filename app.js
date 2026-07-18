@@ -652,18 +652,32 @@
 
   // Each name in a product's history is its own card; the title is just this card's
   // name. Predecessors/successors are shown as their own linked cards below.
+  // A former name carries its current name too, so clicking it copies a correction
+  // that points forward — not one that mislabels the old name as the current one.
   function renameTrail(d, q) {
     const name = d.name || d.id;
-    const cls = (d.state || "current") === "renamed" ? "current former" : "current";
+    const renamed = (d.state || "current") === "renamed";
+    const current = renamed ? currentNameOf(d) : "";
+    // Only treat it as "former" for copy purposes when we actually know the name
+    // it became; otherwise fall back to the plain current-name correction.
+    const isFormer = renamed && current && current !== name && !current.startsWith("(");
+    const cls = renamed ? "current former" : "current";
     const abbr = d.abbr ? ` (${highlight(d.abbr, q)})` : "";
-    return `<span class="${cls}" data-name="${escapeAttr(name)}" title="click to copy a correction">${highlight(name, q)}${abbr}</span>`;
+    const attrs = isFormer ? ` data-former="1" data-current="${escapeAttr(current)}"` : "";
+    const tip = isFormer ? "click to copy the current name" : "click to copy a correction";
+    return `<span class="${cls}" data-name="${escapeAttr(name)}"${attrs} title="${tip}">${highlight(name, q)}${abbr}</span>`;
   }
 
   // A deprecation's title is just the deprecated name; the successor (if any) is its
-  // own linked card in the Successor section below.
+  // own linked card in the Successor section below. Clicking it copies a correction
+  // that names the replacement rather than presenting the dead name as current.
   function depTrail(d, q) {
     const removedYr = d.removedAt ? `<span class="yr"> ${escapeHtml(shortYear(d.removedAt))}</span>` : "";
-    return `<span class="old dep-name">${highlight(d.name, q)}${removedYr}</span>`;
+    const current = currentNameOf(d);
+    const hasSuccessor = current && !current.startsWith("(");
+    const attrs = ` data-dep="1" data-old="${escapeAttr(d.name)}"` +
+      (hasSuccessor ? ` data-current="${escapeAttr(current)}"` : "");
+    return `<span class="old dep-name" data-name="${escapeAttr(d.name)}"${attrs} title="click to copy a correction">${highlight(d.name, q)}${removedYr}</span>`;
   }
 
   function renderError() {
@@ -972,8 +986,9 @@
       btn.addEventListener("click", () => revealPrediction(btn));
     });
 
-    // copy-as-you-were-wrong
-    resultsEl.querySelectorAll(".current").forEach((el) => {
+    // copy-as-you-were-wrong: clicking any card title copies a snappy correction.
+    // A former/deprecated name copies the name it became — never itself as "current".
+    resultsEl.querySelectorAll(".current, .dep-name").forEach((el) => {
       el.addEventListener("click", () => {
         const name = el.dataset.name;
         let text;
@@ -981,7 +996,11 @@
           const when = el.dataset.when ? ` (since ${el.dataset.when})` : "";
           text = `Yes, "${name}" is a real Databricks feature${when}.`;
         } else if (el.dataset.dep) {
-          text = `Actually, "${el.dataset.old}" is deprecated — use "${name}" now.`;
+          text = el.dataset.current
+            ? `Actually, "${el.dataset.old}" is deprecated — use "${el.dataset.current}" now.`
+            : `Actually, "${el.dataset.old}" is deprecated.`;
+        } else if (el.dataset.former) {
+          text = `Actually, "${name}" is the old name — it's "${el.dataset.current}" now.`;
         } else {
           text = `Actually, it's called "${name}" now.`;
         }

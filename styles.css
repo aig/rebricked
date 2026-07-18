@@ -732,6 +732,7 @@ body {
 
 .dep-name {
   color: color-mix(in srgb, var(--warn) 70%, var(--faint));
+  cursor: pointer;
 }
 
 .retired {
