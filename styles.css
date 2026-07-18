@@ -822,6 +822,25 @@ body {
   padding: 2px 0 2px 12px;
 }
 
+/* deadpan "what it costs" line — real billing facts, our attitude */
+.row-price {
+  margin: 10px 0 0;
+  font-size: 12.5px;
+  font-style: italic;
+  color: var(--muted);
+  display: flex;
+  gap: 7px;
+  align-items: baseline;
+  cursor: help;
+  border-left: 3px solid color-mix(in srgb, var(--accent) 45%, var(--line));
+  padding: 2px 0 2px 12px;
+}
+
+.row-price .price-coin {
+  flex: none;
+  font-style: normal;
+}
+
 mark {
   background: color-mix(in srgb, var(--accent) 18%, transparent);
   color: var(--accent-ink);

@@ -5,6 +5,7 @@
     "aliases": ["Lakeflow Spark Declarative Pipelines", "Lakeflow pipelines", "DLT"],
     "category": "Data engineering",
     "what": "Declarative framework for batch and streaming ETL pipelines.",
+    "price": "Billed in DBUs across three tiers — Core, Pro, and Advanced — where 'Advanced' is mostly the tier that lets you insist your data be correct.",
     "lineage": [
       { "name": "Delta Live Tables", "abbr": "DLT", "from": "2021", "to": "2025-06" },
       { "name": "Lakeflow Declarative Pipelines", "from": "2025-06", "to": null }
@@ -22,6 +23,7 @@
     "aliases": ["Workflows", "Jobs", "Jobs & Pipelines"],
     "category": "Data engineering",
     "what": "Orchestration for multi-task jobs and pipelines.",
+    "price": "Runs on Jobs Compute, billed per DBU — cheaper than All-Purpose Compute, Databricks' polite way of asking you to stop developing on a cluster that costs roughly triple.",
     "lineage": [
       { "name": "Workflows", "from": "2022", "to": "2025" },
       { "name": "Lakeflow Jobs", "from": "2025", "to": null }
@@ -39,6 +41,7 @@
     "aliases": ["SQL Endpoint", "SQL Endpoints", "SQL Warehouses"],
     "category": "Compute / BI",
     "what": "SQL-optimized compute that powers Databricks SQL.",
+    "price": "Comes in Classic, Pro, and Serverless — each priced in DBUs, each somehow the one your finance team didn't budget for. Serverless is the priciest and the one everyone picks.",
     "lineage": [
       { "name": "SQL Endpoint", "from": "2021", "to": "2023" },
       { "name": "SQL Warehouse", "from": "2023", "to": null }
@@ -55,6 +58,7 @@
     "aliases": ["Databricks Repos", "Repos"],
     "category": "Developer experience",
     "what": "In-workspace Git client for version-controlling notebooks and files.",
+    "price": "Free. A rare Databricks feature whose only cost is remembering it's now called 'Git folders' and not 'Repos'.",
     "lineage": [
       { "name": "Databricks Repos", "from": "2021", "to": "2024-03" },
       { "name": "Git folders", "from": "2024-03", "to": null }
@@ -71,6 +75,7 @@
     "aliases": ["Data Explorer", "Catalog"],
     "category": "Data governance",
     "what": "In-workspace UI for browsing and managing Unity Catalog securables — schemas, tables, models, functions, and other assets.",
+    "price": "$0 — Unity Catalog governance is included. It's the compute you spawn from every 'let me just preview this table' that lands on the invoice.",
     "lineage": [
       { "name": "Data Explorer", "from": "2022", "to": "2023-09" },
       { "name": "Catalog Explorer", "from": "2023-09", "to": null }
@@ -87,6 +92,7 @@
     "aliases": ["Lakeview dashboards", "Lakeview", "Dashboards"],
     "category": "BI / Dashboards",
     "what": "AI-assisted dashboards for visualizing and sharing query results.",
+    "price": "The dashboard is free to look at; every refresh quietly wakes a SQL warehouse and bills you in DBUs for the privilege of up-to-date charts.",
     "lineage": [
       { "name": "Lakeview dashboards", "from": "2023", "to": "2024-06" },
       { "name": "AI/BI Dashboards", "from": "2024-06", "to": null }
@@ -104,6 +110,7 @@
     "aliases": ["Databricks Asset Bundles", "DABs", "DAB"],
     "category": "Developer experience",
     "what": "Infrastructure-as-code format for defining and deploying Databricks resources (jobs, pipelines, etc.) as a versioned bundle.",
+    "price": "The bundle format is free; the jobs, pipelines, and clusters you deploy with one line of `databricks bundle deploy` are emphatically not.",
     "lineage": [
       { "name": "Databricks Asset Bundles", "from": "2023", "to": "2026-03" },
       { "name": "Declarative Automation Bundles", "from": "2026-03", "to": null }
@@ -120,6 +127,7 @@
     "aliases": ["Genie Spaces", "Genie"],
     "category": "AI / BI",
     "what": "Curated, governed conversational agents scoped to a business domain, now able to take autonomous multi-step actions.",
+    "price": "Every question burns DBUs against a SQL warehouse plus a foundation model — natural language in, unnatural invoice out.",
     "lineage": [
       { "name": "Genie Spaces", "from": "2024", "to": "2026-07" },
       { "name": "Genie Agents", "from": "2026-07", "to": null }
@@ -136,6 +144,7 @@
     "aliases": ["Databricks One", "Genie"],
     "category": "AI / BI",
     "what": "Business-user-facing UI giving non-technical users a single conversational entry point to data and AI.",
+    "price": "Priced by consumption, like everything else — the 'One' refers to the number of products, not the number of line items on the bill.",
     "lineage": [
       { "name": "Databricks One", "from": "2025", "to": "2026-04" },
       { "name": "Genie", "from": "2026-04", "to": "2026-06" },
@@ -154,6 +163,7 @@
     "aliases": ["Mosaic AI Vector Search", "Databricks Vector Search", "Vector Search"],
     "category": "AI / ML",
     "what": "Managed search over Unity Catalog data; now supports full-text and hybrid search without pre-computed embeddings.",
+    "price": "Billed by the hour for the serving endpoint plus storage — it keeps running, and billing, whether or not anyone actually searches anything.",
     "lineage": [
       { "name": "Databricks Vector Search", "from": "2023", "to": "2024" },
       { "name": "Mosaic AI Vector Search", "from": "2024", "to": "2026-06" },
@@ -171,6 +181,7 @@
     "aliases": ["SQL Analytics", "DBSQL", "Databricks SQL Analytics"],
     "category": "Compute / BI",
     "what": "The serverless data warehouse for running SQL queries, dashboards, and BI on the lakehouse.",
+    "price": "Serverless DBSQL lists around $0.70 per DBU — 'serverless' means you don't manage the server, not that you don't pay for it.",
     "lineage": [
       { "name": "SQL Analytics", "from": "2020", "to": "2021-05" },
       { "name": "Databricks SQL", "abbr": "DBSQL", "from": "2021-05", "to": null }
@@ -188,6 +199,7 @@
     "aliases": ["Databricks Delta", "Delta"],
     "category": "Data engineering",
     "what": "The open table format that adds ACID transactions, schema enforcement, and time travel to data lakes.",
+    "price": "Free and open source — the storage format costs nothing; the Databricks compute that reads, writes, and OPTIMIZEs it more than makes up the difference.",
     "lineage": [
       { "name": "Databricks Delta", "from": "2017", "to": "2019-04" },
       { "name": "Delta Lake", "from": "2019-04", "to": null }
@@ -205,6 +217,7 @@
     "aliases": ["Multi-Agent Supervisor", "Agent Bricks: Multi-Agent Supervisor", "MAS"],
     "category": "AI / ML",
     "what": "Agent Bricks capability that orchestrates multiple specialized agents, routing each request to the right one.",
+    "price": "You pay the supervisor in DBUs and model tokens, and the agents it supervises in DBUs and model tokens — middle management, now billable inside your data warehouse.",
     "lineage": [
       { "name": "Agent Bricks: Multi-Agent Supervisor", "abbr": "MAS", "from": "2025", "to": "2026-02" },
       { "name": "Supervisor Agent", "from": "2026-02", "to": null }
@@ -222,6 +235,7 @@
     "aliases": ["Databricks Assistant", "Assistant"],
     "category": "AI / ML",
     "what": "AI coding assistant that generates and fixes SQL and Python across notebooks, the SQL editor, and pipelines, grounded in Unity Catalog metadata.",
+    "price": "The Assistant was famously 'no additional cost,' and the autocomplete still is — the compute it cheerfully talks you into running is the actual upsell.",
     "lineage": [
       { "name": "Databricks Assistant", "from": "2023", "to": "2026-03" },
       { "name": "Genie Code", "from": "2026-03", "to": null }
@@ -242,6 +256,7 @@
     "replacementId": "bundles",
     "category": "Developer experience",
     "what": "Databricks Labs CLI that templated and deployed jobs via the Jobs API.",
+    "price": "Was free, being a Databricks Labs project. Now costs nothing — unless you count the migration to Bundles it obliges you to do.",
     "deprecatedAt": "2023",
     "status": "deprecated",
     "note": "Databricks recommends Asset Bundles (now Declarative Automation Bundles) instead; the dbx docs are archived and there's an official \"Migrate from dbx to bundles\" guide. Different config format (.dbx/project.json vs databricks.yml) — a replacement, not a rename.",
@@ -257,6 +272,7 @@
     "replacementId": "dashboards",
     "category": "BI / Dashboards",
     "what": "The original Redash-based SQL dashboards in Databricks SQL.",
+    "price": "$0, and worth exactly that as of January 12, 2026 — the day access ended and the price of using them became 'you can't.'",
     "deprecatedAt": "2024",
     "removedAt": "2026-01",
     "status": "retired",
@@ -273,6 +289,7 @@
     "replacement": "Databricks CLI (v0.205+)",
     "category": "Developer experience",
     "what": "The original Python-based command-line interface (versions 0.18 and below).",
+    "price": "Free to install, unsupported to run — the price is paid in Stack Overflow answers that no longer apply to the Go-based rewrite.",
     "deprecatedAt": "2023",
     "status": "legacy",
     "note": "Databricks does not support or do feature work on the legacy CLI and recommends the new Go-based CLI (0.205+); the legacy docs are archived. Officially it has always been Experimental, and Databricks states it \"has not established a date or timeline for deprecating the legacy CLI\" — legacy and unsupported rather than formally deprecated. Same core concept, different implementation — a rewrite, not a straight rename.",
@@ -288,6 +305,7 @@
     "replacementId": "uc-volumes",
     "category": "Data governance",
     "what": "Mounting cloud object storage into the DBFS namespace under /mnt.",
+    "price": "No line item — mounts were free. The real cost is the Unity Catalog governance you skipped, now payable in a single security review.",
     "deprecatedAt": "2024",
     "status": "deprecated",
     "note": "Mounts bypass Unity Catalog governance; Databricks recommends UC volumes, external locations, or workspace files instead, and provisions new workspaces without mount access. Deprecation date is approximate — docs state the guidance without a single cutover date.",
@@ -300,6 +318,7 @@
     "aliases": ["Serverless Real-Time Inference", "Mosaic AI Model Serving", "Model Serving"],
     "category": "AI / ML",
     "what": "Highly available, low-latency service for deploying ML and GenAI models behind autoscaling REST endpoints.",
+    "price": "Billed in DBUs by provisioned throughput. It can scale to zero, which is coincidentally also your budget's preferred setting.",
     "lineage": [
       { "name": "Serverless Real-Time Inference", "from": "2022", "to": "2023-03" },
       { "name": "Model Serving", "from": "2023-03", "to": null }
@@ -319,6 +338,7 @@
     "replacement": "Models in Unity Catalog",
     "category": "AI / ML",
     "what": "The legacy per-workspace MLflow model registry, including model stages (None/Staging/Production/Archived).",
+    "price": "Free, like the MLflow registry it wraps. The migration to Models in Unity Catalog is the part with an actual price tag — paid in engineer-hours.",
     "deprecatedAt": "2024",
     "status": "legacy",
     "note": "Docs mark the page \"(legacy)\" and describe deprecation as a future event; since April 2024 the registry is disabled for workspaces in new accounts whose default catalog is in Unity Catalog, and it remains supported in MLflow 3. Databricks recommends Models in Unity Catalog. Stages are not supported there — the three-level namespace plus aliases (e.g. @champion) replace them; migrate versions with copy_model_version(). A replacement, not a rename: different governance model and API.",
@@ -333,6 +353,7 @@
     "replacement": "Feature Engineering in Unity Catalog",
     "category": "AI / ML",
     "what": "The legacy per-workspace feature store, with its own UI and metadata layer separate from Unity Catalog.",
+    "price": "No charge for the store itself; the compute that materializes features into it is a separate, ongoing conversation with finance.",
     "deprecatedAt": "2024",
     "status": "deprecated",
     "note": "Available only for workspaces created before August 19, 2024 (16:00 UTC). Databricks recommends Feature Engineering in Unity Catalog, which unifies feature tables with Delta tables and UC lineage; the databricks-feature-store package moved to databricks-feature-engineering.",
@@ -346,6 +367,7 @@
     "aliases": ["CLUSTER BY", "liquid", "automatic liquid clustering"],
     "category": "Data engineering",
     "what": "Delta Lake data-layout optimization that supersedes Z-ordering and Hive-style partitioning; clustering keys can evolve without rewriting existing data.",
+    "price": "The feature is free; the OPTIMIZE compute that keeps everything clustered bills in DBUs. Tidy data, untidy invoice — unless Predictive Optimization is running it, in which case that bills too.",
     "introducedAt": "2024",
     "status": "ga",
     "occasion": "GA on Databricks Runtime 15.4 LTS and above",
@@ -361,6 +383,7 @@
     "aliases": ["Volumes", "managed volumes", "external volumes"],
     "category": "Data governance",
     "what": "Unity Catalog objects that govern non-tabular data (files of any format) alongside tables — the recommended replacement for DBFS mounts.",
+    "price": "Governing files is free; the cloud storage under a managed volume and the compute that reads it are billed exactly as usual. Governance is the free part; everything it governs is not.",
     "introducedAt": "2023",
     "status": "ga",
     "note": "Managed volumes use Databricks-managed storage; external volumes govern existing cloud storage. Entered Public Preview July 2023 and reached GA on February 22, 2024. Pairs with the DBFS mounts deprecation.",
@@ -375,6 +398,7 @@
     "aliases": ["Query Federation", "foreign catalogs", "catalog federation"],
     "category": "Data governance",
     "what": "Query external databases (Postgres, MySQL, Snowflake, Redshift, and more) in place through Unity Catalog foreign catalogs, with query pushdown and governance — no data movement.",
+    "price": "No fee to federate; you still pay DBUs to run the query and your cloud provider for every byte that crosses the wire. 'No data movement' has an asterisk shaped like an egress bill.",
     "introducedAt": "2023",
     "status": "ga",
     "note": "Governed, read-only access to external data via Unity Catalog foreign catalogs. Introduced in Public Preview in 2023; the overview doc doesn't restate a single GA date.",
@@ -388,6 +412,7 @@
     "aliases": ["Simba Spark ODBC Driver", "Simba ODBC", "Spark ODBC Driver"],
     "category": "Developer experience",
     "what": "The ODBC driver for connecting BI tools and applications to Databricks SQL warehouses and clusters.",
+    "price": "The driver is a free download; what it connects to — a SQL warehouse — starts billing DBUs the moment your BI tool wakes up to refresh a dashboard nobody's looking at.",
     "lineage": [
       { "name": "Simba Spark ODBC Driver", "to": "2026-02" },
       { "name": "Databricks ODBC Driver", "from": "2026-02", "to": null }
@@ -405,6 +430,7 @@
     "aliases": ["Delta Sharing", "Open Sharing"],
     "category": "Data governance",
     "what": "Open protocol and Databricks service for securely sharing data and AI assets across organizations and platforms, with or without Databricks.",
+    "price": "The protocol is open and free; sharing across clouds still bills someone for egress. Generosity, it turns out, comes with a data-transfer fee.",
     "lineage": [
       { "name": "Delta Sharing", "from": "2021", "to": "2026-06" },
       { "name": "OpenSharing", "from": "2026-06", "to": null }
@@ -422,6 +448,7 @@
     "aliases": ["multi-file editor", "Lakeflow multi-file editor"],
     "category": "Data engineering",
     "what": "The IDE for developing Lakeflow (Spark Declarative) pipelines — code-first, folder-based, with selective execution, data previews, and pipeline graphs on one surface.",
+    "price": "The editor is free; the pipelines you build in it bill through Lakeflow's Core/Pro/Advanced DBU tiers. Every 'preview data' click is a small, billable act of curiosity.",
     "lineage": [
       { "name": "multi-file editor", "to": "2025-09" },
       { "name": "Lakeflow Pipelines Editor", "from": "2025-09", "to": null }
@@ -440,6 +467,7 @@
     "replacement": "Unity Catalog",
     "category": "Data governance",
     "what": "The per-workspace metastore that catalogs tables and views within a single workspace, predating Unity Catalog.",
+    "price": "Free — it's the legacy metastore. The catch is that accounts created after December 18, 2025 can't turn it on at any price.",
     "deprecatedAt": "2025",
     "status": "deprecated",
     "note": "Docs state \"The per-workspace Hive metastore is a legacy feature\" and recommend migrating tables and workloads to Unity Catalog, which adds cross-workspace access, lineage, auditing, and access control. Databricks has positioned it as legacy since Unity Catalog's GA; the concrete account-level phase-out landed December 2025 — accounts created after December 18, 2025 have no Hive metastore access and no setting to restore it, while workspace admins in older accounts can still enable legacy features per workspace. Tables remain reachable under the hive_metastore catalog namespace.",
@@ -453,6 +481,7 @@
     "aliases": ["Lakebase Postgres", "OLTP Database", "Databricks Postgres"],
     "category": "Data engineering",
     "what": "A fully managed, serverless Postgres (OLTP) database integrated into the Databricks platform, for building real-time transactional apps alongside lakehouse data.",
+    "price": "Serverless Postgres billed by capacity and storage — OLTP pricing arrives at the lakehouse, and it brought its own meter. Instant branching is a great feature and a great way to instantly branch your bill.",
     "introducedAt": "2026-01",
     "status": "ga",
     "occasion": "GA January 22, 2026",
@@ -468,6 +497,7 @@
     "aliases": ["Lakehouse//RT", "Lakehouse RT", "Reyden"],
     "category": "Compute / BI",
     "what": "A serverless compute engine for low-latency, high-concurrency analytical queries, delivering sub-second SQL reads directly on Unity Catalog Delta and Iceberg tables.",
+    "price": "Pricing is 'contact your Databricks account team' — the four most expensive words in enterprise software. It's Beta, so the meter is still in beta too.",
     "introducedAt": "2026-06",
     "status": "preview",
     "occasion": "Announced June 16, 2026",
@@ -483,6 +513,7 @@
     "aliases": ["Designer", "Visual Data Prep"],
     "category": "Data engineering",
     "what": "A visual, no-code, AI-native experience for building ETL pipelines with a drag-and-drop canvas and natural language, backed by production-ready Lakeflow pipeline code.",
+    "price": "The no-code canvas is included; the governed pipeline code it generates bills in DBUs exactly like the code you'd have written by hand. No code, same invoice.",
     "introducedAt": "2026-06",
     "status": "ga",
     "occasion": "GA June 16, 2026",
@@ -498,6 +529,7 @@
     "aliases": ["ABAC", "attribute-based access control"],
     "category": "Data governance",
     "what": "Unity Catalog access-control model that grants or restricts access by evaluating governed tags (attributes) on securables, so one policy on a catalog or schema applies to everything beneath it.",
+    "price": "Free with Unity Catalog — access control has no DBU meter. It just decides who gets to run up the one on the compute.",
     "introducedAt": "2026-04",
     "status": "ga",
     "occasion": "GA April 28, 2026",
@@ -513,6 +545,7 @@
     "aliases": ["managed Iceberg tables", "Iceberg managed tables", "UC Iceberg"],
     "category": "Data engineering",
     "what": "Apache Iceberg tables created and fully managed by Unity Catalog, readable and writable by external Iceberg engines through the Unity Catalog Iceberg REST Catalog API.",
+    "price": "No charge for the table format; storage, compute, and the predictive optimization keeping it fast are billed as usual. Open format, familiar meter.",
     "introducedAt": "2026-05",
     "status": "ga",
     "occasion": "GA May 21, 2026",
@@ -528,6 +561,7 @@
     "aliases": ["serverless workspace"],
     "category": "Compute / BI",
     "what": "A workspace preconfigured with serverless compute and default storage — a fully managed SaaS experience with no compute or storage running in your own cloud account.",
+    "price": "Fully serverless — compute and storage bill through Databricks, so your carefully negotiated cloud discounts wave politely from the sidelines and don't apply.",
     "introducedAt": "2026-01",
     "status": "ga",
     "occasion": "GA January 29, 2026",
@@ -542,6 +576,7 @@
     "aliases": ["Shared cluster", "Single user cluster", "shared access mode", "single-user access mode"],
     "category": "Compute / BI",
     "what": "Compute access modes that determine Unity Catalog support, language availability, and whether a cluster is shared.",
+    "price": "The access mode is free to choose; whether you pick Standard or Dedicated, the DBUs the cluster burns are supremely indifferent to what it's called this year.",
     "lineage": [
       { "name": "Shared / Single user access modes", "from": "2022", "to": "2025-03" },
       { "name": "Standard and Dedicated access modes", "from": "2025-03", "to": null }
@@ -562,6 +597,7 @@
     "replacementId": "oauth-token-federation",
     "category": "Developer experience",
     "what": "Long-lived bearer tokens used to authenticate to the Databricks REST API, CLI, and integrations.",
+    "price": "The tokens are free. The security incident from the long-lived one you pasted into a notebook three years ago is priced separately — which is roughly why Databricks now prefers OAuth.",
     "deprecatedAt": "2026",
     "status": "deprecated",
     "note": "The docs page is titled \"Authenticate with Databricks personal access tokens (legacy)\" and states \"Where possible, Databricks recommends using OAuth instead of PATs ... because OAuth provides stronger security.\" PATs can't automate account-level functionality — use OAuth tokens for account admins or service principals instead. Still supported but positioned as legacy; OAuth token federation removes the need to manage and rotate them.",
@@ -575,6 +611,7 @@
     "aliases": ["token federation", "workload identity federation"],
     "category": "Developer experience",
     "what": "Lets external systems authenticate to Databricks using their own identity provider's OIDC/JWT tokens, exchanged for Databricks access — with no stored Databricks secrets.",
+    "price": "Free — federating identity costs nothing and, unlike the PATs it replaces, spares you the recurring cost of a 90-day rotation reminder you'll ignore anyway.",
     "introducedAt": "2025-01",
     "status": "ga",
     "note": "Docs: \"OAuth token federation eliminates the need to manage and rotate Databricks secrets such as personal access tokens and Databricks OAuth client secrets.\" The concrete replacement behind the PAT deprecation; entered Public Preview January 24, 2025 and reached GA August 26, 2025.",
@@ -590,6 +627,7 @@
     "replacement": "New SQL editor",
     "category": "Compute / BI",
     "what": "The original Databricks SQL query editor UI.",
+    "price": "$0, retiring late July 2026 — after which the price of using it is simply that you can't. The queries it ran, of course, always billed in DBUs.",
     "deprecatedAt": "2026",
     "removedAt": "2026-07",
     "status": "deprecated",
@@ -606,6 +644,7 @@
     "replacement": "Databricks SQL alerts (new)",
     "category": "BI / Dashboards",
     "what": "The original Databricks SQL alerts that notified when a scheduled query crossed a threshold.",
+    "price": "The alert is free; each evaluation runs a query on a warehouse and bills the DBUs to tell you what you already feared. Peace of mind, metered by the second.",
     "deprecatedAt": "2025",
     "status": "deprecated",
     "note": "Docs contrast \"legacy alerts\" with the new version, which \"unifies all aspects of creating and managing alerts in a single UI\" (OK/TRIGGERED/ERROR states, no reliance on separately saved queries). The new alerts reached Public Preview in November 2025 and GA in May 2026; the legacy alerts CLI command group is marked deprecated.",
@@ -621,6 +660,7 @@
     "replacementId": "uc-volumes",
     "category": "Developer experience",
     "what": "Cluster initialization shell scripts stored on DBFS, plus the older legacy global and cluster-named init-script mechanisms.",
+    "price": "Free, and retired — init scripts on DBFS now cost you a cluster that flatly refuses to start until you move them somewhere governed.",
     "deprecatedAt": "2023",
     "removedAt": "2023-12",
     "status": "retired",
@@ -637,6 +677,7 @@
     "replacementId": "access-modes",
     "category": "Compute / BI",
     "what": "The legacy compute access mode that shares a cluster across users without process isolation or Unity Catalog governance.",
+    "price": "Cheap per DBU, precisely because it skips the isolation and governance you now have to pay for elsewhere. The discount was always a loan against your next audit.",
     "deprecatedAt": "2025",
     "status": "deprecated",
     "note": "Docs: \"No isolation shared clusters are compute resources that use the legacy access mode No isolation shared.\" Admins can enable an account setting that disables credential sharing on them, and new accounts don't get this mode by default. Databricks recommends the Unity Catalog-governed Standard or Dedicated access modes instead.",
@@ -651,6 +692,7 @@
     "replacement": "Databricks Connect (13.3 LTS+)",
     "category": "Developer experience",
     "what": "The original Databricks Connect client for running local code against a remote cluster, on Databricks Runtime 12.2 LTS and below.",
+    "price": "The client is free; the price of the old one is that it doesn't speak Spark Connect, won't be fixed, and quietly bills DBUs on the remote cluster the whole time it works.",
     "deprecatedAt": "2023",
     "status": "deprecated",
     "note": "Docs: \"Databricks Connect for Databricks Runtime 12.2 LTS and below is deprecated ... Use Databricks Connect for Databricks Runtime 13.3 LTS and above instead.\" The new Databricks Connect is rebuilt on Spark Connect — a different architecture, so a replacement rather than a rename.",
@@ -664,6 +706,7 @@
     "aliases": ["Clean Rooms", "clean room"],
     "category": "Data governance",
     "what": "A secure, privacy-protecting environment where multiple parties collaborate on sensitive data — sharing tables, volumes, and views and running approved notebook code — without direct access to each other's data.",
+    "price": "The room is free; the compute each collaborator runs inside it bills in DBUs. Trust, but bill separately.",
     "introducedAt": "2025-02",
     "status": "ga",
     "occasion": "GA on AWS and Azure, February 2025",

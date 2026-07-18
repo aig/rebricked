@@ -382,6 +382,11 @@
       ? `<a href="${escapeAttr(d.source)}" target="_blank" rel="noopener">source ↗</a>`
       : `<span class="nosrc">no source</span>`;
     const note = d.note ? `<p class="row-note">${escapeHtml(d.note)}</p>` : "";
+    // A deadpan "what it costs" line. The billing facts are real (DBUs, tiers,
+    // serverless premiums, egress); the attitude is ours. Flagged as such on hover.
+    const price = d.price
+      ? `<p class="row-price" title="Tongue-in-cheek pricing — the billing facts are real, the attitude is ours."><span class="price-coin" aria-hidden="true">💸</span> ${escapeHtml(d.price)}</p>`
+      : "";
     const occasion = d.occasion ? ` · ${escapeHtml(d.occasion)}` : "";
 
     let trail, badge = "", dateText, rowCls = "";
@@ -414,6 +419,7 @@
       <article class="row${rowCls}" data-id="${escapeAttr(d.id)}">
         <div class="row-main"><div class="lineage">${trail}</div>${oddsCorner}</div>
         <p class="row-what">${escapeHtml(d.what || "")}</p>
+        ${price}
         <div class="row-meta">
           <span class="cat">${escapeHtml(d.category || "")}</span>
           ${badge}
@@ -1231,17 +1237,18 @@
   function cardBlurb(d) {
     const kind = kindOf(d);
     const link = entryURL(d.id);
+    const priceLine = d.price ? `\n💸 ${d.price}` : "";
     if (kind === "feature") {
-      return `🧱 "${d.name}" — new in Databricks (${d.introducedAt || "?"}).\n${d.what || ""}\n${link}`;
+      return `🧱 "${d.name}" — new in Databricks (${d.introducedAt || "?"}).\n${d.what || ""}${priceLine}\n${link}`;
     }
     if (kind === "deprecation") {
       const successor = d.replacement
         ? `use "${d.replacement}" now`
         : "retired, no direct replacement";
-      return `🧱 "${d.name}" is deprecated — ${successor}.\n${d.what || ""}\n${link}`;
+      return `🧱 "${d.name}" is deprecated — ${successor}.\n${d.what || ""}${priceLine}\n${link}`;
     }
     const first = d.lineage && d.lineage[0] ? d.lineage[0].name : d.current;
-    return `🧱 It's not called "${first}" anymore — it's "${d.current}" now (renamed ${d.renamedAt || "?"}).\n${d.what || ""}\n${link}`;
+    return `🧱 It's not called "${first}" anymore — it's "${d.current}" now (renamed ${d.renamedAt || "?"}).\n${d.what || ""}${priceLine}\n${link}`;
   }
 
   // ---- year timeline (Home) ----
