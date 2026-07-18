@@ -97,6 +97,20 @@ body {
   align-items: center;
   gap: 10px;
   padding: 12px 8px 14px;
+  /* it's a button now — clicking the logo goes Home */
+  width: 100%;
+  border: 0;
+  background: none;
+  color: inherit;
+  font-family: inherit;
+  text-align: left;
+  cursor: pointer;
+  border-radius: 8px;
+  transition: background .12s;
+}
+
+.side-brand:hover {
+  background: var(--rail-hover);
 }
 
 .logo {
@@ -1310,6 +1324,27 @@ body.modal-open {
   color: var(--muted);
   padding: 20px 0;
   text-align: center;
+}
+
+/* ================= "New product" overlay copy ================= */
+.new-copy {
+  margin: 16px 0 0;
+  font-size: 13.5px;
+  color: var(--muted);
+  line-height: 1.6;
+}
+
+.new-suggest {
+  margin: 14px 0;
+  font-size: 16px;
+  line-height: 1.5;
+}
+
+.new-fine {
+  margin: 0 0 16px;
+  font-size: 11px;
+  font-style: italic;
+  color: var(--faint);
 }
 
 @media (prefers-reduced-motion: reduce) {

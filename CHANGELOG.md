@@ -3,6 +3,25 @@
 All notable changes to **rebricked**, grouped by day.
 Format loosely follows [Keep a Changelog](https://keepachangelog.com/); dates are `YYYY-MM-DD`.
 
+## 2026-07-18 (the "New" button gag — name predictions)
+
+### Added
+- **`prediction` field** on every rename and feature entry (29 of them) — a deliberately
+  fictional *next* name for the product ("Genie Two", "Solid Clustering", "Workspaceless
+  servers"…). It's the one made-up field in the schema; the validator allows it only as a
+  non-empty string, warns if a deprecation carries one, and the UI always labels it as
+  invented. Documented in CONTRIBUTING.md and AGENTS.md.
+- **The "New" button now does the honest thing** — instead of creating anything, it opens
+  an overlay explaining that around here products aren't created, they're renamed, and
+  suggests a random product plus its predicted next name ("Suggest another" re-rolls,
+  "see the entry" deep-links). Focus-trapped like the quiz; Escape/scrim close it.
+- **Clickable logo** — the Rebricked brand in the rail is now a button that returns Home
+  (and closes the mobile rail).
+
+### Changed
+- The odds badge now names its made-up future: "N% chance of becoming “<prediction>” by
+  <year>" when the entry has one.
+
 ## 2026-07-18 (validation pass — fact-check fixes, CI gate restored, mobile nav)
 
 Every entry was fact-checked against live official docs (36/42 confirmed as written,

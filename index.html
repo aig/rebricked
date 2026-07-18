@@ -16,7 +16,7 @@
   <div class="app">
     <!-- ===== Sidebar (Databricks-style rail) ===== -->
     <aside class="sidebar" aria-label="Primary">
-      <div class="side-brand">
+      <button class="side-brand" id="side-brand" title="Back to Home">
         <span class="logo" aria-hidden="true">
           <svg viewBox="0 0 32 32" width="26" height="26">
             <g fill="#FF3621">
@@ -30,7 +30,7 @@
           <span class="brand-name">Rebricked</span>
           <span class="brand-edition">latest edition</span>
         </span>
-      </div>
+      </button>
 
       <button class="side-new" id="side-new">
         <svg viewBox="0 0 24 24" width="18" height="18" class="ic">
@@ -158,6 +158,24 @@
         </button>
       </div>
       <div class="quiz-body" id="quiz-body"></div>
+    </div>
+  </div>
+
+  <!-- ===== "New product" overlay (spoiler: it suggests a rename instead) ===== -->
+  <div class="quiz-backdrop" id="new-modal" hidden>
+    <div class="quiz-card" role="dialog" aria-modal="true" aria-labelledby="new-title">
+      <div class="quiz-head">
+        <div>
+          <h2 class="quiz-title" id="new-title">A new product?</h2>
+          <p class="quiz-tag">Bold. Let's explore some alternatives first.</p>
+        </div>
+        <button class="quiz-close" id="new-close" title="Close" aria-label="Close">
+          <svg viewBox="0 0 24 24" width="18" height="18" class="ic">
+            <path d="M6 6l12 12M18 6 6 18" />
+          </svg>
+        </button>
+      </div>
+      <div class="quiz-body" id="new-body"></div>
     </div>
   </div>
 

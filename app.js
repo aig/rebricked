@@ -389,7 +389,10 @@
   function oddsBadge(d) {
     const pct = 20 + (hashStr(d.id) % 61); // 20–80%
     const yr = new Date().getFullYear() + 1 + (hashStr(d.id + "y") % 2); // next 1–2 yrs
-    return `<span class="odds" title="Not a real forecast. We made this number up.">${pct}% chance of another name by ${yr}</span>`;
+    const what = d.prediction
+      ? `of becoming “${escapeHtml(d.prediction)}”`
+      : "of another name";
+    return `<span class="odds" title="Not a real forecast. We made this up.">${pct}% chance ${what} by ${yr}</span>`;
   }
 
   function hashStr(s) {
@@ -527,23 +530,32 @@
     document.addEventListener("keydown", (e) => {
       if (e.key === "Escape" && quizEl && !quizEl.hidden) closeQuiz();
     });
-    // Keep Tab inside the dialog while it's open (it's aria-modal).
-    if (quizEl) quizEl.addEventListener("keydown", (e) => {
-      if (e.key !== "Tab") return;
-      const focusables = Array.from(quizEl.querySelectorAll("button:not(:disabled)"))
-        .filter((b) => !b.hidden && b.offsetParent !== null);
-      if (focusables.length === 0) return;
-      const first = focusables[0];
-      const last = focusables[focusables.length - 1];
-      if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
-      else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+    // Keep Tab inside open dialogs (they're aria-modal).
+    wireModalTrap(quizEl);
+
+    // "New" overlay: no, you may not create a product. Pick one to rename.
+    const newModal = $("#new-modal");
+    wireModalTrap(newModal);
+    const newClose = $("#new-close");
+    if (newClose) newClose.addEventListener("click", closeNewModal);
+    if (newModal) newModal.addEventListener("click", (e) => { if (e.target === newModal) closeNewModal(); });
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape" && newModal && !newModal.hidden) closeNewModal();
     });
 
     const rouletteBtn = $("#roulette");
     if (rouletteBtn) rouletteBtn.addEventListener("click", roulette);
 
+    // The brand logo is the other way home.
+    const brand = $("#side-brand");
+    if (brand) brand.addEventListener("click", () => {
+      setActiveNav(document.querySelector(".nav-item[data-home]"));
+      setSidebarOpen(false);
+      goHome();
+    });
+
     const sideNew = $("#side-new");
-    if (sideNew) sideNew.addEventListener("click", goHome);
+    if (sideNew) sideNew.addEventListener("click", openNewModal);
 
     const themeToggle = $("#theme-toggle");
     if (themeToggle) themeToggle.addEventListener("click", () => {
@@ -579,6 +591,72 @@
         searchEl.focus();
       }
     });
+  }
+
+  // Keep Tab cycling inside a modal while it's open.
+  function wireModalTrap(modalEl) {
+    if (!modalEl) return;
+    modalEl.addEventListener("keydown", (e) => {
+      if (e.key !== "Tab") return;
+      const focusables = Array.from(modalEl.querySelectorAll("button:not(:disabled)"))
+        .filter((b) => !b.hidden && b.offsetParent !== null);
+      if (focusables.length === 0) return;
+      const first = focusables[0];
+      const last = focusables[focusables.length - 1];
+      if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+      else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+    });
+  }
+
+  // ---- "New" gag: nothing here is ever new, it's renamed ----
+  let newReturnFocus = null;
+
+  function predictionPool() {
+    // Living products only — you can't rename what's already retired.
+    return DATA.filter((d) => kindOf(d) !== "deprecation" && d.prediction);
+  }
+
+  function openNewModal() {
+    const el = $("#new-modal");
+    if (!el) return;
+    el.hidden = false;
+    document.body.classList.add("modal-open");
+    newReturnFocus = document.activeElement;
+    const closeBtn = $("#new-close");
+    if (closeBtn) closeBtn.focus();
+    renderNewSuggestion();
+  }
+
+  function closeNewModal() {
+    const el = $("#new-modal");
+    if (!el) return;
+    el.hidden = true;
+    document.body.classList.remove("modal-open");
+    if (newReturnFocus && document.body.contains(newReturnFocus)) newReturnFocus.focus();
+    newReturnFocus = null;
+  }
+
+  function renderNewSuggestion() {
+    const body = $("#new-body");
+    if (!body) return;
+    const pool = predictionPool();
+    if (pool.length === 0) {
+      body.innerHTML = `<p class="quiz-msg">No products left to rename. Someone check on the roadmap.</p>`;
+      return;
+    }
+    const pick = pool[Math.floor(Math.random() * pool.length)];
+    body.innerHTML =
+      `<p class="new-copy">Why would you need a <b>new</b> product? Around here we don't create products — we <b>rename</b> the ones we already have. It's cheaper, it ships faster, and it comes with a keynote slide.</p>` +
+      `<p class="new-suggest">May we suggest: <b>${escapeHtml(currentNameOf(pick))}</b> <span class="arrow">→</span> <b>${escapeHtml(pick.prediction)}</b></p>` +
+      `<p class="new-fine">Not a real roadmap. We made this up — but give it a year.</p>` +
+      `<div class="quiz-actions">` +
+      `<button class="quiz-see" id="new-entry" data-id="${escapeAttr(pick.id)}">see the entry ↗</button>` +
+      `<button class="quiz-next" id="new-again">Suggest another</button>` +
+      `</div>`;
+    const again = $("#new-again");
+    if (again) again.addEventListener("click", renderNewSuggestion);
+    const see = $("#new-entry");
+    if (see) see.addEventListener("click", () => { closeNewModal(); focusEntry(see.dataset.id); });
   }
 
   function wireRows() {

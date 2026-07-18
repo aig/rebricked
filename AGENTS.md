@@ -49,8 +49,12 @@ Each entry is one object with a `kind`. Absent `kind` means `"rename"` (back-com
 `verified` is `YYYY-MM-DD`; `source` is required on every entry.
 
 **Rename** (`kind` absent or `"rename"`) — required: `id`, `current`, `category`, `what`,
-`lineage`, `renamedAt`, `source`, `verified`. Optional: `aliases`, `occasion`, `note`.
+`lineage`, `renamedAt`, `source`, `verified`. Optional: `aliases`, `occasion`, `note`,
+`prediction`.
 - `current` **must equal** the last `lineage` step (the one with `"to": null`).
+- `prediction` is the one deliberately fictional field: a made-up *next* name that powers
+  the "New" button gag and the odds badge. Renames/features only; the UI always labels it
+  as invented. Everything else stays sourced and real.
 
 **Deprecation** (`kind: "deprecation"`) — required: `id`, `name`, `category`, `what`,
 `deprecatedAt`, `status`, `source`, `verified`. Optional: `aliases`, `replacement`,
@@ -61,7 +65,7 @@ Each entry is one object with a `kind`. Absent `kind` means `"rename"` (back-com
 
 **Feature** (`kind: "feature"`) — required: `id`, `name`, `category`, `what`,
 `introducedAt`, `source`, `verified`. Optional: `aliases`, `status` (`ga`/`preview`,
-defaults `ga`), `occasion`, `note`.
+defaults `ga`), `occasion`, `note`, `prediction`.
 - No `lineage`/`renamedAt`/`deprecatedAt`/`replacement` — the validator warns and the UI
   ignores them. Once a feature gets renamed or retired, convert it to that kind.
 

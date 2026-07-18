@@ -92,6 +92,10 @@ Add one object to [`databricks.json`](databricks.json). That's the whole PR.
 - `id` is kebab-case and unique across the whole file (renames and deprecations share it).
 - Dates use `YYYY` or `YYYY-MM`. Precision is optional; honesty about precision is not.
 - If sources disagree on a date, use the official doc's date and say so in `note`.
+- `prediction` (renames and features only, optional) is the one **deliberately fictional**
+  field: a made-up next name for the product. It powers the "New" button gag and the odds
+  badge, and the UI always labels it as invented. Keep it deadpan-plausible; everything
+  else in the entry stays sourced and real.
 
 ### Review bar
 A maintainer checks the source resolves and the date is defensible. Merge = publish.

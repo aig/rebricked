@@ -212,6 +212,15 @@ def main():
         if "aliases" in entry and not isinstance(entry["aliases"], list):
             err(eid, "aliases must be an array")
 
+        # prediction (optional, clearly-fictional next name — powers the "New" gag
+        # and the odds badge; renames/features only, retired things don't get renamed)
+        if "prediction" in entry:
+            pred = entry["prediction"]
+            if not isinstance(pred, str) or not pred.strip():
+                err(eid, "prediction must be a non-empty string when present")
+            if kind == "deprecation":
+                warn(eid, "deprecation has 'prediction'; retired things don't get renamed — it will be ignored")
+
     # cross-entry checks
     all_ids = {e.get("id") for e in data if isinstance(e, dict) and e.get("id")}
     for entry in data:
