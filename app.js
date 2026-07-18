@@ -76,7 +76,7 @@
       { label: "SQL Editor", icon: "sqlEditor", ids: ["databricks-sql", "sql-analytics", "legacy-sql-editor", "new-sql-editor"] },
       { label: "Queries", icon: "queries" },
       { label: "Dashboards", icon: "dashboards", ids: ["dashboards", "lakeview-dashboards", "legacy-dashboards"] },
-      { label: "Genie Agents", icon: "genie", ids: ["genie-spaces", "genie-spaces-former", "databricks-one", "databricks-one-former", "genie", "genie-code", "databricks-assistant"] },
+      { label: "Genie Agents", icon: "genie", ids: ["genie-spaces", "genie-spaces-former", "databricks-one", "databricks-one-former", "genie-code", "databricks-assistant"] },
       { label: "Alerts", icon: "alerts", ids: ["legacy-sql-alerts", "sql-alerts-new"] },
       { label: "Query History", icon: "history" },
       { label: "SQL Warehouses", icon: "warehouse", ids: ["sql-endpoint", "sql-endpoint-former", "odbc-driver", "simba-spark-odbc-driver", "lakehouse-rt"] },
