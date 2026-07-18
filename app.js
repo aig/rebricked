@@ -305,35 +305,40 @@
       return;
     }
 
-    resultsEl.innerHTML = groupedByYear(rows, activeSection ? "" : q);
+    resultsEl.innerHTML = groupedByPeriod(rows, activeSection ? "" : q);
     wireRows();
+  }
+
+  // Group key + label for the chronological dividers: the year of the change.
+  function periodOf(d) {
+    const y = shortYear(changedAt(d));
+    return { key: y || "—", label: y || "undated" };
   }
 
   // The list is already sorted newest-change-first, so walking it top-to-bottom and
   // emitting a divider each time the year flips groups the cards into a chronological
   // path — one dated section per year, newest at the top.
-  function groupedByYear(rows, q) {
+  function groupedByPeriod(rows, q) {
     const counts = {};
     rows.forEach((d) => {
-      const y = shortYear(changedAt(d)) || "—";
-      counts[y] = (counts[y] || 0) + 1;
+      const { key } = periodOf(d);
+      counts[key] = (counts[key] || 0) + 1;
     });
-    let lastYear = null;
+    let last = null;
     return rows
       .map((d) => {
-        const y = shortYear(changedAt(d)) || "—";
+        const { key, label } = periodOf(d);
         let sep = "";
-        if (y !== lastYear) {
-          lastYear = y;
-          sep = yearSepHTML(y, counts[y]);
+        if (key !== last) {
+          last = key;
+          sep = periodSepHTML(label, counts[key]);
         }
         return sep + rowHTML(d, q);
       })
       .join("");
   }
 
-  function yearSepHTML(year, n) {
-    const label = year && year !== "—" ? year : "undated";
+  function periodSepHTML(label, n) {
     const count = `${n} change${n === 1 ? "" : "s"}`;
     return (
       `<div class="year-sep" role="separator" aria-label="Changed in ${escapeAttr(label)} — ${escapeAttr(count)}">` +
@@ -429,28 +434,37 @@
     // The odds live on the card; the AI's guesses only appear when you ask.
     const odds = `<span class="odds" title="Not a real forecast. We made this up.">~${pct}% chance of another rename by ${yr}</span>`;
     const preds = Array.isArray(d.prediction) ? d.prediction.filter(Boolean) : [];
-    // One made-up guess, picked deterministically per entry so it doesn't flicker.
-    const guess = preds.length ? preds[hashStr(d.id + "p") % preds.length] : "";
-    const btn = guess
-      ? `<button class="odds-btn" data-pred="${escapeAttr(guess)}" title="Ask the AI what it gets renamed to next">✨ AI guess</button>`
+    // The button carries the whole made-up shortlist; the first click reveals the
+    // seeded guess and each later click rolls a new one. Seed is deterministic per
+    // entry so the first guess doesn't flicker between renders.
+    const start = preds.length ? hashStr(d.id + "p") % preds.length : 0;
+    const btn = preds.length
+      ? `<button class="odds-btn" data-preds="${escapeAttr(JSON.stringify(preds))}" data-i="${start}" title="Ask the AI what it gets renamed to next">✨ AI guess</button>`
       : "";
     // Button sits to the LEFT of the odds text.
     return btn + odds;
   }
 
-  // The AI-guess button offers its (made-up) single next name: a beat of
-  // "thinking", then the guess replaces the button in place.
+  // The AI-guess button reveals a made-up next name: a beat of "thinking", then the
+  // button's own label becomes ✨ <the guess>, keeping the same styling and position.
+  // Click it again to roll a new one — it cycles through the entry's shortlist.
   function revealPrediction(btn) {
-    if (btn.disabled) return;
-    btn.disabled = true;
+    if (btn.classList.contains("thinking")) return; // ignore clicks mid-"thinking"
+    let preds;
+    try { preds = JSON.parse(btn.dataset.preds || "[]"); } catch (e) { preds = []; }
+    if (!preds.length) return;
+    let i = parseInt(btn.dataset.i, 10) || 0;
+    // First reveal shows the seeded index; every click after that advances to a new one.
+    if (btn.dataset.revealed === "1") i = (i + 1) % preds.length;
+    btn.dataset.i = String(i);
     btn.classList.add("thinking");
     btn.textContent = "✨ thinking…";
     const finish = () => {
-      const span = document.createElement("span");
-      span.className = "odds odds-pred";
-      span.title = "Not a real forecast. We made this up.";
-      span.textContent = `AI guess: ${btn.dataset.pred}`;
-      btn.replaceWith(span);
+      btn.classList.remove("thinking");
+      btn.classList.add("odds-guessed");
+      btn.dataset.revealed = "1";
+      btn.title = "Not a real forecast. We made this up. Click for another.";
+      btn.textContent = `✨ ${preds[i]}`;
     };
     const reduced = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     if (reduced) finish();

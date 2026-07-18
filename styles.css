@@ -626,14 +626,16 @@ body {
   display: flex;
   align-items: flex-start;
   justify-content: space-between;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
   gap: 8px 12px;
 }
 
-/* keep the odds from being squeezed to a sliver next to a long lineage */
+/* The odds corner keeps its natural width and stays pinned top-right; the lineage
+   shrinks/wraps to make room. So revealing the (wider) AI guess reflows the lineage,
+   never bumping the corner down to a new line. */
 .row-main .lineage {
   flex: 1 1 auto;
-  min-width: 60%;
+  min-width: 0;
 }
 
 .lineage {
@@ -1124,6 +1126,12 @@ mark {
 .odds-btn.thinking {
   opacity: .75;
   cursor: default;
+}
+
+/* revealed guess: same pill, still clickable to roll another */
+.odds-btn.odds-guessed {
+  opacity: 1;
+  cursor: pointer;
 }
 
 .row-act {

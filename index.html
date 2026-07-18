@@ -8,6 +8,15 @@
   <meta name="description"
     content="A geeky, deadpan lookup for every Databricks product and feature that's been renamed or deprecated, dressed as the Databricks console." />
   <link rel="stylesheet" href="styles.css" />
+  <!-- Set the theme before first paint: dark by default, unless the visitor chose otherwise. -->
+  <script>
+    (function () {
+      try {
+        var t = localStorage.getItem("rebricked-theme");
+        document.documentElement.dataset.theme = t || "dark";
+      } catch (e) { document.documentElement.dataset.theme = "dark"; }
+    })();
+  </script>
   <link rel="icon"
     href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><g fill='%23FF3621'><path d='M2 11.2 16 4l14 7.2-3.1 1.6L16 7.2 5.1 12.8Z' opacity='.95'/><path d='M2 16 16 8.8 30 16l-3.1 1.6L16 12l-10.9 5.6Z' opacity='.8'/><path d='M2 20.8 16 13.6 30 20.8 16 28 2 20.8Zm3.1.1L16 26.4l10.9-5.5L16 16.8Z' opacity='.65'/></g></svg>" />
 </head>
