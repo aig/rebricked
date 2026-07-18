@@ -1094,6 +1094,7 @@ mark {
 }
 
 .tl-bar {
+  position: relative;
   flex: 1 1 0;
   min-width: 22px;
   display: flex;
@@ -1109,22 +1110,76 @@ mark {
   color: var(--faint);
 }
 
+/* crown that sits above the worst-offender year */
+.tl-cap {
+  position: absolute;
+  top: -9px;
+  left: 0;
+  right: 0;
+  text-align: center;
+  font-size: 15px;
+  line-height: 1;
+  pointer-events: none;
+  filter: drop-shadow(0 1px 1px rgba(0, 0, 0, .35));
+}
+
+.tl-peak .tl-cap {
+  animation: tl-bob 2.6s ease-in-out infinite;
+  transform-origin: bottom center;
+}
+
+/* each bar is a little brick tower: mortar grid over an accent gradient */
 .tl-h {
   width: 100%;
   max-width: 46px;
   height: var(--h);
-  min-height: 4px;
-  border-radius: 5px 5px 0 0;
-  background: color-mix(in srgb, var(--accent) 30%, var(--line));
-  transition: background .15s, transform .15s;
+  min-height: 6px;
+  border-radius: 5px 5px 2px 2px;
+  opacity: .82;
+  background:
+    repeating-linear-gradient(90deg, transparent 0 19px,
+      rgba(0, 0, 0, .22) 19px 21px),
+    repeating-linear-gradient(0deg, transparent 0 9px,
+      rgba(0, 0, 0, .22) 9px 11px),
+    linear-gradient(180deg,
+      color-mix(in srgb, var(--accent) 72%, #fff),
+      var(--accent));
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, .22);
+  transform-origin: bottom center;
+  animation: tl-grow .55s cubic-bezier(.2, .8, .25, 1) backwards;
+  animation-delay: calc(var(--i) * 70ms);
+  transition: opacity .15s, filter .15s, box-shadow .15s;
 }
 
 .tl-bar:hover .tl-h {
-  background: color-mix(in srgb, var(--accent) 55%, var(--line));
+  opacity: .95;
+  filter: brightness(1.08) saturate(1.08);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, .25),
+    0 6px 16px -6px var(--accent);
 }
 
 .tl-bar.active .tl-h {
-  background: var(--accent);
+  opacity: 1;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, .3),
+    0 0 0 2px color-mix(in srgb, var(--accent) 60%, transparent),
+    0 8px 20px -6px var(--accent);
+}
+
+@keyframes tl-grow {
+  from { transform: scaleY(0); }
+  to { transform: scaleY(1); }
+}
+
+@keyframes tl-bob {
+  0%, 100% { transform: translateY(0) rotate(-5deg); }
+  50% { transform: translateY(-3px) rotate(5deg); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tl-h { animation: none; }
+  .tl-peak .tl-cap { animation: none; }
 }
 
 .tl-n {

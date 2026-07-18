@@ -1300,10 +1300,12 @@
     if (years.length === 0) { el.hidden = true; return; }
     const max = Math.max(...years.map((y) => counts[y]));
     const bars = years
-      .map((y) => {
+      .map((y, i) => {
         const n = counts[y];
         const h = Math.round((n / max) * 100);
-        return `<button class="tl-bar" data-year="${escapeAttr(y)}" style="--h:${h}%" title="${n} change${n === 1 ? "" : "s"} in ${escapeHtml(y)}"><span class="tl-h"></span><span class="tl-n">${n}</span><span class="tl-y">'${escapeHtml(y.slice(2))}</span></button>`;
+        const peak = n === max ? " tl-peak" : "";
+        const crown = n === max ? "👑" : "";
+        return `<button class="tl-bar${peak}" data-year="${escapeAttr(y)}" style="--h:${h}%;--i:${i}" title="${n} change${n === 1 ? "" : "s"} in ${escapeHtml(y)}"><span class="tl-cap">${crown}</span><span class="tl-h"></span><span class="tl-n">${n}</span><span class="tl-y">'${escapeHtml(y.slice(2))}</span></button>`;
       })
       .join("");
     el.innerHTML =
