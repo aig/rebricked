@@ -129,12 +129,14 @@
     "category": "AI / BI",
     "what": "Business-user-facing UI giving non-technical users a single conversational entry point to data and AI.",
     "lineage": [
-      { "name": "Databricks One", "from": "2025", "to": "2026" },
-      { "name": "Genie One", "from": "2026", "to": null }
+      { "name": "Databricks One", "from": "2025", "to": "2026-04" },
+      { "name": "Genie", "from": "2026-04", "to": "2026-06" },
+      { "name": "Genie One", "from": "2026-06", "to": null }
     ],
-    "renamedAt": "2026",
-    "note": "Genie now includes all capabilities previously known as Databricks One, plus account-level access and native mobile apps.",
-    "source": "https://www.databricks.com/product/genie/one",
+    "renamedAt": "2026-06",
+    "occasion": "Renamed to Genie (April 2026), then Genie One (June 2026)",
+    "note": "Docs state \"Genie One was previously known as Databricks One.\" Announced as Databricks One at Data + AI Summit (June 2025; Public Preview September 2025), renamed to Genie in April 2026, then to Genie One in June 2026 — the /one URL was kept for compatibility. Genie One folds in all Databricks One capabilities plus account-level access and native mobile apps.",
+    "source": "https://docs.databricks.com/aws/en/genie-one/genie",
     "verified": "2026-07-18"
   },
   {
