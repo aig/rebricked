@@ -19,8 +19,9 @@ Format loosely follows [Keep a Changelog](https://keepachangelog.com/); dates ar
   (and closes the mobile rail).
 
 ### Changed
-- The odds badge now names its made-up future: "N% chance of becoming “<prediction>” by
-  <year>" when the entry has one.
+- The odds badge is now an **"✨ AI prediction" button**: click it, it "thinks" for a beat,
+  then reveals the made-up forecast — "AI thinks there's an N% chance it becomes
+  “<prediction>” by <year>" (respects `prefers-reduced-motion` by skipping the delay).
 
 ## 2026-07-18 (validation pass — fact-check fixes, CI gate restored, mobile nav)
 

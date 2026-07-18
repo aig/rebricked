@@ -389,10 +389,31 @@
   function oddsBadge(d) {
     const pct = 20 + (hashStr(d.id) % 61); // 20–80%
     const yr = new Date().getFullYear() + 1 + (hashStr(d.id + "y") % 2); // next 1–2 yrs
-    const what = d.prediction
-      ? `of becoming “${escapeHtml(d.prediction)}”`
-      : "of another name";
-    return `<span class="odds" title="Not a real forecast. We made this up.">${pct}% chance ${what} by ${yr}</span>`;
+    // A button, not a blurt: the "forecast" only appears once you ask the AI for it.
+    return `<button class="odds-btn" data-pct="${pct}" data-yr="${yr}" data-pred="${escapeAttr(d.prediction || "")}" title="Ask the AI what this gets renamed to next">✨ AI prediction</button>`;
+  }
+
+  // The deadpan payoff for the AI-prediction button: a beat of "thinking", then the
+  // made-up forecast replaces the button in place.
+  function revealPrediction(btn) {
+    if (btn.disabled) return;
+    btn.disabled = true;
+    btn.classList.add("thinking");
+    btn.textContent = "✨ thinking…";
+    const finish = () => {
+      const pct = btn.dataset.pct;
+      const yr = btn.dataset.yr;
+      const pred = btn.dataset.pred;
+      const what = pred ? `it becomes “${escapeHtml(pred)}”` : "it gets another name";
+      const span = document.createElement("span");
+      span.className = "odds";
+      span.title = "Not a real forecast. We made this up.";
+      span.innerHTML = `AI thinks there's an ${pct}% chance ${what} by ${yr}`;
+      btn.replaceWith(span);
+    };
+    const reduced = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (reduced) finish();
+    else setTimeout(finish, 650);
   }
 
   function hashStr(s) {
@@ -678,6 +699,11 @@
           );
         }
       });
+    });
+
+    // the AI-prediction reveal
+    resultsEl.querySelectorAll(".odds-btn").forEach((btn) => {
+      btn.addEventListener("click", () => revealPrediction(btn));
     });
 
     // copy-as-you-were-wrong

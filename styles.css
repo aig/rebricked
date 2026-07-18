@@ -1032,6 +1032,30 @@ mark {
   font-style: italic;
 }
 
+/* the "ask the AI" button that reveals the made-up forecast */
+.odds-btn {
+  font-family: inherit;
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--accent-ink);
+  background: color-mix(in srgb, var(--accent) 7%, transparent);
+  border: 1px dashed color-mix(in srgb, var(--accent) 40%, var(--line));
+  border-radius: 5px;
+  padding: 2px 8px;
+  cursor: pointer;
+  transition: background .12s, border-color .12s;
+}
+
+.odds-btn:hover {
+  background: color-mix(in srgb, var(--accent) 14%, transparent);
+  border-color: var(--accent);
+}
+
+.odds-btn.thinking {
+  opacity: .75;
+  cursor: default;
+}
+
 .row-act {
   border: 0;
   background: none;
