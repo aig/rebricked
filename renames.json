@@ -11,14 +11,14 @@
     ],
     "renamedAt": "2025-06",
     "occasion": "Data + AI Summit 2025",
-    "note": "Existing DLT code still runs; classic SKUs kept the DLT prefix.",
+    "note": "Existing DLT code still runs; classic SKUs kept the DLT prefix. Databricks docs increasingly shorthand this to \"Lakeflow pipelines\"; the open-source engine is \"Spark Declarative Pipelines\".",
     "source": "https://docs.databricks.com/aws/en/ldp/where-is-dlt",
     "verified": "2026-07-18"
   },
   {
     "id": "workflows",
     "current": "Lakeflow Jobs",
-    "aliases": ["Workflows", "Jobs"],
+    "aliases": ["Workflows", "Jobs", "Jobs & Pipelines"],
     "category": "Data engineering",
     "what": "Orchestration for multi-task jobs and pipelines.",
     "lineage": [
@@ -27,7 +27,7 @@
     ],
     "renamedAt": "2025",
     "occasion": "Lakeflow GA, 2025",
-    "note": "Folded into the Lakeflow umbrella alongside Connect and Declarative Pipelines.",
+    "note": "Folded into the Lakeflow umbrella alongside Connect and Declarative Pipelines. The sidebar now groups it with pipelines under \"Jobs & Pipelines\".",
     "source": "https://learn.microsoft.com/en-us/azure/databricks/jobs/",
     "verified": "2026-07-18"
   },
@@ -59,6 +59,37 @@
     "renamedAt": "2023",
     "note": "Git folders support asset types Repos didn't and require a remote repo URL.",
     "source": "https://learn.microsoft.com/en-us/azure/databricks/repos/what-happened-repos",
+    "verified": "2026-07-18"
+  },
+  {
+    "id": "catalog-explorer",
+    "current": "Catalog Explorer",
+    "aliases": ["Data Explorer", "Catalog"],
+    "category": "Data governance",
+    "what": "In-workspace UI for browsing and managing Unity Catalog securables — schemas, tables, models, functions, and other assets.",
+    "lineage": [
+      { "name": "Data Explorer", "from": "2022", "to": "2023-09" },
+      { "name": "Catalog Explorer", "from": "2023-09", "to": null }
+    ],
+    "renamedAt": "2023-09",
+    "note": "Renamed to reflect that it manages all Unity Catalog securables, not just data. Shows as \"Catalog\" in the sidebar.",
+    "source": "https://docs.databricks.com/aws/en/catalog-explorer/",
+    "verified": "2026-07-18"
+  },
+  {
+    "id": "dashboards",
+    "current": "AI/BI Dashboards",
+    "aliases": ["Lakeview dashboards", "Lakeview", "Dashboards"],
+    "category": "BI / Dashboards",
+    "what": "AI-assisted dashboards for visualizing and sharing query results.",
+    "lineage": [
+      { "name": "Lakeview dashboards", "from": "2023", "to": "2024-06" },
+      { "name": "AI/BI Dashboards", "from": "2024-06", "to": null }
+    ],
+    "renamedAt": "2024-06",
+    "occasion": "Data + AI Summit 2024",
+    "note": "The user-facing product is \"AI/BI Dashboards\"; the underlying API still uses the \"Lakeview\" name. Distinct from the older SQL/Redash \"legacy dashboards\".",
+    "source": "https://docs.databricks.com/aws/en/dashboards/",
     "verified": "2026-07-18"
   }
 ]
