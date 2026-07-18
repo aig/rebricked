@@ -43,7 +43,7 @@ BADGES = {
         "One right. You've heard a rumor that things got renamed. You have not yet investigated the rumor."),
     2: ("🐌", "Two Keynotes Behind",
         "You know some names. Regrettably, not the current ones."),
-    3: ("🧱", "Passably Rebricked",
+    3: ("🧱", "Passably REbricked",
         "A coin-flip's worth of keeping up — respectable, given the release cadence."),
     4: ("📜", "Release-Notes Regular",
         "You lurk in the changelog and it shows. One rename got you. It always will."),
@@ -81,7 +81,7 @@ def badge_emblem(tier):
     """A stylized certification crest — a dark hexagon medallion with a ribbon,
     the brick mark, and 'REBRICKED CERTIFIED', ringed/accented in the tier colour."""
     return (
-        '<svg class="emblem" viewBox="0 0 200 240" role="img" aria-label="Rebricked Certified">'
+        '<svg class="emblem" viewBox="0 0 200 240" role="img" aria-label="REbricked Certified">'
         '<defs><linearGradient id="hexg" x1="0" y1="0" x2="0" y2="1">'
         '<stop offset="0" stop-color="#1B2230"/><stop offset="1" stop-color="#0E1116"/>'
         '</linearGradient></defs>'
@@ -109,6 +109,26 @@ def stars_html(n, filled=None):
         else:
             out.append(f'<span style="color:{filled if on else "#D0D5DD"}">&#9733;</span>')
     return "".join(out)
+
+
+def badge_card_html(n, title_e, blurb_e):
+    """The achievement card — one source of truth shared by the badge page and the
+    og.png, so the LinkedIn preview is the exact same card the visitor lands on."""
+    return (
+        f'<div class="badge-card badge-tier-{n}">'
+        f'<div class="badge-emblem">{badge_emblem(TIERS[n])}</div>'
+        f'<div class="badge-stars" role="img" aria-label="{n} out of {TOTAL} stars">{stars_html(n)}</div>'
+        f'<div class="badge-score">{n} / {TOTAL} correct</div>'
+        f'<h1 class="badge-name">{title_e}</h1>'
+        f'<p class="badge-blurb">{blurb_e}</p>'
+        '<div class="badge-actions">'
+        f'<a class="badge-btn" href="../../?quiz={n}-{TOTAL}">Take the quiz &rarr;</a>'
+        '<a class="badge-link" href="../../">Back to REbricked</a>'
+        '</div>'
+        '<p class="badge-fine">A REbricked achievement. Not affiliated with Databricks; '
+        'entirely made up, like the roadmap.</p>'
+        '</div>'
+    )
 
 
 # --- static mirror of the app rail (app.js NAV/ICONS) ---
@@ -244,16 +264,16 @@ PAGE = """<!DOCTYPE html>
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>{title} — Rebricked badge ({n}/{total})</title>
+  <title>{title} — REbricked badge ({n}/{total})</title>
   <meta name="description" content="{blurb}" />
   <meta property="og:type" content="website" />
-  <meta property="og:title" content="Rebricked: {title} ({n}/{total})" />
+  <meta property="og:title" content="REbricked: {title} ({n}/{total})" />
   <meta property="og:description" content="{blurb}" />
   <meta property="og:url" content="{page_url}" />
   <meta property="og:image" content="{img_url}" />
   <meta property="og:image:width" content="1200" />
   <meta property="og:image:height" content="630" />
-  <meta property="og:image:alt" content="Rebricked badge: {title}, {n} of {total} correct" />
+  <meta property="og:image:alt" content="REbricked badge: {title}, {n} of {total} correct" />
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:image" content="{img_url}" />
   <link rel="stylesheet" href="../../styles.css" />
@@ -267,18 +287,7 @@ PAGE = """<!DOCTYPE html>
       {topbar}
       <div class="content">
         <div class="badge-stage">
-          <div class="badge-card badge-tier-{n}">
-            <div class="badge-emblem">{emblem}</div>
-            <div class="badge-stars" role="img" aria-label="{n} out of {total} stars">{stars}</div>
-            <div class="badge-score">{n} / {total} correct</div>
-            <h1 class="badge-name">{title}</h1>
-            <p class="badge-blurb">{blurb}</p>
-            <div class="badge-actions">
-              <a class="badge-btn" href="../../?quiz={n}-{total}">Take the quiz &rarr;</a>
-              <a class="badge-link" href="../../">Back to Rebricked</a>
-            </div>
-            <p class="badge-fine">A Rebricked achievement. Not affiliated with Databricks; entirely made up, like the roadmap.</p>
-          </div>
+          {card}
         </div>
       </div>
     </div>
@@ -290,53 +299,29 @@ PAGE = """<!DOCTYPE html>
 </html>
 """
 
-# Source for the 1200x630 og:image — a clean, chrome-free card. Self-contained inline CSS
-# so it renders identically from a temp path. Tokens swapped with str.replace (CSS braces).
-OG_CARD = """<!DOCTYPE html>
+# Source for the 1200x630 og:image. Rather than a bespoke design, it renders the EXACT
+# same badge card the visitor lands on — same markup (badge_card_html) and the real
+# styles.css — centered on the app background, so the LinkedIn preview matches the page.
+OG_PAGE = """<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8" />
+<link rel="stylesheet" href="{styles}" />
 <style>
-  * { margin: 0; box-sizing: border-box; }
-  html, body { width: 1200px; height: 630px; }
-  body {
-    font-family: "Segoe UI", system-ui, -apple-system, sans-serif;
-    color: #11171C;
+  html, body {{ margin: 0; width: 1200px; height: 630px; overflow: hidden; }}
+  .og-canvas {{
+    width: 1200px; height: 630px;
+    display: flex; align-items: center; justify-content: center;
     background:
-      radial-gradient(900px 420px at 82% -18%, color-mix(in srgb, __TIER__ 22%, transparent), transparent),
-      #F6F7F9;
-    display: flex; flex-direction: column;
-    padding: 52px 72px; position: relative;
-  }
-  .brand { display: flex; align-items: center; gap: 14px; }
-  .brand svg { width: 40px; height: 40px; }
-  .brand .nm { font-weight: 800; font-size: 30px; letter-spacing: -.01em; }
-  .brand .nm .re { background: #11171C; color: #F6F7F9; border-radius: 6px; padding: 0 8px; margin-right: 3px; }
-  .brand .sub { font-weight: 600; font-size: 23px; color: #5A6472; }
-  .main { flex: 1; display: flex; align-items: center; gap: 56px; }
-  .emblem { width: 250px; height: 300px; flex: 0 0 auto; filter: drop-shadow(0 12px 26px rgba(20, 25, 35, .2)); }
-  .col { flex: 1; min-width: 0; }
-  .stars { font-size: 34px; letter-spacing: 7px; line-height: 1; }
-  .score { margin-top: 16px; font-size: 24px; font-weight: 800; letter-spacing: .14em; text-transform: uppercase; color: __TIER__; }
-  .name { margin-top: 4px; font-size: 74px; font-weight: 800; letter-spacing: -.03em; line-height: 1.03; }
-  .blurb { margin-top: 16px; font-size: 30px; line-height: 1.4; color: #5A6472; }
-  .foot { position: absolute; right: 72px; bottom: 34px; font-size: 22px; color: #5A6472; }
-  .bar { position: absolute; left: 0; right: 0; bottom: 0; height: 14px; background: __TIER__; }
+      radial-gradient(1100px 520px at 50% -10%, color-mix(in srgb, var(--accent) 11%, transparent), transparent),
+      var(--bg);
+  }}
+  /* scale the 440px card up to fill the wide canvas, still pixel-identical to the page */
+  .og-canvas .badge-card {{ transform: scale(1.15); }}
 </style>
 </head>
 <body>
-  <div class="brand">__LOGO__<span class="nm"><span class="re">RE</span>bricked</span><span class="sub">· the Databricks rename quiz</span></div>
-  <div class="main">
-    __EMBLEM__
-    <div class="col">
-      <div class="stars">__STARS__</div>
-      <div class="score">__SCORE__ / __TOTAL__ correct</div>
-      <div class="name">__TITLE__</div>
-      <div class="blurb">__BLURB__</div>
-    </div>
-  </div>
-  <div class="foot">rebricked.org</div>
-  <div class="bar"></div>
+  <div class="og-canvas">{card}</div>
 </body>
 </html>
 """
@@ -385,6 +370,7 @@ def main():
         print("WARNING: no Chromium-based browser found — og.png images will NOT be "
               "regenerated. Pages still reference og.png; install Edge/Chrome and re-run.")
 
+    styles_uri = (ROOT / "styles.css").as_uri()
     made_images = 0
     with tempfile.TemporaryDirectory() as tmp:
         for n in range(TOTAL + 1):
@@ -394,27 +380,18 @@ def main():
             folder = OUT / f"{n}-of-{TOTAL}"
             folder.mkdir(parents=True)
             page_url = f"{BASE_URL}/badges/{n}-of-{TOTAL}/"
+            card = badge_card_html(n, title_e, blurb_e)
 
             folder.joinpath("index.html").write_text(PAGE.format(
                 n=n, total=TOTAL, pct=round(n / TOTAL * 100),
-                emblem=badge_emblem(TIERS[n]), stars=stars_html(n),
-                title=title_e, blurb=blurb_e,
+                card=card, title=title_e, blurb=blurb_e,
                 favicon=FAVICON, rail=rail, topbar=TOPBAR, js=INLINE_JS,
                 page_url=page_url, img_url=page_url + "og.png",
             ), encoding="utf-8")
 
             if browser:
-                card = (OG_CARD
-                        .replace("__TIER__", TIERS[n])
-                        .replace("__LOGO__", logo_svg(40))
-                        .replace("__EMBLEM__", badge_emblem(TIERS[n]))
-                        .replace("__STARS__", stars_html(n, TIERS[n]))
-                        .replace("__SCORE__", str(n))
-                        .replace("__TOTAL__", str(TOTAL))
-                        .replace("__TITLE__", title_e)
-                        .replace("__BLURB__", blurb_e))
                 src = Path(tmp) / f"og-{n}.html"
-                src.write_text(card, encoding="utf-8")
+                src.write_text(OG_PAGE.format(styles=styles_uri, card=card), encoding="utf-8")
                 if render_png(browser, src, folder / "og.png", Path(tmp) / f"prof-{n}"):
                     made_images += 1
 

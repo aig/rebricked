@@ -574,6 +574,41 @@ body {
   gap: 12px;
 }
 
+/* year dividers: turn the sorted list into a chronological path */
+.year-sep {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 10px 2px 0;
+  user-select: none;
+}
+
+.year-sep:first-child {
+  margin-top: 0;
+}
+
+.year-num {
+  font-size: 13px;
+  font-weight: 800;
+  letter-spacing: .04em;
+  color: var(--accent);
+  font-variant-numeric: tabular-nums;
+}
+
+.year-rule {
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(to right,
+    color-mix(in srgb, var(--accent) 30%, var(--line)),
+    transparent);
+}
+
+.year-count {
+  font-size: 11px;
+  color: var(--faint);
+  white-space: nowrap;
+}
+
 .row {
   background: var(--panel);
   border: 1px solid var(--line);
@@ -587,12 +622,38 @@ body {
   box-shadow: 0 2px 14px rgba(20, 25, 35, .06);
 }
 
+.row-main {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 8px 12px;
+}
+
+/* keep the odds from being squeezed to a sliver next to a long lineage */
+.row-main .lineage {
+  flex: 1 1 auto;
+  min-width: 60%;
+}
+
 .lineage {
   display: flex;
   align-items: center;
   gap: 8px;
   flex-wrap: wrap;
   font-size: 16px;
+}
+
+/* odds + AI guess, pinned to the card's top-right corner */
+.row-odds {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  flex-wrap: wrap;
+  gap: 8px;
+  flex-shrink: 0;
+  margin-top: 2px;
+  margin-left: auto;
 }
 
 .old {

@@ -305,8 +305,43 @@
       return;
     }
 
-    resultsEl.innerHTML = rows.map((d) => rowHTML(d, activeSection ? "" : q)).join("");
+    resultsEl.innerHTML = groupedByYear(rows, activeSection ? "" : q);
     wireRows();
+  }
+
+  // The list is already sorted newest-change-first, so walking it top-to-bottom and
+  // emitting a divider each time the year flips groups the cards into a chronological
+  // path — one dated section per year, newest at the top.
+  function groupedByYear(rows, q) {
+    const counts = {};
+    rows.forEach((d) => {
+      const y = shortYear(changedAt(d)) || "—";
+      counts[y] = (counts[y] || 0) + 1;
+    });
+    let lastYear = null;
+    return rows
+      .map((d) => {
+        const y = shortYear(changedAt(d)) || "—";
+        let sep = "";
+        if (y !== lastYear) {
+          lastYear = y;
+          sep = yearSepHTML(y, counts[y]);
+        }
+        return sep + rowHTML(d, q);
+      })
+      .join("");
+  }
+
+  function yearSepHTML(year, n) {
+    const label = year && year !== "—" ? year : "undated";
+    const count = `${n} change${n === 1 ? "" : "s"}`;
+    return (
+      `<div class="year-sep" role="separator" aria-label="Changed in ${escapeAttr(label)} — ${escapeAttr(count)}">` +
+      `<span class="year-num">${escapeHtml(label)}</span>` +
+      `<span class="year-rule"></span>` +
+      `<span class="year-count">${escapeHtml(count)}</span>` +
+      `</div>`
+    );
   }
 
   // The spotlight + timeline belong to the neutral Home view; hide them the
@@ -367,14 +402,16 @@
 
     const odds = kind === "deprecation" ? "" : oddsBadge(d);
 
+    // The odds + AI guess ride in the top-right corner of the card, clear of the lineage.
+    const oddsCorner = odds ? `<div class="row-odds">${odds}</div>` : "";
+
     return `
       <article class="row${rowCls}" data-id="${escapeAttr(d.id)}">
-        <div class="row-main"><div class="lineage">${trail}</div></div>
+        <div class="row-main"><div class="lineage">${trail}</div>${oddsCorner}</div>
         <p class="row-what">${escapeHtml(d.what || "")}</p>
         <div class="row-meta">
           <span class="cat">${escapeHtml(d.category || "")}</span>
           ${badge}
-          ${odds}
           ${src}
           <button class="row-act" data-act="link" title="Copy a link to this entry">link</button>
           <button class="row-act" data-act="card" title="Copy a shareable blurb (paste into Slack)">copy card</button>
@@ -391,15 +428,18 @@
     const yr = new Date().getFullYear() + 1 + (hashStr(d.id + "y") % 2); // next 1–2 yrs
     // The odds live on the card; the AI's guesses only appear when you ask.
     const odds = `<span class="odds" title="Not a real forecast. We made this up.">~${pct}% chance of another rename by ${yr}</span>`;
-    const preds = Array.isArray(d.prediction) ? d.prediction : [];
-    const btn = preds.length
-      ? `<button class="odds-btn" data-pred="${escapeAttr(orList(preds))}" title="Ask the AI what it gets renamed to next">✨ AI guess</button>`
+    const preds = Array.isArray(d.prediction) ? d.prediction.filter(Boolean) : [];
+    // One made-up guess, picked deterministically per entry so it doesn't flicker.
+    const guess = preds.length ? preds[hashStr(d.id + "p") % preds.length] : "";
+    const btn = guess
+      ? `<button class="odds-btn" data-pred="${escapeAttr(guess)}" title="Ask the AI what it gets renamed to next">✨ AI guess</button>`
       : "";
-    return odds + btn;
+    // Button sits to the LEFT of the odds text.
+    return btn + odds;
   }
 
-  // The AI-guess button offers its (made-up) shortlist of next names: a beat of
-  // "thinking", then the guesses replace the button in place.
+  // The AI-guess button offers its (made-up) single next name: a beat of
+  // "thinking", then the guess replaces the button in place.
   function revealPrediction(btn) {
     if (btn.disabled) return;
     btn.disabled = true;
@@ -409,7 +449,7 @@
       const span = document.createElement("span");
       span.className = "odds odds-pred";
       span.title = "Not a real forecast. We made this up.";
-      span.textContent = `AI guesses: ${btn.dataset.pred}`;
+      span.textContent = `AI guess: ${btn.dataset.pred}`;
       btn.replaceWith(span);
     };
     const reduced = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -636,14 +676,6 @@
   function predictionPool() {
     // Living products only — you can't rename what's already retired.
     return DATA.filter((d) => kindOf(d) !== "deprecation" && Array.isArray(d.prediction) && d.prediction.length);
-  }
-
-  // "A, B, or C" from a list of names.
-  function orList(arr) {
-    const a = (arr || []).filter(Boolean);
-    if (a.length <= 1) return a[0] || "";
-    if (a.length === 2) return a[0] + " or " + a[1];
-    return a.slice(0, -1).join(", ") + ", or " + a[a.length - 1];
   }
 
   function openNewModal() {
@@ -901,7 +933,7 @@
       : 0;
     const link = quizResultURL();
     const text =
-      `I scored ${quizState.score}/${quizState.total} (${pct}%) on Rebricked — the quiz for ` +
+      `I scored ${quizState.score}/${quizState.total} (${pct}%) on REbricked — the quiz for ` +
       `whether you can keep up with everything Databricks has renamed. Think you can beat me? ${link}`;
     const shareUrl =
       "https://www.linkedin.com/sharing/share-offsite/?url=" + encodeURIComponent(link);
@@ -1040,16 +1072,15 @@
         ? `<span class="quiz-ok">Correct.</span>`
         : `<span class="quiz-no">Nope — it's “${escapeHtml(answer)}”.</span>`;
       const done = quizState.total >= QUIZ_LEN;
+      // The entry opens in a new tab so the quiz stays open behind it.
       foot.innerHTML =
         `<p class="quiz-expl">${verdict} ${escapeHtml(entry.what || "")}</p>` +
         `<div class="quiz-actions">` +
-        `<button class="quiz-see" data-id="${escapeAttr(entry.id)}">see the entry ↗</button>` +
+        `<a class="quiz-see" href="${escapeAttr(entryURL(entry.id))}" target="_blank" rel="noopener">see the entry ↗</a>` +
         `<button class="quiz-next">${done ? "See results" : "Next →"}</button>` +
         `</div>`;
       const next = foot.querySelector(".quiz-next");
       if (next) next.addEventListener("click", nextQuestion);
-      const see = foot.querySelector(".quiz-see");
-      if (see) see.addEventListener("click", () => { closeQuiz(); focusEntry(see.dataset.id); });
     }
   }
 
