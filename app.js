@@ -119,6 +119,7 @@
     renderFilters();
     renderTimeline();
     renderSpotlight();
+    renderChallenge();   // show a "beat this score" banner from a shared ?quiz= link
     applyRoute();        // honor ?q= / #id from the address bar
     render();
     if (!focusId) searchEl.focus();
@@ -650,20 +651,52 @@
   // LinkedIn's share dialog only accepts a URL (it scrapes the page's OG tags — it
   // no longer honors prefilled text). So we copy a ready-to-paste brag to the
   // clipboard first, then open the composer for the user to paste into.
+  // A link that carries the score, so whoever opens it sees a "beat this" banner.
+  function quizResultURL() {
+    return (
+      location.origin +
+      location.pathname +
+      "?quiz=" +
+      quizState.score +
+      "-" +
+      quizState.total
+    );
+  }
+
   function shareQuizLinkedIn() {
     const pct = quizState.total
       ? Math.round((quizState.score / quizState.total) * 100)
       : 0;
-    const site = location.origin + location.pathname;
+    const link = quizResultURL();
     const text =
       `I scored ${quizState.score}/${quizState.total} (${pct}%) on Rebricked — the quiz for ` +
-      `whether you can keep up with everything Databricks has renamed. Think you can beat me? ${site}`;
+      `whether you can keep up with everything Databricks has renamed. Think you can beat me? ${link}`;
     const shareUrl =
-      "https://www.linkedin.com/sharing/share-offsite/?url=" + encodeURIComponent(site);
+      "https://www.linkedin.com/sharing/share-offsite/?url=" + encodeURIComponent(link);
     copy(text).then((ok) => {
       toast(ok ? "Score copied — paste it into your LinkedIn post." : "Opening LinkedIn…");
       window.open(shareUrl, "_blank", "noopener,noreferrer");
     });
+  }
+
+  // If the page was opened from a shared ?quiz=score-total link, show the challenge.
+  function renderChallenge() {
+    const el = $("#challenge");
+    if (!el) return;
+    const raw = new URLSearchParams(location.search).get("quiz");
+    const m = raw && /^(\d+)-(\d+)$/.exec(raw);
+    if (!m) { el.hidden = true; return; }
+    const score = Number(m[1]);
+    const total = Number(m[2]);
+    if (!total || total > 999 || score > total) { el.hidden = true; return; }
+    const pct = Math.round((score / total) * 100);
+    el.innerHTML =
+      `<span class="ch-badge">Challenge</span>` +
+      `<span class="ch-text">Someone scored <b>${score}/${total}</b> (${pct}%) on the quiz — think you can beat them?</span>` +
+      `<button class="ch-btn" id="ch-take">Take the quiz</button>`;
+    el.hidden = false;
+    const btn = $("#ch-take");
+    if (btn) btn.addEventListener("click", openQuiz);
   }
 
   function closeQuiz() {
