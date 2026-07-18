@@ -916,6 +916,17 @@ mark {
   text-decoration: underline;
 }
 
+.gh-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35em;
+}
+
+.gh-icon {
+  flex: none;
+  vertical-align: text-bottom;
+}
+
 /* toast */
 .toast {
   position: fixed;
