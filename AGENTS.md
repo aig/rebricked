@@ -52,9 +52,11 @@ Each entry is one object. Required: `id`, `current`, `category`, `what`, `lineag
    python -m http.server 8777
    ```
    then open `http://localhost:8777/`.
-3. If you changed the sidebar, keep [`app.js`](app.js)'s `NAV` config in sync: items whose
-   rename exists in `renames.json` carry a `q` (and get the red "renamed" dot). Don't add a
-   `q` pointing at something not in the data.
+3. If you changed the sidebar, keep [`app.js`](app.js)'s `NAV` config in sync: each rail
+   item maps to the renames it covers via an `ids` array (entry `id`s from `renames.json`),
+   and those items get the red "renamed" dot. Clicking a section filters to its entries;
+   sections with no `ids` show an honest empty state. Every `id` you list must exist in the
+   data, and every entry should be reachable from at least one section (Home shows all).
 
 ## Conventions
 

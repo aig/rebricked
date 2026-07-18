@@ -9,17 +9,20 @@
 
   let DATA = [];
   let activeCategory = null;
+  let activeSection = null; // {label, ids} when a rail section is selected
 
   // ---- sidebar config: mirrors the Databricks console rail ----
-  // `q` links an item to a rename in the dataset; those get a dot + click-to-search.
+  // Every item is clickable. `ids` lists the renames.json entries that changed under
+  // that section; those items get a dot. Sections with no renames show an empty state.
+  // Home clears the filter and shows everything.
   const NAV = [
     { label: "", items: [
       { label: "Home", icon: "home", home: true },
       { label: "Learn", icon: "learn" },
-      { label: "Workspace", icon: "workspace", q: "Git folders" },
+      { label: "Workspace", icon: "workspace", ids: ["repos"] },
       { label: "Recents", icon: "recents" },
-      { label: "Catalog", icon: "catalog", q: "Catalog Explorer" },
-      { label: "Jobs & Pipelines", icon: "jobs", q: "Lakeflow" },
+      { label: "Catalog", icon: "catalog", ids: ["catalog-explorer"] },
+      { label: "Jobs & Pipelines", icon: "jobs", ids: ["dlt", "workflows", "bundles"] },
       { label: "Compute", icon: "compute" },
       { label: "Discover", icon: "discover" },
       { label: "Marketplace", icon: "marketplace" },
@@ -27,11 +30,11 @@
     { label: "SQL", items: [
       { label: "SQL Editor", icon: "sqlEditor" },
       { label: "Queries", icon: "queries" },
-      { label: "Dashboards", icon: "dashboards", q: "Dashboards" },
-      { label: "Genie Agents", icon: "genie", q: "Genie" },
+      { label: "Dashboards", icon: "dashboards", ids: ["dashboards"] },
+      { label: "Genie Agents", icon: "genie", ids: ["genie-spaces", "databricks-one"] },
       { label: "Alerts", icon: "alerts" },
       { label: "Query History", icon: "history" },
-      { label: "SQL Warehouses", icon: "warehouse", q: "SQL Warehouse" },
+      { label: "SQL Warehouses", icon: "warehouse", ids: ["sql-endpoint"] },
     ]},
     { label: "Data Engineering", items: [
       { label: "Runs", icon: "runs" },
@@ -40,7 +43,7 @@
     ]},
     { label: "AI/ML", items: [
       { label: "Playground", icon: "playground" },
-      { label: "Agents", icon: "agents" },
+      { label: "Agents", icon: "agents", ids: ["vector-search"] },
       { label: "AI Gateway", icon: "gateway" },
       { label: "Experiments", icon: "experiments" },
       { label: "Features", icon: "features" },
@@ -104,10 +107,12 @@
         ? `<div class="nav-group-label">${escapeHtml(group.label)}</div>`
         : "";
       const items = group.items.map((it) => {
+        const ids = it.ids || [];
+        const renamed = ids.length > 0;
         const svg = `<svg class="ic" viewBox="0 0 24 24" width="18" height="18">${ICONS[it.icon] || ""}</svg>`;
-        const dot = it.q ? `<span class="renamed-dot" title="renamed — click for history"></span>` : "";
-        const cls = "nav-item" + (it.q ? " is-renamed" : "");
-        const data = it.q ? ` data-q="${escapeAttr(it.q)}"` : (it.home ? ` data-home="1"` : "");
+        const dot = renamed ? `<span class="renamed-dot" title="${ids.length} rename${ids.length === 1 ? "" : "s"} under this section"></span>` : "";
+        const cls = "nav-item" + (renamed ? " is-renamed" : "");
+        const data = it.home ? ` data-home="1"` : ` data-ids="${escapeAttr(ids.join(","))}"`;
         return `<button class="${cls}"${data}><span class="ic-wrap">${svg}</span><span class="label">${escapeHtml(it.label)}</span>${dot}</button>`;
       }).join("");
       return label + items;
@@ -116,12 +121,11 @@
     nav.querySelectorAll(".nav-item").forEach((el) => {
       el.addEventListener("click", () => {
         setActiveNav(el);
-        if (el.dataset.q) {
-          setQuery(el.dataset.q);
-        } else if (el.dataset.home) {
-          setQuery("");
+        if (el.dataset.home !== undefined) {
+          goHome();
         } else {
-          toast(`“${el.querySelector(".label").textContent}” isn't in the dataset — only renamed things live here.`);
+          const ids = (el.dataset.ids || "").split(",").filter(Boolean);
+          setSection(el.querySelector(".label").textContent, ids);
         }
       });
     });
@@ -132,8 +136,19 @@
     if (el) el.classList.add("active");
   }
 
-  function setQuery(q) {
-    searchEl.value = q;
+  // Filter the list to one rail section's renames.
+  function setSection(label, ids) {
+    activeSection = { label, ids };
+    searchEl.value = "";
+    activeCategory = null;
+    chipsEl.querySelectorAll(".chip").forEach((c) => c.classList.remove("active"));
+    render();
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }
+
+  function goHome() {
+    activeSection = null;
+    searchEl.value = "";
     activeCategory = null;
     chipsEl.querySelectorAll(".chip").forEach((c) => c.classList.remove("active"));
     render();
@@ -152,23 +167,30 @@
     const q = searchEl.value.trim().toLowerCase();
     let rows = DATA.slice();
 
-    if (activeCategory) {
-      rows = rows.filter((d) => d.category === activeCategory);
-    }
-    if (q) {
-      rows = rows.filter((d) => haystack(d).includes(q));
+    // A rail section takes precedence: show exactly that section's renames.
+    if (activeSection) {
+      const ids = activeSection.ids;
+      rows = rows.filter((d) => ids.includes(d.id));
+    } else {
+      if (activeCategory) {
+        rows = rows.filter((d) => d.category === activeCategory);
+      }
+      if (q) {
+        rows = rows.filter((d) => haystack(d).includes(q));
+      }
     }
 
     // Most recently renamed first — the freshest confusion on top.
     rows.sort((a, b) => (b.renamedAt || "").localeCompare(a.renamedAt || ""));
 
     if (rows.length === 0) {
-      resultsEl.innerHTML =
-        `<p class="empty">No results. Either it was never renamed,<br>or it was renamed to something you haven't heard yet.</p>`;
+      resultsEl.innerHTML = activeSection
+        ? `<div class="empty">Nothing renamed under <b>${escapeHtml(activeSection.label)}</b> — yet.<br>Either it kept its name, or Databricks hasn't gotten to it.</div>`
+        : `<p class="empty">No results. Either it was never renamed,<br>or it was renamed to something you haven't heard yet.</p>`;
       return;
     }
 
-    resultsEl.innerHTML = rows.map((d) => rowHTML(d, q)).join("");
+    resultsEl.innerHTML = rows.map((d) => rowHTML(d, activeSection ? "" : q)).join("");
     wireRows();
   }
 
@@ -222,6 +244,8 @@
       .join("");
     chipsEl.querySelectorAll(".chip").forEach((chip) => {
       chip.addEventListener("click", () => {
+        activeSection = null; // category chips override a rail-section filter
+        setActiveNav(null);
         const cat = chip.dataset.cat;
         activeCategory = activeCategory === cat ? null : cat;
         chipsEl.querySelectorAll(".chip").forEach((c) =>
@@ -251,14 +275,15 @@
   // ---- interactions ----
   function wireStaticControls() {
     searchEl.addEventListener("input", () => {
-      setActiveNav(null); // manual typing no longer maps to a rail item
+      activeSection = null; // manual typing clears any rail-section filter
+      setActiveNav(null);
       render();
     });
 
     $("#roulette").addEventListener("click", roulette);
 
     const sideNew = $("#side-new");
-    if (sideNew) sideNew.addEventListener("click", () => { setActiveNav(null); setQuery(""); });
+    if (sideNew) sideNew.addEventListener("click", goHome);
 
     $("#theme-toggle").addEventListener("click", () => {
       const root = document.documentElement;
@@ -299,6 +324,7 @@
     if (DATA.length === 0) return;
     // clear filters so the pick is always visible
     setActiveNav(null);
+    activeSection = null;
     searchEl.value = "";
     activeCategory = null;
     chipsEl.querySelectorAll(".chip").forEach((c) => c.classList.remove("active"));
