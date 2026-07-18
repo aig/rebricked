@@ -24,9 +24,12 @@ REQUIRED_COMMON = ("id", "category", "what", "source", "verified")
 REQUIRED_RENAME = ("current", "lineage", "renamedAt")
 # A deprecation names the retired thing and when it was deprecated.
 REQUIRED_DEPRECATION = ("name", "deprecatedAt", "status")
+# A feature names a current, non-deprecated thing and when it landed.
+REQUIRED_FEATURE = ("name", "introducedAt")
 
-VALID_KINDS = ("rename", "deprecation")
+VALID_KINDS = ("rename", "deprecation", "feature")
 VALID_STATUSES = ("deprecated", "retired")
+VALID_FEATURE_STATUSES = ("ga", "preview")
 
 errors = []
 warnings = []
@@ -72,9 +75,11 @@ def main():
             err(eid, f"kind must be one of {VALID_KINDS}, got {kind!r}")
             kind = "rename"  # validate the rest against the safest shape
 
-        required = REQUIRED_COMMON + (
-            REQUIRED_DEPRECATION if kind == "deprecation" else REQUIRED_RENAME
-        )
+        per_kind = {
+            "deprecation": REQUIRED_DEPRECATION,
+            "feature": REQUIRED_FEATURE,
+        }.get(kind, REQUIRED_RENAME)
+        required = REQUIRED_COMMON + per_kind
         for field in required:
             if field not in entry or entry[field] in (None, "", []):
                 err(eid, f"missing required field: {field}")
@@ -93,7 +98,7 @@ def main():
             err(eid, f"source is not an http(s) URL: {src!r}")
 
         # date formats (YYYY / YYYY-MM change dates; YYYY-MM-DD verified)
-        for date_field in ("renamedAt", "deprecatedAt", "removedAt"):
+        for date_field in ("renamedAt", "deprecatedAt", "removedAt", "introducedAt"):
             v = entry.get(date_field)
             if v and not DATE_RE.match(str(v)):
                 err(eid, f"{date_field} must be YYYY or YYYY-MM, got {v!r}")
@@ -108,6 +113,15 @@ def main():
             for stray in ("lineage", "current", "renamedAt"):
                 if stray in entry:
                     warn(eid, f"deprecation has rename-only field {stray!r}; it will be ignored")
+
+        # feature-specific rules
+        if kind == "feature":
+            status = entry.get("status")
+            if status and status not in VALID_FEATURE_STATUSES:
+                err(eid, f"feature status must be one of {VALID_FEATURE_STATUSES}, got {status!r}")
+            for stray in ("lineage", "current", "renamedAt", "deprecatedAt", "removedAt", "replacement"):
+                if stray in entry:
+                    warn(eid, f"feature has non-feature field {stray!r}; it will be ignored")
 
         # lineage rules (renames only)
         lineage = entry.get("lineage")

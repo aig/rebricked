@@ -1,14 +1,17 @@
 # Contributing to rebricked
 
-One rule: **real, sourced changes only.** Two kinds fit: **renames** and **deprecations**.
-If it wouldn't make a data engineer nod and say "oh, *that's* what happened to it" — it
-doesn't belong here.
+One rule: **real, sourced changes only.** Three kinds fit: **renames**, **deprecations**,
+and **features**. If it wouldn't make a data engineer nod and say "oh, *that's* what
+happened to it" (or "oh, *that's* the new thing") — it doesn't belong here.
 
 - A **rename** is a product/feature Databricks gave a new name for *the same thing*. Not a
   new product, not a casual nickname.
 - A **deprecation** is a feature Databricks retired or replaced. A *different* thing takes
   over (or nothing does) — the opposite of a rename. `dbx` → Asset Bundles is a deprecation,
   not a rename: different tool, different config format.
+- A **feature** is a genuinely *new* capability worth tracking — not renamed, not (yet)
+  deprecated. It records what it is and when it landed, so the timeline stays complete.
+  Liquid Clustering and Unity Catalog Volumes are features. Same bar: real and sourced.
 
 Add one object to [`databricks.json`](databricks.json). That's the whole PR.
 
@@ -55,10 +58,32 @@ Add one object to [`databricks.json`](databricks.json). That's the whole PR.
 }
 ```
 
+## Add a feature
+
+```json
+{
+  "id": "kebab-case-unique-id",
+  "kind": "feature",
+  "name": "The New Thing",
+  "aliases": ["what people type", "ABBR"],
+  "category": "Data engineering",
+  "what": "One line: what the thing is.",
+  "introducedAt": "2024",
+  "status": "ga",
+  "occasion": "Where/when it shipped (optional).",
+  "note": "Anything an engineer needs — what it replaces, GA vs preview caveats (optional).",
+  "source": "https://docs.databricks.com/...",
+  "verified": "YYYY-MM-DD"
+}
+```
+
 ### Field rules
 - **Renames:** `current` must equal the last `lineage` entry (the one with `"to": null`).
 - **Deprecations:** `status` is `"deprecated"` or `"retired"`; `removedAt` is optional;
   omit `replacement` if nothing directly replaces it (renders as "retired").
+- **Features:** `introducedAt` (`YYYY`/`YYYY-MM`) is required; `status` is `"ga"` or
+  `"preview"` (optional, defaults to `ga`). No `lineage`/`renamedAt`/`replacement` — those
+  are ignored with a warning. If the thing has been renamed, use a **rename** instead.
 - `source` is **required** on every entry. No source, no entry. Prefer official Databricks /
   Microsoft Learn docs — an archived "legacy"/"migrate from X" doc is ideal for deprecations.
 - `verified` is the date a human last confirmed it. Put the day you checked.

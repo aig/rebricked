@@ -10,6 +10,15 @@
   let DATA = [];
   let activeCategory = null;
   let activeSection = null; // {label, ids} when a rail section is selected
+  let activeKind = "all";   // "all" | "rename" | "deprecation" | "feature"
+
+  // The kind filter (top of results). Orthogonal to section/category/search.
+  const FILTERS = [
+    { key: "all", label: "All" },
+    { key: "rename", label: "Renamed" },
+    { key: "deprecation", label: "Deprecated & removed" },
+    { key: "feature", label: "New features" },
+  ];
 
   // ---- sidebar config: mirrors the Databricks console rail ----
   // Every item is clickable. `ids` lists the databricks.json entries that changed under
@@ -21,7 +30,7 @@
       { label: "Learn", icon: "learn" },
       { label: "Workspace", icon: "workspace", ids: ["repos"] },
       { label: "Recents", icon: "recents" },
-      { label: "Catalog", icon: "catalog", ids: ["catalog-explorer"] },
+      { label: "Catalog", icon: "catalog", ids: ["catalog-explorer", "uc-volumes", "lakehouse-federation"] },
       { label: "Jobs & Pipelines", icon: "jobs", ids: ["dlt", "workflows", "bundles", "dbx"] },
       { label: "Compute", icon: "compute" },
       { label: "Discover", icon: "discover" },
@@ -46,9 +55,9 @@
       { label: "Agents", icon: "agents", ids: ["vector-search", "supervisor-agent"] },
       { label: "AI Gateway", icon: "gateway" },
       { label: "Experiments", icon: "experiments" },
-      { label: "Features", icon: "features" },
-      { label: "Models", icon: "models" },
-      { label: "Serving", icon: "serving" },
+      { label: "Features", icon: "features", ids: ["workspace-feature-store"] },
+      { label: "Models", icon: "models", ids: ["workspace-model-registry"] },
+      { label: "Serving", icon: "serving", ids: ["model-serving"] },
     ]},
   ];
 
@@ -95,8 +104,42 @@
     }
     renderCounter();
     renderChips();
+    renderFilters();
     render();
     searchEl.focus();
+  }
+
+  // ---- kind filter (All / Renamed / Deprecated & removed / New features) ----
+  function renderFilters() {
+    const el = $("#filters");
+    if (!el) return;
+    const count = (key) =>
+      key === "all" ? DATA.length : DATA.filter((d) => kindOf(d) === key).length;
+    el.innerHTML = FILTERS.map((f) => {
+      const active = activeKind === f.key;
+      return `<button class="filter${active ? " active" : ""}" data-kind="${escapeAttr(f.key)}" aria-pressed="${active}">${escapeHtml(f.label)}<span class="filter-count">${count(f.key)}</span></button>`;
+    }).join("");
+    el.querySelectorAll(".filter").forEach((btn) => {
+      btn.addEventListener("click", () => {
+        activeKind = btn.dataset.kind;
+        el.querySelectorAll(".filter").forEach((b) => {
+          const on = b.dataset.kind === activeKind;
+          b.classList.toggle("active", on);
+          b.setAttribute("aria-pressed", on);
+        });
+        render();
+      });
+    });
+  }
+
+  function syncFilterButtons() {
+    const el = $("#filters");
+    if (!el) return;
+    el.querySelectorAll(".filter").forEach((b) => {
+      const on = b.dataset.kind === activeKind;
+      b.classList.toggle("active", on);
+      b.setAttribute("aria-pressed", on);
+    });
   }
 
   function renderNav() {
@@ -150,7 +193,9 @@
     activeSection = null;
     searchEl.value = "";
     activeCategory = null;
+    activeKind = "all";
     chipsEl.querySelectorAll(".chip").forEach((c) => c.classList.remove("active"));
+    syncFilterButtons();
     render();
     window.scrollTo({ top: 0, behavior: "smooth" });
   }
@@ -167,7 +212,7 @@
     const q = searchEl.value.trim().toLowerCase();
     let rows = DATA.slice();
 
-    // A rail section takes precedence: show exactly that section's renames.
+    // A rail section takes precedence: show exactly that section's entries.
     if (activeSection) {
       const ids = activeSection.ids;
       rows = rows.filter((d) => ids.includes(d.id));
@@ -180,13 +225,22 @@
       }
     }
 
+    // The kind filter is orthogonal — it narrows whatever's showing.
+    if (activeKind !== "all") {
+      rows = rows.filter((d) => kindOf(d) === activeKind);
+    }
+
     // Most recently changed first — the freshest confusion on top.
     rows.sort((a, b) => changedAt(b).localeCompare(changedAt(a)));
 
     if (rows.length === 0) {
+      const kindNote =
+        activeKind !== "all"
+          ? ` matching <b>${escapeHtml(FILTERS.find((f) => f.key === activeKind).label)}</b>`
+          : "";
       resultsEl.innerHTML = activeSection
-        ? `<div class="empty">Nothing renamed under <b>${escapeHtml(activeSection.label)}</b> — yet.<br>Either it kept its name, or Databricks hasn't gotten to it.</div>`
-        : `<p class="empty">No results. Either it was never renamed,<br>or it was renamed to something you haven't heard yet.</p>`;
+        ? `<div class="empty">Nothing${kindNote} under <b>${escapeHtml(activeSection.label)}</b> — yet.<br>Either it kept its name, or Databricks hasn't gotten to it.</div>`
+        : `<p class="empty">No results${kindNote}. Either it was never renamed,<br>or it was renamed to something you haven't heard yet.</p>`;
       return;
     }
 
@@ -195,8 +249,7 @@
   }
 
   function rowHTML(d, q) {
-    const dep = isDeprecation(d);
-    const trail = dep ? depTrail(d, q) : renameTrail(d, q);
+    const kind = kindOf(d);
 
     const src = d.source
       ? `<a href="${escapeAttr(d.source)}" target="_blank" rel="noopener">source ↗</a>`
@@ -204,19 +257,28 @@
     const note = d.note ? `<p class="row-note">${escapeHtml(d.note)}</p>` : "";
     const occasion = d.occasion ? ` · ${escapeHtml(d.occasion)}` : "";
 
-    let badge = "";
-    let dateText;
-    if (dep) {
+    let trail, badge = "", dateText, rowCls = "";
+    if (kind === "feature") {
+      rowCls = " is-feature";
+      trail = featureTrail(d, q);
+      const status = d.status || "ga";
+      const label = status === "preview" ? "preview" : "new";
+      badge = `<span class="badge badge-${escapeAttr(status)}">${escapeHtml(label)}</span>`;
+      dateText = `introduced ${escapeHtml(d.introducedAt || "?")}${occasion}`;
+    } else if (kind === "deprecation") {
+      rowCls = " is-deprecation";
+      trail = depTrail(d, q);
       const status = d.status || "deprecated";
       badge = `<span class="badge badge-${escapeAttr(status)}">${escapeHtml(status)}</span>`;
       const removed = d.removedAt ? ` · access ended ${escapeHtml(d.removedAt)}` : "";
       dateText = `deprecated ${escapeHtml(d.deprecatedAt || "?")}${removed}${occasion}`;
     } else {
+      trail = renameTrail(d, q);
       dateText = `renamed ${escapeHtml(d.renamedAt || "?")}${occasion}`;
     }
 
     return `
-      <article class="row${dep ? " is-deprecation" : ""}" data-id="${escapeAttr(d.id)}">
+      <article class="row${rowCls}" data-id="${escapeAttr(d.id)}">
         <div class="row-main"><div class="lineage">${trail}</div></div>
         <p class="row-what">${escapeHtml(d.what || "")}</p>
         <div class="row-meta">
@@ -227,6 +289,12 @@
         </div>
         ${note}
       </article>`;
+  }
+
+  // A feature renders just its current name, clickable to copy a "yes, that's real" line.
+  function featureTrail(d, q) {
+    const when = d.introducedAt ? escapeAttr(d.introducedAt) : "";
+    return `<span class="current feature-name" data-name="${escapeAttr(d.name)}" data-feature="1" data-when="${when}" title="click to copy">${highlight(escapeHtml(d.name), q)}</span>`;
   }
 
   // A rename renders its full lineage trail, ending in the clickable current name.
@@ -341,9 +409,15 @@
     resultsEl.querySelectorAll(".current").forEach((el) => {
       el.addEventListener("click", () => {
         const name = el.dataset.name;
-        const text = el.dataset.dep
-          ? `Actually, "${el.dataset.old}" is deprecated — use "${name}" now.`
-          : `Actually, it's called "${name}" now.`;
+        let text;
+        if (el.dataset.feature) {
+          const when = el.dataset.when ? ` (since ${el.dataset.when})` : "";
+          text = `Yes, "${name}" is a real Databricks feature${when}.`;
+        } else if (el.dataset.dep) {
+          text = `Actually, "${el.dataset.old}" is deprecated — use "${name}" now.`;
+        } else {
+          text = `Actually, it's called "${name}" now.`;
+        }
         copy(text).then((ok) =>
           toast(ok ? `Copied: ${text}` : "Copy failed — select it manually.")
         );
@@ -358,7 +432,9 @@
     activeSection = null;
     searchEl.value = "";
     activeCategory = null;
+    activeKind = "all";
     chipsEl.querySelectorAll(".chip").forEach((c) => c.classList.remove("active"));
+    syncFilterButtons();
     render();
 
     const rows = resultsEl.querySelectorAll(".row");
@@ -400,9 +476,15 @@
       .toLowerCase();
   }
 
-  // A rename's "when" is renamedAt; a deprecation's is when it was removed, else deprecated.
+  // A rename's "when" is renamedAt; a deprecation's is when it was removed, else
+  // deprecated; a feature's is when it was introduced.
   function changedAt(d) {
-    return d.renamedAt || d.removedAt || d.deprecatedAt || "";
+    return d.renamedAt || d.removedAt || d.deprecatedAt || d.introducedAt || "";
+  }
+
+  // Normalize an entry to one of the three filter buckets. Absent kind => rename.
+  function kindOf(d) {
+    return d.kind === "deprecation" || d.kind === "feature" ? d.kind : "rename";
   }
 
   function isDeprecation(d) {

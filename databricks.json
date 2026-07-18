@@ -276,5 +276,89 @@
     "note": "Mounts bypass Unity Catalog governance; Databricks recommends UC volumes, external locations, or workspace files instead, and provisions new workspaces without mount access. Deprecation date is approximate — docs state the guidance without a single cutover date.",
     "source": "https://learn.microsoft.com/en-us/azure/databricks/dbfs/unity-catalog",
     "verified": "2026-07-18"
+  },
+  {
+    "id": "model-serving",
+    "current": "Model Serving",
+    "aliases": ["Serverless Real-Time Inference", "Mosaic AI Model Serving", "Model Serving"],
+    "category": "AI / ML",
+    "what": "Highly available, low-latency service for deploying ML and GenAI models behind autoscaling REST endpoints.",
+    "lineage": [
+      { "name": "Serverless Real-Time Inference", "from": "2022", "to": "2023-03" },
+      { "name": "Model Serving", "from": "2023-03", "to": null }
+    ],
+    "renamedAt": "2023-03",
+    "occasion": "Model Serving GA, March 7, 2023",
+    "note": "The March 2023 release notes state \"Model Serving, formerly Serverless Real-Time Inference, is now generally available.\" Later carried the \"Mosaic AI\" prefix in some surfaces.",
+    "source": "https://learn.microsoft.com/en-us/azure/databricks/release-notes/product/2023/march",
+    "verified": "2026-07-18"
+  },
+  {
+    "id": "workspace-model-registry",
+    "kind": "deprecation",
+    "name": "Workspace Model Registry",
+    "aliases": ["MLflow Model Registry", "workspace registry", "model stages"],
+    "replacement": "Models in Unity Catalog",
+    "category": "AI / ML",
+    "what": "The legacy per-workspace MLflow model registry, including model stages (None/Staging/Production/Archived).",
+    "deprecatedAt": "2024",
+    "status": "deprecated",
+    "note": "Databricks recommends Models in Unity Catalog for governing and deploying models. Stages are not supported in Unity Catalog — the three-level namespace plus aliases (e.g. @champion) replace them; migrate versions with copy_model_version(). A replacement, not a rename: different governance model and API.",
+    "source": "https://docs.databricks.com/aws/en/machine-learning/manage-model-lifecycle/",
+    "verified": "2026-07-18"
+  },
+  {
+    "id": "workspace-feature-store",
+    "kind": "deprecation",
+    "name": "Workspace Feature Store",
+    "aliases": ["Feature Store", "databricks-feature-store"],
+    "replacement": "Feature Engineering in Unity Catalog",
+    "category": "AI / ML",
+    "what": "The legacy per-workspace feature store, with its own UI and metadata layer separate from Unity Catalog.",
+    "deprecatedAt": "2024",
+    "status": "deprecated",
+    "note": "Available only for workspaces created before August 19, 2024 (16:00 UTC). Databricks recommends Feature Engineering in Unity Catalog, which unifies feature tables with Delta tables and UC lineage; the databricks-feature-store package moved to databricks-feature-engineering.",
+    "source": "https://docs.databricks.com/aws/en/machine-learning/feature-store/workspace-feature-store/",
+    "verified": "2026-07-18"
+  },
+  {
+    "id": "liquid-clustering",
+    "kind": "feature",
+    "name": "Liquid Clustering",
+    "aliases": ["CLUSTER BY", "liquid", "automatic liquid clustering"],
+    "category": "Data engineering",
+    "what": "Delta Lake data-layout optimization that supersedes Z-ordering and Hive-style partitioning; clustering keys can evolve without rewriting existing data.",
+    "introducedAt": "2024",
+    "status": "ga",
+    "occasion": "GA on Databricks Runtime 15.4 LTS and above",
+    "note": "Databricks recommends liquid clustering for all new tables — over both Z-ordering and partitioning. Existing ZORDER BY columns can be reused directly as clustering keys.",
+    "source": "https://docs.databricks.com/aws/en/delta/clustering",
+    "verified": "2026-07-18"
+  },
+  {
+    "id": "uc-volumes",
+    "kind": "feature",
+    "name": "Unity Catalog Volumes",
+    "aliases": ["Volumes", "managed volumes", "external volumes"],
+    "category": "Data governance",
+    "what": "Unity Catalog objects that govern non-tabular data (files of any format) alongside tables — the recommended replacement for DBFS mounts.",
+    "introducedAt": "2023",
+    "status": "ga",
+    "note": "Managed volumes use Databricks-managed storage; external volumes govern existing cloud storage. The overview doc no longer restates a single GA date; Volumes reached GA in late 2023. Pairs with the DBFS mounts deprecation.",
+    "source": "https://docs.databricks.com/aws/en/volumes/",
+    "verified": "2026-07-18"
+  },
+  {
+    "id": "lakehouse-federation",
+    "kind": "feature",
+    "name": "Lakehouse Federation",
+    "aliases": ["Query Federation", "foreign catalogs", "catalog federation"],
+    "category": "Data governance",
+    "what": "Query external databases (Postgres, MySQL, Snowflake, Redshift, and more) in place through Unity Catalog foreign catalogs, with query pushdown and governance — no data movement.",
+    "introducedAt": "2023",
+    "status": "ga",
+    "note": "Governed, read-only access to external data via Unity Catalog foreign catalogs. Introduced in Public Preview in 2023; the overview doc doesn't restate a single GA date.",
+    "source": "https://docs.databricks.com/aws/en/query-federation/",
+    "verified": "2026-07-18"
   }
 ]

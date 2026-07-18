@@ -3,6 +3,50 @@
 All notable changes to **rebricked**, grouped by day.
 Format loosely follows [Keep a Changelog](https://keepachangelog.com/); dates are `YYYY-MM-DD`.
 
+## 2026-07-18 (features & lifecycle filter)
+
+### Added
+- **New features are now first-class — a third `kind`.** Alongside renames and deprecations,
+  entries can be `kind: "feature"`: a genuinely new capability worth tracking on the timeline,
+  with `introducedAt` and a `status` of `ga`/`preview`. Rendered in green with a `new`/`preview`
+  badge. Seeded with three verified features: **Liquid Clustering** (GA on DBR 15.4 LTS),
+  **Unity Catalog Volumes** (the replacement for DBFS mounts), and **Lakehouse Federation**.
+- **Lifecycle filter** above the results: **All / Renamed / Deprecated & removed / New
+  features**, each with a live count. Orthogonal to search, category chips, and rail sections;
+  Home and the roulette reset it to All.
+- Two verified deprecations, resolving items from the prior "pending" list:
+  **Workspace Model Registry** → Models in Unity Catalog (stages replaced by aliases), and
+  **Workspace Feature Store** → Feature Engineering in Unity Catalog (workspaces created
+  before Aug 19, 2024 only).
+- One verified rename: **Model Serving** (formerly **Serverless Real-Time Inference**) — the
+  March 2023 release notes state "Model Serving, formerly Serverless Real-Time Inference, is
+  now generally available" (March 7, 2023).
+- Sidebar dots for the new entries: **Catalog** → UC Volumes + Lakehouse Federation,
+  **AI/ML › Models** → Workspace Model Registry, **AI/ML › Features** → Workspace Feature
+  Store, **AI/ML › Serving** → Model Serving.
+
+### Changed
+- `validate.py` gained a `feature` kind (required `name`/`introducedAt`, optional
+  `ga`/`preview` status; warns on stray rename/deprecation fields) and validates `introducedAt`.
+- `app.js` renders features (green accent, `featureTrail`, click-to-copy "yes, that's real"),
+  adds the `kindOf` bucket + the lifecycle filter, and folds `introducedAt` into `changedAt`
+  and the day-counter. `CONTRIBUTING.md` / `AGENTS.md` document the feature kind and filter.
+
+### Notes
+- **Validated an AI-generated "Databricks feature lifecycle" report and integrated only the
+  verifiable parts.** Confirmed against live docs before adding: Workspace Model Registry,
+  Workspace Feature Store, Liquid Clustering, UC Volumes, Lakehouse Federation, and the
+  Serverless Real-Time Inference → Model Serving rename.
+- **Deliberately excluded as unverifiable / fabricated:** the entire GenAI model-retirement
+  table — it lists models that don't exist ("GPT-5.6 Sol", "GPT-5.5", "Gemini 3.5 Flash",
+  "Claude Sonnet 4.6", "Gemini 3.1 Pro") with invented retirement dates. Also skipped for now:
+  Jobs API 2.0/2.1 "deprecated" (the 2.2 doc documents behavior changes but does **not** call
+  2.0/2.1 deprecated), Z-Order "deprecated" (still supported — captured instead as the Liquid
+  Clustering feature it's recommended against), and the many governance/runtime claims (Hive
+  metastore, no-isolation compute, SCIM, DBFS root, JDK/library removals, "Cluster → Compute",
+  "DLT → Lakeflow Pipelines" wording) that are plausible but weren't each fact-checked to this
+  repo's bar. They can be added later, one sourced entry at a time.
+
 ## 2026-07-18
 
 ### Added

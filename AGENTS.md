@@ -13,12 +13,15 @@ no framework, no backend. (rebricked = **re**named or de**pre**cated.)
 
 **Real, sourced changes only. Never be confidently wrong.**
 
-Two kinds of entry, both held to the same bar:
+Three kinds of entry, all held to the same bar:
 - A **rename** (`kind` absent or `"rename"`) is Databricks giving a new name to *the same
   thing*. Not a new product, not a nickname.
 - A **deprecation** (`kind: "deprecation"`) is a feature Databricks retired or replaced —
   it points at the successor (or says there's none). This is the *opposite* of a rename:
   a different thing takes over, usually with a different API/format.
+- A **feature** (`kind: "feature"`) is a genuinely new capability worth tracking on the
+  timeline — not renamed, not deprecated. It records `introducedAt` and a `status` of
+  `ga`/`preview`. The UI shows it in green; the lifecycle filter can isolate features.
 
 Every entry needs an official source (Databricks or Microsoft Learn docs) and a `verified`
 date. If you cannot verify a claim against a live doc, do not add it — flag it instead.
@@ -54,6 +57,16 @@ Each entry is one object with a `kind`. Absent `kind` means `"rename"` (back-com
 `replacementId` (id of the successor's entry), `removedAt`, `occasion`, `note`.
 - `status` is `"deprecated"` (still around, discouraged) or `"retired"` (access ended).
 - Omit `replacement` when nothing directly replaces it — the UI shows "retired".
+
+**Feature** (`kind: "feature"`) — required: `id`, `name`, `category`, `what`,
+`introducedAt`, `source`, `verified`. Optional: `aliases`, `status` (`ga`/`preview`,
+defaults `ga`), `occasion`, `note`.
+- No `lineage`/`renamedAt`/`deprecatedAt`/`replacement` — the validator warns and the UI
+  ignores them. Once a feature gets renamed or retired, convert it to that kind.
+
+The content area has a **lifecycle filter** (All / Renamed / Deprecated & removed / New
+features) that narrows whatever's showing by `kind`. It's orthogonal to search, chips, and
+rail sections; Home and the roulette reset it to All.
 
 ## Before you commit
 
