@@ -3,6 +3,38 @@
 All notable changes to **rebricked**, grouped by day.
 Format loosely follows [Keep a Changelog](https://keepachangelog.com/); dates are `YYYY-MM-DD`.
 
+## 2026-07-18 (auth, compute & editor entries)
+
+Follow-up pass adding smaller-but-recognizable entries and refining one existing entry (33 → 42).
+Every item fact-checked against a live doc; unverifiable candidates were deliberately left out.
+
+### Added
+- Deprecations (7): **Personal access tokens (PATs)** → OAuth (docs now title the page
+  "(legacy)"); **Legacy SQL editor** → new SQL editor (retirement scheduled late July 2026);
+  **Legacy SQL alerts** → new alerts; **Init scripts on DBFS** → UC volumes / workspace files
+  (EOL 2023); **No isolation shared access mode** → Standard/Dedicated; **Legacy Databricks
+  Connect** (≤12.2 LTS) → Spark-Connect-based Databricks Connect (13.3 LTS+).
+- Renames (1): **Standard / Dedicated access modes** (formerly **Shared / Single user**),
+  renamed March 2025, plus the new **Auto** mode.
+- Features (2): **OAuth token federation** (the "kill the secret" replacement behind the PAT
+  deprecation, Jan 2025) and **Databricks Clean Rooms** (GA on AWS/Azure, Feb 2025).
+- Sidebar dots: **Workspace** → PATs + OAuth token federation + legacy Databricks Connect;
+  **Compute** → access modes + no-isolation-shared + DBFS init scripts; **Catalog** → Clean
+  Rooms; **SQL Editor** → legacy SQL editor; **Alerts** → legacy SQL alerts.
+
+### Changed
+- **Genie One** (formerly Databricks One) corrected: the rename happened in two steps
+  (Databricks One → Genie in April 2026 → Genie One in June 2026), and the source now points at
+  the docs page that explicitly states "Genie One was previously known as Databricks One" (the
+  old source URL contained no rename wording).
+
+### Notes
+- Left out for lack of a firsthand-verifiable live doc: **Databricks-managed passwords / basic
+  auth EOL** (both the AWS docs and Microsoft Learn pages failed to render actual content — the
+  July 10, 2024 date is widely cited but I won't add what I couldn't read), and the **Partner
+  Connect → Marketplace** sidebar consolidation (Partner Connect still ships as its own product,
+  so it isn't a clean rename or deprecation).
+
 ## 2026-07-18 (platform release-notes sweep)
 
 Swept every monthly platform release-notes page from July 2025 through July 2026 and added
