@@ -1,0 +1,46 @@
+name: Deploy to GitHub Pages
+
+on:
+  push:
+    branches: [main]
+  # allow manual runs from the Actions tab
+  workflow_dispatch:
+
+# least-privilege token scoped to what Pages deployment needs
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# one live deploy at a time; don't cancel an in-progress one mid-publish
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  # Gate: a malformed or unsourced renames.json must never reach Pages.
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Validate renames.json
+        run: python3 scripts/validate.py
+
+  deploy:
+    needs: validate
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v4
+      - name: Configure Pages
+        uses: actions/configure-pages@v5
+      - name: Upload site
+        uses: actions/upload-pages-artifact@v3
+        with:
+          # no build step — the repo root IS the site
+          path: .
+      - name: Deploy
+        id: deployment
+        uses: actions/deploy-pages@v4
