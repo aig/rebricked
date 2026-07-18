@@ -4,7 +4,8 @@ description: >-
   Track a Databricks thing in the rebricked repo. Given a name — new or old, current or
   ancient — investigate its full history: what it was, every rename, whether it was
   deprecated or retired, and what it's called today. Then classify it (rename /
-  deprecation / feature) and add the correctly-shaped, sourced entry to databricks.json.
+  deprecation / feature) and add the correctly-shaped, sourced entry to databricks.json —
+  including a funny-but-accurate `price` line grounded in real Databricks billing.
   Use whenever asked to "add a feature", "add X", or "track X" — even if X is old or you
   don't yet know what happened to it. Enforces the one rule: real, sourced changes only.
 tools: Read, Edit, Grep, Glob, Bash, WebFetch, WebSearch
@@ -77,6 +78,7 @@ Non-final steps need a `to` date and must be chronological.
   "aliases": ["What people type", "ABBR"],
   "category": "Data engineering",
   "what": "One line: what the thing is.",
+  "price": "Deadpan one-liner anchored to a real billing fact (e.g. DBUs, a real SKU tier).",
   "lineage": [
     { "name": "Old Name", "abbr": "ON", "from": "2021", "to": "2023" },
     { "name": "The Newest Name", "from": "2023", "to": null }
@@ -102,6 +104,7 @@ entry. `removedAt` must not precede `deprecatedAt`.
   "replacementId": "id-of-successor-entry",
   "category": "Developer experience",
   "what": "One line: what the thing was.",
+  "price": "Deadpan one-liner anchored to a real billing fact (e.g. was free; the cost is the migration).",
   "deprecatedAt": "2024",
   "removedAt": "2026-01",
   "status": "deprecated",
@@ -122,6 +125,7 @@ entry. `removedAt` must not precede `deprecatedAt`.
   "aliases": ["what people type", "ABBR"],
   "category": "Data engineering",
   "what": "One line: what the thing is.",
+  "price": "Deadpan one-liner anchored to a real billing fact (e.g. DBUs, storage, serverless premium).",
   "introducedAt": "2024",
   "status": "ga",
   "source": "https://docs.databricks.com/...",
@@ -135,6 +139,15 @@ Rules that apply to every kind:
   A new category means editing `scripts/validate.py` on purpose — never by typo.
 - `source` is required and must be an http(s) URL. No source, no entry.
 - `verified` is `YYYY-MM-DD` — the day *you* checked. Never a future date.
+- `price` (required, every kind) is a deadpan one-liner on what the thing costs. Unlike
+  `prediction`, it is **not** fiction — only the attitude is invented; the billing fact
+  underneath must be true. Anchor the joke to something real: **DBUs** as the unit,
+  a real SKU tier (Jobs vs All-Purpose Compute; DLT/Lakeflow **Core/Pro/Advanced**; SQL
+  Warehouse **Classic/Pro/Serverless**), the serverless premium (serverless DBSQL lists
+  ~$0.70/DBU), storage/egress, "contact your account team" for preview/beta, or "included
+  at no additional cost". Governance (Unity Catalog, Catalog Explorer, ABAC) is genuinely
+  free — say so, and note it's the compute it governs that bills. Keep it to one or two
+  sentences. Prefer the official pricing page (databricks.com/product/pricing) as evidence.
 - `prediction` (renames and features only, optional) is the one deliberately fictional
   field: a non-empty array of deadpan-plausible made-up *next* names. Everything else
   stays sourced and real.

@@ -24,6 +24,7 @@ Add one object to [`databricks.json`](databricks.json). That's the whole PR.
   "aliases": ["What people actually type", "ABBR"],
   "category": "Data engineering",
   "what": "One line: what the thing is.",
+  "price": "Deadpan one-liner on what it costs — funny, but the billing fact must be real.",
   "lineage": [
     { "name": "Old Name", "abbr": "ON", "from": "2021", "to": "2023" },
     { "name": "The Newest Name", "from": "2023", "to": null }
@@ -48,6 +49,7 @@ Add one object to [`databricks.json`](databricks.json). That's the whole PR.
   "replacementId": "id-of-the-successor-entry (optional)",
   "category": "Developer experience",
   "what": "One line: what the thing was.",
+  "price": "Deadpan one-liner on what it costs — funny, but the billing fact must be real.",
   "deprecatedAt": "2024",
   "removedAt": "2026-01",
   "status": "deprecated",
@@ -68,6 +70,7 @@ Add one object to [`databricks.json`](databricks.json). That's the whole PR.
   "aliases": ["what people type", "ABBR"],
   "category": "Data engineering",
   "what": "One line: what the thing is.",
+  "price": "Deadpan one-liner on what it costs — funny, but the billing fact must be real.",
   "introducedAt": "2024",
   "status": "ga",
   "occasion": "Where/when it shipped (optional).",
@@ -89,6 +92,11 @@ Add one object to [`databricks.json`](databricks.json). That's the whole PR.
 - `source` is **required** on every entry. No source, no entry. Prefer official Databricks /
   Microsoft Learn docs — an archived "legacy"/"migrate from X" doc is ideal for deprecations.
 - `verified` is the date a human last confirmed it. Put the day you checked.
+- `price` is **required** on every entry: a deadpan one-liner on what the thing costs.
+  Unlike `prediction`, it is **not** fiction — only the attitude is invented; the billing
+  fact underneath must be real and sourceable (DBUs, a real SKU tier, the serverless
+  premium, storage/egress, "contact your account team", or "included at no additional
+  cost"). Governance features are genuinely free — say so. One or two sentences.
 - `id` is kebab-case and unique across the whole file (renames and deprecations share it).
 - Dates use `YYYY` or `YYYY-MM`. Precision is optional; honesty about precision is not.
 - If sources disagree on a date, use the official doc's date and say so in `note`.

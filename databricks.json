@@ -235,7 +235,7 @@
     "aliases": ["Databricks Assistant", "Assistant"],
     "category": "AI / ML",
     "what": "AI coding assistant that generates and fixes SQL and Python across notebooks, the SQL editor, and pipelines, grounded in Unity Catalog metadata.",
-    "price": "The Assistant was famously 'no additional cost,' and the autocomplete still is — the compute it cheerfully talks you into running is the actual upsell.",
+    "price": "The Assistant was famously 'no additional cost' — then, on July 8, 2026, Genie products went pay-as-you-go: a per-user free monthly LLM allowance, and DBUs once you burn through it. You get a taste free; the compute it talks you into is still extra.",
     "lineage": [
       { "name": "Databricks Assistant", "from": "2023", "to": "2026-03" },
       { "name": "Genie Code", "from": "2026-03", "to": null }
