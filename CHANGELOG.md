@@ -3,6 +3,19 @@
 All notable changes to **rebricked**, grouped by day.
 Format loosely follows [Keep a Changelog](https://keepachangelog.com/); dates are `YYYY-MM-DD`.
 
+## 2026-07-18 (harder quiz — multiple funny predictions)
+
+### Changed
+- **`prediction` is now an array** of funny-but-plausible next names (2–3 per entry, e.g.
+  `dlt` → "Genie Pipelines", "Lakeflow Agentic Pipelines", "Unity Pipelines") instead of a
+  single string. Validator now requires a non-empty array of non-empty strings.
+- **The quiz is harder**: each question seeds its wrong answers with the asked product's
+  *own* fake future names — the most tempting distractors — before filling from every other
+  real and predicted name in the dataset.
+- **Cards show "AI guesses"**: the "✨ AI guess" button now reveals the whole shortlist
+  ("AI guesses: A, B, or C") drawn from the same `prediction` array.
+- The "New" button suggestion picks a random name from the array each time.
+
 ## 2026-07-18 (shareable quiz badges)
 
 ### Added

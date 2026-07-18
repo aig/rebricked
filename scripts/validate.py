@@ -212,12 +212,14 @@ def main():
         if "aliases" in entry and not isinstance(entry["aliases"], list):
             err(eid, "aliases must be an array")
 
-        # prediction (optional, clearly-fictional next name — powers the "New" gag
-        # and the odds badge; renames/features only, retired things don't get renamed)
+        # prediction (optional, clearly-fictional next names — funny alternatives that
+        # power the "New" gag, the card's AI guesses, and the quiz's hardest distractors;
+        # renames/features only, retired things don't get renamed)
         if "prediction" in entry:
             pred = entry["prediction"]
-            if not isinstance(pred, str) or not pred.strip():
-                err(eid, "prediction must be a non-empty string when present")
+            if (not isinstance(pred, list) or not pred
+                    or not all(isinstance(x, str) and x.strip() for x in pred)):
+                err(eid, "prediction must be a non-empty array of non-empty strings when present")
             if kind == "deprecation":
                 warn(eid, "deprecation has 'prediction'; retired things don't get renamed — it will be ignored")
 

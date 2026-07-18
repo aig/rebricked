@@ -12,7 +12,7 @@
     "renamedAt": "2025-06",
     "occasion": "Data + AI Summit 2025",
     "note": "Existing DLT code still runs; classic SKUs kept the DLT prefix. Databricks docs increasingly shorthand this to \"Lakeflow pipelines\"; the open-source engine is \"Spark Declarative Pipelines\".",
-    "prediction": "Genie Pipelines",
+    "prediction": ["Genie Pipelines", "Lakeflow Agentic Pipelines", "Unity Pipelines"],
     "source": "https://docs.databricks.com/aws/en/ldp/where-is-dlt",
     "verified": "2026-07-18"
   },
@@ -29,7 +29,7 @@
     "renamedAt": "2025",
     "occasion": "Lakeflow GA, 2025",
     "note": "Folded into the Lakeflow umbrella alongside Connect and Declarative Pipelines. The sidebar now groups it with pipelines under \"Jobs & Pipelines\".",
-    "prediction": "Genie Jobs",
+    "prediction": ["Genie Jobs", "Lakeflow Agentic Jobs", "Jobs One"],
     "source": "https://learn.microsoft.com/en-us/azure/databricks/jobs/",
     "verified": "2026-07-18"
   },
@@ -45,7 +45,7 @@
     ],
     "renamedAt": "2023",
     "note": "Databricks docs date this to 2023; some write-ups say 2022.",
-    "prediction": "AI Warehouse",
+    "prediction": ["AI Warehouse", "Genie Warehouse", "Lakehouse Warehouse"],
     "source": "https://docs.databricks.com/aws/en/compute/sql-warehouse/",
     "verified": "2026-07-18"
   },
@@ -61,7 +61,7 @@
     ],
     "renamedAt": "2024-03",
     "note": "Renamed March 21, 2024 per the platform release notes. Git folders support asset types Repos didn't and require a remote repo URL.",
-    "prediction": "Git Spaces",
+    "prediction": ["Git Spaces", "Lakeflow Git", "Genie Repos"],
     "source": "https://learn.microsoft.com/en-us/azure/databricks/repos/what-happened-repos",
     "verified": "2026-07-18"
   },
@@ -77,7 +77,7 @@
     ],
     "renamedAt": "2023-09",
     "note": "Renamed to reflect that it manages all Unity Catalog securables, not just data. Shows as \"Catalog\" in the sidebar.",
-    "prediction": "Catalog One",
+    "prediction": ["Catalog One", "Unity Explorer", "Genie Catalog"],
     "source": "https://docs.databricks.com/aws/en/catalog-explorer/",
     "verified": "2026-07-18"
   },
@@ -94,7 +94,7 @@
     "renamedAt": "2024-06",
     "occasion": "Data + AI Summit 2024",
     "note": "The user-facing product is \"AI/BI Dashboards\"; the underlying API still uses the \"Lakeview\" name. Distinct from the older SQL/Redash \"legacy dashboards\".",
-    "prediction": "Genie Dashboards",
+    "prediction": ["Genie Dashboards", "AI/BI Dashboards One", "Lakeview One"],
     "source": "https://docs.databricks.com/aws/en/dashboards/",
     "verified": "2026-07-18"
   },
@@ -110,7 +110,7 @@
     ],
     "renamedAt": "2026-03",
     "note": "Renamed March 16, 2026. Docs read \"Declarative Automation Bundles (formerly known as Databricks Asset Bundles)\"; the DABs acronym was kept. Supersedes the deprecated dbx deployment tool.",
-    "prediction": "Agentic Automation Bundles",
+    "prediction": ["Agentic Automation Bundles", "Unity Bundles", "Genie Bundles"],
     "source": "https://docs.databricks.com/aws/en/dev-tools/bundles/",
     "verified": "2026-07-18"
   },
@@ -126,7 +126,7 @@
     ],
     "renamedAt": "2026-07",
     "note": "Renamed in early July 2026 to reflect the shift from conversational query spaces to autonomous agents. Shows as \"Genie Agents\" in the sidebar.",
-    "prediction": "Genie Agent Teams",
+    "prediction": ["Genie Agent Teams", "Genie Agents One", "Agentic Genie Spaces"],
     "source": "https://docs.databricks.com/aws/en/genie-agents/set-up",
     "verified": "2026-07-18"
   },
@@ -144,7 +144,7 @@
     "renamedAt": "2026-06",
     "occasion": "Renamed to Genie (April 2026), then Genie One (June 2026)",
     "note": "Docs state \"Genie One was previously known as Databricks One.\" Announced as Databricks One at Data + AI Summit (June 2025; Public Preview September 2025), renamed to Genie in April 2026, then to Genie One in June 2026 — the /one URL was kept for compatibility. Genie One folds in all Databricks One capabilities plus account-level access and native mobile apps.",
-    "prediction": "Genie Two",
+    "prediction": ["Genie Two", "Genie One Prime", "Databricks Two"],
     "source": "https://docs.databricks.com/aws/en/genie-one/genie",
     "verified": "2026-07-18"
   },
@@ -161,7 +161,7 @@
     ],
     "renamedAt": "2026-06",
     "note": "Renamed in the June 2026 platform release (release note dated June 1, 2026) as the service expanded beyond pure vector search to full-text and hybrid search; the service had been GA since May 2024 as Mosaic AI Vector Search. The \"Mosaic AI\" prefix came from the 2023 MosaicML acquisition branding.",
-    "prediction": "Genie Search",
+    "prediction": ["Genie Search", "Mosaic AI Search", "Unity Search"],
     "source": "https://docs.databricks.com/aws/en/vector-search/vector-search",
     "verified": "2026-07-18"
   },
@@ -178,7 +178,7 @@
     "renamedAt": "2021-05",
     "occasion": "Renamed May 26, 2021; GA December 15, 2021",
     "note": "The May 26, 2021 release notes state \"SQL Analytics is renamed to Databricks SQL\"; the access entitlement became \"Databricks SQL access\" (formerly \"SQL Analytics access\"). Distinct from the SQL Warehouse compute that powers it.",
-    "prediction": "Lakehouse SQL",
+    "prediction": ["Lakehouse SQL", "Genie SQL", "Databricks SQL One"],
     "source": "https://learn.microsoft.com/en-us/azure/databricks/sql/release-notes/2021",
     "verified": "2026-07-18"
   },
@@ -195,7 +195,7 @@
     "renamedAt": "2019-04",
     "occasion": "Open-sourced at Spark + AI Summit 2019",
     "note": "The proprietary \"Databricks Delta\" feature was open-sourced as Delta Lake on April 24, 2019 and donated to the Linux Foundation; the \"Databricks Delta\" name fell out of use. Same storage layer, new (and now OSS) name.",
-    "prediction": "Delta Lake One",
+    "prediction": ["Delta Lake One", "Unity Delta", "OpenDelta"],
     "source": "https://www.databricks.com/blog/2019/04/24/open-sourcing-delta-lake.html",
     "verified": "2026-07-18"
   },
@@ -212,7 +212,7 @@
     "renamedAt": "2026-02",
     "occasion": "Supervisor Agent GA, February 2026",
     "note": "Docs describe it as \"Supervisor Agent (formerly Multi-Agent Supervisor, MAS)\"; the doc URL still ends in /multi-agent-supervisor. Shortened as the Agent Bricks multi-agent framework reached GA.",
-    "prediction": "Chief Agent Officer",
+    "prediction": ["Chief Agent Officer", "Agent Supervisor Prime", "Genie Supervisor"],
     "source": "https://docs.databricks.com/aws/en/generative-ai/agent-bricks/multi-agent-supervisor",
     "verified": "2026-07-18"
   },
@@ -229,7 +229,7 @@
     "renamedAt": "2026-03",
     "occasion": "Introducing Genie Code, March 2026",
     "note": "The Databricks Assistant docs now live under \"Get coding help from Genie Code\" at the same /notebooks/code-assistant page. Databricks' launch blog frames Genie Code as the newest member of the Genie family rather than an explicit rename, but the docs continuity and community coverage (\"Databricks Assistant is now Genie Code\") treat it as one.",
-    "prediction": "Genie Code One",
+    "prediction": ["Genie Code One", "Genie Coder", "Agentic Assistant"],
     "source": "https://docs.databricks.com/aws/en/notebooks/code-assistant",
     "verified": "2026-07-18"
   },
@@ -307,7 +307,7 @@
     "renamedAt": "2023-03",
     "occasion": "Model Serving GA, March 7, 2023",
     "note": "The March 2023 release notes state \"Model Serving, formerly Serverless Real-Time Inference, is now generally available.\" Later carried the \"Mosaic AI\" prefix in some surfaces.",
-    "prediction": "Agent Serving",
+    "prediction": ["Agent Serving", "Mosaic AI Serving", "Genie Serving"],
     "source": "https://learn.microsoft.com/en-us/azure/databricks/release-notes/product/2023/march",
     "verified": "2026-07-18"
   },
@@ -350,7 +350,7 @@
     "status": "ga",
     "occasion": "GA on Databricks Runtime 15.4 LTS and above",
     "note": "Databricks recommends liquid clustering for all new tables — over both Z-ordering and partitioning. Existing ZORDER BY columns can be reused directly as clustering keys.",
-    "prediction": "Solid Clustering",
+    "prediction": ["Solid Clustering", "Liquid Clustering 2.0", "Genie Clustering"],
     "source": "https://docs.databricks.com/aws/en/delta/clustering",
     "verified": "2026-07-18"
   },
@@ -364,7 +364,7 @@
     "introducedAt": "2023",
     "status": "ga",
     "note": "Managed volumes use Databricks-managed storage; external volumes govern existing cloud storage. Entered Public Preview July 2023 and reached GA on February 22, 2024. Pairs with the DBFS mounts deprecation.",
-    "prediction": "Lakehouse Volumes",
+    "prediction": ["Lakehouse Volumes", "Unity Volumes One", "Genie Volumes"],
     "source": "https://docs.databricks.com/aws/en/volumes/",
     "verified": "2026-07-18"
   },
@@ -378,7 +378,7 @@
     "introducedAt": "2023",
     "status": "ga",
     "note": "Governed, read-only access to external data via Unity Catalog foreign catalogs. Introduced in Public Preview in 2023; the overview doc doesn't restate a single GA date.",
-    "prediction": "Lakehouse Confederation",
+    "prediction": ["Lakehouse Confederation", "Unity Federation", "Genie Federation"],
     "source": "https://docs.databricks.com/aws/en/query-federation/",
     "verified": "2026-07-18"
   },
@@ -395,7 +395,7 @@
     "renamedAt": "2026-02",
     "occasion": "Renamed February 2026",
     "note": "Databricks renamed the driver in February 2026. Existing DSNs and code keep working while the legacy Simba-branded driver stays installed; Databricks stopped shipping new Simba versions but supports existing ones for two years. Same driver, new name.",
-    "prediction": "Lakehouse ODBC Driver",
+    "prediction": ["Lakehouse ODBC Driver", "Unity ODBC Driver", "Genie Connect"],
     "source": "https://docs.databricks.com/aws/en/integrations/odbc/migration",
     "verified": "2026-07-18"
   },
@@ -412,7 +412,7 @@
     "renamedAt": "2026-06",
     "occasion": "Open-sourcing of OpenSharing, June 2026",
     "note": "The June 2026 release notes state \"Delta Sharing is now OpenSharing.\" The rename coincided with releasing OpenSharing as an open standard (GitHub, opensharing.io), so it is a rebrand tied to a broader open-source push rather than a cosmetic change. Delta Sharing was first announced in 2021.",
-    "prediction": "OpenSharing One",
+    "prediction": ["OpenSharing One", "Unity Sharing", "Delta OpenSharing"],
     "source": "https://docs.databricks.com/aws/en/opensharing/",
     "verified": "2026-07-18"
   },
@@ -428,7 +428,7 @@
     ],
     "renamedAt": "2025-09",
     "note": "The September 2025 release notes introduced it as \"the Lakeflow Pipelines Editor (previously called the multi-file editor)\"; the doc URL still ends in /multi-file-editor. Reached Public Preview September 2025 and GA May 2026.",
-    "prediction": "Genie Pipelines Editor",
+    "prediction": ["Genie Pipelines Editor", "Lakeflow IDE", "Agentic Pipelines Editor"],
     "source": "https://docs.databricks.com/aws/en/ldp/multi-file-editor",
     "verified": "2026-07-18"
   },
@@ -457,7 +457,7 @@
     "status": "ga",
     "occasion": "GA January 22, 2026",
     "note": "Brings transactional (OLTP) workloads to the lakehouse, with automatic scaling, instant branching, and native Unity Catalog integration. Entered Public Preview in mid-2025; Lakebase Autoscaling and Lakebase Provisioned were unified at GA. The Compute section's \"OLTP Database\" tab was renamed \"Lakebase Postgres\" in August 2025.",
-    "prediction": "Lakebase One",
+    "prediction": ["Lakebase One", "Genie Base", "Lakehouse Postgres"],
     "source": "https://docs.databricks.com/aws/en/oltp/",
     "verified": "2026-07-18"
   },
@@ -472,7 +472,7 @@
     "status": "ga",
     "occasion": "GA June 16, 2026",
     "note": "Generates governed, production-ready pipeline code from visual \"data preps,\" so prototypes move to production without a rewrite. Entered Public Preview April 2026 and reached GA June 2026.",
-    "prediction": "Genie Designer",
+    "prediction": ["Genie Designer", "Lakeflow Canvas", "Agentic Designer"],
     "source": "https://docs.databricks.com/aws/en/designer/",
     "verified": "2026-07-18"
   },
@@ -487,7 +487,7 @@
     "status": "ga",
     "occasion": "GA April 28, 2026",
     "note": "Supports row filters and column masks that follow governed tags across a catalog or schema instead of per-table grants. Entered Public Preview November 2025 and reached GA April 2026; ABAC GRANT policies were added later, in Beta since June 2026.",
-    "prediction": "Agent-based access control (ABAC)",
+    "prediction": ["Agent-based access control (ABAC)", "Adaptive access control", "Unity ABAC"],
     "source": "https://docs.databricks.com/aws/en/data-governance/unity-catalog/abac/",
     "verified": "2026-07-18"
   },
@@ -502,7 +502,7 @@
     "status": "ga",
     "occasion": "GA May 21, 2026",
     "note": "Managed Iceberg tables get Databricks platform features (liquid clustering, predictive optimization, materialized views) while external engines like Spark, Flink, and Trino read/write them via the Iceberg REST Catalog with credential vending. Part of Databricks' Iceberg interoperability push.",
-    "prediction": "Unity Catalog managed Glacier tables",
+    "prediction": ["Unity Catalog managed Glacier tables", "Unity Managed Iceberg 2.0", "Genie Iceberg"],
     "source": "https://docs.databricks.com/aws/en/iceberg/",
     "verified": "2026-07-18"
   },
@@ -517,7 +517,7 @@
     "status": "ga",
     "occasion": "GA January 29, 2026",
     "note": "Serverless compute and default storage live in the Databricks account, not the customer's cloud account, so cloud credits/discounts don't apply and billing runs through Databricks. Entered Public Preview August 2025 and reached GA January 2026.",
-    "prediction": "Workspaceless servers",
+    "prediction": ["Workspaceless servers", "Agentic workspaces", "Serverless workspaces One"],
     "source": "https://docs.databricks.com/aws/en/admin/workspace/serverless-workspaces",
     "verified": "2026-07-18"
   },
@@ -534,7 +534,7 @@
     "renamedAt": "2025-03",
     "occasion": "What's new with Unity Catalog compute, March 2025",
     "note": "Databricks renamed the access modes: \"Standard\" clusters were formerly \"Shared\" and \"Dedicated\" clusters were formerly \"Single user.\" Dedicated clusters can now be shared with a group, and a new \"Auto\" mode picks the recommended access mode automatically. Same underlying concepts, new names.",
-    "prediction": "Adaptive and Agentic access modes",
+    "prediction": ["Adaptive and Agentic access modes", "Unity access modes", "Standard and Dedicated access modes v2"],
     "source": "https://www.databricks.com/blog/whats-new-unity-catalog-compute",
     "verified": "2026-07-18"
   },
@@ -563,7 +563,7 @@
     "introducedAt": "2025-01",
     "status": "ga",
     "note": "Docs: \"OAuth token federation eliminates the need to manage and rotate Databricks secrets such as personal access tokens and Databricks OAuth client secrets.\" The concrete replacement behind the PAT deprecation; entered Public Preview January 24, 2025 and reached GA August 26, 2025.",
-    "prediction": "OAuth token confederation",
+    "prediction": ["OAuth token confederation", "Unity token federation", "Genie Auth"],
     "source": "https://docs.databricks.com/aws/en/dev-tools/auth/oauth-federation",
     "verified": "2026-07-18"
   },
@@ -653,7 +653,7 @@
     "status": "ga",
     "occasion": "GA on AWS and Azure, February 2025",
     "note": "Built on Delta Sharing/OpenSharing and Unity Catalog with a no-trust model (all parties have equal privileges). Reached GA on AWS and Azure in February 2025, with GCP later in 2025.",
-    "prediction": "Cleaner Rooms",
+    "prediction": ["Cleaner Rooms", "Unity Clean Rooms", "Agentic Clean Rooms"],
     "source": "https://docs.databricks.com/aws/en/clean-rooms/",
     "verified": "2026-07-18"
   }

@@ -389,16 +389,17 @@
   function oddsBadge(d) {
     const pct = 20 + (hashStr(d.id) % 61); // 20–80%
     const yr = new Date().getFullYear() + 1 + (hashStr(d.id + "y") % 2); // next 1–2 yrs
-    // The odds live on the card; the predicted name only appears when you ask the AI.
+    // The odds live on the card; the AI's guesses only appear when you ask.
     const odds = `<span class="odds" title="Not a real forecast. We made this up.">~${pct}% chance of another rename by ${yr}</span>`;
-    const btn = d.prediction
-      ? `<button class="odds-btn" data-pred="${escapeAttr(d.prediction)}" title="Ask the AI what it gets renamed to next">✨ AI prediction</button>`
+    const preds = Array.isArray(d.prediction) ? d.prediction : [];
+    const btn = preds.length
+      ? `<button class="odds-btn" data-pred="${escapeAttr(orList(preds))}" title="Ask the AI what it gets renamed to next">✨ AI guess</button>`
       : "";
     return odds + btn;
   }
 
-  // The AI-prediction button predicts the (made-up) next name: a beat of "thinking",
-  // then the name replaces the button in place.
+  // The AI-guess button offers its (made-up) shortlist of next names: a beat of
+  // "thinking", then the guesses replace the button in place.
   function revealPrediction(btn) {
     if (btn.disabled) return;
     btn.disabled = true;
@@ -408,7 +409,7 @@
       const span = document.createElement("span");
       span.className = "odds odds-pred";
       span.title = "Not a real forecast. We made this up.";
-      span.textContent = `AI predicts: ${btn.dataset.pred}`;
+      span.textContent = `AI guesses: ${btn.dataset.pred}`;
       btn.replaceWith(span);
     };
     const reduced = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -634,7 +635,15 @@
 
   function predictionPool() {
     // Living products only — you can't rename what's already retired.
-    return DATA.filter((d) => kindOf(d) !== "deprecation" && d.prediction);
+    return DATA.filter((d) => kindOf(d) !== "deprecation" && Array.isArray(d.prediction) && d.prediction.length);
+  }
+
+  // "A, B, or C" from a list of names.
+  function orList(arr) {
+    const a = (arr || []).filter(Boolean);
+    if (a.length <= 1) return a[0] || "";
+    if (a.length === 2) return a[0] + " or " + a[1];
+    return a.slice(0, -1).join(", ") + ", or " + a[a.length - 1];
   }
 
   function openNewModal() {
@@ -668,7 +677,7 @@
     const pick = pool[Math.floor(Math.random() * pool.length)];
     body.innerHTML =
       `<p class="new-copy">Why would you need a <b>new</b> product? Around here we don't create products — we <b>rename</b> the ones we already have. It's cheaper, it ships faster, and it comes with a keynote slide.</p>` +
-      `<p class="new-suggest">May we suggest: <b>${escapeHtml(currentNameOf(pick))}</b> <span class="arrow">→</span> <b>${escapeHtml(pick.prediction)}</b></p>` +
+      `<p class="new-suggest">May we suggest: <b>${escapeHtml(currentNameOf(pick))}</b> <span class="arrow">→</span> <b>${escapeHtml(pick.prediction[Math.floor(Math.random() * pick.prediction.length)])}</b></p>` +
       `<p class="new-fine">Not a real roadmap. We made this up — but give it a year.</p>` +
       `<div class="quiz-actions">` +
       `<div class="new-links">` +
@@ -969,14 +978,17 @@
     quizState.asked.push(correct.id);
     quizState.lastId = correct.id;
     const answer = currentNameOf(correct);
-    // Distractors come from the whole dataset (features included), not just the
-    // question pool, so there are always enough distinct names for 4 options.
-    const distractors = shuffle(
-      DATA.map(currentNameOf).filter((n) => n && n !== answer && !n.startsWith("("))
+    // Harder: seed distractors with THIS product's own plausible-but-fake future names
+    // (the most tempting wrong answers), then fill from every other name and predicted
+    // name across the dataset.
+    const own = shuffle((correct.prediction || []).filter((n) => n && n !== answer));
+    const others = shuffle(
+      DATA.flatMap((d) => [currentNameOf(d), ...(d.prediction || [])])
+        .filter((n) => n && n !== answer && !n.startsWith("("))
     );
     const seen = new Set([answer]);
     const options = [answer];
-    for (const n of distractors) {
+    for (const n of [...own.slice(0, 2), ...others]) {
       if (options.length >= 4) break;
       if (!seen.has(n)) { seen.add(n); options.push(n); }
     }

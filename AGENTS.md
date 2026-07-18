@@ -54,9 +54,11 @@ Each entry is one object with a `kind`. Absent `kind` means `"rename"` (back-com
 `lineage`, `renamedAt`, `source`, `verified`. Optional: `aliases`, `occasion`, `note`,
 `prediction`.
 - `current` **must equal** the last `lineage` step (the one with `"to": null`).
-- `prediction` is the one deliberately fictional field: a made-up *next* name that powers
-  the "New" button gag and the odds badge. Renames/features only; the UI always labels it
-  as invented. Everything else stays sourced and real.
+- `prediction` is the one deliberately fictional field: an **array** of made-up *next*
+  names (funny but plausible). They power the "New" button gag, the card's "AI guess"
+  reveal, and the quiz's hardest distractors (a product's own fake future names are the
+  most tempting wrong answers). Renames/features only; the UI always labels them invented.
+  Everything else stays sourced and real.
 
 **Deprecation** (`kind: "deprecation"`) — required: `id`, `name`, `category`, `what`,
 `deprecatedAt`, `status`, `source`, `verified`. Optional: `aliases`, `replacement`,
