@@ -1,0 +1,64 @@
+[
+  {
+    "id": "dlt",
+    "current": "Lakeflow Declarative Pipelines",
+    "aliases": ["Lakeflow Spark Declarative Pipelines", "Lakeflow pipelines", "DLT"],
+    "category": "Data engineering",
+    "what": "Declarative framework for batch and streaming ETL pipelines.",
+    "lineage": [
+      { "name": "Delta Live Tables", "abbr": "DLT", "from": "2021", "to": "2025-06" },
+      { "name": "Lakeflow Declarative Pipelines", "from": "2025-06", "to": null }
+    ],
+    "renamedAt": "2025-06",
+    "occasion": "Data + AI Summit 2025",
+    "note": "Existing DLT code still runs; classic SKUs kept the DLT prefix.",
+    "source": "https://docs.databricks.com/aws/en/ldp/where-is-dlt",
+    "verified": "2026-07-18"
+  },
+  {
+    "id": "workflows",
+    "current": "Lakeflow Jobs",
+    "aliases": ["Workflows", "Jobs"],
+    "category": "Data engineering",
+    "what": "Orchestration for multi-task jobs and pipelines.",
+    "lineage": [
+      { "name": "Workflows", "from": "2022", "to": "2025" },
+      { "name": "Lakeflow Jobs", "from": "2025", "to": null }
+    ],
+    "renamedAt": "2025",
+    "occasion": "Lakeflow GA, 2025",
+    "note": "Folded into the Lakeflow umbrella alongside Connect and Declarative Pipelines.",
+    "source": "https://learn.microsoft.com/en-us/azure/databricks/jobs/",
+    "verified": "2026-07-18"
+  },
+  {
+    "id": "sql-endpoint",
+    "current": "SQL Warehouse",
+    "aliases": ["SQL Endpoint", "SQL Endpoints", "SQL Warehouses"],
+    "category": "Compute / BI",
+    "what": "SQL-optimized compute that powers Databricks SQL.",
+    "lineage": [
+      { "name": "SQL Endpoint", "from": "2021", "to": "2023" },
+      { "name": "SQL Warehouse", "from": "2023", "to": null }
+    ],
+    "renamedAt": "2023",
+    "note": "Databricks docs date this to 2023; some write-ups say 2022.",
+    "source": "https://docs.databricks.com/aws/en/compute/sql-warehouse/",
+    "verified": "2026-07-18"
+  },
+  {
+    "id": "repos",
+    "current": "Git folders",
+    "aliases": ["Databricks Repos", "Repos"],
+    "category": "Developer experience",
+    "what": "In-workspace Git client for version-controlling notebooks and files.",
+    "lineage": [
+      { "name": "Databricks Repos", "from": "2021", "to": "2023" },
+      { "name": "Git folders", "from": "2023", "to": null }
+    ],
+    "renamedAt": "2023",
+    "note": "Git folders support asset types Repos didn't and require a remote repo URL.",
+    "source": "https://learn.microsoft.com/en-us/azure/databricks/repos/what-happened-repos",
+    "verified": "2026-07-18"
+  }
+]

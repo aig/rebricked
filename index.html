@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>rebricked — it's not called that anymore</title>
+  <meta name="description" content="A geeky, deadpan lookup for every product and feature Databricks has renamed." />
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="icon"
+    href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🧱</text></svg>" />
+</head>
+
+<body>
+  <main class="wrap">
+    <header class="masthead">
+      <div class="brand">
+        <h1 class="wordmark">rebricked</h1>
+        <p class="tagline">It's not called that anymore.</p>
+      </div>
+      <div class="controls">
+        <div class="counter" id="counter" title="today − the most recent rename in the dataset">
+          <span class="counter-dot">🟩</span>
+          <span class="counter-text" id="counter-text">counting…</span>
+        </div>
+        <button class="ghost-btn" id="roulette" title="Jump to a random rename">🎲 roulette</button>
+        <button class="ghost-btn" id="theme-toggle" title="Toggle light / dark" aria-label="Toggle theme">◐</button>
+      </div>
+    </header>
+
+    <div class="search-zone">
+      <div class="search-box">
+        <span class="search-icon" aria-hidden="true">🔍</span>
+        <input type="text" id="search" class="search-input" placeholder="type an old name…" autocomplete="off"
+          spellcheck="false" autofocus />
+      </div>
+      <div class="chips" id="chips"></div>
+    </div>
+
+    <section class="results" id="results" aria-live="polite"></section>
+
+    <footer class="footer">
+      <p id="footer-line">Accurate as of the last time we checked — which, given the subject, may already be wrong.</p>
+      <p class="disclaimer">Not affiliated with Databricks. Every entry is sourced and dated.</p>
+    </footer>
+  </main>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <script src="app.js"></script>
+</body>
+
+</html>
