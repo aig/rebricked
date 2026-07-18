@@ -42,6 +42,7 @@ source and current Databricks naming — not just run the schema check.
 | [`scripts/build_badges.py`](scripts/build_badges.py) | Regenerates `badges/<n>-of-5/` — one shareable quiz-result page per score, plus its `og.png`. Run after editing badge copy. Rendering `og.png` needs Edge/Chrome installed; the pages themselves are plain static files. |
 | [`badges/`](badges/) | Generated. One folder per quiz result (0–5 of 5): an OG-tagged `index.html` (with an absolute `og:image`) plus a 1200×630 `og.png`. The quiz's LinkedIn share links here. Don't hand-edit; run the generator. |
 | [`CONTRIBUTING.md`](CONTRIBUTING.md) | The entry schema and field rules. |
+| [`agents/`](agents/) | Task-scoped agent instructions. [`add-databricks-entry.md`](agents/add-databricks-entry.md): investigate a Databricks thing's history + status, then add the right-kind entry. Tool-agnostic; sibling of this file. |
 | [`.github/workflows/`](.github/workflows/) | GitHub Pages CI: validate, then deploy. |
 
 ## Data shape (`databricks.json`)
