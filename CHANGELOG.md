@@ -3,6 +3,23 @@
 All notable changes to **rebricked**, grouped by day.
 Format loosely follows [Keep a Changelog](https://keepachangelog.com/); dates are `YYYY-MM-DD`.
 
+## 2026-07-18 (facts over pricing; icon card actions)
+
+### Changed
+- **`price` → `fact`.** The per-entry line is now a real-but-fun fact *about the feature*
+  (what it does, how it works, its rename history, a documented quirk or codename) instead
+  of a tongue-in-cheek pricing quip. All 43 entries rewritten; rendered as a `.row-fact`
+  line (💡) and carried into the share blurb. `fact` is the new required field — validator,
+  [`CONTRIBUTING.md`](CONTRIBUTING.md), [`AGENTS.md`](AGENTS.md), and the
+  `add-databricks-entry` agent guide updated to match.
+- **Card actions are now an icon toolbar** in each card's **bottom-right** corner (the
+  conventional spot). "copy card" is replaced by **share on LinkedIn**; the copy-link and
+  source links became icon buttons alongside it.
+
+### Mobile
+- On phones the top search bar now takes its own full-width row so it's no longer squeezed
+  by the menu and action buttons.
+
 ## 2026-07-18 (new field — funny-but-accurate pricing)
 
 ### Added

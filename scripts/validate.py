@@ -20,9 +20,9 @@ DATE_RE = re.compile(r"^\d{4}(-(0[1-9]|1[0-2]))?$")  # YYYY or YYYY-MM (real mon
 VERIFIED_RE = re.compile(r"^\d{4}-\d{2}-\d{2}$")     # YYYY-MM-DD
 URL_RE = re.compile(r"^https?://", re.IGNORECASE)
 
-# Fields every entry needs, regardless of kind. `price` is a deadpan one-liner whose
-# billing fact must be real — funny but accurate — so every entry carries one.
-REQUIRED_COMMON = ("id", "category", "what", "price", "source", "verified")
+# Fields every entry needs, regardless of kind. `fact` is a real-but-fun one-liner
+# about the feature — genuinely true, grounded in its history — so every entry carries one.
+REQUIRED_COMMON = ("id", "category", "what", "fact", "source", "verified")
 # A rename tells a lineage story ending in the current name.
 REQUIRED_RENAME = ("current", "lineage", "renamedAt")
 # A deprecation names the retired thing and when it was deprecated.
@@ -213,9 +213,9 @@ def main():
         if "aliases" in entry and not isinstance(entry["aliases"], list):
             err(eid, "aliases must be an array")
 
-        # price must be a non-empty string (the required-field check catches absence)
-        if "price" in entry and not (isinstance(entry["price"], str) and entry["price"].strip()):
-            err(eid, "price must be a non-empty string")
+        # fact must be a non-empty string (the required-field check catches absence)
+        if "fact" in entry and not (isinstance(entry["fact"], str) and entry["fact"].strip()):
+            err(eid, "fact must be a non-empty string")
 
         # prediction (optional, clearly-fictional next names — funny alternatives that
         # power the "New" gag, the card's AI guesses, and the quiz's hardest distractors;

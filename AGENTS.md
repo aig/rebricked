@@ -49,16 +49,16 @@ source and current Databricks naming — not just run the schema check.
 
 Each entry is one object with a `kind`. Absent `kind` means `"rename"` (back-compat).
 `id` is kebab-case and unique across the whole file; dates are `YYYY` or `YYYY-MM`;
-`verified` is `YYYY-MM-DD`; `source` and `price` are required on every entry.
+`verified` is `YYYY-MM-DD`; `source` and `fact` are required on every entry.
 
 **Rename** (`kind` absent or `"rename"`) — required: `id`, `current`, `category`, `what`,
-`price`, `lineage`, `renamedAt`, `source`, `verified`. Optional: `aliases`, `occasion`,
+`fact`, `lineage`, `renamedAt`, `source`, `verified`. Optional: `aliases`, `occasion`,
 `note`, `prediction`.
 - `current` **must equal** the last `lineage` step (the one with `"to": null`).
-- `price` is a deadpan one-liner on what it costs — **funny but accurate**: the billing
-  fact underneath (DBUs, a real SKU tier, the serverless premium, storage/egress, "included
-  at no additional cost") must be true and sourceable. Only the attitude is invented. Unlike
-  `prediction`, it is not fiction; required on every kind.
+- `fact` is a real-but-fun one-liner about the feature — **funny but accurate**: the fact
+  underneath (what it does, how it works, its rename history, a documented quirk) must be
+  true and sourceable. Only the tone is ours. Unlike `prediction`, it is not fiction;
+  required on every kind. Keep it about the feature — not its pricing.
 - `prediction` is the one deliberately fictional field: an **array** of made-up *next*
   names (funny but plausible). They power the "New" button gag, the card's "AI guess"
   reveal, and the quiz's hardest distractors (a product's own fake future names are the
@@ -66,13 +66,13 @@ Each entry is one object with a `kind`. Absent `kind` means `"rename"` (back-com
   Everything else stays sourced and real.
 
 **Deprecation** (`kind: "deprecation"`) — required: `id`, `name`, `category`, `what`,
-`price`, `deprecatedAt`, `status`, `source`, `verified`. Optional: `aliases`, `replacement`,
+`fact`, `deprecatedAt`, `status`, `source`, `verified`. Optional: `aliases`, `replacement`,
 `replacementId` (id of the successor's entry), `removedAt`, `occasion`, `note`.
 - `status` is `"deprecated"` (still around, discouraged), `"retired"` (access ended), or
   `"legacy"` (docs call it legacy/unsupported but no formal deprecation date exists).
 - Omit `replacement` when nothing directly replaces it — the UI shows "retired".
 
-**Feature** (`kind: "feature"`) — required: `id`, `name`, `category`, `what`, `price`,
+**Feature** (`kind: "feature"`) — required: `id`, `name`, `category`, `what`, `fact`,
 `introducedAt`, `source`, `verified`. Optional: `aliases`, `status` (`ga`/`preview`,
 defaults `ga`), `occasion`, `note`, `prediction`.
 - No `lineage`/`renamedAt`/`deprecatedAt`/`replacement` — the validator warns and the UI

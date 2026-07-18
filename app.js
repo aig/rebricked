@@ -33,6 +33,22 @@
   ];
   let emptyIdx = 0;
 
+  // Inline SVGs for the card action toolbar. Stroke-based to match the app's icon
+  // set; LinkedIn is its filled brand glyph (like the GitHub mark in the footer).
+  const ICON = {
+    link:
+      '<svg viewBox="0 0 24 24" width="15" height="15" class="ic" aria-hidden="true">' +
+      '<path d="M10 13a5 5 0 0 0 7.07 0l3-3a5 5 0 1 0-7.07-7.07l-1.72 1.71" />' +
+      '<path d="M14 11a5 5 0 0 0-7.07 0l-3 3a5 5 0 1 0 7.07 7.07l1.71-1.71" /></svg>',
+    source:
+      '<svg viewBox="0 0 24 24" width="15" height="15" class="ic" aria-hidden="true">' +
+      '<path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" />' +
+      '<path d="M15 3h6v6" /><path d="M10 14 21 3" /></svg>',
+    linkedin:
+      '<svg viewBox="0 0 24 24" width="15" height="15" class="gh-icon" aria-hidden="true">' +
+      '<path fill="currentColor" stroke="none" d="M20.45 20.45h-3.56v-5.57c0-1.33-.02-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.94v5.67H9.35V9h3.42v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.46zM5.34 7.43a2.07 2.07 0 1 1 0-4.14 2.07 2.07 0 0 1 0 4.14zM7.12 20.45H3.55V9h3.57zM22.22 0H1.77C.8 0 0 .78 0 1.75v20.5C0 23.22.8 24 1.77 24h20.45c.98 0 1.78-.78 1.78-1.75V1.75C24 .78 23.2 0 22.22 0z" /></svg>',
+  };
+
   // The kind filter (top of results). Orthogonal to section/category/search.
   const FILTERS = [
     { key: "feature", label: "New" },
@@ -406,14 +422,16 @@
   function rowHTML(d, q) {
     const kind = kindOf(d);
 
+    // Card actions live as a compact icon toolbar in the bottom-right corner —
+    // the conventional spot for per-item controls. Source, copy-link, and share.
     const src = d.source
-      ? `<a href="${escapeAttr(d.source)}" target="_blank" rel="noopener">source ↗</a>`
-      : `<span class="nosrc">no source</span>`;
+      ? `<a class="row-act" href="${escapeAttr(d.source)}" target="_blank" rel="noopener" title="Open the source ↗" aria-label="Open the source">${ICON.source}</a>`
+      : "";
     const note = d.note ? `<p class="row-note">${escapeHtml(d.note)}</p>` : "";
-    // A deadpan "what it costs" line. The billing facts are real (DBUs, tiers,
-    // serverless premiums, egress); the attitude is ours. Flagged as such on hover.
-    const price = d.price
-      ? `<p class="row-price" title="Tongue-in-cheek pricing — the billing facts are real, the attitude is ours."><span class="price-coin" aria-hidden="true">💸</span> ${escapeHtml(d.price)}</p>`
+    // A real-but-fun fact about the feature — genuinely true, grounded in each
+    // entry's history; the tone is ours.
+    const fact = d.fact
+      ? `<p class="row-fact"><span class="fact-icon" aria-hidden="true">💡</span> ${escapeHtml(d.fact)}</p>`
       : "";
     const occasion = d.occasion ? ` · ${escapeHtml(d.occasion)}` : "";
 
@@ -447,14 +465,16 @@
       <article class="row${rowCls}" data-id="${escapeAttr(d.id)}">
         <div class="row-main"><div class="lineage">${trail}</div>${oddsCorner}</div>
         <p class="row-what">${escapeHtml(d.what || "")}</p>
-        ${price}
+        ${fact}
         <div class="row-meta">
           <span class="cat">${escapeHtml(d.category || "")}</span>
           ${badge}
-          ${src}
-          <button class="row-act" data-act="link" title="Copy a link to this entry">link</button>
-          <button class="row-act" data-act="card" title="Copy a shareable blurb (paste into Slack)">copy card</button>
           <span class="date">${dateText}</span>
+          <div class="row-actions">
+            <button class="row-act" data-act="link" title="Copy a link to this entry" aria-label="Copy link to this entry">${ICON.link}</button>
+            <button class="row-act" data-act="share" title="Share this entry on LinkedIn" aria-label="Share this entry on LinkedIn">${ICON.linkedin}</button>
+            ${src}
+          </div>
         </div>
         ${note}
       </article>`;
@@ -735,7 +755,7 @@
     newReturnFocus = document.activeElement;
     const closeBtn = $("#new-close");
     if (closeBtn) closeBtn.focus();
-    renderNewSuggestion();
+    renderNewNameForm();
   }
 
   function closeNewModal() {
@@ -775,50 +795,66 @@
     if (see) see.addEventListener("click", () => { closeNewModal(); focusEntry(see.dataset.id); });
   }
 
-  // "Suggest yours" — you can't. Naming is done to you, not by you.
-  const NO_YOURS = [
-    "Love the initiative. Sadly, naming rights require a keynote slot, a rebrand budget, and at least one acquisition — none of which you currently have.",
-    "We floated your idea to the Naming Committee. They renamed it before you finished typing.",
-    "Can't do it. Every product name here must legally contain “Lakeflow”, “Genie”, or “Unity”, and yours contains hope.",
-    "Denied. Your name is far too memorable — it would never survive next year's rebrand.",
-    "External suggestions aren't accepted. Ours have to marinate through two summits and a leadership offsite first.",
+  // The "truth" — deadpan realities about naming things at Databricks. Naming is
+  // done to you, not by you.
+  const TRUTHS = [
+    "Here's the truth: you don't get to name it. Around here we don't create products — we rename the ones we already have. It's cheaper, ships faster, and comes with a keynote slide.",
+    "The truth: whatever you call it, the Naming Committee renamed it before you finished typing. Every product name must legally contain “Lakeflow”, “Genie”, or “Unity”.",
+    "The truth: it'll ship under that name for about a year, marinate through two summits and a leadership offsite, and come back with a “Mosaic AI” prefix nobody asked for.",
+    "The truth: naming rights require a keynote slot, a rebrand budget, and at least one acquisition — none of which a new product currently has.",
+    "The truth: your name is far too clear and memorable. It would never survive next year's rebrand.",
   ];
-  let noYoursIdx = 0;
+  let truthIdx = 0;
 
-  // Step one of "suggest yours": let them type it in. (Step two is the polite no.)
+  // Step one: ask the user to name their new brand / product / feature.
   function renderNewNameForm() {
     const body = $("#new-body");
     if (!body) return;
     body.innerHTML =
-      `<p class="new-copy">All right, pitch us. What would <b>you</b> call it?</p>` +
+      `<p class="new-copy">So you want to launch something new. What's the <b>brand, product, or feature</b> called?</p>` +
       `<input type="text" id="new-name-input" class="new-input" maxlength="60" autocomplete="off" ` +
-      `placeholder="e.g. Lakeflow Genie Unity One" aria-label="Your product name suggestion" />` +
+      `placeholder="e.g. Lakeflow Genie Unity One" aria-label="Your new brand, product, or feature name" />` +
       `<div class="quiz-actions end">` +
-      `<button class="quiz-next" id="new-submit">Submit suggestion</button>` +
+      `<button class="quiz-next" id="new-submit">Tell me the truth</button>` +
       `</div>`;
     const input = $("#new-name-input");
     if (input) input.focus();
-    const go = () => renderNewRefusal(input ? input.value.trim() : "");
+    const go = () => renderNewTruth(input ? input.value.trim() : "");
     const submit = $("#new-submit");
     if (submit) submit.addEventListener("click", go);
     if (input) input.addEventListener("keydown", (e) => { if (e.key === "Enter") go(); });
   }
 
-  // Step two: the polite, deadpan no — now that they've committed to a name.
-  function renderNewRefusal(name) {
+  // Step two: the deadpan truth — now that they've committed to a name. Where we can,
+  // we tell them what it'll *actually* get renamed to (a made-up next name from the pool).
+  function renderNewTruth(name) {
     const body = $("#new-body");
     if (!body) return;
-    const line = NO_YOURS[noYoursIdx++ % NO_YOURS.length];
+    const line = TRUTHS[truthIdx++ % TRUTHS.length];
     const lead = name
       ? `<p class="new-suggest">“${escapeHtml(name)}”? Bold choice.</p>`
       : `<p class="new-suggest">A nameless product. Even bolder.</p>`;
+    // A plausible fake "next name" for their product, borrowed from the prediction pool.
+    const pool = predictionPool();
+    let renamed = "";
+    if (name && pool.length) {
+      const pick = pool[Math.floor(Math.random() * pool.length)];
+      const to = pick.prediction[Math.floor(Math.random() * pick.prediction.length)];
+      renamed = `<p class="new-suggest">Give it a year and “${escapeHtml(name)}” ships as <b>${escapeHtml(to)}</b>.</p>`;
+    }
     body.innerHTML =
       lead +
       `<p class="new-copy">${escapeHtml(line)}</p>` +
+      renamed +
       `<p class="new-fine">Naming is done to you, not by you.</p>` +
-      `<div class="quiz-actions end">` +
+      `<div class="quiz-actions">` +
+      `<div class="new-links">` +
+      `<button class="quiz-see" id="new-retry">try another name</button>` +
+      `</div>` +
       `<button class="quiz-next" id="new-back">Fine, you pick</button>` +
       `</div>`;
+    const retry = $("#new-retry");
+    if (retry) retry.addEventListener("click", renderNewNameForm);
     const back = $("#new-back");
     if (back) back.addEventListener("click", renderNewSuggestion);
   }
@@ -835,11 +871,8 @@
           copy(url).then((ok) =>
             toast(ok ? `Link copied — ${url}` : "Copy failed — select it manually.")
           );
-        } else {
-          const blurb = cardBlurb(d);
-          copy(blurb).then((ok) =>
-            toast(ok ? "Card copied — paste it into Slack." : "Copy failed — select it manually.")
-          );
+        } else if (btn.dataset.act === "share") {
+          shareEntryLinkedIn(d);
         }
       });
     });
@@ -1269,22 +1302,36 @@
     return d.current;
   }
 
-  // A tidy multi-line blurb for pasting into Slack / chat.
+  // A tidy multi-line blurb for sharing (LinkedIn post text, Slack, chat).
   function cardBlurb(d) {
     const kind = kindOf(d);
     const link = entryURL(d.id);
-    const priceLine = d.price ? `\n💸 ${d.price}` : "";
+    const factLine = d.fact ? `\n💡 ${d.fact}` : "";
     if (kind === "feature") {
-      return `🧱 "${d.name}" — new in Databricks (${d.introducedAt || "?"}).\n${d.what || ""}${priceLine}\n${link}`;
+      return `🧱 "${d.name}" — new in Databricks (${d.introducedAt || "?"}).\n${d.what || ""}${factLine}\n${link}`;
     }
     if (kind === "deprecation") {
       const successor = d.replacement
         ? `use "${d.replacement}" now`
         : "retired, no direct replacement";
-      return `🧱 "${d.name}" is deprecated — ${successor}.\n${d.what || ""}${priceLine}\n${link}`;
+      return `🧱 "${d.name}" is deprecated — ${successor}.\n${d.what || ""}${factLine}\n${link}`;
     }
     const first = d.lineage && d.lineage[0] ? d.lineage[0].name : d.current;
-    return `🧱 It's not called "${first}" anymore — it's "${d.current}" now (renamed ${d.renamedAt || "?"}).\n${d.what || ""}${priceLine}\n${link}`;
+    return `🧱 It's not called "${first}" anymore — it's "${d.current}" now (renamed ${d.renamedAt || "?"}).\n${d.what || ""}${factLine}\n${link}`;
+  }
+
+  // Share a single entry on LinkedIn. Mirrors the quiz share: copy the blurb to the
+  // clipboard (LinkedIn's share dialog no longer accepts prefilled text) and open the
+  // share-offsite dialog pointed at the entry's deep link.
+  function shareEntryLinkedIn(d) {
+    const link = entryURL(d.id);
+    const blurb = cardBlurb(d);
+    const shareUrl =
+      "https://www.linkedin.com/sharing/share-offsite/?url=" + encodeURIComponent(link);
+    copy(blurb).then((ok) => {
+      toast(ok ? "Blurb copied — paste it into your LinkedIn post." : "Opening LinkedIn…");
+      window.open(shareUrl, "_blank", "noopener,noreferrer");
+    });
   }
 
   // ---- year timeline (Home) ----
