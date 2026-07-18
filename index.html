@@ -1,49 +1,88 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="dark">
+<html lang="en">
 
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>rebricked — it's not called that anymore</title>
-  <meta name="description" content="A geeky, deadpan lookup for every product and feature Databricks has renamed." />
+  <meta name="description" content="A geeky, deadpan lookup for every product and feature Databricks has renamed, dressed as the Databricks console." />
   <link rel="stylesheet" href="styles.css" />
   <link rel="icon"
     href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🧱</text></svg>" />
 </head>
 
 <body>
-  <main class="wrap">
-    <header class="masthead">
-      <div class="brand">
-        <h1 class="wordmark">rebricked by Databricks</h1>
-        <p class="tagline">It's not called that anymore.</p>
+  <div class="app">
+    <!-- ===== Sidebar (Databricks-style rail) ===== -->
+    <aside class="sidebar" aria-label="Primary">
+      <div class="side-brand">
+        <span class="logo" aria-hidden="true">
+          <svg viewBox="0 0 32 32" width="26" height="26">
+            <g fill="#FF3621">
+              <path d="M2 11.2 16 4l14 7.2-3.1 1.6L16 7.2 5.1 12.8Z" opacity=".95" />
+              <path d="M2 16 16 8.8 30 16l-3.1 1.6L16 12l-10.9 5.6Z" opacity=".8" />
+              <path d="M2 20.8 16 13.6 30 20.8 16 28 2 20.8Zm3.1.1L16 26.4l10.9-5.5L16 16.8Z" opacity=".65" />
+            </g>
+          </svg>
+        </span>
+        <span class="brand-text">
+          <span class="brand-name">databricks</span>
+          <span class="brand-edition">rebricked edition</span>
+        </span>
       </div>
-      <div class="controls">
-        <div class="counter" id="counter" title="today − the most recent rename in the dataset">
-          <span class="counter-dot">🟩</span>
-          <span class="counter-text" id="counter-text">counting…</span>
+
+      <button class="side-new" id="side-new">
+        <svg viewBox="0 0 24 24" width="18" height="18" class="ic"><path d="M12 5v14M5 12h14" /></svg>
+        <span>New</span>
+      </button>
+
+      <nav class="nav" id="nav" aria-label="Databricks navigation"></nav>
+
+      <div class="side-foot">
+        <span class="dot-legend"><i class="renamed-dot"></i> renamed — click for history</span>
+      </div>
+    </aside>
+
+    <!-- ===== Main ===== -->
+    <div class="main">
+      <header class="topbar">
+        <div class="topsearch">
+          <svg viewBox="0 0 24 24" width="16" height="16" class="ic"><circle cx="11" cy="11" r="7" /><path d="m21 21-4.3-4.3" /></svg>
+          <input type="text" id="search" class="search-input" placeholder="Search an old name — “DLT”, “SQL Endpoint”, “Repos”…"
+            autocomplete="off" spellcheck="false" autofocus />
+          <kbd class="slash">/</kbd>
         </div>
-        <button class="ghost-btn" id="roulette" title="Jump to a random rename">🎲 roulette</button>
-        <button class="ghost-btn" id="theme-toggle" title="Toggle light / dark" aria-label="Toggle theme">◐</button>
-      </div>
-    </header>
+        <div class="topactions">
+          <div class="counter" id="counter" title="days since the most recent rename in the dataset">
+            <span class="counter-text" id="counter-text">counting…</span>
+          </div>
+          <button class="icon-btn" id="roulette" title="Jump to a random rename" aria-label="Random rename">
+            <svg viewBox="0 0 24 24" width="18" height="18" class="ic"><rect x="3" y="3" width="18" height="18" rx="4" /><circle cx="8.5" cy="8.5" r="1.4" fill="currentColor" stroke="none"/><circle cx="15.5" cy="15.5" r="1.4" fill="currentColor" stroke="none"/><circle cx="15.5" cy="8.5" r="1.4" fill="currentColor" stroke="none"/><circle cx="8.5" cy="15.5" r="1.4" fill="currentColor" stroke="none"/></svg>
+          </button>
+          <button class="icon-btn" id="theme-toggle" title="Toggle light / dark" aria-label="Toggle theme">
+            <svg viewBox="0 0 24 24" width="18" height="18" class="ic"><path d="M12 3a9 9 0 1 0 9 9c-4.97 0-9-4.03-9-9Z" /></svg>
+          </button>
+        </div>
+      </header>
 
-    <div class="search-zone">
-      <div class="search-box">
-        <span class="search-icon" aria-hidden="true">🔍</span>
-        <input type="text" id="search" class="search-input" placeholder="type an old name…" autocomplete="off"
-          spellcheck="false" autofocus />
+      <div class="content">
+        <div class="page-head">
+          <h1 class="page-title">It's not called that anymore</h1>
+          <p class="page-sub">Every product and feature Databricks has renamed — sourced, dated, and searchable.
+            The items in the rail with an <i class="renamed-dot"></i> are the ones that changed.</p>
+        </div>
+
+        <div class="chips" id="chips"></div>
+
+        <section class="results" id="results" aria-live="polite"></section>
+
+        <footer class="footer">
+          <p id="footer-line">Accurate as of the last time we checked — which, given the subject, may already be wrong.</p>
+          <p class="disclaimer">Not affiliated with Databricks. Console chrome is an homage; every entry is sourced and dated.</p>
+        </footer>
       </div>
-      <div class="chips" id="chips"></div>
     </div>
-
-    <section class="results" id="results" aria-live="polite"></section>
-
-    <footer class="footer">
-      <p id="footer-line">Accurate as of the last time we checked — which, given the subject, may already be wrong.</p>
-      <p class="disclaimer">Not affiliated with Databricks. Every entry is sourced and dated.</p>
-    </footer>
-  </main>
+  </div>
 
   <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
