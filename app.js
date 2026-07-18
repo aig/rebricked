@@ -21,6 +21,7 @@
   const resetKinds = () => { activeKinds = new Set(KIND_KEYS); };
   let activeYear = null;    // "2025" etc. when a timeline bar is selected
   let focusId = null;       // a single deep-linked entry (#id), overrides everything
+  let lastRouletteId = null; // last randomizer winner, to avoid picking it twice running
 
   // Rotated on each empty render so the deadpan doesn't get stale.
   const EMPTY_LINES = [
@@ -34,10 +35,9 @@
 
   // The kind filter (top of results). Orthogonal to section/category/search.
   const FILTERS = [
-    { key: "all", label: "All" },
+    { key: "feature", label: "New" },
     { key: "rename", label: "Renamed" },
-    { key: "deprecation", label: "Deprecated & removed" },
-    { key: "feature", label: "New features" },
+    { key: "deprecation", label: "Deprecated" },
   ];
 
   // ---- sidebar config: mirrors the Databricks console rail ----
@@ -870,7 +870,16 @@
     const rows = resultsEl.querySelectorAll(".row");
     if (rows.length === 0) return;
 
-    // a short beat of fake suspense, then land
+    // Pick the winner up front, at random, avoiding an immediate repeat.
+    let target = Math.floor(Math.random() * rows.length);
+    if (rows.length > 1) {
+      while (rows[target].dataset.id === lastRouletteId) {
+        target = Math.floor(Math.random() * rows.length);
+      }
+    }
+    lastRouletteId = rows[target].dataset.id;
+
+    // a short beat of fake suspense, then land on the pre-chosen target
     let ticks = 6 + Math.floor(rows.length * 0.7);
     let i = 0;
     const spin = () => {
@@ -882,7 +891,7 @@
         setTimeout(spin, 60 + (1 - ticks / 12) * 40);
       } else {
         rows.forEach((r) => r.classList.remove("flash"));
-        const winner = rows[(i - 1) % rows.length];
+        const winner = rows[target];
         winner.classList.add("flash");
         winner.scrollIntoView({ behavior: "smooth", block: "center" });
         // The roulette shows the full list, so the URL must reflect that state —
