@@ -65,7 +65,8 @@ Format loosely follows [Keep a Changelog](https://keepachangelog.com/); dates ar
   MosaicML → Mosaic AI / Redash (an acquisition and an absorption, not product renames).
 - Still pending verification before adding: Databricks Assistant → Genie Code,
   Feature Store → Feature Engineering in Unity Catalog, OLTP Database → Lakebase Postgres,
-  SQL Analytics → Databricks SQL.
+  SQL Analytics → Databricks SQL. _(Genie Code and Databricks SQL were verified and added
+  later the same day — see the section above.)_
 
 <!--
 Template for the next day:
