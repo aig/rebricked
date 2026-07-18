@@ -655,10 +655,13 @@
       if (e.key === "Escape" && sb && sb.classList.contains("open")) setSidebarOpen(false);
     });
 
+    // Dark by default; an explicit choice (saved) always wins. Mirrors the head script.
     try {
       const saved = localStorage.getItem("rebricked-theme");
-      if (saved) document.documentElement.dataset.theme = saved;
-    } catch (e) {}
+      document.documentElement.dataset.theme = saved || "dark";
+    } catch (e) {
+      document.documentElement.dataset.theme = "dark";
+    }
 
     // "/" focuses search, like every tool this audience already lives in.
     document.addEventListener("keydown", (e) => {
