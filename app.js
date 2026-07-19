@@ -1155,7 +1155,9 @@
 
   // ---- quiz: "guess the current name" ----
   const QUIZ_LEN = 5; // questions per round
-  const quizState = { score: 0, total: 0, streak: 0, answered: false, asked: [], lastId: null };
+  const QUIZ_KEYS = ["A", "B", "C", "D"]; // Millionaire-style answer labels
+  // marks[] holds one true/false per answered question, driving the money-tree ladder.
+  const quizState = { score: 0, total: 0, streak: 0, answered: false, asked: [], lastId: null, marks: [] };
   let quizReturnFocus = null; // element to restore focus to when the dialog closes
 
   // Entries that pose a fair "what's it called now?" question: renames (old → current)
@@ -1192,6 +1194,8 @@
     quizState.streak = 0;
     quizState.asked = [];
     quizState.lastId = null;
+    quizState.marks = [];
+    renderLadder();
     el.hidden = false;
     document.body.classList.add("modal-open");
     quizReturnFocus = document.activeElement;
@@ -1278,6 +1282,21 @@
     if (share) share.hidden = quizState.total < QUIZ_LEN;
   }
 
+  // The money-tree ladder: one segment per question — answered ones show
+  // correct/miss, the current (or next) one is lit in accent red.
+  function renderLadder() {
+    const el = $("#quiz-ladder");
+    if (!el) return;
+    let html = "";
+    for (let n = 0; n < QUIZ_LEN; n++) {
+      let cls = "quiz-rung";
+      if (n < quizState.marks.length) cls += quizState.marks[n] ? " done" : " miss";
+      else if (n === quizState.marks.length) cls += " now";
+      html += `<div class="${cls}"></div>`;
+    }
+    el.innerHTML = html;
+  }
+
   function nextQuestion() {
     const body = $("#quiz-body");
     const pool = quizPool();
@@ -1326,14 +1345,17 @@
     }
     const choices = shuffle(options);
 
+    renderLadder();
     body.innerHTML =
       `<p class="quiz-progress">Question ${quizState.total + 1} of ${QUIZ_LEN}</p>` +
-      `<p class="quiz-q">What is <b>“${escapeHtml(quizPrompt(correct))}”</b> called now?</p>` +
+      `<p class="quiz-q">What is <span class="quiz-name">${escapeHtml(quizPrompt(correct))}</span> called now?</p>` +
       `<div class="quiz-opts">` +
       choices
         .map(
-          (c) =>
-            `<button class="quiz-opt" data-name="${escapeAttr(c)}">${escapeHtml(c)}</button>`
+          (c, idx) =>
+            `<button class="quiz-opt" data-name="${escapeAttr(c)}">` +
+            `<span class="quiz-opt-in"><span class="quiz-key">${QUIZ_KEYS[idx]}</span>` +
+            `<span class="quiz-val">${escapeHtml(c)}</span></span></button>`
         )
         .join("") +
       `</div>` +
@@ -1347,36 +1369,49 @@
   function answerQuestion(btn, answer, entry) {
     if (quizState.answered) return;
     quizState.answered = true;
-    quizState.total++;
     const opts = $("#quiz-body").querySelectorAll(".quiz-opt");
-    const chosen = btn.dataset.name;
-    const right = chosen === answer;
-    if (right) { quizState.score++; quizState.streak++; }
-    else { quizState.streak = 0; }
+    const right = btn.dataset.name === answer;
 
-    opts.forEach((o) => {
-      o.disabled = true;
-      if (o.dataset.name === answer) o.classList.add("correct");
-      else if (o === btn) o.classList.add("wrong");
-    });
-    updateQuizScore();
+    // Lock in the pick and hold — the "is that your final answer?" beat — then reveal.
+    opts.forEach((o) => { o.disabled = true; });
+    btn.classList.add("locked");
+    const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-    const foot = $("#quiz-foot");
-    if (foot) {
-      const verdict = right
-        ? `<span class="quiz-ok">Correct.</span>`
-        : `<span class="quiz-no">Nope — it's “${escapeHtml(answer)}”.</span>`;
-      const done = quizState.total >= QUIZ_LEN;
-      // The entry opens in a new tab so the quiz stays open behind it.
-      foot.innerHTML =
-        `<p class="quiz-expl">${verdict} ${escapeHtml(entry.what || "")}</p>` +
-        `<div class="quiz-actions">` +
-        `<a class="quiz-see" href="${escapeAttr(entryURL(entry.id))}" target="_blank" rel="noopener">see the entry ↗</a>` +
-        `<button class="quiz-next">${done ? "See results" : "Next →"}</button>` +
-        `</div>`;
-      const next = foot.querySelector(".quiz-next");
-      if (next) next.addEventListener("click", nextQuestion);
-    }
+    setTimeout(() => {
+      btn.classList.remove("locked");
+      quizState.total++;
+      quizState.marks.push(right);
+      if (right) { quizState.score++; quizState.streak++; }
+      else { quizState.streak = 0; }
+
+      opts.forEach((o) => {
+        if (o.dataset.name === answer) o.classList.add("correct");
+        else if (o === btn) o.classList.add("wrong");
+      });
+      updateQuizScore();
+      renderLadder();
+
+      const foot = $("#quiz-foot");
+      if (foot) {
+        const verdict = right
+          ? `<span class="quiz-ok">Correct — you kept up.</span>`
+          : `<span class="quiz-no">Nope — it moved on without you.</span>`;
+        const done = quizState.total >= QUIZ_LEN;
+        // The entry opens in a new tab so the quiz stays open behind it.
+        foot.innerHTML =
+          `<p class="quiz-chain">` +
+          `<span class="old">${escapeHtml(quizPrompt(entry))}</span>` +
+          `<span class="arw">→</span>` +
+          `<span class="new">${escapeHtml(answer)}</span></p>` +
+          `<p class="quiz-expl">${verdict} ${escapeHtml(entry.what || "")}</p>` +
+          `<div class="quiz-actions">` +
+          `<a class="quiz-see" href="${escapeAttr(entryURL(entry.id))}" target="_blank" rel="noopener">see the entry ↗</a>` +
+          `<button class="quiz-next">${done ? "See results" : "Next →"}</button>` +
+          `</div>`;
+        const next = foot.querySelector(".quiz-next");
+        if (next) next.addEventListener("click", nextQuestion);
+      }
+    }, reduceMotion ? 0 : 1000);
   }
 
   function finishQuiz() {
@@ -1408,6 +1443,8 @@
       quizState.streak = 0;
       quizState.asked = [];
       quizState.lastId = null;
+      quizState.marks = [];
+      renderLadder();
       nextQuestion();
     });
     const done = $("#quiz-done");

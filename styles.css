@@ -1921,10 +1921,55 @@ body.modal-open {
   color: var(--faint);
 }
 
+/* money-tree ladder — one segment per question */
+.quiz-ladder {
+  display: flex;
+  gap: 6px;
+  margin: 12px 0 16px;
+}
+
+.quiz-rung {
+  flex: 1;
+  height: 8px;
+  border-radius: 99px;
+  background: var(--bg);
+  border: 1px solid var(--line);
+  transition: background .25s, border-color .25s, box-shadow .25s;
+}
+
+.quiz-rung.done {
+  background: var(--c-active);
+  border-color: var(--c-active);
+}
+
+.quiz-rung.miss {
+  background: var(--c-deprecated);
+  border-color: var(--c-deprecated);
+}
+
+.quiz-rung.now {
+  background: var(--accent);
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 20%, transparent);
+}
+
 .quiz-q {
   margin: 6px 0 14px;
   font-size: 16px;
   line-height: 1.5;
+}
+
+/* the old name, in the console's mono rename-chip idiom */
+.quiz-name {
+  font-family: var(--mono);
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--accent);
+  background: color-mix(in srgb, var(--accent) 12%, var(--panel));
+  border: 1px solid color-mix(in srgb, var(--accent) 30%, transparent);
+  padding: 1px 8px;
+  border-radius: 7px;
+  white-space: nowrap;
 }
 
 /* results screen */
@@ -1952,46 +1997,150 @@ body.modal-open {
   color: var(--muted);
 }
 
+/* answer lozenges — the Who-Wants-to-Be-a-Millionaire hexagon, 2×2 */
 .quiz-opts {
   display: grid;
-  gap: 8px;
+  grid-template-columns: 1fr 1fr;
+  gap: 11px;
 }
 
+/* .quiz-opt is the 1.5px border layer; .quiz-opt-in is the fill. Both clipped
+   to the same hexagon so the border traces the pointed ends. */
 .quiz-opt {
-  text-align: left;
-  padding: 11px 14px;
-  border: 1px solid var(--line);
-  border-radius: 10px;
-  background: var(--bg);
-  color: var(--ink);
-  font-family: inherit;
-  font-size: 14px;
-  font-weight: 500;
+  position: relative;
+  padding: 1.5px;
+  border: 0;
   cursor: pointer;
-  transition: border-color .12s, background .12s;
+  font-family: inherit;
+  background: var(--line);
+  transition: transform .12s, background .14s;
+  clip-path: polygon(4.5% 0, 95.5% 0, 100% 50%, 95.5% 100%, 4.5% 100%, 0 50%);
 }
 
-.quiz-opt:hover:not(:disabled) {
-  border-color: var(--accent);
+.quiz-opt-in {
+  clip-path: polygon(4.5% 0, 95.5% 0, 100% 50%, 95.5% 100%, 4.5% 100%, 0 50%);
+  background: var(--panel);
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  padding: 12px 20px;
+  min-height: 54px;
+  text-align: left;
+}
+
+.quiz-key {
+  flex: 0 0 auto;
+  width: 15px;
+  font-family: var(--mono);
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--accent);
+}
+
+.quiz-val {
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1.2;
+  color: var(--ink);
+}
+
+.quiz-opt:not(:disabled):hover {
+  transform: translateY(-1px);
+  background: var(--accent);
+}
+
+.quiz-opt:not(:disabled):hover .quiz-opt-in {
+  background: color-mix(in srgb, var(--accent) 10%, var(--panel));
 }
 
 .quiz-opt:disabled {
   cursor: default;
 }
 
+.quiz-opt:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+}
+
+/* lock-in suspense — the "final answer?" pause, in Databricks red */
+.quiz-opt.locked {
+  background: var(--accent);
+  animation: quiz-lock 1s ease-in-out infinite;
+}
+
+.quiz-opt.locked .quiz-opt-in {
+  background: color-mix(in srgb, var(--accent) 18%, var(--panel));
+}
+
+.quiz-opt.locked .quiz-key {
+  color: var(--accent-ink);
+}
+
+@keyframes quiz-lock {
+  0%, 100% { filter: brightness(1); }
+  50% { filter: brightness(1.14); }
+}
+
 .quiz-opt.correct {
-  border-color: var(--ok);
-  background: color-mix(in srgb, var(--ok) 14%, var(--panel));
-  color: var(--ink);
+  background: var(--c-active);
+}
+
+.quiz-opt.correct .quiz-opt-in {
+  background: color-mix(in srgb, var(--c-active) 15%, var(--panel));
+}
+
+.quiz-opt.correct .quiz-key {
+  color: var(--c-active-ink);
 }
 
 .quiz-opt.wrong {
-  border-color: var(--warn);
-  background: color-mix(in srgb, var(--warn) 14%, var(--panel));
+  background: var(--c-deprecated);
+}
+
+.quiz-opt.wrong .quiz-opt-in {
+  background: color-mix(in srgb, var(--c-deprecated) 15%, var(--panel));
+}
+
+.quiz-opt.wrong .quiz-key {
+  color: var(--c-deprecated-ink);
+}
+
+@media (max-width: 480px) {
+  .quiz-opts { grid-template-columns: 1fr; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .quiz-opt.locked { animation: none; }
 }
 
 .quiz-foot {
   margin-top: 14px;
+}
+
+/* the reveal: former name → current name, in the rename-chain idiom */
+.quiz-chain {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin: 0 0 10px;
+  font-family: var(--mono);
+  font-size: 12.5px;
+}
+
+.quiz-chain .old {
+  color: var(--muted);
+  text-decoration: line-through;
+  text-decoration-color: color-mix(in srgb, var(--muted) 60%, transparent);
+}
+
+.quiz-chain .arw {
+  color: var(--c-active);
+}
+
+.quiz-chain .new {
+  color: var(--ink);
+  font-weight: 700;
 }
 
 .quiz-expl {
