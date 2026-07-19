@@ -62,8 +62,19 @@ deprecated in 2024), record what's true and say so in your report.
 
 `Read` [`databricks.json`](../databricks.json) and grep for the name / candidate `id` and
 any historical names. If the thing is already tracked, update that entry rather than adding
-a duplicate. `id` is kebab-case and **unique across the whole file** (all kinds share one
-namespace).
+a duplicate.
+
+**The id follows the name.** Every card's `id` is the kebab-case slug of **its own `name`**,
+with any parenthetical qualifier dropped, and **unique across the whole file** (all kinds
+share one namespace). Examples: `"Unity Catalog Volumes"` → `unity-catalog-volumes`;
+`"Attribute-based access control (ABAC)"` → `attribute-based-access-control`;
+`"Databricks CLI (v0.205+)"` → `databricks-cli`. The validator enforces this exactly, so a
+mismatched id fails the gate.
+
+**Ids are permanent.** Once a card exists, its id never changes - not to tidy a mismatch,
+and not when the product is later renamed. A rename adds a **new** card whose id is the new
+name's slug and points the old card's `successorId` at it; the old card keeps its id and
+name unchanged. Do not re-slug existing entries.
 
 ## Step 4 - Write the entry (shape depends on the kind)
 
@@ -74,7 +85,7 @@ about that name, never mentioning the successor. Predecessors are derived from `
 
 ```json
 {
-  "id": "old-name-slug",
+  "id": "old-name",
   "name": "Old Name",
   "abbr": "ON",
   "category": "Data engineering",
@@ -82,13 +93,13 @@ about that name, never mentioning the successor. Predecessors are derived from `
   "fact": "Self-contained real-but-fun one-liner about THIS name (a quirk, its origin, a detail).",
   "from": "2021",
   "to": "2023",
-  "successorId": "kebab-case-unique-id",
+  "successorId": "the-newest-name",
   "status": "renamed",
   "source": "https://docs.databricks.com/...",
   "verified": "YYYY-MM-DD"
 },
 {
-  "id": "kebab-case-unique-id",
+  "id": "the-newest-name",
   "name": "The Newest Name",
   "aliases": ["What people type", "ABBR"],
   "category": "Data engineering",
@@ -108,7 +119,7 @@ card. `removedAt` must not precede `deprecatedAt`.
 
 ```json
 {
-  "id": "kebab-case-unique-id",
+  "id": "the-retired-thing",
   "kind": "deprecation",
   "name": "The Retired Thing",
   "aliases": ["what people type", "/legacy/path"],
@@ -131,7 +142,7 @@ add a card for the new name and set this one's `successorId` to it.
 
 ```json
 {
-  "id": "kebab-case-unique-id",
+  "id": "the-new-thing",
   "kind": "feature",
   "name": "The New Thing",
   "aliases": ["what people type", "ABBR"],

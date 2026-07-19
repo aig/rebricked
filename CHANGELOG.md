@@ -6,6 +6,16 @@ Format loosely follows [Keep a Changelog](https://keepachangelog.com/); dates ar
 ## 2026-07-19 (status-based filter, palette, colour-coded timeline, analytics)
 
 ### Changed
+- **Ids now follow the name, and the gate enforces it.** Every card's `id` is the kebab
+  slug of its own `name` (parenthetical qualifiers dropped), so a deep link always lands on
+  the card for the product named in the link - and when that product was renamed, the card
+  shows it. 31 ids were normalised (e.g. `workflows` → `lakeflow-jobs` with the former name
+  reclaiming `workflows`; `dlt` → `lakeflow-declarative-pipelines`; `abac` →
+  `attribute-based-access-control`), with all `successorId` pointers and the `app.js` NAV
+  updated to match. `validate.py` gained a hard check that `id == name_slug(name)`. **Ids are
+  permanent from here on:** a rename adds a new card, it never re-slugs an existing id. Old
+  deep links to the retired ids no longer resolve (no redirects). Contributor/agent docs
+  updated to match.
 - **Merged `state` into `status` - one lifecycle field per card.** Renames previously used
   `state` (`current`/`renamed`) while deprecations/features used `status` and redundantly
   copied it into `state` (they were always equal). Now every card carries a single `status`

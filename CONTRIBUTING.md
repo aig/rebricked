@@ -22,7 +22,7 @@ one `"renamed"` card per former name (add another `"renamed"` card for each extr
 
 ```json
 {
-  "id": "old-name-slug",
+  "id": "old-name",
   "name": "Old Name",
   "abbr": "ON",
   "category": "Data engineering",
@@ -30,13 +30,13 @@ one `"renamed"` card per former name (add another `"renamed"` card for each extr
   "fact": "Self-contained real-but-fun one-liner about THIS name - don't mention the newer name.",
   "from": "2021",
   "to": "2023",
-  "successorId": "kebab-case-unique-id",
+  "successorId": "the-newest-name",
   "status": "renamed",
   "source": "https://docs.databricks.com/...",
   "verified": "YYYY-MM-DD"
 },
 {
-  "id": "kebab-case-unique-id",
+  "id": "the-newest-name",
   "name": "The Newest Name",
   "aliases": ["What people actually type", "ABBR"],
   "category": "Data engineering",
@@ -55,7 +55,7 @@ one `"renamed"` card per former name (add another `"renamed"` card for each extr
 
 ```json
 {
-  "id": "kebab-case-unique-id",
+  "id": "the-retired-thing",
   "kind": "deprecation",
   "name": "The Retired Thing",
   "aliases": ["what people type", "/legacy/path"],
@@ -78,7 +78,7 @@ one `"renamed"` card per former name (add another `"renamed"` card for each extr
 
 ```json
 {
-  "id": "kebab-case-unique-id",
+  "id": "the-new-thing",
   "kind": "feature",
   "name": "The New Thing",
   "aliases": ["what people type", "ABBR"],
@@ -123,7 +123,14 @@ one `"renamed"` card per former name (add another `"renamed"` card for each extr
   Unlike `prediction`, it is **not** fiction - only the tone is ours; the fact underneath
   must be real and sourceable (what it does, how it works, its rename history, a documented
   quirk or codename). Keep it about the feature, not its pricing. One or two sentences.
-- `id` is kebab-case and unique across the whole file (renames and deprecations share it).
+- `id` is the kebab-case slug of the entry's own `name`, with any parenthetical qualifier
+  dropped, and unique across the whole file (all kinds share one namespace). Examples:
+  `"Unity Catalog Volumes"` → `unity-catalog-volumes`;
+  `"Attribute-based access control (ABAC)"` → `attribute-based-access-control`. The validator
+  enforces this. **Ids are permanent:** once assigned, an id never changes - not to fix a
+  mismatch, not on a later rename. A rename adds a *new* card with the new name's slug and
+  points the old card's `successorId` at it; the old card keeps its id. Never re-slug an
+  existing entry.
 - Dates use `YYYY` or `YYYY-MM`. Precision is optional; honesty about precision is not.
 - Never use em dashes (`—`) in any text field. Use a hyphen (`-`) instead.
 - If sources disagree on a date, use the official doc's date and say so in `note`.

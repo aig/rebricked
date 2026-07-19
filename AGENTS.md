@@ -54,8 +54,13 @@ the old one. Predecessors are *derived* (any card whose `successorId` points her
 only ever store the forward link.
 
 Each entry is one object with a `kind`. Absent `kind` means `"rename"` (back-compat).
-`id` is kebab-case and unique across the whole file; dates are `YYYY` or `YYYY-MM`;
-`verified` is `YYYY-MM-DD`; `source` and `fact` are required on every entry.
+`id` is the kebab-case slug of the entry's own `name` (parenthetical qualifiers dropped) and
+unique across the whole file - e.g. `"Unity Catalog Volumes"` → `unity-catalog-volumes`,
+`"Databricks CLI (v0.205+)"` → `databricks-cli`; the validator enforces it. **Ids are
+permanent:** once set, an id never changes - a rename adds a new card with the new name's
+slug and repoints the old card's `successorId`; the old card keeps its id, never re-slugged.
+Dates are `YYYY` or `YYYY-MM`; `verified` is `YYYY-MM-DD`; `source` and `fact` are required
+on every entry.
 - `fact` is a real-but-fun one-liner about **this card's** thing - **funny but accurate**,
   true and sourceable, and **self-contained** (don't mention the successor/predecessor -
   those are their own linked cards). Only the tone is ours. Not fiction; required on every kind.

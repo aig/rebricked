@@ -52,6 +52,16 @@ VALID_CATEGORIES = (
 )
 
 
+def name_slug(name):
+    """The id convention: kebab-case slug of the entry's own name, with any
+    parenthetical qualifier (version/abbreviation/disambiguator) dropped.
+    'Unity Catalog Volumes' -> 'unity-catalog-volumes';
+    'Attribute-based access control (ABAC)' -> 'attribute-based-access-control';
+    'Databricks CLI (v0.205+)' -> 'databricks-cli'."""
+    base = re.sub(r"\([^)]*\)", "", str(name))  # drop "(...)" qualifiers
+    return re.sub(r"[^a-z0-9]+", "-", base.lower()).strip("-")
+
+
 def ym(date_str):
     """'2024' -> (2024, None); '2024-03' -> (2024, 3). Assumes DATE_RE matched."""
     parts = str(date_str).split("-")
@@ -128,6 +138,15 @@ def main():
             seen_ids.add(entry["id"])
             if not re.match(r"^[a-z0-9-]+$", str(entry["id"])):
                 err(eid, "id must be kebab-case [a-z0-9-]")
+            # id follows the name: it is the name's slug (parentheticals dropped).
+            # Existing ids are frozen - a rename adds a NEW card with the new name's
+            # slug; it never mutates an id in place. New entries must conform.
+            name = entry.get("name")
+            if name:
+                want = name_slug(name)
+                if str(entry["id"]) != want:
+                    err(eid, f"id must be the name slug {want!r} (from name {name!r}); "
+                             "ids follow the name")
 
         # source must be a URL
         src = entry.get("source")
