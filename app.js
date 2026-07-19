@@ -850,6 +850,8 @@
     // Quiz overlay controls.
     const quizOpen = $("#quiz-open");
     if (quizOpen) quizOpen.addEventListener("click", () => { track("quiz-open"); openQuiz(); });
+    const quizBanner = $("#quiz-banner");
+    if (quizBanner) quizBanner.addEventListener("click", () => { track("quiz-open", { source: "home-banner" }); openQuiz(); });
     const quizClose = $("#quiz-close");
     if (quizClose) quizClose.addEventListener("click", closeQuiz);
     const quizEl = $("#quiz");

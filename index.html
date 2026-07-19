@@ -116,15 +116,45 @@
         <div class="challenge" id="challenge" hidden></div>
 
         <div class="page-head">
-          <h1 class="page-title">Databricks renamed it</h1>
-          <p class="page-sub">Every Databricks product and feature that's been renamed, deprecated, or newly shipped -
-            sourced, dated, and searchable. The items in the rail with an <i class="renamed-dot"></i> are the ones that
-            changed. Use the filter to see what's <b>active</b>, <b>renamed</b>, <b>legacy</b>, or
-            everything.
-          </p>
+          <div class="page-head-copy">
+            <h1 class="page-title">Databricks renamed it</h1>
+            <p class="page-sub">Every Databricks product and feature that's been renamed, deprecated, or newly shipped -
+              sourced, dated, and searchable. The items in the rail with an <i class="renamed-dot"></i> are the ones that
+              changed. Use the filter to see what's <b>active</b>, <b>renamed</b>, <b>legacy</b>, or
+              everything.
+            </p>
+            <div class="spotlight" id="spotlight" hidden></div>
+          </div>
+          <button class="quiz-banner" id="quiz-banner" type="button" aria-label="Take the quiz and get your badge">
+            <span class="quiz-banner-eyebrow">REbricked certified</span>
+            <span class="quiz-banner-badge" aria-hidden="true">
+              <svg class="quiz-banner-emblem" viewBox="0 0 200 240">
+                <defs>
+                  <linearGradient id="quiz-badge-hex" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="0" stop-color="#1B2230" />
+                    <stop offset="1" stop-color="#0E1116" />
+                  </linearGradient>
+                </defs>
+                <path d="M74 150 H100 V236 L87 221 74 236 Z" fill="#6E8BF5" />
+                <path d="M126 150 H100 V236 L113 221 126 236 Z" fill="#6E8BF5" />
+                <path d="M100 14 167.5 53 167.5 131 100 170 32.5 131 32.5 53 Z" fill="url(#quiz-badge-hex)" stroke="#6E8BF5" stroke-width="5" stroke-linejoin="round" />
+                <g transform="translate(77 28) scale(1.44)" fill="#FF3621">
+                  <path d="M2 11.2 16 4l14 7.2-3.1 1.6L16 7.2 5.1 12.8Z" opacity=".95" />
+                  <path d="M2 16 16 8.8 30 16l-3.1 1.6L16 12l-10.9 5.6Z" opacity=".8" />
+                  <path d="M2 20.8 16 13.6 30 20.8 16 28 2 20.8Zm3.1.1L16 26.4l10.9-5.5L16 16.8Z" opacity=".65" />
+                </g>
+                <text x="100" y="108" text-anchor="middle" fill="#EAECEF" font-family="Segoe UI, system-ui, sans-serif" font-size="15" font-weight="800" letter-spacing="2">REBRICKED</text>
+                <text x="100" y="127" text-anchor="middle" fill="#6E8BF5" font-family="Segoe UI, system-ui, sans-serif" font-size="11" font-weight="700" letter-spacing="3">CERTIFIED</text>
+              </svg>
+            </span>
+            <span class="quiz-banner-copy">
+              <span class="quiz-banner-title">Take quiz and get your Badge</span>
+              <span class="quiz-banner-note">Five rename questions. One shareable reward with your name.</span>
+              <span class="quiz-banner-detail">Test yourself, it's free</span>
+            </span>
+            <span class="quiz-banner-arrow" aria-hidden="true">→</span>
+          </button>
         </div>
-
-        <div class="spotlight" id="spotlight" hidden></div>
 
         <div class="timeline" id="timeline" hidden aria-label="Changes per year"></div>
 
