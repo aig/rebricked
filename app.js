@@ -61,7 +61,7 @@
   const FILTERS = [
     { key: "current", label: "Active", hint: "In use now — new, preview and current names" },
     { key: "renamed", label: "Renamed", hint: "Superseded former names" },
-    { key: "deprecation", label: "Deprecated", hint: "Deprecated or retired" },
+    { key: "deprecation", label: "Legacy", hint: "Deprecated or retired" },
   ];
 
   // ---- sidebar config: mirrors the Databricks console rail ----
@@ -1524,7 +1524,7 @@
   const TL_BUCKETS = [
     { key: "current", label: "Active" },
     { key: "renamed", label: "Renamed" },
-    { key: "deprecation", label: "Deprecated" },
+    { key: "deprecation", label: "Legacy" },
   ];
   // Per-year counts split by bucket. Computed once — the data is fixed after load;
   // only which buckets are shown changes as the filter toggles.

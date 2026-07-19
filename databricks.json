@@ -1071,14 +1071,14 @@
     "what": "Long-lived bearer tokens used to authenticate to the Databricks REST API, CLI, and integrations.",
     "fact": "These long-lived bearer tokens authenticate to the REST API, CLI, and integrations — but they can't automate account-level functionality, and have a habit of ending up pasted into notebooks.",
     "deprecatedAt": "2026",
-    "status": "deprecated",
+    "status": "legacy",
     "note": "The docs page is titled \"Authenticate with Databricks personal access tokens (legacy)\" and states \"Where possible, Databricks recommends using OAuth instead of PATs ... because OAuth provides stronger security.\" PATs can't automate account-level functionality — use OAuth tokens for account admins or service principals instead. Still supported but positioned as legacy; OAuth token federation removes the need to manage and rotate them.",
     "source": "https://docs.databricks.com/aws/en/dev-tools/auth/pat",
     "links": [
       { "url": "https://community.databricks.com/t5/data-engineering/personal-access-token-retention-period-change/td-p/107534", "kind": "community", "label": "Community: PAT retention change" }
     ],
     "verified": "2026-07-18",
-    "state": "deprecated"
+    "state": "legacy"
   },
   {
     "id": "oauth-token-federation",
