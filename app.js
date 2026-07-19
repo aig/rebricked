@@ -9,6 +9,12 @@
   const chipsEl = $("#chips") || document.createElement("div");
   const toastEl = $("#toast");
 
+  // Umami custom events. No-op if the analytics script is blocked, absent, or not yet
+  // loaded — tracking must never affect the app, so every call is guarded.
+  function track(name, data) {
+    try { if (window.umami) window.umami.track(name, data); } catch (e) {}
+  }
+
   let DATA = [];
   let activeCategory = null;
   let activeSection = null; // {label, ids} when a rail section is selected
@@ -182,6 +188,7 @@
         } else {
           activeKinds.add(key);
         }
+        track("filter-toggle", { filter: key, on: activeKinds.has(key) });
         writeURL();
         render();
       });
@@ -239,10 +246,13 @@
         setActiveNav(el);
         setSidebarOpen(false); // on mobile the rail overlays the content — close it after a pick
         if (el.dataset.home !== undefined) {
+          track("nav", { section: "Home" });
           goHome();
         } else {
+          const label = el.querySelector(".label").textContent;
           const ids = (el.dataset.ids || "").split(",").filter(Boolean);
-          setSection(el.querySelector(".label").textContent, ids);
+          track("nav", { section: label });
+          setSection(label, ids);
         }
       });
     });
@@ -749,6 +759,7 @@
 
   // ---- interactions ----
   function wireStaticControls() {
+    let searchTrackTimer = null;
     searchEl.addEventListener("input", () => {
       activeSection = null; // manual typing clears any rail-section filter
       focusId = null;
@@ -756,6 +767,12 @@
       setActiveNav(null);
       writeURL();
       render();
+      // Track the settled query, not every keystroke. Terms are product names, not PII.
+      clearTimeout(searchTrackTimer);
+      searchTrackTimer = setTimeout(() => {
+        const q = searchEl.value.trim().toLowerCase();
+        if (q.length >= 2) track("search", { term: q });
+      }, 800);
     });
 
     // Back/forward and pasted-in-place links.
@@ -763,7 +780,7 @@
 
     // Quiz overlay controls.
     const quizOpen = $("#quiz-open");
-    if (quizOpen) quizOpen.addEventListener("click", openQuiz);
+    if (quizOpen) quizOpen.addEventListener("click", () => { track("quiz-open"); openQuiz(); });
     const quizClose = $("#quiz-close");
     if (quizClose) quizClose.addEventListener("click", closeQuiz);
     const quizEl = $("#quiz");
@@ -785,7 +802,7 @@
     });
 
     const rouletteBtn = $("#roulette");
-    if (rouletteBtn) rouletteBtn.addEventListener("click", roulette);
+    if (rouletteBtn) rouletteBtn.addEventListener("click", () => { track("roulette"); roulette(); });
 
     // The brand logo is the other way home.
     const brand = $("#side-brand");
@@ -796,7 +813,7 @@
     });
 
     const sideNew = $("#side-new");
-    if (sideNew) sideNew.addEventListener("click", openNewModal);
+    if (sideNew) sideNew.addEventListener("click", () => { track("new-modal-open"); openNewModal(); });
 
     const themeToggle = $("#theme-toggle");
     if (themeToggle) themeToggle.addEventListener("click", () => {
@@ -805,6 +822,7 @@
       const next = cur === "dark" ? "light" : "dark";
       root.dataset.theme = next;
       try { localStorage.setItem("rebricked-theme", next); } catch (e) {}
+      track("theme-toggle", { theme: next });
     });
 
     // Mobile: the hamburger opens the rail; the scrim, a nav pick, or Escape closes it.
@@ -981,10 +999,12 @@
         if (!d) return;
         if (btn.dataset.act === "link") {
           const url = entryURL(d.id);
+          track("copy-link", { id: d.id });
           copy(url).then((ok) =>
             toast(ok ? `Link copied — ${url}` : "Copy failed — select it manually.")
           );
         } else if (btn.dataset.act === "share") {
+          track("share", { id: d.id });
           shareEntryLinkedIn(d);
         }
       });
@@ -992,7 +1012,7 @@
 
     // the AI-prediction reveal
     resultsEl.querySelectorAll(".odds-btn").forEach((btn) => {
-      btn.addEventListener("click", () => revealPrediction(btn));
+      btn.addEventListener("click", () => { track("guess-name"); revealPrediction(btn); });
     });
 
     // copy-as-you-were-wrong: clicking any card title copies a snappy correction.
@@ -1500,6 +1520,7 @@
         const y = b.dataset.year;
         // toggle off if the same year is clicked again
         activeYear = activeYear === y ? null : y;
+        if (activeYear) track("timeline-year", { year: activeYear });
         focusId = null;
         activeSection = null;
         activeCategory = null;
