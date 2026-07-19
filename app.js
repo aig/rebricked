@@ -1170,7 +1170,9 @@
     const pct = quizState.total
       ? Math.round((quizState.score / quizState.total) * 100)
       : 0;
-    const link = quizResultURL();
+    const link = withUTM(quizResultURL(), {
+      source: "linkedin", medium: "social", campaign: "quiz-share",
+    });
     const text =
       `I scored ${quizState.score}/${quizState.total} (${pct}%) on REbricked — the quiz for ` +
       `whether you can keep up with everything Databricks has renamed. Think you can beat me? ${link}`;
@@ -1443,6 +1445,21 @@
     return location.origin + location.pathname + "#" + encodeURIComponent(id);
   }
 
+  // Append UTM params to a URL's query string — kept before any #fragment so analytics
+  // can read them (a fragment query is invisible to the server/tracker). Falsy values
+  // are dropped. See https://docs.umami.is/docs/utm
+  function withUTM(url, params) {
+    const hashAt = url.indexOf("#");
+    const base = hashAt === -1 ? url : url.slice(0, hashAt);
+    const hash = hashAt === -1 ? "" : url.slice(hashAt);
+    const qs = Object.keys(params)
+      .filter((k) => params[k])
+      .map((k) => "utm_" + k + "=" + encodeURIComponent(params[k]))
+      .join("&");
+    if (!qs) return url;
+    return base + (base.indexOf("?") === -1 ? "?" : "&") + qs + hash;
+  }
+
   // Walk the successor chain to the end — the card that nothing supersedes.
   function headOf(d) {
     const seen = new Set([d.id]);
@@ -1464,9 +1481,9 @@
   }
 
   // A tidy multi-line blurb for sharing (LinkedIn post text, Slack, chat).
-  function cardBlurb(d) {
+  function cardBlurb(d, shareLink) {
     const kind = kindOf(d);
-    const link = entryURL(d.id);
+    const link = shareLink || entryURL(d.id);
     const factLine = d.fact ? `\n💡 ${d.fact}` : "";
     if (kind === "feature") {
       return `🧱 "${d.name}" — new in Databricks (${d.introducedAt || "?"}).\n${d.what || ""}${factLine}\n${link}`;
@@ -1487,8 +1504,10 @@
   // clipboard (LinkedIn's share dialog no longer accepts prefilled text) and open the
   // share-offsite dialog pointed at the entry's deep link.
   function shareEntryLinkedIn(d) {
-    const link = entryURL(d.id);
-    const blurb = cardBlurb(d);
+    const link = withUTM(entryURL(d.id), {
+      source: "linkedin", medium: "social", campaign: "card-share", content: d.id,
+    });
+    const blurb = cardBlurb(d, link);
     const shareUrl =
       "https://www.linkedin.com/sharing/share-offsite/?url=" + encodeURIComponent(link);
     copy(blurb).then((ok) => {
