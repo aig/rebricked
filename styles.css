@@ -2019,6 +2019,52 @@ body.modal-open {
   color: var(--muted);
 }
 
+.quiz-recipient {
+  margin: 18px 0;
+  padding: 16px;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: var(--bg);
+}
+
+.quiz-recipient-title {
+  margin: 0;
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.quiz-recipient-fields {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+.quiz-recipient label {
+  display: grid;
+  gap: 4px;
+  margin-top: 10px;
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--muted);
+}
+
+.quiz-recipient .new-input {
+  margin: 0;
+}
+
+.quiz-recipient-note {
+  margin: 9px 0 12px;
+  font-size: 11px;
+  line-height: 1.4;
+  color: var(--faint);
+}
+
+.quiz-recipient-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
 /* answer lozenges - the Who-Wants-to-Be-a-Millionaire hexagon, 2×2 */
 .quiz-opts {
   display: grid;
@@ -2138,6 +2184,8 @@ body.modal-open {
   .quiz-opts {
     grid-template-columns: 1fr;
   }
+  .quiz-recipient-fields { grid-template-columns: 1fr; }
+  .quiz-recipient-actions { align-items: stretch; flex-direction: column; }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -2339,11 +2387,47 @@ body.modal-open {
   display: flex;
   align-items: center;
   justify-content: center;
-  min-height: 74vh;
+  /*min-height: 74vh;*/
   padding: 24px 4px;
-  background:
-    radial-gradient(1100px 460px at 50% -12%, color-mix(in srgb, var(--accent) 9%, transparent), transparent);
+  /*background: radial-gradient(1100px 460px at 50% -12%, color-mix(in srgb, var(--accent) 9%, transparent), transparent);*/
 }
+
+.badge-intro {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  max-width: 860px;
+  margin: 0 auto;
+  padding: 28px 4px 0;
+}
+
+.badge-intro h1 {
+  margin: 0;
+  font-size: 24px;
+  letter-spacing: -.02em;
+}
+
+.badge-intro p {
+  max-width: 62ch;
+  margin: 6px 0 0;
+  color: var(--muted);
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.badge-intro-cta {
+  flex: 0 0 auto;
+  border-radius: 999px;
+  padding: 10px 16px;
+  background: var(--accent);
+  color: #fff;
+  font-size: 13px;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.badge-intro-cta:hover { background: var(--accent-ink); }
 
 /* rail/new/brand are anchors on the badge page - keep them looking like the app */
 .nav-item,
@@ -2356,8 +2440,19 @@ body.modal-open {
 .badge-card {
   --tier: var(--accent);
   width: 100%;
-  max-width: 440px;
-  text-align: center;
+  max-width: 860px;
+  display: grid;
+  grid-template-columns: 250px minmax(0, 1fr);
+  grid-template-areas:
+    "emblem name"
+    "emblem stars"
+    "emblem score"
+    "emblem recipient"
+    "emblem blurb"
+    "emblem actions"
+    "emblem fine";
+  column-gap: 26px;
+  text-align: left;
   background: var(--panel);
   border: 1px solid var(--line);
   border-top: 4px solid var(--tier);
@@ -2367,8 +2462,10 @@ body.modal-open {
 }
 
 .badge-emblem {
+  grid-area: emblem;
   display: flex;
   justify-content: center;
+  align-items: center;
 }
 
 .badge-emblem .emblem {
@@ -2378,6 +2475,7 @@ body.modal-open {
 }
 
 .badge-stars {
+  grid-area: stars;
   margin-top: 12px;
   font-size: 22px;
   letter-spacing: 5px;
@@ -2393,6 +2491,7 @@ body.modal-open {
 }
 
 .badge-score {
+  grid-area: score;
   margin-top: 14px;
   font-size: 12px;
   font-weight: 700;
@@ -2402,15 +2501,30 @@ body.modal-open {
 }
 
 .badge-name {
+  grid-area: name;
   margin: 6px 0 0;
   font-size: 27px;
   font-weight: 800;
   letter-spacing: -.02em;
+  color: var(--tier);
+}
+
+.badge-recipient {
+  grid-area: recipient;
+  margin: 16px 0 0;
+  font-size: 24px;
+  line-height: 1.2;
+  letter-spacing: -.02em;
+  color: var(--ink);
+}
+
+.badge-recipient strong {
   color: var(--ink);
 }
 
 .badge-blurb {
-  margin: 12px auto 0;
+  grid-area: blurb;
+  margin: 12px 0 0;
   max-width: 34ch;
   font-size: 14px;
   line-height: 1.6;
@@ -2418,30 +2532,63 @@ body.modal-open {
 }
 
 .badge-actions {
+  grid-area: actions;
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: flex-start;
+  justify-content: flex-start;
+  flex-wrap: wrap;
   gap: 10px;
   margin-top: 22px;
 }
 
-.badge-btn {
-  display: inline-block;
-  padding: 10px 22px;
-  border-radius: 999px;
-  background: var(--accent);
-  border: 1px solid var(--accent);
-  color: #fff;
-  font-size: 14px;
-  font-weight: 700;
-  text-decoration: none;
-  transition: background .15s, border-color .15s;
+.badge-primary-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
 }
 
-.badge-btn:hover {
-  background: var(--accent-ink);
-  border-color: var(--accent-ink);
+.badge-share {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  border: 1px solid #0A66C2;
+  border-radius: 999px;
+  padding: 9px 18px;
+  background: #0A66C2;
+  color: #fff;
+  font: inherit;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
 }
+
+.badge-share-mark {
+  color: #fff;
+  font-family: Arial, sans-serif;
+  font-size: 17px;
+  font-weight: 800;
+  line-height: 1;
+}
+
+.badge-share:hover {
+  background: #004182;
+  border-color: #004182;
+}
+
+.badge-export {
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  padding: 9px 15px;
+  background: transparent;
+  color: var(--ink);
+  font: inherit;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.badge-export:hover { background: var(--bg); }
 
 .badge-link {
   font-size: 12.5px;
@@ -2456,10 +2603,55 @@ body.modal-open {
 }
 
 .badge-fine {
+  grid-area: fine;
   margin: 20px 0 0;
   font-size: 10.5px;
   font-style: italic;
   color: var(--faint);
+}
+
+@media (max-width: 640px) {
+  .badge-intro { align-items: flex-start; flex-direction: column; gap: 14px; }
+  .badge-card {
+    display: block;
+    max-width: 440px;
+    text-align: center;
+  }
+
+  .badge-emblem { display: flex; }
+  .badge-blurb { margin-left: auto; margin-right: auto; }
+  .badge-actions { align-items: center; }
+  .badge-primary-actions { align-items: stretch; flex-direction: column; }
+  .badge-share, .badge-export { justify-content: center; }
+}
+
+@media print {
+  @page { size: A4 landscape; margin: 0; }
+  html, body { width: 297mm; height: 210mm; }
+  .sidebar, .topbar, .badge-intro, .badge-actions, .badge-fine { display: none !important; }
+  .app, .main, .content { display: block; min-height: 0; padding: 0; background: #fff; }
+  .badge-stage {
+    display: flex;
+    width: 297mm;
+    height: 210mm;
+    min-height: 0;
+    padding: 0;
+    background: #fff;
+  }
+  .badge-card {
+    box-sizing: border-box;
+    width: 270mm;
+    max-width: none;
+    min-height: 166mm;
+    margin: 0;
+    padding: 14mm;
+    grid-template-columns: 76mm minmax(0, 1fr);
+    column-gap: 12mm;
+    border: 1mm solid var(--tier);
+    border-top-width: 2mm;
+    border-radius: 6mm;
+    box-shadow: none;
+  }
 }
 
 /* one ascending tier ladder - more correct = higher metal.

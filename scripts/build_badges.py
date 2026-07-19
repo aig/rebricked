@@ -117,12 +117,16 @@ def badge_card_html(n, title_e, blurb_e):
     return (
         f'<div class="badge-card badge-tier-{n}">'
         f'<div class="badge-emblem">{badge_emblem(TIERS[n])}</div>'
+        f'<h2 class="badge-name">{title_e}</h2>'
         f'<div class="badge-stars" role="img" aria-label="{n} out of {TOTAL} stars">{stars_html(n)}</div>'
         f'<div class="badge-score">{n} / {TOTAL} correct</div>'
-        f'<h1 class="badge-name">{title_e}</h1>'
+        '<p class="badge-recipient" id="badge-recipient" hidden><strong id="badge-recipient-name"></strong></p>'
         f'<p class="badge-blurb">{blurb_e}</p>'
         '<div class="badge-actions">'
-        f'<a class="badge-btn" href="../../?quiz={n}-{TOTAL}">Take the quiz &rarr;</a>'
+        '<div class="badge-primary-actions">'
+        '<button class="badge-share" id="badge-share" type="button"><span class="badge-share-mark" aria-hidden="true">in</span>Share on LinkedIn</button>'
+        '<button class="badge-export" id="badge-export-pdf" type="button">Export to PDF</button>'
+        '<button class="badge-export" id="badge-export-jpg" type="button">Export to JPG</button></div>'
         '</div>'
         '<p class="badge-fine">A REbricked achievement. Not affiliated with Databricks; '
         'entirely made up, like the roadmap.</p>'
@@ -228,7 +232,7 @@ TOPBAR = (
     'aria-label="Search old Databricks names" autocomplete="off" spellcheck="false" />'
     '<kbd class="slash">/</kbd></div>'
     '<div class="topactions">'
-    '<a class="quiz-cta" href="../../"><svg viewBox="0 0 24 24" width="16" height="16" class="ic">'
+    '<a class="quiz-cta" href="../../?startQuiz=1"><svg viewBox="0 0 24 24" width="16" height="16" class="ic">'
     '<path d="M9.2 9a2.8 2.8 0 1 1 3.9 2.6c-.9.4-1.6 1.1-1.6 2.1v.4" /><path d="M12 17.5h.01" /></svg>'
     '<span>Take the quiz</span></a>'
     '<button class="icon-btn" id="theme-toggle" title="Toggle light / dark" aria-label="Toggle theme">'
@@ -254,6 +258,47 @@ INLINE_JS = """<script>
   function setOpen(o) { if (sb) sb.classList.toggle('open', o); if (sc) sc.hidden = !o; if (mb) mb.setAttribute('aria-expanded', String(o)); }
   if (mb) mb.addEventListener('click', function () { setOpen(!(sb && sb.classList.contains('open'))); });
   if (sc) sc.addEventListener('click', function () { setOpen(false); });
+  var p = new URLSearchParams(location.search), first = (p.get('first') || '').trim(), last = (p.get('last') || '').trim();
+  var recipient = [first, last].filter(Boolean).join(' ').replace(/\\s+/g, ' ').slice(0, 101);
+  var recipientEl = document.getElementById('badge-recipient'), recipientName = document.getElementById('badge-recipient-name');
+  if (recipient && recipientEl && recipientName) { recipientName.textContent = recipient; recipientEl.hidden = false; }
+  var share = document.getElementById('badge-share');
+  if (share) share.addEventListener('click', function () {
+    // LinkedIn's crawler cannot reach localhost, so always share the public canonical
+    // URL while preserving the path and the recipient's query parameters.
+    var url = 'https://rebricked.org' + location.pathname + location.search;
+    window.open('https://www.linkedin.com/sharing/share-offsite/?url=' + encodeURIComponent(url), '_blank', 'noopener,noreferrer');
+  });
+  var pdf = document.getElementById('badge-export-pdf');
+  if (pdf) pdf.addEventListener('click', function () { window.print(); });
+  function loadImage(src) { return new Promise(function (resolve, reject) { var i = new Image(); i.onload = function () { resolve(i); }; i.onerror = reject; i.src = src; }); }
+  function wrap(ctx, text, x, y, width, lineHeight) {
+    var words = text.split(/\\s+/), line = '', lines = [];
+    words.forEach(function (word) { var test = line ? line + ' ' + word : word; if (ctx.measureText(test).width > width && line) { lines.push(line); line = word; } else { line = test; } });
+    if (line) lines.push(line); lines.forEach(function (line, n) { ctx.fillText(line, x, y + n * lineHeight); });
+    return y + lines.length * lineHeight;
+  }
+  var jpg = document.getElementById('badge-export-jpg');
+  if (jpg) jpg.addEventListener('click', async function () {
+    var card = document.querySelector('.badge-card'), emblem = document.querySelector('.badge-emblem svg');
+    if (!card || !emblem) return;
+    var canvas = document.createElement('canvas'), ctx = canvas.getContext('2d'), tier = getComputedStyle(card).getPropertyValue('--tier').trim() || '#FF3621';
+    canvas.width = 1200; canvas.height = 630;
+    ctx.fillStyle = '#F7F8FA'; ctx.fillRect(0, 0, 1200, 630);
+    ctx.fillStyle = '#FFFFFF'; ctx.strokeStyle = tier; ctx.lineWidth = 4;
+    ctx.beginPath(); ctx.roundRect(40, 40, 1120, 550, 24); ctx.fill(); ctx.stroke();
+    try {
+      var svg = new XMLSerializer().serializeToString(emblem), image = await loadImage('data:image/svg+xml;charset=utf-8,' + encodeURIComponent(svg));
+      ctx.drawImage(image, 115, 165, 190, 228);
+    } catch (e) {}
+    var title = document.querySelector('.badge-name').textContent.trim(), recipient = document.getElementById('badge-recipient-name').textContent.trim(), score = document.querySelector('.badge-score').textContent.trim(), blurb = document.querySelector('.badge-blurb').textContent.trim();
+    ctx.fillStyle = tier; ctx.font = '800 44px system-ui, sans-serif'; wrap(ctx, title, 375, 155, 700, 52);
+    ctx.font = '30px system-ui, sans-serif'; ctx.fillStyle = '#18212B'; if (recipient) ctx.fillText(recipient, 375, 245);
+    ctx.font = '32px system-ui, sans-serif'; ctx.fillStyle = tier; ctx.fillText(document.querySelectorAll('.badge-stars .on').length ? '★★★★★' : '☆☆☆☆☆', 375, 315);
+    ctx.font = '700 18px system-ui, sans-serif'; ctx.fillText(score.toUpperCase(), 375, 355);
+    ctx.font = '24px system-ui, sans-serif'; ctx.fillStyle = '#5F6B7A'; wrap(ctx, blurb, 375, 410, 650, 34);
+    canvas.toBlob(function (blob) { if (!blob) return; var a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = 'rebricked-badge.jpg'; a.click(); URL.revokeObjectURL(a.href); }, 'image/jpeg', .95);
+  });
 })();
 </script>"""
 
@@ -285,6 +330,13 @@ PAGE = """<!DOCTYPE html>
     <div class="main">
       {topbar}
       <div class="content">
+        <section class="badge-intro" aria-labelledby="badge-intro-title">
+          <div>
+            <h1 id="badge-intro-title">How well do you know Databricks renames?</h1>
+            <p>Answer five questions about names that changed, then earn your own shareable REbricked badge.</p>
+          </div>
+          <a class="badge-intro-cta" href="../../?startQuiz=1">Take the quiz and get your badge &rarr;</a>
+        </section>
         <div class="badge-stage">
           {card}
         </div>

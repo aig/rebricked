@@ -155,6 +155,15 @@
     renderChallenge();   // show a "beat this score" banner from a shared ?quiz= link
     applyRoute();        // honor ?q= / #id from the address bar
     render();
+    // Badge pages return here with this flag so their CTA behaves exactly like the
+    // in-app quiz button, rather than merely landing on the catalogue.
+    if (new URLSearchParams(location.search).get("startQuiz") === "1") {
+      const url = new URL(location.href);
+      url.searchParams.delete("startQuiz");
+      try { history.replaceState(null, "", url.pathname + url.search + url.hash); } catch (e) {}
+      openQuiz();
+      return;
+    }
     if (!focusId) searchEl.focus();
   }
 
@@ -1154,7 +1163,7 @@
   const QUIZ_LEN = 5; // questions per round
   const QUIZ_KEYS = ["A", "B", "C", "D"]; // Millionaire-style answer labels
   // marks[] holds one true/false per answered question, driving the money-tree ladder.
-  const quizState = { score: 0, total: 0, streak: 0, answered: false, asked: [], lastId: null, marks: [] };
+  const quizState = { score: 0, total: 0, streak: 0, answered: false, asked: [], lastId: null, marks: [], recipient: null };
   let quizReturnFocus = null; // element to restore focus to when the dialog closes
 
   // Entries that pose a fair "what's it called now?" question: renames (old → current)
@@ -1192,20 +1201,13 @@
     quizState.asked = [];
     quizState.lastId = null;
     quizState.marks = [];
+    quizState.recipient = null;
     renderLadder();
     el.hidden = false;
     document.body.classList.add("modal-open");
     quizReturnFocus = document.activeElement;
     const closeBtn = $("#quiz-close");
     if (closeBtn) closeBtn.focus();
-    const share = $("#quiz-share");
-    if (share) {
-      share.hidden = true;
-      if (!share.dataset.wired) {
-        share.dataset.wired = "1";
-        share.addEventListener("click", shareQuizLinkedIn);
-      }
-    }
     nextQuestion();
   }
 
@@ -1218,7 +1220,12 @@
   // with Open Graph tags, so the badge shows in the preview. Only reachable once the
   // round is complete, which is also the only time the share button is shown.
   function quizResultURL() {
-    return location.origin + pageDir() + "badges/" + quizState.score + "-of-" + QUIZ_LEN + "/";
+    const url = new URL(location.origin + pageDir() + "badges/" + quizState.score + "-of-" + QUIZ_LEN + "/");
+    if (quizState.recipient) {
+      url.searchParams.set("first", quizState.recipient.first);
+      url.searchParams.set("last", quizState.recipient.last);
+    }
+    return url.toString();
   }
 
   function shareQuizLinkedIn() {
@@ -1273,8 +1280,7 @@
     if (s) s.textContent = `Score ${quizState.score} / ${quizState.total}`;
     const st = $("#quiz-streak");
     if (st) st.textContent = quizState.streak >= 2 ? `🔥 ${quizState.streak} in a row` : "";
-    // Sharing sends the badge page for the finished round, so only offer it once the
-    // round is complete - a mid-round score has no badge page to link to.
+    // Sharing sends the named badge page, so only offer it once a name was entered.
     const share = $("#quiz-share");
     if (share) share.hidden = quizState.total < QUIZ_LEN;
   }
@@ -1425,27 +1431,51 @@
       `<div class="quiz-result">` +
       `<p class="quiz-final">You scored <b>${quizState.score} / ${QUIZ_LEN}</b> <span class="quiz-pct">(${pct}%)</span></p>` +
       `<p class="quiz-verdict">${escapeHtml(verdict)}</p>` +
-      `<div class="quiz-actions">` +
-      `<a class="quiz-see" id="quiz-badge" href="${escapeAttr(quizResultURL())}" target="_blank" rel="noopener">See your badge ↗</a>` +
-      `<div class="new-links">` +
-      `<button class="quiz-see" id="quiz-again">Play again</button>` +
-      `<button class="quiz-next" id="quiz-done">Done</button>` +
+      `<form class="quiz-recipient" id="quiz-recipient">` +
+      `<p class="quiz-recipient-title">Put your name on the badge</p>` +
+      `<div class="quiz-recipient-fields">` +
+      `<label>First name<input class="new-input" id="quiz-first" name="first" autocomplete="given-name" maxlength="40" required></label>` +
+      `<label>Last name<input class="new-input" id="quiz-last" name="last" autocomplete="family-name" maxlength="60" required></label>` +
       `</div>` +
+      `<p class="quiz-recipient-note">Your name is encoded in the badge link; no account is needed.</p>` +
+      `<div class="quiz-recipient-actions">` +
+      `<button class="quiz-next" type="submit">Show my badge ↗</button>` +
+      `<button class="quiz-share" id="quiz-share" type="button" title="Share your named badge on LinkedIn">` +
+      `<svg viewBox="0 0 24 24" width="14" height="14" class="li-ic" aria-hidden="true">` +
+      `<path d="M4.98 3.5A2.5 2.5 0 1 1 2.5 6 2.5 2.5 0 0 1 4.98 3.5zM3 8.98h4V21H3zM9.5 8.98h3.83v1.64h.05a4.2 4.2 0 0 1 3.78-2.08c4.04 0 4.79 2.66 4.79 6.12V21h-4v-5.34c0-1.27-.02-2.9-1.77-2.9s-2.04 1.38-2.04 2.81V21h-4z" />` +
+      `</svg><span>Share on LinkedIn</span></button>` +
       `</div>` +
+      `</form>` +
       `</div>`;
-    const again = $("#quiz-again");
-    if (again) again.addEventListener("click", () => {
-      quizState.score = 0;
-      quizState.total = 0;
-      quizState.streak = 0;
-      quizState.asked = [];
-      quizState.lastId = null;
-      quizState.marks = [];
-      renderLadder();
-      nextQuestion();
+    const recipientForm = $("#quiz-recipient");
+    function saveQuizRecipient() {
+      if (!recipientForm || !recipientForm.reportValidity()) return false;
+      const firstInput = $("#quiz-first");
+      const lastInput = $("#quiz-last");
+      const first = firstInput.value.trim().replace(/\s+/g, " ");
+      const last = lastInput.value.trim().replace(/\s+/g, " ");
+      if (!first || !last) {
+        const missing = first ? lastInput : firstInput;
+        missing.setCustomValidity(`Enter your ${first ? "last" : "first"} name.`);
+        missing.reportValidity();
+        missing.addEventListener("input", () => missing.setCustomValidity(""), { once: true });
+        return false;
+      }
+      quizState.recipient = { first, last };
+      updateQuizScore();
+      return true;
+    }
+    if (recipientForm) recipientForm.addEventListener("submit", (e) => {
+      e.preventDefault();
+      if (!saveQuizRecipient()) return;
+      track("quiz-badge-created", { score: quizState.score });
+      window.open(quizResultURL(), "_blank", "noopener");
     });
-    const done = $("#quiz-done");
-    if (done) done.addEventListener("click", closeQuiz);
+    const share = $("#quiz-share");
+    if (share) share.addEventListener("click", () => {
+      if (!saveQuizRecipient()) return;
+      shareQuizLinkedIn();
+    });
   }
 
   // ---- deep links / routing ----
