@@ -564,7 +564,17 @@ body {
 }
 
 .page-head {
+  display: grid;
+  grid-template-columns: minmax(0, 2fr) minmax(220px, 1fr);
+  align-items: stretch;
+  gap: 24px;
   margin-bottom: 20px;
+}
+
+.page-head-copy {
+  display: grid;
+  align-content: start;
+  gap: 16px;
 }
 
 .page-title {
@@ -584,6 +594,123 @@ body {
 .page-sub .renamed-dot {
   transform: translateY(1px);
   margin: 0 2px;
+}
+
+/* Home-page invitation to the same in-app quiz as the top-bar CTA. */
+.quiz-banner {
+  display: grid;
+  grid-template-columns: 72px minmax(0, 1fr) auto;
+  grid-template-rows: auto 1fr;
+  align-items: center;
+  align-self: stretch;
+  min-width: 0;
+  gap: 8px 12px;
+  padding: 12px;
+  border: 1px solid color-mix(in srgb, #6E8BF5 55%, var(--line));
+  border-radius: 16px;
+  background:
+    radial-gradient(circle at 0% 100%, color-mix(in srgb, #6E8BF5 16%, transparent), transparent 50%),
+    linear-gradient(135deg, color-mix(in srgb, var(--accent) 9%, var(--panel)), var(--panel) 65%);
+  color: var(--ink);
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+  box-shadow: 0 8px 24px color-mix(in srgb, var(--accent) 9%, transparent);
+  transition: border-color .15s, box-shadow .15s, transform .15s;
+}
+
+.quiz-banner:hover {
+  border-color: #6E8BF5;
+  box-shadow: 0 12px 30px color-mix(in srgb, #6E8BF5 22%, transparent);
+  transform: translateY(-1px);
+}
+
+.quiz-banner:focus-visible {
+  outline: 3px solid color-mix(in srgb, var(--accent) 35%, transparent);
+  outline-offset: 2px;
+}
+
+.quiz-banner-badge {
+  grid-row: 2;
+  display: grid;
+  place-items: center;
+  width: 72px;
+  height: 88px;
+  overflow: hidden;
+  border: 1px solid color-mix(in srgb, #6E8BF5 50%, #0E1116);
+  border-radius: 11px;
+  background: linear-gradient(145deg, #20293A, #0E1116);
+}
+
+.quiz-banner-emblem {
+  width: 68px;
+  height: 82px;
+  flex: none;
+  filter: drop-shadow(0 5px 7px rgba(0, 0, 0, .3));
+}
+
+.quiz-banner-copy {
+  grid-row: 2;
+  display: grid;
+  gap: 5px;
+  min-width: 0;
+}
+
+.quiz-banner-eyebrow {
+  grid-column: 1 / -1;
+  grid-row: 1;
+  width: 100%;
+  padding: 5px 8px;
+  border-radius: 7px;
+  background: color-mix(in srgb, #6E8BF5 14%, transparent);
+  color: #5368CA;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: .1em;
+  line-height: 1.2;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+.quiz-banner-title {
+  font-size: 15px;
+  font-weight: 800;
+  line-height: 1.25;
+  letter-spacing: -.01em;
+}
+
+.quiz-banner-note {
+  color: var(--muted);
+  font-size: 11.5px;
+  line-height: 1.35;
+}
+
+.quiz-banner-detail {
+  padding-top: 5px;
+  border-top: 1px solid color-mix(in srgb, #6E8BF5 22%, var(--line));
+  color: var(--ink);
+  font-size: 11.5px;
+  font-weight: 600;
+  line-height: 1.35;
+}
+
+.quiz-banner-arrow {
+  grid-row: 2;
+  align-self: end;
+  color: #586ED2;
+  font-size: 22px;
+  line-height: 1;
+}
+
+@media (max-width: 640px) {
+  .page-head {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
+  .quiz-banner {
+    width: 100%;
+  }
 }
 
 /* lifecycle filter - segmented control above the category chips */
@@ -1540,6 +1667,11 @@ mark {
 
 .sp-link:hover {
   text-decoration: underline;
+}
+
+/* Inside the home heading's left column, spacing comes from .page-head-copy. */
+.page-head-copy .spotlight {
+  margin-bottom: 0;
 }
 
 /* ================= Year timeline ================= */

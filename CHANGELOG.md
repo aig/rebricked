@@ -3,6 +3,15 @@
 All notable changes to **rebricked**, grouped by day.
 Format loosely follows [Keep a Changelog](https://keepachangelog.com/); dates are `YYYY-MM-DD`.
 
+## 2026-07-19 (home quiz banner)
+
+### Added
+- **Responsive quiz badge banner.** The home-page introduction now includes a badge-themed
+  quiz invitation: it sits beside the copy and the monthly spotlight on desktop, and spans the
+  full width beneath them on phones. It opens the existing in-app quiz and records its own
+  anonymous CTA source. Its larger certificate emblem sits on a matching dark badge tile, with
+  the reward and sharing flow explained in the CTA itself.
+
 ## 2026-07-19 (named quiz badges)
 
 ### Added
