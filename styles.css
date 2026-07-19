@@ -523,6 +523,11 @@ body {
   .odds {
     white-space: normal;
   }
+
+  /* Shrink the title just enough to keep it on a single line across phone widths. */
+  .page-title {
+    font-size: clamp(16px, 4.8vw, 26px);
+  }
 }
 
 .icon-btn {
