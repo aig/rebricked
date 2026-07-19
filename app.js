@@ -457,25 +457,25 @@
     if (kind === "feature") {
       rowCls = " is-feature";
       trail = featureTrail(d, q);
-      dateText = `introduced ${escapeHtml(d.introducedAt || "?")}${occasion}`;
+      dateText = `introduced ${escapeHtml(fmtDate(d.introducedAt || "?"))}${occasion}`;
     } else if (kind === "deprecation") {
       rowCls = " is-deprecation";
       trail = depTrail(d, q);
       const status = d.status || "deprecated";
-      const removed = d.removedAt ? ` · access ended ${escapeHtml(d.removedAt)}` : "";
+      const removed = d.removedAt ? ` · access ended ${escapeHtml(fmtDate(d.removedAt))}` : "";
       const verb = status === "legacy" ? "legacy since" : "deprecated";
-      dateText = `${verb} ${escapeHtml(d.deprecatedAt || "?")}${removed}${occasion}`;
+      dateText = `${verb} ${escapeHtml(fmtDate(d.deprecatedAt || "?"))}${removed}${occasion}`;
     } else {
       trail = renameTrail(d, q);
       if ((d.status || "current") === "renamed") {
         rowCls = " is-former";
         const span = d.from && d.to
-          ? `${escapeHtml(d.from)}–${escapeHtml(d.to)}`
-          : d.to ? `until ${escapeHtml(d.to)}` : escapeHtml(d.from || "?");
+          ? `${escapeHtml(fmtDate(d.from))}–${escapeHtml(fmtDate(d.to))}`
+          : d.to ? `until ${escapeHtml(fmtDate(d.to))}` : escapeHtml(fmtDate(d.from || "?"));
         dateText = `in use ${span}${occasion}`;
       } else {
         rowCls = " is-current"; // current-name side of a rename — same Latest/green bucket
-        dateText = `current since ${escapeHtml(d.from || "?")}${occasion}`;
+        dateText = `current since ${escapeHtml(fmtDate(d.from || "?"))}${occasion}`;
       }
     }
 
@@ -494,6 +494,9 @@
 
     return `
       <article class="row${rowCls}" data-id="${escapeAttr(d.id)}">
+        <div class="row-meta">
+          <span class="date">${dateText}</span>
+        </div>
         <div class="row-main">
           <div class="row-head-left">
             <div class="lineage">${trail}</div>
@@ -507,9 +510,6 @@
               <button class="row-act" data-act="share" title="Share this entry on LinkedIn" aria-label="Share this entry on LinkedIn">${ICON.linkedin}</button>
             </div>
           </div>
-        </div>
-        <div class="row-meta">
-          <span class="date">${dateText}</span>
         </div>
         <p class="row-what">${escapeHtml(d.what || "")}</p>
         ${fact}
@@ -1717,6 +1717,19 @@
 
   function shortYear(dateStr) {
     return (dateStr || "").split("-")[0];
+  }
+
+  const MONTHS = ["January", "February", "March", "April", "May", "June",
+    "July", "August", "September", "October", "November", "December"];
+
+  // Display a raw date token: "2026-07" -> "July 2026", "2021" -> "2021".
+  // Anything that isn't YYYY or YYYY-MM (incl. "?") is returned unchanged.
+  function fmtDate(dateStr) {
+    const s = String(dateStr ?? "").trim();
+    const m = /^(\d{4})-(\d{1,2})$/.exec(s);
+    if (!m) return s;
+    const month = MONTHS[Number(m[2]) - 1];
+    return month ? `${month} ${m[1]}` : s;
   }
 
   // Takes RAW text, matches on it, and escapes each piece separately — matching on
