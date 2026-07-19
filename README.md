@@ -1,6 +1,8 @@
-# REbricked 🧱
+<h1 align="center">
+  <img src="assets/logo.svg" alt="REbricked" width="320">
+</h1>
 
-**Databricks no longer calls it that.**
+<p align="center"><strong>Databricks no longer calls it that.</strong></p>
 
 A single static page that answers one question: *"What happened to the thing Databricks
 used to call X?"* It lists Databricks product and feature **renames, deprecations, and new
