@@ -16,11 +16,12 @@ features** — sourced, dated, and searchable — dressed up as the Databricks c
 - **Look up an old name** and see what it became — full lineage, with dates
   (e.g. *Delta Live Tables → Lakeflow Declarative Pipelines*).
 - **Three kinds of entry**, each held to the same bar of *real, sourced changes only*:
-  - **Renames** — a new name for the same thing (red accent).
-  - **Deprecations** — retired or replaced, pointing at the successor (amber accent).
-  - **New features** — genuinely new capabilities worth tracking (green accent).
-- **Filter and search** — a lifecycle filter (All / Renamed / Deprecated & removed / New
-  features), category chips, a console-style sidebar, and instant search.
+  - **Renames** — a new name for the same thing. The name in use now shows as **Active**
+    (green); each superseded former name shows as **Renamed** (slate).
+  - **Deprecations** — retired or replaced, pointing at the successor (**Deprecated**, amber).
+  - **New features** — genuinely new capabilities worth tracking (**Active**, green).
+- **Filter and search** — a status filter (**Active / Renamed / Deprecated**), keyed on the
+  badge each card shows, plus category chips, a console-style sidebar, and instant search.
 - Every entry has an **official source** (Databricks or Microsoft Learn docs) and a
   `verified` date.
 
@@ -31,7 +32,8 @@ features** — sourced, dated, and searchable — dressed up as the Databricks c
   whoever opens it gets a "beat this score" challenge banner.
 - **Deep links** — `#<entry-id>` opens a single entry; `?q=<term>` reflects the search box.
   Each card can copy its own link or a tidy blurb for pasting into Slack.
-- **Year timeline** — a bar chart of changes per year; click a bar to filter.
+- **Year timeline** — a stacked bar chart of changes per year, colour-coded by status
+  (Active / Renamed / Deprecated) and synced to the filter; click a bar to filter by year.
 - **"On this month" spotlight**, a **random-entry roulette** (with brick confetti 🧱), a
   light/dark theme toggle, and a deadpan "days since the last change" counter.
 
@@ -58,6 +60,14 @@ Then open <http://localhost:8777/>.
 | `scripts/validate.py` | Schema / format gate for `databricks.json`. |
 | `CONTRIBUTING.md` | The entry schema and field rules. |
 | `AGENTS.md` | Guidance for AI agents (and humans) working in the repo. |
+
+## Analytics & privacy
+
+Visits are counted with [Umami](https://umami.is) — cookieless, no personal data, so no
+consent banner is required. A few anonymous custom events (filter toggles, quiz opens,
+searches, shares) help show what people use. LinkedIn share links carry
+[UTM tags](https://docs.umami.is/docs/utm) so shared traffic is attributed. Everything is
+guarded: if the analytics script is blocked or absent, the app behaves identically.
 
 ## Contributing
 

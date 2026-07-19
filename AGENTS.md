@@ -21,7 +21,8 @@ Three kinds of entry, all held to the same bar:
   a different thing takes over, usually with a different API/format.
 - A **feature** (`kind: "feature"`) is a genuinely new capability worth tracking on the
   timeline — not renamed, not deprecated. It records `introducedAt` and a `status` of
-  `ga`/`preview`. The UI shows it in green; the lifecycle filter can isolate features.
+  `ga`/`preview`. The UI shows it in green, grouped with current names under the **Active**
+  status filter.
 
 Every entry needs an official source (Databricks or Microsoft Learn docs) and a `verified`
 date. If you cannot verify a claim against a live doc, do not add it — flag it instead.
@@ -37,7 +38,7 @@ source and current Databricks naming — not just run the schema check.
 | [`databricks.json`](databricks.json) | **The data. Source of truth.** An array of rename, deprecation, and feature objects. |
 | [`index.html`](index.html) | The app shell: Databricks-style sidebar rail + content area. |
 | [`app.js`](app.js) | Vanilla JS (IIFE, no deps). Fetches `databricks.json`, renders sidebar + result cards, wires search/chips/roulette/theme. |
-| [`styles.css`](styles.css) | All styling. CSS variables; light default, `data-theme="dark"` toggle. Sidebar rail is always dark. Renames use the red accent; deprecations use amber. |
+| [`styles.css`](styles.css) | All styling. CSS variables; light default, `data-theme="dark"` toggle. Sidebar rail is always dark. Status colors are three dedicated tokens — `--c-active` (green), `--c-renamed` (slate), `--c-deprecated` (amber), each with a dark value; the brand red (`--accent`) is chrome only. |
 | [`scripts/validate.py`](scripts/validate.py) | Schema/format gate for `databricks.json`. Branches on `kind`. |
 | [`scripts/build_badges.py`](scripts/build_badges.py) | Regenerates `badges/<n>-of-5/` — one shareable quiz-result page per score, plus its `og.png`. Run after editing badge copy. Rendering `og.png` needs Edge/Chrome installed; the pages themselves are plain static files. |
 | [`badges/`](badges/) | Generated. One folder per quiz result (0–5 of 5): an OG-tagged `index.html` (with an absolute `og:image`) plus a 1200×630 `og.png`. The quiz's LinkedIn share links here. Don't hand-edit; run the generator. |
@@ -85,9 +86,17 @@ defaults `ga`), `occasion`, `note`, `prediction`, `links`.
 - No `from`/`to`/`state` needed. Once a feature gets renamed, add a new card for the new
   name and set this one's `successorId` to it (and convert as needed).
 
-The content area has a **lifecycle filter** (All / Renamed / Deprecated & removed / New
-features) that narrows whatever's showing by `kind`. It's orthogonal to search, chips, and
-rail sections; Home and the roulette reset it to All.
+The content area has a **status filter** (Active / Renamed / Deprecated) that narrows
+whatever's showing by the badge each card shows — via `bucketOf`, not raw `kind`, so
+unchecking **Active** hides both new features and current-name renames (everything in use),
+while **Renamed** is only superseded former names. It's orthogonal to search, chips, and
+rail sections; Home and the roulette reset it to all three. The year timeline mirrors the
+same buckets as stacked, colour-coded segments and follows the filter live.
+
+**Analytics.** Umami (cookieless, in `index.html`) plus a guarded `track(name, data)` helper
+in `app.js` for custom events — every call is wrapped so a blocked/absent script can't affect
+the app. LinkedIn share links get UTM tags via `withUTM(url, params)`. Keep new tracking
+behind `track()`; never let analytics throw into a user path.
 
 ## Before you commit
 

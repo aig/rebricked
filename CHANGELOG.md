@@ -3,6 +3,39 @@
 All notable changes to **rebricked**, grouped by day.
 Format loosely follows [Keep a Changelog](https://keepachangelog.com/); dates are `YYYY-MM-DD`.
 
+## 2026-07-19 (status-based filter, palette, colour-coded timeline, analytics)
+
+### Changed
+- **The filter is now status-based, not kind-based.** Buckets are **Active / Renamed /
+  Deprecated**, keyed on the badge a card shows (`bucketOf`) rather than raw `kind`. A
+  new feature, a preview, and the current-name side of a rename all count as **Active**;
+  only superseded former names are **Renamed**. Unchecking **Active** now hides current
+  names too (previously they stayed, filed under the old rename bucket). The empty-state,
+  URL `kind=` param, and filter tooltips follow the new keys.
+- **New status palette via dedicated tokens.** `--c-active` (emerald), `--c-renamed`
+  (slate), `--c-deprecated` (amber), each with a light **and** dark value — the old green
+  never adapted to dark mode. Badges, card left-stripes, and timeline segments all read
+  from these tokens; the Databricks brand red (`--accent`) is now chrome-only. The solid
+  "retired" badge uses a theme-aware `--c-deprecated-ink` so its text stays legible on the
+  light-in-dark-mode amber.
+- **Badge wording.** `former name` → `renamed`; the current-name badge `current` → `latest`.
+- **Year timeline is dynamic.** Each year's bar is now a stacked, colour-coded column
+  (Active / Renamed / Deprecated) with a legend, and it re-renders live as the filter
+  toggles — hiding a bucket rescales the plot instead of blanking it. Title is now
+  "Changes by year".
+- **Home extras persist across filtering.** The timeline and the "on this month" spotlight
+  no longer key off `allKindsSelected()`, so toggling a filter (or, for the spotlight,
+  selecting a year) keeps them visible instead of hiding the whole panel.
+
+### Added
+- **Cookieless analytics (Umami).** No cookies, no personal data, no consent banner. A
+  guarded `track(name, data)` helper records anonymous custom events (filter toggles, nav,
+  debounced searches, quiz opens, roulette, shares, timeline-year, theme). Every call is
+  wrapped so a blocked or absent script can't affect the app.
+- **UTM-tagged share links.** `withUTM(url, params)` appends UTM params (kept before any
+  `#fragment`) to the card and quiz LinkedIn share URLs, so shared traffic attributes in
+  Umami. Card shares carry the entry id as `utm_content`.
+
 ## 2026-07-19 (card header reflow; click-to-copy correction fix)
 
 ### Fixed
