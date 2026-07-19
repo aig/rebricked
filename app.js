@@ -59,9 +59,9 @@
   // The status filter (top of results). Orthogonal to section/category/search.
   // Keys match the buckets bucketOf() returns and the badges the cards show.
   const FILTERS = [
-    { key: "current", label: "Current" },
-    { key: "renamed", label: "Renamed" },
-    { key: "deprecation", label: "Deprecated" },
+    { key: "current", label: "Active", hint: "In use now — new, preview and current names" },
+    { key: "renamed", label: "Renamed", hint: "Superseded former names" },
+    { key: "deprecation", label: "Deprecated", hint: "Deprecated or retired" },
   ];
 
   // ---- sidebar config: mirrors the Databricks console rail ----
@@ -173,12 +173,13 @@
     return rows;
   }
 
-  // ---- status filter (Current / Renamed / Deprecated) ----
+  // ---- status filter (Active / Renamed / Deprecated) ----
   function renderFilters() {
     const el = $("#filters");
     if (!el) return;
     el.innerHTML = FILTERS.map((f) => {
-      return `<button class="filter" data-kind="${escapeAttr(f.key)}" aria-pressed="false">${escapeHtml(f.label)}<span class="filter-count">0</span></button>`;
+      const title = f.hint ? ` title="${escapeAttr(f.hint)}"` : "";
+      return `<button class="filter" data-kind="${escapeAttr(f.key)}"${title} aria-pressed="false">${escapeHtml(f.label)}<span class="filter-count">0</span></button>`;
     }).join("");
     el.querySelectorAll(".filter").forEach((btn) => {
       btn.addEventListener("click", () => {
@@ -435,9 +436,9 @@
         b.classList.toggle("active", b.dataset.year === activeYear)
       );
     }
-    // Spotlight is home-only content — hide it once a year is selected, but keep it up
-    // when the user has merely toggled a filter.
-    if (sp) sp.hidden = !(onList && !activeYear);
+    // Spotlight stays up across filter toggles and year selections — anything on the
+    // main list. It hides only when the user drills into an entry/section/category/search.
+    if (sp) sp.hidden = !onList;
   }
 
   function rowHTML(d, q) {
@@ -473,6 +474,7 @@
           : d.to ? `until ${escapeHtml(d.to)}` : escapeHtml(d.from || "?");
         dateText = `in use ${span}${occasion}`;
       } else {
+        rowCls = " is-current"; // current-name side of a rename — same Latest/green bucket
         dateText = `current since ${escapeHtml(d.from || "?")}${occasion}`;
       }
     }
@@ -533,7 +535,7 @@
     if ((d.state || "current") === "renamed") {
       return `<span class="badge badge-former">renamed</span>`;
     }
-    return `<span class="badge badge-current">current</span>`;
+    return `<span class="badge badge-current">latest</span>`;
   }
 
   // Cross-card links. A card points forward via `successorId` (the name it became,
@@ -1520,7 +1522,7 @@
   // Filter buckets in stacking order (top → bottom of each bar); the class suffix
   // colors the segment and its legend swatch, mirroring the status badges.
   const TL_BUCKETS = [
-    { key: "current", label: "Current" },
+    { key: "current", label: "Active" },
     { key: "renamed", label: "Renamed" },
     { key: "deprecation", label: "Deprecated" },
   ];
