@@ -460,11 +460,9 @@ body {
     max-width: none;
   }
 
-  /* Keep the small action icons pinned top-right; the title, AI-guess pill, and tags
-     wrap within the left group as the card narrows. */
-  .row-head-right {
-    align-self: flex-start;
-  }
+  /* Card-header reflow for narrow screens lives at the end of the file, after the base
+     .row-head-right / .row-main rules — a mobile override placed here (before those base
+     rules) loses the cascade to them, since media queries add no specificity. */
 
   /* Let the odds text wrap cleanly inside its pill rather than overflowing the card. */
   .odds {
@@ -2038,3 +2036,41 @@ body.modal-open {
 .badge-tier-3 { --tier: #D6A419; }
 .badge-tier-4 { --tier: #4CB7C9; }
 .badge-tier-5 { --tier: #6E8BF5; }
+
+/* ---- card header on narrow screens ----
+   The AI-guess pill ("✨ Guess a new name using AI") is wide and its group is
+   flex-shrink:0, so on a phone it holds full width and crushes the title — wrapping
+   it to two lines and shoving the status badge + category onto their own rows.
+   Collapse the right-hand group into the card's flow (display:contents) so the
+   compact action icons stay pinned beside the title while the wide pill drops to its
+   own full-width row underneath, giving the title and its tags room to sit together.
+
+   This block is at the end of the file on purpose: media queries add no specificity,
+   so these single-class overrides must come *after* the base .row-head-right rule to
+   win the cascade. */
+@media (max-width: 640px) {
+  .row-main {
+    flex-wrap: wrap;
+  }
+
+  .row-head-right {
+    display: contents;
+  }
+
+  /* Grow from zero (not from the title's max-content) so the left group always shares
+     the first line with the pinned icons — otherwise a title+tags wider than the card
+     claims the whole line and bumps the icons onto a row of their own. */
+  .row-head-left {
+    flex-basis: 0;
+  }
+
+  .row-actions {
+    order: 2; /* icons stay on the title's line, pinned right by their margin-left:auto */
+  }
+
+  .row-odds {
+    order: 3;
+    flex-basis: 100%;   /* the wide pill gets its own row, clear of the title */
+    margin-top: 4px;
+  }
+}

@@ -36,6 +36,17 @@ Format loosely follows [Keep a Changelog](https://keepachangelog.com/); dates ar
   `#fragment`) to the card and quiz LinkedIn share URLs, so shared traffic attributes in
   Umami. Card shares carry the entry id as `utm_content`.
 
+### Fixed
+- **Card header on phones.** The wide "✨ Guess a new name using AI" pill was pinned in a
+  `flex-shrink:0` group top-right, so on a narrow card it held its full width, wrapped the
+  title to two lines, and pushed the status badge and category onto rows of their own. On
+  `≤640px` the right-hand group now collapses into the card flow (`display:contents`): the
+  compact action icons stay pinned beside the title and the pill drops to its own full-width
+  row underneath. `.row-head-left` grows from `flex-basis:0` so a wide title never bumps the
+  icons onto a separate line (regression seen on badge-only cards like deprecations). The
+  override lives at the end of the stylesheet so it wins the cascade over the base
+  `.row-head-right` rule — media queries add no specificity.
+
 ## 2026-07-19 (card header reflow; click-to-copy correction fix)
 
 ### Fixed
