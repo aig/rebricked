@@ -1807,8 +1807,19 @@
 
   // A card's "when": a rename card's is when that name took effect (`from`); a
   // deprecation's is when it was removed, else deprecated; a feature's is introduced.
+  // When the change this entry represents actually happened - so the timeline files
+  // each event under the year it occurred, not when the name first existed.
+  //   feature     -> introduced
+  //   deprecation -> deprecated (fall back to removed if that's all we have)
+  //   rename      -> a superseded name's change is when the new name took over (to);
+  //                  the surviving current name's change is when it took effect (from).
   function changedAt(d) {
-    return d.from || d.removedAt || d.deprecatedAt || d.introducedAt || "";
+    const k = kindOf(d);
+    if (k === "feature") return d.introducedAt || "";
+    if (k === "deprecation") return d.deprecatedAt || d.removedAt || "";
+    return (d.status || "current") === "renamed"
+      ? (d.to || d.from || "")
+      : (d.from || d.to || "");
   }
 
   // Normalize an entry to one of the three underlying kinds. Absent kind => rename.
