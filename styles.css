@@ -16,7 +16,7 @@
   --warn: #B45309;
   /* amber — deprecated / retired */
   /* Lifecycle states — one deliberate, CVD-validated hue each (light):
-       Active = emerald · Renamed = indigo · Legacy = slate · Deprecated = amber.
+       Active = emerald · Renamed = orange (shared with the chart) · Legacy = slate · Deprecated = amber.
      --c-*      = mark: chart fills, card spines, legend dots
      --c-*-ink  = label text on the tinted badge (clears WCAG AA on --panel)
      Renamed moved off slate so it no longer collides with Legacy; the charted
@@ -24,19 +24,22 @@
      Kept separate from --accent/--ok/--warn (which chrome + quiz reuse). */
   --c-active: #0E8F5E;
   --c-active-ink: #0A6E48;
-  --c-renamed: #5A54D9;
-  --c-renamed-ink: #4842C4;
+  --c-renamed: #EB6834;
+  --c-renamed-ink: #AD481B;
   --c-legacy: #5F6B7A;
   --c-legacy-ink: #4B5563;
   --c-deprecated: #B45309;
   --c-deprecated-ink: #92430A;
   --c-retired-fg: #FFFFFF;
   /* text on the solid "retired" badge */
-  /* chart-segment fills — equal to the marks in light; stepped darker in dark
-     so the stacked bars stay inside the validator's dark lightness band. */
-  --seg-active: var(--c-active);
+  /* chart-segment fills. Renamed reuses the card's --c-renamed (orange) and Legacy
+     reuses --c-legacy (slate), so the chart and the badges share those two colors.
+     Active is chart-specific: a teal-green that stays colorblind-safe beside the
+     orange (pure green ↔ orange fails CVD). Validated both themes; Active is stepped
+     brighter for the dark surface below. */
+  --seg-active: #10A37F;
   --seg-renamed: var(--c-renamed);
-  --seg-deprecated: var(--c-deprecated);
+  --seg-deprecated: var(--c-legacy);
   --sans: -apple-system, BlinkMacSystemFont, "Segoe UI", "Inter", Roboto, Helvetica, Arial, sans-serif;
   --mono: ui-monospace, "SF Mono", "Cascadia Code", Menlo, Consolas, monospace;
 
@@ -64,18 +67,19 @@
      ink == mark here since the brighter tones read cleanly on the dark tint. */
   --c-active: #34D399;
   --c-active-ink: #34D399;
-  --c-renamed: #A5A0FF;
-  --c-renamed-ink: #A5A0FF;
+  --c-renamed: #F0774A;
+  --c-renamed-ink: #F0774A;
   --c-legacy: #96A1B0;
   --c-legacy-ink: #A7B0BD;
   --c-deprecated: #FBBF24;
   --c-deprecated-ink: #FBBF24;
   --c-retired-fg: #241900;
   /* dark text on the light-amber solid badge */
-  /* dimmer, in-band fills for the stacked bars on the dark chart surface */
-  --seg-active: #12A06B;
-  --seg-renamed: #6C64E8;
-  --seg-deprecated: #C0800C;
+  /* same chart palette on the dark surface; Renamed & Legacy reuse the badge tokens,
+     Active is the chart-specific teal-green, stepped brighter here. */
+  --seg-active: #17AC83;
+  --seg-renamed: var(--c-renamed);
+  --seg-deprecated: var(--c-legacy);
 }
 
 * {
@@ -1606,21 +1610,30 @@ mark {
   min-height: 3px;
   border-radius: 4px 4px 0 0;
   overflow: hidden;
-  /* clip the stacked segments to the rounded top */
+  /* clip the stacked segments to the rounded top + square baseline */
   display: flex;
   flex-direction: column;
-  /* stack bucket segments top → bottom */
+  /* stack bucket segments top → bottom, with a 2px surface gap between fills */
+  gap: 2px;
   transform-origin: bottom center;
   animation: tl-grow .5s cubic-bezier(.2, .8, .25, 1) backwards;
   animation-delay: calc(var(--i) * 55ms);
   transition: filter .15s, box-shadow .15s;
 }
 
-/* one slice per active bucket; flex-grow (set inline) carries its count */
+/* one slice per active bucket; flex-grow (set inline) carries its count.
+   Each fill is a rounded block separated by the 2px gap above; the top slice
+   keeps the 4px bar-top corners so it meets the container edge cleanly. */
 .tl-seg {
   width: 100%;
   flex-basis: 0;
   min-height: 2px;
+  border-radius: 2px;
+}
+
+.tl-seg:first-child {
+  border-top-left-radius: 4px;
+  border-top-right-radius: 4px;
 }
 
 /* segment + legend colors, aligned with the status badges:
