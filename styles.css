@@ -667,20 +667,19 @@ body {
   gap: 8px 12px;
 }
 
-/* Left of the top row: the title plus its tags (category + status badge), all on
-   one baseline. It shrinks/wraps to make room for the pinned right-hand controls. */
+/* Left of the top row: just the title (its name / lineage). Category + date ride in
+   the eyebrow above; the status pill moved to the right group. */
 .row-head-left {
   display: flex;
-  align-items: center;
+  align-items: baseline;
   flex-wrap: wrap;
-  gap: 8px 10px;
+  gap: 6px 10px;
   flex: 1 1 auto;
   min-width: 0;
 }
 
-/* Right of the top row: the AI-guess pill and the action icons (copy link, share),
-   pinned top-right. It keeps its natural width so revealing the wider AI guess
-   reflows the title on the left, never bumping the controls to a new line. */
+/* Right of the top row: the status pill and the action icons (copy link, share),
+   pinned top-right. Narrow enough now that it never bumps to its own line. */
 .row-head-right {
   display: flex;
   align-items: center;
@@ -690,10 +689,11 @@ body {
 
 .lineage {
   display: flex;
-  align-items: center;
+  align-items: baseline;
   gap: 8px;
   flex-wrap: wrap;
-  font-size: 16px;
+  font-size: 17.5px;
+  letter-spacing: -.01em;
 }
 
 /* odds + AI guess, sitting inline right after the card title */
@@ -736,20 +736,23 @@ body {
 
 /* deprecations: amber accent — the deprecated/retired state */
 .row.is-deprecation {
-  border-left-width: 3px;
-  border-left-color: color-mix(in srgb, var(--c-deprecated) 55%, var(--line));
-  padding-left: 16px;
+  --state: var(--c-deprecated);
+  border-left-width: 4px;
+  border-left-color: color-mix(in srgb, var(--state) 60%, var(--line));
+  padding-left: 15px;
 }
 
 /* renamed (former name): slate accent — a superseded name, receded */
 .row.is-former {
-  border-left-width: 3px;
-  border-left-color: color-mix(in srgb, var(--c-renamed) 55%, var(--line));
-  padding-left: 16px;
+  --state: var(--c-renamed);
+  border-left-width: 4px;
+  border-left-color: color-mix(in srgb, var(--state) 60%, var(--line));
+  padding-left: 15px;
 }
 
+/* deprecated title: kept as a JS/copy hook only — styling comes from .current so the
+   title matches every other card type (plain ink, not amber, not struck) */
 .dep-name {
-  color: color-mix(in srgb, var(--c-deprecated) 70%, var(--faint));
   cursor: pointer;
 }
 
@@ -759,12 +762,27 @@ body {
 }
 
 .badge {
-  border-radius: 5px;
-  padding: 2px 8px;
-  font-size: 11px;
-  font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  border-radius: 999px;
+  padding: 3px 10px 3px 9px;
+  font-family: var(--mono);
+  font-size: 10.5px;
+  font-weight: 700;
   text-transform: uppercase;
-  letter-spacing: .01em;
+  letter-spacing: .06em;
+  white-space: nowrap;
+}
+
+/* the pill carries a status dot, so it doubles as the color legend */
+.badge::before {
+  content: "";
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: currentColor;
+  flex: none;
 }
 
 .badge-deprecated {
@@ -901,6 +919,7 @@ body {
 }
 
 .ref-chip {
+  position: relative;
   display: inline-flex;
   align-items: center;
   gap: 6px;
@@ -917,6 +936,38 @@ body {
 .ref-chip:hover {
   border-color: var(--accent);
   color: var(--ink);
+}
+
+/* styled tooltip: the source (label / domain) on hover or focus, since the chip text
+   is just its kind now. Dark on both themes, like the toast. */
+.ref-chip[data-tip]::after {
+  content: attr(data-tip);
+  position: absolute;
+  left: 0;
+  bottom: calc(100% + 8px);
+  width: max-content;
+  max-width: 240px;
+  padding: 6px 10px;
+  border-radius: 8px;
+  background: #11171C;
+  color: #fff;
+  border: 1px solid rgba(255, 255, 255, .12);
+  font-family: var(--mono);
+  font-size: 11px;
+  line-height: 1.4;
+  white-space: normal;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, .28);
+  opacity: 0;
+  transform: translateY(3px);
+  pointer-events: none;
+  transition: opacity .13s, transform .13s;
+  z-index: 10;
+}
+
+.ref-chip[data-tip]:hover::after,
+.ref-chip[data-tip]:focus-visible::after {
+  opacity: 1;
+  transform: translateY(0);
 }
 
 .ref-dot {
@@ -954,17 +1005,16 @@ body {
 /* Active bucket (new/preview features + current-name renames): emerald accent */
 .row.is-feature,
 .row.is-current {
-  border-left-width: 3px;
-  border-left-color: color-mix(in srgb, var(--c-active) 55%, var(--line));
-  padding-left: 16px;
+  --state: var(--c-active);
+  border-left-width: 4px;
+  border-left-color: color-mix(in srgb, var(--state) 60%, var(--line));
+  padding-left: 15px;
 }
 
+/* feature title: no green tint — the title matches every other card type; the state
+   shows in the NEW pill and the spine. (.current supplies color + hover.) */
 .feature-name {
-  color: color-mix(in srgb, var(--c-active) 78%, var(--ink));
-}
-
-.feature-name:hover {
-  border-bottom-color: var(--c-active);
+  cursor: pointer;
 }
 
 .badge-ga {
@@ -985,23 +1035,45 @@ body {
   color: var(--muted);
 }
 
+/* date strip — sits below the description (matching the design), monospace */
 .row-meta {
   display: flex;
   align-items: center;
-  gap: 12px;
-  margin-bottom: 10px;
-  font-size: 12px;
+  gap: 8px;
+  margin-top: 12px;
+  font-family: var(--mono);
+  font-size: 11.5px;
   color: var(--faint);
   flex-wrap: wrap;
 }
 
+/* category eyebrow — a full-width mono line above the title */
+.row-eyebrow {
+  margin-bottom: 6px;
+}
+
+/* category, as a monospace eyebrow — no longer a boxed chip */
 .cat {
-  border: 1px solid var(--line);
-  border-radius: 5px;
-  padding: 2px 8px;
-  background: var(--bg);
-  color: var(--muted);
-  font-size: 12px;
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: .09em;
+  text-transform: uppercase;
+  color: var(--faint);
+}
+
+.meta-dot {
+  color: var(--faint);
+  opacity: .55;
+}
+
+/* the actionable lifecycle date (access ended / retires), pulled out and flagged */
+.meta-urgent {
+  font-weight: 700;
+  color: var(--c-deprecated);
+  background: color-mix(in srgb, var(--c-deprecated) 12%, transparent);
+  border: 1px solid color-mix(in srgb, var(--c-deprecated) 30%, transparent);
+  border-radius: 999px;
+  padding: 1px 9px;
 }
 
 .row-meta a:not(.row-act) {
@@ -1016,6 +1088,7 @@ body {
 
 .row-meta .date {
   color: var(--faint);
+  font-variant-numeric: tabular-nums;
 }
 
 /* action toolbar, bottom-right of the card — the conventional spot for per-item
@@ -1027,12 +1100,11 @@ body {
   gap: 4px;
 }
 
+/* docs comment: sits below the footer as a plain caveat — no rule, no box */
 .row-note {
-  margin: 10px 0 0;
+  margin: 12px 0 0;
   font-size: 12.5px;
   color: var(--muted);
-  border-left: 3px solid var(--line);
-  padding: 2px 0 2px 12px;
 }
 
 /* "Previously" line under a rename title — the prior names, newest-first */
@@ -1073,19 +1145,88 @@ body {
 }
 
 /* real-but-fun fact line — genuinely true, our tone */
+/* the 💡 tip: no rule, no box — just the icon and italic text, above the footer */
 .row-fact {
-  margin: 10px 0 0;
+  margin: 12px 0 0;
   font-size: 12.5px;
   color: var(--muted);
+  font-style: italic;
   display: flex;
-  gap: 7px;
+  gap: 8px;
   align-items: baseline;
-  border-left: 3px solid color-mix(in srgb, var(--accent) 45%, var(--line));
-  padding: 2px 0 2px 12px;
 }
 
 .row-fact .fact-icon {
   flex: none;
+  font-style: normal;
+}
+
+/* lineage chain: the rename history as one scannable line — predecessors → this card
+   → successors. Replaces the mini-cards that repeated the description verbatim. */
+.lineage-chain {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 12px;
+  font-family: var(--mono);
+  font-size: 12px;
+  color: var(--muted);
+}
+
+.chain-node {
+  color: var(--faint);
+  text-decoration: none;
+  border-bottom: 1px solid transparent;
+  transition: color .15s, border-color .15s;
+}
+
+a.chain-node:hover {
+  color: var(--ink);
+  border-bottom-color: var(--state, var(--accent));
+}
+
+.chain-node.now {
+  color: var(--ink);
+  font-weight: 600;
+}
+
+.chain-node.former {
+  text-decoration: line-through;
+  text-decoration-thickness: 1.5px;
+  text-decoration-color: color-mix(in srgb, currentColor 55%, transparent);
+}
+
+.chain-yr {
+  opacity: .65;
+}
+
+.chain-flow {
+  color: var(--state, var(--accent));
+  font-weight: 700;
+}
+
+/* card footer: references (left) and the "guess the sequel" gag (right) share one row
+   and one divider, so the wide pill no longer crowds the title. */
+.row-foot {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px 16px;
+  flex-wrap: wrap;
+  margin-top: 16px;
+}
+
+.row-foot .row-refs {
+  margin-top: 0;
+  padding-top: 0;
+  border-top: 0;
+  flex: 1 1 auto;
+}
+
+.row-foot .row-odds {
+  flex: 0 0 auto;
+  margin-left: auto;
 }
 
 mark {
@@ -1467,20 +1608,22 @@ mark {
 
 /* the "ask the AI" button that reveals the made-up forecast */
 .odds-btn {
-  font-family: inherit;
-  font-size: 11px;
+  font-family: var(--mono);
+  font-size: 10.5px;
   font-weight: 600;
+  letter-spacing: .04em;
   color: var(--accent-ink);
-  background: color-mix(in srgb, var(--accent) 7%, transparent);
+  background: transparent;
   border: 1px dashed color-mix(in srgb, var(--accent) 40%, var(--line));
-  border-radius: 5px;
-  padding: 2px 8px;
+  border-radius: 999px;
+  padding: 4px 12px;
   cursor: pointer;
+  white-space: nowrap;
   transition: background .12s, border-color .12s;
 }
 
 .odds-btn:hover {
-  background: color-mix(in srgb, var(--accent) 14%, transparent);
+  background: color-mix(in srgb, var(--accent) 10%, transparent);
   border-color: var(--accent);
 }
 
@@ -2038,39 +2181,20 @@ body.modal-open {
 .badge-tier-5 { --tier: #6E8BF5; }
 
 /* ---- card header on narrow screens ----
-   The AI-guess pill ("✨ Guess a new name using AI") is wide and its group is
-   flex-shrink:0, so on a phone it holds full width and crushes the title — wrapping
-   it to two lines and shoving the status badge + category onto their own rows.
-   Collapse the right-hand group into the card's flow (display:contents) so the
-   compact action icons stay pinned beside the title while the wide pill drops to its
-   own full-width row underneath, giving the title and its tags room to sit together.
+   The status pill + action icons are narrow now that the "guess the sequel" gag lives
+   in the footer, so the right group stays pinned beside the title without the
+   display:contents reflow the wide pill used to need.
 
-   This block is at the end of the file on purpose: media queries add no specificity,
-   so these single-class overrides must come *after* the base .row-head-right rule to
-   win the cascade. */
+   This block stays at the end of the file: media queries add no specificity, so these
+   single-class overrides must come *after* the base rules to win the cascade. */
 @media (max-width: 640px) {
   .row-main {
     flex-wrap: wrap;
   }
 
-  .row-head-right {
-    display: contents;
-  }
-
-  /* Grow from zero (not from the title's max-content) so the left group always shares
-     the first line with the pinned icons — otherwise a title+tags wider than the card
-     claims the whole line and bumps the icons onto a row of their own. */
+  /* Grow from zero so the title always shares the first line with the pinned pill +
+     icons, rather than claiming the whole line and bumping them to a row of their own. */
   .row-head-left {
     flex-basis: 0;
-  }
-
-  .row-actions {
-    order: 2; /* icons stay on the title's line, pinned right by their margin-left:auto */
-  }
-
-  .row-odds {
-    order: 3;
-    flex-basis: 100%;   /* the wide pill gets its own row, clear of the title */
-    margin-top: 4px;
   }
 }

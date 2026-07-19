@@ -453,70 +453,79 @@
     const occasion = d.occasion ? ` · ${escapeHtml(d.occasion)}` : "";
 
     const badge = statusBadge(d);
-    let trail, dateText, rowCls = "";
+    let trail, dateText, urgent = "", rowCls = "";
     if (kind === "feature") {
       rowCls = " is-feature";
       trail = featureTrail(d, q);
-      dateText = `introduced ${escapeHtml(fmtDate(d.introducedAt || "?"))}${occasion}`;
+      dateText = `Introduced ${escapeHtml(fmtDate(d.introducedAt || "?"))}${occasion}`;
     } else if (kind === "deprecation") {
       rowCls = " is-deprecation";
       trail = depTrail(d, q);
       const status = d.status || "deprecated";
-      const removed = d.removedAt ? ` · access ended ${escapeHtml(fmtDate(d.removedAt))}` : "";
-      const verb = status === "legacy" ? "legacy since" : "deprecated";
-      dateText = `${verb} ${escapeHtml(fmtDate(d.deprecatedAt || "?"))}${removed}${occasion}`;
+      const verb = status === "legacy" ? "Legacy since" : "Deprecated";
+      dateText = `${verb} ${escapeHtml(fmtDate(d.deprecatedAt || "?"))}${occasion}`;
+      // The concrete access cut-off, flagged on its own — the one lifecycle date a
+      // reader actually needs to act on, rather than buried mid-sentence.
+      if (d.removedAt) urgent = `<span class="meta-urgent">⚠ Access ended ${escapeHtml(fmtDate(d.removedAt))}</span>`;
     } else {
       trail = renameTrail(d, q);
       if ((d.status || "current") === "renamed") {
         rowCls = " is-former";
         const span = d.from && d.to
-          ? `${escapeHtml(fmtDate(d.from))}–${escapeHtml(fmtDate(d.to))}`
+          ? `${escapeHtml(fmtDate(d.from))} – ${escapeHtml(fmtDate(d.to))}`
           : d.to ? `until ${escapeHtml(fmtDate(d.to))}` : escapeHtml(fmtDate(d.from || "?"));
-        dateText = `in use ${span}${occasion}`;
+        dateText = `In use ${span}${occasion}`;
       } else {
         rowCls = " is-current"; // current-name side of a rename — same Latest/green bucket
-        dateText = `current since ${escapeHtml(fmtDate(d.from || "?"))}${occasion}`;
+        dateText = `Current since ${escapeHtml(fmtDate(d.from || "?"))}${occasion}`;
       }
     }
 
-    // Successors / predecessors pulled from the linked cards — the history chain.
-    // Successor rides up top (right under the head row); predecessor stays below.
-    const successor = relSection("Successor", successorsOf(d));
-    const predecessor = relSection("Predecessor", predecessorsOf(d));
+    // The rename history as one scannable line: predecessors → this card → successors,
+    // each other name linking to its own card. Replaces the successor/predecessor
+    // mini-cards, which repeated this card's description verbatim.
+    const chain = lineageChain(d);
 
     // Classified reference links so every claim is checkable.
     const refs = refsSection(d);
 
+    // The made-up "guess the next name" gag — now in the footer beside the refs, so it
+    // no longer crowds the title.
     const odds = kind === "deprecation" ? "" : oddsBadge(d);
-
-    // The odds + AI guess ride in the top-right corner of the card, clear of the lineage.
     const oddsCorner = odds ? `<div class="row-odds">${odds}</div>` : "";
+    const foot = (refs || oddsCorner)
+      ? `<div class="row-foot">${refs || "<span></span>"}${oddsCorner}</div>`
+      : "";
+
+    // Category is the eyebrow above the title; the date rides in its own strip below
+    // the description (matching the design), not trailing the category.
+    const catHTML = d.category ? `<span class="cat">${escapeHtml(d.category)}</span>` : "";
+    const eyebrow = catHTML ? `<div class="row-eyebrow">${catHTML}</div>` : "";
+    const meta = (dateText || urgent)
+      ? `<div class="row-meta"><span class="date">${dateText}</span>${urgent}</div>`
+      : "";
 
     return `
       <article class="row${rowCls}" data-id="${escapeAttr(d.id)}">
-        <div class="row-meta">
-          <span class="date">${dateText}</span>
-        </div>
+        ${eyebrow}
         <div class="row-main">
           <div class="row-head-left">
             <div class="lineage">${trail}</div>
-            ${badge}
-            <span class="cat">${escapeHtml(d.category || "")}</span>
           </div>
           <div class="row-head-right">
-            ${oddsCorner}
+            ${badge}
             <div class="row-actions">
               <button class="row-act" data-act="link" title="Copy a link to this entry" aria-label="Copy link to this entry">${ICON.link}</button>
               <button class="row-act" data-act="share" title="Share this entry on LinkedIn" aria-label="Share this entry on LinkedIn">${ICON.linkedin}</button>
             </div>
           </div>
         </div>
-        ${successor}
+        ${chain}
         <p class="row-what">${escapeHtml(d.what || "")}</p>
+        ${meta}
         ${fact}
-        ${predecessor}
+        ${foot}
         ${note}
-        ${refs}
       </article>`;
   }
 
@@ -572,9 +581,43 @@
     return out;
   }
 
+  // The lineage as one scannable line: predecessors → this card → successors, oldest to
+  // newest. Every name but this one links to its own card, so the row still navigates
+  // the full history — without the mini-cards that repeated this card's description.
+  function lineageChain(d) {
+    const preds = predecessorsOf(d).slice().reverse(); // oldest-first
+    const succs = successorsOf(d);
+    if (!preds.length && !succs.length) return "";
+    const nowFormer =
+      kindOf(d) === "deprecation" ||
+      (kindOf(d) === "rename" && (d.status || "current") === "renamed");
+    const node = (x, isNow) => {
+      const nm = x.name || currentNameOf(x);
+      if (isNow) {
+        // No year on the current node — the eyebrow above already carries this card's
+        // date, and repeating it can read as backwards next to a successor that shipped
+        // in an earlier year (e.g. a 2025 replacement for a 2026 deprecation).
+        return `<span class="chain-node now${nowFormer ? " former" : ""}">${escapeHtml(nm)}</span>`;
+      }
+      const yr = shortYear(changedAt(x));
+      const yrHTML = yr ? ` <span class="chain-yr">’${escapeHtml(yr.slice(2))}</span>` : "";
+      return `<a class="chain-node" href="#${escapeAttr(encodeURIComponent(x.id))}" ` +
+        `title="Open “${escapeAttr(nm)}”">${escapeHtml(nm)}${yrHTML}</a>`;
+    };
+    const parts = [
+      ...preds.map((p) => node(p, false)),
+      node(d, true),
+      ...succs.map((s) => node(s, false)),
+    ];
+    return `<div class="lineage-chain">` +
+      parts.join(`<span class="chain-flow" aria-hidden="true">→</span>`) +
+      `</div>`;
+  }
+
   // A relationship section: label + one linked mini-card per related entry, each
   // pulling its name, status, date, and description from that other record and
-  // linking to it (click jumps to the card via the #id route).
+  // linking to it (click jumps to the card via the #id route). Retained for reference;
+  // the card now shows lineage inline via lineageChain().
   function relSection(label, items) {
     if (!items.length) return "";
     const plural = items.length > 1 ? "s" : "";
@@ -618,15 +661,15 @@
     if (!links.length) return "";
     links.sort((a, b) => (REF_ORDER[a.kind] ?? 9) - (REF_ORDER[b.kind] ?? 9));
     const chips = links.map((l) => {
-      const text = l.label || hostOf(l.url) || REF_KINDS[l.kind];
+      // The link text is just its kind now; the source (label or domain) rides in a
+      // styled tooltip on hover/focus, so the chips stay compact.
+      const src = l.label || hostOf(l.url) || REF_KINDS[l.kind];
       return `<a class="ref-chip ref-${escapeAttr(l.kind)}" href="${escapeAttr(l.url)}" target="_blank" rel="noopener" ` +
-        `title="${escapeAttr(REF_KINDS[l.kind])} · ${escapeAttr(l.url)}">` +
+        `data-tip="${escapeAttr(src)}" aria-label="${escapeAttr(REF_KINDS[l.kind])} — ${escapeAttr(src)}">` +
         `<span class="ref-dot" aria-hidden="true"></span>` +
-        `<span class="ref-kind">${escapeHtml(REF_KINDS[l.kind])}</span>` +
-        `<span class="ref-host">${escapeHtml(text)}</span>` +
-        `<span class="ref-ext" aria-hidden="true">↗</span></a>`;
+        `<span class="ref-kind">${escapeHtml(REF_KINDS[l.kind])}</span></a>`;
     }).join("");
-    return `<div class="row-refs"><span class="ref-label">References</span><div class="ref-chips">${chips}</div></div>`;
+    return `<div class="row-refs"><div class="ref-chips">${chips}</div></div>`;
   }
 
   // The AI-guess button. No fake odds — just an invitation to have the "AI" make up
@@ -637,7 +680,7 @@
     const preds = Array.isArray(d.prediction) ? d.prediction.filter(Boolean) : [];
     if (!preds.length) return "";
     const start = hashStr(d.id + "p") % preds.length;
-    return `<button class="odds-btn" data-preds="${escapeAttr(JSON.stringify(preds))}" data-i="${start}" title="Our AI's best guess at the next rebrand">✨ Let AI name the sequel</button>`;
+    return `<button class="odds-btn" data-preds="${escapeAttr(JSON.stringify(preds))}" data-i="${start}" title="Our AI's best guess at the next rebrand">✨ Guess the sequel</button>`;
   }
 
   // The AI-guess button reveals a made-up next name: a beat of "thinking", then the
@@ -692,7 +735,10 @@
     // Only treat it as "former" for copy purposes when we actually know the name
     // it became; otherwise fall back to the plain current-name correction.
     const isFormer = renamed && current && current !== name && !current.startsWith("(");
-    const cls = renamed ? "current former" : "current";
+    // The title reads the same across every card type — plain, not struck. The
+    // "former" signal lives in the status pill and the struck node in the lineage
+    // chain, so the title stays consistent (data-former still drives the copy text).
+    const cls = "current";
     const abbr = d.abbr ? ` (${highlight(d.abbr, q)})` : "";
     const attrs = isFormer ? ` data-former="1" data-current="${escapeAttr(current)}"` : "";
     const tip = isFormer ? "click to copy the current name" : "click to copy a correction";
@@ -703,12 +749,13 @@
   // own linked card in the Successor section below. Clicking it copies a correction
   // that names the replacement rather than presenting the dead name as current.
   function depTrail(d, q) {
-    const removedYr = d.removedAt ? `<span class="yr"> ${escapeHtml(shortYear(d.removedAt))}</span>` : "";
     const current = currentNameOf(d);
     const hasSuccessor = current && !current.startsWith("(");
     const attrs = ` data-dep="1" data-old="${escapeAttr(d.name)}"` +
       (hasSuccessor ? ` data-current="${escapeAttr(current)}"` : "");
-    return `<span class="old dep-name" data-name="${escapeAttr(d.name)}"${attrs} title="click to copy a correction">${highlight(d.name, q)}${removedYr}</span>`;
+    // Same plain title as every other card type; the removal year now lives in the
+    // date strip, and the DEPRECATED pill carries the state.
+    return `<span class="current dep-name" data-name="${escapeAttr(d.name)}"${attrs} title="click to copy a correction">${highlight(d.name, q)}</span>`;
   }
 
   function renderError() {
