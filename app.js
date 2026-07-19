@@ -524,8 +524,8 @@
         <p class="row-what">${escapeHtml(d.what || "")}</p>
         ${meta}
         ${fact}
-        ${foot}
         ${note}
+        ${foot}
       </article>`;
   }
 
