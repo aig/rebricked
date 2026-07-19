@@ -2111,7 +2111,13 @@ body.modal-open {
 }
 
 @media (max-width: 480px) {
-  .quiz-opts { grid-template-columns: 1fr; }
+  /* Stacked single column — trim the desktop generosity so four rungs plus the
+     header, ladder and question fit the phone viewport without feeling oversized. */
+  .quiz-opts { grid-template-columns: 1fr; gap: 8px; }
+  .quiz-opt-in { min-height: 46px; padding: 10px 20px; }
+  .quiz-card { padding: 18px 18px 20px; }
+  .quiz-q { margin: 4px 0 12px; }
+  .quiz-ladder { margin: 10px 0 14px; }
 }
 
 @media (prefers-reduced-motion: reduce) {
