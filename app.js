@@ -419,16 +419,25 @@
   }
 
   function updateHomeExtras() {
-    const home = isHome();
     const tl = $("#timeline");
     const sp = $("#spotlight");
+    // Home-ish view, ignoring the kind filter: on the main list with no entry/section/
+    // category/search open. Toggling a filter must NOT hide the home extras, so neither
+    // the timeline nor the spotlight keys off allKindsSelected().
+    const onList = !focusId && !activeSection && !activeCategory && searchEl.value.trim() === "";
     if (tl) {
-      tl.hidden = !home && !activeYear; // keep it visible while a year is selected
+      // The timeline *is* the kind filter's view, so it must stay up even when not all
+      // buckets are selected. Also visible while a year is selected.
+      const visible = onList || activeYear;
+      if (visible) renderTimeline();      // keep segments/heights in sync with the filter
+      tl.hidden = !visible;
       tl.querySelectorAll(".tl-bar").forEach((b) =>
         b.classList.toggle("active", b.dataset.year === activeYear)
       );
     }
-    if (sp) sp.hidden = !home;
+    // Spotlight is home-only content — hide it once a year is selected, but keep it up
+    // when the user has merely toggled a filter.
+    if (sp) sp.hidden = !(onList && !activeYear);
   }
 
   function rowHTML(d, q) {
@@ -1489,32 +1498,76 @@
   }
 
   // ---- year timeline (Home) ----
+  // Filter buckets in stacking order (top → bottom of each bar); the class suffix
+  // colors the segment and its legend swatch, mirroring the status badges.
+  const TL_BUCKETS = [
+    { key: "current", label: "Current" },
+    { key: "renamed", label: "Renamed" },
+    { key: "deprecation", label: "Deprecated" },
+  ];
+  // Per-year counts split by bucket. Computed once — the data is fixed after load;
+  // only which buckets are shown changes as the filter toggles.
+  let TL_DATA = null;
+  let tlRenderedKey = null; // buckets last drawn, so an unrelated re-render doesn't re-animate
+  function timelineData() {
+    if (TL_DATA) return TL_DATA;
+    const byYear = {};
+    DATA.forEach((d) => {
+      const y = shortYear(changedAt(d));
+      if (!y) return;
+      const slot = byYear[y] || (byYear[y] = { current: 0, renamed: 0, deprecation: 0 });
+      slot[bucketOf(d)]++;
+    });
+    TL_DATA = { years: Object.keys(byYear).sort(), byYear };
+    return TL_DATA;
+  }
+
   function renderTimeline() {
     const el = $("#timeline");
     if (!el) return;
-    const counts = {};
-    DATA.forEach((d) => {
-      const y = shortYear(changedAt(d));
-      if (y) counts[y] = (counts[y] || 0) + 1;
-    });
-    const years = Object.keys(counts).sort();
+    const { years, byYear } = timelineData();
     if (years.length === 0) { el.hidden = true; return; }
-    const max = Math.max(...years.map((y) => counts[y]));
-    const bars = years
-      .map((y, i) => {
-        const n = counts[y];
-        const h = Math.round((n / max) * 100);
-        const label = `${n} change${n === 1 ? "" : "s"} in ${escapeHtml(y)}`;
-        return `<button class="tl-bar" data-year="${escapeAttr(y)}" style="--h:${h}%;--i:${i}" title="${label}" aria-label="${label}"><span class="tl-n">${n}</span><span class="tl-h"></span></button>`;
-      })
-      .join("");
+
+    // Only the buckets the filter currently shows — this is what makes the plot react.
+    // Heights rescale to the tallest *visible* year, so hiding a bucket redraws rather
+    // than blanks the graph.
+    const active = TL_BUCKETS.filter((b) => activeKinds.has(b.key));
+    const key = active.map((b) => b.key).join(",") || "none";
+    // Same buckets already on screen? Skip the rebuild (and its animation); the
+    // selected-year highlight is refreshed separately in updateHomeExtras.
+    if (key === tlRenderedKey && el.querySelector(".tl-bar")) return;
+    tlRenderedKey = key;
+
+    const totals = years.map((y) => active.reduce((s, b) => s + byYear[y][b.key], 0));
+    const max = Math.max(1, ...totals);
+    const filtered = active.length < TL_BUCKETS.length;
+
+    const bars = years.map((y, i) => {
+      const total = totals[i];
+      const h = Math.round((total / max) * 100);
+      // One stacked slice per active bucket; flex-grow carries its share of the bar.
+      const segs = active.map((b) => {
+        const n = byYear[y][b.key];
+        if (!n) return "";
+        return `<span class="tl-seg tl-seg-${b.key}" style="flex-grow:${n}" title="${n} ${escapeHtml(b.label)}"></span>`;
+      }).join("");
+      const label = `${total} change${total === 1 ? "" : "s"} in ${escapeHtml(y)}${filtered ? " (filtered)" : ""}`;
+      return `<button class="tl-bar" data-year="${escapeAttr(y)}" style="--h:${h}%;--i:${i}" title="${label}" aria-label="${label}"><span class="tl-n">${total}</span><span class="tl-h">${segs}</span></button>`;
+    }).join("");
+
     const axis = years
       .map((y) => `<span class="tl-y" data-year="${escapeAttr(y)}">'${escapeHtml(y.slice(2))}</span>`)
       .join("");
+    const legend = active
+      .map((b) => `<span class="tl-key"><i class="tl-dot tl-seg-${b.key}"></i>${escapeHtml(b.label)}</span>`)
+      .join("");
+
     el.innerHTML =
-      `<div class="tl-title">The renaming, by year <span class="tl-hint">— click a bar to filter</span></div>` +
+      `<div class="tl-title">Changes by year <span class="tl-hint">— click a bar to filter</span>` +
+      `<span class="tl-legend">${legend}</span></div>` +
       `<div class="tl-plot">${bars}</div>` +
       `<div class="tl-axis">${axis}</div>`;
+
     el.querySelectorAll(".tl-bar").forEach((b) => {
       b.addEventListener("click", () => {
         const y = b.dataset.year;
@@ -1531,6 +1584,10 @@
         render();
       });
     });
+    // Re-apply the selected-year highlight after a rebuild.
+    el.querySelectorAll(".tl-bar").forEach((b) =>
+      b.classList.toggle("active", b.dataset.year === activeYear)
+    );
   }
 
   // ---- "on this day" spotlight (Home) ----

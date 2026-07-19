@@ -1286,6 +1286,10 @@ mark {
 }
 
 .tl-title {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 6px 10px;
   font-size: 12px;
   font-weight: 600;
   color: var(--muted);
@@ -1295,6 +1299,29 @@ mark {
 .tl-hint {
   font-weight: 400;
   color: var(--faint);
+}
+
+/* legend: one swatch per active bucket, pushed to the right of the title */
+.tl-legend {
+  display: inline-flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 4px 12px;
+  margin-left: auto;
+}
+
+.tl-key {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-weight: 500;
+  color: var(--muted);
+}
+
+.tl-dot {
+  width: 9px;
+  height: 9px;
+  border-radius: 2px;
 }
 
 /* plot area: columns anchored to a single baseline rule */
@@ -1338,13 +1365,33 @@ mark {
   max-height: calc(100% - 22px);
   min-height: 3px;
   border-radius: 4px 4px 0 0;
-  background: linear-gradient(180deg,
-    color-mix(in srgb, var(--accent) 78%, #fff),
-    var(--accent));
+  overflow: hidden;          /* clip the stacked segments to the rounded top */
+  display: flex;
+  flex-direction: column;    /* stack bucket segments top → bottom */
   transform-origin: bottom center;
   animation: tl-grow .5s cubic-bezier(.2, .8, .25, 1) backwards;
   animation-delay: calc(var(--i) * 55ms);
   transition: filter .15s, box-shadow .15s;
+}
+
+/* one slice per active bucket; flex-grow (set inline) carries its count */
+.tl-seg {
+  width: 100%;
+  flex-basis: 0;
+  min-height: 2px;
+}
+
+/* segment + legend colors, aligned with the status badges */
+.tl-seg-current {
+  background: linear-gradient(180deg,
+    color-mix(in srgb, var(--accent) 78%, #fff),
+    var(--accent));
+}
+.tl-seg-renamed { background: color-mix(in srgb, var(--muted) 65%, transparent); }
+.tl-seg-deprecation {
+  background: linear-gradient(180deg,
+    color-mix(in srgb, var(--warn) 82%, #fff),
+    var(--warn));
 }
 
 .tl-bar:hover .tl-h {
