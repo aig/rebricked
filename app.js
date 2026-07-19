@@ -508,16 +508,16 @@
 
     return `
       <article class="row${rowCls}" data-id="${escapeAttr(d.id)}">
-        <div class="row-eyebrow">
-          ${catHTML}
-          ${badge}
-        </div>
         <div class="row-main">
           <div class="lineage">${trail}</div>
+          ${badge}
         </div>
-        ${chain}
-        <p class="row-what">${escapeHtml(d.what || "")}</p>
+        <div class="row-eyebrow">
+          ${catHTML}
+          ${chain}
+        </div>
         ${meta}
+        <p class="row-what">${escapeHtml(d.what || "")}</p>
         ${fact}
         ${note}
         ${foot}
