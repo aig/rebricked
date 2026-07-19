@@ -146,7 +146,8 @@ body {
 .side-brand {
   display: flex;
   align-items: center;
-  gap: 1px; /* RE chip sits right against "bricked" so it reads as one word */
+  gap: 1px;
+  /* RE chip sits right against "bricked" so it reads as one word */
   padding: 12px 8px 14px;
   /* it's a button now - clicking the logo goes Home */
   width: 100%;
@@ -186,10 +187,9 @@ body {
   align-items: center;
   background: #fff;
   color: var(--rail);
-  border-radius: 5px;
-  padding: 3px 6px;
+  padding: 1px 3px;
   font-weight: 800;
-  font-size: 20px;
+  font-size: 24px;
   line-height: 1;
   letter-spacing: -.02em;
 }
@@ -2145,8 +2145,15 @@ body.modal-open {
 }
 
 @keyframes quiz-lock {
-  0%, 100% { filter: brightness(1); }
-  50% { filter: brightness(1.14); }
+
+  0%,
+  100% {
+    filter: brightness(1);
+  }
+
+  50% {
+    filter: brightness(1.14);
+  }
 }
 
 .quiz-opt.correct {
@@ -2174,13 +2181,15 @@ body.modal-open {
 }
 
 @media (max-width: 480px) {
-  .quiz-opts { grid-template-columns: 1fr; }
-  .quiz-recipient-fields { grid-template-columns: 1fr; }
-  .quiz-recipient-actions { align-items: stretch; flex-direction: column; }
+  .quiz-opts {
+    grid-template-columns: 1fr;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .quiz-opt.locked { animation: none; }
+  .quiz-opt.locked {
+    animation: none;
+  }
 }
 
 .quiz-foot {
