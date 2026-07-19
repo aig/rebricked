@@ -661,7 +661,7 @@ body {
 
 .row-main {
   display: flex;
-  align-items: flex-start;
+  align-items: center;
   justify-content: space-between;
   flex-wrap: nowrap;
   gap: 8px 12px;
@@ -1047,9 +1047,17 @@ body {
   flex-wrap: wrap;
 }
 
-/* category eyebrow — a full-width mono line above the title */
+/* top strip: category eyebrow (left) + status badge (right) */
 .row-eyebrow {
-  margin-bottom: 6px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 24px;
+  margin-bottom: 8px;
+}
+
+.row-eyebrow .badge {
+  margin-left: auto;
 }
 
 /* category, as a monospace eyebrow — no longer a boxed chip */
@@ -1094,7 +1102,6 @@ body {
 /* action toolbar, bottom-right of the card — the conventional spot for per-item
    controls. Icon buttons only: copy link, share on LinkedIn, open source. */
 .row-actions {
-  margin-left: auto;
   display: flex;
   align-items: center;
   gap: 4px;
@@ -1224,9 +1231,16 @@ a.chain-node:hover {
   flex: 1 1 auto;
 }
 
+/* right cluster of the footer: copy / share icons next to the guess-the-sequel gag */
+.row-foot-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex: 0 0 auto;
+}
+
 .row-foot .row-odds {
   flex: 0 0 auto;
-  margin-left: auto;
 }
 
 mark {

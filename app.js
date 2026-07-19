@@ -489,36 +489,30 @@
     // Classified reference links so every claim is checkable.
     const refs = refsSection(d);
 
-    // The made-up "guess the next name" gag — now in the footer beside the refs, so it
-    // no longer crowds the title.
+    // Footer: references on the left; the utility actions (copy link, share) and the
+    // made-up "guess the next name" gag grouped together on the right.
     const odds = kind === "deprecation" ? "" : oddsBadge(d);
     const oddsCorner = odds ? `<div class="row-odds">${odds}</div>` : "";
-    const foot = (refs || oddsCorner)
-      ? `<div class="row-foot">${refs || "<span></span>"}${oddsCorner}</div>`
-      : "";
+    const actions = `<div class="row-actions">
+            <button class="row-act" data-act="link" title="Copy a link to this entry" aria-label="Copy link to this entry">${ICON.link}</button>
+            <button class="row-act" data-act="share" title="Share this entry on LinkedIn" aria-label="Share this entry on LinkedIn">${ICON.linkedin}</button>
+          </div>`;
+    const foot = `<div class="row-foot">${refs || "<span></span>"}<div class="row-foot-actions">${oddsCorner}${actions}</div></div>`;
 
-    // Category is the eyebrow above the title; the date rides in its own strip below
-    // the description (matching the design), not trailing the category.
+    // Top strip: category on the left, the status badge on the right.
     const catHTML = d.category ? `<span class="cat">${escapeHtml(d.category)}</span>` : "";
-    const eyebrow = catHTML ? `<div class="row-eyebrow">${catHTML}</div>` : "";
     const meta = (dateText || urgent)
       ? `<div class="row-meta"><span class="date">${dateText}</span>${urgent}</div>`
       : "";
 
     return `
       <article class="row${rowCls}" data-id="${escapeAttr(d.id)}">
-        ${eyebrow}
+        <div class="row-eyebrow">
+          ${catHTML}
+          ${badge}
+        </div>
         <div class="row-main">
-          <div class="row-head-left">
-            <div class="lineage">${trail}</div>
-          </div>
-          <div class="row-head-right">
-            ${badge}
-            <div class="row-actions">
-              <button class="row-act" data-act="link" title="Copy a link to this entry" aria-label="Copy link to this entry">${ICON.link}</button>
-              <button class="row-act" data-act="share" title="Share this entry on LinkedIn" aria-label="Share this entry on LinkedIn">${ICON.linkedin}</button>
-            </div>
-          </div>
+          <div class="lineage">${trail}</div>
         </div>
         ${chain}
         <p class="row-what">${escapeHtml(d.what || "")}</p>
