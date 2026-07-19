@@ -9,7 +9,7 @@
     "fact": "Introduced at the 2021 Data + AI Summit, it let engineers build entire production pipelines by sprinkling the keyword LIVE into ordinary SQL and letting the framework untangle the dependencies for them.",
     "from": "2021",
     "to": "2025-06",
-    "successorId": "dlt",
+    "successorId": "lakeflow-declarative-pipelines",
     "status": "renamed",
     "source": "https://docs.databricks.com/aws/en/ldp/where-is-dlt",
     "links": [
@@ -19,7 +19,7 @@
     "verified": "2026-07-18"
   },
   {
-    "id": "dlt",
+    "id": "lakeflow-declarative-pipelines",
     "kind": "rename",
     "name": "Lakeflow Declarative Pipelines",
     "aliases": ["Lakeflow Spark Declarative Pipelines", "Lakeflow pipelines", "DLT"],
@@ -39,7 +39,7 @@
     "verified": "2026-07-18"
   },
   {
-    "id": "workflows-former",
+    "id": "workflows",
     "kind": "rename",
     "name": "Workflows",
     "category": "Data engineering",
@@ -47,7 +47,7 @@
     "fact": "Databricks' answer to 'do we really need Airflow for this?', it wired tasks into DAGs right inside the platform and added a Repair and Rerun button so you could retry only the tasks that flopped.",
     "from": "2022",
     "to": "2025",
-    "successorId": "workflows",
+    "successorId": "lakeflow-jobs",
     "status": "renamed",
     "source": "https://learn.microsoft.com/en-us/azure/databricks/jobs/",
     "links": [
@@ -57,7 +57,7 @@
     "verified": "2026-07-18"
   },
   {
-    "id": "workflows",
+    "id": "lakeflow-jobs",
     "kind": "rename",
     "name": "Lakeflow Jobs",
     "aliases": ["Workflows", "Jobs", "Jobs & Pipelines"],
@@ -77,7 +77,7 @@
     "verified": "2026-07-18"
   },
   {
-    "id": "sql-endpoint-former",
+    "id": "sql-endpoint",
     "kind": "rename",
     "name": "SQL Endpoint",
     "category": "Compute / BI",
@@ -85,7 +85,7 @@
     "fact": "It was the compute you pointed your BI tool at: elastic, Photon-powered clusters that spun up for SQL queries, including a pre-baked 'Starter' one that switched itself off after 120 idle minutes.",
     "from": "2021",
     "to": "2023",
-    "successorId": "sql-endpoint",
+    "successorId": "sql-warehouse",
     "status": "renamed",
     "source": "https://docs.databricks.com/aws/en/compute/sql-warehouse/",
     "links": [
@@ -95,7 +95,7 @@
     "verified": "2026-07-18"
   },
   {
-    "id": "sql-endpoint",
+    "id": "sql-warehouse",
     "kind": "rename",
     "name": "SQL Warehouse",
     "aliases": ["SQL Endpoint", "SQL Endpoints", "SQL Warehouses"],
@@ -122,7 +122,7 @@
     "fact": "Born to fix data teams' 'poor or no integration with Git,' it turned each notebook into a versioned file you could branch, review and commit without ever leaving the workspace.",
     "from": "2021",
     "to": "2024-03",
-    "successorId": "repos",
+    "successorId": "git-folders",
     "status": "renamed",
     "source": "https://learn.microsoft.com/en-us/azure/databricks/repos/what-happened-repos",
     "links": [
@@ -132,7 +132,7 @@
     "verified": "2026-07-18"
   },
   {
-    "id": "repos",
+    "id": "git-folders",
     "kind": "rename",
     "name": "Git folders",
     "aliases": ["Databricks Repos", "Repos"],
@@ -196,7 +196,7 @@
     "fact": "Launched in preview in 2023, it paired a rebuilt visualization engine that claimed charts up to 10x faster with an assistant that would draft your graphs from a plain-English request.",
     "from": "2023",
     "to": "2024-06",
-    "successorId": "dashboards",
+    "successorId": "ai-bi-dashboards",
     "status": "renamed",
     "source": "https://docs.databricks.com/aws/en/dashboards/",
     "links": [
@@ -206,7 +206,7 @@
     "verified": "2026-07-18"
   },
   {
-    "id": "dashboards",
+    "id": "ai-bi-dashboards",
     "kind": "rename",
     "name": "AI/BI Dashboards",
     "aliases": ["Lakeview dashboards", "Lakeview", "Dashboards"],
@@ -234,7 +234,7 @@
     "fact": "Databricks' take on infrastructure-as-code: a single databricks.yml that packaged jobs, pipelines and notebooks into one versioned unit you could test and ship from dev to prod.",
     "from": "2023",
     "to": "2026-03",
-    "successorId": "bundles",
+    "successorId": "declarative-automation-bundles",
     "status": "renamed",
     "source": "https://docs.databricks.com/aws/en/dev-tools/bundles/",
     "links": [
@@ -244,7 +244,7 @@
     "verified": "2026-07-18"
   },
   {
-    "id": "bundles",
+    "id": "declarative-automation-bundles",
     "kind": "rename",
     "name": "Declarative Automation Bundles",
     "aliases": ["Databricks Asset Bundles", "DABs", "DAB"],
@@ -263,7 +263,7 @@
     "verified": "2026-07-18"
   },
   {
-    "id": "genie-spaces-former",
+    "id": "genie-spaces",
     "kind": "rename",
     "name": "Genie Spaces",
     "category": "AI / BI",
@@ -271,7 +271,7 @@
     "fact": "A Genie Space was a topic-scoped room where analysts hand-fed the AI tables, metric definitions and sample queries, so a business user could ask 'how's my sales pipeline?' and get an answer instead of Slacking the data team.",
     "from": "2024",
     "to": "2026-07",
-    "successorId": "genie-spaces",
+    "successorId": "genie-agents",
     "status": "renamed",
     "source": "https://docs.databricks.com/aws/en/genie-agents/set-up",
     "links": [
@@ -281,7 +281,7 @@
     "verified": "2026-07-18"
   },
   {
-    "id": "genie-spaces",
+    "id": "genie-agents",
     "kind": "rename",
     "name": "Genie Agents",
     "aliases": ["Genie Spaces", "Genie"],
@@ -300,7 +300,7 @@
     "verified": "2026-07-18"
   },
   {
-    "id": "databricks-one-former",
+    "id": "databricks-one",
     "kind": "rename",
     "name": "Databricks One",
     "category": "AI / BI",
@@ -308,7 +308,7 @@
     "fact": "A deliberately code-free front door for executives and marketers who never touch a notebook, bundling dashboards, natural-language questions and custom apps behind one un-technical home screen, with no seat-based licenses required.",
     "from": "2025",
     "to": "2026-06",
-    "successorId": "databricks-one",
+    "successorId": "genie-one",
     "status": "renamed",
     "source": "https://docs.databricks.com/aws/en/genie-one/genie",
     "links": [
@@ -318,7 +318,7 @@
     "verified": "2026-07-18"
   },
   {
-    "id": "databricks-one",
+    "id": "genie-one",
     "kind": "rename",
     "name": "Genie One",
     "aliases": ["Databricks One"],
@@ -364,7 +364,7 @@
     "fact": "Reached general availability as a serverless vector database boasting one-click Delta-to-index sync and, per its makers, up to 5x faster performance than rival vector stores while scaling to billions of embeddings.",
     "from": "2024",
     "to": "2026-06",
-    "successorId": "vector-search",
+    "successorId": "databricks-ai-search",
     "status": "renamed",
     "source": "https://docs.databricks.com/aws/en/vector-search/vector-search",
     "links": [
@@ -374,7 +374,7 @@
     "verified": "2026-07-18"
   },
   {
-    "id": "vector-search",
+    "id": "databricks-ai-search",
     "kind": "rename",
     "name": "Databricks AI Search",
     "aliases": ["Mosaic AI Vector Search", "Databricks Vector Search", "Vector Search"],
@@ -551,7 +551,7 @@
     "name": "dbx",
     "aliases": ["dbx by Databricks Labs", "Databricks CLI eXtensions"],
     "replacement": "Declarative Automation Bundles",
-    "successorId": "bundles",
+    "successorId": "declarative-automation-bundles",
     "category": "Developer experience",
     "what": "Databricks Labs CLI that templated and deployed jobs via the Jobs API.",
     "fact": "A Databricks Labs side project - the name is short for 'Databricks CLI eXtensions' - that templated and deployed jobs to the Jobs API straight from your terminal.",
@@ -571,7 +571,7 @@
     "name": "Legacy dashboards",
     "aliases": ["Redash dashboards", "SQL dashboards", "DBSQL dashboards"],
     "replacement": "AI/BI Dashboards",
-    "successorId": "dashboards",
+    "successorId": "ai-bi-dashboards",
     "category": "BI / Dashboards",
     "what": "The original Redash-based SQL dashboards in Databricks SQL.",
     "fact": "These were built on Redash, the open-source SQL dashboarding tool Databricks acquired in 2020 - and their direct access finally ended in January 2026.",
@@ -588,7 +588,7 @@
     "verified": "2026-07-18"
   },
   {
-    "id": "legacy-cli",
+    "id": "legacy-databricks-cli",
     "kind": "deprecation",
     "name": "Legacy Databricks CLI",
     "aliases": ["databricks-cli", "Databricks CLI v0.18", "Python Databricks CLI"],
@@ -613,7 +613,7 @@
     "name": "DBFS mounts",
     "aliases": ["/mnt", "dbutils.fs.mount", "mount points"],
     "replacement": "Unity Catalog volumes & external locations",
-    "successorId": "uc-volumes",
+    "successorId": "unity-catalog-volumes",
     "category": "Data governance",
     "what": "Mounting cloud object storage into the DBFS namespace under /mnt.",
     "fact": "A single `dbutils.fs.mount` made a cloud storage bucket look like a local /mnt path to everyone on the cluster - convenient, and entirely outside per-user governance.",
@@ -671,7 +671,7 @@
     "name": "Workspace Model Registry",
     "aliases": ["MLflow Model Registry", "workspace registry", "model stages"],
     "replacement": "Models in Unity Catalog",
-    "successorId": "models-in-uc",
+    "successorId": "models-in-unity-catalog",
     "category": "AI / ML",
     "what": "The legacy per-workspace MLflow model registry, including model stages (None/Staging/Production/Archived).",
     "fact": "It tracked each model through named stages - None, Staging, Production, Archived - and lived inside a single workspace, one isolated registry per workspace.",
@@ -691,7 +691,7 @@
     "name": "Workspace Feature Store",
     "aliases": ["Feature Store", "databricks-feature-store"],
     "replacement": "Feature Engineering in Unity Catalog",
-    "successorId": "feature-engineering-uc",
+    "successorId": "feature-engineering-in-unity-catalog",
     "category": "AI / ML",
     "what": "The legacy per-workspace feature store, with its own UI and metadata layer separate from Unity Catalog.",
     "fact": "It ran its own UI and metadata layer, separate from the rest of the catalog, and shipped as the databricks-feature-store Python package with its own client API.",
@@ -725,7 +725,7 @@
     "verified": "2026-07-18"
   },
   {
-    "id": "uc-volumes",
+    "id": "unity-catalog-volumes",
     "kind": "feature",
     "name": "Unity Catalog Volumes",
     "aliases": ["Volumes", "managed volumes", "external volumes"],
@@ -770,7 +770,7 @@
     "what": "The ODBC driver for connecting BI tools and applications to Databricks SQL warehouses and clusters.",
     "fact": "An OEM driver licensed from Simba Technologies that let Tableau, Power BI and other BI tools speak ODBC to your cluster; its lineage traces back to a 2014 driver built for Shark, Spark's early SQL front-end.",
     "to": "2026-02",
-    "successorId": "odbc-driver",
+    "successorId": "databricks-odbc-driver",
     "status": "renamed",
     "source": "https://docs.databricks.com/aws/en/integrations/odbc/migration",
     "links": [
@@ -780,7 +780,7 @@
     "verified": "2026-07-18"
   },
   {
-    "id": "odbc-driver",
+    "id": "databricks-odbc-driver",
     "kind": "rename",
     "name": "Databricks ODBC Driver",
     "aliases": ["Simba Spark ODBC Driver", "Simba ODBC", "Spark ODBC Driver"],
@@ -799,7 +799,7 @@
     "verified": "2026-07-18"
   },
   {
-    "id": "delta-sharing-former",
+    "id": "delta-sharing",
     "kind": "rename",
     "name": "Delta Sharing",
     "category": "Data governance",
@@ -807,7 +807,7 @@
     "fact": "Billed as the world's first open protocol for sharing live datasets across organizations, it lets a recipient pull Delta Lake or Parquet data straight into pandas or Tableau without first adopting the provider's platform.",
     "from": "2021",
     "to": "2026-06",
-    "successorId": "delta-sharing",
+    "successorId": "opensharing",
     "status": "renamed",
     "source": "https://docs.databricks.com/aws/en/opensharing/",
     "links": [
@@ -817,7 +817,7 @@
     "verified": "2026-07-18"
   },
   {
-    "id": "delta-sharing",
+    "id": "opensharing",
     "kind": "rename",
     "name": "OpenSharing",
     "aliases": ["Delta Sharing", "Open Sharing"],
@@ -844,7 +844,7 @@
     "what": "The IDE for developing Lakeflow (Spark Declarative) pipelines - code-first, folder-based, with selective execution, data previews, and pipeline graphs on one surface.",
     "fact": "A folder-based IDE that breaks pipeline logic out of single notebooks into modular Python and SQL files, complete with tabs, a dependency graph, per-table run buttons, and a cross-file issues panel.",
     "to": "2025-09",
-    "successorId": "pipelines-editor",
+    "successorId": "lakeflow-pipelines-editor",
     "status": "renamed",
     "source": "https://docs.databricks.com/aws/en/ldp/multi-file-editor",
     "links": [
@@ -853,7 +853,7 @@
     "verified": "2026-07-18"
   },
   {
-    "id": "pipelines-editor",
+    "id": "lakeflow-pipelines-editor",
     "kind": "rename",
     "name": "Lakeflow Pipelines Editor",
     "aliases": ["multi-file editor", "Lakeflow multi-file editor"],
@@ -910,7 +910,7 @@
     "verified": "2026-07-18"
   },
   {
-    "id": "lakehouse-rt",
+    "id": "lakehouse-real-time",
     "kind": "feature",
     "name": "Lakehouse Real-Time",
     "aliases": ["Lakehouse//RT", "Lakehouse RT", "Reyden"],
@@ -950,7 +950,7 @@
     "verified": "2026-07-18"
   },
   {
-    "id": "abac",
+    "id": "attribute-based-access-control",
     "kind": "feature",
     "name": "Attribute-based access control (ABAC)",
     "aliases": ["ABAC", "attribute-based access control"],
@@ -969,7 +969,7 @@
     "verified": "2026-07-18"
   },
   {
-    "id": "uc-managed-iceberg",
+    "id": "unity-catalog-managed-iceberg-tables",
     "kind": "feature",
     "name": "Unity Catalog managed Iceberg tables",
     "aliases": ["managed Iceberg tables", "Iceberg managed tables", "UC Iceberg"],
@@ -1016,7 +1016,7 @@
     "fact": "The two original ways to attach compute to governed data: one isolated every user's Python, SQL and Scala so a crowd could safely share one cluster, the other gave a lone user privileged machine access for GPUs, R and RDD APIs.",
     "from": "2022",
     "to": "2025-03",
-    "successorId": "access-modes",
+    "successorId": "standard-and-dedicated-access-modes",
     "status": "renamed",
     "source": "https://www.databricks.com/blog/whats-new-unity-catalog-compute",
     "links": [
@@ -1026,7 +1026,7 @@
     "verified": "2026-07-18"
   },
   {
-    "id": "access-modes",
+    "id": "standard-and-dedicated-access-modes",
     "kind": "rename",
     "name": "Standard and Dedicated access modes",
     "aliases": ["Shared cluster", "Single user cluster", "shared access mode", "single-user access mode"],
@@ -1045,7 +1045,7 @@
     "verified": "2026-07-18"
   },
   {
-    "id": "pat",
+    "id": "personal-access-tokens",
     "kind": "deprecation",
     "name": "Personal access tokens (PATs)",
     "aliases": ["PAT", "personal access token", "token authentication"],
@@ -1108,7 +1108,7 @@
     "name": "Legacy SQL alerts",
     "aliases": ["legacy alerts", "SQL alerts v1"],
     "replacement": "Databricks SQL alerts (new)",
-    "successorId": "sql-alerts-new",
+    "successorId": "databricks-sql-alerts",
     "category": "BI / Dashboards",
     "what": "The original Databricks SQL alerts that notified when a scheduled query crossed a threshold.",
     "fact": "These original SQL alerts fired when a scheduled query crossed a threshold - and each alert leaned on a separately saved query to do it.",
@@ -1122,12 +1122,12 @@
     "verified": "2026-07-18"
   },
   {
-    "id": "dbfs-init-scripts",
+    "id": "init-scripts-on-dbfs",
     "kind": "deprecation",
     "name": "Init scripts on DBFS",
     "aliases": ["DBFS init scripts", "legacy global init scripts", "cluster-named init scripts"],
     "replacement": "Init scripts in Unity Catalog volumes or workspace files",
-    "successorId": "uc-volumes",
+    "successorId": "unity-catalog-volumes",
     "category": "Developer experience",
     "what": "Cluster initialization shell scripts stored on DBFS, plus the older legacy global and cluster-named init-script mechanisms.",
     "fact": "This deprecation has real teeth: leave your init scripts on DBFS and the cluster flatly refuses to start until you move them somewhere governed.",
@@ -1142,12 +1142,12 @@
     "verified": "2026-07-18"
   },
   {
-    "id": "no-isolation-shared",
+    "id": "no-isolation-shared-access-mode",
     "kind": "deprecation",
     "name": "No isolation shared access mode",
     "aliases": ["No isolation shared clusters", "no-isolation shared", "legacy shared (no isolation)"],
     "replacement": "Standard or Dedicated access mode",
-    "successorId": "access-modes",
+    "successorId": "standard-and-dedicated-access-modes",
     "category": "Compute / BI",
     "what": "The legacy compute access mode that shares a cluster across users without process isolation or Unity Catalog governance.",
     "fact": "It shared one cluster across users with no process isolation between them and no Unity Catalog governance - so, unsurprisingly, new accounts don't get it by default anymore.",
@@ -1162,7 +1162,7 @@
     "verified": "2026-07-18"
   },
   {
-    "id": "databricks-connect-legacy",
+    "id": "legacy-databricks-connect",
     "kind": "deprecation",
     "name": "Legacy Databricks Connect",
     "aliases": ["databricks-connect <=12.2", "Databricks Connect v1"],
@@ -1181,7 +1181,7 @@
     "verified": "2026-07-18"
   },
   {
-    "id": "clean-rooms",
+    "id": "databricks-clean-rooms",
     "kind": "feature",
     "name": "Databricks Clean Rooms",
     "aliases": ["Clean Rooms", "clean room"],
@@ -1257,7 +1257,7 @@
     "verified": "2026-07-18"
   },
   {
-    "id": "models-in-uc",
+    "id": "models-in-unity-catalog",
     "kind": "feature",
     "name": "Models in Unity Catalog",
     "aliases": ["UC models", "Models in UC"],
@@ -1275,7 +1275,7 @@
     "verified": "2026-07-18"
   },
   {
-    "id": "feature-engineering-uc",
+    "id": "feature-engineering-in-unity-catalog",
     "kind": "feature",
     "name": "Feature Engineering in Unity Catalog",
     "aliases": ["Feature Engineering", "databricks-feature-engineering"],
@@ -1312,7 +1312,7 @@
     "verified": "2026-07-18"
   },
   {
-    "id": "sql-alerts-new",
+    "id": "databricks-sql-alerts",
     "kind": "feature",
     "name": "Databricks SQL alerts (new)",
     "aliases": ["SQL alerts", "Databricks SQL alerts"],
