@@ -491,15 +491,14 @@
     // Classified reference links so every claim is checkable.
     const refs = refsSection(d);
 
-    // Footer: references on the left; the utility actions (copy link, share) and the
-    // made-up "guess the next name" gag grouped together on the right.
-    const odds = kind === "deprecation" ? "" : oddsBadge(d);
-    const oddsCorner = odds ? `<div class="row-odds">${odds}</div>` : "";
+    // Footer: references on the left; the utility actions (copy link, share) on the
+    // right. The "guess the next name" gag moved into the lineage chain as its
+    // trailing, future-name node (see lineageChain).
     const actions = `<div class="row-actions">
             <button class="row-act" data-act="link" title="Copy a link to this entry" aria-label="Copy link to this entry">${ICON.link}</button>
             <button class="row-act" data-act="share" title="Share this entry on LinkedIn" aria-label="Share this entry on LinkedIn">${ICON.linkedin}</button>
           </div>`;
-    const foot = `<div class="row-foot">${refs || "<span></span>"}<div class="row-foot-actions">${oddsCorner}${actions}</div></div>`;
+    const foot = `<div class="row-foot">${refs || "<span></span>"}<div class="row-foot-actions">${actions}</div></div>`;
 
     // Top strip: category on the left, the status badge on the right.
     const catHTML = d.category ? `<span class="cat">${escapeHtml(d.category)}</span>` : "";
@@ -583,7 +582,12 @@
   function lineageChain(d) {
     const preds = predecessorsOf(d).slice().reverse(); // oldest-first
     const succs = successorsOf(d);
-    if (!preds.length && !succs.length) return "";
+    // The "guess the sequel" gag now lives as the trailing node of the chain — the
+    // made-up *next* name, sitting right after the live tip. Only on a card that is
+    // itself the current tip (renames' former sides and deprecations don't forecast).
+    const guess = kindOf(d) !== "deprecation" && (d.status || "current") !== "renamed"
+      ? oddsBadge(d) : "";
+    if (!preds.length && !succs.length && !guess) return "";
     const nowFormer =
       kindOf(d) === "deprecation" ||
       (kindOf(d) === "rename" && (d.status || "current") === "renamed");
@@ -605,6 +609,7 @@
       node(d, true),
       ...succs.map((s) => node(s, false)),
     ];
+    if (guess) parts.push(guess); // the forecast pill rides in the last, future-name slot
     return `<div class="lineage-chain">` +
       parts.join(`<span class="chain-flow" aria-hidden="true">→</span>`) +
       `</div>`;
@@ -676,7 +681,7 @@
     const preds = Array.isArray(d.prediction) ? d.prediction.filter(Boolean) : [];
     if (!preds.length) return "";
     const start = hashStr(d.id + "p") % preds.length;
-    return `<button class="odds-btn" data-preds="${escapeAttr(JSON.stringify(preds))}" data-i="${start}" title="Our AI's best guess at the next rebrand">✨ Guess the sequel</button>`;
+    return `<button class="odds-btn" data-preds="${escapeAttr(JSON.stringify(preds))}" data-i="${start}" title="Our AI's best guess at the next rebrand">✨ Ask Genie</button>`;
   }
 
   // The AI-guess button reveals a made-up next name: a beat of "thinking", then the
