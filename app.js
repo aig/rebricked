@@ -12,9 +12,10 @@
   let DATA = [];
   let activeCategory = null;
   let activeSection = null; // {label, ids} when a rail section is selected
-  // Multi-select kind filter. "All" is derived: it's active exactly when all three
-  // kinds are selected. Toggling any kind off deselects "All" too.
-  const KIND_KEYS = ["rename", "deprecation", "feature"];
+  // Multi-select status filter, keyed on the badge a card shows (see bucketOf), not on
+  // kindOf. "All" is derived: it's active exactly when all three buckets are selected.
+  // Toggling any bucket off deselects "All" too.
+  const KIND_KEYS = ["current", "renamed", "deprecation"];
   let activeKinds = new Set(KIND_KEYS);
   const allKindsSelected = () => KIND_KEYS.every((k) => activeKinds.has(k));
   const filterOn = (key) => (key === "all" ? allKindsSelected() : activeKinds.has(key));
@@ -49,10 +50,11 @@
       '<path fill="currentColor" stroke="none" d="M20.45 20.45h-3.56v-5.57c0-1.33-.02-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.94v5.67H9.35V9h3.42v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.46zM5.34 7.43a2.07 2.07 0 1 1 0-4.14 2.07 2.07 0 0 1 0 4.14zM7.12 20.45H3.55V9h3.57zM22.22 0H1.77C.8 0 0 .78 0 1.75v20.5C0 23.22.8 24 1.77 24h20.45c.98 0 1.78-.78 1.78-1.75V1.75C24 .78 23.2 0 22.22 0z" /></svg>',
   };
 
-  // The kind filter (top of results). Orthogonal to section/category/search.
+  // The status filter (top of results). Orthogonal to section/category/search.
+  // Keys match the buckets bucketOf() returns and the badges the cards show.
   const FILTERS = [
-    { key: "feature", label: "New" },
-    { key: "rename", label: "Renamed" },
+    { key: "current", label: "Current" },
+    { key: "renamed", label: "Renamed" },
     { key: "deprecation", label: "Deprecated" },
   ];
 
@@ -165,7 +167,7 @@
     return rows;
   }
 
-  // ---- kind filter (New / Renamed / Deprecated) ----
+  // ---- status filter (Current / Renamed / Deprecated) ----
   function renderFilters() {
     const el = $("#filters");
     if (!el) return;
@@ -196,7 +198,7 @@
     el.querySelectorAll(".filter").forEach((b) => {
       const key = b.dataset.kind;
       const span = b.querySelector(".filter-count");
-      if (span) span.textContent = pool.filter((d) => kindOf(d) === key).length;
+      if (span) span.textContent = pool.filter((d) => bucketOf(d) === key).length;
       const on = filterOn(key);
       b.classList.toggle("active", on);
       b.setAttribute("aria-pressed", on);
@@ -320,9 +322,9 @@
     const q = searchEl.value.trim().toLowerCase();
     let rows = contextRows();
 
-    // The kind filter is orthogonal — it narrows whatever's showing.
+    // The status filter is orthogonal — it narrows whatever's showing.
     if (!allKindsSelected()) {
-      rows = rows.filter((d) => activeKinds.has(kindOf(d)));
+      rows = rows.filter((d) => activeKinds.has(bucketOf(d)));
     }
 
     // The timeline year filter is likewise orthogonal.
@@ -510,7 +512,7 @@
     }
     // rename card: the name in use now vs. a superseded one
     if ((d.state || "current") === "renamed") {
-      return `<span class="badge badge-former">former name</span>`;
+      return `<span class="badge badge-former">renamed</span>`;
     }
     return `<span class="badge badge-current">current</span>`;
   }
@@ -1579,9 +1581,21 @@
     return d.from || d.removedAt || d.deprecatedAt || d.introducedAt || "";
   }
 
-  // Normalize an entry to one of the three filter buckets. Absent kind => rename.
+  // Normalize an entry to one of the three underlying kinds. Absent kind => rename.
   function kindOf(d) {
     return d.kind === "deprecation" || d.kind === "feature" ? d.kind : "rename";
+  }
+
+  // Which status filter bucket an entry falls in — aligned with the badge the card
+  // shows, NOT with kindOf. A newly shipped feature and the current-name side of a
+  // rename both read as "current"; only a superseded former name is "renamed". This is
+  // what the top-of-results filter toggles, so unchecking "Current" hides everything
+  // currently in use, whether it got here by launch or by rename.
+  function bucketOf(d) {
+    const k = kindOf(d);
+    if (k === "deprecation") return "deprecation";
+    if (k === "feature") return "current";
+    return (d.state || "current") === "renamed" ? "renamed" : "current";
   }
 
   // Mixed-precision dates ("2025" vs "2025-06") don't compare lexicographically —
