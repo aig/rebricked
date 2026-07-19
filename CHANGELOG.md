@@ -29,6 +29,10 @@ Format loosely follows [Keep a Changelog](https://keepachangelog.com/); dates ar
   "retired" badge uses a theme-aware `--c-deprecated-ink` so its text stays legible on the
   light-in-dark-mode amber.
 - **Badge wording.** `former name` → `renamed`; the current-name badge `current` → `latest`.
+- **Logo relaid out as a one-height lockup.** The emblem (unchanged), the inverted **RE**
+  chip, and a stacked **bricked** / **latest edition** block now sit in a single row, all
+  sized to the same height, matching the wordmark. Previously "REbricked" was one small text
+  line with the edition tag beneath the whole word.
 - **Year timeline is dynamic.** Each year's bar is now a stacked, colour-coded column
   (Active / Renamed / Deprecated) with a legend, and it re-renders live as the filter
   toggles — hiding a bucket rescales the plot instead of blanking it. Title is now

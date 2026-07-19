@@ -130,10 +130,12 @@ body {
   border-radius: 8px;
 }
 
+/* One horizontal lockup: emblem · "RE" chip · stacked "bricked"/"latest edition".
+   All three items are ~one height and vertically centered, matching the wordmark. */
 .side-brand {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 1px; /* RE chip sits right against "bricked" so it reads as one word */
   padding: 12px 8px 14px;
   /* it's a button now — clicking the logo goes Home */
   width: 100%;
@@ -151,47 +153,61 @@ body {
   background: var(--rail-hover);
 }
 
+/* Emblem sized to match the "RE" chip's height; a small gap sets it off from the
+   wordmark, which otherwise runs together as one unit. */
 .logo {
   display: inline-flex;
+  flex: 0 0 auto;
+  margin-right: 0;
   filter: drop-shadow(0 1px 2px rgba(0, 0, 0, .4));
 }
 
-.brand-text {
-  display: flex;
-  flex-direction: column;
-  /* right-align the edition tag so its right edge lines up with "Rebricked" above it */
-  align-items: flex-end;
-  line-height: 1.05;
+.logo svg {
+  display: block;
+  width: 30px;
+  height: 30px;
 }
 
-/* icon + wordmark on one row so the logo centers on the "RE" square, not the whole stack */
-.brand-head {
-  display: flex;
-  align-items: center;
-  gap: 2px;
-}
-
-.brand-name {
-  font-weight: 700;
-  font-size: 17px;
-  color: #fff;
-  letter-spacing: -.01em;
-}
-
-/* the "Re" of Rebricked as an inverted chip — the whole point (re-named) */
+/* the "Re" of Rebricked as an inverted chip — the whole point (re-named).
+   Now a standalone block sized to lead the wordmark. */
 .brand-re {
+  display: inline-flex;
+  align-items: center;
   background: #fff;
   color: var(--rail);
-  border-radius: 4px;
-  padding: 0 4px;
-  margin-right: 2px;
+  border-radius: 5px;
+  padding: 3px 6px;
+  font-weight: 800;
+  font-size: 20px;
+  line-height: 1;
+  letter-spacing: -.02em;
+}
+
+/* "bricked" over "latest edition", stacked so together they match the RE chip's height;
+   right-aligned so the edition tag's right edge lines up under "bricked". */
+.brand-tail {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  justify-content: center;
+  margin-left: 1px;
+  line-height: 1;
+}
+
+.brand-word {
+  font-weight: 700;
+  font-size: 19px;
+  color: #fff;
+  letter-spacing: -.01em;
+  line-height: 1;
 }
 
 .brand-edition {
-  font-size: 10px;
+  font-size: 8.5px;
   color: var(--rail-muted);
-  letter-spacing: .02em;
-  margin-top: 2px;
+  letter-spacing: .04em;
+  margin-top: 1px;
+  line-height: 1;
 }
 
 .side-new {
