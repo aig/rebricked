@@ -101,6 +101,13 @@ body {
   font-size: 14px;
   line-height: 1.55;
   -webkit-font-smoothing: antialiased;
+  /* Hidden hover affordances (e.g. the .ref-chip tooltip, an absolutely-positioned
+     max-content pseudo-element) can extend past the right edge and widen the page.
+     On mobile that expands the layout viewport, which throws the fixed quiz modal —
+     centred via inset:0 — off-screen. Clip the stray horizontal overflow. `clip`
+     (not `hidden`) so no scroll container is created and the sticky sidebar/topbar
+     keep working. */
+  overflow-x: clip;
 }
 
 .app {
@@ -2111,13 +2118,7 @@ body.modal-open {
 }
 
 @media (max-width: 480px) {
-  /* Stacked single column — trim the desktop generosity so four rungs plus the
-     header, ladder and question fit the phone viewport without feeling oversized. */
-  .quiz-opts { grid-template-columns: 1fr; gap: 8px; }
-  .quiz-opt-in { min-height: 46px; padding: 10px 20px; }
-  .quiz-card { padding: 18px 18px 20px; }
-  .quiz-q { margin: 4px 0 12px; }
-  .quiz-ladder { margin: 10px 0 14px; }
+  .quiz-opts { grid-template-columns: 1fr; }
 }
 
 @media (prefers-reduced-motion: reduce) {
