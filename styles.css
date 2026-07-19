@@ -2324,14 +2324,11 @@ body.modal-open {
     flex-basis: 0;
   }
 
-  /* When the footer action cluster wraps to its own line, let it span the full width
-     so the copy/LinkedIn icons can pin to the right edge (the "guess the sequel" gag
-     stays on the left) instead of huddling together on the left. */
+  /* Keep the copy/LinkedIn action cluster on the same row as the reference chips:
+     the chips block absorbs the remaining space (its own chips wrap internally when
+     needed) while the icons stay pinned to the right edge. */
   .row-foot-actions {
-    flex: 1 1 100%;
-  }
-
-  .row-foot-actions .row-actions {
+    flex: 0 0 auto;
     margin-left: auto;
   }
 }
