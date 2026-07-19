@@ -22,11 +22,16 @@
      Renamed moved off slate so it no longer collides with Legacy; the charted
      trio (active/renamed/deprecated) passes the colorblind + contrast validator.
      Kept separate from --accent/--ok/--warn (which chrome + quiz reuse). */
-  --c-active: #0E8F5E;     --c-active-ink: #0A6E48;
-  --c-renamed: #5A54D9;    --c-renamed-ink: #4842C4;
-  --c-legacy: #5F6B7A;     --c-legacy-ink: #4B5563;
-  --c-deprecated: #B45309; --c-deprecated-ink: #92430A;
-  --c-retired-fg: #FFFFFF; /* text on the solid "retired" badge */
+  --c-active: #0E8F5E;
+  --c-active-ink: #0A6E48;
+  --c-renamed: #5A54D9;
+  --c-renamed-ink: #4842C4;
+  --c-legacy: #5F6B7A;
+  --c-legacy-ink: #4B5563;
+  --c-deprecated: #B45309;
+  --c-deprecated-ink: #92430A;
+  --c-retired-fg: #FFFFFF;
+  /* text on the solid "retired" badge */
   /* chart-segment fills — equal to the marks in light; stepped darker in dark
      so the stacked bars stay inside the validator's dark lightness band. */
   --seg-active: var(--c-active);
@@ -57,11 +62,16 @@
   --warn: #F0A93B;
   /* same four states, stepped for the dark surface (not naively flipped);
      ink == mark here since the brighter tones read cleanly on the dark tint. */
-  --c-active: #34D399;     --c-active-ink: #34D399;
-  --c-renamed: #A5A0FF;    --c-renamed-ink: #A5A0FF;
-  --c-legacy: #96A1B0;     --c-legacy-ink: #A7B0BD;
-  --c-deprecated: #FBBF24; --c-deprecated-ink: #FBBF24;
-  --c-retired-fg: #241900; /* dark text on the light-amber solid badge */
+  --c-active: #34D399;
+  --c-active-ink: #34D399;
+  --c-renamed: #A5A0FF;
+  --c-renamed-ink: #A5A0FF;
+  --c-legacy: #96A1B0;
+  --c-legacy-ink: #A7B0BD;
+  --c-deprecated: #FBBF24;
+  --c-deprecated-ink: #FBBF24;
+  --c-retired-fg: #241900;
+  /* dark text on the light-amber solid badge */
   /* dimmer, in-band fills for the stacked bars on the dark chart surface */
   --seg-active: #12A06B;
   --seg-renamed: #6C64E8;
@@ -152,6 +162,13 @@ body {
   /* right-align the edition tag so its right edge lines up with "Rebricked" above it */
   align-items: flex-end;
   line-height: 1.05;
+}
+
+/* icon + wordmark on one row so the logo centers on the "RE" square, not the whole stack */
+.brand-head {
+  display: flex;
+  align-items: center;
+  gap: 2px;
 }
 
 .brand-name {
@@ -654,8 +671,8 @@ body {
   flex: 1;
   height: 1px;
   background: linear-gradient(to right,
-    color-mix(in srgb, var(--accent) 30%, var(--line)),
-    transparent);
+      color-mix(in srgb, var(--accent) 30%, var(--line)),
+      transparent);
 }
 
 .year-count {
@@ -1007,9 +1024,17 @@ body {
 }
 
 /* official = accent, community = green, internet = neutral */
-.ref-official .ref-dot { background: var(--accent); }
-.ref-community .ref-dot { background: var(--ok); }
-.ref-internet .ref-dot { background: var(--muted); }
+.ref-official .ref-dot {
+  background: var(--accent);
+}
+
+.ref-community .ref-dot {
+  background: var(--ok);
+}
+
+.ref-internet .ref-dot {
+  background: var(--muted);
+}
 
 .ref-kind {
   font-weight: 600;
@@ -1564,9 +1589,11 @@ mark {
   max-height: calc(100% - 22px);
   min-height: 3px;
   border-radius: 4px 4px 0 0;
-  overflow: hidden;          /* clip the stacked segments to the rounded top */
+  overflow: hidden;
+  /* clip the stacked segments to the rounded top */
   display: flex;
-  flex-direction: column;    /* stack bucket segments top → bottom */
+  flex-direction: column;
+  /* stack bucket segments top → bottom */
   transform-origin: bottom center;
   animation: tl-grow .5s cubic-bezier(.2, .8, .25, 1) backwards;
   animation-delay: calc(var(--i) * 55ms);
@@ -1587,18 +1614,20 @@ mark {
    mix washes out on the dark graph. */
 .tl-seg-current {
   background: linear-gradient(180deg,
-    color-mix(in srgb, var(--seg-active) 90%, #fff),
-    var(--seg-active));
+      color-mix(in srgb, var(--seg-active) 90%, #fff),
+      var(--seg-active));
 }
+
 .tl-seg-renamed {
   background: linear-gradient(180deg,
-    color-mix(in srgb, var(--seg-renamed) 90%, #fff),
-    var(--seg-renamed));
+      color-mix(in srgb, var(--seg-renamed) 90%, #fff),
+      var(--seg-renamed));
 }
+
 .tl-seg-deprecation {
   background: linear-gradient(180deg,
-    color-mix(in srgb, var(--seg-deprecated) 90%, #fff),
-    var(--seg-deprecated));
+      color-mix(in srgb, var(--seg-deprecated) 90%, #fff),
+      var(--seg-deprecated));
 }
 
 .tl-bar:hover .tl-h {
@@ -1616,12 +1645,19 @@ mark {
 }
 
 @keyframes tl-grow {
-  from { transform: scaleY(0); }
-  to { transform: scaleY(1); }
+  from {
+    transform: scaleY(0);
+  }
+
+  to {
+    transform: scaleY(1);
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .tl-h { animation: none; }
+  .tl-h {
+    animation: none;
+  }
 }
 
 /* year axis under the baseline, columns aligned to the bars above */
@@ -2217,12 +2253,29 @@ body.modal-open {
 
 /* one ascending tier ladder — more correct = higher metal.
    0 Stone · 1 Bronze · 2 Silver · 3 Gold · 4 Platinum · 5 Diamond */
-.badge-tier-0 { --tier: #7C8792; }
-.badge-tier-1 { --tier: #B87333; }
-.badge-tier-2 { --tier: #98A0AC; }
-.badge-tier-3 { --tier: #D6A419; }
-.badge-tier-4 { --tier: #4CB7C9; }
-.badge-tier-5 { --tier: #6E8BF5; }
+.badge-tier-0 {
+  --tier: #7C8792;
+}
+
+.badge-tier-1 {
+  --tier: #B87333;
+}
+
+.badge-tier-2 {
+  --tier: #98A0AC;
+}
+
+.badge-tier-3 {
+  --tier: #D6A419;
+}
+
+.badge-tier-4 {
+  --tier: #4CB7C9;
+}
+
+.badge-tier-5 {
+  --tier: #6E8BF5;
+}
 
 /* ---- card header on narrow screens ----
    The status pill + action icons are narrow now that the "guess the sequel" gag lives

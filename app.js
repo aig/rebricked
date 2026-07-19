@@ -1418,6 +1418,13 @@
     // No (valid) hash — make sure we're not stuck focused on a stale entry.
     focusId = null;
     const params = new URLSearchParams(location.search);
+    // ?id=<id> is the crawler-safe deep link: LinkedIn (and most link previews) drop
+    // the #fragment, so shared entry links carry the id in the query string instead.
+    const idParam = (params.get("id") || "").trim();
+    if (idParam && DATA.some((d) => d.id === idParam)) {
+      focusEntry(idParam, { push: false });
+      return;
+    }
     const q = (params.get("q") || "").trim();
     if (q) {
       searchEl.value = q;
@@ -1491,6 +1498,12 @@
     return location.origin + location.pathname + "#" + encodeURIComponent(id);
   }
 
+  // Crawler-safe deep link for sharing. Link previews (LinkedIn, Slack, etc.) strip the
+  // #fragment, so the entry id rides in the query string; applyRoute() honors ?id=.
+  function entryShareURL(id) {
+    return location.origin + location.pathname + "?id=" + encodeURIComponent(id);
+  }
+
   // Append UTM params to a URL's query string — kept before any #fragment so analytics
   // can read them (a fragment query is invisible to the server/tracker). Falsy values
   // are dropped. See https://docs.umami.is/docs/utm
@@ -1550,7 +1563,7 @@
   // clipboard (LinkedIn's share dialog no longer accepts prefilled text) and open the
   // share-offsite dialog pointed at the entry's deep link.
   function shareEntryLinkedIn(d) {
-    const link = withUTM(entryURL(d.id), {
+    const link = withUTM(entryShareURL(d.id), {
       source: "linkedin", medium: "social", campaign: "card-share", content: d.id,
     });
     const blurb = cardBlurb(d, link);
