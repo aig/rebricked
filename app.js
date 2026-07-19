@@ -588,20 +588,23 @@
     const guess = kindOf(d) !== "deprecation" && (d.status || "current") !== "renamed"
       ? oddsBadge(d) : "";
     if (!preds.length && !succs.length && !guess) return "";
-    const nowFormer =
-      kindOf(d) === "deprecation" ||
-      (kindOf(d) === "rename" && (d.status || "current") === "renamed");
+    // A node is "former" — struck through — when its own record is a superseded rename
+    // or a deprecation, whether it's the card's own name or a predecessor in the chain.
+    const isFormer = (x) =>
+      kindOf(x) === "deprecation" ||
+      (kindOf(x) === "rename" && (x.status || "current") === "renamed");
     const node = (x, isNow) => {
       const nm = x.name || currentNameOf(x);
+      const former = isFormer(x) ? " former" : "";
       if (isNow) {
         // No year on the current node — the eyebrow above already carries this card's
         // date, and repeating it can read as backwards next to a successor that shipped
         // in an earlier year (e.g. a 2025 replacement for a 2026 deprecation).
-        return `<span class="chain-node now${nowFormer ? " former" : ""}">${escapeHtml(nm)}</span>`;
+        return `<span class="chain-node now${former}">${escapeHtml(nm)}</span>`;
       }
       const yr = shortYear(changedAt(x));
       const yrHTML = yr ? ` <span class="chain-yr">’${escapeHtml(yr.slice(2))}</span>` : "";
-      return `<a class="chain-node" href="#${escapeAttr(encodeURIComponent(x.id))}" ` +
+      return `<a class="chain-node${former}" href="#${escapeAttr(encodeURIComponent(x.id))}" ` +
         `title="Open “${escapeAttr(nm)}”">${escapeHtml(nm)}${yrHTML}</a>`;
     };
     const parts = [
