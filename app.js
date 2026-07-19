@@ -480,9 +480,9 @@
     }
 
     // Successors / predecessors pulled from the linked cards — the history chain.
-    const rels =
-      relSection("Successor", successorsOf(d)) +
-      relSection("Predecessor", predecessorsOf(d));
+    // Successor rides up top (right under the head row); predecessor stays below.
+    const successor = relSection("Successor", successorsOf(d));
+    const predecessor = relSection("Predecessor", predecessorsOf(d));
 
     // Classified reference links so every claim is checkable.
     const refs = refsSection(d);
@@ -511,9 +511,10 @@
             </div>
           </div>
         </div>
+        ${successor}
         <p class="row-what">${escapeHtml(d.what || "")}</p>
         ${fact}
-        ${rels}
+        ${predecessor}
         ${note}
         ${refs}
       </article>`;
