@@ -3,6 +3,16 @@
 All notable changes to **rebricked**, grouped by day.
 Format loosely follows [Keep a Changelog](https://keepachangelog.com/); dates are `YYYY-MM-DD`.
 
+## 2026-07-19 (named quiz badges)
+
+### Added
+- **Named quiz badges.** After completing the quiz, players enter a first and last name before
+  opening their badge. The values live only in its URL (`first` and `last` query parameters),
+  and the static badge page reads them client-side - no backend or account needed.
+  Social preview images remain score-based because static Open Graph metadata cannot vary per URL.
+  Badge pages also include a LinkedIn share button that keeps those query parameters in the
+  shared link.
+
 ## 2026-07-19 (status-based filter, palette, colour-coded timeline, analytics)
 
 ### Changed
