@@ -500,8 +500,7 @@
           </div>`;
     const foot = `<div class="row-foot">${refs || "<span></span>"}<div class="row-foot-actions">${actions}</div></div>`;
 
-    // Top strip: category on the left, the status badge on the right.
-    const catHTML = d.category ? `<span class="cat">${escapeHtml(d.category)}</span>` : "";
+    // Top strip: the lineage chain leads, with the status badge pinned right.
     const meta = (dateText || urgent)
       ? `<div class="row-meta"><span class="date">${dateText}</span>${urgent}</div>`
       : "";
@@ -509,13 +508,9 @@
     return `
       <article class="row${rowCls}" data-id="${escapeAttr(d.id)}">
         <div class="row-eyebrow">
-          ${catHTML}
+          ${chain}
           ${badge}
         </div>
-        <div class="row-main">
-          <div class="lineage">${trail}</div>
-        </div>
-        ${chain}
         <p class="row-what">${escapeHtml(d.what || "")}</p>
         ${meta}
         ${fact}
@@ -587,7 +582,9 @@
     // itself the current tip (renames' former sides and deprecations don't forecast).
     const guess = kindOf(d) !== "deprecation" && (d.status || "current") !== "renamed"
       ? oddsBadge(d) : "";
-    if (!preds.length && !succs.length && !guess) return "";
+    // The chain always renders: the card's title now lives here as the "now" node
+    // (styled as an inverted chip), so even a card with no predecessors, successors,
+    // or forecast still shows its name.
     // A node is "former" - struck through - when its own record is a superseded rename
     // or a deprecation, whether it's the card's own name or a predecessor in the chain.
     const isFormer = (x) =>
