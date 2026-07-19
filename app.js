@@ -459,9 +459,11 @@
       trail = featureTrail(d, q);
       dateText = `Introduced ${escapeHtml(fmtDate(d.introducedAt || "?"))}${occasion}`;
     } else if (kind === "deprecation") {
-      rowCls = " is-deprecation";
-      trail = depTrail(d, q);
       const status = d.status || "deprecated";
+      // legacy (no formal end date) gets its own quiet slate spine; a dated
+      // deprecation/retirement keeps the amber one.
+      rowCls = status === "legacy" ? " is-legacy" : " is-deprecation";
+      trail = depTrail(d, q);
       const verb = status === "legacy" ? "Legacy since" : "Deprecated";
       dateText = `${verb} ${escapeHtml(fmtDate(d.deprecatedAt || "?"))}${occasion}`;
       // The concrete access cut-off, flagged on its own — the one lifecycle date a

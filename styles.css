@@ -15,12 +15,23 @@
   --ok: #1A8754;
   --warn: #B45309;
   /* amber — deprecated / retired */
-  /* status buckets — Active = emerald, Renamed = slate, Deprecated = amber.
+  /* Lifecycle states — one deliberate, CVD-validated hue each (light):
+       Active = emerald · Renamed = indigo · Legacy = slate · Deprecated = amber.
+     --c-*      = mark: chart fills, card spines, legend dots
+     --c-*-ink  = label text on the tinted badge (clears WCAG AA on --panel)
+     Renamed moved off slate so it no longer collides with Legacy; the charted
+     trio (active/renamed/deprecated) passes the colorblind + contrast validator.
      Kept separate from --accent/--ok/--warn (which chrome + quiz reuse). */
-  --c-active: #047857;
-  --c-renamed: #64748B;
-  --c-deprecated: #B45309;
-  --c-deprecated-ink: #FFFFFF; /* text on the solid "retired" badge */
+  --c-active: #0E8F5E;     --c-active-ink: #0A6E48;
+  --c-renamed: #5A54D9;    --c-renamed-ink: #4842C4;
+  --c-legacy: #5F6B7A;     --c-legacy-ink: #4B5563;
+  --c-deprecated: #B45309; --c-deprecated-ink: #92430A;
+  --c-retired-fg: #FFFFFF; /* text on the solid "retired" badge */
+  /* chart-segment fills — equal to the marks in light; stepped darker in dark
+     so the stacked bars stay inside the validator's dark lightness band. */
+  --seg-active: var(--c-active);
+  --seg-renamed: var(--c-renamed);
+  --seg-deprecated: var(--c-deprecated);
   --sans: -apple-system, BlinkMacSystemFont, "Segoe UI", "Inter", Roboto, Helvetica, Arial, sans-serif;
   --mono: ui-monospace, "SF Mono", "Cascadia Code", Menlo, Consolas, monospace;
 
@@ -44,10 +55,17 @@
   --accent: #FF5A3C;
   --accent-ink: #FF7355;
   --warn: #F0A93B;
-  --c-active: #4ADE80;
-  --c-renamed: #94A3B8;
-  --c-deprecated: #FBBF24;
-  --c-deprecated-ink: #241900; /* dark text on the light-amber solid badge */
+  /* same four states, stepped for the dark surface (not naively flipped);
+     ink == mark here since the brighter tones read cleanly on the dark tint. */
+  --c-active: #34D399;     --c-active-ink: #34D399;
+  --c-renamed: #A5A0FF;    --c-renamed-ink: #A5A0FF;
+  --c-legacy: #96A1B0;     --c-legacy-ink: #A7B0BD;
+  --c-deprecated: #FBBF24; --c-deprecated-ink: #FBBF24;
+  --c-retired-fg: #241900; /* dark text on the light-amber solid badge */
+  /* dimmer, in-band fills for the stacked bars on the dark chart surface */
+  --seg-active: #12A06B;
+  --seg-renamed: #6C64E8;
+  --seg-deprecated: #C0800C;
 }
 
 * {
@@ -742,11 +760,19 @@ body {
   padding-left: 15px;
 }
 
-/* renamed (former name): slate accent — a superseded name, receded */
+/* renamed (former name): indigo accent — a superseded name, redirected */
 .row.is-former {
   --state: var(--c-renamed);
   border-left-width: 4px;
   border-left-color: color-mix(in srgb, var(--state) 60%, var(--line));
+  padding-left: 15px;
+}
+
+/* legacy: slate accent, dashed — old/unsupported but never formally deprecated,
+   so its spine is quieter than the solid amber of a dated deprecation. */
+.row.is-legacy {
+  --state: var(--c-legacy);
+  border-left: 4px dashed color-mix(in srgb, var(--state) 60%, var(--line));
   padding-left: 15px;
 }
 
@@ -786,33 +812,35 @@ body {
 }
 
 .badge-deprecated {
-  color: var(--c-deprecated);
+  color: var(--c-deprecated-ink);
   background: color-mix(in srgb, var(--c-deprecated) 12%, transparent);
   border: 1px solid color-mix(in srgb, var(--c-deprecated) 30%, transparent);
 }
 
 .badge-retired {
-  color: var(--c-deprecated-ink);
+  color: var(--c-retired-fg);
   background: var(--c-deprecated);
   border: 1px solid var(--c-deprecated);
 }
 
-/* "legacy": docs call it legacy/unsupported but no formal deprecation exists — quieter than amber */
+/* "legacy": docs call it legacy/unsupported but no formal deprecation exists —
+   its own quiet slate, dashed, so it reads as distinct from both indigo Renamed
+   and amber Deprecated without ever shouting. */
 .badge-legacy {
-  color: var(--muted);
-  background: color-mix(in srgb, var(--muted) 10%, transparent);
-  border: 1px dashed color-mix(in srgb, var(--muted) 40%, transparent);
+  color: var(--c-legacy-ink);
+  background: color-mix(in srgb, var(--c-legacy) 10%, transparent);
+  border: 1px dashed color-mix(in srgb, var(--c-legacy) 42%, transparent);
 }
 
 /* "current" = the name in use now; "former" = a superseded name (quiet, struck-through feel) */
 .badge-current {
-  color: var(--c-active);
+  color: var(--c-active-ink);
   background: color-mix(in srgb, var(--c-active) 12%, transparent);
   border: 1px solid color-mix(in srgb, var(--c-active) 30%, transparent);
 }
 
 .badge-former {
-  color: var(--c-renamed);
+  color: var(--c-renamed-ink);
   background: color-mix(in srgb, var(--c-renamed) 13%, transparent);
   border: 1px solid color-mix(in srgb, var(--c-renamed) 34%, transparent);
 }
@@ -1018,13 +1046,13 @@ body {
 }
 
 .badge-ga {
-  color: var(--c-active);
+  color: var(--c-active-ink);
   background: color-mix(in srgb, var(--c-active) 12%, transparent);
   border: 1px solid color-mix(in srgb, var(--c-active) 30%, transparent);
 }
 
 .badge-preview {
-  color: var(--c-active);
+  color: var(--c-active-ink);
   background: color-mix(in srgb, var(--c-active) 12%, transparent);
   border: 1px dashed color-mix(in srgb, var(--c-active) 45%, transparent);
 }
@@ -1077,7 +1105,7 @@ body {
 /* the actionable lifecycle date (access ended / retires), pulled out and flagged */
 .meta-urgent {
   font-weight: 700;
-  color: var(--c-deprecated);
+  color: var(--c-deprecated-ink);
   background: color-mix(in srgb, var(--c-deprecated) 12%, transparent);
   border: 1px solid color-mix(in srgb, var(--c-deprecated) 30%, transparent);
   border-radius: 999px;
@@ -1553,22 +1581,24 @@ mark {
 }
 
 /* segment + legend colors, aligned with the status badges:
-   Active = emerald, Renamed = slate, Deprecated = amber.
-   Only a light sheen at the top — a heavy white mix washes out on the dark graph. */
+   Active = emerald, Renamed = indigo, Deprecated = amber. Fills use the --seg-*
+   tokens, which step darker in dark mode so the stacked bars stay inside the
+   validator's dark lightness band. Only a light sheen at the top — a heavy white
+   mix washes out on the dark graph. */
 .tl-seg-current {
   background: linear-gradient(180deg,
-    color-mix(in srgb, var(--c-active) 90%, #fff),
-    var(--c-active));
+    color-mix(in srgb, var(--seg-active) 90%, #fff),
+    var(--seg-active));
 }
 .tl-seg-renamed {
   background: linear-gradient(180deg,
-    color-mix(in srgb, var(--c-renamed) 90%, #fff),
-    var(--c-renamed));
+    color-mix(in srgb, var(--seg-renamed) 90%, #fff),
+    var(--seg-renamed));
 }
 .tl-seg-deprecation {
   background: linear-gradient(180deg,
-    color-mix(in srgb, var(--c-deprecated) 90%, #fff),
-    var(--c-deprecated));
+    color-mix(in srgb, var(--seg-deprecated) 90%, #fff),
+    var(--seg-deprecated));
 }
 
 .tl-bar:hover .tl-h {
