@@ -1581,6 +1581,15 @@
     return d.name || d.id;
   }
 
+  // The name a rename left behind. A superseded record (status "renamed") already
+  // carries the old name as its own `name`; a surviving record keeps prior names in
+  // `aliases`, newest-first, so aliases[0] is the immediately-previous name.
+  function formerNameOf(d) {
+    if (kindOf(d) !== "rename") return "";
+    if ((d.status || "current") === "renamed") return d.name || "";
+    return (d.aliases && d.aliases[0]) || "";
+  }
+
   // A tidy multi-line blurb for sharing (LinkedIn post text, Slack, chat).
   function cardBlurb(d, shareLink) {
     const kind = kindOf(d);
@@ -1731,9 +1740,13 @@
     const kind = kindOf(pick);
     const verb =
       kind === "feature" ? "shipped" : kind === "deprecation" ? "deprecated" : "renamed";
+    // A rename's subject is the name that *went away* ("Genie Spaces was renamed"),
+    // not where it landed. Features/deprecations just name the thing itself.
+    const former = kind === "rename" ? formerNameOf(pick) : "";
+    const subject = former || currentNameOf(pick);
     el.innerHTML =
       `<span class="sp-tag">On this month</span>` +
-      `<span class="sp-text"><b>${escapeHtml(currentNameOf(pick))}</b> was ${verb} <b>${ago}</b> (${escapeHtml(when)}). ` +
+      `<span class="sp-text"><b>${escapeHtml(subject)}</b> was ${verb} <b>${ago}</b> (${escapeHtml(fmtDate(when))}). ` +
       `<button class="sp-link" data-id="${escapeAttr(pick.id)}">see it →</button></span>`;
     const link = el.querySelector(".sp-link");
     if (link) link.addEventListener("click", () => focusEntry(link.dataset.id));
