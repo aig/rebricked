@@ -2,11 +2,11 @@
   <img src="assets/logo.svg" alt="REbricked" width="320">
 </h1>
 
-<p align="center"><strong>Databricks no longer calls it that.</strong></p>
+<p align="center"><strong>Databricks renamed it.</strong></p>
 
 A single static page that answers one question: *"What happened to the thing Databricks
 used to call X?"* It lists Databricks product and feature **renames, deprecations, and new
-features** — sourced, dated, and searchable — dressed up as the Databricks console.
+features** - sourced, dated, and searchable - dressed up as the Databricks console.
 
 `rebricked` = **re**named or de**pre**cated.
 
@@ -15,33 +15,33 @@ features** — sourced, dated, and searchable — dressed up as the Databricks c
 
 ## What it does
 
-- **Look up an old name** and see what it became — full lineage, with dates
+- **Look up an old name** and see what it became - full lineage, with dates
   (e.g. *Delta Live Tables → Lakeflow Declarative Pipelines*).
 - **Three kinds of entry**, each held to the same bar of *real, sourced changes only*:
-  - **Renames** — a new name for the same thing. The name in use now shows as **Active**
+  - **Renames** - a new name for the same thing. The name in use now shows as **Active**
     (green); each superseded former name shows as **Renamed** (slate).
-  - **Deprecations** — retired or replaced, pointing at the successor (**Deprecated**, amber).
-  - **New features** — genuinely new capabilities worth tracking (**Active**, green).
-- **Filter and search** — a status filter (**Active / Renamed / Deprecated**), keyed on the
+  - **Deprecations** - retired or replaced, pointing at the successor (**Deprecated**, amber).
+  - **New features** - genuinely new capabilities worth tracking (**Active**, green).
+- **Filter and search** - a status filter (**Active / Renamed / Deprecated**), keyed on the
   badge each card shows, plus category chips, a console-style sidebar, and instant search.
 - Every entry has an **official source** (Databricks or Microsoft Learn docs) and a
   `verified` date.
 
 ### The fun bits
 
-- **Quiz mode** — "guess the current name," 5 questions per round, score + streak, and a
+- **Quiz mode** - "guess the current name," 5 questions per round, score + streak, and a
   results screen. Share your score on LinkedIn via a link that encodes the result, so
   whoever opens it gets a "beat this score" challenge banner.
-- **Deep links** — `#<entry-id>` opens a single entry; `?q=<term>` reflects the search box.
+- **Deep links** - `#<entry-id>` opens a single entry; `?q=<term>` reflects the search box.
   Each card can copy its own link or a tidy blurb for pasting into Slack.
-- **Year timeline** — a stacked bar chart of changes per year, colour-coded by status
+- **Year timeline** - a stacked bar chart of changes per year, colour-coded by status
   (Active / Renamed / Deprecated) and synced to the filter; click a bar to filter by year.
 - **"On this month" spotlight**, a **random-entry roulette** (with brick confetti 🧱), a
   light/dark theme toggle, and a deadpan "days since the last change" counter.
 
 ## Running locally
 
-No build step, no framework, no backend — it's a static site. The page fetches
+No build step, no framework, no backend - it's a static site. The page fetches
 `databricks.json`, so it must be served over http (opening the file directly is blocked by
 the browser):
 
@@ -65,7 +65,7 @@ Then open <http://localhost:8777/>.
 
 ## Analytics & privacy
 
-Visits are counted with [Umami](https://umami.is) — cookieless, no personal data, so no
+Visits are counted with [Umami](https://umami.is) - cookieless, no personal data, so no
 consent banner is required. A few anonymous custom events (filter toggles, quiz opens,
 searches, shares) help show what people use. LinkedIn share links carry
 [UTM tags](https://docs.umami.is/docs/utm) so shared traffic is attributed. Everything is
@@ -91,5 +91,5 @@ See [CONTRIBUTING.md](CONTRIBUTING.md) for the full field rules.
 
 This site is for educational purposes only and is **not affiliated with, endorsed by, or
 sponsored by Databricks**. Product names and trademarks belong to their respective owners;
-the console-style chrome is an homage. Every entry is sourced and dated, but — given the
-subject — may already be out of date.
+the console-style chrome is an homage. Every entry is sourced and dated, but - given the
+subject - may already be out of date.

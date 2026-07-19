@@ -6,13 +6,13 @@ Format loosely follows [Keep a Changelog](https://keepachangelog.com/); dates ar
 ## 2026-07-19 (status-based filter, palette, colour-coded timeline, analytics)
 
 ### Changed
-- **Merged `state` into `status` — one lifecycle field per card.** Renames previously used
+- **Merged `state` into `status` - one lifecycle field per card.** Renames previously used
   `state` (`current`/`renamed`) while deprecations/features used `status` and redundantly
   copied it into `state` (they were always equal). Now every card carries a single `status`
   whose vocabulary depends on kind: `current`/`renamed` (rename), `deprecated`/`legacy`/
   `retired` (deprecation), `ga`/`preview` (feature). Rename cards' `state` migrated to
   `status`; the mirror copies were dropped. `validate.py`, `app.js`, and the contributor/agent
-  docs updated to match. No visible behaviour change — badges render identically.
+  docs updated to match. No visible behaviour change - badges render identically.
 - **PAT reclassified `deprecated` → `legacy`.** Personal access tokens have no formal
   deprecation date (the docs page is titled "…(legacy)"), so they now match the same
   convention as the legacy CLI and Workspace Model Registry.
@@ -23,7 +23,7 @@ Format loosely follows [Keep a Changelog](https://keepachangelog.com/); dates ar
   names too (previously they stayed, filed under the old rename bucket). The empty-state,
   URL `kind=` param, and filter tooltips follow the new keys.
 - **New status palette via dedicated tokens.** `--c-active` (emerald), `--c-renamed`
-  (slate), `--c-deprecated` (amber), each with a light **and** dark value — the old green
+  (slate), `--c-deprecated` (amber), each with a light **and** dark value - the old green
   never adapted to dark mode. Badges, card left-stripes, and timeline segments all read
   from these tokens; the Databricks brand red (`--accent`) is now chrome-only. The solid
   "retired" badge uses a theme-aware `--c-deprecated-ink` so its text stays legible on the
@@ -35,7 +35,7 @@ Format loosely follows [Keep a Changelog](https://keepachangelog.com/); dates ar
   line with the edition tag beneath the whole word.
 - **Year timeline is dynamic.** Each year's bar is now a stacked, colour-coded column
   (Active / Renamed / Deprecated) with a legend, and it re-renders live as the filter
-  toggles — hiding a bucket rescales the plot instead of blanking it. Title is now
+  toggles - hiding a bucket rescales the plot instead of blanking it. Title is now
   "Changes by year".
 - **Home extras persist across filtering.** The timeline and the "on this month" spotlight
   no longer key off `allKindsSelected()`, so toggling a filter (or, for the spotlight,
@@ -59,17 +59,17 @@ Format loosely follows [Keep a Changelog](https://keepachangelog.com/); dates ar
   row underneath. `.row-head-left` grows from `flex-basis:0` so a wide title never bumps the
   icons onto a separate line (regression seen on badge-only cards like deprecations). The
   override lives at the end of the stylesheet so it wins the cascade over the base
-  `.row-head-right` rule — media queries add no specificity.
+  `.row-head-right` rule - media queries add no specificity.
 
 ## 2026-07-19 (card header reflow; click-to-copy correction fix)
 
 ### Fixed
 - **Clicking a card title no longer mislabels an old name as the current one.** A *former*
   name (a `"renamed"` card) or a *deprecated* name used to copy "Actually, it's called
-  '<that name>' now" — presenting the superseded name as current. A former-name title now
-  copies the name it actually became (`Actually, "X" is the old name — it's "Y" now.`), and
-  deprecated titles — previously not clickable at all — now copy `Actually, "X" is
-  deprecated — use "Y" now.` (or just "…is deprecated." when nothing replaced it). Current
+  '<that name>' now" - presenting the superseded name as current. A former-name title now
+  copies the name it actually became (`Actually, "X" is the old name - it's "Y" now.`), and
+  deprecated titles - previously not clickable at all - now copy `Actually, "X" is
+  deprecated - use "Y" now.` (or just "…is deprecated." when nothing replaced it). Current
   names and features are unchanged. Each former/deprecated card carries its resolved current
   name (`data-current`, via `currentNameOf`) so the correction points forward; `.dep-name`
   gained a pointer cursor now that it's clickable.
@@ -83,10 +83,10 @@ Format loosely follows [Keep a Changelog](https://keepachangelog.com/); dates ar
   icons sat bottom-right.
 - Rendering split into `.row-head-left` / `.row-head-right`; `.cat` was un-scoped from
   `.row-meta` so the category tag keeps its chip styling in the header; the mobile rule that
-  stacked the odds pill under the title is gone — the pill now wraps within the header's left
+  stacked the odds pill under the title is gone - the pill now wraps within the header's left
   group as the card narrows.
 
-## 2026-07-18 (one card per name — the rename-split)
+## 2026-07-18 (one card per name - the rename-split)
 
 ### Changed
 - **Every historical name is now its own card.** The `lineage` array is gone; a rename
@@ -103,7 +103,7 @@ Format loosely follows [Keep a Changelog](https://keepachangelog.com/); dates ar
   its own year), search, and the quiz were all migrated to the new model.
 
 ### Reference links (earlier the same day)
-- **Every entry carries verified reference links** — `official` (docs), plus researched
+- **Every entry carries verified reference links** - `official` (docs), plus researched
   `community` and `internet` links, rendered as classified chips. Nothing fabricated; each
   URL was fetch-checked.
 
@@ -113,7 +113,7 @@ Format loosely follows [Keep a Changelog](https://keepachangelog.com/); dates ar
 - **`price` → `fact`.** The per-entry line is now a real-but-fun fact *about the feature*
   (what it does, how it works, its rename history, a documented quirk or codename) instead
   of a tongue-in-cheek pricing quip. All 43 entries rewritten; rendered as a `.row-fact`
-  line (💡) and carried into the share blurb. `fact` is the new required field — validator,
+  line (💡) and carried into the share blurb. `fact` is the new required field - validator,
   [`CONTRIBUTING.md`](CONTRIBUTING.md), [`AGENTS.md`](AGENTS.md), and the
   `add-databricks-entry` agent guide updated to match.
 - **Card actions are now an icon toolbar** in each card's **bottom-right** corner (the
@@ -124,10 +124,10 @@ Format loosely follows [Keep a Changelog](https://keepachangelog.com/); dates ar
 - On phones the top search bar now takes its own full-width row so it's no longer squeezed
   by the menu and action buttons.
 
-## 2026-07-18 (new field — funny-but-accurate pricing)
+## 2026-07-18 (new field - funny-but-accurate pricing)
 
 ### Added
-- **Every entry now carries a `price`** — a deadpan one-liner on what the thing costs,
+- **Every entry now carries a `price`** - a deadpan one-liner on what the thing costs,
   rendered as a `.row-price` line on each card and appended to the "copy card" blurb. The
   jokes are ours; the billing facts underneath are real and sourced (DBUs, SKU tiers like
   DLT Core/Pro/Advanced and SQL Warehouse Classic/Pro/Serverless, the ~$0.70/DBU serverless
@@ -139,30 +139,30 @@ Format loosely follows [Keep a Changelog](https://keepachangelog.com/); dates ar
 
 ### Changed
 - **Genie Code** pricing corrected: reflects the July 8, 2026 move of Genie products to
-  pay-as-you-go (per-user free monthly LLM allowance, then DBUs) — it is no longer "no
+  pay-as-you-go (per-user free monthly LLM allowance, then DBUs) - it is no longer "no
   additional cost."
 - **Lakehouse//RT** pricing corrected: it has a *public* serverless-DBU rate (30% intro
   discount through Jan 2027), not "contact your account team."
 - **Clean Rooms** pricing corrected: there is a per-collaborator platform fee on top of the
-  in-room compute — the room is not free.
+  in-room compute - the room is not free.
 - **No isolation shared** pricing corrected: no discounted DBU rate; the DBUs cost the same.
 
-## 2026-07-18 (new feature — Lakehouse//RT)
+## 2026-07-18 (new feature - Lakehouse//RT)
 
 ### Added
-- **Lakehouse Real-Time (Lakehouse//RT)** — a `feature` entry for Databricks' new serverless
+- **Lakehouse Real-Time (Lakehouse//RT)** - a `feature` entry for Databricks' new serverless
   real-time analytics engine (powered by *Reyden*), delivering sub-second SQL reads on Unity
   Catalog tables. Announced June 16, 2026; currently in Beta (`status: preview`). Filed under
   **Compute / BI** and wired into the **SQL Warehouses** rail section.
 
-## 2026-07-18 (harder quiz — multiple funny predictions)
+## 2026-07-18 (harder quiz - multiple funny predictions)
 
 ### Changed
 - **`prediction` is now an array** of funny-but-plausible next names (2–3 per entry, e.g.
   `dlt` → "Genie Pipelines", "Lakeflow Agentic Pipelines", "Unity Pipelines") instead of a
   single string. Validator now requires a non-empty array of non-empty strings.
 - **The quiz is harder**: each question seeds its wrong answers with the asked product's
-  *own* fake future names — the most tempting distractors — before filling from every other
+  *own* fake future names - the most tempting distractors - before filling from every other
   real and predicted name in the dataset.
 - **Cards show "AI guesses"**: the "✨ AI guess" button now reveals the whole shortlist
   ("AI guesses: A, B, or C") drawn from the same `prediction` array.
@@ -171,13 +171,13 @@ Format loosely follows [Keep a Changelog](https://keepachangelog.com/); dates ar
 ## 2026-07-18 (shareable quiz badges)
 
 ### Added
-- **A badge page per quiz result** — `badges/<n>-of-5/` for every score 0–5. Each shows a
+- **A badge page per quiz result** - `badges/<n>-of-5/` for every score 0–5. Each shows a
   stylized Databricks-style **certification crest** (hexagon medallion + ribbon, "REBRICKED
   CERTIFIED") with a **5-star rating** (n filled) and a funny achievement (e.g. 5/5 =
   "Keeper of the Renames", 0/5 = "Rip Van Rebrand"), rendered as a screen inside the app
   chrome (sidebar rail + top bar) with Open Graph tags. The crest, stars, score, and card
-  border follow one ascending tier ladder — Stone → Bronze → Silver → Gold → Platinum →
-  Diamond (0→5) — so the colour reads the rank. Generated by
+  border follow one ascending tier ladder - Stone → Bronze → Silver → Gold → Platinum →
+  Diamond (0→5) - so the colour reads the rank. Generated by
   [`scripts/build_badges.py`](scripts/build_badges.py) (rerun after editing the copy); the
   folders are committed so there's still no deploy-time build.
 - **A 1200×630 `og.png` per badge** rendered from an inline card (via headless Edge/Chrome
@@ -185,7 +185,7 @@ Format loosely follows [Keep a Changelog](https://keepachangelog.com/); dates ar
   text. `og:image`/`og:url` are absolute (base `https://rebricked.org`).
 - The **stacked-brick Rebricked logo** now serves as the favicon everywhere (replacing the
   🧱 emoji tab icon) and appears as the wordmark on the badge pages and the og image.
-- The **wordmark** now sets "RE" in an inverted chip — **RE**bricked — in the sidebar,
+- The **wordmark** now sets "RE" in an inverted chip - **RE**bricked - in the sidebar,
   the badge pages, and the og image (the "re-" of re-named/de-pre-cated).
 - The quiz results screen gains a **"See your badge ↗"** link, and each badge page's
   "Take the quiz" button carries the score back as a `?quiz=` challenge.
@@ -195,43 +195,43 @@ Format loosely follows [Keep a Changelog](https://keepachangelog.com/); dates ar
   shared post previews the badge. The share button is now shown **only once a round is
   finished** (it used to appear after the first answer, which had no badge page to link to).
 
-## 2026-07-18 (the "New" button gag — name predictions)
+## 2026-07-18 (the "New" button gag - name predictions)
 
 ### Added
-- **`prediction` field** on every rename and feature entry (29 of them) — a deliberately
+- **`prediction` field** on every rename and feature entry (29 of them) - a deliberately
   fictional *next* name for the product ("Genie Two", "Solid Clustering", "Workspaceless
   servers"…). It's the one made-up field in the schema; the validator allows it only as a
   non-empty string, warns if a deprecation carries one, and the UI always labels it as
   invented. Documented in CONTRIBUTING.md and AGENTS.md.
-- **The "New" button now does the honest thing** — instead of creating anything, it opens
+- **The "New" button now does the honest thing** - instead of creating anything, it opens
   an overlay explaining that around here products aren't created, they're renamed, and
   suggests a random product plus its predicted next name ("Suggest another" re-rolls,
-  "see the entry" deep-links, "suggest yours" first asks you to type a name, then — via a
-  rotating deadpan refusal — explains that naming is done to you, not by you).
+  "see the entry" deep-links, "suggest yours" first asks you to type a name, then - via a
+  rotating deadpan refusal - explains that naming is done to you, not by you).
   Focus-trapped like the quiz; Escape/scrim close it.
-- **Clickable logo** — the Rebricked brand in the rail is now a button that returns Home
+- **Clickable logo** - the Rebricked brand in the rail is now a button that returns Home
   (and closes the mobile rail).
 
 ### Changed
 - Each rename/feature card shows a static **"~N% chance of another rename by <year>"**
   probability, plus an **"✨ AI prediction" button** that "thinks" for a beat and then
-  reveals the made-up next name — "AI predicts: <prediction>" (respects
+  reveals the made-up next name - "AI predicts: <prediction>" (respects
   `prefers-reduced-motion` by skipping the delay).
 
-## 2026-07-18 (validation pass — fact-check fixes, CI gate restored, mobile nav)
+## 2026-07-18 (validation pass - fact-check fixes, CI gate restored, mobile nav)
 
 Every entry was fact-checked against live official docs (36/42 confirmed as written,
 6 corrected below), and the app/infra findings from the same audit were applied.
 
-### Fixed (data — each verified against the cited source)
+### Fixed (data - each verified against the cited source)
 - **repos**: the Repos → Git folders rename happened **March 21, 2024**, not 2023
   (`renamedAt` and lineage now `2024-03`, per the March 2024 platform release notes).
-- **vector-search**: the note claimed "renamed at GA on 2026-06-25" — the rename release
+- **vector-search**: the note claimed "renamed at GA on 2026-06-25" - the rename release
   note is dated June 1, 2026 and the service had been GA since May 2024.
 - **uc-volumes**: GA was **February 22, 2024**, not "late 2023".
-- **legacy-cli**: status → `legacy` — docs explicitly state no deprecation date or
+- **legacy-cli**: status → `legacy` - docs explicitly state no deprecation date or
   timeline has been established. Also fixed the "does no support" typo.
-- **workspace-model-registry**: status → `legacy` — disabled for new UC-default accounts
+- **workspace-model-registry**: status → `legacy` - disabled for new UC-default accounts
   since April 2024, but docs describe deprecation as a future event.
 - **hive-metastore**: the per-workspace re-enable applies only to accounts created before
   the December 2025 cutoff; new accounts have no restore path.
@@ -240,18 +240,18 @@ Every entry was fact-checked against live official docs (36/42 confirmed as writ
   legacy-dashboards upgrade-tool window is now past tense.
 
 ### Added
-- **Mobile navigation** — a hamburger button and scrim; the rail was previously
+- **Mobile navigation** - a hamburger button and scrim; the rail was previously
   unreachable on narrow screens (nothing ever toggled `.sidebar.open`).
 - **`legacy` deprecation status** (badge + "legacy since" wording) for things Databricks
   calls legacy without a formal deprecation.
-- **Successor links** — deprecation cards link to the replacement's entry via
+- **Successor links** - deprecation cards link to the replacement's entry via
   `replacementId` (added the missing links: dbfs-mounts and dbfs-init-scripts →
   uc-volumes, pat → oauth-token-federation, no-isolation-shared → access-modes).
-- **Shareable filter URLs** — rail section, category, lifecycle filter, and timeline year
+- **Shareable filter URLs** - rail section, category, lifecycle filter, and timeline year
   now serialize to `?s=` / `?cat=` / `?kind=` / `?year=` and restore on load.
-- **CI validation restored** — `static.yml` runs `scripts/validate.py` before deploy
+- **CI validation restored** - `static.yml` runs `scripts/validate.py` before deploy
   (the step existed once and was lost in a workflow rework; docs claimed it still ran).
-- **Validator hardening** — real month ranges, `removedAt ≥ deprecatedAt`, lineage
+- **Validator hardening** - real month ranges, `removedAt ≥ deprecatedAt`, lineage
   chronology, category allow-list, future-`verified` rejection, `replacementId`
   integrity, and a NAV coverage cross-check against `app.js` (every entry must be
   reachable from the rail; every rail id must exist).
@@ -267,31 +267,31 @@ Every entry was fact-checked against live official docs (36/42 confirmed as writ
   longer writes an entry hash it isn't showing; the quiz dialog traps focus and restores
   it on close; `#search` gained a proper label; low-contrast metadata text was darkened
   to meet WCAG AA.
-- Hardened `init()` — missing DOM elements and entries without `lineage` degrade
+- Hardened `init()` - missing DOM elements and entries without `lineage` degrade
   gracefully instead of crashing the whole render.
 
-## 2026-07-18 (fun pass — quiz, timeline, deep links)
+## 2026-07-18 (fun pass - quiz, timeline, deep links)
 
 A round of playful, no-dependency additions on top of the same data. No schema changes;
 `databricks.json` and the validator are untouched.
 
 ### Added
-- **Quiz mode** — an advertised "Take the quiz" call-to-action in the top bar opens an
+- **Quiz mode** - an advertised "Take the quiz" call-to-action in the top bar opens an
   overlay that shows an old name and four current-name choices, tracks score + streak, and
   links straight to the matching entry. Draws its questions from renames (old → current) and
   deprecations that name a replacement.
-- **Share on LinkedIn** — once you've answered a question the quiz shows a LinkedIn button
+- **Share on LinkedIn** - once you've answered a question the quiz shows a LinkedIn button
   that copies a ready-to-paste score brag and opens LinkedIn's share composer for the site.
-- **Deep links / shareable URLs** — `#<entry-id>` opens a single entry on its own; `?q=<term>`
+- **Deep links / shareable URLs** - `#<entry-id>` opens a single entry on its own; `?q=<term>`
   reflects the search box. Each card gains a **link** action (copies the deep link) and a
   **copy card** action (a tidy 🧱 blurb for pasting into Slack/chat).
-- **Year timeline** on Home — a small bar chart of changes per year; click a bar to filter,
+- **Year timeline** on Home - a small bar chart of changes per year; click a bar to filter,
   click again to clear.
-- **"On this month" spotlight** on Home — surfaces a change from the current month (or the
+- **"On this month" spotlight** on Home - surfaces a change from the current month (or the
   most recent one) with a "see it →" jump.
 - **Brick confetti** 🧱 rains down when the roulette lands (respects
   `prefers-reduced-motion`).
-- **Made-up odds gag** — each rename/feature card carries a deadpan, entirely-fictional
+- **Made-up odds gag** - each rename/feature card carries a deadpan, entirely-fictional
   "N% chance of another name by <year>" badge (deterministic per entry).
 - **Rotating empty-state lines** so a no-results screen isn't the same joke every time.
 
@@ -322,7 +322,7 @@ Every item fact-checked against a live doc; unverifiable candidates were deliber
 
 ### Notes
 - Left out for lack of a firsthand-verifiable live doc: **Databricks-managed passwords / basic
-  auth EOL** (both the AWS docs and Microsoft Learn pages failed to render actual content — the
+  auth EOL** (both the AWS docs and Microsoft Learn pages failed to render actual content - the
   July 10, 2024 date is widely cited but I won't add what I couldn't read), and the **Partner
   Connect → Marketplace** sidebar consolidation (Partner Connect still ships as its own product,
   so it isn't a clean rename or deprecation).
@@ -334,11 +334,11 @@ nine verified entries (24 → 33). Each was fact-checked against its live source
 
 ### Added
 - Three renames:
-  - **OpenSharing** (formerly **Delta Sharing**) — "Delta Sharing is now OpenSharing" (June 2026),
+  - **OpenSharing** (formerly **Delta Sharing**) - "Delta Sharing is now OpenSharing" (June 2026),
     a rebrand tied to open-sourcing the OpenSharing standard.
-  - **Databricks ODBC Driver** (formerly **Simba Spark ODBC Driver**) — renamed February 2026;
+  - **Databricks ODBC Driver** (formerly **Simba Spark ODBC Driver**) - renamed February 2026;
     existing DSNs keep working while the legacy driver is installed.
-  - **Lakeflow Pipelines Editor** (previously the **multi-file editor**) — Public Preview
+  - **Lakeflow Pipelines Editor** (previously the **multi-file editor**) - Public Preview
     September 2025, GA May 2026; the doc URL still ends in `/multi-file-editor`.
 - One deprecation: **Hive metastore** → Unity Catalog. Positioned as a legacy feature; accounts
   created after December 18, 2025 have no Hive metastore access by default.
@@ -353,7 +353,7 @@ nine verified entries (24 → 33). Each was fact-checked against its live source
 
 ### Notes
 - Confirmed the existing **Databricks AI Search** entry against the June 2026 "Vector Search is
-  now AI Search" rename — already correct, no change.
+  now AI Search" rename - already correct, no change.
 - Deliberately excluded from the sweep, to hold the catalog's bar: routine model-catalog
   retirements (e.g. Gemini 2.5 Flash, Claude Sonnet 4), UI-label-only tweaks (SQL section →
   Lakehouse), and niche schema/log-table deprecations. The "Lakeflow Declarative Pipelines →
@@ -364,7 +364,7 @@ nine verified entries (24 → 33). Each was fact-checked against its live source
 ## 2026-07-18 (features & lifecycle filter)
 
 ### Added
-- **New features are now first-class — a third `kind`.** Alongside renames and deprecations,
+- **New features are now first-class - a third `kind`.** Alongside renames and deprecations,
   entries can be `kind: "feature"`: a genuinely new capability worth tracking on the timeline,
   with `introducedAt` and a `status` of `ga`/`preview`. Rendered in green with a `new`/`preview`
   badge. Seeded with three verified features: **Liquid Clustering** (GA on DBR 15.4 LTS),
@@ -376,7 +376,7 @@ nine verified entries (24 → 33). Each was fact-checked against its live source
   **Workspace Model Registry** → Models in Unity Catalog (stages replaced by aliases), and
   **Workspace Feature Store** → Feature Engineering in Unity Catalog (workspaces created
   before Aug 19, 2024 only).
-- One verified rename: **Model Serving** (formerly **Serverless Real-Time Inference**) — the
+- One verified rename: **Model Serving** (formerly **Serverless Real-Time Inference**) - the
   March 2023 release notes state "Model Serving, formerly Serverless Real-Time Inference, is
   now generally available" (March 7, 2023).
 - Sidebar dots for the new entries: **Catalog** → UC Volumes + Lakehouse Federation,
@@ -396,10 +396,10 @@ nine verified entries (24 → 33). Each was fact-checked against its live source
   Workspace Feature Store, Liquid Clustering, UC Volumes, Lakehouse Federation, and the
   Serverless Real-Time Inference → Model Serving rename.
 - **Deliberately excluded as unverifiable / fabricated:** the entire GenAI model-retirement
-  table — it lists models that don't exist ("GPT-5.6 Sol", "GPT-5.5", "Gemini 3.5 Flash",
+  table - it lists models that don't exist ("GPT-5.6 Sol", "GPT-5.5", "Gemini 3.5 Flash",
   "Claude Sonnet 4.6", "Gemini 3.1 Pro") with invented retirement dates. Also skipped for now:
   Jobs API 2.0/2.1 "deprecated" (the 2.2 doc documents behavior changes but does **not** call
-  2.0/2.1 deprecated), Z-Order "deprecated" (still supported — captured instead as the Liquid
+  2.0/2.1 deprecated), Z-Order "deprecated" (still supported - captured instead as the Liquid
   Clustering feature it's recommended against), and the many governance/runtime claims (Hive
   metastore, no-isolation compute, SCIM, DBFS root, JDK/library removals, "Cluster → Compute",
   "DLT → Lakeflow Pipelines" wording) that are plausible but weren't each fact-checked to this
@@ -410,21 +410,21 @@ nine verified entries (24 → 33). Each was fact-checked against its live source
 ### Added
 - **Deprecations are now first-class.** Entries carry a `kind`: `"rename"` (default) or
   `"deprecation"`. A deprecation names the retired feature, its `replacement` (or none),
-  `deprecatedAt`/`removedAt`, and a `status` of `deprecated`/`retired` — the opposite of a
+  `deprecatedAt`/`removedAt`, and a `status` of `deprecated`/`retired` - the opposite of a
   rename (a different thing takes over). Seeded with four sourced deprecations: **dbx** →
   Declarative Automation Bundles, **Legacy (Redash) dashboards** → AI/BI Dashboards (access
   ended Jan 12, 2026), **Legacy Databricks CLI** → the new Go-based CLI, and **DBFS mounts**
   → Unity Catalog volumes & external locations. This is a curated, sourced seed, not an
-  exhaustive list — deprecations grow one sourced entry at a time, same as renames.
+  exhaustive list - deprecations grow one sourced entry at a time, same as renames.
 - Four rename entries, each fact-checked against its cited source before adding:
-  - **Databricks SQL** (formerly **SQL Analytics**) — the May 26, 2021 SQL release notes
+  - **Databricks SQL** (formerly **SQL Analytics**) - the May 26, 2021 SQL release notes
     state the rename outright, including the `sql-analytics-access` → `databricks-sql-access`
     entitlement migration.
-  - **Delta Lake** (formerly **Databricks Delta**) — the proprietary feature was
+  - **Delta Lake** (formerly **Databricks Delta**) - the proprietary feature was
     open-sourced under the new name at Spark + AI Summit, April 24, 2019.
-  - **Supervisor Agent** (formerly **Agent Bricks: Multi-Agent Supervisor**) — docs read
+  - **Supervisor Agent** (formerly **Agent Bricks: Multi-Agent Supervisor**) - docs read
     "Supervisor Agent (formerly Multi-Agent Supervisor, MAS)"; GA February 2026.
-  - **Genie Code** (formerly **Databricks Assistant**) — the Assistant docs now live at the
+  - **Genie Code** (formerly **Databricks Assistant**) - the Assistant docs now live at the
     same `/notebooks/code-assistant` page retitled to Genie Code (March 2026). The `note`
     flags that the launch blog frames this as a new Genie-family member, not an explicit rename.
 - Sidebar dots for the new entries where they belong: **SQL Editor** → Databricks SQL,
@@ -437,7 +437,7 @@ nine verified entries (24 → 33). Each was fact-checked against its live source
 - `validate.py` branches on `kind` with per-kind required fields (rename vs deprecation) and
   validates `deprecatedAt`/`removedAt`/`status`.
 - `app.js` renders deprecations with an amber accent, a `deprecated`/`retired` badge, and an
-  "old → replacement" (or "retired — no direct replacement") trail; search, sort, the
+  "old → replacement" (or "retired - no direct replacement") trail; search, sort, the
   day-counter, and the copy-correction toast now span both kinds. Sidebar dots added for
   dbx (Jobs & Pipelines) and Legacy dashboards (Dashboards).
 - Site copy reframed to "renamed **or** deprecated" (rebricked = **re**named or de**pre**cated).
@@ -445,7 +445,7 @@ nine verified entries (24 → 33). Each was fact-checked against its live source
 ### Notes
 - Triaged a large community/LinkedIn-sourced rename list. Deliberately **excluded**:
   Lakehouse Platform → Data Intelligence Platform (a 2023 repositioning that added the
-  DatabricksIQ engine, per Databricks' own framing — not a same-thing rename); global init
+  DatabricksIQ engine, per Databricks' own framing - not a same-thing rename); global init
   scripts → base environments (a deprecation/replacement); UniForm compatibility modes and
   MLflow trace storage wording (archival/positioning, not renames). Skipped as already
   covered: Jobs → Lakeflow Jobs, DLT, Databricks Asset Bundles → DABs, SQL Endpoint → SQL
@@ -459,7 +459,7 @@ nine verified entries (24 → 33). Each was fact-checked against its live source
 ### Added
 - Initial project: static site (`index.html`, `app.js`, `styles.css`), `renames.json`
   dataset, `CONTRIBUTING.md`, and `LICENSE`.
-- Schema/format validator [`scripts/validate.py`](scripts/validate.py) — the CI gate that
+- Schema/format validator [`scripts/validate.py`](scripts/validate.py) - the CI gate that
   blocks malformed or unsourced entries.
 - GitHub Pages CI: validate `renames.json`, then deploy.
 - `.gitignore` to exclude the `.claude` directory.
@@ -487,7 +487,7 @@ nine verified entries (24 → 33). Each was fact-checked against its live source
 - Still pending verification before adding: Databricks Assistant → Genie Code,
   Feature Store → Feature Engineering in Unity Catalog, OLTP Database → Lakebase Postgres,
   SQL Analytics → Databricks SQL. _(Genie Code and Databricks SQL were verified and added
-  later the same day — see the section above.)_
+  later the same day - see the section above.)_
 
 <!--
 Template for the next day:

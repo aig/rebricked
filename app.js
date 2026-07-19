@@ -10,7 +10,7 @@
   const toastEl = $("#toast");
 
   // Umami custom events. No-op if the analytics script is blocked, absent, or not yet
-  // loaded — tracking must never affect the app, so every call is guarded.
+  // loaded - tracking must never affect the app, so every call is guarded.
   function track(name, data) {
     try { if (window.umami) window.umami.track(name, data); } catch (e) {}
   }
@@ -35,7 +35,7 @@
     "Either it was never renamed,<br>or it was renamed to something you haven't heard yet.",
     "Nothing here. Check back after the next summit keynote.",
     "No matches. It may have been renamed to a synonym of the word you typed.",
-    "Zero results — which, for Databricks, is statistically surprising.",
+    "Zero results - which, for Databricks, is statistically surprising.",
     "Couldn't find it. Try the old name. Or the older name. Or the oldest name.",
   ];
   let emptyIdx = 0;
@@ -59,7 +59,7 @@
   // The status filter (top of results). Orthogonal to section/category/search.
   // Keys match the buckets bucketOf() returns and the badges the cards show.
   const FILTERS = [
-    { key: "current", label: "Active", hint: "In use now — new, preview and current names" },
+    { key: "current", label: "Active", hint: "In use now - new, preview and current names" },
     { key: "renamed", label: "Renamed", hint: "Superseded former names" },
     { key: "deprecation", label: "Legacy", hint: "Deprecated or retired" },
   ];
@@ -245,7 +245,7 @@
     nav.querySelectorAll(".nav-item").forEach((el) => {
       el.addEventListener("click", () => {
         setActiveNav(el);
-        setSidebarOpen(false); // on mobile the rail overlays the content — close it after a pick
+        setSidebarOpen(false); // on mobile the rail overlays the content - close it after a pick
         if (el.dataset.home !== undefined) {
           track("nav", { section: "Home" });
           goHome();
@@ -311,7 +311,7 @@
 
   // ---- rendering ----
   function render() {
-    // A single deep-linked entry (#id) shows on its own — nothing else competes.
+    // A single deep-linked entry (#id) shows on its own - nothing else competes.
     if (focusId) {
       const one = DATA.find((d) => d.id === focusId);
       updateHomeExtras();
@@ -324,7 +324,7 @@
         });
         return;
       }
-      focusId = null; // unknown id — fall through to the normal list
+      focusId = null; // unknown id - fall through to the normal list
     }
 
     // The kind-filter counts must track this same scope, so update them now.
@@ -333,7 +333,7 @@
     const q = searchEl.value.trim().toLowerCase();
     let rows = contextRows();
 
-    // The status filter is orthogonal — it narrows whatever's showing.
+    // The status filter is orthogonal - it narrows whatever's showing.
     if (!allKindsSelected()) {
       rows = rows.filter((d) => activeKinds.has(bucketOf(d)));
     }
@@ -343,7 +343,7 @@
       rows = rows.filter((d) => shortYear(changedAt(d)) === activeYear);
     }
 
-    // Most recently changed first — the freshest confusion on top.
+    // Most recently changed first - the freshest confusion on top.
     rows.sort((a, b) => dateKey(changedAt(b)).localeCompare(dateKey(changedAt(a))));
 
     updateHomeExtras();
@@ -357,7 +357,7 @@
       const yearNote = activeYear ? ` in <b>${escapeHtml(activeYear)}</b>` : "";
       const line = EMPTY_LINES[emptyIdx++ % EMPTY_LINES.length];
       resultsEl.innerHTML = activeSection
-        ? `<div class="empty">Nothing${kindNote}${yearNote} under <b>${escapeHtml(activeSection.label)}</b> — yet.<br>Either it kept its name, or Databricks hasn't gotten to it.</div>`
+        ? `<div class="empty">Nothing${kindNote}${yearNote} under <b>${escapeHtml(activeSection.label)}</b> - yet.<br>Either it kept its name, or Databricks hasn't gotten to it.</div>`
         : `<p class="empty">No results${kindNote}${yearNote}. ${line}</p>`;
       return;
     }
@@ -369,12 +369,12 @@
   // Group key + label for the chronological dividers: the year of the change.
   function periodOf(d) {
     const y = shortYear(changedAt(d));
-    return { key: y || "—", label: y || "undated" };
+    return { key: y || "-", label: y || "undated" };
   }
 
   // The list is already sorted newest-change-first, so walking it top-to-bottom and
   // emitting a divider each time the year flips groups the cards into a chronological
-  // path — one dated section per year, newest at the top.
+  // path - one dated section per year, newest at the top.
   function groupedByPeriod(rows, q) {
     const counts = {};
     rows.forEach((d) => {
@@ -398,7 +398,7 @@
   function periodSepHTML(label, n) {
     const count = `${n} change${n === 1 ? "" : "s"}`;
     return (
-      `<div class="year-sep" role="separator" aria-label="Changed in ${escapeAttr(label)} — ${escapeAttr(count)}">` +
+      `<div class="year-sep" role="separator" aria-label="Changed in ${escapeAttr(label)} - ${escapeAttr(count)}">` +
       `<span class="year-num">${escapeHtml(label)}</span>` +
       `<span class="year-rule"></span>` +
       `<span class="year-count">${escapeHtml(count)}</span>` +
@@ -436,7 +436,7 @@
         b.classList.toggle("active", b.dataset.year === activeYear)
       );
     }
-    // Spotlight stays up across filter toggles and year selections — anything on the
+    // Spotlight stays up across filter toggles and year selections - anything on the
     // main list. It hides only when the user drills into an entry/section/category/search.
     if (sp) sp.hidden = !onList;
   }
@@ -445,7 +445,7 @@
     const kind = kindOf(d);
 
     const note = d.note ? `<p class="row-note">${escapeHtml(d.note)}</p>` : "";
-    // A real-but-fun fact about the feature — genuinely true, grounded in each
+    // A real-but-fun fact about the feature - genuinely true, grounded in each
     // entry's history; the tone is ours.
     const fact = d.fact
       ? `<p class="row-fact"><span class="fact-icon" aria-hidden="true">💡</span> ${escapeHtml(d.fact)}</p>`
@@ -466,7 +466,7 @@
       trail = depTrail(d, q);
       const verb = status === "legacy" ? "Legacy since" : "Deprecated";
       dateText = `${verb} ${escapeHtml(fmtDate(d.deprecatedAt || "?"))}${occasion}`;
-      // The concrete access cut-off, flagged on its own — the one lifecycle date a
+      // The concrete access cut-off, flagged on its own - the one lifecycle date a
       // reader actually needs to act on, rather than buried mid-sentence.
       if (d.removedAt) urgent = `<span class="meta-urgent">⚠ Access ended ${escapeHtml(fmtDate(d.removedAt))}</span>`;
     } else {
@@ -478,7 +478,7 @@
           : d.to ? `until ${escapeHtml(fmtDate(d.to))}` : escapeHtml(fmtDate(d.from || "?"));
         dateText = `In use ${span}${occasion}`;
       } else {
-        rowCls = " is-current"; // current-name side of a rename — same Latest/green bucket
+        rowCls = " is-current"; // current-name side of a rename - same Latest/green bucket
         dateText = `Current since ${escapeHtml(fmtDate(d.from || "?"))}${occasion}`;
       }
     }
@@ -524,7 +524,7 @@
       </article>`;
   }
 
-  // The card's "current status" badge — one per kind.
+  // The card's "current status" badge - one per kind.
   function statusBadge(d) {
     const kind = kindOf(d);
     if (kind === "deprecation") {
@@ -578,17 +578,17 @@
 
   // The lineage as one scannable line: predecessors → this card → successors, oldest to
   // newest. Every name but this one links to its own card, so the row still navigates
-  // the full history — without the mini-cards that repeated this card's description.
+  // the full history - without the mini-cards that repeated this card's description.
   function lineageChain(d) {
     const preds = predecessorsOf(d).slice().reverse(); // oldest-first
     const succs = successorsOf(d);
-    // The "guess the sequel" gag now lives as the trailing node of the chain — the
+    // The "guess the sequel" gag now lives as the trailing node of the chain - the
     // made-up *next* name, sitting right after the live tip. Only on a card that is
     // itself the current tip (renames' former sides and deprecations don't forecast).
     const guess = kindOf(d) !== "deprecation" && (d.status || "current") !== "renamed"
       ? oddsBadge(d) : "";
     if (!preds.length && !succs.length && !guess) return "";
-    // A node is "former" — struck through — when its own record is a superseded rename
+    // A node is "former" - struck through - when its own record is a superseded rename
     // or a deprecation, whether it's the card's own name or a predecessor in the chain.
     const isFormer = (x) =>
       kindOf(x) === "deprecation" ||
@@ -597,7 +597,7 @@
       const nm = x.name || currentNameOf(x);
       const former = isFormer(x) ? " former" : "";
       if (isNow) {
-        // No year on the current node — the eyebrow above already carries this card's
+        // No year on the current node - the eyebrow above already carries this card's
         // date, and repeating it can read as backwards next to a successor that shipped
         // in an earlier year (e.g. a 2025 replacement for a 2026 deprecation).
         return `<span class="chain-node now${former}">${escapeHtml(nm)}</span>`;
@@ -669,14 +669,14 @@
       // styled tooltip on hover/focus, so the chips stay compact.
       const src = l.label || hostOf(l.url) || REF_KINDS[l.kind];
       return `<a class="ref-chip ref-${escapeAttr(l.kind)}" href="${escapeAttr(l.url)}" target="_blank" rel="noopener" ` +
-        `data-tip="${escapeAttr(src)}" aria-label="${escapeAttr(REF_KINDS[l.kind])} — ${escapeAttr(src)}">` +
+        `data-tip="${escapeAttr(src)}" aria-label="${escapeAttr(REF_KINDS[l.kind])} - ${escapeAttr(src)}">` +
         `<span class="ref-dot" aria-hidden="true"></span>` +
         `<span class="ref-kind">${escapeHtml(REF_KINDS[l.kind])}</span></a>`;
     }).join("");
     return `<div class="row-refs"><div class="ref-chips">${chips}</div></div>`;
   }
 
-  // The AI-guess button. No fake odds — just an invitation to have the "AI" make up
+  // The AI-guess button. No fake odds - just an invitation to have the "AI" make up
   // the next name. The button carries the whole made-up shortlist; the first click
   // reveals the seeded guess and each later click rolls a new one. Seed is
   // deterministic per entry so the first guess doesn't flicker between renders.
@@ -689,7 +689,7 @@
 
   // The AI-guess button reveals a made-up next name: a beat of "thinking", then the
   // button's own label becomes ✨ <the guess>, keeping the same styling and position.
-  // Click it again to roll a new one — it cycles through the entry's shortlist.
+  // Click it again to roll a new one - it cycles through the entry's shortlist.
   function revealPrediction(btn) {
     if (btn.classList.contains("thinking")) return; // ignore clicks mid-"thinking"
     let preds;
@@ -731,7 +731,7 @@
   // Each name in a product's history is its own card; the title is just this card's
   // name. Predecessors/successors are shown as their own linked cards below.
   // A former name carries its current name too, so clicking it copies a correction
-  // that points forward — not one that mislabels the old name as the current one.
+  // that points forward - not one that mislabels the old name as the current one.
   function renameTrail(d, q) {
     const name = d.name || d.id;
     const renamed = (d.status || "current") === "renamed";
@@ -739,7 +739,7 @@
     // Only treat it as "former" for copy purposes when we actually know the name
     // it became; otherwise fall back to the plain current-name correction.
     const isFormer = renamed && current && current !== name && !current.startsWith("(");
-    // The title reads the same across every card type — plain, not struck. The
+    // The title reads the same across every card type - plain, not struck. The
     // "former" signal lives in the status pill and the struck node in the lineage
     // chain, so the title stays consistent (data-former still drives the copy text).
     const cls = "current";
@@ -767,14 +767,14 @@
       <div class="error">
         <p><strong>Couldn't load <code>databricks.json</code>.</strong></p>
         <p>If you opened this file directly, your browser blocked the fetch.<br>
-        Serve it over http instead — from this folder run:</p>
+        Serve it over http instead - from this folder run:</p>
         <p><code>python -m http.server</code></p>
         <p>then open <code>http://localhost:8000</code>. It's a static site; that's all it needs.</p>
       </div>`;
   }
 
   function renderChips() {
-    // Category chips are hidden — the chips row renders empty.
+    // Category chips are hidden - the chips row renders empty.
     chipsEl.innerHTML = "";
     chipsEl.querySelectorAll(".chip").forEach((chip) => {
       chip.addEventListener("click", () => {
@@ -816,7 +816,7 @@
     if (!el) return;
     const latest = DATA.map((d) => d.verified).filter(Boolean).sort().pop();
     if (latest) {
-      el.textContent = `Accurate as of ${latest} — the last time we checked. Given the subject, it may already be wrong.`;
+      el.textContent = `Accurate as of ${latest} - the last time we checked. Given the subject, it may already be wrong.`;
     }
   }
 
@@ -937,7 +937,7 @@
   let newReturnFocus = null;
 
   function predictionPool() {
-    // Living products only — you can't rename what's already retired.
+    // Living products only - you can't rename what's already retired.
     return DATA.filter((d) => kindOf(d) !== "deprecation" && Array.isArray(d.prediction) && d.prediction.length);
   }
 
@@ -971,9 +971,9 @@
     }
     const pick = pool[Math.floor(Math.random() * pool.length)];
     body.innerHTML =
-      `<p class="new-copy">Why would you need a <b>new</b> product? Around here we don't create products — we <b>rename</b> the ones we already have. It's cheaper, it ships faster, and it comes with a keynote slide.</p>` +
+      `<p class="new-copy">Why would you need a <b>new</b> product? Around here we don't create products - we <b>rename</b> the ones we already have. It's cheaper, it ships faster, and it comes with a keynote slide.</p>` +
       `<p class="new-suggest">May we suggest: <b>${escapeHtml(currentNameOf(pick))}</b> <span class="arrow">→</span> <b>${escapeHtml(pick.prediction[Math.floor(Math.random() * pick.prediction.length)])}</b></p>` +
-      `<p class="new-fine">Not a real roadmap. We made this up — but give it a year.</p>` +
+      `<p class="new-fine">Not a real roadmap. We made this up - but give it a year.</p>` +
       `<div class="quiz-actions">` +
       `<div class="new-links">` +
       `<button class="quiz-see" id="new-entry" data-id="${escapeAttr(pick.id)}">see the entry ↗</button>` +
@@ -989,13 +989,13 @@
     if (see) see.addEventListener("click", () => { closeNewModal(); focusEntry(see.dataset.id); });
   }
 
-  // The "truth" — deadpan realities about naming things at Databricks. Naming is
+  // The "truth" - deadpan realities about naming things at Databricks. Naming is
   // done to you, not by you.
   const TRUTHS = [
-    "Here's the truth: you don't get to name it. Around here we don't create products — we rename the ones we already have. It's cheaper, ships faster, and comes with a keynote slide.",
+    "Here's the truth: you don't get to name it. Around here we don't create products - we rename the ones we already have. It's cheaper, ships faster, and comes with a keynote slide.",
     "The truth: whatever you call it, the Naming Committee renamed it before you finished typing. Every product name must legally contain “Lakeflow”, “Genie”, or “Unity”.",
     "The truth: it'll ship under that name for about a year, marinate through two summits and a leadership offsite, and come back with a “Mosaic AI” prefix nobody asked for.",
-    "The truth: naming rights require a keynote slot, a rebrand budget, and at least one acquisition — none of which a new product currently has.",
+    "The truth: naming rights require a keynote slot, a rebrand budget, and at least one acquisition - none of which a new product currently has.",
     "The truth: your name is far too clear and memorable. It would never survive next year's rebrand.",
   ];
   let truthIdx = 0;
@@ -1019,7 +1019,7 @@
     if (input) input.addEventListener("keydown", (e) => { if (e.key === "Enter") go(); });
   }
 
-  // Step two: the deadpan truth — now that they've committed to a name. Where we can,
+  // Step two: the deadpan truth - now that they've committed to a name. Where we can,
   // we tell them what it'll *actually* get renamed to (a made-up next name from the pool).
   function renderNewTruth(name) {
     const body = $("#new-body");
@@ -1064,7 +1064,7 @@
           const url = entryURL(d.id);
           track("copy-link", { id: d.id });
           copy(url).then((ok) =>
-            toast(ok ? `Link copied — ${url}` : "Copy failed — select it manually.")
+            toast(ok ? `Link copied - ${url}` : "Copy failed - select it manually.")
           );
         } else if (btn.dataset.act === "share") {
           track("share", { id: d.id });
@@ -1079,7 +1079,7 @@
     });
 
     // copy-as-you-were-wrong: clicking any card title copies a snappy correction.
-    // A former/deprecated name copies the name it became — never itself as "current".
+    // A former/deprecated name copies the name it became - never itself as "current".
     resultsEl.querySelectorAll(".current, .dep-name").forEach((el) => {
       el.addEventListener("click", () => {
         const name = el.dataset.name;
@@ -1089,15 +1089,15 @@
           text = `Yes, "${name}" is a real Databricks feature${when}.`;
         } else if (el.dataset.dep) {
           text = el.dataset.current
-            ? `Actually, "${el.dataset.old}" is deprecated — use "${el.dataset.current}" now.`
+            ? `Actually, "${el.dataset.old}" is deprecated - use "${el.dataset.current}" now.`
             : `Actually, "${el.dataset.old}" is deprecated.`;
         } else if (el.dataset.former) {
-          text = `Actually, "${name}" is the old name — it's "${el.dataset.current}" now.`;
+          text = `Actually, "${name}" is the old name - it's "${el.dataset.current}" now.`;
         } else {
           text = `Actually, it's called "${name}" now.`;
         }
         copy(text).then((ok) =>
-          toast(ok ? `Copied: ${text}` : "Copy failed — select it manually.")
+          toast(ok ? `Copied: ${text}` : "Copy failed - select it manually.")
         );
       });
     });
@@ -1144,7 +1144,7 @@
         const winner = rows[target];
         winner.classList.add("flash");
         winner.scrollIntoView({ behavior: "smooth", block: "center" });
-        // The roulette shows the full list, so the URL must reflect that state —
+        // The roulette shows the full list, so the URL must reflect that state -
         // writing the entry hash here would reload into a different (focused) view.
         writeURL();
         brickConfetti();
@@ -1217,7 +1217,7 @@
     return location.pathname.replace(/[^/]*$/, "");
   }
 
-  // The shared link is the badge page for this score (badges/<n>-of-5/) — a real page
+  // The shared link is the badge page for this score (badges/<n>-of-5/) - a real page
   // with Open Graph tags, so the badge shows in the preview. Only reachable once the
   // round is complete, which is also the only time the share button is shown.
   function quizResultURL() {
@@ -1232,12 +1232,12 @@
       source: "linkedin", medium: "social", campaign: "quiz-share",
     });
     const text =
-      `I scored ${quizState.score}/${quizState.total} (${pct}%) on REbricked — the quiz for ` +
+      `I scored ${quizState.score}/${quizState.total} (${pct}%) on REbricked - the quiz for ` +
       `whether you can keep up with everything Databricks has renamed. Think you can beat me? ${link}`;
     const shareUrl =
       "https://www.linkedin.com/sharing/share-offsite/?url=" + encodeURIComponent(link);
     copy(text).then((ok) => {
-      toast(ok ? "Score copied — paste it into your LinkedIn post." : "Opening LinkedIn…");
+      toast(ok ? "Score copied - paste it into your LinkedIn post." : "Opening LinkedIn…");
       window.open(shareUrl, "_blank", "noopener,noreferrer");
     });
   }
@@ -1255,7 +1255,7 @@
     const pct = Math.round((score / total) * 100);
     el.innerHTML =
       `<span class="ch-badge">Challenge</span>` +
-      `<span class="ch-text">Someone scored <b>${score}/${total}</b> (${pct}%) on the quiz — think you can beat them?</span>` +
+      `<span class="ch-text">Someone scored <b>${score}/${total}</b> (${pct}%) on the quiz - think you can beat them?</span>` +
       `<button class="ch-btn" id="ch-take">Take the quiz</button>`;
     el.hidden = false;
     const btn = $("#ch-take");
@@ -1277,12 +1277,12 @@
     const st = $("#quiz-streak");
     if (st) st.textContent = quizState.streak >= 2 ? `🔥 ${quizState.streak} in a row` : "";
     // Sharing sends the badge page for the finished round, so only offer it once the
-    // round is complete — a mid-round score has no badge page to link to.
+    // round is complete - a mid-round score has no badge page to link to.
     const share = $("#quiz-share");
     if (share) share.hidden = quizState.total < QUIZ_LEN;
   }
 
-  // The money-tree ladder: one segment per question — answered ones show
+  // The money-tree ladder: one segment per question - answered ones show
   // correct/miss, the current (or next) one is lit in accent red.
   function renderLadder() {
     const el = $("#quiz-ladder");
@@ -1304,7 +1304,7 @@
       if (body) body.innerHTML = `<p class="quiz-msg">Not enough data to build a quiz yet.</p>`;
       return;
     }
-    // A round is exactly QUIZ_LEN questions — after the last answer, show results.
+    // A round is exactly QUIZ_LEN questions - after the last answer, show results.
     if (quizState.total >= QUIZ_LEN) {
       finishQuiz();
       return;
@@ -1327,7 +1327,7 @@
     // Harder: seed distractors with THIS product's own plausible-but-fake future names
     // (the most tempting wrong answers), then fill from every other name and predicted
     // name across the dataset. A deprecation has no predictions of its own, so borrow
-    // the replacement's — same successor, plausible next rebrands (e.g. "DBFS mounts" →
+    // the replacement's - same successor, plausible next rebrands (e.g. "DBFS mounts" →
     // Unity Catalog volumes, decoyed by that product's "…Volumes" predictions).
     const ownPreds = Array.isArray(correct.prediction) ? correct.prediction : [];
     const repl = correct.successorId && DATA.find((d) => d.id === correct.successorId);
@@ -1372,7 +1372,7 @@
     const opts = $("#quiz-body").querySelectorAll(".quiz-opt");
     const right = btn.dataset.name === answer;
 
-    // Lock in the pick and hold — the "is that your final answer?" beat — then reveal.
+    // Lock in the pick and hold - the "is that your final answer?" beat - then reveal.
     opts.forEach((o) => { o.disabled = true; });
     btn.classList.add("locked");
     const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -1394,8 +1394,8 @@
       const foot = $("#quiz-foot");
       if (foot) {
         const verdict = right
-          ? `<span class="quiz-ok">Correct — you kept up.</span>`
-          : `<span class="quiz-no">Nope — it moved on without you.</span>`;
+          ? `<span class="quiz-ok">Correct - you kept up.</span>`
+          : `<span class="quiz-no">Nope - it moved on without you.</span>`;
         const done = quizState.total >= QUIZ_LEN;
         // The entry opens in a new tab so the quiz stays open behind it.
         foot.innerHTML =
@@ -1420,7 +1420,7 @@
     const pct = Math.round((quizState.score / QUIZ_LEN) * 100);
     let verdict;
     if (pct === 100) verdict = "Flawless. You've been reading the release notes.";
-    else if (pct >= 60) verdict = "Not bad — you mostly kept up with the renaming.";
+    else if (pct >= 60) verdict = "Not bad - you mostly kept up with the renaming.";
     else if (pct >= 20) verdict = "Rough. In fairness, so is keeping track of this.";
     else verdict = "It's fine. Everything got renamed since you last looked anyway.";
 
@@ -1460,7 +1460,7 @@
       focusEntry(hash, { push: false });
       return;
     }
-    // No (valid) hash — make sure we're not stuck focused on a stale entry.
+    // No (valid) hash - make sure we're not stuck focused on a stale entry.
     focusId = null;
     const params = new URLSearchParams(location.search);
     // ?id=<id> is the crawler-safe deep link: LinkedIn (and most link previews) drop
@@ -1549,7 +1549,7 @@
     return location.origin + location.pathname + "?id=" + encodeURIComponent(id);
   }
 
-  // Append UTM params to a URL's query string — kept before any #fragment so analytics
+  // Append UTM params to a URL's query string - kept before any #fragment so analytics
   // can read them (a fragment query is invisible to the server/tracker). Falsy values
   // are dropped. See https://docs.umami.is/docs/utm
   function withUTM(url, params) {
@@ -1564,7 +1564,7 @@
     return base + (base.indexOf("?") === -1 ? "?" : "&") + qs + hash;
   }
 
-  // Walk the successor chain to the end — the card that nothing supersedes.
+  // Walk the successor chain to the end - the card that nothing supersedes.
   function headOf(d) {
     const seen = new Set([d.id]);
     let cur = d;
@@ -1580,7 +1580,7 @@
   function currentNameOf(d) {
     const head = headOf(d);
     if (head && head !== d) return head.name;
-    if (kindOf(d) === "deprecation") return d.replacement || "(retired — no successor)";
+    if (kindOf(d) === "deprecation") return d.replacement || "(retired - no successor)";
     return d.name || d.id;
   }
 
@@ -1590,18 +1590,18 @@
     const link = shareLink || entryURL(d.id);
     const factLine = d.fact ? `\n💡 ${d.fact}` : "";
     if (kind === "feature") {
-      return `🧱 "${d.name}" — new in Databricks (${d.introducedAt || "?"}).\n${d.what || ""}${factLine}\n${link}`;
+      return `🧱 "${d.name}" - new in Databricks (${d.introducedAt || "?"}).\n${d.what || ""}${factLine}\n${link}`;
     }
     if (kind === "deprecation") {
       const now = currentNameOf(d);
       const successor = now.startsWith("(") ? "retired, no direct replacement" : `use "${now}" now`;
-      return `🧱 "${d.name}" is deprecated — ${successor}.\n${d.what || ""}${factLine}\n${link}`;
+      return `🧱 "${d.name}" is deprecated - ${successor}.\n${d.what || ""}${factLine}\n${link}`;
     }
     // rename card
     if ((d.status || "current") === "renamed") {
-      return `🧱 It's not called "${d.name}" anymore — it's "${currentNameOf(d)}" now.\n${d.what || ""}${factLine}\n${link}`;
+      return `🧱 It's not called "${d.name}" anymore - it's "${currentNameOf(d)}" now.\n${d.what || ""}${factLine}\n${link}`;
     }
-    return `🧱 "${d.name}" — the current Databricks name (since ${d.from || "?"}).\n${d.what || ""}${factLine}\n${link}`;
+    return `🧱 "${d.name}" - the current Databricks name (since ${d.from || "?"}).\n${d.what || ""}${factLine}\n${link}`;
   }
 
   // Share a single entry on LinkedIn. Mirrors the quiz share: copy the blurb to the
@@ -1615,7 +1615,7 @@
     const shareUrl =
       "https://www.linkedin.com/sharing/share-offsite/?url=" + encodeURIComponent(link);
     copy(blurb).then((ok) => {
-      toast(ok ? "Blurb copied — paste it into your LinkedIn post." : "Opening LinkedIn…");
+      toast(ok ? "Blurb copied - paste it into your LinkedIn post." : "Opening LinkedIn…");
       window.open(shareUrl, "_blank", "noopener,noreferrer");
     });
   }
@@ -1628,7 +1628,7 @@
     { key: "renamed", label: "Renamed" },
     { key: "deprecation", label: "Legacy" },
   ];
-  // Per-year counts split by bucket. Computed once — the data is fixed after load;
+  // Per-year counts split by bucket. Computed once - the data is fixed after load;
   // only which buckets are shown changes as the filter toggles.
   let TL_DATA = null;
   let tlRenderedKey = null; // buckets last drawn, so an unrelated re-render doesn't re-animate
@@ -1651,7 +1651,7 @@
     const { years, byYear } = timelineData();
     if (years.length === 0) { el.hidden = true; return; }
 
-    // Only the buckets the filter currently shows — this is what makes the plot react.
+    // Only the buckets the filter currently shows - this is what makes the plot react.
     // Heights rescale to the tallest *visible* year, so hiding a bucket redraws rather
     // than blanks the graph.
     const active = TL_BUCKETS.filter((b) => activeKinds.has(b.key));
@@ -1686,7 +1686,7 @@
       .join("");
 
     el.innerHTML =
-      `<div class="tl-title">Changes by year <span class="tl-hint">— click a bar to filter</span>` +
+      `<div class="tl-title">Changes by year <span class="tl-hint">- click a bar to filter</span>` +
       `<span class="tl-legend">${legend}</span></div>` +
       `<div class="tl-plot">${bars}</div>` +
       `<div class="tl-axis">${axis}</div>`;
@@ -1787,7 +1787,7 @@
     return d.kind === "deprecation" || d.kind === "feature" ? d.kind : "rename";
   }
 
-  // Which status filter bucket an entry falls in — aligned with the badge the card
+  // Which status filter bucket an entry falls in - aligned with the badge the card
   // shows, NOT with kindOf. A newly shipped feature and the current-name side of a
   // rename both read as "current"; only a superseded former name is "renamed". This is
   // what the top-of-results filter toggles, so unchecking "Current" hides everything
@@ -1799,7 +1799,7 @@
     return (d.status || "current") === "renamed" ? "renamed" : "current";
   }
 
-  // Mixed-precision dates ("2025" vs "2025-06") don't compare lexicographically —
+  // Mixed-precision dates ("2025" vs "2025-06") don't compare lexicographically -
   // "2025" < "2025-01" would make year-only entries the oldest in their year.
   // Treat a bare year as mid-year for comparison purposes only (display stays raw).
   function dateKey(s) {
@@ -1834,7 +1834,7 @@
     return month ? `${month} ${m[1]}` : s;
   }
 
-  // Takes RAW text, matches on it, and escapes each piece separately — matching on
+  // Takes RAW text, matches on it, and escapes each piece separately - matching on
   // escaped text would let a search for "amp" land inside an "&amp;" entity.
   function highlight(text, q) {
     const s = String(text ?? "");

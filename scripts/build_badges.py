@@ -12,9 +12,9 @@ real app. The quiz's LinkedIn button shares the folder URL; its OG tags (incl. o
 make the badge show in the preview, and "Take the quiz" carries the score back as ?quiz=.
 
 The quiz asks a random 5 of the eligible entries, so the meaningful outcome is the
-count of correct answers, not which specific ones — hence one page per score (0..5).
+count of correct answers, not which specific ones - hence one page per score (0..5).
 
-Keep the NAV/ICONS below roughly in sync with app.js — it's a static mirror of the rail.
+Keep the NAV/ICONS below roughly in sync with app.js - it's a static mirror of the rail.
 
 Run:  python scripts/build_badges.py
 Rewrites badges/ from scratch. Regenerating og.png needs a Chromium-based browser
@@ -32,7 +32,7 @@ ROOT = Path(__file__).resolve().parent.parent
 OUT = ROOT / "badges"
 TOTAL = 5
 
-# Absolute base URL of the deployed site — og:image / og:url must be absolute.
+# Absolute base URL of the deployed site - og:image / og:url must be absolute.
 BASE_URL = "https://rebricked.org"
 
 # score -> (emoji, badge name, deadpan blurb)
@@ -44,18 +44,18 @@ BADGES = {
     2: ("🐌", "Two Keynotes Behind",
         "You know some names. Regrettably, not the current ones."),
     3: ("🧱", "Passably REbricked",
-        "A coin-flip's worth of keeping up — respectable, given the release cadence."),
+        "A coin-flip's worth of keeping up - respectable, given the release cadence."),
     4: ("📜", "Release-Notes Regular",
         "You lurk in the changelog and it shows. One rename got you. It always will."),
     5: ("🏆", "Keeper of the Renames",
         "Flawless. You either work there or you need a hobby. Possibly both."),
 }
 
-# One ascending tier ladder — the more you got right, the higher the metal.
+# One ascending tier ladder - the more you got right, the higher the metal.
 # 0 Stone · 1 Bronze · 2 Silver · 3 Gold · 4 Platinum · 5 Diamond.
 TIERS = {0: "#7C8792", 1: "#B87333", 2: "#98A0AC", 3: "#D6A419", 4: "#4CB7C9", 5: "#6E8BF5"}
 
-# The Rebricked mark — the same stacked-brick logo used in the sidebar (index.html).
+# The Rebricked mark - the same stacked-brick logo used in the sidebar (index.html).
 LOGO_PATHS = (
     "<path d=\"M2 11.2 16 4l14 7.2-3.1 1.6L16 7.2 5.1 12.8Z\" opacity=\".95\"/>"
     "<path d=\"M2 16 16 8.8 30 16l-3.1 1.6L16 12l-10.9 5.6Z\" opacity=\".8\"/>"
@@ -78,7 +78,7 @@ FAVICON = (
 )
 
 def badge_emblem(tier):
-    """A stylized certification crest — a dark hexagon medallion with a ribbon,
+    """A stylized certification crest - a dark hexagon medallion with a ribbon,
     the brick mark, and 'REBRICKED CERTIFIED', ringed/accented in the tier colour."""
     return (
         '<svg class="emblem" viewBox="0 0 200 240" role="img" aria-label="REbricked Certified">'
@@ -112,7 +112,7 @@ def stars_html(n, filled=None):
 
 
 def badge_card_html(n, title_e, blurb_e):
-    """The achievement card — one source of truth shared by the badge page and the
+    """The achievement card - one source of truth shared by the badge page and the
     og.png, so the LinkedIn preview is the exact same card the visitor lands on."""
     return (
         f'<div class="badge-card badge-tier-{n}">'
@@ -160,7 +160,7 @@ ICONS = {
     "serving": '<circle cx="12" cy="12" r="2.2"/><path d="M7.5 7.5a6.5 6.5 0 0 0 0 9M16.5 7.5a6.5 6.5 0 0 1 0 9M4.8 4.8a10 10 0 0 0 0 14.4M19.2 4.8a10 10 0 0 1 0 14.4"/>',
 }
 
-# (group label, [(item label, icon, has_changes)]) — has_changes gets the dot + a
+# (group label, [(item label, icon, has_changes)]) - has_changes gets the dot + a
 # ?s= link into the app; the rest just link home.
 NAV = [
     ("", [("Home", "home", None), ("Learn", "learn", False), ("Workspace", "workspace", True),
@@ -191,11 +191,11 @@ def render_rail():
             if changed is None:            # Home
                 href = "../../"
                 cls, dot = "nav-item", ""
-            elif changed:                  # section with entries — dot + deep link
+            elif changed:                  # section with entries - dot + deep link
                 href = "../../?s=" + quote(it_label)
                 cls = "nav-item is-renamed"
                 dot = '<span class="renamed-dot"></span>'
-            else:                          # inert section — link home
+            else:                          # inert section - link home
                 href = "../../"
                 cls, dot = "nav-item", ""
             parts.append(
@@ -212,7 +212,7 @@ def render_rail():
         '<path d="M12 5v14M5 12h14" /></svg><span>New</span></a>'
         f'<nav class="nav" aria-label="Databricks navigation">{"".join(groups)}</nav>'
         '<div class="side-foot"><span class="dot-legend"><i class="renamed-dot"></i> '
-        'renamed or deprecated — open in the app</span></div>'
+        'renamed or deprecated - open in the app</span></div>'
         '</aside>'
     )
 
@@ -224,7 +224,7 @@ TOPBAR = (
     '<svg viewBox="0 0 24 24" width="18" height="18" class="ic"><path d="M4 6h16M4 12h16M4 18h16" /></svg></button>'
     '<div class="topsearch"><svg viewBox="0 0 24 24" width="16" height="16" class="ic">'
     '<circle cx="11" cy="11" r="7" /><path d="m21 21-4.3-4.3" /></svg>'
-    '<input type="text" id="search" class="search-input" placeholder="Search an old name — press Enter" '
+    '<input type="text" id="search" class="search-input" placeholder="Search an old name - press Enter" '
     'aria-label="Search old Databricks names" autocomplete="off" spellcheck="false" />'
     '<kbd class="slash">/</kbd></div>'
     '<div class="topactions">'
@@ -263,7 +263,7 @@ PAGE = """<!DOCTYPE html>
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>{title} — REbricked badge ({n}/{total})</title>
+  <title>{title} - REbricked badge ({n}/{total})</title>
   <meta name="description" content="{blurb}" />
   <meta property="og:type" content="website" />
   <meta property="og:title" content="REbricked Certified: {title} ({n}/{total})" />
@@ -299,8 +299,8 @@ PAGE = """<!DOCTYPE html>
 """
 
 # Source for the 1200x630 og:image. Rather than a bespoke design, it renders the EXACT
-# same badge card the visitor lands on — same markup (badge_card_html) and the real
-# styles.css — centered on the app background, so the LinkedIn preview matches the page.
+# same badge card the visitor lands on - same markup (badge_card_html) and the real
+# styles.css - centered on the app background, so the LinkedIn preview matches the page.
 OG_PAGE = """<!DOCTYPE html>
 <html lang="en">
 <head>
@@ -366,7 +366,7 @@ def main():
     rail = render_rail()
     browser = find_browser()
     if not browser:
-        print("WARNING: no Chromium-based browser found — og.png images will NOT be "
+        print("WARNING: no Chromium-based browser found - og.png images will NOT be "
               "regenerated. Pages still reference og.png; install Edge/Chrome and re-run.")
 
     styles_uri = (ROOT / "styles.css").as_uri()

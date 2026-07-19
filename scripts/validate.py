@@ -21,7 +21,7 @@ VERIFIED_RE = re.compile(r"^\d{4}-\d{2}-\d{2}$")     # YYYY-MM-DD
 URL_RE = re.compile(r"^https?://", re.IGNORECASE)
 
 # Fields every entry needs, regardless of kind. `fact` is a real-but-fun one-liner
-# about the feature — genuinely true, grounded in its history — so every entry carries one.
+# about the feature - genuinely true, grounded in its history - so every entry carries one.
 REQUIRED_COMMON = ("id", "category", "what", "fact", "source", "verified")
 # Each name in a product's history is its own card, linked by `successorId`.
 REQUIRED_RENAME = ("name", "status")
@@ -39,7 +39,7 @@ VALID_RENAME_STATUSES = ("current", "renamed")
 # Classified reference links: official docs, community (blogs/forums), or wider internet.
 VALID_LINK_KINDS = ("official", "community", "internet")
 
-# The category set the UI's chips are built from. A new category is allowed —
+# The category set the UI's chips are built from. A new category is allowed -
 # add it here deliberately rather than by typo.
 VALID_CATEGORIES = (
     "Data engineering",
@@ -65,7 +65,7 @@ def date_before(a, b):
     if ay != by:
         return ay < by
     if am is None or bm is None:
-        return False  # same year, mixed precision — can't call it out of order
+        return False  # same year, mixed precision - can't call it out of order
     return am < bm
 
 errors = []
@@ -224,7 +224,7 @@ def main():
                     if "label" in li and not isinstance(li["label"], str):
                         err(eid, "link label must be a string")
 
-        # prediction (optional, clearly-fictional next names — funny alternatives that
+        # prediction (optional, clearly-fictional next names - funny alternatives that
         # power the "New" gag, the card's AI guesses, and the quiz's hardest distractors;
         # renames/features only, retired things don't get renamed)
         if "prediction" in entry:
@@ -233,7 +233,7 @@ def main():
                     or not all(isinstance(x, str) and x.strip() for x in pred)):
                 err(eid, "prediction must be a non-empty array of non-empty strings when present")
             if kind == "deprecation":
-                warn(eid, "deprecation has 'prediction'; retired things don't get renamed — it will be ignored")
+                warn(eid, "deprecation has 'prediction'; retired things don't get renamed - it will be ignored")
 
     # cross-entry checks
     all_ids = {e.get("id") for e in data if isinstance(e, dict) and e.get("id")}
@@ -259,7 +259,7 @@ def main():
         for missing in sorted(nav_ids - all_ids):
             err(missing, "NAV in app.js references an id that is not in databricks.json")
         for unreachable in sorted(all_ids - nav_ids):
-            err(unreachable, "entry appears in no NAV section in app.js — unreachable from the rail")
+            err(unreachable, "entry appears in no NAV section in app.js - unreachable from the rail")
 
     # report
     for w in warnings:

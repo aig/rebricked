@@ -22,7 +22,7 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
-  # The schema gate — a malformed entry must never reach production.
+  # The schema gate - a malformed entry must never reach production.
   # Same check contributors run locally: python scripts/validate.py
   validate:
     runs-on: ubuntu-latest

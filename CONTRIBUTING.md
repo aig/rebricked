@@ -2,14 +2,14 @@
 
 One rule: **real, sourced changes only.** Three kinds fit: **renames**, **deprecations**,
 and **features**. If it wouldn't make a data engineer nod and say "oh, *that's* what
-happened to it" (or "oh, *that's* the new thing") — it doesn't belong here.
+happened to it" (or "oh, *that's* the new thing") - it doesn't belong here.
 
 - A **rename** is a product/feature Databricks gave a new name for *the same thing*. Not a
   new product, not a casual nickname.
 - A **deprecation** is a feature Databricks retired or replaced. A *different* thing takes
-  over (or nothing does) — the opposite of a rename. `dbx` → Asset Bundles is a deprecation,
+  over (or nothing does) - the opposite of a rename. `dbx` → Asset Bundles is a deprecation,
   not a rename: different tool, different config format.
-- A **feature** is a genuinely *new* capability worth tracking — not renamed, not (yet)
+- A **feature** is a genuinely *new* capability worth tracking - not renamed, not (yet)
   deprecated. It records what it is and when it landed, so the timeline stays complete.
   Liquid Clustering and Unity Catalog Volumes are features. Same bar: real and sourced.
 
@@ -27,7 +27,7 @@ one `"renamed"` card per former name (add another `"renamed"` card for each extr
   "abbr": "ON",
   "category": "Data engineering",
   "what": "One line: what the thing was under this name.",
-  "fact": "Self-contained real-but-fun one-liner about THIS name — don't mention the newer name.",
+  "fact": "Self-contained real-but-fun one-liner about THIS name - don't mention the newer name.",
   "from": "2021",
   "to": "2023",
   "successorId": "kebab-case-unique-id",
@@ -41,11 +41,11 @@ one `"renamed"` card per former name (add another `"renamed"` card for each extr
   "aliases": ["What people actually type", "ABBR"],
   "category": "Data engineering",
   "what": "One line: what the thing is.",
-  "fact": "Real-but-fun one-liner about the current thing — funny, but true and sourceable.",
+  "fact": "Real-but-fun one-liner about the current thing - funny, but true and sourceable.",
   "from": "2023",
   "status": "current",
   "occasion": "Where it was announced (optional).",
-  "note": "Anything an engineer needs to know — does old code still run? (optional)",
+  "note": "Anything an engineer needs to know - does old code still run? (optional)",
   "source": "https://docs.databricks.com/...",
   "verified": "YYYY-MM-DD"
 }
@@ -63,7 +63,7 @@ one `"renamed"` card per former name (add another `"renamed"` card for each extr
   "successorId": "id-of-the-successor-card (optional)",
   "category": "Developer experience",
   "what": "One line: what the thing was.",
-  "fact": "Real-but-fun one-liner about the feature — funny, but the fact must be true and sourceable.",
+  "fact": "Real-but-fun one-liner about the feature - funny, but the fact must be true and sourceable.",
   "deprecatedAt": "2024",
   "removedAt": "2026-01",
   "status": "deprecated",
@@ -84,11 +84,11 @@ one `"renamed"` card per former name (add another `"renamed"` card for each extr
   "aliases": ["what people type", "ABBR"],
   "category": "Data engineering",
   "what": "One line: what the thing is.",
-  "fact": "Real-but-fun one-liner about the feature — funny, but the fact must be true and sourceable.",
+  "fact": "Real-but-fun one-liner about the feature - funny, but the fact must be true and sourceable.",
   "introducedAt": "2024",
   "status": "ga",
   "occasion": "Where/when it shipped (optional).",
-  "note": "Anything an engineer needs — what it replaces, GA vs preview caveats (optional).",
+  "note": "Anything an engineer needs - what it replaces, GA vs preview caveats (optional).",
   "source": "https://docs.databricks.com/...",
   "verified": "YYYY-MM-DD"
 }
@@ -100,31 +100,32 @@ one `"renamed"` card per former name (add another `"renamed"` card for each extr
   everyone's `successorId`, so you never store a backward link. Keep each card's `fact`
   self-contained (about that name, not its successor).
 - **Deprecations:** `status` is `"deprecated"`, `"retired"`, or `"legacy"`. Choose
-  `"legacy"` — **not** `"deprecated"` — when the docs merely call it legacy/unsupported but
+  `"legacy"` - **not** `"deprecated"` - when the docs merely call it legacy/unsupported but
   Databricks has set **no formal deprecation date or timeline** (a "…(legacy)" doc title is
   the tell); reserve `"deprecated"` for an actual announced deprecation, and `"retired"` for
   something already removed. `removedAt` is optional; omit `successorId`/`replacement` if
   nothing directly replaces it (renders as "retired"). Set `successorId` when the successor
-  has its own card — the card links to it.
+  has its own card - the card links to it.
 - **Features:** `introducedAt` (`YYYY`/`YYYY-MM`) is required; `status` is `"ga"` or
   `"preview"` (optional, defaults to `ga`). If the thing later gets renamed, add a card for
   the new name and point this one's `successorId` at it.
 - **`status` is the single lifecycle field**, and its allowed values depend on the kind:
   `"current"`/`"renamed"` for a rename, `"deprecated"`/`"legacy"`/`"retired"` for a
-  deprecation, `"ga"`/`"preview"` for a feature. There is no separate `state` field — one
+  deprecation, `"ga"`/`"preview"` for a feature. There is no separate `state` field - one
   value per card says where it sits in its own lifecycle.
 - `links` (optional, every kind): additional classified references, an array of
   `{ "url", "kind": "official"|"community"|"internet", "label" }`. Every URL must be real
-  and verified — a dead or off-topic link is worse than none.
+  and verified - a dead or off-topic link is worse than none.
 - `source` is **required** on every entry. No source, no entry. Prefer official Databricks /
-  Microsoft Learn docs — an archived "legacy"/"migrate from X" doc is ideal for deprecations.
+  Microsoft Learn docs - an archived "legacy"/"migrate from X" doc is ideal for deprecations.
 - `verified` is the date a human last confirmed it. Put the day you checked.
 - `fact` is **required** on every entry: a real-but-fun one-liner about the feature itself.
-  Unlike `prediction`, it is **not** fiction — only the tone is ours; the fact underneath
+  Unlike `prediction`, it is **not** fiction - only the tone is ours; the fact underneath
   must be real and sourceable (what it does, how it works, its rename history, a documented
   quirk or codename). Keep it about the feature, not its pricing. One or two sentences.
 - `id` is kebab-case and unique across the whole file (renames and deprecations share it).
 - Dates use `YYYY` or `YYYY-MM`. Precision is optional; honesty about precision is not.
+- Never use em dashes (`—`) in any text field. Use a hyphen (`-`) instead.
 - If sources disagree on a date, use the official doc's date and say so in `note`.
 - `prediction` (renames and features only, optional) is the one **deliberately fictional**
   field: an **array** of made-up next names for the product, e.g.
