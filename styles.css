@@ -606,10 +606,10 @@ body {
   min-width: 0;
   gap: 8px 12px;
   padding: 12px;
-  border: 1px solid color-mix(in srgb, #6E8BF5 55%, var(--line));
+  border: 1px solid color-mix(in srgb, var(--accent) 55%, var(--line));
   border-radius: 16px;
   background:
-    radial-gradient(circle at 0% 100%, color-mix(in srgb, #6E8BF5 16%, transparent), transparent 50%),
+    radial-gradient(circle at 0% 100%, color-mix(in srgb, var(--accent) 16%, transparent), transparent 50%),
     linear-gradient(135deg, color-mix(in srgb, var(--accent) 9%, var(--panel)), var(--panel) 65%);
   color: var(--ink);
   font: inherit;
@@ -620,8 +620,8 @@ body {
 }
 
 .quiz-banner:hover {
-  border-color: #6E8BF5;
-  box-shadow: 0 12px 30px color-mix(in srgb, #6E8BF5 22%, transparent);
+  border-color: var(--accent);
+  box-shadow: 0 12px 30px color-mix(in srgb, var(--accent) 22%, transparent);
   transform: translateY(-1px);
 }
 
@@ -637,7 +637,7 @@ body {
   width: 72px;
   height: 88px;
   overflow: hidden;
-  border: 1px solid color-mix(in srgb, #6E8BF5 50%, #0E1116);
+  border: 1px solid color-mix(in srgb, var(--accent) 50%, #0E1116);
   border-radius: 11px;
   background: linear-gradient(145deg, #20293A, #0E1116);
 }
@@ -662,8 +662,8 @@ body {
   width: 100%;
   padding: 5px 8px;
   border-radius: 7px;
-  background: color-mix(in srgb, #6E8BF5 14%, transparent);
-  color: #5368CA;
+  background: color-mix(in srgb, var(--accent) 14%, transparent);
+  color: var(--accent-ink);
   font-size: 11px;
   font-weight: 800;
   letter-spacing: .1em;
@@ -687,7 +687,7 @@ body {
 
 .quiz-banner-detail {
   padding-top: 5px;
-  border-top: 1px solid color-mix(in srgb, #6E8BF5 22%, var(--line));
+  border-top: 1px solid color-mix(in srgb, var(--accent) 22%, var(--line));
   color: var(--ink);
   font-size: 11.5px;
   font-weight: 600;
@@ -697,7 +697,7 @@ body {
 .quiz-banner-arrow {
   grid-row: 2;
   align-self: end;
-  color: #586ED2;
+  color: var(--accent);
   font-size: 22px;
   line-height: 1;
 }
@@ -2165,9 +2165,14 @@ body.modal-open {
   font-weight: 700;
 }
 
+.quiz-recipient-optional {
+  font-weight: 500;
+  color: var(--faint);
+}
+
 .quiz-recipient-fields {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 1fr;
   gap: 10px;
 }
 

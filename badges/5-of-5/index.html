@@ -56,8 +56,10 @@
   function setOpen(o) { if (sb) sb.classList.toggle('open', o); if (sc) sc.hidden = !o; if (mb) mb.setAttribute('aria-expanded', String(o)); }
   if (mb) mb.addEventListener('click', function () { setOpen(!(sb && sb.classList.contains('open'))); });
   if (sc) sc.addEventListener('click', function () { setOpen(false); });
-  var p = new URLSearchParams(location.search), first = (p.get('first') || '').trim(), last = (p.get('last') || '').trim();
-  var recipient = [first, last].filter(Boolean).join(' ').replace(/\s+/g, ' ').slice(0, 101);
+  var p = new URLSearchParams(location.search);
+  // Current links carry a single ?name; older shared links used ?first/?last.
+  var name = (p.get('name') || '').trim(), first = (p.get('first') || '').trim(), last = (p.get('last') || '').trim();
+  var recipient = (name || [first, last].filter(Boolean).join(' ')).replace(/\s+/g, ' ').slice(0, 101);
   var recipientEl = document.getElementById('badge-recipient'), recipientName = document.getElementById('badge-recipient-name');
   if (recipient && recipientEl && recipientName) { recipientName.textContent = recipient; recipientEl.hidden = false; }
   var share = document.getElementById('badge-share');

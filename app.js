@@ -848,8 +848,6 @@
     window.addEventListener("hashchange", () => { applyRoute(); render(); });
 
     // Quiz overlay controls.
-    const quizOpen = $("#quiz-open");
-    if (quizOpen) quizOpen.addEventListener("click", () => { track("quiz-open"); openQuiz(); });
     const quizBanner = $("#quiz-banner");
     if (quizBanner) quizBanner.addEventListener("click", () => { track("quiz-open", { source: "home-banner" }); openQuiz(); });
     const quizClose = $("#quiz-close");
@@ -1224,8 +1222,7 @@
   function quizResultURL() {
     const url = new URL(location.origin + pageDir() + "badges/" + quizState.score + "-of-" + QUIZ_LEN + "/");
     if (quizState.recipient) {
-      url.searchParams.set("first", quizState.recipient.first);
-      url.searchParams.set("last", quizState.recipient.last);
+      url.searchParams.set("name", quizState.recipient);
     }
     return url.toString();
   }
@@ -1434,15 +1431,14 @@
       `<p class="quiz-final">You scored <b>${quizState.score} / ${QUIZ_LEN}</b> <span class="quiz-pct">(${pct}%)</span></p>` +
       `<p class="quiz-verdict">${escapeHtml(verdict)}</p>` +
       `<form class="quiz-recipient" id="quiz-recipient">` +
-      `<p class="quiz-recipient-title">Put your name on the badge</p>` +
+      `<p class="quiz-recipient-title">Put your name on the badge <span class="quiz-recipient-optional">(optional)</span></p>` +
       `<div class="quiz-recipient-fields">` +
-      `<label>First name<input class="new-input" id="quiz-first" name="first" autocomplete="given-name" maxlength="40" required></label>` +
-      `<label>Last name<input class="new-input" id="quiz-last" name="last" autocomplete="family-name" maxlength="60" required></label>` +
+      `<label>Name<input class="new-input" id="quiz-name" name="name" autocomplete="name" maxlength="60"></label>` +
       `</div>` +
-      `<p class="quiz-recipient-note">Your name is encoded in the badge link; no account is needed.</p>` +
+      `<p class="quiz-recipient-note">Leave it blank for an unnamed badge. Your name is encoded in the badge link; no account is needed.</p>` +
       `<div class="quiz-recipient-actions">` +
       `<button class="quiz-next" type="submit">Show my badge ↗</button>` +
-      `<button class="quiz-share" id="quiz-share" type="button" title="Share your named badge on LinkedIn">` +
+      `<button class="quiz-share" id="quiz-share" type="button" title="Share your badge on LinkedIn">` +
       `<svg viewBox="0 0 24 24" width="14" height="14" class="li-ic" aria-hidden="true">` +
       `<path d="M4.98 3.5A2.5 2.5 0 1 1 2.5 6 2.5 2.5 0 0 1 4.98 3.5zM3 8.98h4V21H3zM9.5 8.98h3.83v1.64h.05a4.2 4.2 0 0 1 3.78-2.08c4.04 0 4.79 2.66 4.79 6.12V21h-4v-5.34c0-1.27-.02-2.9-1.77-2.9s-2.04 1.38-2.04 2.81V21h-4z" />` +
       `</svg><span>Share on LinkedIn</span></button>` +
@@ -1450,20 +1446,12 @@
       `</form>` +
       `</div>`;
     const recipientForm = $("#quiz-recipient");
+    // The name is optional: an empty field just yields an unnamed badge.
     function saveQuizRecipient() {
       if (!recipientForm || !recipientForm.reportValidity()) return false;
-      const firstInput = $("#quiz-first");
-      const lastInput = $("#quiz-last");
-      const first = firstInput.value.trim().replace(/\s+/g, " ");
-      const last = lastInput.value.trim().replace(/\s+/g, " ");
-      if (!first || !last) {
-        const missing = first ? lastInput : firstInput;
-        missing.setCustomValidity(`Enter your ${first ? "last" : "first"} name.`);
-        missing.reportValidity();
-        missing.addEventListener("input", () => missing.setCustomValidity(""), { once: true });
-        return false;
-      }
-      quizState.recipient = { first, last };
+      const nameInput = $("#quiz-name");
+      const name = nameInput ? nameInput.value.trim().replace(/\s+/g, " ") : "";
+      quizState.recipient = name || null;
       updateQuizScore();
       return true;
     }
