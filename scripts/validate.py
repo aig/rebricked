@@ -24,7 +24,7 @@ URL_RE = re.compile(r"^https?://", re.IGNORECASE)
 # about the feature — genuinely true, grounded in its history — so every entry carries one.
 REQUIRED_COMMON = ("id", "category", "what", "fact", "source", "verified")
 # Each name in a product's history is its own card, linked by `successorId`.
-REQUIRED_RENAME = ("name", "state")
+REQUIRED_RENAME = ("name", "status")
 # A deprecation names the retired thing and when it was deprecated.
 REQUIRED_DEPRECATION = ("name", "deprecatedAt", "status")
 # A feature names a current, non-deprecated thing and when it landed.
@@ -35,7 +35,7 @@ VALID_KINDS = ("rename", "deprecation", "feature")
 VALID_STATUSES = ("deprecated", "retired", "legacy")
 VALID_FEATURE_STATUSES = ("ga", "preview")
 # A rename card is either the name in use now ("current") or a superseded one ("renamed").
-VALID_RENAME_STATES = ("current", "renamed")
+VALID_RENAME_STATUSES = ("current", "renamed")
 # Classified reference links: official docs, community (blogs/forums), or wider internet.
 VALID_LINK_KINDS = ("official", "community", "internet")
 
@@ -182,16 +182,16 @@ def main():
 
         # rename-specific rules: each name in a product's history is its own card
         if kind == "rename":
-            state = entry.get("state")
-            if state and state not in VALID_RENAME_STATES:
-                err(eid, f"rename state must be one of {VALID_RENAME_STATES}, got {state!r}")
+            status = entry.get("status")
+            if status and status not in VALID_RENAME_STATUSES:
+                err(eid, f"rename status must be one of {VALID_RENAME_STATUSES}, got {status!r}")
             # a superseded name points forward; the current name does not and is open-ended
-            if state == "renamed":
+            if status == "renamed":
                 if not entry.get("successorId"):
                     err(eid, "a 'renamed' card needs a successorId (what it became)")
                 if entry.get("to") in (None, ""):
                     err(eid, "a 'renamed' card needs a 'to' date (when it stopped being current)")
-            if state == "current" and entry.get("to") not in (None, ""):
+            if status == "current" and entry.get("to") not in (None, ""):
                 err(eid, "a 'current' card must not have a 'to' date")
             for stray in ("lineage", "current", "renamedAt"):
                 if stray in entry:

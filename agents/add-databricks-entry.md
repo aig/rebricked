@@ -68,7 +68,7 @@ namespace).
 ## Step 4 — Write the entry (shape depends on the kind)
 
 **Rename** — one card per name. Each card: required `id`, `name`, `category`, `what`,
-`fact`, `state`, `source`, `verified`. A `"renamed"` card also needs `to` and `successorId`
+`fact`, `status`, `source`, `verified`. A `"renamed"` card also needs `to` and `successorId`
 (the next name's id); the `"current"` card has no `to`. Each `fact` is self-contained —
 about that name, never mentioning the successor. Predecessors are derived from `successorId`.
 
@@ -83,7 +83,7 @@ about that name, never mentioning the successor. Predecessors are derived from `
   "from": "2021",
   "to": "2023",
   "successorId": "kebab-case-unique-id",
-  "state": "renamed",
+  "status": "renamed",
   "source": "https://docs.databricks.com/...",
   "verified": "YYYY-MM-DD"
 },
@@ -95,7 +95,7 @@ about that name, never mentioning the successor. Predecessors are derived from `
   "what": "One line: what the thing is.",
   "fact": "Real-but-fun one-liner about the current thing (what it does, a codename, a detail).",
   "from": "2023",
-  "state": "current",
+  "status": "current",
   "source": "https://docs.databricks.com/...",
   "verified": "YYYY-MM-DD"
 }

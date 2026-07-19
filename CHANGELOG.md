@@ -6,6 +6,16 @@ Format loosely follows [Keep a Changelog](https://keepachangelog.com/); dates ar
 ## 2026-07-19 (status-based filter, palette, colour-coded timeline, analytics)
 
 ### Changed
+- **Merged `state` into `status` — one lifecycle field per card.** Renames previously used
+  `state` (`current`/`renamed`) while deprecations/features used `status` and redundantly
+  copied it into `state` (they were always equal). Now every card carries a single `status`
+  whose vocabulary depends on kind: `current`/`renamed` (rename), `deprecated`/`legacy`/
+  `retired` (deprecation), `ga`/`preview` (feature). Rename cards' `state` migrated to
+  `status`; the mirror copies were dropped. `validate.py`, `app.js`, and the contributor/agent
+  docs updated to match. No visible behaviour change — badges render identically.
+- **PAT reclassified `deprecated` → `legacy`.** Personal access tokens have no formal
+  deprecation date (the docs page is titled "…(legacy)"), so they now match the same
+  convention as the legacy CLI and Workspace Model Registry.
 - **The filter is now status-based, not kind-based.** Buckets are **Active / Renamed /
   Deprecated**, keyed on the badge a card shows (`bucketOf`) rather than raw `kind`. A
   new feature, a preview, and the current-name side of a rename all count as **Active**;

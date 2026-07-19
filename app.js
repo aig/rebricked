@@ -467,7 +467,7 @@
       dateText = `${verb} ${escapeHtml(d.deprecatedAt || "?")}${removed}${occasion}`;
     } else {
       trail = renameTrail(d, q);
-      if ((d.state || "current") === "renamed") {
+      if ((d.status || "current") === "renamed") {
         rowCls = " is-former";
         const span = d.from && d.to
           ? `${escapeHtml(d.from)}–${escapeHtml(d.to)}`
@@ -532,7 +532,7 @@
       return `<span class="badge badge-${escapeAttr(status)}">${escapeHtml(label)}</span>`;
     }
     // rename card: the name in use now vs. a superseded one
-    if ((d.state || "current") === "renamed") {
+    if ((d.status || "current") === "renamed") {
       return `<span class="badge badge-former">renamed</span>`;
     }
     return `<span class="badge badge-current">latest</span>`;
@@ -636,7 +636,7 @@
     const preds = Array.isArray(d.prediction) ? d.prediction.filter(Boolean) : [];
     if (!preds.length) return "";
     const start = hashStr(d.id + "p") % preds.length;
-    return `<button class="odds-btn" data-preds="${escapeAttr(JSON.stringify(preds))}" data-i="${start}" title="Ask the AI to guess the next name">✨ Guess a new name using AI</button>`;
+    return `<button class="odds-btn" data-preds="${escapeAttr(JSON.stringify(preds))}" data-i="${start}" title="Our AI's best guess at the next rebrand">✨ Let AI name the sequel</button>`;
   }
 
   // The AI-guess button reveals a made-up next name: a beat of "thinking", then the
@@ -686,7 +686,7 @@
   // that points forward — not one that mislabels the old name as the current one.
   function renameTrail(d, q) {
     const name = d.name || d.id;
-    const renamed = (d.state || "current") === "renamed";
+    const renamed = (d.status || "current") === "renamed";
     const current = renamed ? currentNameOf(d) : "";
     // Only treat it as "former" for copy purposes when we actually know the name
     // it became; otherwise fall back to the plain current-name correction.
@@ -1112,7 +1112,7 @@
     return DATA.filter((d) => {
       const k = kindOf(d);
       // a former name whose current name is knowable, or a deprecation with a successor
-      if (k === "rename") return (d.state === "renamed") && !currentNameOf(d).startsWith("(");
+      if (k === "rename") return (d.status === "renamed") && !currentNameOf(d).startsWith("(");
       if (k === "deprecation") return !currentNameOf(d).startsWith("(");
       return false;
     });
@@ -1496,7 +1496,7 @@
       return `🧱 "${d.name}" is deprecated — ${successor}.\n${d.what || ""}${factLine}\n${link}`;
     }
     // rename card
-    if ((d.state || "current") === "renamed") {
+    if ((d.status || "current") === "renamed") {
       return `🧱 It's not called "${d.name}" anymore — it's "${currentNameOf(d)}" now.\n${d.what || ""}${factLine}\n${link}`;
     }
     return `🧱 "${d.name}" — the current Databricks name (since ${d.from || "?"}).\n${d.what || ""}${factLine}\n${link}`;
@@ -1694,7 +1694,7 @@
     const k = kindOf(d);
     if (k === "deprecation") return "deprecation";
     if (k === "feature") return "current";
-    return (d.state || "current") === "renamed" ? "renamed" : "current";
+    return (d.status || "current") === "renamed" ? "renamed" : "current";
   }
 
   // Mixed-precision dates ("2025" vs "2025-06") don't compare lexicographically —

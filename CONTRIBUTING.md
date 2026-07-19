@@ -31,7 +31,7 @@ one `"renamed"` card per former name (add another `"renamed"` card for each extr
   "from": "2021",
   "to": "2023",
   "successorId": "kebab-case-unique-id",
-  "state": "renamed",
+  "status": "renamed",
   "source": "https://docs.databricks.com/...",
   "verified": "YYYY-MM-DD"
 },
@@ -43,7 +43,7 @@ one `"renamed"` card per former name (add another `"renamed"` card for each extr
   "what": "One line: what the thing is.",
   "fact": "Real-but-fun one-liner about the current thing — funny, but true and sourceable.",
   "from": "2023",
-  "state": "current",
+  "status": "current",
   "occasion": "Where it was announced (optional).",
   "note": "Anything an engineer needs to know — does old code still run? (optional)",
   "source": "https://docs.databricks.com/...",
@@ -99,13 +99,20 @@ one `"renamed"` card per former name (add another `"renamed"` card for each extr
   `successorId`; the `"current"` card has no `to`. Predecessors are derived from
   everyone's `successorId`, so you never store a backward link. Keep each card's `fact`
   self-contained (about that name, not its successor).
-- **Deprecations:** `status` is `"deprecated"`, `"retired"`, or `"legacy"` (docs call it
-  legacy/unsupported but no formal deprecation date exists); `removedAt` is optional;
-  omit `successorId`/`replacement` if nothing directly replaces it (renders as "retired").
-  Set `successorId` when the successor has its own card — the card links to it.
+- **Deprecations:** `status` is `"deprecated"`, `"retired"`, or `"legacy"`. Choose
+  `"legacy"` — **not** `"deprecated"` — when the docs merely call it legacy/unsupported but
+  Databricks has set **no formal deprecation date or timeline** (a "…(legacy)" doc title is
+  the tell); reserve `"deprecated"` for an actual announced deprecation, and `"retired"` for
+  something already removed. `removedAt` is optional; omit `successorId`/`replacement` if
+  nothing directly replaces it (renders as "retired"). Set `successorId` when the successor
+  has its own card — the card links to it.
 - **Features:** `introducedAt` (`YYYY`/`YYYY-MM`) is required; `status` is `"ga"` or
   `"preview"` (optional, defaults to `ga`). If the thing later gets renamed, add a card for
   the new name and point this one's `successorId` at it.
+- **`status` is the single lifecycle field**, and its allowed values depend on the kind:
+  `"current"`/`"renamed"` for a rename, `"deprecated"`/`"legacy"`/`"retired"` for a
+  deprecation, `"ga"`/`"preview"` for a feature. There is no separate `state` field — one
+  value per card says where it sits in its own lifecycle.
 - `links` (optional, every kind): additional classified references, an array of
   `{ "url", "kind": "official"|"community"|"internet", "label" }`. Every URL must be real
   and verified — a dead or off-topic link is worse than none.

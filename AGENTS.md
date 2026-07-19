@@ -67,9 +67,9 @@ Each entry is one object with a `kind`. Absent `kind` means `"rename"` (back-com
   names (funny but plausible). Renames/features only; the UI always labels them invented.
 
 **Rename** (`kind` absent or `"rename"`) — required: `id`, `name`, `category`, `what`,
-`fact`, `state`, `source`, `verified`. Optional: `abbr`, `aliases`, `from`, `to`,
+`fact`, `status`, `source`, `verified`. Optional: `abbr`, `aliases`, `from`, `to`,
 `successorId`, `occasion`, `note`, `prediction`, `links`.
-- `state` is `"current"` (the name in use now — no `to`) or `"renamed"` (a superseded name
+- `status` is `"current"` (the name in use now — no `to`) or `"renamed"` (a superseded name
   — needs both a `to` date and a `successorId` pointing at the next name).
 - `from`/`to` are when this name took effect / stopped being current.
 
@@ -83,8 +83,8 @@ Each entry is one object with a `kind`. Absent `kind` means `"rename"` (back-com
 **Feature** (`kind: "feature"`) — required: `id`, `name`, `category`, `what`, `fact`,
 `introducedAt`, `source`, `verified`. Optional: `aliases`, `status` (`ga`/`preview`,
 defaults `ga`), `occasion`, `note`, `prediction`, `links`.
-- No `from`/`to`/`state` needed. Once a feature gets renamed, add a new card for the new
-  name and set this one's `successorId` to it (and convert as needed).
+- No `from`/`to` needed, and `status` defaults to `ga`. Once a feature gets renamed, add a
+  new card for the new name and set this one's `successorId` to it (and convert as needed).
 
 The content area has a **status filter** (Active / Renamed / Deprecated) that narrows
 whatever's showing by the badge each card shows — via `bucketOf`, not raw `kind`, so
