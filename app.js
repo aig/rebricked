@@ -1445,6 +1445,8 @@
       `</div>` +
       `</form>` +
       `</div>`;
+    // A perfect round gets the same celebratory brick shower as a roulette landing.
+    if (quizState.score === QUIZ_LEN) brickConfetti();
     const recipientForm = $("#quiz-recipient");
     // The name is optional: an empty field just yields an unnamed badge.
     function saveQuizRecipient() {

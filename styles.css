@@ -1936,7 +1936,8 @@ mark {
   inset: 0;
   pointer-events: none;
   overflow: hidden;
-  z-index: 60;
+  /* above the quiz modal (80) so a perfect-score shower is visible over the dialog */
+  z-index: 90;
 }
 
 .brick {
@@ -2321,8 +2322,15 @@ body.modal-open {
   .quiz-opts {
     grid-template-columns: 1fr;
   }
-  .quiz-recipient-fields { grid-template-columns: 1fr; }
-  .quiz-recipient-actions { align-items: stretch; flex-direction: column; }
+
+  .quiz-recipient-fields {
+    grid-template-columns: 1fr;
+  }
+
+  .quiz-recipient-actions {
+    align-items: stretch;
+    flex-direction: column;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -2564,7 +2572,9 @@ body.modal-open {
   text-decoration: none;
 }
 
-.badge-intro-cta:hover { background: var(--accent-ink); }
+.badge-intro-cta:hover {
+  background: var(--accent-ink);
+}
 
 /* rail/new/brand are anchors on the badge page - keep them looking like the app */
 .nav-item,
@@ -2725,7 +2735,9 @@ body.modal-open {
   cursor: pointer;
 }
 
-.badge-export:hover { background: var(--bg); }
+.badge-export:hover {
+  background: var(--bg);
+}
 
 .badge-link {
   font-size: 12.5px;
@@ -2748,25 +2760,71 @@ body.modal-open {
 }
 
 @media (max-width: 640px) {
-  .badge-intro { align-items: flex-start; flex-direction: column; gap: 14px; }
+  .badge-intro {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 14px;
+  }
+
   .badge-card {
     display: block;
     max-width: 440px;
     text-align: center;
   }
 
-  .badge-emblem { display: flex; }
-  .badge-blurb { margin-left: auto; margin-right: auto; }
-  .badge-actions { align-items: center; }
-  .badge-primary-actions { align-items: stretch; flex-direction: column; }
-  .badge-share, .badge-export { justify-content: center; }
+  .badge-emblem {
+    display: flex;
+  }
+
+  .badge-blurb {
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .badge-actions {
+    align-items: center;
+  }
+
+  .badge-primary-actions {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .badge-share,
+  .badge-export {
+    justify-content: center;
+  }
 }
 
 @media print {
-  @page { size: A4 landscape; margin: 0; }
-  html, body { width: 297mm; height: 210mm; }
-  .sidebar, .topbar, .badge-intro, .badge-actions, .badge-fine { display: none !important; }
-  .app, .main, .content { display: block; min-height: 0; padding: 0; background: #fff; }
+  @page {
+    size: A4 landscape;
+    margin: 0;
+  }
+
+  html,
+  body {
+    width: 297mm;
+    height: 210mm;
+  }
+
+  .sidebar,
+  .topbar,
+  .badge-intro,
+  .badge-actions,
+  .badge-fine {
+    display: none !important;
+  }
+
+  .app,
+  .main,
+  .content {
+    display: block;
+    min-height: 0;
+    padding: 0;
+    background: #fff;
+  }
+
   .badge-stage {
     display: flex;
     width: 297mm;
@@ -2775,6 +2833,7 @@ body.modal-open {
     padding: 0;
     background: #fff;
   }
+
   .badge-card {
     box-sizing: border-box;
     width: 270mm;
