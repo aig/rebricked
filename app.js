@@ -1732,7 +1732,7 @@
         card = fresh;
       }
     }
-    scrollRowIntoView(card);
+    card.scrollIntoView({ behavior: "smooth", block: "center" });
     flashOnce(card);
   }
 
