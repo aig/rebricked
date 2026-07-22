@@ -27,7 +27,7 @@
   const filterOn = (key) => (key === "all" ? allKindsSelected() : activeKinds.has(key));
   const resetKinds = () => { activeKinds = new Set(KIND_KEYS); };
   let activeYear = null;    // "2025" etc. when a timeline bar is selected
-  let focusId = null;       // a single deep-linked entry (#id), overrides everything
+  let focusId = null;       // a deep-linked entry (#id / ?id=): sets its crawlable meta and gets scrolled to
   let lastRouletteId = null; // last randomizer winner, to avoid picking it twice running
 
   // Rotated on each empty render so the deadpan doesn't get stale.
@@ -204,6 +204,7 @@
         } else {
           activeKinds.add(key);
         }
+        focusId = null; // a deliberate filter leaves the deep-linked entry's focus
         track("filter-toggle", { filter: key, on: activeKinds.has(key) });
         writeURL();
         render();
@@ -343,25 +344,13 @@
 
   // ---- rendering ----
   function render() {
-    // A deep-linked entry (#id) shows with its whole lineage family, so the chain
-    // nodes point at real sibling cards on the page: clicking one scrolls to it
-    // rather than collapsing the view down to that single card.
-    if (focusId) {
-      const one = DATA.find((d) => d.id === focusId);
-      updateHomeExtras();
-      if (one) {
-        entryMeta(one);
-        // The whole family is one card now; open it with the deep-linked member active.
-        resultsEl.innerHTML = rowHTML(one);
-        wireRows();
-        requestAnimationFrame(() => flashOnce(rowEl(one.id)));
-        return;
-      }
-      focusId = null; // unknown id - fall through to the normal list
-    }
-
-    // Any non-focused view is the site's front door - restore the default metadata.
-    setMeta(DEFAULT_TITLE, DEFAULT_DESC);
+    // A deep-linked entry (#id / ?id=) gets its own crawlable <title>/description, but
+    // it still renders inside the full list - focusEntry() scrolls to and flashes the
+    // card rather than collapsing the page down to that single entry.
+    const focused = focusId ? DATA.find((d) => d.id === focusId) : null;
+    if (focusId && !focused) focusId = null; // unknown id - treat as the plain list
+    if (focused) entryMeta(focused);
+    else setMeta(DEFAULT_TITLE, DEFAULT_DESC);
 
     // The kind-filter counts must track this same scope, so update them now.
     updateFilterCounts();
@@ -1712,11 +1701,39 @@
     syncFilterButtons();
     if (push) writeURL();
     render();
-    // Land on the focused card itself - within its family it may sit below earlier
-    // predecessors, so scrolling only to the filters block could leave it off-screen.
-    const el = rowEl(id);
-    if (el) scrollRowIntoView(el);
-    else scrollToFilters();
+    // Land on the entry inside the full list: scroll to its card and flash it, instead
+    // of collapsing the page to that single card. Deferred a frame so the freshly
+    // rendered cards exist before we measure and scroll.
+    requestAnimationFrame(() => revealEntry(id));
+  }
+
+  // Bring an entry's card into view within the full list. Its lineage family renders as
+  // one card keyed on the first-sorted member, so the target may currently show a
+  // sibling: find that family card, swap it in place to the requested member (the same
+  // in-place swap a lineage-node click performs), then scroll to it and flash.
+  function revealEntry(id) {
+    const target = DATA.find((d) => d.id === id);
+    if (!target) { scrollToFilters(); return; }
+    let card = rowEl(id);
+    if (!card) {
+      const familyIds = new Set(lineageFamily(target).map((x) => x.id));
+      card = [...resultsEl.querySelectorAll(".family-card")].find((c) =>
+        familyIds.has(c.dataset.id)
+      );
+    }
+    if (!card) { scrollToFilters(); return; }
+    if (card.dataset.id !== id) {
+      const tmp = document.createElement("template");
+      tmp.innerHTML = rowHTML(target).trim();
+      const fresh = tmp.content.firstElementChild;
+      if (fresh) {
+        card.replaceWith(fresh);
+        wireCard(fresh);
+        card = fresh;
+      }
+    }
+    scrollRowIntoView(card);
+    flashOnce(card);
   }
 
   // Resolve a card element by its entry id, quoting the value so ids with odd
