@@ -449,17 +449,38 @@ ENTRY_STYLE = """  <style>
     .fact-row { display: grid; grid-template-columns: 180px 1fr; gap: 12px; padding: 9px 2px; border-bottom: 1px solid var(--rail-line, rgba(127,127,127,.2)); }
     .fact-row dt { color: var(--muted, #8a94a3); font-weight: 600; margin: 0; }
     .fact-row dd { margin: 0; }
+    /* The date's confirmation mark: a quiet 🔗 that lifts on hover, never browser-blue. */
+    .date-src { text-decoration: none; margin-left: 5px; opacity: .5; transition: opacity .15s; }
+    .date-src:hover { opacity: 1; }
+    .date-src-mark { font-size: 11px; }
     .entry-sources h2, .entry-related h2 { font-size: 14px; text-transform: uppercase; letter-spacing: .1em; color: var(--muted, #8a94a3); margin: 0 0 10px; }
-    .entry-sources ul, .entry-related ul { list-style: none; padding: 0; margin: 0 0 24px; }
-    .entry-sources li, .entry-related li { margin: 0 0 8px; font-size: 14px; }
+    .entry-sources ul { list-style: none; padding: 0; margin: 0 0 24px; }
+    .entry-sources li { margin: 0 0 8px; font-size: 14px; }
+    /* Content links carry the brand ink, not the default browser blue. */
+    .entry-sources a, .entry-lineage a { color: var(--accent-ink, #C4260F); text-decoration: none; }
+    .entry-sources a:hover, .entry-lineage a:hover { text-decoration: underline; }
     .src-kind { display: inline-block; min-width: 68px; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .06em; color: var(--muted, #8a94a3); }
-    .entry-cta { display: inline-flex; align-items: center; gap: 8px; margin: 4px 0 26px; padding: 11px 18px; border-radius: 10px; background: var(--accent, #FF3621); color: #fff; font-weight: 700; text-decoration: none; }
+    /* Related peers read as rounded chips that light up in the accent on hover. */
+    .entry-related ul { list-style: none; padding: 0; margin: 0 0 24px; display: flex; flex-wrap: wrap; gap: 8px; }
+    .entry-related li { margin: 0; }
+    .entry-related a { display: inline-block; text-decoration: none; color: var(--ink, #11171C); border: 1px solid var(--line, #E2E6EB); border-radius: 999px; padding: 5px 13px; font-size: 13px; background: var(--panel, #fff); transition: border-color .15s, color .15s, background .15s; }
+    .entry-related a:hover { border-color: var(--accent, #FF3621); color: var(--accent-ink, #C4260F); background: color-mix(in srgb, var(--accent) 6%, var(--panel, #fff)); }
+    .entry-cta { display: inline-flex; align-items: center; gap: 8px; margin: 4px 0 26px; padding: 11px 18px; border-radius: 10px; background: var(--accent, #FF3621); color: #fff; font-weight: 700; text-decoration: none; transition: filter .15s, box-shadow .15s; }
+    .entry-cta:hover { filter: brightness(1.05); box-shadow: 0 6px 18px color-mix(in srgb, var(--accent) 30%, transparent); }
     .hub-doc h1 { font-size: 30px; margin: 6px 0 10px; }
     .hub-lead { font-size: 16px; color: var(--muted, #8a94a3); margin: 0 0 26px; }
     .hub-cat { font-size: 13px; text-transform: uppercase; letter-spacing: .1em; color: var(--muted, #8a94a3); margin: 26px 0 10px; }
-    .hub-list { list-style: none; padding: 0; margin: 0; display: grid; grid-template-columns: 1fr 1fr; gap: 6px 22px; }
-    .hub-list a { text-decoration: none; }
-    .hub-list .st { font-size: 11px; color: var(--muted, #8a94a3); }
+    .hub-list { list-style: none; padding: 0; margin: 0; display: grid; grid-template-columns: 1fr 1fr; gap: 2px 22px; }
+    /* Each hub row: name + a color-coded lifecycle pill so the list scans by status. */
+    .hub-item { display: flex; align-items: baseline; gap: 8px; padding: 3px 0; }
+    .hub-link { text-decoration: none; color: var(--ink, #11171C); font-weight: 500; }
+    .hub-link:hover { color: var(--accent-ink, #C4260F); text-decoration: underline; }
+    .hub-badge { flex: none; font-family: var(--mono); font-size: 9.5px; font-weight: 700; text-transform: uppercase; letter-spacing: .05em; padding: 2px 8px; border-radius: 999px; white-space: nowrap; color: var(--c-legacy-ink); background: color-mix(in srgb, var(--c-legacy) 15%, transparent); }
+    .hub-badge.s-active { color: var(--c-active-ink); background: color-mix(in srgb, var(--c-active) 15%, transparent); }
+    .hub-badge.s-renamed { color: var(--c-renamed-ink); background: color-mix(in srgb, var(--c-renamed) 15%, transparent); }
+    .hub-badge.s-deprecated { color: var(--c-deprecated-ink); background: color-mix(in srgb, var(--c-deprecated) 16%, transparent); }
+    .hub-badge.s-legacy { color: var(--c-legacy-ink); background: color-mix(in srgb, var(--c-legacy) 15%, transparent); }
+    .hub-badge.s-retired { color: var(--c-retired-fg); background: var(--c-deprecated); }
     @media (max-width: 560px) { .fact-row, .hub-list { grid-template-columns: 1fr; } .entry-doc h1, .hub-doc h1 { font-size: 24px; } }
   </style>"""
 
@@ -646,8 +667,8 @@ def render_hub(v, entries):
         for d in items:
             status = badge_label(d)
             lis.append(
-                f'<li><a href="{attr(d["id"])}/">{esc(d["name"])}</a> '
-                f'<span class="st">{esc(status)}</span></li>'
+                f'<li class="hub-item"><a class="hub-link" href="{attr(d["id"])}/">{esc(d["name"])}</a>'
+                f'<span class="hub-badge s-{attr(status)}">{esc(status)}</span></li>'
             )
             item_list.append(
                 {
