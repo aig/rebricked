@@ -537,11 +537,17 @@
     const fact = d.fact
       ? `<p class="row-fact"><span class="fact-icon" aria-hidden="true">💡</span> ${escapeHtml(d.fact)}</p>`
       : "";
-    const occasion = d.occasion ? ` · ${escapeHtml(d.occasion)}` : "";
+    // `occasion` is now { date, link, note } - a dated milestone with its own confirmation.
+    // We render its note text (linked to the source), still accepting a bare string.
+    const occObj = d.occasion && typeof d.occasion === "object" ? d.occasion : null;
+    const occText = occObj ? (occObj.note || "") : (d.occasion || "");
+    const occasion = occText
+      ? ` · ${srcLink(occText, occObj ? (occObj.link || "") : "", "")}`
+      : "";
     let dateText = "", urgent = "", spine = "";
     if (kind === "feature") {
       spine = "is-feature";
-      dateText = `Introduced ${escapeHtml(fmtDate(d.introducedAt || "?"))}${occasion}`;
+      dateText = `Introduced ${dateLinkHTML(d.introducedAt || "?")}${occasion}`;
     } else if (kind === "deprecation") {
       const status = d.status || "deprecated";
       spine = status === "legacy" ? "is-legacy" : "is-deprecation";
@@ -551,8 +557,8 @@
       // confirmation link like renames do. Falls back to introducedAt if there's no `from`.
       const origin = d.from != null ? d.from : d.introducedAt;
       const intro = dateOf(origin) ? `Available from ${dateLinkHTML(origin)} · ` : "";
-      dateText = `${intro}${verb} ${escapeHtml(fmtDate(d.deprecatedAt || "?"))}${occasion}`;
-      if (d.removedAt) urgent = `<span class="meta-urgent">⚠ Access ended ${escapeHtml(fmtDate(d.removedAt))}</span>`;
+      dateText = `${intro}${verb} ${dateLinkHTML(d.deprecatedAt || "?")}${occasion}`;
+      if (dateOf(d.removedAt)) urgent = `<span class="meta-urgent">⚠ Access ended ${dateLinkHTML(d.removedAt)}</span>`;
     } else if ((d.status || "current") === "renamed") {
       spine = "is-former";
       const fromD = dateOf(d.from), toD = dateOf(d.to);
@@ -719,7 +725,7 @@
     // Compact start-date token for a node: its `from` (or a feature's introducedAt), as
     // "2026-07" -> "07’26", a bare year -> "’26". Shows when each name began.
     const nodeDate = (x) => {
-      const s = String(dateOf(x.from) || x.introducedAt || "");
+      const s = String(dateOf(x.from) || dateOf(x.introducedAt) || "");
       const yr = shortYear(s);
       if (!yr) return "";
       const mm = /^\d{4}-(\d{2})/.exec(s);
@@ -866,7 +872,7 @@
 
   // A feature renders just its current name, clickable to copy a "yes, that's real" line.
   function featureTrail(d, q) {
-    const when = d.introducedAt ? escapeAttr(d.introducedAt) : "";
+    const when = dateOf(d.introducedAt) ? escapeAttr(dateOf(d.introducedAt)) : "";
     return `<span class="current feature-name" data-name="${escapeAttr(d.name)}" data-feature="1" data-when="${when}" title="click to copy">${highlight(d.name, q)}</span>`;
   }
 
@@ -1827,7 +1833,7 @@
     const link = shareLink || entryURL(d.id);
     const factLine = d.fact ? `\n💡 ${d.fact}` : "";
     if (kind === "feature") {
-      return `🧱 "${d.name}" - new in Databricks (${d.introducedAt || "?"}).\n${d.what || ""}${factLine}\n${link}`;
+      return `🧱 "${d.name}" - new in Databricks (${dateOf(d.introducedAt) || "?"}).\n${d.what || ""}${factLine}\n${link}`;
     }
     if (kind === "deprecation") {
       const now = currentNameOf(d);
@@ -2027,8 +2033,8 @@
   //                  the surviving current name's change is when it took effect (from).
   function changedAt(d) {
     const k = kindOf(d);
-    if (k === "feature") return d.introducedAt || "";
-    if (k === "deprecation") return d.deprecatedAt || d.removedAt || "";
+    if (k === "feature") return dateOf(d.introducedAt) || "";
+    if (k === "deprecation") return dateOf(d.deprecatedAt) || dateOf(d.removedAt) || "";
     return (d.status || "current") === "renamed"
       ? (dateOf(d.to) || dateOf(d.from) || "")
       : (dateOf(d.from) || dateOf(d.to) || "");
@@ -2103,16 +2109,21 @@
     return v && typeof v === "object" && v.link ? String(v.link) : "";
   }
 
+  // Wrap arbitrary text in a source link (small 🔗 mark) when a URL is given; otherwise
+  // return it plain-escaped. Shared by the date chips and the occasion note.
+  function srcLink(text, url, title) {
+    if (!url) return escapeHtml(text);
+    const t = title ? ` title="${escapeAttr(title)}"` : "";
+    return `<a class="date-src" href="${escapeAttr(url)}" target="_blank" rel="noopener"${t}>` +
+      `${escapeHtml(text)}<span class="date-src-mark" aria-hidden="true">🔗</span></a>`;
+  }
+
   // A date token rendered with its confirmation link, when one exists: the formatted
   // date becomes a source-linked chip carrying a small 🔗 mark; otherwise it's plain
   // escaped text. Returns HTML (the date line is inserted unescaped).
   function dateLinkHTML(v) {
     const txt = fmtDate(dateOf(v)) || "?";
-    const url = linkOf(v);
-    if (!url) return escapeHtml(txt);
-    return `<a class="date-src" href="${escapeAttr(url)}" target="_blank" rel="noopener" ` +
-      `title="Source confirming ${escapeAttr(txt)}">${escapeHtml(txt)}` +
-      `<span class="date-src-mark" aria-hidden="true">🔗</span></a>`;
+    return srcLink(txt, linkOf(v), `Source confirming ${txt}`);
   }
 
   // Takes RAW text, matches on it, and escapes each piece separately - matching on
