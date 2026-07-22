@@ -362,6 +362,44 @@
     "verified": "2026-07-18"
   },
   {
+    "id": "genie-ontology",
+    "kind": "feature",
+    "name": "Genie Ontology",
+    "category": "AI / BI",
+    "what": "A continuously maintained map of business knowledge that grounds Genie One in an organization's terms, metrics, authoritative sources, and rules.",
+    "fact": "Its knowledge snippets get authority scores based on their source, usage, and freshness, so even business context has to earn its place in the answer.",
+    "introducedAt": "2026-06",
+    "status": "preview",
+    "occasion": "Introduced in Public Preview with Genie One enhancements on June 4, 2026",
+    "note": "Genie One extracts knowledge from tables, queries, dashboards, notebooks, documents, and connected apps, then ranks relevant snippets and applies Unity Catalog permissions when answering.",
+    "prediction": ["Genie Business Graph", "Genie Semantics", "Genie Context Fabric"],
+    "source": "https://docs.databricks.com/aws/en/workspace/genie-chat#genie-ontology",
+    "links": [
+      { "url": "https://docs.databricks.com/aws/en/ai-bi/release-notes/2026#genie-one-enhancements", "kind": "official", "label": "Databricks release notes: Genie Ontology Public Preview" },
+      { "url": "https://www.databricks.com/blog/introducing-genie-one-genie-ontology-and-genie-agents", "kind": "community", "label": "Databricks Blog: Introducing Genie Ontology" }
+    ],
+    "verified": "2026-07-22"
+  },
+  {
+    "id": "genie-zeroops",
+    "kind": "feature",
+    "name": "Genie ZeroOps",
+    "aliases": ["Genie ZeoOps", "ZeroOps"],
+    "category": "AI / ML",
+    "what": "A background agent that monitors production data and AI assets, investigates issues, and prepares fixes for human review.",
+    "fact": "It traces root causes through lineage and validates drafted fixes in a sandbox, leaving production untouched until a human accepts the proposal.",
+    "introducedAt": "2026-06",
+    "status": "preview",
+    "occasion": "Introduced at Data + AI Summit 2026",
+    "note": "Databricks describes Genie ZeroOps as a background agent for data quality, compliance, data engineering, and ML operations. Databricks employee guidance identifies the current availability stage as Private Preview.",
+    "prediction": ["Genie AutoOps", "Genie Reliability", "Genie Ops One"],
+    "source": "https://www.databricks.com/dataaisummit/session/genie-zeroops-data-quality-and-compliance-scale",
+    "links": [
+      { "url": "https://community.databricks.com/t5/technical-blog/a-pragmatic-mlops-implementation-plan-on-databricks/ba-p/163033", "kind": "community", "label": "Databricks employee guide: ZeroOps Private Preview" }
+    ],
+    "verified": "2026-07-22"
+  },
+  {
     "id": "databricks-vector-search",
     "kind": "rename",
     "name": "Databricks Vector Search",

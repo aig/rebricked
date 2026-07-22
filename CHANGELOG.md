@@ -3,6 +3,17 @@
 All notable changes to **rebricked**, grouped by day.
 Format loosely follows [Keep a Changelog](https://keepachangelog.com/); dates are `YYYY-MM-DD`.
 
+## 2026-07-22 (Genie Ontology and ZeroOps)
+
+### Added
+- **Genie Ontology.** Added the Public Preview feature that automatically builds and
+  maintains Genie One's permission-aware map of business terms, metrics, authoritative
+  sources, and rules.
+- **Genie ZeroOps.** Added the Private Preview background agent that monitors production
+  data and AI assets, investigates issues, and drafts sandbox-validated fixes for review.
+  Included `Genie ZeoOps` as a search alias for the misspelling in the original request.
+- Wired both feature cards into the Genie Agents rail section.
+
 ## 2026-07-21 (lineage navigation)
 
 ### Changed
