@@ -2109,13 +2109,15 @@
     return v && typeof v === "object" && v.link ? String(v.link) : "";
   }
 
-  // Wrap arbitrary text in a source link (small 🔗 mark) when a URL is given; otherwise
-  // return it plain-escaped. Shared by the date chips and the occasion note.
+  // Render text plain, then append a small 🔗 that is itself the source link (only the
+  // mark is clickable, not the date/text). With no URL, just the plain text. Shared by
+  // the date chips and the occasion note.
   function srcLink(text, url, title) {
     if (!url) return escapeHtml(text);
-    const t = title ? ` title="${escapeAttr(title)}"` : "";
-    return `<a class="date-src" href="${escapeAttr(url)}" target="_blank" rel="noopener"${t}>` +
-      `${escapeHtml(text)}<span class="date-src-mark" aria-hidden="true">🔗</span></a>`;
+    const label = title || "Open source";
+    return `${escapeHtml(text)}<a class="date-src" href="${escapeAttr(url)}" target="_blank" rel="noopener" ` +
+      `title="${escapeAttr(label)}" aria-label="${escapeAttr(label)}">` +
+      `<span class="date-src-mark" aria-hidden="true">🔗</span></a>`;
   }
 
   // A date token rendered with its confirmation link, when one exists: the formatted

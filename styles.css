@@ -1449,19 +1449,24 @@ body {
   font-variant-numeric: tabular-nums;
 }
 
-/* A date that carries a confirmation link: the date reads in the accent color (via the
-   .row-meta a rule above) with a small, muted 🔗 mark that firms up on hover. The mark
-   is what signals "this date is sourced" without a full underline in the resting state. */
+/* Confirmation-source link: only the small 🔗 mark is clickable - the date / text beside
+   it stays plain. The mark is muted at rest and firms up on hover; being an icon, it is
+   never underlined. */
 .date-src {
+  text-decoration: none;
   white-space: nowrap;
 }
 
+.date-src:hover,
+.date-src:focus-visible {
+  text-decoration: none;
+}
+
 .date-src-mark {
-  margin-left: 2px;
+  margin-left: 3px;
   font-size: 0.82em;
   opacity: 0.5;
   vertical-align: baseline;
-  text-decoration: none;
 }
 
 .date-src:hover .date-src-mark,
