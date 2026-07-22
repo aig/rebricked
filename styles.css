@@ -911,15 +911,9 @@ body {
   gap: 6px;
 }
 
-/* opaque fill so a straddling pill cuts the card's top border cleanly */
-.fam-rel .badge {
-  background: var(--panel);
-}
-
-/* keep the solid "retired" badge filled rather than cut to panel */
-.fam-rel .badge-retired {
-  background: var(--c-deprecated);
-}
+/* Each badge now carries its own opaque solid fill (see the .badge-* rules), which cuts the
+   card's top border just as cleanly as the old panel fill did - so no per-context override
+   is needed here anymore. */
 
 /* first block inside a body shouldn't add extra top margin under the chain header */
 .fam-body > .row-what:first-child {
@@ -1060,10 +1054,14 @@ body {
   flex: none;
 }
 
+/* Badges are filled: the state color is the background and the label is --panel (white on
+   the light theme, near-black on the dark one), i.e. background and text swapped from the
+   old tinted-fill look. The solid fill is opaque, so a badge straddling the card's top edge
+   still cuts the border cleanly. Dashed borders are kept where they carried meaning. */
 .badge-deprecated {
-  color: var(--c-deprecated-ink);
-  background: color-mix(in srgb, var(--c-deprecated) 12%, transparent);
-  border: 1px solid color-mix(in srgb, var(--c-deprecated) 30%, transparent);
+  color: var(--panel);
+  background: var(--c-deprecated);
+  border: 1px solid var(--c-deprecated);
 }
 
 .badge-retired {
@@ -1076,22 +1074,22 @@ body {
    its own quiet slate, dashed, so it reads as distinct from both indigo Renamed
    and amber Deprecated without ever shouting. */
 .badge-legacy {
-  color: var(--c-legacy-ink);
-  background: color-mix(in srgb, var(--c-legacy) 10%, transparent);
-  border: 1px dashed color-mix(in srgb, var(--c-legacy) 42%, transparent);
+  color: var(--panel);
+  background: var(--c-legacy);
+  border: 1px dashed var(--c-legacy);
 }
 
 /* "current" = the name in use now; "former" = a superseded name (quiet, struck-through feel) */
 .badge-current {
-  color: var(--c-active-ink);
-  background: color-mix(in srgb, var(--c-active) 12%, transparent);
-  border: 1px solid color-mix(in srgb, var(--c-active) 30%, transparent);
+  color: var(--panel);
+  background: var(--c-active);
+  border: 1px solid var(--c-active);
 }
 
 .badge-former {
-  color: var(--c-renamed-ink);
-  background: color-mix(in srgb, var(--c-renamed) 13%, transparent);
-  border: 1px solid color-mix(in srgb, var(--c-renamed) 34%, transparent);
+  color: var(--panel);
+  background: var(--c-renamed);
+  border: 1px solid var(--c-renamed);
 }
 
 /* a former name in a card title reads as retired: muted + struck through */
@@ -1303,15 +1301,15 @@ body {
 }
 
 .badge-ga {
-  color: var(--c-active-ink);
-  background: color-mix(in srgb, var(--c-active) 12%, transparent);
-  border: 1px solid color-mix(in srgb, var(--c-active) 30%, transparent);
+  color: var(--panel);
+  background: var(--c-active);
+  border: 1px solid var(--c-active);
 }
 
 .badge-preview {
-  color: var(--c-active-ink);
-  background: color-mix(in srgb, var(--c-active) 12%, transparent);
-  border: 1px dashed color-mix(in srgb, var(--c-active) 45%, transparent);
+  color: var(--panel);
+  background: var(--c-active);
+  border: 1px dashed var(--c-active);
 }
 
 /* Release-maturity pills: one cool hue per stage (violet -> indigo -> blue -> teal ->
@@ -1319,27 +1317,27 @@ body {
    final." On a card the panel fill from `.row-eyebrow .badge` shows through, so the hue
    lives in the border + label; elsewhere the tint background shows too. */
 .badge-rel-private-preview {
-  color: var(--rel-private-preview);
-  background: color-mix(in srgb, var(--rel-private-preview) 12%, transparent);
-  border: 1px dashed color-mix(in srgb, var(--rel-private-preview) 48%, transparent);
+  color: var(--panel);
+  background: var(--rel-private-preview);
+  border: 1px dashed var(--rel-private-preview);
 }
 
 .badge-rel-beta {
-  color: var(--rel-beta);
-  background: color-mix(in srgb, var(--rel-beta) 12%, transparent);
-  border: 1px dashed color-mix(in srgb, var(--rel-beta) 48%, transparent);
+  color: var(--panel);
+  background: var(--rel-beta);
+  border: 1px dashed var(--rel-beta);
 }
 
 .badge-rel-public-preview {
-  color: var(--rel-public-preview);
-  background: color-mix(in srgb, var(--rel-public-preview) 12%, transparent);
-  border: 1px dashed color-mix(in srgb, var(--rel-public-preview) 48%, transparent);
+  color: var(--panel);
+  background: var(--rel-public-preview);
+  border: 1px dashed var(--rel-public-preview);
 }
 
 .badge-rel-ga {
-  color: var(--rel-ga);
-  background: color-mix(in srgb, var(--rel-ga) 12%, transparent);
-  border: 1px solid color-mix(in srgb, var(--rel-ga) 34%, transparent);
+  color: var(--panel);
+  background: var(--rel-ga);
+  border: 1px solid var(--rel-ga);
 }
 
 /* An announced-but-unreached stage (e.g. "GA soon") is dashed even when its stage would
