@@ -1462,11 +1462,24 @@ body {
   opacity: 0.5;
   vertical-align: baseline;
   text-decoration: none;
+  font-weight: 700;
+}
+
+/* On the light surface the muted 🔗 washes out, so give it full strength and ink-black
+   color there (the mark stays quietly muted on the dark theme). */
+:root[data-theme="light"] .date-src-mark {
+  opacity: 1;
+  color: var(--ink);
 }
 
 .date-src:hover .date-src-mark,
 .date-src:focus-visible .date-src-mark {
   opacity: 0.95;
+}
+
+:root[data-theme="light"] .date-src:hover .date-src-mark,
+:root[data-theme="light"] .date-src:focus-visible .date-src-mark {
+  opacity: 1;
 }
 
 /* When the release-maturity pill has a stage-confirmation link it renders as an anchor;
@@ -2067,8 +2080,10 @@ mark {
   font-weight: 600;
   letter-spacing: .04em;
   color: var(--accent-ink);
-  background: transparent;
-  border: 1px dashed color-mix(in srgb, var(--accent) 40%, var(--line));
+  /* a soft tinted chip instead of bare transparency: the ✨ is a pale-gold color emoji
+     that all but vanishes on the light surface, so it needs a backing with some weight. */
+  background: color-mix(in srgb, var(--accent) 8%, var(--panel));
+  border: 1px dashed color-mix(in srgb, var(--accent) 45%, var(--line));
   border-radius: 999px;
   padding: 4px 12px;
   cursor: pointer;
