@@ -753,6 +753,31 @@ body {
   stroke-linecap: round;
 }
 
+.filters-toggle {
+  display: none;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: 7px 9px;
+  border: 0;
+  border-radius: 7px;
+  color: var(--ink);
+  background: var(--bg);
+  font: inherit;
+  font-size: 12.5px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.filters-toggle svg {
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.7;
+  transition: transform .15s;
+}
+
+.filters.is-open .filters-toggle svg { transform: rotate(180deg); }
+
 .filter {
   font-family: inherit;
   font-size: 12.5px;
@@ -793,6 +818,17 @@ body {
 .filter.active .filter-count {
   color: var(--panel);
   background: var(--muted);
+}
+
+@media (max-width: 640px) {
+  .filters-toggle { display: flex; }
+  .filters-icon,
+  .filters > .filter { display: none; }
+  .filters.is-open > .filter {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+  }
 }
 
 .chips {
@@ -2042,6 +2078,11 @@ mark {
 @media (max-width: 760px) {
   .home-charts { grid-template-columns: 1fr; }
   .chart-flow-divider { width: 100%; height: 1px; margin: 3px 0; }
+}
+
+@media (max-width: 640px) {
+  .chart-flow,
+  .spotlight { display: none; }
 }
 
 .tl-title {

@@ -194,6 +194,7 @@
     const el = $("#filters");
     if (!el) return;
     el.innerHTML =
+      '<button class="filters-toggle" type="button" aria-expanded="false"><span>Status: All</span><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path d="m4 6 4 4 4-4" /></svg></button>' +
       '<span class="filters-icon" aria-hidden="true"><svg viewBox="0 0 24 24" width="16" height="16"><path d="M4 6h16M7 12h10M10 18h4" /></svg></span>' +
       FILTERS.map((f) => {
         const title = f.hint ? ` title="${escapeAttr(f.hint)}"` : "";
@@ -207,10 +208,18 @@
         } else {
           activeKinds = new Set([key]);
         }
+        el.classList.remove("is-open");
+        const toggle = el.querySelector(".filters-toggle");
+        if (toggle) toggle.setAttribute("aria-expanded", "false");
         track("filter-toggle", { filter: key, on: filterOn(key) });
         writeURL();
         render();
       });
+    });
+    const toggle = el.querySelector(".filters-toggle");
+    if (toggle) toggle.addEventListener("click", () => {
+      const open = el.classList.toggle("is-open");
+      toggle.setAttribute("aria-expanded", String(open));
     });
     updateFilterCounts();
   }
@@ -231,6 +240,7 @@
       b.classList.toggle("active", on);
       b.setAttribute("aria-pressed", on);
     });
+    updateFilterToggle();
   }
 
   function syncFilterButtons() {
@@ -241,6 +251,16 @@
       b.classList.toggle("active", on);
       b.setAttribute("aria-pressed", on);
     });
+    updateFilterToggle();
+  }
+
+  function updateFilterToggle() {
+    const toggle = $("#filters .filters-toggle span");
+    if (!toggle) return;
+    const selected = allKindsSelected()
+      ? FILTERS[0]
+      : FILTERS.find((f) => f.key !== "all" && activeKinds.has(f.key));
+    toggle.textContent = `Status: ${selected ? selected.label : "All"}`;
   }
 
   function renderNav() {

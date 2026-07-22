@@ -113,6 +113,11 @@ Format loosely follows [Keep a Changelog](https://keepachangelog.com/); dates ar
 - Added hover details to every yearly-chart segment with its year, status, count, and share.
 - Removed misleading progression arrows between Legacy, Deprecated, and Retired.
 - Moved pie values outside the chart and connected each number to its slice with a thin leader line.
+- Collapsed lifecycle filters into an accessible dropdown menu on mobile, showing the
+  current selection and closing automatically after a choice.
+- Hidden the shared chart legend on mobile screens.
+- Fixed the mobile legend rule order so the base chart styles no longer override it.
+- Hidden the `On this month` spotlight on mobile screens.
 - Matched lifecycle highlights in status help to their card colors, including gray Legacy.
 - Made the Deprecated help highlight exactly match its card badge styling.
 
