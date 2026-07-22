@@ -13,12 +13,22 @@ happened to it" (or "oh, *that's* the new thing") - it doesn't belong here.
   deprecated. It records what it is and when it landed, so the timeline stays complete.
   Liquid Clustering and Unity Catalog Volumes are features. Same bar: real and sourced.
 
-Add one object to [`databricks.json`](databricks.json). That's the whole PR.
+There is **no `kind` field** - `status` is the sole discriminator, and it stores only what
+can't be calculated: `active` (any name in use now), `renamed` (a superseded former name), or
+`deprecated`/`legacy`/`retired` (retired or replaced). Whether an `active` card is a fresh
+feature or the current name of a rename is *calculated*, not stored - a feature carries its
+own `introducedAt`; the current tip of a rename chain carries `from`. `status` is what the
+validator branches on to decide the entry's shape.
+
+Add one object to [`databricks.features.json`](databricks.features.json). That's the whole PR.
 
 ## Add a rename
 
-Each name is its own card, linked by `successorId`. A rename = one `"current"` card plus
-one `"renamed"` card per former name (add another `"renamed"` card for each extra old name).
+Each name is its own card, linked by `successorId`. A rename = one `"active"` card (the
+current name, carrying a `from` date) plus one `"renamed"` card per former name (add another
+`"renamed"` card for each extra old name). The current-name card is `active` just like a
+feature - what marks it as a rename tip is the `renamed` card pointing at it, so it's derived,
+not stored.
 
 ```json
 {
@@ -43,7 +53,7 @@ one `"renamed"` card per former name (add another `"renamed"` card for each extr
   "what": "One line: what the thing is.",
   "fact": "Real-but-fun one-liner about the current thing - funny, but true and sourceable.",
   "from": "2023",
-  "status": "current",
+  "status": "active",
   "occasion": "Where it was announced (optional).",
   "note": "Anything an engineer needs to know - does old code still run? (optional)",
   "source": "https://docs.databricks.com/...",
@@ -56,7 +66,6 @@ one `"renamed"` card per former name (add another `"renamed"` card for each extr
 ```json
 {
   "id": "the-retired-thing",
-  "kind": "deprecation",
   "name": "The Retired Thing",
   "aliases": ["what people type", "/legacy/path"],
   "replacement": "What To Use Instead",
@@ -79,14 +88,17 @@ one `"renamed"` card per former name (add another `"renamed"` card for each extr
 ```json
 {
   "id": "the-new-thing",
-  "kind": "feature",
   "name": "The New Thing",
   "aliases": ["what people type", "ABBR"],
   "category": "Data engineering",
   "what": "One line: what the thing is.",
   "fact": "Real-but-fun one-liner about the feature - funny, but the fact must be true and sourceable.",
   "introducedAt": "2024",
-  "status": "ga",
+  "status": "active",
+  "releases": [
+    { "type": "public-preview", "date": "2024-03" },
+    { "type": "ga", "date": "2024-11" }
+  ],
   "occasion": "Where/when it shipped (optional).",
   "note": "Anything an engineer needs - what it replaces, GA vs preview caveats (optional).",
   "source": "https://docs.databricks.com/...",
@@ -95,10 +107,22 @@ one `"renamed"` card per former name (add another `"renamed"` card for each extr
 ```
 
 ### Field rules
-- **Renames:** one card per name. Each `"renamed"` card needs a `to` date and a
-  `successorId`; the `"current"` card has no `to`. Predecessors are derived from
-  everyone's `successorId`, so you never store a backward link. Keep each card's `fact`
-  self-contained (about that name, not its successor).
+- **`status` is the sole discriminator** (there is no `kind` field), and it stores only what
+  can't be calculated: `"active"` (any name in use now), `"renamed"` (a superseded former
+  name), `"deprecated"`/`"legacy"`/`"retired"` (retired or replaced). The validator branches
+  on it to pick the required fields.
+- **Active = features *and* current rename tips.** Don't store which one a card is - it's
+  calculated: a standalone **feature** carries its own `introducedAt`; the **current tip** of
+  a rename chain carries `from` (and has a `renamed` card pointing at it). An `active` card
+  must have **exactly one** of `introducedAt`/`from` and never a `to` - that's what keeps the
+  distinction unambiguous. Maturity (Preview vs GA) is **not** `status` - it's the separate
+  `releases` timeline below.
+- **Renames:** one card per name. Each `"renamed"` card needs a `to` date and a `successorId`;
+  the `"active"` current-name card has a `from` and no `to`. Predecessors are derived from
+  everyone's `successorId`, so you never store a backward link. When a feature is later
+  renamed, change its card to `status: "renamed"` with a `to`/`successorId` and add the new
+  name's `active` card. Keep each card's `fact` self-contained (about that name, not its
+  successor).
 - **Deprecations:** `status` is `"deprecated"`, `"retired"`, or `"legacy"`. Choose
   `"legacy"` - **not** `"deprecated"` - when the docs merely call it legacy/unsupported but
   Databricks has set **no formal deprecation date or timeline** (a "…(legacy)" doc title is
@@ -106,15 +130,31 @@ one `"renamed"` card per former name (add another `"renamed"` card for each extr
   something already removed. `removedAt` is optional; omit `successorId`/`replacement` if
   nothing directly replaces it (renders as "retired"). Set `successorId` when the successor
   has its own card - the card links to it.
-- **Features:** `introducedAt` (`YYYY`/`YYYY-MM`) is required; `status` is `"ga"` or
-  `"preview"` (optional, defaults to `ga`). If the thing later gets renamed, add a card for
-  the new name and point this one's `successorId` at it.
-- **`status` is the single lifecycle field**, and its allowed values depend on the kind:
-  `"current"`/`"renamed"` for a rename, `"deprecated"`/`"legacy"`/`"retired"` for a
-  deprecation, `"ga"`/`"preview"` for a feature. There is no separate `state` field - one
-  value per card says where it sits in its own lifecycle.
-- `links` (optional, every kind): additional classified references, an array of
-  `{ "url", "kind": "official"|"community"|"internet", "label" }`. Every URL must be real
+- **`releases` is the maturity timeline** (optional, any entry): an **ordered array of
+  stages** the thing has entered, chronological. The **last element is its current maturity**.
+  Each stage is either **reached** - `{ "type", "date" }` (the date it hit that stage) - or
+  **announced but not yet reached** - `{ "type", "is_announced": true }` (no date; only the
+  last stage may be announced). It is **orthogonal** to `status` - a thing can be `active` but
+  currently in public preview, or even `legacy` but `beta` (shipped as Beta, later marked
+  legacy without ever reaching GA - e.g. Agent Bricks Custom LLM). The valid stage `type`s are
+  Databricks' own release stages, in order:
+
+  | `type` | Databricks stage | Meaning |
+  |---|---|---|
+  | `private-preview` | Private Preview | Invite-only, a small set of customers |
+  | `beta` | Beta | Available to most customers |
+  | `public-preview` | Public Preview | Available to all customers |
+  | `ga` | GA | Fully supported, production-ready (off the Previews page) |
+
+  There is **no `pre-ga` type** - "GA approaching soon" is just GA announced-but-unreached,
+  i.e. `{ "type": "ga", "is_announced": true }`. Only include reached stages whose dates you
+  can source (`YYYY`/`YYYY-MM`); don't invent transition dates. Omit `releases` entirely when
+  maturity is unknown or moot (e.g. a superseded former name). The UI shows the current (last)
+  stage as a pill on a cool-hue ramp (violet -> indigo -> blue -> green; an announced stage
+  renders "<Stage> soon", dashed), with the full timeline in the tooltip.
+- `links` (optional, every entry): additional classified references, an array of
+  `{ "url", "kind": "official"|"community"|"internet", "label" }`. (That inner `kind`
+  classifies the *link* - it is unrelated to the entry's `status`.) Every URL must be real
   and verified - a dead or off-topic link is worse than none.
 - `source` is **required** on every entry. No source, no entry. Prefer official Databricks /
   Microsoft Learn docs - an archived "legacy"/"migrate from X" doc is ideal for deprecations.
@@ -124,7 +164,7 @@ one `"renamed"` card per former name (add another `"renamed"` card for each extr
   must be real and sourceable (what it does, how it works, its rename history, a documented
   quirk or codename). Keep it about the feature, not its pricing. One or two sentences.
 - `id` is the kebab-case slug of the entry's own `name`, with any parenthetical qualifier
-  dropped, and unique across the whole file (all kinds share one namespace). Examples:
+  dropped, and unique across the whole file (all entries share one namespace). Examples:
   `"Unity Catalog Volumes"` → `unity-catalog-volumes`;
   `"Attribute-based access control (ABAC)"` → `attribute-based-access-control`. The validator
   enforces this. **Ids are permanent:** once assigned, an id never changes - not to fix a

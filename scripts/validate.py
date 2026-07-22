@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Validate databricks.json against the rebricked field rules.
+"""Validate databricks.features.json against the rebricked field rules.
 
 The one unforgivable bug is being confidently wrong. This gate keeps a
 malformed or unsourced entry from ever reaching GitHub Pages.
@@ -13,29 +13,39 @@ import sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
-DATA = ROOT / "databricks.json"
+DATA = ROOT / "databricks.features.json"
 APP_JS = ROOT / "app.js"
 
 DATE_RE = re.compile(r"^\d{4}(-(0[1-9]|1[0-2]))?$")  # YYYY or YYYY-MM (real months only)
 VERIFIED_RE = re.compile(r"^\d{4}-\d{2}-\d{2}$")     # YYYY-MM-DD
 URL_RE = re.compile(r"^https?://", re.IGNORECASE)
 
-# Fields every entry needs, regardless of kind. `fact` is a real-but-fun one-liner
-# about the feature - genuinely true, grounded in its history - so every entry carries one.
-REQUIRED_COMMON = ("id", "category", "what", "fact", "source", "verified")
-# Each name in a product's history is its own card, linked by `successorId`.
-REQUIRED_RENAME = ("name", "status")
-# A deprecation names the retired thing and when it was deprecated.
-REQUIRED_DEPRECATION = ("name", "deprecatedAt", "status")
-# A feature names a current, non-deprecated thing and when it landed.
-REQUIRED_FEATURE = ("name", "introducedAt")
+# Fields every entry needs. `fact` is a real-but-fun one-liner about the feature -
+# genuinely true, grounded in its history - so every entry carries one. `status` is the
+# sole discriminator (see below), so it is required on every card too.
+REQUIRED_COMMON = ("id", "name", "category", "what", "fact", "source", "verified", "status")
 
-VALID_KINDS = ("rename", "deprecation", "feature")
-# "legacy" = docs call it legacy/unsupported but no formal deprecation date exists.
-VALID_STATUSES = ("deprecated", "retired", "legacy")
-VALID_FEATURE_STATUSES = ("ga", "preview")
-# A rename card is either the name in use now ("current") or a superseded one ("renamed").
-VALID_RENAME_STATUSES = ("current", "renamed")
+# `status` is the SOLE discriminator - there is no separate `kind` field. Its value is
+# limited to what is NOT derivable from the rest of the card:
+DEPRECATION_STATUSES = ("deprecated", "retired", "legacy")  # a retired or replaced thing -
+#   a human "a different thing took over" call, not derivable. "legacy" = docs call it
+#   legacy/unsupported but no formal deprecation date exists.
+LIVE_STATUS = "active"      # every name in use now - BOTH standalone features AND the
+#   current tip of a rename chain. Which of the two a card is is NOT stored (it would be
+#   redundant): it's calculated - a feature carries its own `introducedAt`; a rename tip
+#   carries `from` (and has a `renamed` card pointing at it).
+RENAMED_STATUS = "renamed"  # a superseded former name (needs `to` + `successorId`)
+VALID_STATUSES = DEPRECATION_STATUSES + (LIVE_STATUS, RENAMED_STATUS)
+# Release maturity is tracked SEPARATELY on the `release` axis below, so a thing can be
+# e.g. legacy-but-Beta or active-but-Public-Preview.
+# The MATURITY axis, orthogonal to status. Carried as `releases`: an ordered timeline of
+# stages a thing passed through; the last is its current maturity. Each stage is either
+# REACHED - {type, date} - or merely ANNOUNCED but not yet reached - {type, is_announced:
+# true} (no date). The valid stage `type`s, in Databricks' own order:
+#   private-preview -> beta -> public-preview -> ga
+# (There is no "pre-ga"/"GA approaching soon" type: that is just GA announced-but-not-reached,
+# i.e. {type: "ga", is_announced: true}.)
+VALID_RELEASES = ("private-preview", "beta", "public-preview", "ga")
 # Classified reference links: official docs, community (blogs/forums), or wider internet.
 VALID_LINK_KINDS = ("official", "community", "internet")
 
@@ -78,6 +88,18 @@ def date_before(a, b):
         return False  # same year, mixed precision - can't call it out of order
     return am < bm
 
+
+def status_group(s):
+    """The lifecycle family a status belongs to. Returns "deprecation", "renamed",
+    "active" (any live name), or None for an unknown status."""
+    if s in DEPRECATION_STATUSES:
+        return "deprecation"
+    if s == RENAMED_STATUS:
+        return "renamed"
+    if s == LIVE_STATUS:
+        return "active"
+    return None
+
 errors = []
 warnings = []
 
@@ -100,11 +122,11 @@ def main():
     try:
         data = json.loads(raw)
     except json.JSONDecodeError as e:
-        print(f"FATAL: databricks.json is not valid JSON: {e}")
+        print(f"FATAL: databricks.features.json is not valid JSON: {e}")
         return 1
 
     if not isinstance(data, list):
-        print("FATAL: databricks.json must be a JSON array")
+        print("FATAL: databricks.features.json must be a JSON array")
         return 1
 
     seen_ids = set()
@@ -116,17 +138,18 @@ def main():
             err(eid, "entry is not an object")
             continue
 
-        # kind decides which fields are required. Default (absent) is a rename.
-        kind = entry.get("kind", "rename")
-        if kind not in VALID_KINDS:
-            err(eid, f"kind must be one of {VALID_KINDS}, got {kind!r}")
-            kind = "rename"  # validate the rest against the safest shape
+        # `status` is the sole discriminator (no `kind` field). It decides both what the
+        # card is and which extra fields are required.
+        status = entry.get("status")
+        if status is not None and status not in VALID_STATUSES:
+            err(eid, f"status must be one of {VALID_STATUSES}, got {status!r}")
+        grp = status_group(status)
 
-        per_kind = {
-            "deprecation": REQUIRED_DEPRECATION,
-            "feature": REQUIRED_FEATURE,
-        }.get(kind, REQUIRED_RENAME)
-        required = REQUIRED_COMMON + per_kind
+        required = list(REQUIRED_COMMON)
+        if grp == "deprecation":
+            required.append("deprecatedAt")           # a retired thing: when it was deprecated
+        # (An "active" card needs exactly one of introducedAt/from, and "renamed" needs
+        # `to` + `successorId`; both enforced in the per-group blocks below.)
         for field in required:
             if field not in entry or entry[field] in (None, "", []):
                 err(eid, f"missing required field: {field}")
@@ -158,6 +181,38 @@ def main():
         if cat and cat not in VALID_CATEGORIES:
             err(eid, f"category must be one of {VALID_CATEGORIES}, got {cat!r}")
 
+        # release maturity (optional, any entry) - the axis orthogonal to lifecycle status.
+        # `releases` is the stage timeline: each {type, date} is when the thing entered that
+        # stage, in chronological order. The last entry is its current maturity.
+        rels = entry.get("releases")
+        if rels is not None:
+            if not isinstance(rels, list) or not rels:
+                err(eid, "releases must be a non-empty array when present")
+            else:
+                prev_date = None
+                last_i = len(rels) - 1
+                for i, r in enumerate(rels):
+                    if not isinstance(r, dict):
+                        err(eid, "each release must be an object {type, date} or {type, is_announced}")
+                        continue
+                    rtype, rdate, ann = r.get("type"), r.get("date"), r.get("is_announced")
+                    if rtype not in VALID_RELEASES:
+                        err(eid, f"release type must be one of {VALID_RELEASES}, got {rtype!r}")
+                    if ann is not None:
+                        # announced-but-not-yet-reached: no date, and only allowed as the last stage
+                        if ann is not True:
+                            err(eid, "is_announced must be true when present (else omit it and give a date)")
+                        if rdate is not None:
+                            err(eid, "a release stage has both date and is_announced - use one (date = reached, is_announced = announced only)")
+                        if i != last_i:
+                            err(eid, "only the last release stage may be is_announced (an announced-but-unreached stage can't precede a reached one)")
+                    elif not (rdate and DATE_RE.match(str(rdate))):
+                        err(eid, f"release date must be YYYY or YYYY-MM (or set is_announced: true if announced but not yet reached), got {rdate!r}")
+                    elif prev_date and DATE_RE.match(str(prev_date)) and date_before(rdate, prev_date):
+                        err(eid, f"releases must be in chronological order ({prev_date} then {rdate})")
+                    if rdate and DATE_RE.match(str(rdate)):
+                        prev_date = rdate
+
         # date formats (YYYY / YYYY-MM change dates; YYYY-MM-DD verified)
         for date_field in ("from", "to", "deprecatedAt", "removedAt", "introducedAt"):
             v = entry.get(date_field)
@@ -177,44 +232,41 @@ def main():
                 except ValueError:
                     err(eid, f"verified is not a real date: {verified!r}")
 
-        # deprecation-specific rules
-        if kind == "deprecation":
-            status = entry.get("status")
-            if status and status not in VALID_STATUSES:
-                err(eid, f"status must be one of {VALID_STATUSES}, got {status!r}")
+        # deprecation-group rules (status deprecated / retired / legacy)
+        if grp == "deprecation":
             dep_at, rem_at = entry.get("deprecatedAt"), entry.get("removedAt")
             if dep_at and rem_at and DATE_RE.match(str(dep_at)) and DATE_RE.match(str(rem_at)):
                 if date_before(rem_at, dep_at):
                     err(eid, f"removedAt ({rem_at}) is before deprecatedAt ({dep_at})")
-            for stray in ("lineage", "current", "renamedAt"):
+            for stray in ("lineage", "renamedAt"):
                 if stray in entry:
                     warn(eid, f"deprecation has rename-only field {stray!r}; it will be ignored")
 
-        # feature-specific rules
-        if kind == "feature":
-            status = entry.get("status")
-            if status and status not in VALID_FEATURE_STATUSES:
-                err(eid, f"feature status must be one of {VALID_FEATURE_STATUSES}, got {status!r}")
-            for stray in ("lineage", "current", "renamedAt", "replacement"):
+        # live-name rules (status active): a card is a standalone feature XOR the current tip
+        # of a rename chain, and which one it is is CALCULATED, not stored - a feature carries
+        # its own `introducedAt`; a rename tip carries `from`. Exactly one must be present so
+        # that distinction is unambiguous. A live name is open-ended, so it never has a `to`.
+        if grp == "active":
+            has_intro = bool(entry.get("introducedAt"))
+            has_from = bool(entry.get("from"))
+            if has_intro == has_from:
+                err(eid, "an 'active' card needs exactly one of introducedAt (a standalone "
+                         "feature) or from (the current name of a rename chain), not both/neither")
+            if entry.get("to") not in (None, ""):
+                err(eid, "an 'active' card must not have a 'to' date (it is open-ended)")
+            for stray in ("lineage", "renamedAt"):
                 if stray in entry:
-                    warn(eid, f"feature has non-feature field {stray!r}; it will be ignored")
+                    warn(eid, f"active card has legacy field {stray!r}; it is no longer used")
 
-        # rename-specific rules: each name in a product's history is its own card
-        if kind == "rename":
-            status = entry.get("status")
-            if status and status not in VALID_RENAME_STATUSES:
-                err(eid, f"rename status must be one of {VALID_RENAME_STATUSES}, got {status!r}")
-            # a superseded name points forward; the current name does not and is open-ended
-            if status == "renamed":
-                if not entry.get("successorId"):
-                    err(eid, "a 'renamed' card needs a successorId (what it became)")
-                if entry.get("to") in (None, ""):
-                    err(eid, "a 'renamed' card needs a 'to' date (when it stopped being current)")
-            if status == "current" and entry.get("to") not in (None, ""):
-                err(eid, "a 'current' card must not have a 'to' date")
-            for stray in ("lineage", "current", "renamedAt"):
+        # renamed-name rules: a superseded former name points forward and is closed-ended.
+        if grp == "renamed":
+            if not entry.get("successorId"):
+                err(eid, "a 'renamed' card needs a successorId (what it became)")
+            if entry.get("to") in (None, ""):
+                err(eid, "a 'renamed' card needs a 'to' date (when it stopped being current)")
+            for stray in ("lineage", "renamedAt"):
                 if stray in entry:
-                    warn(eid, f"rename card has legacy field {stray!r}; it is no longer used")
+                    warn(eid, f"renamed card has legacy field {stray!r}; it is no longer used")
 
         # aliases shape (optional field)
         if "aliases" in entry and not isinstance(entry["aliases"], list):
@@ -251,7 +303,7 @@ def main():
             if (not isinstance(pred, list) or not pred
                     or not all(isinstance(x, str) and x.strip() for x in pred)):
                 err(eid, "prediction must be a non-empty array of non-empty strings when present")
-            if kind == "deprecation":
+            if grp == "deprecation":
                 warn(eid, "deprecation has 'prediction'; retired things don't get renamed - it will be ignored")
 
     # cross-entry checks
@@ -276,7 +328,7 @@ def main():
         for group in re.findall(r"ids:\s*\[([^\]]*)\]", app_js):
             nav_ids.update(re.findall(r"\"([a-z0-9-]+)\"", group))
         for missing in sorted(nav_ids - all_ids):
-            err(missing, "NAV in app.js references an id that is not in databricks.json")
+            err(missing, "NAV in app.js references an id that is not in databricks.features.json")
         for unreachable in sorted(all_ids - nav_ids):
             err(unreachable, "entry appears in no NAV section in app.js - unreachable from the rail")
 

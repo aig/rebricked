@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Incrementally fetch external reference docs (e.g. Databricks release notes).
 
-The rebricked data (databricks.json) is sourced from official docs; this keeps a
+The rebricked data (databricks.features.json) is sourced from official docs; this keeps a
 local mirror of those docs so entries can be checked and new renames spotted as
 release notes ship.
 

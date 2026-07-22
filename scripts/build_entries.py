@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Static, crawlable pages per vendor and entry - the content SEO layer.
 
-The app renders everything client-side from databricks.json, so to a crawler index.html is
+The app renders everything client-side from databricks.features.json, so to a crawler index.html is
 an empty shell and the ?id= deep links are not distinct documents. This script emits real
 HTML the crawlers can index:
 
@@ -38,7 +38,7 @@ from build_badges import (
 )
 
 ROOT = Path(__file__).resolve().parent.parent
-DATA = ROOT / "databricks.json"
+DATA = ROOT / "databricks.features.json"
 SITEMAP = ROOT / "sitemap.xml"
 TOTAL_BADGES = 5
 
@@ -90,7 +90,15 @@ def vendor_name(v):
 
 
 def kind_of(d):
-    return d["kind"] if d.get("kind") in ("deprecation", "feature") else "rename"
+    # `status` is the sole discriminator (no `kind` field). "active" covers every live name;
+    # whether it's a standalone feature or the current tip of a rename chain is calculated,
+    # not stored - a feature has its own `introducedAt`, a rename tip carries `from`.
+    s = d.get("status")
+    if s in ("deprecated", "legacy", "retired"):
+        return "deprecation"
+    if s == "renamed":
+        return "rename"
+    return "feature" if d.get("introducedAt") else "rename"
 
 
 def chrome(root):
@@ -299,17 +307,49 @@ def sources_html(d):
     return f'<section class="entry-sources"><h2>Sources</h2><ul>{"".join(items)}</ul></section>'
 
 
+# Release maturity (orthogonal to lifecycle status) - Databricks' own stages. `releases` is
+# a stage timeline; the pill shows the LAST stage. A stage is reached (has a `date`) or only
+# announced (`is_announced: true`, no date -> rendered "<Stage> soon", dashed). Entries with
+# no `releases` show no pill.
+RELEASE_LABELS = {
+    "private-preview": "Private Preview",
+    "beta": "Beta",
+    "public-preview": "Public Preview",
+    "ga": "GA",
+}
+
+
+def release_pill(d):
+    rels = d.get("releases")
+    if not rels:
+        return ""
+    cur = rels[-1]  # last stage = current maturity
+    label = RELEASE_LABELS.get(cur.get("type"))
+    if not label:
+        return ""
+    announced = cur.get("is_announced") is True and cur.get("date") is None
+    text = label + " soon" if announced else label
+    hist = " -> ".join(f"{RELEASE_LABELS.get(r.get('type'), r.get('type'))} {r.get('date') or '(announced)'}" for r in rels)
+    cls = f'badge-rel-{cur.get("type")}' + (" badge-rel-soon" if announced else "")
+    return f' <span class="badge {attr(cls)} badge-release" title="{attr(hist)}">{esc(text)}</span>'
+
+
+# The lifecycle badge shows the real `status` value. Each status maps to an existing
+# color class (active reuses the green "current" look; renamed the slate "former" look).
+STATUS_BADGE_CLASS = {
+    "active": "badge-current",
+    "renamed": "badge-former",
+    "deprecated": "badge-deprecated",
+    "legacy": "badge-legacy",
+    "retired": "badge-retired",
+}
+
+
 def badge_html(d):
-    kind = kind_of(d)
-    if kind == "deprecation":
-        s = d.get("status", "deprecated")
-        return f'<span class="badge badge-{attr(s)}">{esc(s)}</span>'
-    if kind == "feature":
-        s = d.get("status", "ga")
-        return f'<span class="badge badge-{attr(s)}">{esc("preview" if s == "preview" else "new")}</span>'
-    if (d.get("status") or "current") == "renamed":
-        return '<span class="badge badge-former">renamed</span>'
-    return '<span class="badge badge-current">latest</span>'
+    s = d.get("status", "active")
+    # "active" is the default - don't render a status badge for it (release pill still shows).
+    status_badge = "" if s == "active" else f'<span class="badge {STATUS_BADGE_CLASS.get(s, "badge-current")}">{esc(s)}</span>'
+    return status_badge + release_pill(d)
 
 
 def entry_jsonld(d, url, hub_url, title, desc):
@@ -657,12 +697,8 @@ def render_hub(v, entries):
 
 
 def badge_label(d):
-    kind = kind_of(d)
-    if kind == "deprecation":
-        return d.get("status", "deprecated")
-    if kind == "feature":
-        return "preview" if d.get("status") == "preview" else "new"
-    return "renamed" if (d.get("status") or "current") == "renamed" else "latest"
+    # The compact hub-list label is just the real status value.
+    return d.get("status", "active")
 
 
 def write_sitemap(data):

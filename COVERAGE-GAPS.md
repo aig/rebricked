@@ -1,6 +1,6 @@
 # rebricked — Coverage Gap Report
 
-**What was compared:** the project's data file (`databricks.json`, 71 curated entries — renames, deprecations, and notable features, plus 106 aliases) against the full Databricks product release notes in `reference/` (103 monthly files, Apr 2018 - Jul 2026).
+**What was compared:** the project's data file (`databricks.features.json`, 71 curated entries — renames, deprecations, and notable features, plus 106 aliases) against the full Databricks product release notes in `reference/` (103 monthly files, Apr 2018 - Jul 2026).
 
 **Method:** five agents extracted every distinct named product/service/feature from the release notes (~600 raw mentions), deduped to distinct concepts (earliest mention kept), then diffed against every name and alias the project already covers. Nothing was dropped for being minor — per your instruction, this is the whole list.
 
