@@ -81,6 +81,35 @@ def fmt_date(s):
     return f"{MONTHS[idx]} {m.group(1)}" if 0 <= idx < 12 else s
 
 
+# Date fields are { date, link } objects (occasion also carries a `note`); a bare string is
+# still accepted. These mirror app.js dateOf/linkOf/srcLink/dateLinkHTML.
+def date_of(v):
+    return str(v.get("date") or "") if isinstance(v, dict) else str(v or "")
+
+
+def link_of(v):
+    return str(v["link"]) if isinstance(v, dict) and v.get("link") else ""
+
+
+def src_link(text, url, title=""):
+    """Escaped text followed by a bare 🔗 anchor when a URL is given; plain text otherwise."""
+    label = esc(text)
+    if not url:
+        return label
+    aria = title or f"Source for {text}"
+    tip = f' title="{attr(title)}"' if title else ""
+    return (
+        f'{label}<a class="date-src" href="{attr(url)}" target="_blank" rel="noopener"{tip} '
+        f'aria-label="{attr(aria)}"><span class="date-src-mark" aria-hidden="true">🔗</span></a>'
+    )
+
+
+def date_link_html(v):
+    """Formatted date rendered as a source-linked chip; plain '?' when the date is missing."""
+    txt = fmt_date(date_of(v)) or "?"
+    return src_link(txt, link_of(v), f"Source confirming {txt}")
+
+
 def vendor_of(d):
     return d.get("vendor") or DEFAULT_VENDOR
 
@@ -162,7 +191,7 @@ def meta_for(d, by_id, data):
     vlabel = vendor_name(vendor_of(d))
 
     if kind == "feature":
-        when = fmt_date(d.get("introducedAt"))
+        when = fmt_date(date_of(d.get("introducedAt")))
         title = f"{name} - new in {vlabel}"
         lead = f"{name} is a {vlabel} {cat.lower()} capability" + (
             f", introduced {when}." if when else "."
@@ -172,7 +201,7 @@ def meta_for(d, by_id, data):
         word = status_word(d)
         succ = successors_of(d, by_id)
         repl = succ[-1]["name"] if succ else (d.get("replacement") or "")
-        when = fmt_date(d.get("removedAt") or d.get("deprecatedAt"))
+        when = fmt_date(date_of(d.get("removedAt") or d.get("deprecatedAt")))
         verb = (
             "legacy since"
             if word == "legacy"
@@ -189,7 +218,7 @@ def meta_for(d, by_id, data):
         if (d.get("status") or "current") == "renamed":
             succ = successors_of(d, by_id)
             current = succ[-1]["name"] if succ else None
-            when = fmt_date(d.get("to"))
+            when = fmt_date(date_of(d.get("to")))
             if current:
                 title = f"{name} is now {current} ({vlabel})"
                 lead = f"{name} was renamed - {vlabel} now calls it {current}" + (
@@ -202,7 +231,7 @@ def meta_for(d, by_id, data):
         else:
             preds = predecessors_of(d, data)
             former = preds[0]["name"] if preds else None
-            when = fmt_date(d.get("from"))
+            when = fmt_date(date_of(d.get("from")))
             title = f"{name} ({vlabel})" + (f" - formerly {former}" if former else "")
             lead = (
                 f"{name} is the current {vlabel} name"
@@ -259,19 +288,22 @@ def facts_html(d):
     if d.get("abbr"):
         rows.append(("Abbreviation", esc(d["abbr"])))
     if kind == "feature" and d.get("introducedAt"):
-        rows.append(("Introduced", esc(fmt_date(d["introducedAt"]))))
+        rows.append(("Introduced", date_link_html(d["introducedAt"])))
     if kind == "rename":
         if d.get("from"):
-            rows.append(("In use from", esc(fmt_date(d["from"]))))
+            rows.append(("In use from", date_link_html(d["from"])))
         if d.get("to"):
-            rows.append(("Renamed", esc(fmt_date(d["to"]))))
+            rows.append(("Renamed", date_link_html(d["to"])))
     if kind == "deprecation":
         if d.get("deprecatedAt"):
-            rows.append(("Deprecated", esc(fmt_date(d["deprecatedAt"]))))
+            rows.append(("Deprecated", date_link_html(d["deprecatedAt"])))
         if d.get("removedAt"):
-            rows.append(("Access ended", esc(fmt_date(d["removedAt"]))))
+            rows.append(("Access ended", date_link_html(d["removedAt"])))
     if d.get("occasion"):
-        rows.append(("Announced at", esc(d["occasion"])))
+        occ = d["occasion"]
+        occ_text = (occ.get("note") or "") if isinstance(occ, dict) else occ
+        if occ_text:
+            rows.append(("Announced at", src_link(occ_text, link_of(occ))))
     aliases = [a for a in (d.get("aliases") or []) if a]
     if aliases:
         rows.append(("Also known as", esc(", ".join(aliases))))
