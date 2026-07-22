@@ -6,6 +6,11 @@ on:
   push:
     branches: ["main"]
 
+  # Gate every PR into the default branch with the same schema check (validate job only;
+  # the deploy job below is guarded to push/dispatch so PRs never publish).
+  pull_request:
+    branches: ["main"]
+
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 
@@ -34,6 +39,8 @@ jobs:
 
   deploy:
     needs: validate
+    # Only publish on push to main / manual dispatch - never on a pull_request run.
+    if: github.event_name != 'pull_request'
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}

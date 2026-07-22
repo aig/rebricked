@@ -1449,9 +1449,9 @@ body {
   font-variant-numeric: tabular-nums;
 }
 
-/* A date that carries a confirmation link: the date reads in the accent color (via the
-   .row-meta a rule above) with a small, muted 🔗 mark that firms up on hover. The mark
-   is what signals "this date is sourced" without a full underline in the resting state. */
+/* A date that carries a confirmation link: the date itself reads as plain text and only a
+   small, muted 🔗 mark is the link, firming up on hover. The mark is what signals "this date
+   is sourced" - the date/text is never itself a hyperlink. */
 .date-src {
   white-space: nowrap;
 }

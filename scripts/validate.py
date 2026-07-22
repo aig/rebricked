@@ -89,6 +89,13 @@ def date_before(a, b):
     return am < bm
 
 
+def date_token(v):
+    """Pull the date string out of a date field, whether it's the current { date, link }
+    object shape (the date plus a URL confirming it) or a bare string (still tolerated
+    for resilience). Returns the raw date token, or None."""
+    return v.get("date") if isinstance(v, dict) else v
+
+
 def status_group(s):
     """The lifecycle family a status belongs to. Returns "deprecation", "renamed",
     "active" (any live name), or None for an unknown status."""
@@ -110,6 +117,18 @@ def err(entry_id, msg):
 
 def warn(entry_id, msg):
     warnings.append(f"[{entry_id}] {msg}")
+
+
+def check_date_obj(eid, field, v):
+    """A date field is now a { date, link } object - the date plus a URL confirming it
+    (a bare string is still tolerated for resilience). Validate the confirmation link when
+    present and return the extracted date token for the format/order checks."""
+    if isinstance(v, dict):
+        link = v.get("link")
+        if link is not None and not (isinstance(link, str) and URL_RE.match(link)):
+            err(eid, f"{field}.link must be an http(s) URL when present, got {link!r}")
+        return v.get("date")
+    return v
 
 
 def main():
@@ -198,6 +217,10 @@ def main():
                     rtype, rdate, ann = r.get("type"), r.get("date"), r.get("is_announced")
                     if rtype not in VALID_RELEASES:
                         err(eid, f"release type must be one of {VALID_RELEASES}, got {rtype!r}")
+                    # each stage now carries a URL confirming its date (optional)
+                    rlink = r.get("link")
+                    if rlink is not None and not (isinstance(rlink, str) and URL_RE.match(rlink)):
+                        err(eid, f"release link must be an http(s) URL when present, got {rlink!r}")
                     if ann is not None:
                         # announced-but-not-yet-reached: no date, and only allowed as the last stage
                         if ann is not True:
@@ -213,12 +236,16 @@ def main():
                     if rdate and DATE_RE.match(str(rdate)):
                         prev_date = rdate
 
-        # date formats (YYYY / YYYY-MM change dates; YYYY-MM-DD verified)
+        # date formats (YYYY / YYYY-MM change dates; YYYY-MM-DD verified). Each of these is
+        # now a { date, link } object - the date plus a URL confirming it; check_date_obj
+        # validates the link and hands back the date token (a bare string is still accepted).
         for date_field in ("from", "to", "deprecatedAt", "removedAt", "introducedAt"):
-            v = entry.get(date_field)
-            if v and not DATE_RE.match(str(v)):
-                err(eid, f"{date_field} must be YYYY or YYYY-MM, got {v!r}")
-        f, t = entry.get("from"), entry.get("to")
+            if date_field not in entry:
+                continue
+            tok = check_date_obj(eid, date_field, entry[date_field])
+            if tok and not DATE_RE.match(str(tok)):
+                err(eid, f"{date_field} must be YYYY or YYYY-MM, got {tok!r}")
+        f, t = date_token(entry.get("from")), date_token(entry.get("to"))
         if f and t and DATE_RE.match(str(f)) and DATE_RE.match(str(t)) and date_before(t, f):
             err(eid, f"to ({t}) is before from ({f})")
         verified = entry.get("verified")
@@ -234,7 +261,7 @@ def main():
 
         # deprecation-group rules (status deprecated / retired / legacy)
         if grp == "deprecation":
-            dep_at, rem_at = entry.get("deprecatedAt"), entry.get("removedAt")
+            dep_at, rem_at = date_token(entry.get("deprecatedAt")), date_token(entry.get("removedAt"))
             if dep_at and rem_at and DATE_RE.match(str(dep_at)) and DATE_RE.match(str(rem_at)):
                 if date_before(rem_at, dep_at):
                     err(eid, f"removedAt ({rem_at}) is before deprecatedAt ({dep_at})")
@@ -267,6 +294,19 @@ def main():
             for stray in ("lineage", "renamedAt"):
                 if stray in entry:
                     warn(eid, f"renamed card has legacy field {stray!r}; it is no longer used")
+
+        # occasion (optional): a dated milestone { date, link, note } - e.g. the summit a
+        # name debuted at - carrying its own confirmation link like the date fields do.
+        occ = entry.get("occasion")
+        if occ is not None:
+            if not isinstance(occ, dict):
+                err(eid, "occasion must be an object { date, link, note }")
+            else:
+                otok = check_date_obj(eid, "occasion", occ)
+                if otok and not DATE_RE.match(str(otok)):
+                    err(eid, f"occasion.date must be YYYY or YYYY-MM, got {otok!r}")
+                if "note" in occ and not isinstance(occ.get("note"), str):
+                    err(eid, "occasion.note must be a string")
 
         # aliases shape (optional field)
         if "aliases" in entry and not isinstance(entry["aliases"], list):
