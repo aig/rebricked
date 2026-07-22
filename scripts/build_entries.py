@@ -347,8 +347,9 @@ STATUS_BADGE_CLASS = {
 
 def badge_html(d):
     s = d.get("status", "active")
-    cls = STATUS_BADGE_CLASS.get(s, "badge-current")
-    return f'<span class="badge {cls}">{esc(s)}</span>' + release_pill(d)
+    # "active" is the default - don't render a status badge for it (release pill still shows).
+    status_badge = "" if s == "active" else f'<span class="badge {STATUS_BADGE_CLASS.get(s, "badge-current")}">{esc(s)}</span>'
+    return status_badge + release_pill(d)
 
 
 def entry_jsonld(d, url, hub_url, title, desc):

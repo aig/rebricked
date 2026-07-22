@@ -6,6 +6,19 @@ Format loosely follows [Keep a Changelog](https://keepachangelog.com/); dates ar
 ## 2026-07-22 (Agent Bricks + status/release model rework)
 
 ### Changed
+- **The `active` status badge is no longer shown on cards.** `active` is the default state,
+  so its badge was noise; only the noteworthy lifecycle states (renamed / deprecated / legacy
+  / retired) now render a status badge. The release pill still shows on active cards, so an
+  active card reads as just its release pill (+ lineage chain). `statusBadge()` (app.js) and
+  `badge_html()` (build_entries.py) return no status badge for `active`.
+- **Release stages can be announced-but-unreached (`is_announced: true`); dropped `pre-ga`.**
+  A `releases` stage is now either reached - `{type, date}` - or merely announced -
+  `{type, is_announced: true}` (no date, only allowed as the last stage). That removes the
+  need for a `pre-ga` type: "GA approaching soon" is just `{type: "ga", is_announced: true}`.
+  Valid `type`s are now `private-preview` / `beta` / `public-preview` / `ga`. The pill renders
+  an announced stage as "<Stage> soon" with a dashed border (`badge-rel-soon`); the teal
+  `--rel-pre-ga` token/class were removed. `validate.py` enforces date-XOR-is_announced and
+  announced-only-last. (No data used `pre-ga` or an announced stage yet, so no entries changed.)
 - **`release` (single value) became `releases` (a `{type, date}` timeline).** Each entry now
   records the ordered stages it passed through with the date it entered each - e.g.
   `information-extraction` is `[{beta, 2025-06}, {public-preview, 2026-03}]`. The last stage

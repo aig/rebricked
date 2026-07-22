@@ -602,6 +602,9 @@
   };
   function statusBadge(d) {
     const s = d.status || "active";
+    // "active" is the unremarkable default - don't clutter the card with it; only the
+    // noteworthy lifecycle states (renamed / deprecated / legacy / retired) get a badge.
+    if (s === "active") return "";
     const cls = STATUS_BADGE_CLASS[s] || "badge-current";
     return `<span class="badge ${cls}">${escapeHtml(s)}</span>`;
   }
