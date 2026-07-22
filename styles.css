@@ -1743,15 +1743,18 @@ mark {
   transform: translate(-50%, 0);
 }
 
-/* roulette flash */
+/* roulette flash - a transient highlight. The border pop lives INSIDE the keyframes so
+   it reverts to the card's state spine (green / legacy / deprecated) when the animation
+   ends; keeping border-color on the .flash rule itself would permanently override the
+   spine, since the class lingers after an in-place lineage swap. */
 .row.flash {
   animation: flash .6s ease;
-  border-color: var(--accent);
 }
 
 @keyframes flash {
   0% {
     background: color-mix(in srgb, var(--accent) 16%, var(--panel));
+    border-color: var(--accent);
   }
 
   100% {

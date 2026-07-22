@@ -354,10 +354,7 @@
         // The whole family is one card now; open it with the deep-linked member active.
         resultsEl.innerHTML = rowHTML(one);
         wireRows();
-        requestAnimationFrame(() => {
-          const el = rowEl(one.id);
-          if (el) el.classList.add("flash");
-        });
+        requestAnimationFrame(() => flashOnce(rowEl(one.id)));
         return;
       }
       focusId = null; // unknown id - fall through to the normal list
@@ -1201,6 +1198,16 @@
     if (back) back.addEventListener("click", renderNewSuggestion);
   }
 
+  // Play the one-shot highlight, then drop the class so it never lingers on the element.
+  // A lingering `flash` would keep the card in its animated state and (before this) pin
+  // its spine to the accent color, so a swapped-back card never returned to its own hue.
+  function flashOnce(el) {
+    if (!el) return;
+    void el.offsetWidth; // restart the animation even on a repeat trigger
+    el.classList.add("flash");
+    el.addEventListener("animationend", () => el.classList.remove("flash"), { once: true });
+  }
+
   // Wire one result card's controls. Scoped per-card so an in-place chain swap can re-wire
   // just the replaced card, without doubling listeners on every other card on the page.
   function wireCard(card) {
@@ -1240,8 +1247,7 @@
         if (!fresh) return;
         card.replaceWith(fresh);
         wireCard(fresh);
-        void fresh.offsetWidth; // restart the flash even on a repeat swap
-        fresh.classList.add("flash");
+        flashOnce(fresh);
         track("lineage-open", { id });
       });
     });
