@@ -59,7 +59,7 @@
   // The status filter (top of results). Orthogonal to section/category/search.
   // Keys match the buckets bucketOf() returns and the badges the cards show.
   const FILTERS = [
-    { key: "current", label: "Active", hint: "In use now - new, preview and current names" },
+    { key: "current", label: "Latest", hint: "In use now - new, preview and current names" },
     { key: "deprecation", label: "Legacy", hint: "Deprecated or retired" },
     { key: "renamed", label: "Renamed", hint: "Superseded former names" },
   ];
@@ -351,10 +351,8 @@
       updateHomeExtras();
       if (one) {
         entryMeta(one);
-        const family = lineageFamily(one);
-        resultsEl.innerHTML = family.length > 1
-          ? groupedByPeriod(family, "")
-          : rowHTML(one, "");
+        // The whole family is one card now; open it with the deep-linked member active.
+        resultsEl.innerHTML = rowHTML(one);
         wireRows();
         requestAnimationFrame(() => {
           const el = rowEl(one.id);
@@ -403,6 +401,17 @@
         : `<p class="empty">No results${kindNote}${yearNote}. ${line}</p>`;
       return;
     }
+
+    // Collapse each lineage family to a single card: keep only the first-sorted member of
+    // each family (the rest render as its tabs), so a rename chain shows once, not once
+    // per name.
+    const seenFamily = new Set();
+    rows = rows.filter((d) => {
+      const key = lineageFamily(d).map((x) => x.id).sort().join("|");
+      if (seenFamily.has(key)) return false;
+      seenFamily.add(key);
+      return true;
+    });
 
     resultsEl.innerHTML = groupedByPeriod(rows, activeSection ? "" : q);
     wireRows();
@@ -510,101 +519,102 @@
     if (sp) sp.hidden = !onList;
   }
 
-  function rowHTML(d, q) {
-    const kind = kindOf(d);
+  // A record's lifecycle as a flow key shared by the chain arrows' colors: a
+  // deprecation is amber (slate when legacy), a superseded rename is orange, everything
+  // live is green.
+  function flowStatusOf(x) {
+    if (kindOf(x) === "deprecation") return (x.status === "legacy") ? "legacy" : "deprecated";
+    if (kindOf(x) === "rename" && (x.status || "current") === "renamed") return "renamed";
+    return "active";
+  }
 
+  // One family member's card body: its status badge, description, dates, fact, note,
+  // and the reference/action footer. The lineage names now live in the bookmark tabs
+  // above (see rowHTML); the release pill is removed for now. Returns { spine, html }.
+  function memberBody(d) {
+    const kind = kindOf(d);
     const note = d.note ? `<p class="row-note">${escapeHtml(d.note)}</p>` : "";
-    // A real-but-fun fact about the feature - genuinely true, grounded in each
-    // entry's history; the tone is ours.
     const fact = d.fact
       ? `<p class="row-fact"><span class="fact-icon" aria-hidden="true">💡</span> ${escapeHtml(d.fact)}</p>`
       : "";
     const occasion = d.occasion ? ` · ${escapeHtml(d.occasion)}` : "";
-
-    const badge = statusBadge(d);
-    let trail, dateText, urgent = "", rowCls = "";
+    let dateText = "", urgent = "", spine = "";
     if (kind === "feature") {
-      rowCls = " is-feature";
-      trail = featureTrail(d, q);
+      spine = "is-feature";
       dateText = `Introduced ${escapeHtml(fmtDate(d.introducedAt || "?"))}${occasion}`;
     } else if (kind === "deprecation") {
       const status = d.status || "deprecated";
-      // legacy (no formal end date) gets its own quiet slate spine; a dated
-      // deprecation/retirement keeps the amber one.
-      rowCls = status === "legacy" ? " is-legacy" : " is-deprecation";
-      trail = depTrail(d, q);
+      spine = status === "legacy" ? "is-legacy" : "is-deprecation";
       const verb = status === "legacy" ? "Legacy since" : "Deprecated";
       dateText = `${verb} ${escapeHtml(fmtDate(d.deprecatedAt || "?"))}${occasion}`;
-      // The concrete access cut-off, flagged on its own - the one lifecycle date a
-      // reader actually needs to act on, rather than buried mid-sentence.
       if (d.removedAt) urgent = `<span class="meta-urgent">⚠ Access ended ${escapeHtml(fmtDate(d.removedAt))}</span>`;
+    } else if ((d.status || "current") === "renamed") {
+      spine = "is-former";
+      const span = d.from && d.to
+        ? `${escapeHtml(fmtDate(d.from))} – ${escapeHtml(fmtDate(d.to))}`
+        : d.to ? `until ${escapeHtml(fmtDate(d.to))}` : escapeHtml(fmtDate(d.from || "?"));
+      dateText = `In use ${span}${occasion}`;
     } else {
-      trail = renameTrail(d, q);
-      if ((d.status || "current") === "renamed") {
-        rowCls = " is-former";
-        const span = d.from && d.to
-          ? `${escapeHtml(fmtDate(d.from))} – ${escapeHtml(fmtDate(d.to))}`
-          : d.to ? `until ${escapeHtml(fmtDate(d.to))}` : escapeHtml(fmtDate(d.from || "?"));
-        dateText = `In use ${span}${occasion}`;
-      } else {
-        rowCls = " is-current"; // current-name side of a rename - same Latest/green bucket
-        dateText = `Current since ${escapeHtml(fmtDate(d.from || "?"))}${occasion}`;
-      }
+      spine = "is-current";
+      dateText = `Current since ${escapeHtml(fmtDate(d.from || "?"))}${occasion}`;
     }
 
-    // The rename history as one scannable line: predecessors → this card → successors,
-    // each other name linking to its own card. Replaces the successor/predecessor
-    // mini-cards, which repeated this card's description verbatim.
-    const chain = lineageChain(d);
-
-    // Classified reference links so every claim is checkable.
     const refs = refsSection(d);
-
-    // Footer: references on the left; the utility actions (copy link, share) on the
-    // right. The "guess the next name" gag moved into the lineage chain as its
-    // trailing, future-name node (see lineageChain).
     const actions = `<div class="row-actions">
             <button class="row-act" data-act="link" title="Copy a link to this entry" aria-label="Copy link to this entry">${ICON.link}</button>
             <button class="row-act" data-act="share" title="Share this entry on LinkedIn" aria-label="Share this entry on LinkedIn">${ICON.linkedin}</button>
           </div>`;
     const foot = `<div class="row-foot">${refs || "<span></span>"}<div class="row-foot-actions">${actions}</div></div>`;
-
-    // Top strip: the status badge leads as a bookmark anchored to the card's top-left
-    // corner, with the lineage chain following on the same line.
-    const meta = (dateText || urgent)
-      ? `<div class="row-meta"><span class="date">${dateText}</span>${urgent}</div>`
+    // Each member's body carries its own date line: "Current since / In use / Introduced …"
+    // for live / former / feature members, "Deprecated …" for deprecations. (The flow-chain
+    // header omits the current name's year, so the body is where that date now lives.)
+    const dateHTML = dateText ? `<span class="date">${dateText}</span>` : "";
+    const meta = (dateHTML || urgent)
+      ? `<div class="row-meta">${dateHTML}${urgent}</div>`
       : "";
+    return {
+      spine,
+      html: `<p class="row-what">${escapeHtml(d.what || "")}</p>${meta}${fact}${note}${foot}`,
+    };
+  }
 
+  // A whole lineage family collapsed into ONE card. Its names read as an inline flow chain
+  // in a header strip - former names linking to their own cards, the active name as the
+  // inverted "now" chip (see lineageChain) - above the active member's body. The active
+  // member's release-maturity pill + status badge ride the right of that strip. `activeD`
+  // is the member shown; clicking a former name in the chain deep-links to it, which
+  // re-renders the card with that member active.
+  function rowHTML(activeD) {
+    const body = memberBody(activeD);
+    // right cluster: release pill (only while live) then the status badge (rightmost).
+    // renamed / deprecated / legacy / retired members show just their status badge.
+    const release = flowStatusOf(activeD) === "active" ? releasePill(activeD) : "";
+    const cluster = `${release}${statusBadge(activeD)}`;
+    // the status / release cluster is pinned to the card's top-right corner (see CSS)
+    const rel = cluster ? `<span class="fam-rel">${cluster}</span>` : "";
+    const head = `<div class="fam-chainbar">${lineageChain(activeD)}</div>`;
     return `
-      <article class="row${rowCls}" data-id="${escapeAttr(d.id)}">
-        <div class="row-eyebrow">
-          ${badge}
-          ${chain}
-          ${releasePill(d)}
-        </div>
-        <p class="row-what">${escapeHtml(d.what || "")}</p>
-        ${meta}
-        ${fact}
-        ${note}
-        ${foot}
+      <article class="row family-card ${body.spine}" data-id="${escapeAttr(activeD.id)}">
+        ${rel}
+        ${head}
+        <div class="fam-body ${body.spine}" data-mid="${escapeAttr(activeD.id)}">${body.html}</div>
       </article>`;
   }
 
-  // The card's lifecycle badge - its label is the real `status` value (no "latest"/"new"
-  // aliases). Each status maps to an existing color class: active reuses the green "current"
-  // look; renamed the slate "former" look. Release maturity rides beside it via releasePill().
+  // The card's lifecycle badge. The live state (stored as "active", shown elsewhere as
+  // "latest") gets NO card badge - only the noteworthy states do. Each maps to a color
+  // class: renamed the slate "former" look, etc. Release maturity rides beside it.
   const STATUS_BADGE_CLASS = {
-    active: "badge-current",
     renamed: "badge-former",
     deprecated: "badge-deprecated",
     legacy: "badge-legacy",
     retired: "badge-retired",
   };
+  // The live/"latest" state (stored as "active"). Recognized either way; it shows no badge.
+  const LIVE_STATUSES = new Set(["latest", "active"]);
   function statusBadge(d) {
-    const s = d.status || "active";
-    // "active" is the unremarkable default - don't clutter the card with it; only the
-    // noteworthy lifecycle states (renamed / deprecated / legacy / retired) get a badge.
-    if (s === "active") return "";
+    const s = d.status || "latest";
+    if (LIVE_STATUSES.has(s)) return "";
     const cls = STATUS_BADGE_CLASS[s] || "badge-current";
     return `<span class="badge ${cls}">${escapeHtml(s)}</span>`;
   }
@@ -676,11 +686,13 @@
   function lineageChain(d) {
     const preds = predecessorsOf(d).slice().reverse(); // oldest-first
     const succs = successorsOf(d);
-    // The "guess the sequel" gag now lives as the trailing node of the chain - the
-    // made-up *next* name, sitting right after the live tip. Only on a card that is
-    // itself the current tip (renames' former sides and deprecations don't forecast).
-    const guess = kindOf(d) !== "deprecation" && (d.status || "current") !== "renamed"
-      ? oddsBadge(d) : "";
+    // The "guess the sequel" gag rides the trailing slot of the chain - the made-up *next*
+    // name after the live tip. It belongs to the family's tip (its newest name), not to the
+    // member in focus, so it shows on every card in the lineage - not only when the current
+    // name is the one being viewed. A tip that is deprecated / superseded gets no forecast.
+    const tip = succs.length ? succs[succs.length - 1] : d;
+    const guess = (kindOf(tip) !== "deprecation" && (tip.status || "current") !== "renamed")
+      ? oddsBadge(tip) : "";
     // The chain always renders: the card's title now lives here as the "now" node
     // (styled as an inverted chip), so even a card with no predecessors, successors,
     // or forecast still shows its name.
@@ -689,19 +701,25 @@
     const isFormer = (x) =>
       kindOf(x) === "deprecation" ||
       (kindOf(x) === "rename" && (x.status || "current") === "renamed");
+    // Compact start-date token for a node: its `from` (or a feature's introducedAt), as
+    // "2026-07" -> "07’26", a bare year -> "’26". Shows when each name began.
+    const nodeDate = (x) => {
+      const s = String(x.from || x.introducedAt || "");
+      const yr = shortYear(s);
+      if (!yr) return "";
+      const mm = /^\d{4}-(\d{2})/.exec(s);
+      return mm ? `${mm[1]}’${yr.slice(2)}` : `’${yr.slice(2)}`;
+    };
     const node = (x, isNow) => {
       const nm = x.name || currentNameOf(x);
       const former = isFormer(x) ? " former" : "";
+      const date = nodeDate(x);
+      const dateHTML = date ? `<span class="chain-yr">${escapeHtml(date)}</span>` : "";
       if (isNow) {
-        // No year on the current node - the eyebrow above already carries this card's
-        // date, and repeating it can read as backwards next to a successor that shipped
-        // in an earlier year (e.g. a 2025 replacement for a 2026 deprecation).
-        return `<span class="chain-node now${former}">${escapeHtml(nm)}</span>`;
+        return `<span class="chain-node now${former}">${escapeHtml(nm)}${dateHTML}</span>`;
       }
-      const yr = shortYear(changedAt(x));
-      const yrHTML = yr ? ` <span class="chain-yr">’${escapeHtml(yr.slice(2))}</span>` : "";
       return `<a class="chain-node${former}" href="#${escapeAttr(encodeURIComponent(x.id))}" ` +
-        `title="Open “${escapeAttr(nm)}”">${escapeHtml(nm)}${yrHTML}</a>`;
+        `title="Open “${escapeAttr(nm)}”">${escapeHtml(nm)}${dateHTML}</a>`;
     };
     // Each arrow is colored by the change it represents, not the card being viewed:
     // the left-hand node is the thing that changed, so the arrow takes its status color
@@ -718,6 +736,9 @@
       ...succs.map((s) => ({ el: node(s, false), src: s })),
     ];
     if (guess) seq.push({ el: guess, src: null }); // forecast rides the last, future-name slot
+    // Chronological order: the oldest name leads on the left and the flow runs
+    // past -> present -> (forecast) rightward. Arrows point right - toward the newer
+    // name - each colored by the older (left) node, the thing that changed.
     const inner = seq.map((item, i) =>
       (i ? `<span class="chain-flow ${flowClass(seq[i - 1].src)}" aria-hidden="true">→</span>` : "") + item.el
     ).join("");
@@ -1159,12 +1180,14 @@
     if (back) back.addEventListener("click", renderNewSuggestion);
   }
 
-  function wireRows() {
-    // per-card actions: deep link + shareable blurb
-    resultsEl.querySelectorAll(".row-act").forEach((btn) => {
+  // Wire one result card's controls. Scoped per-card so an in-place chain swap can re-wire
+  // just the replaced card, without doubling listeners on every other card on the page.
+  function wireCard(card) {
+    // per-card actions: deep link + shareable blurb, targeting the active member.
+    card.querySelectorAll(".row-act").forEach((btn) => {
       btn.addEventListener("click", () => {
-        const row = btn.closest(".row");
-        const d = DATA.find((x) => x.id === row.dataset.id);
+        const body = btn.closest(".fam-body");
+        const d = DATA.find((x) => x.id === (body ? body.dataset.mid : card.dataset.id));
         if (!d) return;
         if (btn.dataset.act === "link") {
           const url = entryURL(d.id);
@@ -1179,37 +1202,37 @@
       });
     });
 
-    // Lineage chain hops: when the target card is already on the page (its whole
-    // family renders together in focus view), scroll to it in place instead of
-    // letting the #id route rebuild the view. Cards not on screen fall through to
-    // the normal deep-link navigation.
-    resultsEl.querySelectorAll("a.chain-node").forEach((a) => {
+    // Lineage chain: clicking a name swaps THIS card to that member in place - its body,
+    // chain, status cluster and spine all repaint while every other card on the page stays
+    // put (no list filtering, no navigation). A modifier-click still falls through to the
+    // #id link, so a name can be opened in a new tab or deep-linked.
+    card.querySelectorAll("a.chain-node").forEach((a) => {
       a.addEventListener("click", (e) => {
+        if (e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
         const id = decodeURIComponent((a.getAttribute("href") || "").replace(/^#/, ""));
-        const target = rowEl(id);
-        if (!target) return; // not on screen - let the browser follow the #id link
+        const member = DATA.find((x) => x.id === id);
+        if (!member) return; // unknown - let the browser follow the link
         e.preventDefault();
-        focusId = id;
-        try { history.replaceState(null, "", "#" + encodeURIComponent(id)); } catch (_) {}
-        resultsEl.querySelectorAll(".row.flash").forEach((r) => r.classList.remove("flash"));
-        void target.offsetWidth; // restart the flash animation even on a repeat hop
-        target.classList.add("flash");
-        // Keep the eye where it clicked: land the target card at the same viewport
-        // height as the node just clicked, so the hop feels anchored in place rather
-        // than yanking the card up to the top bar.
-        scrollRowIntoView(target, a.getBoundingClientRect().top);
-        track("lineage-hop", { id });
+        const tmp = document.createElement("template");
+        tmp.innerHTML = rowHTML(member).trim();
+        const fresh = tmp.content.firstElementChild;
+        if (!fresh) return;
+        card.replaceWith(fresh);
+        wireCard(fresh);
+        void fresh.offsetWidth; // restart the flash even on a repeat swap
+        fresh.classList.add("flash");
+        track("lineage-open", { id });
       });
     });
 
     // the AI-prediction reveal
-    resultsEl.querySelectorAll(".odds-btn").forEach((btn) => {
+    card.querySelectorAll(".odds-btn").forEach((btn) => {
       btn.addEventListener("click", () => { track("guess-name"); revealPrediction(btn); });
     });
 
     // copy-as-you-were-wrong: clicking any card title copies a snappy correction.
     // A former/deprecated name copies the name it became - never itself as "current".
-    resultsEl.querySelectorAll(".current, .dep-name").forEach((el) => {
+    card.querySelectorAll(".current, .dep-name").forEach((el) => {
       el.addEventListener("click", () => {
         const name = el.dataset.name;
         let text;
@@ -1230,6 +1253,10 @@
         );
       });
     });
+  }
+
+  function wireRows() {
+    resultsEl.querySelectorAll(".family-card").forEach(wireCard);
   }
 
   function roulette() {
@@ -1819,7 +1846,7 @@
   // Filter buckets in stacking order (top → bottom of each bar); the class suffix
   // colors the segment and its legend swatch, mirroring the status badges.
   const TL_BUCKETS = [
-    { key: "current", label: "Active" },
+    { key: "current", label: "Latest" },
     { key: "renamed", label: "Renamed" },
     { key: "deprecation", label: "Legacy" },
   ];

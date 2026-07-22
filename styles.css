@@ -878,6 +878,54 @@ body {
   box-shadow: 0 2px 14px rgba(20, 25, 35, .06);
 }
 
+/* ===== lineage as an inline flow chain (collapsed family card) =====
+   The family's names read as one scannable line - former names → the current name as an
+   inverted "now" chip - in a header strip above the active member's body. Clicking a former
+   name deep-links to that member's card. (Replaces the old straddling bookmark-tab strip.) */
+
+/* header strip: the flow chain (past -> present, left to right), split from the body below
+   by a hairline. The straddling status badge above rides its own line, clear of the chain. */
+.fam-chainbar {
+  padding-bottom: 12px;
+  margin-bottom: 12px;
+  border-bottom: 1px solid var(--line);
+}
+
+/* the chain brings its own flex flow; drop its default top margin so it sits flush at the
+   top of the strip */
+.fam-chainbar .lineage-chain {
+  margin-top: 0;
+  min-width: 0;
+}
+
+/* the active member's release + status cluster (release pill then status badge, status
+   rightmost) straddles the card's top-right edge like a bookmark - half on the card, half
+   above - on its own line above the chain, never sharing the chain's row */
+.fam-rel {
+  position: absolute;
+  top: 0;
+  right: 16px;
+  transform: translateY(-50%);
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+/* opaque fill so a straddling pill cuts the card's top border cleanly */
+.fam-rel .badge {
+  background: var(--panel);
+}
+
+/* keep the solid "retired" badge filled rather than cut to panel */
+.fam-rel .badge-retired {
+  background: var(--c-deprecated);
+}
+
+/* first block inside a body shouldn't add extra top margin under the chain header */
+.fam-body > .row-what:first-child {
+  margin-top: 0;
+}
+
 .row-main {
   display: flex;
   align-items: center;
@@ -1483,28 +1531,33 @@ body {
   color: var(--muted);
 }
 
+/* every name is a chip: former / neighbour names are outlined pills, the current name is
+   the filled "now" chip below. Same shape, so the chain reads as a row of before/after tags. */
 .chain-node {
-  color: var(--faint);
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  color: var(--muted);
   text-decoration: none;
-  border-bottom: 1px solid transparent;
-  transition: color .15s, border-color .15s;
+  background: var(--bg);
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  padding: 3px 8px;
+  transition: color .15s, border-color .15s, background .15s;
 }
 
 a.chain-node:hover {
   color: var(--ink);
-  border-bottom-color: var(--state, var(--accent));
+  background: var(--panel);
+  border-color: var(--state, var(--accent));
 }
 
-/* The current name is the card's title now, so it leads as an inverted chip -
-   the same move as the "RE" in the REbricked wordmark, flipped per theme so it
-   reads on either surface (dark-on-light in light mode, light-on-dark in dark). */
+/* The current name leads as an inverted (filled) chip - the same move as the "RE" in the
+   REbricked wordmark, flipped per theme so it reads on either surface. */
 .chain-node.now {
-  display: inline-flex;
-  align-items: center;
   background: var(--ink);
   color: var(--panel);
-  border-radius: 5px;
-  padding: 3px 7px;
+  border-color: var(--ink);
   font-weight: 800;
   letter-spacing: -.01em;
 }
