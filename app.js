@@ -101,7 +101,7 @@
     ]},
     { label: "AI/ML", items: [
       { label: "Playground", icon: "playground" },
-      { label: "Agents", icon: "agents", ids: ["databricks-ai-search", "databricks-vector-search", "mosaic-ai-vector-search", "supervisor-agent", "agent-bricks-multi-agent-supervisor"] },
+      { label: "Agents", icon: "agents", ids: ["databricks-ai-search", "databricks-vector-search", "mosaic-ai-vector-search", "agent-bricks", "information-extraction", "knowledge-assistant", "classification", "custom-llm", "supervisor-agent", "agent-bricks-multi-agent-supervisor"] },
       { label: "AI Gateway", icon: "gateway" },
       { label: "Experiments", icon: "experiments" },
       { label: "Features", icon: "features", ids: ["workspace-feature-store", "feature-engineering-in-unity-catalog"] },
@@ -580,6 +580,7 @@
         <div class="row-eyebrow">
           ${badge}
           ${chain}
+          ${releasePill(d)}
         </div>
         <p class="row-what">${escapeHtml(d.what || "")}</p>
         ${meta}
@@ -589,23 +590,48 @@
       </article>`;
   }
 
-  // The card's "current status" badge - one per kind.
+  // The card's lifecycle badge - its label is the real `status` value (no "latest"/"new"
+  // aliases). Each status maps to an existing color class: active reuses the green "current"
+  // look; renamed the slate "former" look. Release maturity rides beside it via releasePill().
+  const STATUS_BADGE_CLASS = {
+    active: "badge-current",
+    renamed: "badge-former",
+    deprecated: "badge-deprecated",
+    legacy: "badge-legacy",
+    retired: "badge-retired",
+  };
   function statusBadge(d) {
-    const kind = kindOf(d);
-    if (kind === "deprecation") {
-      const status = d.status || "deprecated";
-      return `<span class="badge badge-${escapeAttr(status)}">${escapeHtml(status)}</span>`;
-    }
-    if (kind === "feature") {
-      const status = d.status || "ga";
-      const label = status === "preview" ? "preview" : "new";
-      return `<span class="badge badge-${escapeAttr(status)}">${escapeHtml(label)}</span>`;
-    }
-    // rename card: the name in use now vs. a superseded one
-    if ((d.status || "current") === "renamed") {
-      return `<span class="badge badge-former">renamed</span>`;
-    }
-    return `<span class="badge badge-current">latest</span>`;
+    const s = d.status || "active";
+    const cls = STATUS_BADGE_CLASS[s] || "badge-current";
+    return `<span class="badge ${cls}">${escapeHtml(s)}</span>`;
+  }
+
+  // Release maturity is its own axis, orthogonal to the lifecycle badge above: a thing can
+  // be active-but-Public-Preview or even legacy-but-Beta. `releases` is a stage timeline;
+  // the pill shows the LAST stage. A stage is either reached (has a `date`) or merely
+  // announced (`is_announced: true`, no date) - an announced stage renders "<Stage> soon"
+  // with a dashed border. Only an entry with no `releases` (a superseded name, where
+  // maturity is moot) shows no pill.
+  const RELEASE_LABELS = {
+    "private-preview": "Private Preview",
+    "beta": "Beta",
+    "public-preview": "Public Preview",
+    "ga": "GA",
+  };
+  function releasePill(d) {
+    const rels = d.releases;
+    if (!Array.isArray(rels) || !rels.length) return ""; // no timeline -> no pill
+    const cur = rels[rels.length - 1];                   // last stage = current maturity
+    const label = RELEASE_LABELS[cur.type];
+    if (!label) return "";
+    const announced = cur.is_announced === true && cur.date == null;
+    const text = announced ? label + " soon" : label;
+    // full stage history in the tooltip (e.g. "Beta 2025-06 -> Public Preview 2026-03",
+    // or an announced-but-unreached stage as "GA (announced)")
+    const hist = rels.map((r) => `${RELEASE_LABELS[r.type] || r.type} ${r.date || "(announced)"}`).join(" -> ");
+    // one cool hue per stage; `badge-rel-soon` dashes the border for an announced stage
+    const cls = `badge-rel-${escapeAttr(cur.type)}${announced ? " badge-rel-soon" : ""}`;
+    return `<span class="badge ${cls} badge-release" title="${escapeAttr(hist)}">${escapeHtml(text)}</span>`;
   }
 
   // Cross-card links. A card points forward via `successorId` (the name it became,
@@ -1963,9 +1989,16 @@
       : (d.from || d.to || "");
   }
 
-  // Normalize an entry to one of the three underlying kinds. Absent kind => rename.
+  // The logical family an entry belongs to. `status` is the sole stored discriminator, but
+  // it does NOT distinguish a standalone feature from the current tip of a rename chain -
+  // both are "active". That split is calculated, not stored: a feature carries its own
+  // `introducedAt`; a rename tip carries `from`. deprecated/legacy/retired => deprecation;
+  // renamed => rename; active => feature if it has introducedAt, else a rename (current tip).
   function kindOf(d) {
-    return d.kind === "deprecation" || d.kind === "feature" ? d.kind : "rename";
+    const s = d.status;
+    if (s === "deprecated" || s === "legacy" || s === "retired") return "deprecation";
+    if (s === "renamed") return "rename";
+    return d.introducedAt ? "feature" : "rename";
   }
 
   // Which status filter bucket an entry falls in - aligned with the badge the card

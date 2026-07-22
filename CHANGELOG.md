@@ -3,6 +3,77 @@
 All notable changes to **rebricked**, grouped by day.
 Format loosely follows [Keep a Changelog](https://keepachangelog.com/); dates are `YYYY-MM-DD`.
 
+## 2026-07-22 (Agent Bricks + status/release model rework)
+
+### Changed
+- **`release` (single value) became `releases` (a `{type, date}` timeline).** Each entry now
+  records the ordered stages it passed through with the date it entered each - e.g.
+  `information-extraction` is `[{beta, 2025-06}, {public-preview, 2026-03}]`. The last stage
+  is the current maturity, so the pill shows it and the tooltip lists the whole history
+  ("Beta 2025-06 -> Public Preview 2026-03"). Populated for all 42 entries that had a
+  `release`, drawing each stage date from the entry's own sourced note; foundational GA
+  products with no documented preview history get a single `{ga, <date>}`. `validate.py`
+  checks each `{type, date}` (valid stage type, `YYYY`/`YYYY-MM`, chronological order);
+  `releasePill`/`release_pill` read the last stage; docs updated.
+- **Badges now show the real `status` value, with the `release` badge on the right.** Dropped
+  the `"latest"`/`"new"` aliases - the lifecycle badge reads the literal status
+  (`active`, `renamed`, `deprecated`, `legacy`, `retired`) as the top-left bookmark, and the
+  release-stage pill (Beta / Public Preview / ...) mirrors it on the card's top-right corner.
+  `statusBadge()`/`releasePill()` in `app.js`, `badge_html()`/`badge_label()` in
+  `build_entries.py`, and the `.row-eyebrow` bookmark positioning in `styles.css` were updated
+  together.
+- **Dropped the `kind` field; `status` is now the sole discriminator.** `kind`
+  (`rename`/`deprecation`/`feature`) was fully derivable from `status`, so it was removed
+  from all 78 entries. `kindOf()` (app.js) and `kind_of()` (build_entries.py) now derive the
+  logical family from `status` instead of reading a field, so no downstream rendering changed.
+  Updated `validate.py` (status-keyed required fields, new `status_group()` helper) and the
+  schema docs in `AGENTS.md`, `CONTRIBUTING.md`, and `agents/add-databricks-entry.md`.
+- **Dropped the `current` status; every live name is now `active`.** `current` (the tip of a
+  rename chain) was itself derivable, so it's gone too. Whether an `active` card is a
+  standalone feature or a current rename tip is now **calculated** - a feature carries its own
+  `introducedAt`, a rename tip carries `from` (and has a `renamed` card pointing at it) - so
+  the redundant status value isn't stored. The status set is now
+  `active` / `renamed` / `deprecated` / `legacy` / `retired` (42 active, 22 renamed, 14
+  deprecation). The validator requires an `active` card to carry exactly one of
+  `introducedAt`/`from` and no `to`; `kindOf`/`kind_of` derive feature-vs-tip from that.
+
+
+### Added
+- **Populated `release` on every active entry, verified against docs.** Set explicit
+  `release: "ga"` on all 39 GA `active` entries (from each entry's own sourced GA date, or -
+  for four 2026 items past easy reach: Genie One, Genie Agents, Classification, Databricks
+  OpenSharing - confirmed GA against live docs). The two pre-GA entries keep their stage
+  (`information-extraction` public-preview, `lakehouse-real-time` beta), and `agent-bricks`
+  is intentionally left unset (its own note records there was no single "Agent Bricks GA"
+  event - capabilities GA'd individually). `release` is only carried on live (`active`)
+  names plus the still-in-Beta legacy `custom-llm`; superseded/retired cards omit it (their
+  maturity is historical). Every set `release` renders a right-side pill on its own cool-hue
+  ramp - violet (private preview) -> indigo (beta) -> blue (public preview) -> teal (GA soon)
+  -> solid green (GA); pre-GA dashed, GA solid. The ramp stays clear of the warm renamed/
+  deprecated and slate legacy lifecycle colors. New `--rel-*` tokens (light + dark) in
+  `styles.css`; only entries with no `release` show no pill.
+- **Five Agent Bricks entries.** The umbrella brand and its capabilities, each sourced
+  against live Databricks docs: `agent-bricks` (umbrella, feature), `information-extraction`
+  (feature, Public Preview), `knowledge-assistant` (feature, GA Jan 2026), `classification`
+  (feature), and `custom-llm` (deprecation, `legacy`). All wired into the AI/ML → Agents
+  rail. The launch capabilities all shipped 2025-06 at Data + AI Summit (not the earlier
+  dates the gap report guessed), and "Knowledge Assurance" was confirmed a non-name -
+  it is Knowledge Assistant.
+
+### Changed
+- **Split `status` into two orthogonal axes: `status` (lifecycle) + `release` (maturity).**
+  `status` previously overloaded lifecycle and release maturity - features used it for
+  `ga`/`preview` while renames/deprecations used it for lifecycle. Now `status` is purely
+  lifecycle (live names `active`; superseded names `renamed`; deprecations
+  `deprecated`/`legacy`/`retired`), and a new optional `release` axis carries Databricks'
+  own maturity stages: `private-preview` → `beta` → `public-preview` → `pre-ga` → `ga`
+  (omit when GA). This lets a card be `active`-but-`public-preview` or `legacy`-but-`beta` -
+  e.g. Agent Bricks Custom LLM, which shipped as Beta and was later marked legacy without
+  ever reaching GA. Migrated all 19 pre-existing feature entries (`ga`→`active`; the two
+  preview features gained a `release`). Updated `scripts/validate.py`, `scripts/build_entries.py`,
+  `app.js` (new `releasePill()` + amber maturity pill), `styles.css`, and the schema docs
+  in `AGENTS.md`/`CONTRIBUTING.md`.
+
 ## 2026-07-21 (lineage navigation)
 
 ### Changed

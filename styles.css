@@ -31,6 +31,14 @@
   --c-deprecated: #B45309;
   --c-deprecated-ink: #92430A;
   --c-retired-fg: #FFFFFF;
+
+  /* release-maturity ramp (orthogonal to the lifecycle colors above): a cool violet->green
+     progression that never collides with warm renamed/deprecated or slate legacy. GA reuses
+     the production green (--c-active). Pre-GA stages render dashed; GA solid. */
+  --rel-private-preview: #7C3AED;  /* violet */
+  --rel-beta: #4F46E5;             /* indigo */
+  --rel-public-preview: #2563EB;   /* blue */
+  --rel-ga: var(--c-active);       /* green (production) */
   /* text on the solid "retired" badge */
   /* chart-segment fills. Renamed reuses the card's --c-renamed (orange) and Legacy
      reuses --c-legacy (slate), so the chart and the badges share those two colors.
@@ -75,6 +83,11 @@
   --c-deprecated-ink: #FBBF24;
   --c-retired-fg: #241900;
   /* dark text on the light-amber solid badge */
+  /* release ramp, brighter tones for the dark surface */
+  --rel-private-preview: #A78BFA;  /* violet */
+  --rel-beta: #818CF8;             /* indigo */
+  --rel-public-preview: #60A5FA;   /* blue */
+  --rel-ga: var(--c-active);       /* green */
   /* same chart palette on the dark surface; Renamed & Legacy reuse the badge tokens,
      Active is the chart-specific teal-green, stepped brighter here. */
   --seg-active: #17AC83;
@@ -1245,6 +1258,36 @@ body {
   border: 1px dashed color-mix(in srgb, var(--c-active) 45%, transparent);
 }
 
+/* Release-maturity pills: one cool hue per stage (violet -> indigo -> blue -> teal ->
+   green), escalating to a SOLID green at GA; pre-GA stages are dashed to read as "not
+   final." On a card the panel fill from `.row-eyebrow .badge` shows through, so the hue
+   lives in the border + label; elsewhere the tint background shows too. */
+.badge-rel-private-preview {
+  color: var(--rel-private-preview);
+  background: color-mix(in srgb, var(--rel-private-preview) 12%, transparent);
+  border: 1px dashed color-mix(in srgb, var(--rel-private-preview) 48%, transparent);
+}
+.badge-rel-beta {
+  color: var(--rel-beta);
+  background: color-mix(in srgb, var(--rel-beta) 12%, transparent);
+  border: 1px dashed color-mix(in srgb, var(--rel-beta) 48%, transparent);
+}
+.badge-rel-public-preview {
+  color: var(--rel-public-preview);
+  background: color-mix(in srgb, var(--rel-public-preview) 12%, transparent);
+  border: 1px dashed color-mix(in srgb, var(--rel-public-preview) 48%, transparent);
+}
+.badge-rel-ga {
+  color: var(--rel-ga);
+  background: color-mix(in srgb, var(--rel-ga) 12%, transparent);
+  border: 1px solid color-mix(in srgb, var(--rel-ga) 34%, transparent);
+}
+/* An announced-but-unreached stage (e.g. "GA soon") is dashed even when its stage would
+   normally be solid, signalling "not final yet". Placed after the stage rules so it wins. */
+.badge-rel-soon {
+  border-style: dashed;
+}
+
 .row-what {
   margin: 10px 0 0;
   font-size: 13px;
@@ -1291,12 +1334,20 @@ body {
   box-shadow: none;
 }
 
+/* The release-maturity pill mirrors the status bookmark on the opposite (top-right) corner,
+   so lifecycle reads on the left and maturity on the right. */
+.row-eyebrow .badge-release {
+  left: auto;
+  right: 18px;
+}
+
 /* "retired" is a solid tab, not an outlined one - keep its filled amber + light label
    rather than the panel fill the outlined statuses use. (Placed after the rule above so
    it wins at equal specificity.) */
 .row-eyebrow .badge-retired {
   background: var(--c-deprecated);
 }
+
 
 /* Flatten the chain into the eyebrow's own flex flow (display: contents) so its nodes
    become direct siblings of the bookmark. The chain then starts on the same line as the
