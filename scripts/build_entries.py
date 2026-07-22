@@ -334,7 +334,7 @@ def sources_html(d):
         k = REF_KINDS.get(l.get("kind"), "Source")
         items.append(
             f'<li><span class="src-kind src-{attr(l.get("kind","internet"))}">{esc(k)}</span> '
-            f'<a href="{attr(l["url"])}" target="_blank" rel="noopener nofollow">{label}</a></li>'
+            f'<a href="{attr(l["url"])}" target="_blank" rel="noopener">{label}</a></li>'
         )
     return f'<section class="entry-sources"><h2>Sources</h2><ul>{"".join(items)}</ul></section>'
 
