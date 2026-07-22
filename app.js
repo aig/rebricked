@@ -550,13 +550,14 @@
       if (d.removedAt) urgent = `<span class="meta-urgent">⚠ Access ended ${escapeHtml(fmtDate(d.removedAt))}</span>`;
     } else if ((d.status || "current") === "renamed") {
       spine = "is-former";
-      const span = d.from && d.to
-        ? `${escapeHtml(fmtDate(d.from))} – ${escapeHtml(fmtDate(d.to))}`
-        : d.to ? `until ${escapeHtml(fmtDate(d.to))}` : escapeHtml(fmtDate(d.from || "?"));
+      const fromD = dateOf(d.from), toD = dateOf(d.to);
+      const span = fromD && toD
+        ? `${dateLinkHTML(d.from)} – ${dateLinkHTML(d.to)}`
+        : toD ? `until ${dateLinkHTML(d.to)}` : dateLinkHTML(d.from || "?");
       dateText = `In use ${span}${occasion}`;
     } else {
       spine = "is-current";
-      dateText = `Current since ${escapeHtml(fmtDate(d.from || "?"))}${occasion}`;
+      dateText = `Current since ${dateLinkHTML(d.from || "?")}${occasion}`;
     }
 
     const refs = refsSection(d);
@@ -644,6 +645,15 @@
     const hist = rels.map((r) => `${RELEASE_LABELS[r.type] || r.type} ${r.date ? fmtDate(r.date) : "(announced)"}`).join(" -> ");
     // one cool hue per stage; `badge-rel-soon` dashes the border for an announced stage
     const cls = `badge-rel-${escapeAttr(cur.type)}${announced ? " badge-rel-soon" : ""}`;
+    // Each release stage now carries a `link` confirming its date; the pill (which shows
+    // the current stage) links out to that stage's confirmation when present. The full
+    // stage history still rides in the hover tooltip.
+    const url = cur.link ? String(cur.link) : "";
+    const tip = url ? `${hist} · click for source` : hist;
+    if (url) {
+      return `<a class="badge ${cls} badge-release badge-release-link" href="${escapeAttr(url)}" ` +
+        `target="_blank" rel="noopener" title="${escapeAttr(tip)}">${escapeHtml(text)}</a>`;
+    }
     return `<span class="badge ${cls} badge-release" title="${escapeAttr(hist)}">${escapeHtml(text)}</span>`;
   }
 
@@ -704,7 +714,7 @@
     // Compact start-date token for a node: its `from` (or a feature's introducedAt), as
     // "2026-07" -> "07’26", a bare year -> "’26". Shows when each name began.
     const nodeDate = (x) => {
-      const s = String(x.from || x.introducedAt || "");
+      const s = String(dateOf(x.from) || x.introducedAt || "");
       const yr = shortYear(s);
       if (!yr) return "";
       const mm = /^\d{4}-(\d{2})/.exec(s);
@@ -1823,7 +1833,7 @@
     if ((d.status || "current") === "renamed") {
       return `🧱 It's not called "${d.name}" anymore - it's "${currentNameOf(d)}" now.\n${d.what || ""}${factLine}\n${link}`;
     }
-    return `🧱 "${d.name}" - the current Databricks name (since ${d.from || "?"}).\n${d.what || ""}${factLine}\n${link}`;
+    return `🧱 "${d.name}" - the current Databricks name (since ${dateOf(d.from) || "?"}).\n${d.what || ""}${factLine}\n${link}`;
   }
 
   // Share a single entry on LinkedIn. Mirrors the quiz share: copy the blurb to the
@@ -2015,8 +2025,8 @@
     if (k === "feature") return d.introducedAt || "";
     if (k === "deprecation") return d.deprecatedAt || d.removedAt || "";
     return (d.status || "current") === "renamed"
-      ? (d.to || d.from || "")
-      : (d.from || d.to || "");
+      ? (dateOf(d.to) || dateOf(d.from) || "")
+      : (dateOf(d.from) || dateOf(d.to) || "");
   }
 
   // The logical family an entry belongs to. `status` is the sole stored discriminator, but
@@ -2076,6 +2086,28 @@
     if (!m) return s;
     const month = MONTHS[Number(m[2]) - 1];
     return month ? `${month} ${m[1]}` : s;
+  }
+
+  // `from` and `to` are now { date, link } objects - the date plus a URL confirming it
+  // (link may be null, and a bare string is still accepted for resilience). `dateOf`
+  // pulls the raw date token; `linkOf` pulls the confirmation URL.
+  function dateOf(v) {
+    return v && typeof v === "object" ? String(v.date ?? "") : String(v ?? "");
+  }
+  function linkOf(v) {
+    return v && typeof v === "object" && v.link ? String(v.link) : "";
+  }
+
+  // A date token rendered with its confirmation link, when one exists: the formatted
+  // date becomes a source-linked chip carrying a small 🔗 mark; otherwise it's plain
+  // escaped text. Returns HTML (the date line is inserted unescaped).
+  function dateLinkHTML(v) {
+    const txt = fmtDate(dateOf(v)) || "?";
+    const url = linkOf(v);
+    if (!url) return escapeHtml(txt);
+    return `<a class="date-src" href="${escapeAttr(url)}" target="_blank" rel="noopener" ` +
+      `title="Source confirming ${escapeAttr(txt)}">${escapeHtml(txt)}` +
+      `<span class="date-src-mark" aria-hidden="true">🔗</span></a>`;
   }
 
   // Takes RAW text, matches on it, and escapes each piece separately - matching on

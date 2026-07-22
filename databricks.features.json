@@ -6,13 +6,13 @@
     "category": "Data engineering",
     "what": "Declarative framework for batch and streaming ETL pipelines.",
     "fact": "Introduced at the 2021 Data + AI Summit, it let engineers build entire production pipelines by sprinkling the keyword LIVE into ordinary SQL and letting the framework untangle the dependencies for them.",
-    "from": "2021",
-    "to": "2025-06",
+    "from": { "date": "2021", "link": "https://www.databricks.com/blog/2021/05/27/announcing-the-launch-of-delta-live-tables-reliable-data-engineering-made-easy.html" },
+    "to": { "date": "2025-06", "link": "https://docs.databricks.com/aws/en/release-notes/product/2025/june" },
     "successorId": "lakeflow-declarative-pipelines",
     "status": "renamed",
     "releases": [
-      { "type": "public-preview", "date": "2021-05" },
-      { "type": "ga", "date": "2022-04" }
+      { "type": "public-preview", "date": "2021-05", "link": "https://www.databricks.com/blog/2021/05/27/announcing-the-launch-of-delta-live-tables-reliable-data-engineering-made-easy.html" },
+      { "type": "ga", "date": "2022-04", "link": "https://www.cdotrends.com/story/16335/databricks-announces-general-availability-delta-live-tables" }
     ],
     "source": "https://docs.databricks.com/aws/en/ldp/where-is-dlt",
     "links": [
@@ -28,10 +28,10 @@
     "category": "Data engineering",
     "what": "Declarative framework for batch and streaming ETL pipelines.",
     "fact": "You describe the tables you want and it works out the execution order and dependencies for you - and the DLT code written back in 2021 still runs unchanged under the new name.",
-    "from": "2025-06",
+    "from": { "date": "2025-06", "link": "https://docs.databricks.com/aws/en/release-notes/product/2025/june" },
     "status": "active",
     "releases": [
-      { "type": "ga", "date": "2025-06" }
+      { "type": "ga", "date": "2025-06", "link": "https://docs.databricks.com/aws/en/release-notes/product/2025/june" }
     ],
     "occasion": "Data + AI Summit 2025",
     "note": "Existing DLT code still runs; classic SKUs kept the DLT prefix. Databricks docs increasingly shorthand this to \"Lakeflow pipelines\"; the open-source engine is \"Spark Declarative Pipelines\".",
@@ -49,13 +49,13 @@
     "category": "Data engineering",
     "what": "Orchestration for multi-task jobs and pipelines.",
     "fact": "Databricks' answer to 'do we really need Airflow for this?', it wired tasks into DAGs right inside the platform and added a Repair and Rerun button so you could retry only the tasks that flopped.",
-    "from": "2022",
-    "to": "2025",
+    "from": { "date": "2022", "link": "https://www.databricks.com/blog/2022/06/29/top-5-workflows-announcements-at-data-ai-summit.html" },
+    "to": { "date": "2025", "link": "https://docs.databricks.com/aws/en/release-notes/product/2025/june" },
     "successorId": "lakeflow-jobs",
     "status": "renamed",
     "releases": [
-      { "type": "public-preview", "date": "2021-07" },
-      { "type": "ga", "date": "2021-10" }
+      { "type": "public-preview", "date": "2021-07", "link": "https://docs.databricks.com/aws/en/release-notes/product/2021/july" },
+      { "type": "ga", "date": "2021-10", "link": "https://docs.databricks.com/aws/en/release-notes/product/2021/october" }
     ],
     "source": "https://learn.microsoft.com/en-us/azure/databricks/jobs/",
     "links": [
@@ -71,10 +71,10 @@
     "category": "Data engineering",
     "what": "Orchestration for multi-task jobs and pipelines.",
     "fact": "A single job can chain notebooks, SQL, Python, dbt, and even other jobs into one dependency graph - Databricks' original orchestrator, now reunited with pipelines under the Lakeflow umbrella.",
-    "from": "2025",
+    "from": { "date": "2025", "link": "https://docs.databricks.com/aws/en/release-notes/product/2025/june" },
     "status": "active",
     "releases": [
-      { "type": "ga", "date": "2025" }
+      { "type": "ga", "date": "2025", "link": "https://docs.databricks.com/aws/en/release-notes/product/2025/june" }
     ],
     "occasion": "Lakeflow GA, 2025",
     "note": "Folded into the Lakeflow umbrella alongside Connect and Declarative Pipelines. The sidebar now groups it with pipelines under \"Jobs & Pipelines\".",
@@ -92,8 +92,8 @@
     "category": "Compute / BI",
     "what": "SQL-optimized compute that powers Databricks SQL.",
     "fact": "It was the compute you pointed your BI tool at: elastic, Photon-powered clusters that spun up for SQL queries, including a pre-baked 'Starter' one that switched itself off after 120 idle minutes.",
-    "from": "2021",
-    "to": "2023",
+    "from": { "date": "2021", "link": "https://www.databricks.com/blog/2021/09/30/databricks-sql-delivering-a-production-sql-development-experience-on-the-data-lake.html" },
+    "to": { "date": "2023", "link": "https://docs.databricks.com/aws/en/compute/sql-warehouse/" },
     "successorId": "sql-warehouse",
     "status": "renamed",
     "source": "https://docs.databricks.com/aws/en/compute/sql-warehouse/",
@@ -110,10 +110,10 @@
     "category": "Compute / BI",
     "what": "SQL-optimized compute that powers Databricks SQL.",
     "fact": "The word 'Warehouse' replaced 'Endpoint' to make it read like a proper data warehouse to BI users - and the serverless flavor spins up in seconds where the classic one took minutes.",
-    "from": "2023",
+    "from": { "date": "2023", "link": "https://docs.databricks.com/aws/en/compute/sql-warehouse/" },
     "status": "active",
     "releases": [
-      { "type": "ga", "date": "2023" }
+      { "type": "ga", "date": "2023", "link": "https://docs.databricks.com/aws/en/compute/sql-warehouse/" }
     ],
     "note": "Databricks docs date this to 2023; some write-ups say 2022.",
     "prediction": ["AI Warehouse", "Genie Warehouse", "Lakehouse Warehouse"],
@@ -130,12 +130,12 @@
     "category": "Developer experience",
     "what": "In-workspace Git client for version-controlling notebooks and files.",
     "fact": "Born to fix data teams' 'poor or no integration with Git,' it turned each notebook into a versioned file you could branch, review and commit without ever leaving the workspace.",
-    "from": "2021",
-    "to": "2024-03",
+    "from": { "date": "2021", "link": "https://docs.databricks.com/aws/en/release-notes/product/2021/august" },
+    "to": { "date": "2024-03", "link": "https://docs.databricks.com/aws/en/release-notes/product/2024/march" },
     "successorId": "git-folders",
     "status": "renamed",
     "releases": [
-      { "type": "ga", "date": "2021-08" }
+      { "type": "ga", "date": "2021-08", "link": "https://docs.databricks.com/aws/en/release-notes/product/2021/august" }
     ],
     "source": "https://learn.microsoft.com/en-us/azure/databricks/repos/what-happened-repos",
     "links": [
@@ -151,10 +151,10 @@
     "category": "Developer experience",
     "what": "In-workspace Git client for version-controlling notebooks and files.",
     "fact": "It's a full Git client living inside the workspace - branch, commit, pull - and it was renamed 'Git folders' once it grew to version arbitrary files, not just notebooks.",
-    "from": "2024-03",
+    "from": { "date": "2024-03", "link": "https://docs.databricks.com/aws/en/release-notes/product/2024/march" },
     "status": "active",
     "releases": [
-      { "type": "ga", "date": "2024-05" }
+      { "type": "ga", "date": "2024-05", "link": "https://docs.databricks.com/aws/en/release-notes/product/2024/may" }
     ],
     "note": "Renamed March 21, 2024 per the platform release notes. Git folders support asset types Repos didn't and require a remote repo URL.",
     "prediction": ["Git Spaces", "Lakeflow Git", "Genie Repos"],
@@ -171,8 +171,8 @@
     "category": "Data governance",
     "what": "In-workspace UI for browsing Unity Catalog data - schemas and tables - viewing sample data, and handing out grants.",
     "fact": "The point-and-click window into Unity Catalog: browse schemas, peek at sample data and hand out grants, provided you remembered that USE alone wouldn't let anyone actually see a table.",
-    "from": "2022",
-    "to": "2023-09",
+    "from": { "date": "2022", "link": "https://docs.databricks.com/aws/en/catalog-explorer/" },
+    "to": { "date": "2023-09", "link": "https://www.databricks.com/blog/accelerating-discovery-unity-catalog-revamped-catalog-explorer" },
     "successorId": "catalog-explorer",
     "status": "renamed",
     "source": "https://docs.databricks.com/aws/en/catalog-explorer/",
@@ -189,10 +189,10 @@
     "category": "Data governance",
     "what": "In-workspace UI for browsing and managing Unity Catalog securables - schemas, tables, models, functions, and other assets.",
     "fact": "It got promoted from 'Data Explorer' once it started managing models, functions, and volumes too - not just tables - though the sidebar still just calls it 'Catalog.'",
-    "from": "2023-09",
+    "from": { "date": "2023-09", "link": "https://www.databricks.com/blog/accelerating-discovery-unity-catalog-revamped-catalog-explorer" },
     "status": "active",
     "releases": [
-      { "type": "ga", "date": "2023-09" }
+      { "type": "ga", "date": "2023-09", "link": "https://www.databricks.com/blog/accelerating-discovery-unity-catalog-revamped-catalog-explorer" }
     ],
     "note": "Renamed to reflect that it manages all Unity Catalog securables, not just data. Shows as \"Catalog\" in the sidebar.",
     "prediction": ["Catalog One", "Unity Explorer", "Genie Catalog"],
@@ -209,12 +209,12 @@
     "category": "BI / Dashboards",
     "what": "AI-assisted dashboards for visualizing and sharing query results.",
     "fact": "Entered public preview on September 28, 2023 (AWS and Azure first, GCP in the first half of 2024), pairing a new visualization engine that rendered larger charts up to 10x faster with draft/publish editing, Unity Catalog lineage, and Databricks Assistant to draft visualizations from a plain-English request.",
-    "from": "2023-09",
-    "to": "2024-06",
+    "from": { "date": "2023-09", "link": "https://www.databricks.com/blog/announcing-public-preview-lakeview-dashboards" },
+    "to": { "date": "2024-06", "link": "https://www.databricks.com/blog/introducing-aibi-intelligent-analytics-real-world-data" },
     "successorId": "ai-bi-dashboards",
     "status": "renamed",
     "releases": [
-      { "type": "public-preview", "date": "2023-09" }
+      { "type": "public-preview", "date": "2023-09", "link": "https://www.databricks.com/blog/announcing-public-preview-lakeview-dashboards" }
     ],
     "occasion": "Public preview September 28, 2023",
     "note": "Launched under the codename \"Lakeview\"; the announcement blog has since been retitled \"AI/BI Dashboards\" to match the June 2024 rename, but the API still uses the Lakeview name. Distinct from the older Redash-based legacy dashboards.",
@@ -232,10 +232,10 @@
     "category": "BI / Dashboards",
     "what": "AI-assisted dashboards for visualizing and sharing query results.",
     "fact": "You can build a chart by typing a question in plain English - and although the product is now 'AI/BI Dashboards,' the API underneath still answers to its old codename, Lakeview.",
-    "from": "2024-06",
+    "from": { "date": "2024-06", "link": "https://www.databricks.com/blog/introducing-aibi-intelligent-analytics-real-world-data" },
     "status": "active",
     "releases": [
-      { "type": "ga", "date": "2024-06" }
+      { "type": "ga", "date": "2024-06", "link": "https://www.databricks.com/blog/introducing-aibi-intelligent-analytics-real-world-data" }
     ],
     "occasion": "Data + AI Summit 2024",
     "note": "The user-facing product is \"AI/BI Dashboards\"; the underlying API still uses the \"Lakeview\" name. Distinct from the older SQL/Redash \"legacy dashboards\".",
@@ -253,8 +253,8 @@
     "category": "Developer experience",
     "what": "Infrastructure-as-code format for defining and deploying Databricks resources (jobs, pipelines, etc.) as a versioned bundle.",
     "fact": "Databricks' take on infrastructure-as-code: a single databricks.yml that packaged jobs, pipelines and notebooks into one versioned unit you could test and ship from dev to prod.",
-    "from": "2023",
-    "to": "2026-03",
+    "from": { "date": "2023", "link": "https://docs.databricks.com/aws/en/release-notes/product/2023/september" },
+    "to": { "date": "2026-03", "link": "https://docs.databricks.com/aws/en/release-notes/product/2026/march" },
     "successorId": "declarative-automation-bundles",
     "status": "renamed",
     "source": "https://docs.databricks.com/aws/en/dev-tools/bundles/",
@@ -271,11 +271,11 @@
     "category": "Developer experience",
     "what": "Infrastructure-as-code format for defining and deploying Databricks resources (jobs, pipelines, etc.) as a versioned bundle.",
     "fact": "Define an entire project - jobs, pipelines, clusters - in YAML and ship it with one `databricks bundle deploy`; even after the 2026 rename, everyone still just calls them DABs.",
-    "from": "2026-03",
+    "from": { "date": "2026-03", "link": "https://docs.databricks.com/aws/en/release-notes/product/2026/march" },
     "status": "active",
     "releases": [
-      { "type": "public-preview", "date": "2023-10" },
-      { "type": "ga", "date": "2024-04" }
+      { "type": "public-preview", "date": "2023-10", "link": "https://docs.databricks.com/aws/en/dev-tools/bundles/" },
+      { "type": "ga", "date": "2024-04", "link": "https://www.databricks.com/blog/announcing-general-availability-databricks-asset-bundles" }
     ],
     "note": "Renamed March 16, 2026. Docs read \"Declarative Automation Bundles (formerly known as Databricks Asset Bundles)\"; the DABs acronym was kept. Supersedes the deprecated dbx deployment tool.",
     "prediction": ["Agentic Automation Bundles", "Unity Bundles", "Genie Bundles"],
@@ -292,8 +292,8 @@
     "category": "AI / BI",
     "what": "Curated, governed conversational query spaces scoped to a business domain, letting business users ask questions of their structured data in plain English (text-to-SQL).",
     "fact": "A Genie Space was a topic-scoped room where analysts hand-fed the AI tables, metric definitions and sample queries, so a business user could ask 'how's my sales pipeline?' and get an answer instead of Slacking the data team.",
-    "from": "2024",
-    "to": "2026-07",
+    "from": { "date": "2024", "link": "https://www.databricks.com/blog/aibi-genie-now-generally-available" },
+    "to": { "date": "2026-07", "link": "https://docs.databricks.com/aws/en/ai-bi/release-notes/2026" },
     "successorId": "genie-agents",
     "status": "renamed",
     "source": "https://docs.databricks.com/aws/en/genie-agents/set-up",
@@ -310,10 +310,10 @@
     "category": "AI / BI",
     "what": "Curated, governed conversational agents scoped to a business domain, now able to take autonomous multi-step actions.",
     "fact": "It graduated from merely answering questions to taking autonomous multi-step actions on your data - which is exactly why 'Genie Spaces' became 'Genie Agents' in 2026.",
-    "from": "2026-07",
+    "from": { "date": "2026-07", "link": "https://docs.databricks.com/aws/en/ai-bi/release-notes/2026" },
     "status": "active",
     "releases": [
-      { "type": "ga", "date": "2026-07" }
+      { "type": "ga", "date": "2026-07", "link": "https://docs.databricks.com/aws/en/ai-bi/release-notes/2026" }
     ],
     "note": "Renamed in early July 2026 to reflect the shift from conversational query spaces to autonomous agents. Shows as \"Genie Agents\" in the sidebar.",
     "prediction": ["Genie Agent Teams", "Genie Agents One", "Agentic Genie Spaces"],
@@ -330,8 +330,8 @@
     "category": "AI / BI",
     "what": "Business-user-facing UI giving non-technical users a single conversational entry point to data and AI.",
     "fact": "A deliberately code-free front door for executives and marketers who never touch a notebook, bundling dashboards, natural-language questions and custom apps behind one un-technical home screen, with no seat-based licenses required.",
-    "from": "2025",
-    "to": "2026-04",
+    "from": { "date": "2025", "link": "https://www.databricks.com/blog/introducing-databricks-one" },
+    "to": { "date": "2026-04", "link": "https://docs.databricks.com/aws/en/ai-bi/release-notes/2026" },
     "successorId": "genie",
     "status": "renamed",
     "source": "https://docs.databricks.com/aws/en/genie-one/genie",
@@ -348,8 +348,8 @@
     "category": "AI / BI",
     "what": "Business-user-facing UI giving non-technical users a single conversational entry point to data and AI.",
     "fact": "For a few weeks in the spring of 2026 the simplified business UI was simply called 'Genie' - Databricks reusing the name of its conversational-analytics feature for the whole front door - before June's rename tacked on 'One' to disambiguate.",
-    "from": "2026-04",
-    "to": "2026-06",
+    "from": { "date": "2026-04", "link": "https://docs.databricks.com/aws/en/ai-bi/release-notes/2026" },
+    "to": { "date": "2026-06", "link": "https://docs.databricks.com/aws/en/ai-bi/release-notes/2026" },
     "successorId": "genie-one",
     "status": "renamed",
     "occasion": "Renamed from Databricks One to Genie, April 27, 2026",
@@ -369,11 +369,11 @@
     "category": "AI / BI",
     "what": "Business-user-facing UI giving non-technical users a single conversational entry point to data and AI.",
     "fact": "A deliberately no-notebooks front door for business users - executives and marketers who never open a notebook - that launched as Databricks One, spent a few weeks as plain 'Genie', and settled on Genie One in June 2026.",
-    "from": "2026-06",
+    "from": { "date": "2026-06", "link": "https://www.databricks.com/blog/introducing-genie-one-genie-ontology-and-genie-agents" },
     "status": "active",
     "releases": [
-      { "type": "public-preview", "date": "2025-09" },
-      { "type": "ga", "date": "2026-01" }
+      { "type": "public-preview", "date": "2025-09", "link": "https://docs.databricks.com/aws/en/genie-one/genie" },
+      { "type": "ga", "date": "2026-01", "link": "https://docs.databricks.com/aws/en/ai-bi/release-notes/2026" }
     ],
     "occasion": "Renamed from Genie to Genie One, June 9, 2026",
     "note": "Docs state \"Genie One was previously known as Databricks One.\" The path ran Databricks One (Data + AI Summit, June 2025; Public Preview September 2025) -> Genie (April 27, 2026) -> Genie One (June 9, 2026), the final rename disambiguating it from the Genie Spaces/Agents conversational feature. Genie One folds in all Databricks One capabilities plus account-level access and native mobile apps.",
@@ -391,8 +391,8 @@
     "category": "AI / ML",
     "what": "Managed vector (similarity) search over Unity Catalog data, turning a Delta table into an auto-syncing vector index for RAG apps.",
     "fact": "Launched to give RAG apps a serverless similarity search that could turn any Delta table into an auto-syncing vector index with one click, all governed by the same Unity Catalog permissions as the underlying data.",
-    "from": "2023",
-    "to": "2024",
+    "from": { "date": "2023", "link": "https://www.databricks.com/blog/introducing-databricks-vector-search-public-preview" },
+    "to": { "date": "2024", "link": "https://docs.databricks.com/aws/en/release-notes/product/2024/may" },
     "successorId": "mosaic-ai-vector-search",
     "status": "renamed",
     "source": "https://docs.databricks.com/aws/en/vector-search/vector-search",
@@ -408,13 +408,13 @@
     "category": "AI / ML",
     "what": "Managed, serverless vector (similarity) search over Unity Catalog data, with one-click Delta-to-index sync, scaling to billions of embeddings.",
     "fact": "Reached general availability as a serverless vector database boasting one-click Delta-to-index sync and, per its makers, up to 5x faster performance than rival vector stores while scaling to billions of embeddings.",
-    "from": "2024",
-    "to": "2026-06",
+    "from": { "date": "2024", "link": "https://www.databricks.com/blog/announcing-mosaic-ai-vector-search-general-availability-databricks" },
+    "to": { "date": "2026-06", "link": "https://docs.databricks.com/aws/en/release-notes/product/2026/june" },
     "successorId": "databricks-ai-search",
     "status": "renamed",
     "releases": [
-      { "type": "public-preview", "date": "2023-11" },
-      { "type": "ga", "date": "2024-05" }
+      { "type": "public-preview", "date": "2023-11", "link": "https://docs.databricks.com/aws/en/release-notes/product/2023/november" },
+      { "type": "ga", "date": "2024-05", "link": "https://www.databricks.com/blog/announcing-mosaic-ai-vector-search-general-availability-databricks" }
     ],
     "source": "https://docs.databricks.com/aws/en/vector-search/vector-search",
     "links": [
@@ -430,10 +430,10 @@
     "category": "AI / ML",
     "what": "Managed search over Unity Catalog data; now supports full-text and hybrid search without pre-computed embeddings.",
     "fact": "It outgrew pure vector search - now it does full-text and hybrid too, with no precomputed embeddings required - and its old 'Mosaic AI' prefix was a souvenir from the 2023 MosaicML acquisition.",
-    "from": "2026-06",
+    "from": { "date": "2026-06", "link": "https://docs.databricks.com/aws/en/release-notes/product/2026/june" },
     "status": "active",
     "releases": [
-      { "type": "ga", "date": "2024-05" }
+      { "type": "ga", "date": "2024-05", "link": "https://www.databricks.com/blog/announcing-mosaic-ai-vector-search-general-availability-databricks" }
     ],
     "note": "Renamed in the June 2026 platform release (release note dated June 1, 2026) as the service expanded beyond pure vector search to full-text and hybrid search; the service had been GA since May 2024 as Mosaic AI Vector Search. The \"Mosaic AI\" prefix came from the 2023 MosaicML acquisition branding.",
     "prediction": ["Genie Search", "Mosaic AI Search", "Unity Search"],
@@ -450,8 +450,8 @@
     "category": "Compute / BI",
     "what": "The serverless data warehouse for running SQL queries, dashboards, and BI on the lakehouse.",
     "fact": "Debuted in November 2020 to let analysts run plain BI and reporting workloads directly on the data lake, with a SQL-native workspace and connectors for Tableau, Power BI and Looker: warehouse habits at lake prices.",
-    "from": "2020",
-    "to": "2021-05",
+    "from": { "date": "2020", "link": "https://www.databricks.com/blog/2020/11/12/announcing-the-launch-of-databricks-sql.html" },
+    "to": { "date": "2021-05", "link": "https://learn.microsoft.com/en-us/azure/databricks/sql/release-notes/2021" },
     "successorId": "databricks-sql",
     "status": "renamed",
     "source": "https://learn.microsoft.com/en-us/azure/databricks/sql/release-notes/2021",
@@ -469,11 +469,11 @@
     "category": "Compute / BI",
     "what": "The serverless data warehouse for running SQL queries, dashboards, and BI on the lakehouse.",
     "fact": "Easy to confuse with SQL Warehouse, but one's the product and the other's the compute engine that runs it - and it dropped the name 'SQL Analytics' back in 2021.",
-    "from": "2021-05",
+    "from": { "date": "2021-05", "link": "https://learn.microsoft.com/en-us/azure/databricks/sql/release-notes/2021" },
     "status": "active",
     "releases": [
-      { "type": "public-preview", "date": "2020-11" },
-      { "type": "ga", "date": "2021-12" }
+      { "type": "public-preview", "date": "2020-11", "link": "https://www.prnewswire.com/news-releases/databricks-launches-sql-analytics-to-enable-cloud-data-warehousing-on-data-lakes-301171524.html" },
+      { "type": "ga", "date": "2021-12", "link": "https://learn.microsoft.com/en-us/azure/databricks/sql/release-notes/2021" }
     ],
     "occasion": "Renamed May 26, 2021; GA December 15, 2021",
     "note": "The May 26, 2021 release notes state \"SQL Analytics is renamed to Databricks SQL\"; the access entitlement became \"Databricks SQL access\" (formerly \"SQL Analytics access\"). Distinct from the SQL Warehouse compute that powers it.",
@@ -491,12 +491,12 @@
     "category": "Data engineering",
     "what": "The proprietary Databricks table format that adds ACID transactions, schema enforcement, and time travel to data lakes.",
     "fact": "Unveiled at Spark Summit Europe 2017 as a single system fusing a data lake's scale, a warehouse's query speed and a streaming pipe's low latency, storing everything as plain Parquet on S3 while promising up to 100x faster queries.",
-    "from": "2017",
-    "to": "2019-04",
+    "from": { "date": "2017", "link": "https://www.databricks.com/blog/2017/10/25/databricks-delta-a-unified-management-system-for-real-time-big-data.html" },
+    "to": { "date": "2019-04", "link": "https://www.databricks.com/blog/2019/04/24/open-sourcing-delta-lake.html" },
     "successorId": "delta-lake",
     "status": "renamed",
     "releases": [
-      { "type": "private-preview", "date": "2018-05" }
+      { "type": "private-preview", "date": "2018-05", "link": "https://docs.databricks.com/aws/en/release-notes/product/2018/may" }
     ],
     "source": "https://www.databricks.com/blog/2019/04/24/open-sourcing-delta-lake.html",
     "links": [
@@ -512,10 +512,10 @@
     "category": "Data engineering",
     "what": "The open table format that adds ACID transactions, schema enforcement, and time travel to data lakes.",
     "fact": "It lets you 'time travel' - query a table exactly as it looked versions ago - and the format went from proprietary 'Databricks Delta' to open source under the Linux Foundation in 2019.",
-    "from": "2019-04",
+    "from": { "date": "2019-04", "link": "https://www.databricks.com/blog/2019/04/24/open-sourcing-delta-lake.html" },
     "status": "active",
     "releases": [
-      { "type": "ga", "date": "2019-02" }
+      { "type": "ga", "date": "2019-02", "link": "https://docs.databricks.com/aws/en/release-notes/product/2019/february" }
     ],
     "occasion": "Open-sourced at Spark + AI Summit 2019",
     "note": "The proprietary \"Databricks Delta\" feature was open-sourced as Delta Lake on April 24, 2019 and donated to the Linux Foundation; the \"Databricks Delta\" name fell out of use. Same storage layer, new (and now OSS) name.",
@@ -534,8 +534,8 @@
     "category": "AI / ML",
     "what": "Agent Bricks capability that orchestrates multiple specialized agents, routing each request to the right one.",
     "fact": "A control-plane conductor for enterprise AI: it reads your intent, chops a messy question into subtasks, routes each to the best specialist agent, and stitches the replies back into a single cited answer.",
-    "from": "2025",
-    "to": "2026-02",
+    "from": { "date": "2025", "link": "https://www.databricks.com/blog/multi-agent-supervisor-architecture-orchestrating-enterprise-ai-scale" },
+    "to": { "date": "2026-02", "link": "https://www.databricks.com/blog/agent-bricks-supervisor-agent-now-ga-orchestrate-enterprise-agents" },
     "successorId": "supervisor-agent",
     "status": "renamed",
     "source": "https://docs.databricks.com/aws/en/generative-ai/agent-bricks/multi-agent-supervisor",
@@ -552,11 +552,11 @@
     "category": "AI / ML",
     "what": "Agent Bricks capability that orchestrates multiple specialized agents, routing each request to the right one.",
     "fact": "It's an agent whose entire job is bossing other agents around - routing each request to the right specialist - and its doc URL still reads /multi-agent-supervisor.",
-    "from": "2026-02",
+    "from": { "date": "2026-02", "link": "https://www.databricks.com/blog/agent-bricks-supervisor-agent-now-ga-orchestrate-enterprise-agents" },
     "status": "active",
     "releases": [
-      { "type": "beta", "date": "2025-07" },
-      { "type": "ga", "date": "2026-02" }
+      { "type": "beta", "date": "2025-07", "link": "https://docs.databricks.com/aws/en/generative-ai/agent-bricks/multi-agent-supervisor" },
+      { "type": "ga", "date": "2026-02", "link": "https://www.databricks.com/blog/agent-bricks-supervisor-agent-now-ga-orchestrate-enterprise-agents" }
     ],
     "occasion": "Supervisor Agent GA, February 2026",
     "note": "Docs describe it as \"Supervisor Agent (formerly Multi-Agent Supervisor, MAS)\"; the doc URL still ends in /multi-agent-supervisor. Shortened as the Agent Bricks multi-agent framework reached GA.",
@@ -596,8 +596,8 @@
     "introducedAt": "2025-06",
     "status": "active",
     "releases": [
-      { "type": "beta", "date": "2025-06" },
-      { "type": "public-preview", "date": "2026-03" }
+      { "type": "beta", "date": "2025-06", "link": "https://www.databricks.com/blog/introducing-agent-bricks" },
+      { "type": "public-preview", "date": "2026-03", "link": "https://learn.microsoft.com/en-us/azure/databricks/release-notes/product/2026/march" }
     ],
     "occasion": "Data + AI Summit, June 2025 (beta); rebuilt on the ai_extract v2 signature, Public Preview March 2026.",
     "note": "The original launch capability now lives at a \"(legacy)\" docs page (key-info-extraction); the current Information Extraction UI (info-extraction) is built on the ai_extract v2 signature and entered Public Preview 2026-03-27.",
@@ -619,8 +619,8 @@
     "introducedAt": "2025-06",
     "status": "active",
     "releases": [
-      { "type": "beta", "date": "2025-06" },
-      { "type": "ga", "date": "2026-01" }
+      { "type": "beta", "date": "2025-06", "link": "https://www.databricks.com/blog/introducing-agent-bricks" },
+      { "type": "ga", "date": "2026-01", "link": "https://www.databricks.com/blog/agent-bricks-knowledge-assistant-now-generally-available-turning-enterprise-knowledge-answers" }
     ],
     "occasion": "Data + AI Summit, June 2025 (beta); GA January 2026.",
     "note": "Launched in beta at DAIS June 2025 and reached GA on 2026-01-27, expanding to new regions at GA. Not to be confused with \"Knowledge Assurance\", which is not an official Databricks name.",
@@ -641,8 +641,8 @@
     "introducedAt": "2026-03",
     "status": "active",
     "releases": [
-      { "type": "public-preview", "date": "2026-03" },
-      { "type": "ga", "date": "2026-06" }
+      { "type": "public-preview", "date": "2026-03", "link": "https://learn.microsoft.com/en-us/azure/databricks/release-notes/product/2026/march" },
+      { "type": "ga", "date": "2026-06", "link": "https://docs.databricks.com/aws/en/release-notes/product/2026/june" }
     ],
     "occasion": "Public Preview March 2026; ai_classify GA at Data + AI Summit June 2026.",
     "note": "Not part of the original June 2025 launch; entered Public Preview 2026-03-27 alongside the ai_classify v2 signature. The underlying ai_classify function reached GA 2026-06 (Document Intelligence GA); the Classification UI page carries no preview flag.",
@@ -661,11 +661,11 @@
     "category": "AI / ML",
     "what": "Agent Bricks capability for building a task-specialized text LLM from your own data - summarization, classification, transformation, and generation - with auto-optimized cost versus quality.",
     "fact": "On \"Optimize\" it races several strategies (including Foundation Model fine-tuning) and can deploy a cheaper model that matches the quality of a bigger one; the guidelines you accept double as auto-generated pass/fail evaluation metrics.",
-    "from": "2025-06",
+    "from": { "date": "2025-06", "link": "https://www.databricks.com/blog/introducing-agent-bricks" },
     "deprecatedAt": "2026",
     "status": "legacy",
     "releases": [
-      { "type": "beta", "date": "2025-06" }
+      { "type": "beta", "date": "2025-06", "link": "https://www.databricks.com/blog/introducing-agent-bricks" }
     ],
     "note": "Launched in beta at DAIS June 2025 and never reached GA; by mid-2026 its docs page was retitled \"Use Custom LLM to create a gen AI agent for text (legacy)\" while still flagged Beta. This is \"legacy\", not a formal deprecation - no removal date is set and no successor is officially documented (DAIS 2026 promoted \"Custom Agents\" but no doc names it a replacement).",
     "source": "https://docs.databricks.com/aws/en/generative-ai/agent-bricks/custom-llm",
@@ -681,13 +681,13 @@
     "category": "AI / ML",
     "what": "AI coding assistant that generates and fixes SQL and Python across notebooks, the SQL editor, and pipelines, grounded in Unity Catalog metadata.",
     "fact": "A context-aware helper wired into notebooks, the SQL editor and file editor that turns plain-English requests into SQL or Python, explains gnarly code, and quietly reads your Unity Catalog metadata to tailor answers.",
-    "from": "2023",
-    "to": "2026-03",
+    "from": { "date": "2023", "link": "https://www.databricks.com/blog/introducing-databricks-assistant" },
+    "to": { "date": "2026-03", "link": "https://www.databricks.com/blog/introducing-genie-code" },
     "successorId": "genie-code",
     "status": "renamed",
     "releases": [
-      { "type": "public-preview", "date": "2023-07" },
-      { "type": "ga", "date": "2024-06" }
+      { "type": "public-preview", "date": "2023-07", "link": "https://www.databricks.com/blog/introducing-databricks-assistant" },
+      { "type": "ga", "date": "2024-06", "link": "https://docs.databricks.com/aws/en/release-notes/product/2024/june" }
     ],
     "source": "https://docs.databricks.com/aws/en/notebooks/code-assistant",
     "links": [
@@ -703,10 +703,10 @@
     "category": "AI / ML",
     "what": "AI coding assistant that generates and fixes SQL and Python across notebooks, the SQL editor, and pipelines, grounded in Unity Catalog metadata.",
     "fact": "Unlike a generic code assistant, it reads your Unity Catalog metadata - so its SQL and Python suggestions already know your real table and column names.",
-    "from": "2026-03",
+    "from": { "date": "2026-03", "link": "https://www.databricks.com/blog/introducing-genie-code" },
     "status": "active",
     "releases": [
-      { "type": "ga", "date": "2026-03" }
+      { "type": "ga", "date": "2026-03", "link": "https://www.databricks.com/blog/introducing-genie-code" }
     ],
     "occasion": "Introducing Genie Code, March 2026",
     "note": "The Databricks Assistant docs now live under \"Get coding help from Genie Code\" at the same /notebooks/code-assistant page. Databricks' launch blog frames Genie Code as the newest member of the Genie family rather than an explicit rename, but the docs continuity and community coverage (\"Databricks Assistant is now Genie Code\") treat it as one.",
@@ -727,7 +727,7 @@
     "category": "Developer experience",
     "what": "Databricks Labs CLI that templated and deployed jobs via the Jobs API.",
     "fact": "A Databricks Labs side project - the name is short for 'Databricks CLI eXtensions' - that templated and deployed jobs to the Jobs API straight from your terminal.",
-    "from": "2021-02",
+    "from": { "date": "2021-02", "link": "https://learn.microsoft.com/en-us/azure/databricks/archive/dev-tools/dbx/" },
     "deprecatedAt": "2023",
     "status": "deprecated",
     "note": "Databricks recommends Asset Bundles (now Declarative Automation Bundles) instead; the dbx docs are archived and there's an official \"Migrate from dbx to bundles\" guide. Different config format (.dbx/project.json vs databricks.yml) - a replacement, not a rename.",
@@ -745,8 +745,8 @@
     "category": "BI / Dashboards",
     "what": "Databricks SQL's original built-in dashboards for pinning query visualizations onto a shared, drag-and-drop canvas.",
     "fact": "Databricks' first dashboards ran on Redash - the open-source SQL visualization tool it acquired in June 2020 - stitched straight into the SQL Analytics product that shipped that November.",
-    "from": "2020-11",
-    "to": "2023",
+    "from": { "date": "2020-11", "link": "https://learn.microsoft.com/en-us/azure/databricks/release-notes/product/2020/november" },
+    "to": { "date": "2023", "link": "https://docs.databricks.com/aws/en/release-notes/product/2023/september" },
     "successorId": "legacy-dashboards",
     "status": "renamed",
     "occasion": "Launched with SQL Analytics, November 2020",
@@ -766,7 +766,7 @@
     "category": "BI / Dashboards",
     "what": "The deprecation-era name for the original Redash-based Databricks SQL dashboards.",
     "fact": "The Redash-era dashboards Databricks finally switched off: direct access ended January 12, 2026, and an in-place upgrade tool lingered only until that March.",
-    "from": "2020-11",
+    "from": { "date": "2020-11", "link": "https://docs.databricks.com/aws/en/release-notes/product/2020/november" },
     "deprecatedAt": "2024",
     "removedAt": "2026-01",
     "status": "retired",
@@ -787,7 +787,7 @@
     "category": "Developer experience",
     "what": "The original Python-based command-line interface (versions 0.18 and below).",
     "fact": "It was a Python package (versions 0.18 and below) that carried an official 'Experimental' label for its entire life and never graduated out of it.",
-    "from": "2017-06",
+    "from": { "date": "2017-06", "link": "https://learn.microsoft.com/en-us/azure/databricks/dev-tools/cli/migrate" },
     "deprecatedAt": "2023",
     "status": "legacy",
     "note": "Databricks does not support or do feature work on the legacy CLI and recommends the new Go-based CLI (0.205+); the legacy docs are archived. Officially it has always been Experimental, and Databricks states it \"has not established a date or timeline for deprecating the legacy CLI\" - legacy and unsupported rather than formally deprecated. Same core concept, different implementation - a rewrite, not a straight rename.",
@@ -803,11 +803,11 @@
     "name": "DBFS mounts",
     "aliases": ["/mnt", "dbutils.fs.mount", "mount points"],
     "replacement": "Unity Catalog volumes & external locations",
-    "successorId": "unity-catalog-volumes",
+    "successorId": "init-scripts-on-dbfs",
     "category": "Data governance",
     "what": "Mounting cloud object storage into the DBFS namespace under /mnt.",
     "fact": "A single `dbutils.fs.mount` made a cloud storage bucket look like a local /mnt path to everyone on the cluster - convenient, and entirely outside per-user governance.",
-    "from": "2016",
+    "from": { "date": "2016", "link": "https://learn.microsoft.com/en-us/azure/databricks/dbfs/unity-catalog" },
     "deprecatedAt": "2024",
     "status": "deprecated",
     "note": "Mounts bypass Unity Catalog governance; Databricks recommends UC volumes, external locations, or workspace files instead, and provisions new workspaces without mount access. Deprecation date is approximate - docs state the guidance without a single cutover date.",
@@ -824,12 +824,12 @@
     "category": "AI / ML",
     "what": "Highly available, low-latency service for deploying ML and GenAI models behind autoscaling REST endpoints.",
     "fact": "Puts a trained model behind a REST endpoint and manages the servers for you, elastically scaling capacity up under load and back down when the traffic dries up.",
-    "from": "2022",
-    "to": "2023-03",
+    "from": { "date": "2022", "link": "https://docs.databricks.com/aws/en/release-notes/product/2022/august" },
+    "to": { "date": "2023-03", "link": "https://learn.microsoft.com/en-us/azure/databricks/release-notes/product/2023/march" },
     "successorId": "model-serving",
     "status": "renamed",
     "releases": [
-      { "type": "public-preview", "date": "2022-08" }
+      { "type": "public-preview", "date": "2022-08", "link": "https://docs.databricks.com/aws/en/release-notes/product/2022/august" }
     ],
     "source": "https://learn.microsoft.com/en-us/azure/databricks/release-notes/product/2023/march",
     "links": [
@@ -845,10 +845,10 @@
     "category": "AI / ML",
     "what": "Highly available, low-latency service for deploying ML and GenAI models behind autoscaling REST endpoints.",
     "fact": "It shed the tongue-twister name 'Serverless Real-Time Inference' in 2023 - and its endpoints can scale all the way down to zero when nobody's calling them.",
-    "from": "2023-03",
+    "from": { "date": "2023-03", "link": "https://learn.microsoft.com/en-us/azure/databricks/release-notes/product/2023/march" },
     "status": "active",
     "releases": [
-      { "type": "ga", "date": "2023-03" }
+      { "type": "ga", "date": "2023-03", "link": "https://learn.microsoft.com/en-us/azure/databricks/release-notes/product/2023/march" }
     ],
     "occasion": "Model Serving GA, March 7, 2023",
     "note": "The March 2023 release notes state \"Model Serving, formerly Serverless Real-Time Inference, is now generally available.\" Later carried the \"Mosaic AI\" prefix in some surfaces.",
@@ -869,12 +869,12 @@
     "category": "AI / ML",
     "what": "The legacy per-workspace MLflow model registry, including model stages (None/Staging/Production/Archived).",
     "fact": "It tracked each model through named stages - None, Staging, Production, Archived - and lived inside a single workspace, one isolated registry per workspace.",
-    "from": "2020",
+    "from": { "date": "2020", "link": "https://docs.databricks.com/aws/en/release-notes/product/2020/march" },
     "deprecatedAt": "2024",
     "status": "legacy",
     "releases": [
-      { "type": "public-preview", "date": "2020-03" },
-      { "type": "ga", "date": "2020-11" }
+      { "type": "public-preview", "date": "2020-03", "link": "https://docs.databricks.com/aws/en/release-notes/product/2020/march" },
+      { "type": "ga", "date": "2020-11", "link": "https://docs.databricks.com/aws/en/release-notes/product/2020/november" }
     ],
     "note": "Docs mark the page \"(legacy)\" and describe deprecation as a future event; since April 2024 the registry is disabled for workspaces in new accounts whose default catalog is in Unity Catalog, and it remains supported in MLflow 3. Databricks recommends Models in Unity Catalog. Stages are not supported there - the three-level namespace plus aliases (e.g. @champion) replace them; migrate versions with copy_model_version(). A replacement, not a rename: different governance model and API.",
     "source": "https://docs.databricks.com/aws/en/machine-learning/manage-model-lifecycle/",
@@ -893,12 +893,12 @@
     "category": "AI / ML",
     "what": "The legacy per-workspace feature store, with its own UI and metadata layer separate from Unity Catalog.",
     "fact": "It ran its own UI and metadata layer, separate from the rest of the catalog, and shipped as the databricks-feature-store Python package with its own client API.",
-    "from": "2021-05",
+    "from": { "date": "2021-05", "link": "https://docs.databricks.com/aws/en/release-notes/product/2021/may" },
     "deprecatedAt": "2024",
     "status": "deprecated",
     "releases": [
-      { "type": "public-preview", "date": "2021-05" },
-      { "type": "ga", "date": "2022-03" }
+      { "type": "public-preview", "date": "2021-05", "link": "https://docs.databricks.com/aws/en/release-notes/product/2021/may" },
+      { "type": "ga", "date": "2022-03", "link": "https://docs.databricks.com/aws/en/release-notes/product/2022/march" }
     ],
     "note": "Available only for workspaces created before August 19, 2024 (16:00 UTC). Databricks recommends Feature Engineering in Unity Catalog, which unifies feature tables with Delta tables and UC lineage; the databricks-feature-store package moved to databricks-feature-engineering.",
     "source": "https://docs.databricks.com/aws/en/machine-learning/feature-store/workspace-feature-store/",
@@ -917,8 +917,8 @@
     "introducedAt": "2024",
     "status": "active",
     "releases": [
-      { "type": "public-preview", "date": "2025-02" },
-      { "type": "ga", "date": "2025-06" }
+      { "type": "public-preview", "date": "2025-02", "link": "https://docs.databricks.com/aws/en/release-notes/product/2025/february" },
+      { "type": "ga", "date": "2025-06", "link": "https://docs.databricks.com/aws/en/release-notes/product/2025/june" }
     ],
     "occasion": "GA on Databricks Runtime 15.4 LTS and above",
     "note": "Databricks recommends liquid clustering for all new tables - over both Z-ordering and partitioning. Existing ZORDER BY columns can be reused directly as clustering keys.",
@@ -940,8 +940,8 @@
     "introducedAt": "2023",
     "status": "active",
     "releases": [
-      { "type": "public-preview", "date": "2023-07" },
-      { "type": "ga", "date": "2024-02" }
+      { "type": "public-preview", "date": "2023-07", "link": "https://docs.databricks.com/aws/en/release-notes/product/2023/july" },
+      { "type": "ga", "date": "2024-02", "link": "https://www.databricks.com/blog/announcing-general-availability-unity-catalog-volumes" }
     ],
     "note": "Managed volumes use Databricks-managed storage; external volumes govern existing cloud storage. Entered Public Preview July 2023 and reached GA on February 22, 2024. Pairs with the DBFS mounts deprecation.",
     "prediction": ["Lakehouse Volumes", "Unity Volumes One", "Genie Volumes"],
@@ -962,8 +962,8 @@
     "introducedAt": "2023",
     "status": "active",
     "releases": [
-      { "type": "public-preview", "date": "2023-07" },
-      { "type": "ga", "date": "2024-08" }
+      { "type": "public-preview", "date": "2023-07", "link": "https://docs.databricks.com/aws/en/release-notes/product/2023/july" },
+      { "type": "ga", "date": "2024-08", "link": "https://docs.databricks.com/aws/en/release-notes/product/2024/august" }
     ],
     "note": "Governed, read-only access to external data via Unity Catalog foreign catalogs. Introduced in Public Preview in 2023; the overview doc doesn't restate a single GA date.",
     "prediction": ["Lakehouse Confederation", "Unity Federation", "Genie Federation"],
@@ -980,8 +980,8 @@
     "category": "Developer experience",
     "what": "The ODBC driver for connecting BI tools and applications to Databricks SQL warehouses and clusters.",
     "fact": "An OEM driver licensed from Simba Technologies that let Tableau, Power BI and other BI tools speak ODBC to your cluster; its lineage traces back to a 2014 driver built for Shark, Spark's early SQL front-end.",
-    "from": "2014",
-    "to": "2026-02",
+    "from": { "date": "2014", "link": "https://www.databricks.com/blog/2014/04/30/databricks-partners-with-simba-to-deliver-shark-odbc-driver.html" },
+    "to": { "date": "2026-02", "link": "https://docs.databricks.com/aws/en/release-notes/product/2026/february" },
     "successorId": "databricks-odbc-driver",
     "status": "renamed",
     "source": "https://docs.databricks.com/aws/en/integrations/odbc/migration",
@@ -998,10 +998,10 @@
     "category": "Developer experience",
     "what": "The ODBC driver for connecting BI tools and applications to Databricks SQL warehouses and clusters.",
     "fact": "For years this was the third-party 'Simba Spark' driver in disguise - Databricks finally put its own name on it in 2026, and existing DSNs never noticed the change.",
-    "from": "2026-02",
+    "from": { "date": "2026-02", "link": "https://docs.databricks.com/aws/en/release-notes/product/2026/february" },
     "status": "active",
     "releases": [
-      { "type": "ga", "date": "2026-02" }
+      { "type": "ga", "date": "2026-02", "link": "https://docs.databricks.com/aws/en/release-notes/product/2026/february" }
     ],
     "occasion": "Renamed February 2026",
     "note": "Databricks renamed the driver in February 2026. Existing DSNs and code keep working while the legacy Simba-branded driver stays installed; Databricks stopped shipping new Simba versions but supports existing ones for two years. Same driver, new name.",
@@ -1018,14 +1018,14 @@
     "category": "Data governance",
     "what": "Open protocol and Databricks service for securely sharing live data across organizations and platforms, with or without Databricks.",
     "fact": "Billed as the world's first open protocol for sharing live datasets across organizations, it lets a recipient pull Delta Lake or Parquet data straight into pandas or Tableau without first adopting the provider's platform.",
-    "from": "2021",
-    "to": "2026-06",
+    "from": { "date": "2021", "link": "https://www.databricks.com/blog/2021/05/26/introducing-delta-sharing-an-open-protocol-for-secure-data-sharing.html" },
+    "to": { "date": "2026-06", "link": "https://www.databricks.com/blog/introducing-opensharing-next-evolution-delta-sharing-agentic-era" },
     "successorId": "opensharing",
     "status": "renamed",
     "releases": [
-      { "type": "private-preview", "date": "2022-01" },
-      { "type": "public-preview", "date": "2022-03" },
-      { "type": "ga", "date": "2022-08" }
+      { "type": "private-preview", "date": "2022-01", "link": "https://docs.databricks.com/aws/en/release-notes/product/2022/january" },
+      { "type": "public-preview", "date": "2022-03", "link": "https://docs.databricks.com/aws/en/release-notes/product/2022/march" },
+      { "type": "ga", "date": "2022-08", "link": "https://docs.databricks.com/aws/en/release-notes/product/2022/august" }
     ],
     "source": "https://docs.databricks.com/aws/en/opensharing/",
     "links": [
@@ -1041,10 +1041,10 @@
     "category": "Data governance",
     "what": "Open protocol and Databricks service for securely sharing data and AI assets across organizations and platforms, with or without Databricks.",
     "fact": "It's an open protocol, so you can share a live table with someone who's never touched Databricks - and in 2026 the standard itself was open-sourced as OpenSharing at opensharing.io.",
-    "from": "2026-06",
+    "from": { "date": "2026-06", "link": "https://www.databricks.com/blog/introducing-opensharing-next-evolution-delta-sharing-agentic-era" },
     "status": "active",
     "releases": [
-      { "type": "ga", "date": "2026-06" }
+      { "type": "ga", "date": "2026-06", "link": "https://www.databricks.com/blog/introducing-opensharing-next-evolution-delta-sharing-agentic-era" }
     ],
     "occasion": "Open-sourcing of OpenSharing, June 2026",
     "note": "Databricks positions OpenSharing (June 2026) as \"the next evolution of Delta Sharing\": the standard was open-sourced as an independent project under the Linux Foundation (GitHub, opensharing.io) and its scope expanded from data sharing to the full AI stack, with \"Databricks OpenSharing\" as the enterprise implementation. Delta Sharing (first announced 2021) remains the underlying protocol, so this is a rebrand-plus-expansion of the service rather than a clean retirement of Delta Sharing.",
@@ -1062,8 +1062,8 @@
     "category": "Data engineering",
     "what": "The IDE for developing Lakeflow (Spark Declarative) pipelines - code-first, folder-based, with selective execution, data previews, and pipeline graphs on one surface.",
     "fact": "A folder-based IDE that breaks pipeline logic out of single notebooks into modular Python and SQL files, complete with tabs, a dependency graph, per-table run buttons, and a cross-file issues panel.",
-    "from": "2025-06",
-    "to": "2025-09",
+    "from": { "date": "2025-06", "link": "https://docs.databricks.com/aws/en/ldp/multi-file-editor" },
+    "to": { "date": "2025-09", "link": "https://docs.databricks.com/aws/en/release-notes/product/2025/september" },
     "successorId": "lakeflow-pipelines-editor",
     "status": "renamed",
     "source": "https://docs.databricks.com/aws/en/ldp/multi-file-editor",
@@ -1079,11 +1079,11 @@
     "category": "Data engineering",
     "what": "The IDE for developing Lakeflow (Spark Declarative) pipelines - code-first, folder-based, with selective execution, data previews, and pipeline graphs on one surface.",
     "fact": "A code-first IDE that shows your pipeline graph, data previews, and selective runs on one screen - though its URL still betrays the old name, 'multi-file editor.'",
-    "from": "2025-09",
+    "from": { "date": "2025-09", "link": "https://docs.databricks.com/aws/en/release-notes/product/2025/september" },
     "status": "active",
     "releases": [
-      { "type": "public-preview", "date": "2025-09" },
-      { "type": "ga", "date": "2026-05" }
+      { "type": "public-preview", "date": "2025-09", "link": "https://docs.databricks.com/aws/en/release-notes/product/2025/september" },
+      { "type": "ga", "date": "2026-05", "link": "https://docs.databricks.com/aws/en/release-notes/product/2026/may" }
     ],
     "note": "The September 2025 release notes introduced it as \"the Lakeflow Pipelines Editor (previously called the multi-file editor)\"; the doc URL still ends in /multi-file-editor. Reached Public Preview September 2025 and GA May 2026.",
     "prediction": ["Genie Pipelines Editor", "Lakeflow IDE", "Agentic Pipelines Editor"],
@@ -1102,7 +1102,7 @@
     "category": "Data governance",
     "what": "The per-workspace metastore that catalogs tables and views within a single workspace, predating Unity Catalog.",
     "fact": "It scopes every table and view to a single workspace, and those tables still live under the hive_metastore catalog namespace - though brand-new accounts can no longer enable it at all.",
-    "from": "2015",
+    "from": { "date": "2015", "link": "https://docs.databricks.com/aws/en/data-governance/unity-catalog/hive-metastore" },
     "deprecatedAt": "2025",
     "status": "deprecated",
     "note": "Docs state \"The per-workspace Hive metastore is a legacy feature\" and recommend migrating tables and workloads to Unity Catalog, which adds cross-workspace access, lineage, auditing, and access control. Databricks has positioned it as legacy since Unity Catalog's GA; the concrete account-level phase-out landed December 2025 - accounts created after December 18, 2025 have no Hive metastore access and no setting to restore it, while workspace admins in older accounts can still enable legacy features per workspace. Tables remain reachable under the hive_metastore catalog namespace.",
@@ -1122,8 +1122,8 @@
     "introducedAt": "2026-02",
     "status": "active",
     "releases": [
-      { "type": "public-preview", "date": "2025-06" },
-      { "type": "ga", "date": "2026-01" }
+      { "type": "public-preview", "date": "2025-06", "link": "https://www.databricks.com/blog/announcing-lakebase-public-preview" },
+      { "type": "ga", "date": "2026-01", "link": "https://docs.databricks.com/aws/en/release-notes/product/2026/january" }
     ],
     "occasion": "GA February 2026",
     "note": "Brings transactional (OLTP) workloads to the lakehouse, with automatic scaling, instant branching, and native Unity Catalog integration. Entered Public Preview in mid-2025; Lakebase Autoscaling and Lakebase Provisioned were unified at GA. The Compute section's \"OLTP Database\" tab was renamed \"Lakebase Postgres\" in August 2025.",
@@ -1145,7 +1145,7 @@
     "introducedAt": "2026-06",
     "status": "active",
     "releases": [
-      { "type": "beta", "date": "2026-06" }
+      { "type": "beta", "date": "2026-06", "link": "https://docs.databricks.com/aws/en/release-notes/product/2026/june" }
     ],
     "occasion": "Announced June 16, 2026",
     "note": "Brings millisecond real-time analytics directly to the lakehouse, so a separate serving database isn't needed; every query still runs under Unity Catalog governance. Powered by a new asynchronous execution engine, Reyden. In Beta for select read-only workloads - contact your Databricks account team to enable it.",
@@ -1167,8 +1167,8 @@
     "introducedAt": "2026-06",
     "status": "active",
     "releases": [
-      { "type": "public-preview", "date": "2026-04" },
-      { "type": "ga", "date": "2026-06" }
+      { "type": "public-preview", "date": "2026-04", "link": "https://docs.databricks.com/aws/en/release-notes/product/2026/april" },
+      { "type": "ga", "date": "2026-06", "link": "https://docs.databricks.com/aws/en/release-notes/product/2026/june" }
     ],
     "occasion": "GA June 16, 2026",
     "note": "Generates governed, production-ready pipeline code from visual \"data preps,\" so prototypes move to production without a rewrite. Entered Public Preview April 2026 and reached GA June 2026.",
@@ -1190,9 +1190,9 @@
     "introducedAt": "2026-05",
     "status": "active",
     "releases": [
-      { "type": "beta", "date": "2025-06" },
-      { "type": "public-preview", "date": "2025-11" },
-      { "type": "ga", "date": "2026-04" }
+      { "type": "beta", "date": "2025-06", "link": "https://docs.databricks.com/aws/en/release-notes/product/2025/june" },
+      { "type": "public-preview", "date": "2025-11", "link": "https://docs.databricks.com/aws/en/release-notes/product/2025/november" },
+      { "type": "ga", "date": "2026-04", "link": "https://docs.databricks.com/aws/en/release-notes/product/2026/april" }
     ],
     "occasion": "GA May 2026",
     "note": "Supports row filters and column masks that follow governed tags across a catalog or schema instead of per-table grants. Entered Public Preview November 2025 and reached GA in May 2026 (GA announced on the Databricks blog dated May 13, 2026); ABAC GRANT policies were added later, in Beta since June 2026.",
@@ -1213,8 +1213,8 @@
     "introducedAt": "2026-05",
     "status": "active",
     "releases": [
-      { "type": "public-preview", "date": "2025-06" },
-      { "type": "ga", "date": "2026-05" }
+      { "type": "public-preview", "date": "2025-06", "link": "https://www.prnewswire.com/news-releases/databricks-eliminates-table-format-lock-in-and-adds-capabilities-for-business-users-with-unity-catalog-advancements-302478796.html" },
+      { "type": "ga", "date": "2026-05", "link": "https://docs.databricks.com/aws/en/release-notes/product/2026/may" }
     ],
     "occasion": "GA May 21, 2026",
     "note": "Managed Iceberg tables get Databricks platform features (liquid clustering, predictive optimization, materialized views) while external engines like Spark, Flink, and Trino read/write them via the Iceberg REST Catalog with credential vending. Part of Databricks' Iceberg interoperability push.",
@@ -1236,8 +1236,8 @@
     "introducedAt": "2026-01",
     "status": "active",
     "releases": [
-      { "type": "public-preview", "date": "2025-08" },
-      { "type": "ga", "date": "2026-01" }
+      { "type": "public-preview", "date": "2025-08", "link": "https://docs.databricks.com/aws/en/release-notes/product/2025/august" },
+      { "type": "ga", "date": "2026-01", "link": "https://docs.databricks.com/aws/en/release-notes/product/2026/january" }
     ],
     "occasion": "GA January 29, 2026",
     "note": "Serverless compute and default storage live in the Databricks account, not the customer's cloud account, so cloud credits/discounts don't apply and billing runs through Databricks. Entered Public Preview August 2025 and reached GA January 2026.",
@@ -1254,8 +1254,8 @@
     "category": "Compute / BI",
     "what": "Compute access modes that determine Unity Catalog support, language availability, and whether a cluster is shared.",
     "fact": "The two original ways to attach compute to governed data: one isolated every user's Python, SQL and Scala so a crowd could safely share one cluster, the other gave a lone user privileged machine access for GPUs, R and RDD APIs.",
-    "from": "2022",
-    "to": "2025-03",
+    "from": { "date": "2022", "link": "https://www.databricks.com/blog/whats-new-unity-catalog-compute" },
+    "to": { "date": "2025-03", "link": "https://www.databricks.com/blog/whats-new-unity-catalog-compute" },
     "successorId": "standard-and-dedicated-access-modes",
     "status": "renamed",
     "source": "https://www.databricks.com/blog/whats-new-unity-catalog-compute",
@@ -1272,10 +1272,10 @@
     "category": "Compute / BI",
     "what": "Compute access modes that determine Unity Catalog support, language availability, and whether a cluster is shared.",
     "fact": "'Shared' became 'Standard' and 'Single user' became 'Dedicated' in 2025 - then 'Dedicated' clusters were promptly allowed to be shared with a group, making the new name ironic on arrival.",
-    "from": "2025-03",
+    "from": { "date": "2025-03", "link": "https://www.databricks.com/blog/whats-new-unity-catalog-compute" },
     "status": "active",
     "releases": [
-      { "type": "ga", "date": "2025-03" }
+      { "type": "ga", "date": "2025-03", "link": "https://www.databricks.com/blog/whats-new-unity-catalog-compute" }
     ],
     "occasion": "What's new with Unity Catalog compute, March 2025",
     "note": "Databricks renamed the access modes: \"Standard\" clusters were formerly \"Shared\" and \"Dedicated\" clusters were formerly \"Single user.\" Dedicated clusters can now be shared with a group, and a new \"Auto\" mode picks the recommended access mode automatically. Same underlying concepts, new names.",
@@ -1295,7 +1295,7 @@
     "category": "Developer experience",
     "what": "Long-lived bearer tokens used to authenticate to the Databricks REST API, CLI, and integrations.",
     "fact": "These long-lived bearer tokens authenticate to the REST API, CLI, and integrations - but they can't automate account-level functionality, and have a habit of ending up pasted into notebooks.",
-    "from": "2017",
+    "from": { "date": "2017", "link": "https://docs.databricks.com/aws/en/dev-tools/auth/pat" },
     "deprecatedAt": "2026",
     "status": "legacy",
     "note": "The docs page is titled \"Authenticate with Databricks personal access tokens (legacy)\" and states \"Where possible, Databricks recommends using OAuth instead of PATs ... because OAuth provides stronger security.\" PATs can't automate account-level functionality - use OAuth tokens for account admins or service principals instead. Still supported but positioned as legacy; OAuth token federation removes the need to manage and rotate them.",
@@ -1315,8 +1315,8 @@
     "introducedAt": "2025-01",
     "status": "active",
     "releases": [
-      { "type": "public-preview", "date": "2025-01" },
-      { "type": "ga", "date": "2025-08" }
+      { "type": "public-preview", "date": "2025-01", "link": "https://docs.databricks.com/aws/en/release-notes/product/2025/january" },
+      { "type": "ga", "date": "2025-08", "link": "https://docs.databricks.com/aws/en/release-notes/product/2025/august" }
     ],
     "note": "Docs: \"OAuth token federation eliminates the need to manage and rotate Databricks secrets such as personal access tokens and Databricks OAuth client secrets.\" The concrete replacement behind the PAT deprecation; entered Public Preview January 24, 2025 and reached GA August 26, 2025.",
     "prediction": ["OAuth token confederation", "Unity token federation", "Genie Auth"],
@@ -1335,7 +1335,7 @@
     "category": "Compute / BI",
     "what": "The original Databricks SQL query editor UI.",
     "fact": "The original Databricks SQL query editor ran one statement per tab - and it's scheduled to retire entirely in late July 2026.",
-    "from": "2020-11",
+    "from": { "date": "2020-11", "link": "https://docs.databricks.com/aws/en/release-notes/product/2020/november" },
     "deprecatedAt": "2026",
     "removedAt": "2026-07",
     "status": "deprecated",
@@ -1356,7 +1356,7 @@
     "category": "BI / Dashboards",
     "what": "The original Databricks SQL alerts that notified when a scheduled query crossed a threshold.",
     "fact": "These original SQL alerts fired when a scheduled query crossed a threshold - and each alert leaned on a separately saved query to do it.",
-    "from": "2020-11",
+    "from": { "date": "2020-11", "link": "https://docs.databricks.com/aws/en/release-notes/product/2020/november" },
     "deprecatedAt": "2025",
     "status": "deprecated",
     "note": "Docs contrast \"legacy alerts\" with the new version, which \"unifies all aspects of creating and managing alerts in a single UI\" (TRIGGERED/OK/UNKNOWN states, no reliance on separately saved queries). The new alerts reached Public Preview in November 2025 and GA in May 2026; the legacy alerts CLI command group is marked deprecated.",
@@ -1375,7 +1375,7 @@
     "category": "Developer experience",
     "what": "Cluster initialization shell scripts stored on DBFS, plus the older legacy global and cluster-named init-script mechanisms.",
     "fact": "This deprecation has real teeth: leave your init scripts on DBFS and the cluster flatly refuses to start until you move them somewhere governed.",
-    "from": "2018",
+    "from": { "date": "2018", "link": "https://docs.databricks.com/aws/en/init-scripts/" },
     "deprecatedAt": "2023",
     "removedAt": "2023-12",
     "status": "retired",
@@ -1395,7 +1395,7 @@
     "category": "Compute / BI",
     "what": "The legacy compute access mode that shares a cluster across users without process isolation or Unity Catalog governance.",
     "fact": "It shared one cluster across users with no process isolation between them and no Unity Catalog governance - so, unsurprisingly, new accounts don't get it by default anymore.",
-    "from": "2022",
+    "from": { "date": "2022", "link": "https://docs.databricks.com/aws/en/admin/account-settings/no-isolation-shared" },
     "deprecatedAt": "2025",
     "status": "deprecated",
     "note": "Docs: \"No isolation shared clusters are compute resources that use the legacy access mode No isolation shared.\" Admins can enable an account setting that disables credential sharing on them, and new accounts don't get this mode by default. Databricks recommends the Unity Catalog-governed Standard or Dedicated access modes instead.",
@@ -1415,7 +1415,7 @@
     "category": "Developer experience",
     "what": "The original Databricks Connect client for running local code against a remote cluster, on Databricks Runtime 12.2 LTS and below.",
     "fact": "The original Databricks Connect ran local code against a remote cluster on Runtime 12.2 LTS and below, using its own bespoke client protocol that predated Spark Connect.",
-    "from": "2019-06",
+    "from": { "date": "2019-06", "link": "https://docs.databricks.com/aws/en/release-notes/product/2019/june" },
     "deprecatedAt": "2023",
     "status": "deprecated",
     "note": "Docs: \"Databricks Connect for Databricks Runtime 12.2 LTS and below is deprecated ... Use Databricks Connect for Databricks Runtime 13.3 LTS and above instead.\" The new Databricks Connect is rebuilt on Spark Connect - a different architecture, so a replacement rather than a rename.",
@@ -1435,8 +1435,8 @@
     "introducedAt": "2025-02",
     "status": "active",
     "releases": [
-      { "type": "public-preview", "date": "2024-08" },
-      { "type": "ga", "date": "2025-01" }
+      { "type": "public-preview", "date": "2024-08", "link": "https://www.databricks.com/blog/databricks-clean-rooms-privacy-safe-collaboration-public-preview" },
+      { "type": "ga", "date": "2025-01", "link": "https://docs.databricks.com/aws/en/release-notes/product/2025/january" }
     ],
     "occasion": "GA on AWS and Azure, February 2025",
     "note": "Built on Delta Sharing/OpenSharing and Unity Catalog with a no-trust model (all parties have equal privileges). Reached GA on AWS and Azure in February 2025, with GCP later in 2025.",
@@ -1458,8 +1458,8 @@
     "introducedAt": "2023",
     "status": "active",
     "releases": [
-      { "type": "public-preview", "date": "2023-06" },
-      { "type": "ga", "date": "2026-05" }
+      { "type": "public-preview", "date": "2023-06", "link": "https://docs.databricks.com/aws/en/release-notes/product/2023/june" },
+      { "type": "ga", "date": "2026-05", "link": "https://docs.databricks.com/aws/en/release-notes/product/2026/may" }
     ],
     "note": "The successor to the legacy Python CLI (0.18 and below). Reached 0.205 in 2023 and GA in 2024; adds Databricks Asset Bundles support the legacy CLI never had.",
     "prediction": ["Genie CLI", "Unity CLI", "Databricks CLI One"],
@@ -1480,8 +1480,8 @@
     "introducedAt": "2023",
     "status": "active",
     "releases": [
-      { "type": "public-preview", "date": "2023-04" },
-      { "type": "ga", "date": "2023-06" }
+      { "type": "public-preview", "date": "2023-04", "link": "https://docs.databricks.com/aws/en/release-notes/product/2023/april" },
+      { "type": "ga", "date": "2023-06", "link": "https://docs.databricks.com/aws/en/release-notes/product/2023/june" }
     ],
     "note": "The successor to the legacy Databricks Connect (Runtime 12.2 LTS and below). Available for Databricks Runtime 13.3 LTS and above.",
     "prediction": ["Genie Connect", "Spark Connect One", "Databricks Connect Prime"],
@@ -1501,8 +1501,8 @@
     "introducedAt": "2022",
     "status": "active",
     "releases": [
-      { "type": "public-preview", "date": "2022-03" },
-      { "type": "ga", "date": "2022-08" }
+      { "type": "public-preview", "date": "2022-03", "link": "https://docs.databricks.com/aws/en/release-notes/product/2022/march" },
+      { "type": "ga", "date": "2022-08", "link": "https://docs.databricks.com/aws/en/release-notes/product/2022/august" }
     ],
     "note": "The successor to the per-workspace Hive metastore. Announced 2021; GA on AWS in August 2022. Adds cross-workspace access, row/column-level security, lineage, and auditing.",
     "prediction": ["Unity Catalog One", "Genie Catalog", "Lakehouse Catalog"],
@@ -1523,8 +1523,8 @@
     "introducedAt": "2024",
     "status": "active",
     "releases": [
-      { "type": "public-preview", "date": "2023-06" },
-      { "type": "ga", "date": "2023-10" }
+      { "type": "public-preview", "date": "2023-06", "link": "https://docs.databricks.com/aws/en/release-notes/product/2023/june" },
+      { "type": "ga", "date": "2023-10", "link": "https://docs.databricks.com/aws/en/release-notes/product/2023/october" }
     ],
     "note": "The successor to the Workspace Model Registry. Stages give way to a three-level namespace plus aliases; migrate versions with copy_model_version().",
     "prediction": ["Genie Models", "Mosaic AI Registry", "Unity Models One"],
@@ -1544,8 +1544,8 @@
     "introducedAt": "2023",
     "status": "active",
     "releases": [
-      { "type": "public-preview", "date": "2023-08" },
-      { "type": "ga", "date": "2023-10" }
+      { "type": "public-preview", "date": "2023-08", "link": "https://docs.databricks.com/aws/en/release-notes/product/2023/august" },
+      { "type": "ga", "date": "2023-10", "link": "https://docs.databricks.com/aws/en/release-notes/product/2023/october" }
     ],
     "note": "The successor to the Workspace Feature Store. Uses the databricks-feature-engineering package (formerly databricks-feature-store).",
     "prediction": ["Genie Features", "Mosaic AI Features", "Unity Feature Store"],
@@ -1565,7 +1565,7 @@
     "introducedAt": "2025",
     "status": "active",
     "releases": [
-      { "type": "ga", "date": "2026-05" }
+      { "type": "ga", "date": "2026-05", "link": "https://docs.databricks.com/aws/en/sql/user/sql-editor/" }
     ],
     "note": "The successor to the legacy SQL editor, which retires in late July 2026. Became the default for all workspaces in late May 2026.",
     "prediction": ["Genie SQL editor", "Lakeflow SQL editor", "SQL editor One"],
@@ -1586,9 +1586,9 @@
     "introducedAt": "2025",
     "status": "active",
     "releases": [
-      { "type": "beta", "date": "2025-05" },
-      { "type": "public-preview", "date": "2025-11" },
-      { "type": "ga", "date": "2026-05" }
+      { "type": "beta", "date": "2025-05", "link": "https://docs.databricks.com/aws/en/release-notes/product/2025/may" },
+      { "type": "public-preview", "date": "2025-11", "link": "https://docs.databricks.com/aws/en/release-notes/product/2025/november" },
+      { "type": "ga", "date": "2026-05", "link": "https://docs.databricks.com/aws/en/release-notes/product/2026/may" }
     ],
     "note": "The successor to the legacy SQL alerts. Public Preview November 2025, GA May 2026.",
     "prediction": ["Genie Alerts", "Lakeflow Alerts", "SQL Alerts One"],
@@ -1608,8 +1608,8 @@
     "introducedAt": "2024-11",
     "status": "active",
     "releases": [
-      { "type": "public-preview", "date": "2024-10" },
-      { "type": "ga", "date": "2025-05" }
+      { "type": "public-preview", "date": "2024-10", "link": "https://docs.databricks.com/aws/en/release-notes/product/2024/october" },
+      { "type": "ga", "date": "2025-05", "link": "https://docs.databricks.com/aws/en/release-notes/product/2025/may" }
     ],
     "occasion": "GA announced June 11, 2025",
     "note": "Launched in Public Preview November 2024 and reached GA June 11, 2025 - by which point Databricks reported 20,000+ apps built by 2,500+ customers, across 28 regions and all three clouds. Supports Python (Streamlit, Dash, Gradio, Plotly) and JavaScript/Node.js (React and friends).",

@@ -1449,6 +1449,34 @@ body {
   font-variant-numeric: tabular-nums;
 }
 
+/* A date that carries a confirmation link: the date reads in the accent color (via the
+   .row-meta a rule above) with a small, muted 🔗 mark that firms up on hover. The mark
+   is what signals "this date is sourced" without a full underline in the resting state. */
+.date-src {
+  white-space: nowrap;
+}
+
+.date-src-mark {
+  margin-left: 2px;
+  font-size: 0.82em;
+  opacity: 0.5;
+  vertical-align: baseline;
+  text-decoration: none;
+}
+
+.date-src:hover .date-src-mark,
+.date-src:focus-visible .date-src-mark {
+  opacity: 0.95;
+}
+
+/* When the release-maturity pill has a stage-confirmation link it renders as an anchor;
+   keep it visually identical to the static pill (no underline, inherited hue) and just
+   nudge the cursor to signal it's clickable. */
+a.badge-release-link {
+  text-decoration: none;
+  cursor: pointer;
+}
+
 /* action toolbar, bottom-right of the card - the conventional spot for per-item
    controls. Icon buttons only: copy link, share on LinkedIn, open source. */
 .row-actions {
