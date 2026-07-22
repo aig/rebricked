@@ -576,6 +576,10 @@ body {
   letter-spacing: -.02em;
 }
 
+.page-title-accent {
+  color: var(--accent);
+}
+
 .page-sub {
   margin: 6px 0 0;
   color: var(--muted);
@@ -728,6 +732,22 @@ body {
   border-radius: 10px;
   width: fit-content;
   max-width: 100%;
+}
+
+.filters-icon {
+  width: 30px;
+  min-height: 30px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--muted);
+}
+
+.filters-icon svg {
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.8;
+  stroke-linecap: round;
 }
 
 .filter {
@@ -989,6 +1009,63 @@ body {
   border-radius: 50%;
   background: currentColor;
   flex: none;
+}
+
+/* Lifecycle help: a compact status-progression table on hover and keyboard focus. */
+.has-status-guide { position: relative; }
+.status-guide {
+  position: absolute;
+  top: calc(100% + 8px);
+  right: 0;
+  z-index: 30;
+  display: grid;
+  gap: 8px;
+  width: 470px;
+  max-width: min(470px, calc(100vw - 44px));
+  padding: 12px;
+  border: 1px solid #fff;
+  border-radius: 10px;
+  color: var(--ink);
+  background: var(--panel);
+  box-shadow: 0 8px 24px rgba(20, 25, 35, .18);
+  font-family: var(--sans);
+  font-size: 11px;
+  font-weight: 500;
+  line-height: 1.25;
+  letter-spacing: normal;
+  text-align: left;
+  text-transform: none;
+  white-space: normal;
+  pointer-events: none;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-3px);
+  transition: opacity .14s, transform .14s, visibility .14s;
+}
+.has-status-guide:hover > .status-guide,
+.has-status-guide:focus-visible > .status-guide {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+.sg-title { font-size: 11px; font-weight: 800; color: var(--ink); }
+.sg-row { display: grid; grid-template-columns: 92px 1fr; align-items: center; gap: 9px; }
+.sg-label { color: var(--faint); font-size: 9px; font-weight: 800; text-transform: uppercase; letter-spacing: .04em; }
+.sg-flow { display: flex; align-items: center; gap: 5px; min-width: 0; }
+.sg-stage { display: grid; gap: 1px; min-width: 0; padding: 5px 7px; border: 1px solid var(--line); border-radius: 7px; background: var(--bg); }
+.sg-stage b { font-size: 9px; white-space: nowrap; }
+.sg-stage small { color: var(--faint); font-size: 8px; white-space: nowrap; }
+.sg-stage.active { color: var(--c-active-ink); border-color: var(--c-active); background: color-mix(in srgb, var(--c-active) 12%, var(--panel)); box-shadow: 0 0 0 1px color-mix(in srgb, var(--c-active) 18%, transparent); }
+.sg-stage.active-beta,
+.sg-stage.active-private-preview,
+.sg-stage.active-public-preview,
+.sg-stage.active-preview { color: var(--c-deprecated-ink); border-color: var(--c-deprecated); background: color-mix(in srgb, var(--c-deprecated) 12%, var(--panel)); box-shadow: 0 0 0 1px color-mix(in srgb, var(--c-deprecated) 18%, transparent); }
+.sg-arrow { flex: none; color: var(--accent); font-size: 13px; font-weight: 800; }
+
+@media (max-width: 620px) {
+  .status-guide { width: min(330px, calc(100vw - 32px)); }
+  .sg-row { grid-template-columns: 1fr; gap: 4px; }
+  .sg-flow { flex-wrap: wrap; }
 }
 
 .badge-deprecated {
@@ -1279,16 +1356,31 @@ body {
 /* Status tag as a flush top-edge tab: it straddles the card's top border, inset from
    the left, like a fieldset legend. An opaque panel fill cuts the border line behind it;
    each status still reads through its own border, label, and dot colors. */
-.row-eyebrow .badge {
+.row.is-feature,
+.row.has-availability,
+.row.has-corner-status { padding-right: 112px; }
+
+.row-eyebrow .badge-availability,
+.row-eyebrow .badge-corner {
   position: absolute;
-  top: 0;
-  left: 18px;
-  transform: translateY(-52%);
+  top: 12px;
+  right: 14px;
+  left: auto;
+  transform: none;
   margin: 0;
-  padding: 2px 10px;
-  border-radius: 7px;
-  background: var(--panel);
+  padding: 3px 9px;
+  border-radius: 999px;
   box-shadow: none;
+  text-decoration: none;
+}
+
+.row-eyebrow .badge-lifecycle:not(.badge-corner) {
+  position: relative;
+  flex: none;
+  margin: 0;
+  padding: 3px 9px;
+  border-radius: 999px;
+  transform: none;
 }
 
 /* "retired" is a solid tab, not an outlined one - keep its filled amber + light label
@@ -1516,6 +1608,39 @@ mark {
   text-align: center;
   line-height: 1.7;
 }
+
+/* Lakeflow Connect keeps its fast-moving connector inventory below the product card. */
+.connectors-section {
+  margin: 12px 0 2px;
+  background: var(--bg);
+  border: 1px solid var(--line);
+  border-radius: 9px;
+  padding: 8px;
+}
+
+.connector-catalog {
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: var(--bg);
+  /* Status guides extend beyond the compact catalog; clipping here hid most of them. */
+  overflow: visible;
+}
+
+.connector-list { display: grid; gap: 1px; background: var(--line); }
+.connector-item { padding: 9px 10px; background: var(--panel); }
+.connector-item:first-child { border-radius: 9px 9px 0 0; }
+.connector-item:last-child { border-radius: 0 0 9px 9px; }
+.connector-item:only-child { border-radius: 9px; }
+.connector-main { display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; }
+.connector-main h4 { margin: 0 0 3px; font-size: 13px; }
+.connector-main p { margin: 0; color: var(--muted); font-size: 11.5px; line-height: 1.4; }
+.connector-status { display: flex; align-items: center; gap: 7px; flex: none; }
+.connector-date { color: var(--faint); font-size: 10px; font-variant-numeric: tabular-nums; text-decoration: none; white-space: nowrap; }
+.connector-date:hover { color: var(--accent); }
+.connector-state { flex: none; border-radius: 999px; padding: 3px 8px; font-size: 10px; font-weight: 800; text-transform: uppercase; letter-spacing: .03em; text-decoration: none; }
+.state-beta, .state-private-preview, .state-public-preview { color: var(--c-deprecated); background: color-mix(in srgb, var(--c-deprecated) 12%, transparent); }
+.state-ga { color: var(--c-active); background: color-mix(in srgb, var(--c-active) 12%, transparent); }
+.state-deprecated, .state-retired { color: var(--muted); background: var(--bg); }
 
 .error code {
   color: var(--accent);

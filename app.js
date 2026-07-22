@@ -16,11 +16,11 @@
   }
 
   let DATA = [];
+  let CONNECTORS = [];
   let activeCategory = null;
   let activeSection = null; // {label, ids} when a rail section is selected
-  // Multi-select status filter, keyed on the badge a card shows (see bucketOf), not on
-  // kindOf. "All" is derived: it's active exactly when all three buckets are selected.
-  // Toggling any bucket off deselects "All" too.
+  // Single-select status filter, keyed on the badge a card shows (see bucketOf), not on
+  // kindOf. "All" is represented by all three buckets so the filtering path stays simple.
   const KIND_KEYS = ["current", "deprecation", "renamed"];
   let activeKinds = new Set(KIND_KEYS);
   const allKindsSelected = () => KIND_KEYS.every((k) => activeKinds.has(k));
@@ -59,13 +59,13 @@
   // The status filter (top of results). Orthogonal to section/category/search.
   // Keys match the buckets bucketOf() returns and the badges the cards show.
   const FILTERS = [
+    { key: "all", label: "All", hint: "Show every lifecycle stage" },
     { key: "current", label: "Active", hint: "In use now - new, preview and current names" },
     { key: "deprecation", label: "Legacy", hint: "Deprecated or retired" },
     { key: "renamed", label: "Renamed", hint: "Superseded former names" },
   ];
 
-  // Status sort order within a year, and the order the filter buttons render in:
-  // Active first, then Legacy, then Renamed. Keys match bucketOf().
+  // Status sort order within a year. Filter buttons add All before these buckets.
   const BUCKET_ORDER = { current: 0, deprecation: 1, renamed: 2 };
 
   // ---- sidebar config: mirrors the Databricks console rail ----
@@ -96,7 +96,7 @@
     ]},
     { label: "Data Engineering", items: [
       { label: "Runs", icon: "runs" },
-      { label: "Data Ingestion", icon: "ingestion" },
+      { label: "Data Ingestion", icon: "ingestion", ids: ["lakeflow-connect"] },
       { label: "Visual Data Prep", icon: "dataprep", ids: ["lakeflow-designer"] },
     ]},
     { label: "AI/ML", items: [
@@ -147,7 +147,7 @@
     wireStaticControls();
     renderNav();
     try {
-      DATA = await loadData();
+      [DATA, CONNECTORS] = await Promise.all([loadData(), loadConnectors()]);
     } catch (err) {
       renderError();
       return;
@@ -188,23 +188,25 @@
     return rows;
   }
 
-  // ---- status filter (Active / Renamed / Deprecated) ----
+  // ---- status filter (All / Active / Legacy / Renamed) ----
   function renderFilters() {
     const el = $("#filters");
     if (!el) return;
-    el.innerHTML = FILTERS.map((f) => {
-      const title = f.hint ? ` title="${escapeAttr(f.hint)}"` : "";
-      return `<button class="filter" data-kind="${escapeAttr(f.key)}"${title} aria-pressed="false">${escapeHtml(f.label)}<span class="filter-count">0</span></button>`;
-    }).join("");
+    el.innerHTML =
+      '<span class="filters-icon" aria-hidden="true"><svg viewBox="0 0 24 24" width="16" height="16"><path d="M4 6h16M7 12h10M10 18h4" /></svg></span>' +
+      FILTERS.map((f) => {
+        const title = f.hint ? ` title="${escapeAttr(f.hint)}"` : "";
+        return `<button class="filter" data-kind="${escapeAttr(f.key)}"${title} aria-pressed="false">${escapeHtml(f.label)}<span class="filter-count">0</span></button>`;
+      }).join("");
     el.querySelectorAll(".filter").forEach((btn) => {
       btn.addEventListener("click", () => {
         const key = btn.dataset.kind;
-        if (activeKinds.has(key)) {
-          activeKinds.delete(key);
+        if (key === "all") {
+          resetKinds();
         } else {
-          activeKinds.add(key);
+          activeKinds = new Set([key]);
         }
-        track("filter-toggle", { filter: key, on: activeKinds.has(key) });
+        track("filter-toggle", { filter: key, on: filterOn(key) });
         writeURL();
         render();
       });
@@ -221,7 +223,9 @@
     el.querySelectorAll(".filter").forEach((b) => {
       const key = b.dataset.kind;
       const span = b.querySelector(".filter-count");
-      if (span) span.textContent = pool.filter((d) => bucketOf(d) === key).length;
+      if (span) span.textContent = key === "all"
+        ? pool.length
+        : pool.filter((d) => bucketOf(d) === key).length;
       const on = filterOn(key);
       b.classList.toggle("active", on);
       b.setAttribute("aria-pressed", on);
@@ -324,6 +328,12 @@
     return res.json();
   }
 
+  async function loadConnectors() {
+    const res = await fetch("connectors.json", { cache: "no-store" });
+    if (!res.ok) throw new Error("bad connector response " + res.status);
+    return res.json();
+  }
+
   // ---- document metadata (title + description) ----
   // Deep-linked entries (?id=/#id) are the shareable, crawlable URLs, so give each its
   // own <title> and description; the list view falls back to the page defaults.
@@ -381,7 +391,7 @@
 
     // The timeline year filter is likewise orthogonal.
     if (activeYear) {
-      rows = rows.filter((d) => shortYear(changedAt(d)) === activeYear);
+      rows = rows.filter((d) => shortYear(activityAt(d)) === activeYear);
     }
 
     // Newest year on top; within a year, order by status - Active, then Legacy, then
@@ -411,13 +421,13 @@
   // Newest year on top; within a year, order by status - Active, then Legacy, then
   // Renamed (matching the filter buttons) - and by most recent change inside each.
   function byRecency(a, b) {
-    const ya = shortYear(changedAt(a));
-    const yb = shortYear(changedAt(b));
+    const ya = shortYear(activityAt(a));
+    const yb = shortYear(activityAt(b));
     if (ya !== yb) return yb.localeCompare(ya);
     const ra = BUCKET_ORDER[bucketOf(a)] ?? 9;
     const rb = BUCKET_ORDER[bucketOf(b)] ?? 9;
     if (ra !== rb) return ra - rb;
-    return dateKey(changedAt(b)).localeCompare(dateKey(changedAt(a)));
+    return dateKey(activityAt(b)).localeCompare(dateKey(activityAt(a)));
   }
 
   // The full lineage family of an entry: every predecessor, the entry itself, and
@@ -437,7 +447,7 @@
 
   // Group key + label for the chronological dividers: the year of the change.
   function periodOf(d) {
-    const y = shortYear(changedAt(d));
+    const y = shortYear(activityAt(d));
     return { key: y || "-", label: y || "undated" };
   }
 
@@ -514,6 +524,9 @@
     const kind = kindOf(d);
 
     const note = d.note ? `<p class="row-note">${escapeHtml(d.note)}</p>` : "";
+    const connectorCatalog = d.id === "lakeflow-connect"
+      ? `<section class="connectors-section" aria-label="Managed connector status">${connectorCatalogHTML()}</section>`
+      : "";
     // A real-but-fun fact about the feature - genuinely true, grounded in each
     // entry's history; the tone is ours.
     const fact = d.fact
@@ -522,11 +535,18 @@
     const occasion = d.occasion ? ` · ${escapeHtml(d.occasion)}` : "";
 
     const badge = statusBadge(d);
+    const availability = kind !== "feature" && d.availability
+      ? availabilityBadge(d)
+      : "";
+    const lifecycleInCorner = kind === "deprecation" ||
+      (kind === "rename" && (d.status || "current") === "renamed");
     let trail, dateText, urgent = "", rowCls = "";
     if (kind === "feature") {
       rowCls = " is-feature";
       trail = featureTrail(d, q);
-      dateText = `Introduced ${escapeHtml(fmtDate(d.introducedAt || "?"))}${occasion}`;
+      const connectorUpdate = latestConnectorUpdate(d.id);
+      const updateNote = connectorUpdate ? ` · Latest connector status ${escapeHtml(connectorUpdate)}` : "";
+      dateText = `Introduced ${escapeHtml(fmtDate(d.introducedAt || "?"))}${occasion}${updateNote}`;
     } else if (kind === "deprecation") {
       const status = d.status || "deprecated";
       // legacy (no formal end date) gets its own quiet slate spine; a dated
@@ -551,6 +571,8 @@
         dateText = `Current since ${escapeHtml(fmtDate(d.from || "?"))}${occasion}`;
       }
     }
+    if (availability) rowCls += " has-availability";
+    if (lifecycleInCorner) rowCls += " has-corner-status";
 
     // The rename history as one scannable line: predecessors → this card → successors,
     // each other name linking to its own card. Replaces the successor/predecessor
@@ -579,14 +601,50 @@
       <article class="row${rowCls}" data-id="${escapeAttr(d.id)}">
         <div class="row-eyebrow">
           ${badge}
+          ${availability}
           ${chain}
         </div>
         <p class="row-what">${escapeHtml(d.what || "")}</p>
         ${meta}
         ${fact}
         ${note}
+        ${connectorCatalog}
         ${foot}
       </article>`;
+  }
+
+  const CONNECTOR_STATUS_LABELS = {
+    "private-preview": "Private Preview",
+    beta: "Beta",
+    "public-preview": "Public Preview",
+    ga: "GA",
+    deprecated: "Deprecated",
+    retired: "Retired",
+  };
+
+  function statusGuide(current) {
+    const stage = (key, label, note) =>
+      `<span class="sg-stage${current === key || (current === "preview" && key === "public-preview") ? ` active active-${escapeAttr(current)}` : ""}"><b>${escapeHtml(label)}</b><small>${escapeHtml(note)}</small></span>`;
+    const arrow = `<span class="sg-arrow" aria-hidden="true">→</span>`;
+    return `<span class="status-guide" role="table" aria-label="Databricks status progression">
+      <span class="sg-title">How Databricks statuses progress</span>
+      <span class="sg-row" role="row"><span class="sg-label" role="rowheader">Availability</span><span class="sg-flow" role="cell">${stage("private-preview", "Private Preview", "invite only")}${arrow}${stage("beta", "Beta", "early testing")}${arrow}${stage("public-preview", "Public Preview", "broader testing")}${arrow}${stage("ga", "GA", "production ready")}</span></span>
+      <span class="sg-row" role="row"><span class="sg-label" role="rowheader">Product lifecycle</span><span class="sg-flow" role="cell">${stage("current", "Current name", "in use now")}${arrow}${stage("renamed", "Renamed", "new name")}</span></span>
+      <span class="sg-row" role="row"><span class="sg-label" role="rowheader">Retirement</span><span class="sg-flow" role="cell">${stage("current", "Current name", "supported")}${arrow}${stage("legacy", "Legacy", "older path")}${arrow}${stage("deprecated", "Deprecated", "move away")}${arrow}${stage("retired", "Retired", "access ended")}</span></span>
+    </span>`;
+  }
+
+  function connectorCatalogHTML() {
+    const rows = CONNECTORS.slice()
+      .sort((a, b) => b.statusUpdatedAt.localeCompare(a.statusUpdatedAt) || a.name.localeCompare(b.name))
+      .map((c) => {
+        return `<article class="connector-item">
+          <div class="connector-main"><div><h4>${escapeHtml(c.name)}</h4><p>${escapeHtml(c.what)}</p></div><div class="connector-status"><a class="connector-date" href="${escapeAttr(c.source)}" target="_blank" rel="noopener" title="Open official documentation">${escapeHtml(c.statusUpdatedAt)}</a><a class="connector-state state-${escapeAttr(c.status)} has-status-guide" href="${escapeAttr(c.source)}" target="_blank" rel="noopener">${escapeHtml(CONNECTOR_STATUS_LABELS[c.status] || c.status)}${statusGuide(c.status)}</a></div></div>
+        </article>`;
+      }).join("");
+    return `<div class="connector-catalog">
+      <div class="connector-list">${rows}</div>
+    </div>`;
   }
 
   // The card's "current status" badge - one per kind.
@@ -594,18 +652,29 @@
     const kind = kindOf(d);
     if (kind === "deprecation") {
       const status = d.status || "deprecated";
-      return `<span class="badge badge-${escapeAttr(status)}">${escapeHtml(status)}</span>`;
+      return `<span class="badge badge-${escapeAttr(status)} badge-lifecycle badge-corner has-status-guide" tabindex="0">${escapeHtml(status)}${statusGuide(status)}</span>`;
     }
     if (kind === "feature") {
       const status = d.status || "ga";
-      const label = status === "preview" ? "preview" : "new";
-      return `<span class="badge badge-${escapeAttr(status)}">${escapeHtml(label)}</span>`;
+      const label = status === "preview" ? "Preview" : "GA";
+      const linked = d.id === "lakeflow-connect";
+      const tag = linked ? "a" : "span";
+      const attrs = linked
+        ? ` href="${escapeAttr(d.source)}" target="_blank" rel="noopener" title="Open official availability documentation"`
+        : "";
+      return `<${tag} class="badge badge-${escapeAttr(status)} badge-availability has-status-guide"${attrs}${linked ? "" : ' tabindex="0"'}>${escapeHtml(label)}${statusGuide(status)}</${tag}>`;
     }
     // rename card: the name in use now vs. a superseded one
     if ((d.status || "current") === "renamed") {
-      return `<span class="badge badge-former">renamed</span>`;
+      return `<span class="badge badge-former badge-lifecycle badge-corner has-status-guide" tabindex="0">renamed${statusGuide("renamed")}</span>`;
     }
-    return `<span class="badge badge-current">latest</span>`;
+    return "";
+  }
+
+  function availabilityBadge(d) {
+    const status = d.availability;
+    const labels = { ga: "GA", preview: "Preview", beta: "Beta", "private-preview": "Private Preview", "public-preview": "Public Preview" };
+    return `<a class="badge badge-${escapeAttr(status === "ga" ? "ga" : "preview")} badge-availability has-status-guide" href="${escapeAttr(d.availabilitySource)}" target="_blank" rel="noopener" title="Available since ${escapeAttr(d.availabilityAt)} - open official source">${escapeHtml(labels[status] || status)}${statusGuide(status)}</a>`;
   }
 
   // Cross-card links. A card points forward via `successorId` (the name it became,
@@ -873,9 +942,10 @@
   function renderCounter() {
     const el = $("#counter-text");
     if (!el) return;
-    // days since the most recent change (rename or deprecation) anywhere in the dataset
-    const latest = DATA
-      .map(changedAt)
+    // Product lifecycle events and connector status transitions share this freshness
+    // counter, even though their records live in separate source files.
+    const latest = DATA.map(changedAt)
+      .concat(CONNECTORS.map((c) => c.statusUpdatedAt))
       .filter(Boolean)
       .sort((a, b) => dateKey(a).localeCompare(dateKey(b)))
       .pop();
@@ -1609,8 +1679,9 @@
     }
     const kind = params.get("kind");
     if (kind !== null) {
-      // Comma-separated list of selected kinds; an empty value means none selected.
-      activeKinds = new Set(kind.split(",").filter((k) => KIND_KEYS.includes(k)));
+      // Keep legacy comma-separated links valid, but select only their first known bucket.
+      const selectedKind = kind.split(",").find((k) => KIND_KEYS.includes(k));
+      if (selectedKind) activeKinds = new Set([selectedKind]);
       syncFilterButtons();
     }
     const year = params.get("year");
@@ -1802,7 +1873,7 @@
     if (TL_DATA) return TL_DATA;
     const byYear = {};
     DATA.forEach((d) => {
-      const y = shortYear(changedAt(d));
+      const y = shortYear(activityAt(d));
       if (!y) return;
       const slot = byYear[y] || (byYear[y] = { current: 0, renamed: 0, deprecation: 0 });
       slot[bucketOf(d)]++;
@@ -1963,6 +2034,22 @@
       : (d.from || d.to || "");
   }
 
+  function latestConnectorUpdate(productId) {
+    return CONNECTORS
+      .filter((c) => c.productId === productId && c.statusUpdatedAt)
+      .map((c) => c.statusUpdatedAt)
+      .sort()
+      .pop() || "";
+  }
+
+  // Parent product cards bubble up when a child connector changes status, while their
+  // own introducedAt remains the immutable launch date shown inside the card.
+  function activityAt(d) {
+    const own = changedAt(d);
+    const child = latestConnectorUpdate(d.id);
+    return dateKey(child) > dateKey(own) ? child : own;
+  }
+
   // Normalize an entry to one of the three underlying kinds. Absent kind => rename.
   function kindOf(d) {
     return d.kind === "deprecation" || d.kind === "feature" ? d.kind : "rename";
@@ -1989,9 +2076,10 @@
 
   function daysSince(dateStr) {
     if (!dateStr) return null;
-    // accept YYYY or YYYY-MM; default missing parts to the start of the period
-    const [y, m] = dateStr.split("-");
-    const then = new Date(Number(y), (Number(m) || 1) - 1, 1);
+    // Accept YYYY, YYYY-MM, and YYYY-MM-DD. Partial product dates retain the existing
+    // start-of-period behavior; exact connector dates must not lose their day component.
+    const [y, m, d] = dateStr.split("-");
+    const then = new Date(Number(y), (Number(m) || 1) - 1, Number(d) || 1);
     if (isNaN(then)) return null;
     const now = new Date();
     const diff = Math.floor((now - then) / 86400000);

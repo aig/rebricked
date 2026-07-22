@@ -14,6 +14,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
 DATA = ROOT / "databricks.json"
+CONNECTORS = ROOT / "connectors.json"
 APP_JS = ROOT / "app.js"
 
 DATE_RE = re.compile(r"^\d{4}(-(0[1-9]|1[0-2]))?$")  # YYYY or YYYY-MM (real months only)
@@ -34,10 +35,12 @@ VALID_KINDS = ("rename", "deprecation", "feature")
 # "legacy" = docs call it legacy/unsupported but no formal deprecation date exists.
 VALID_STATUSES = ("deprecated", "retired", "legacy")
 VALID_FEATURE_STATUSES = ("ga", "preview")
+VALID_AVAILABILITY = ("private-preview", "beta", "public-preview", "preview", "ga")
 # A rename card is either the name in use now ("current") or a superseded one ("renamed").
 VALID_RENAME_STATUSES = ("current", "renamed")
 # Classified reference links: official docs, community (blogs/forums), or wider internet.
 VALID_LINK_KINDS = ("official", "community", "internet")
+VALID_CONNECTOR_STATUSES = ("private-preview", "beta", "public-preview", "ga", "deprecated", "retired")
 
 # The category set the UI's chips are built from. A new category is allowed -
 # add it here deliberately rather than by typo.
@@ -152,6 +155,15 @@ def main():
         src = entry.get("source")
         if src and not URL_RE.match(str(src)):
             err(eid, f"source is not an http(s) URL: {src!r}")
+        availability = entry.get("availability")
+        if availability:
+            if availability not in VALID_AVAILABILITY:
+                err(eid, f"availability must be one of {VALID_AVAILABILITY}, got {availability!r}")
+            if not URL_RE.match(str(entry.get("availabilitySource", ""))):
+                err(eid, "availability needs an official http(s) availabilitySource")
+            available_at = entry.get("availabilityAt")
+            if not available_at or not DATE_RE.match(str(available_at)):
+                err(eid, f"availabilityAt must be YYYY or YYYY-MM, got {available_at!r}")
 
         # category must come from the deliberate allow-list
         cat = entry.get("category")
@@ -256,6 +268,67 @@ def main():
 
     # cross-entry checks
     all_ids = {e.get("id") for e in data if isinstance(e, dict) and e.get("id")}
+
+    # Fast-moving child catalogs live outside the product timeline. Connectors retain
+    # exact lifecycle stages and an append-only status history instead of flattening
+    # Beta / Public Preview into the feature card's generic preview badge.
+    try:
+        connectors = json.loads(CONNECTORS.read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError) as exc:
+        err("connectors", f"could not read valid connectors.json: {exc}")
+        connectors = []
+    if not isinstance(connectors, list):
+        err("connectors", "connectors.json must be a JSON array")
+        connectors = []
+    connector_ids = set()
+    for connector in connectors:
+        if not isinstance(connector, dict):
+            err("connectors", "each connector must be an object")
+            continue
+        cid = connector.get("id", "?")
+        for field in ("id", "name", "productId", "type", "direction", "category", "what", "status", "introducedAt", "statusUpdatedAt", "statusHistory", "source", "verified"):
+            if connector.get(field) in (None, "", []):
+                err(cid, f"connector missing required field: {field}")
+        if cid in connector_ids:
+            err(cid, "duplicate connector id")
+        connector_ids.add(cid)
+        if connector.get("productId") not in all_ids:
+            err(cid, f"connector productId {connector.get('productId')!r} is not in databricks.json")
+        status = connector.get("status")
+        if status not in VALID_CONNECTOR_STATUSES:
+            err(cid, f"connector status must be one of {VALID_CONNECTOR_STATUSES}, got {status!r}")
+        for field in ("introducedAt", "statusUpdatedAt", "verified"):
+            value = connector.get(field)
+            if value and not VERIFIED_RE.match(str(value)):
+                err(cid, f"connector {field} must be YYYY-MM-DD, got {value!r}")
+        for field in ("source",):
+            value = connector.get(field)
+            if value and not URL_RE.match(str(value)):
+                err(cid, f"connector {field} is not an http(s) URL")
+        history = connector.get("statusHistory", [])
+        if not isinstance(history, list):
+            err(cid, "connector statusHistory must be an array")
+            history = []
+        previous = ""
+        for event in history:
+            if not isinstance(event, dict):
+                err(cid, "each connector statusHistory event must be an object")
+                continue
+            if event.get("status") not in VALID_CONNECTOR_STATUSES:
+                err(cid, f"invalid connector history status: {event.get('status')!r}")
+            date = event.get("date", "")
+            if not VERIFIED_RE.match(str(date)):
+                err(cid, f"connector history date must be YYYY-MM-DD, got {date!r}")
+            if previous and date < previous:
+                err(cid, "connector statusHistory must be chronological")
+            previous = date
+            if not URL_RE.match(str(event.get("source", ""))):
+                err(cid, "connector history event needs an http(s) source")
+        if history:
+            if history[-1].get("status") != status:
+                err(cid, "connector status must match the latest statusHistory event")
+            if history[-1].get("date") != connector.get("statusUpdatedAt"):
+                err(cid, "connector statusUpdatedAt must match the latest statusHistory date")
     for entry in data:
         if not isinstance(entry, dict):
             continue

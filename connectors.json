@@ -1,0 +1,65 @@
+[
+  {
+    "id": "reddit-ads",
+    "name": "Reddit Ads",
+    "productId": "lakeflow-connect",
+    "type": "managed-connector",
+    "direction": "ingestion",
+    "category": "Advertising",
+    "what": "Ingests advertising campaign data and performance metrics from Reddit Ads into Databricks.",
+    "status": "beta",
+    "introducedAt": "2026-07-21",
+    "statusUpdatedAt": "2026-07-21",
+    "statusHistory": [
+      {
+        "status": "beta",
+        "date": "2026-07-21",
+        "source": "https://docs.databricks.com/aws/en/release-notes/product/2026/july#reddit-ads-connector-is-now-available-in-beta"
+      }
+    ],
+    "source": "https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/reddit-ads",
+    "verified": "2026-07-22"
+  },
+  {
+    "id": "anthropic",
+    "name": "Anthropic",
+    "productId": "lakeflow-connect",
+    "type": "managed-connector",
+    "direction": "ingestion",
+    "category": "AI platforms",
+    "what": "Ingests Anthropic Compliance API audit and directory data together with Claude chats and messages.",
+    "status": "beta",
+    "introducedAt": "2026-07-17",
+    "statusUpdatedAt": "2026-07-17",
+    "statusHistory": [
+      {
+        "status": "beta",
+        "date": "2026-07-17",
+        "source": "https://docs.databricks.com/aws/en/release-notes/product/2026/july#anthropic-managed-ingestion-connector-beta"
+      }
+    ],
+    "source": "https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/anthropic",
+    "verified": "2026-07-22"
+  },
+  {
+    "id": "strac",
+    "name": "Strac",
+    "productId": "lakeflow-connect",
+    "type": "managed-connector",
+    "direction": "ingestion",
+    "category": "Security",
+    "what": "Ingests data-security audit events from Strac into Databricks.",
+    "status": "beta",
+    "introducedAt": "2026-07-09",
+    "statusUpdatedAt": "2026-07-09",
+    "statusHistory": [
+      {
+        "status": "beta",
+        "date": "2026-07-09",
+        "source": "https://docs.databricks.com/aws/en/release-notes/product/2026/july#strac-connector-beta"
+      }
+    ],
+    "source": "https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/strac",
+    "verified": "2026-07-22"
+  }
+]

@@ -255,6 +255,9 @@
     "fact": "Define an entire project - jobs, pipelines, clusters - in YAML and ship it with one `databricks bundle deploy`; even after the 2026 rename, everyone still just calls them DABs.",
     "from": "2026-03",
     "status": "current",
+    "availability": "ga",
+    "availabilityAt": "2024",
+    "availabilitySource": "https://docs.databricks.com/aws/en/release-notes/dev-tools/bundles",
     "note": "Renamed March 16, 2026. Docs read \"Declarative Automation Bundles (formerly known as Databricks Asset Bundles)\"; the DABs acronym was kept. Supersedes the deprecated dbx deployment tool.",
     "prediction": ["Agentic Automation Bundles", "Unity Bundles", "Genie Bundles"],
     "source": "https://docs.databricks.com/aws/en/dev-tools/bundles/",
@@ -262,7 +265,7 @@
       { "url": "https://community.databricks.com/t5/community-articles/ci-cd-on-databricks-with-asset-bundles-dabs-and-github-actions/td-p/149565", "kind": "community", "label": "Databricks Community: CI/CD with DABs" },
       { "url": "https://www.mechanicalrock.io/blog/an-ode-to-databricks-asset-bundles", "kind": "internet", "label": "Mechanical Rock: An Ode to DABs" }
     ],
-    "verified": "2026-07-18"
+    "verified": "2026-07-22"
   },
   {
     "id": "genie-spaces",
@@ -292,6 +295,9 @@
     "fact": "It graduated from merely answering questions to taking autonomous multi-step actions on your data - which is exactly why 'Genie Spaces' became 'Genie Agents' in 2026.",
     "from": "2026-07",
     "status": "current",
+    "availability": "ga",
+    "availabilityAt": "2024",
+    "availabilitySource": "https://docs.databricks.com/aws/en/ai-bi/release-notes/2024",
     "note": "Renamed in early July 2026 to reflect the shift from conversational query spaces to autonomous agents. Shows as \"Genie Agents\" in the sidebar.",
     "prediction": ["Genie Agent Teams", "Genie Agents One", "Agentic Genie Spaces"],
     "source": "https://docs.databricks.com/aws/en/genie-agents/set-up",
@@ -299,7 +305,7 @@
       { "url": "https://www.databricks.com/blog/data-dialogue-best-practices-guide-building-high-performing-genie-spaces", "kind": "community", "label": "Databricks Blog: Genie Spaces Best Practices" },
       { "url": "https://nimbleapproach.com/blog/exploring-databricks-genie-enhancing-insight-through-conversational-analytics/", "kind": "internet", "label": "Nimble Approach: Exploring Databricks Genie" }
     ],
-    "verified": "2026-07-18"
+    "verified": "2026-07-22"
   },
   {
     "id": "databricks-one",
@@ -351,6 +357,9 @@
     "fact": "A deliberately no-notebooks front door for business users - executives and marketers who never open a notebook - that launched as Databricks One, spent a few weeks as plain 'Genie', and settled on Genie One in June 2026.",
     "from": "2026-06",
     "status": "current",
+    "availability": "ga",
+    "availabilityAt": "2026-01",
+    "availabilitySource": "https://docs.databricks.com/aws/en/ai-bi/release-notes/2026#genie-one-is-generally-available",
     "occasion": "Renamed from Genie to Genie One, June 9, 2026",
     "note": "Docs state \"Genie One was previously known as Databricks One.\" The path ran Databricks One (Data + AI Summit, June 2025; Public Preview September 2025) -> Genie (April 27, 2026) -> Genie One (June 9, 2026), the final rename disambiguating it from the Genie Spaces/Agents conversational feature. Genie One folds in all Databricks One capabilities plus account-level access and native mobile apps.",
     "prediction": ["Genie Two", "Genie One Prime", "Databricks Two"],
@@ -359,7 +368,7 @@
       { "url": "https://www.databricks.com/blog/introducing-genie-one-genie-ontology-and-genie-agents", "kind": "community", "label": "Databricks Blog: Introducing Genie One" },
       { "url": "https://www.databricks.com/company/newsroom/press-releases/databricks-unveils-databricks-one-new-experience-bring-data-and-ai", "kind": "internet", "label": "Press Release: Databricks Unveils One" }
     ],
-    "verified": "2026-07-18"
+    "verified": "2026-07-22"
   },
   {
     "id": "genie-ontology",
@@ -560,6 +569,9 @@
     "fact": "It's an agent whose entire job is bossing other agents around - routing each request to the right specialist - and its doc URL still reads /multi-agent-supervisor.",
     "from": "2026-02",
     "status": "current",
+    "availability": "ga",
+    "availabilityAt": "2026-02",
+    "availabilitySource": "https://docs.databricks.com/aws/en/release-notes/product/2026/february#supervisor-agent-is-now-generally-available",
     "occasion": "Supervisor Agent GA, February 2026",
     "note": "Docs describe it as \"Supervisor Agent (formerly Multi-Agent Supervisor, MAS)\"; the doc URL still ends in /multi-agent-supervisor. Shortened as the Agent Bricks multi-agent framework reached GA.",
     "prediction": ["Chief Agent Officer", "Agent Supervisor Prime", "Genie Supervisor"],
@@ -567,7 +579,7 @@
     "links": [
       { "url": "https://www.databricks.com/blog/agent-bricks-supervisor-agent-now-ga-orchestrate-enterprise-agents", "kind": "community", "label": "Databricks Blog: Supervisor Agent GA" }
     ],
-    "verified": "2026-07-18"
+    "verified": "2026-07-22"
   },
   {
     "id": "databricks-assistant",
@@ -1029,6 +1041,24 @@
       { "url": "https://www.prnewswire.com/news-releases/databricks-unveils-lakeflow-designer-for-data-analysts-to-build-reliable-pipelines-without-coding-302478809.html", "kind": "internet", "label": "PR Newswire: Lakeflow Designer" }
     ],
     "verified": "2026-07-18"
+  },
+  {
+    "id": "lakeflow-connect",
+    "kind": "feature",
+    "name": "Lakeflow Connect",
+    "category": "Data engineering",
+    "what": "Managed ingestion for SaaS applications, databases, file sources, and streaming systems, powered by serverless Lakeflow pipelines and governed by Unity Catalog.",
+    "fact": "Its connectors remember their incremental position and retry with exponential backoff, because even ingestion pipelines deserve to know where they left off.",
+    "introducedAt": "2024-06",
+    "status": "ga",
+    "occasion": "Introduced with Databricks Lakeflow at Data + AI Summit 2024",
+    "note": "Individual managed connectors have independent release stages. Their Beta, Public Preview, GA, deprecation, and retirement history is tracked in the connector catalog on this card.",
+    "prediction": ["Lakeflow Sources", "Lakeflow Ingest", "Lakeflow Connect One"],
+    "source": "https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/",
+    "links": [
+      { "url": "https://community.databricks.com/t5/announcements/introducing-databricks-lakeflow-a-unified-intelligent-solution/td-p/74822", "kind": "community", "label": "Databricks announcement: Introducing Lakeflow" }
+    ],
+    "verified": "2026-07-22"
   },
   {
     "id": "attribute-based-access-control",

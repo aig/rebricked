@@ -6,6 +6,62 @@ Format loosely follows [Keep a Changelog](https://keepachangelog.com/); dates ar
 ## 2026-07-22 (Genie Ontology and ZeroOps)
 
 ### Added
+- **Lakeflow Connect connector catalog.** Added Lakeflow Connect to the main product
+  timeline and introduced a separate `connectors.json` child catalog for its fast-moving
+  managed connectors. Connector records keep exact Beta, Public Preview, GA, deprecated,
+  and retired stages plus append-only sourced status history. The Lakeflow Connect card
+  now exposes a searchable, status-filterable catalog, initially tracking Reddit Ads Beta
+  from July 21, 2026. The schema gate validates parent links, dates, sources, status values,
+  and history continuity.
+- **Connector catalog embedded in the Lakeflow Connect card.** The catalog is rendered
+  expanded inside its parent product card, with its search, status filters, count, and
+  per-connector history visible in context.
+- **Compacted the embedded connector catalog.** Removed the repeated Lakeflow Connect /
+  Managed connectors heading and explanatory copy, tightened spacing and typography, and
+  kept the searchable status list as the card's only connector chrome.
+- **Removed connector search and status-filter controls.** The embedded catalog now shows
+  only compact connector rows with their current status, source, and update date.
+- **Removed the connector status-history disclosure from the card UI.** Status history
+  remains in `connectors.json` as validated source data, while each row shows only its
+  current stage and last status-change date.
+- **Made connector dates and statuses direct documentation links.** The status-change date
+  now sits immediately left of the status pill; both open the connector's official docs,
+  replacing the duplicated update-date and Docs metadata below.
+- **Removed connector category labels from the card UI.** Categories remain structured in
+  `connectors.json` for future grouping without adding noise to compact connector rows.
+- **Added Anthropic and Strac managed connectors.** Both are sourced Beta entries with
+  their official release dates (July 17 and July 9, 2026). Connector rows sort by the
+  latest `statusUpdatedAt` date descending, then alphabetically when dates match.
+- **Fixed the days-since-last-change counter for connector updates.** It now considers
+  connector `statusUpdatedAt` values alongside product lifecycle dates and preserves the
+  day in exact `YYYY-MM-DD` dates instead of treating every update as the first of month.
+- **Promoted parent products when their connector catalog changes.** Homepage ordering,
+  year grouping, and timeline filtering now use the newest child connector status date,
+  so Lakeflow Connect rises to 2026 while retaining its original June 2024 launch date.
+- **Replaced Lakeflow Connect's generic NEW badge with GA availability.** The parent
+  product's GA badge now sits in the card's upper-right corner and links to official docs;
+  each managed connector continues to show its own independent availability stage.
+- **Standardized status placement and labels across every card.** All lifecycle badges now
+  sit in the upper-right corner. Feature badges expose actual `GA` or `Preview` values,
+  current rename cards say `Current`, and deprecated, retired, legacy, and renamed cards
+  retain their explicit lifecycle stages instead of decorative NEW / Latest wording.
+- **Upgraded status help into a visual progression table.** Hovering or keyboard-focusing
+  any product or connector status now shows availability and lifecycle flows with arrows,
+  concise explanations, and the card's current stage highlighted.
+- **Clarified the rename status label.** Current rename cards now say `Current name`
+  instead of `Current`, distinguishing naming state from GA product availability.
+- **Separated availability from lifecycle placement.** Only GA and Preview occupy the
+  upper-right availability slot. Current name, Renamed, Legacy, Deprecated, and Retired
+  now stay on the left side of the card's top status row.
+- **Added independently sourced availability to current-name cards.** Genie Agents,
+  Genie One, Declarative Automation Bundles, and Supervisor Agent now combine a left-side
+  `Current name` lifecycle badge with a right-side GA badge linked to the official GA
+  evidence. The validator now requires a date and official source for availability.
+- **Moved non-current lifecycle statuses to the upper-right corner.** Renamed, Legacy,
+  Deprecated, and Retired now use the prominent corner position reserved for the card's
+  decisive status.
+- **Hidden the default Current name badge.** The value remains in data and continues to
+  drive filtering, but cards now surface only availability or actionable lifecycle states.
 - **Genie Ontology.** Added the Public Preview feature that automatically builds and
   maintains Genie One's permission-aware map of business terms, metrics, authoritative
   sources, and rules.
@@ -13,6 +69,16 @@ Format loosely follows [Keep a Changelog](https://keepachangelog.com/); dates ar
   data and AI assets, investigates issues, and drafts sandbox-validated fixes for review.
   Included `Genie ZeoOps` as a search alias for the misspelling in the original request.
 - Wired both feature cards into the Genie Agents rail section.
+
+### Changed
+- Added `.org` to the sidebar logo wordmark.
+- Extended the homepage heading with the red brand-accent tagline “We track it”.
+- Added a filter icon and an `All` option to the homepage lifecycle filters. Categories are
+  mutually exclusive, default to `All`, and show counts for the current scope.
+
+### Fixed
+- Prevented connector status help popovers from being clipped by the subcategory catalog.
+- Matched Beta and Preview highlights in status help popovers to their orange card badges.
 
 ## 2026-07-21 (lineage navigation)
 
