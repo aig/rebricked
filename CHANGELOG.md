@@ -75,10 +75,35 @@ Format loosely follows [Keep a Changelog](https://keepachangelog.com/); dates ar
 - Extended the homepage heading with the red brand-accent tagline “We track it”.
 - Added a filter icon and an `All` option to the homepage lifecycle filters. Categories are
   mutually exclusive, default to `All`, and show counts for the current scope.
+- Raised card status pills onto the top border so they straddle the card edge.
+- Increased the vertical spacing between result cards to 20px for clearer separation.
 
 ### Fixed
 - Prevented connector status help popovers from being clipped by the subcategory catalog.
 - Matched Beta and Preview highlights in status help popovers to their orange card badges.
+- Limited the upper-right status spacing to the card header so content below uses the full width.
+- Made status badge backgrounds opaque so the card border cannot show through them.
+- Standardized Preview statuses to blue across cards, connector rows, and help popovers.
+- Differentiated preview stages: Private Preview is yellow, Beta is orange, and Public Preview remains blue.
+- Displayed the full `Public Preview` label instead of shortening it to `Preview`.
+- Switched Renamed and Deprecated statuses, including their card borders, to gray palettes.
+- Expanded the filters and yearly timeline from broad lifecycle buckets to exact statuses:
+  GA, Private Preview, Beta, Public Preview, Current Name, Legacy, Deprecated, Retired,
+  and Renamed.
+- Widened status-help cells so full status labels and descriptions fit without clipping.
+- Combined Legacy and Deprecated into one Legacy filter and graph segment, kept Renamed
+  separate, and removed Current Name from both controls while retaining those cards under All.
+- Folded Retired into Legacy in both the filter controls and yearly graph.
+- Sized the homepage spotlight strip to its text and moved it into the heading column,
+  allowing the quiz banner on the right to align higher with the strip.
+- Stopped the quiz banner before the filter row and widened the filters to fill the left column.
+- Extended the filter row across both heading columns to align with the banner's right edge.
+- Changed Renamed to red across cards, status help, and yearly graph segments.
+- Included subcard statuses in parent-card filtering and timeline counts. Lakeflow Connect
+  now matches its connector statuses, filtered views narrow its child rows, and connector
+  status-history events appear as their own dated graph segments.
+- Matched lifecycle highlights in status help to their card colors, including gray Legacy.
+- Made the Deprecated help highlight exactly match its card badge styling.
 
 ## 2026-07-21 (lineage navigation)
 

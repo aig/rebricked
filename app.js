@@ -19,13 +19,12 @@
   let CONNECTORS = [];
   let activeCategory = null;
   let activeSection = null; // {label, ids} when a rail section is selected
-  // Single-select status filter, keyed on the badge a card shows (see bucketOf), not on
-  // kindOf. "All" is represented by all three buckets so the filtering path stays simple.
-  const KIND_KEYS = ["current", "deprecation", "renamed"];
-  let activeKinds = new Set(KIND_KEYS);
-  const allKindsSelected = () => KIND_KEYS.every((k) => activeKinds.has(k));
+  // Single-select status filter, keyed on the exact badge a card shows (see statusOf).
+  const FILTER_KEYS = ["ga", "private-preview", "beta", "public-preview", "legacy", "renamed"];
+  let activeKinds = new Set(FILTER_KEYS);
+  const allKindsSelected = () => FILTER_KEYS.every((k) => activeKinds.has(k));
   const filterOn = (key) => (key === "all" ? allKindsSelected() : activeKinds.has(key));
-  const resetKinds = () => { activeKinds = new Set(KIND_KEYS); };
+  const resetKinds = () => { activeKinds = new Set(FILTER_KEYS); };
   let activeYear = null;    // "2025" etc. when a timeline bar is selected
   let focusId = null;       // a single deep-linked entry (#id), overrides everything
   let lastRouletteId = null; // last randomizer winner, to avoid picking it twice running
@@ -57,16 +56,18 @@
   };
 
   // The status filter (top of results). Orthogonal to section/category/search.
-  // Keys match the buckets bucketOf() returns and the badges the cards show.
+  // Keys match statusOf() and the labels rendered on cards.
   const FILTERS = [
-    { key: "all", label: "All", hint: "Show every lifecycle stage" },
-    { key: "current", label: "Active", hint: "In use now - new, preview and current names" },
-    { key: "deprecation", label: "Legacy", hint: "Deprecated or retired" },
+    { key: "all", label: "All", hint: "Show every status" },
+    { key: "ga", label: "GA", hint: "Generally available" },
+    { key: "private-preview", label: "Private Preview", hint: "Invite-only preview" },
+    { key: "beta", label: "Beta", hint: "Early testing" },
+    { key: "public-preview", label: "Public Preview", hint: "Publicly available preview" },
+    { key: "legacy", label: "Legacy", hint: "Legacy, deprecated, or retired" },
     { key: "renamed", label: "Renamed", hint: "Superseded former names" },
   ];
 
-  // Status sort order within a year. Filter buttons add All before these buckets.
-  const BUCKET_ORDER = { current: 0, deprecation: 1, renamed: 2 };
+  const BUCKET_ORDER = { ga: 0, "private-preview": 1, beta: 2, "public-preview": 3, current: 4, legacy: 5, deprecated: 6, retired: 7, renamed: 8 };
 
   // ---- sidebar config: mirrors the Databricks console rail ----
   // Every item is clickable. `ids` lists the databricks.json entries that changed under
@@ -188,7 +189,7 @@
     return rows;
   }
 
-  // ---- status filter (All / Active / Legacy / Renamed) ----
+  // ---- exact status filter ----
   function renderFilters() {
     const el = $("#filters");
     if (!el) return;
@@ -225,7 +226,7 @@
       const span = b.querySelector(".filter-count");
       if (span) span.textContent = key === "all"
         ? pool.length
-        : pool.filter((d) => bucketOf(d) === key).length;
+        : pool.filter((d) => entryFilterBuckets(d).has(key)).length;
       const on = filterOn(key);
       b.classList.toggle("active", on);
       b.setAttribute("aria-pressed", on);
@@ -386,7 +387,7 @@
 
     // The status filter is orthogonal - it narrows whatever's showing.
     if (!allKindsSelected()) {
-      rows = rows.filter((d) => activeKinds.has(bucketOf(d)));
+      rows = rows.filter((d) => [...entryFilterBuckets(d)].some((status) => activeKinds.has(status)));
     }
 
     // The timeline year filter is likewise orthogonal.
@@ -394,8 +395,7 @@
       rows = rows.filter((d) => shortYear(activityAt(d)) === activeYear);
     }
 
-    // Newest year on top; within a year, order by status - Active, then Legacy, then
-    // Renamed (matching the filter buttons) - and by most recent change inside each.
+    // Newest year on top; within a year, follow the filter order, then recency.
     rows.sort(byRecency);
 
     updateHomeExtras();
@@ -418,14 +418,13 @@
     wireRows();
   }
 
-  // Newest year on top; within a year, order by status - Active, then Legacy, then
-  // Renamed (matching the filter buttons) - and by most recent change inside each.
+  // Newest year on top; within a year, follow the filter order, then recency.
   function byRecency(a, b) {
     const ya = shortYear(activityAt(a));
     const yb = shortYear(activityAt(b));
     if (ya !== yb) return yb.localeCompare(ya);
-    const ra = BUCKET_ORDER[bucketOf(a)] ?? 9;
-    const rb = BUCKET_ORDER[bucketOf(b)] ?? 9;
+    const ra = BUCKET_ORDER[statusOf(a)] ?? 99;
+    const rb = BUCKET_ORDER[statusOf(b)] ?? 99;
     if (ra !== rb) return ra - rb;
     return dateKey(activityAt(b)).localeCompare(dateKey(activityAt(a)));
   }
@@ -525,7 +524,7 @@
 
     const note = d.note ? `<p class="row-note">${escapeHtml(d.note)}</p>` : "";
     const connectorCatalog = d.id === "lakeflow-connect"
-      ? `<section class="connectors-section" aria-label="Managed connector status">${connectorCatalogHTML()}</section>`
+      ? `<section class="connectors-section" aria-label="Managed connector status">${connectorCatalogHTML(d)}</section>`
       : "";
     // A real-but-fun fact about the feature - genuinely true, grounded in each
     // entry's history; the tone is ours.
@@ -634,8 +633,12 @@
     </span>`;
   }
 
-  function connectorCatalogHTML() {
-    const rows = CONNECTORS.slice()
+  function connectorCatalogHTML(parent) {
+    const ownMatches = activeKinds.has(filterBucket(parent));
+    const visible = allKindsSelected() || ownMatches
+      ? CONNECTORS.slice()
+      : CONNECTORS.filter((c) => activeKinds.has(filterBucketForStatus(c.status)));
+    const rows = visible
       .sort((a, b) => b.statusUpdatedAt.localeCompare(a.statusUpdatedAt) || a.name.localeCompare(b.name))
       .map((c) => {
         return `<article class="connector-item">
@@ -656,7 +659,7 @@
     }
     if (kind === "feature") {
       const status = d.status || "ga";
-      const label = status === "preview" ? "Preview" : "GA";
+      const label = status === "preview" ? "Public Preview" : "GA";
       const linked = d.id === "lakeflow-connect";
       const tag = linked ? "a" : "span";
       const attrs = linked
@@ -673,8 +676,8 @@
 
   function availabilityBadge(d) {
     const status = d.availability;
-    const labels = { ga: "GA", preview: "Preview", beta: "Beta", "private-preview": "Private Preview", "public-preview": "Public Preview" };
-    return `<a class="badge badge-${escapeAttr(status === "ga" ? "ga" : "preview")} badge-availability has-status-guide" href="${escapeAttr(d.availabilitySource)}" target="_blank" rel="noopener" title="Available since ${escapeAttr(d.availabilityAt)} - open official source">${escapeHtml(labels[status] || status)}${statusGuide(status)}</a>`;
+    const labels = { ga: "GA", preview: "Public Preview", beta: "Beta", "private-preview": "Private Preview", "public-preview": "Public Preview" };
+    return `<a class="badge badge-${escapeAttr(status === "ga" ? "ga" : "preview")} badge-${escapeAttr(status)} badge-availability has-status-guide" href="${escapeAttr(d.availabilitySource)}" target="_blank" rel="noopener" title="Available since ${escapeAttr(d.availabilityAt)} - open official source">${escapeHtml(labels[status] || status)}${statusGuide(status)}</a>`;
   }
 
   // Cross-card links. A card points forward via `successorId` (the name it became,
@@ -1680,7 +1683,8 @@
     const kind = params.get("kind");
     if (kind !== null) {
       // Keep legacy comma-separated links valid, but select only their first known bucket.
-      const selectedKind = kind.split(",").find((k) => KIND_KEYS.includes(k));
+      const aliases = { deprecation: "legacy", deprecated: "legacy", retired: "legacy", preview: "public-preview" };
+      const selectedKind = kind.split(",").map((k) => aliases[k] || k).find((k) => FILTER_KEYS.includes(k));
       if (selectedKind) activeKinds = new Set([selectedKind]);
       syncFilterButtons();
     }
@@ -1861,9 +1865,12 @@
   // Filter buckets in stacking order (top → bottom of each bar); the class suffix
   // colors the segment and its legend swatch, mirroring the status badges.
   const TL_BUCKETS = [
-    { key: "current", label: "Active" },
+    { key: "ga", label: "GA" },
+    { key: "private-preview", label: "Private Preview" },
+    { key: "beta", label: "Beta" },
+    { key: "public-preview", label: "Public Preview" },
+    { key: "legacy", label: "Legacy" },
     { key: "renamed", label: "Renamed" },
-    { key: "deprecation", label: "Legacy" },
   ];
   // Per-year counts split by bucket. Computed once - the data is fixed after load;
   // only which buckets are shown changes as the filter toggles.
@@ -1872,11 +1879,20 @@
   function timelineData() {
     if (TL_DATA) return TL_DATA;
     const byYear = {};
+    const add = (date, bucket) => {
+      const y = shortYear(date);
+      if (!y || !bucket) return;
+      const slot = byYear[y] || (byYear[y] = Object.fromEntries(FILTER_KEYS.map((key) => [key, 0])));
+      slot[bucket]++;
+    };
     DATA.forEach((d) => {
-      const y = shortYear(activityAt(d));
-      if (!y) return;
-      const slot = byYear[y] || (byYear[y] = { current: 0, renamed: 0, deprecation: 0 });
-      slot[bucketOf(d)]++;
+      add(changedAt(d), filterBucket(d));
+    });
+    CONNECTORS.forEach((connector) => {
+      const history = Array.isArray(connector.statusHistory) && connector.statusHistory.length
+        ? connector.statusHistory
+        : [{ status: connector.status, date: connector.statusUpdatedAt }];
+      history.forEach((event) => add(event.date, filterBucketForStatus(event.status)));
     });
     TL_DATA = { years: Object.keys(byYear).sort(), byYear };
     return TL_DATA;
@@ -1892,13 +1908,14 @@
     // Heights rescale to the tallest *visible* year, so hiding a bucket redraws rather
     // than blanks the graph.
     const active = TL_BUCKETS.filter((b) => activeKinds.has(b.key));
-    const key = active.map((b) => b.key).join(",") || "none";
+    const key = [...activeKinds].join(",") || "none";
     // Same buckets already on screen? Skip the rebuild (and its animation); the
     // selected-year highlight is refreshed separately in updateHomeExtras.
     if (key === tlRenderedKey && el.querySelector(".tl-bar")) return;
     tlRenderedKey = key;
 
-    const totals = years.map((y) => active.reduce((s, b) => s + byYear[y][b.key], 0));
+    const timelineCount = (y, bucket) => byYear[y][bucket.key];
+    const totals = years.map((y) => active.reduce((s, b) => s + timelineCount(y, b), 0));
     const max = Math.max(1, ...totals);
     const filtered = active.length < TL_BUCKETS.length;
 
@@ -1907,7 +1924,7 @@
       const h = Math.round((total / max) * 100);
       // One stacked slice per active bucket; flex-grow carries its share of the bar.
       const segs = active.map((b) => {
-        const n = byYear[y][b.key];
+        const n = timelineCount(y, b);
         if (!n) return "";
         return `<span class="tl-seg tl-seg-${b.key}" style="flex-grow:${n}" title="${n} ${escapeHtml(b.label)}"></span>`;
       }).join("");
@@ -2055,16 +2072,40 @@
     return d.kind === "deprecation" || d.kind === "feature" ? d.kind : "rename";
   }
 
-  // Which status filter bucket an entry falls in - aligned with the badge the card
-  // shows, NOT with kindOf. A newly shipped feature and the current-name side of a
-  // rename both read as "current"; only a superseded former name is "renamed". This is
-  // what the top-of-results filter toggles, so unchecking "Current" hides everything
-  // currently in use, whether it got here by launch or by rename.
-  function bucketOf(d) {
+  // Exact visible status for filters and timeline. Availability evidence takes priority
+  // because that is the badge displayed on current-name cards.
+  function statusOf(d) {
+    if (d.availability) return d.availability === "preview" ? "public-preview" : d.availability;
     const k = kindOf(d);
-    if (k === "deprecation") return "deprecation";
-    if (k === "feature") return "current";
+    if (k === "deprecation") return d.status || "deprecated";
+    if (k === "feature") return (d.status || "ga") === "preview" ? "public-preview" : (d.status || "ga");
     return (d.status || "current") === "renamed" ? "renamed" : "current";
+  }
+
+  // The compact controls intentionally combine old lifecycle states. Current Name has
+  // no filter or chart segment; those cards remain visible through All.
+  function filterBucket(d) {
+    const status = statusOf(d);
+    return filterBucketForStatus(status);
+  }
+
+  function filterBucketForStatus(status) {
+    const normalized = status === "preview" ? "public-preview" : status;
+    if (normalized === "legacy" || normalized === "deprecated" || normalized === "retired") return "legacy";
+    if (normalized === "current") return null;
+    return normalized;
+  }
+
+  // A parent card can match both its own badge and statuses exposed by child cards.
+  function entryFilterBuckets(d) {
+    const buckets = new Set();
+    const own = filterBucket(d);
+    if (own) buckets.add(own);
+    CONNECTORS.filter((c) => c.productId === d.id).forEach((c) => {
+      const child = filterBucketForStatus(c.status);
+      if (child) buckets.add(child);
+    });
+    return buckets;
   }
 
   // Mixed-precision dates ("2025" vs "2025-06") don't compare lexicographically -

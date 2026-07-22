@@ -14,29 +14,28 @@
   --accent-ink: #C4260F;
   --ok: #1A8754;
   --warn: #B45309;
-  /* amber - deprecated / retired */
-  /* Lifecycle states - one deliberate, CVD-validated hue each (light):
-       Active = emerald · Renamed = orange (shared with the chart) · Legacy = slate · Deprecated = amber.
+  /* Lifecycle states (light): Active = emerald, Renamed = red, while Legacy and
+     Deprecated use neutral-gray shades; availability stages keep their own hues.
      --c-*      = mark: chart fills, card spines, legend dots
      --c-*-ink  = label text on the tinted badge (clears WCAG AA on --panel)
-     Renamed moved off slate so it no longer collides with Legacy; the charted
-     trio (active/renamed/deprecated) passes the colorblind + contrast validator.
      Kept separate from --accent/--ok/--warn (which chrome + quiz reuse). */
   --c-active: #0E8F5E;
   --c-active-ink: #0A6E48;
-  --c-renamed: #EB6834;
-  --c-renamed-ink: #AD481B;
+  --c-preview: #3B82F6;
+  --c-preview-ink: #1D4ED8;
+  --c-private-preview: #EAB308;
+  --c-private-preview-ink: #854D0E;
+  --c-beta: #F97316;
+  --c-beta-ink: #C2410C;
+  --c-renamed: #DC2626;
+  --c-renamed-ink: #B91C1C;
   --c-legacy: #5F6B7A;
   --c-legacy-ink: #4B5563;
-  --c-deprecated: #B45309;
-  --c-deprecated-ink: #92430A;
+  --c-deprecated: #6B7280;
+  --c-deprecated-ink: #4B5563;
   --c-retired-fg: #FFFFFF;
   /* text on the solid "retired" badge */
-  /* chart-segment fills. Renamed reuses the card's --c-renamed (orange) and Legacy
-     reuses --c-legacy (slate), so the chart and the badges share those two colors.
-     Active is chart-specific: a teal-green that stays colorblind-safe beside the
-     orange (pure green ↔ orange fails CVD). Validated both themes; Active is stepped
-     brighter for the dark surface below. */
+  /* Chart segments reuse the lifecycle tokens; Active is stepped separately. */
   --seg-active: #10A37F;
   --seg-renamed: var(--c-renamed);
   --seg-deprecated: var(--c-legacy);
@@ -67,14 +66,20 @@
      ink == mark here since the brighter tones read cleanly on the dark tint. */
   --c-active: #34D399;
   --c-active-ink: #34D399;
-  --c-renamed: #F0774A;
-  --c-renamed-ink: #F0774A;
+  --c-preview: #60A5FA;
+  --c-preview-ink: #60A5FA;
+  --c-private-preview: #FACC15;
+  --c-private-preview-ink: #FACC15;
+  --c-beta: #FB923C;
+  --c-beta-ink: #FB923C;
+  --c-renamed: #F87171;
+  --c-renamed-ink: #F87171;
   --c-legacy: #96A1B0;
   --c-legacy-ink: #A7B0BD;
-  --c-deprecated: #FBBF24;
-  --c-deprecated-ink: #FBBF24;
-  --c-retired-fg: #241900;
-  /* dark text on the light-amber solid badge */
+  --c-deprecated: #9CA3AF;
+  --c-deprecated-ink: #9CA3AF;
+  --c-retired-fg: #111827;
+  /* dark text on the light-gray solid badge */
   /* same chart palette on the dark surface; Renamed & Legacy reuse the badge tokens,
      Active is the chart-specific teal-green, stepped brighter here. */
   --seg-active: #17AC83;
@@ -563,10 +568,8 @@ body {
   gap: 16px;
 }
 
-/* The quiz banner (right column) is taller than the title + copy, so push the filters
-   to the bottom of the left column - their bottom edge then lines up with the banner. */
-.page-head-copy > .filters {
-  margin-top: auto;
+.page-head > .filters {
+  grid-column: 1 / -1;
 }
 
 .page-title {
@@ -598,7 +601,7 @@ body {
   grid-template-columns: 72px minmax(0, 1fr) auto;
   grid-template-rows: auto 1fr;
   align-items: center;
-  align-self: stretch;
+  align-self: start;
   min-width: 0;
   gap: 8px 12px;
   padding: 12px;
@@ -714,7 +717,7 @@ body {
     width: 100%;
   }
 
-  .page-head-copy > .filters {
+  .page-head > .filters {
     order: 1;
   }
 }
@@ -730,7 +733,7 @@ body {
   background: var(--panel);
   border: 1px solid var(--line);
   border-radius: 10px;
-  width: fit-content;
+  width: 100%;
   max-width: 100%;
 }
 
@@ -825,7 +828,7 @@ body {
 /* result cards */
 .results {
   display: grid;
-  gap: 12px;
+  gap: 20px;
 }
 
 /* year dividers: turn the sorted list into a chronological path */
@@ -952,7 +955,7 @@ body {
   border-bottom-color: var(--accent);
 }
 
-/* deprecations: amber accent - the deprecated/retired state */
+/* deprecations: neutral gray accent */
 .row.is-deprecation {
   --state: var(--c-deprecated);
   border-left-width: 4px;
@@ -960,7 +963,7 @@ body {
   padding-left: 15px;
 }
 
-/* renamed (former name): indigo accent - a superseded name, redirected */
+/* renamed (former name): red accent */
 .row.is-former {
   --state: var(--c-renamed);
   border-left-width: 4px;
@@ -1020,8 +1023,8 @@ body {
   z-index: 30;
   display: grid;
   gap: 8px;
-  width: 470px;
-  max-width: min(470px, calc(100vw - 44px));
+  width: 560px;
+  max-width: min(560px, calc(100vw - 44px));
   padding: 12px;
   border: 1px solid #fff;
   border-radius: 10px;
@@ -1052,14 +1055,18 @@ body {
 .sg-row { display: grid; grid-template-columns: 92px 1fr; align-items: center; gap: 9px; }
 .sg-label { color: var(--faint); font-size: 9px; font-weight: 800; text-transform: uppercase; letter-spacing: .04em; }
 .sg-flow { display: flex; align-items: center; gap: 5px; min-width: 0; }
-.sg-stage { display: grid; gap: 1px; min-width: 0; padding: 5px 7px; border: 1px solid var(--line); border-radius: 7px; background: var(--bg); }
+.sg-stage { display: grid; gap: 1px; min-width: max-content; padding: 6px 9px; border: 1px solid var(--line); border-radius: 7px; background: var(--bg); }
 .sg-stage b { font-size: 9px; white-space: nowrap; }
 .sg-stage small { color: var(--faint); font-size: 8px; white-space: nowrap; }
 .sg-stage.active { color: var(--c-active-ink); border-color: var(--c-active); background: color-mix(in srgb, var(--c-active) 12%, var(--panel)); box-shadow: 0 0 0 1px color-mix(in srgb, var(--c-active) 18%, transparent); }
-.sg-stage.active-beta,
-.sg-stage.active-private-preview,
+.sg-stage.active-beta { color: var(--c-beta-ink); border-color: var(--c-beta); background: color-mix(in srgb, var(--c-beta) 12%, var(--panel)); box-shadow: 0 0 0 1px color-mix(in srgb, var(--c-beta) 18%, transparent); }
+.sg-stage.active-private-preview { color: var(--c-private-preview-ink); border-color: var(--c-private-preview); background: color-mix(in srgb, var(--c-private-preview) 14%, var(--panel)); box-shadow: 0 0 0 1px color-mix(in srgb, var(--c-private-preview) 20%, transparent); }
 .sg-stage.active-public-preview,
-.sg-stage.active-preview { color: var(--c-deprecated-ink); border-color: var(--c-deprecated); background: color-mix(in srgb, var(--c-deprecated) 12%, var(--panel)); box-shadow: 0 0 0 1px color-mix(in srgb, var(--c-deprecated) 18%, transparent); }
+.sg-stage.active-preview { color: var(--c-preview-ink); border-color: var(--c-preview); background: color-mix(in srgb, var(--c-preview) 12%, var(--panel)); box-shadow: 0 0 0 1px color-mix(in srgb, var(--c-preview) 18%, transparent); }
+.sg-stage.active-renamed { color: var(--c-renamed-ink); border-color: var(--c-renamed); background: color-mix(in srgb, var(--c-renamed) 13%, var(--panel)); box-shadow: 0 0 0 1px color-mix(in srgb, var(--c-renamed) 18%, transparent); }
+.sg-stage.active-legacy { color: var(--c-legacy-ink); border-color: var(--c-legacy); background: color-mix(in srgb, var(--c-legacy) 10%, var(--panel)); box-shadow: 0 0 0 1px color-mix(in srgb, var(--c-legacy) 18%, transparent); }
+.sg-stage.active-deprecated { color: var(--c-deprecated-ink); border-color: color-mix(in srgb, var(--c-deprecated) 30%, transparent); background: color-mix(in srgb, var(--c-deprecated) 12%, var(--panel)); box-shadow: none; }
+.sg-stage.active-retired { color: var(--c-retired-fg); border-color: var(--c-deprecated); background: var(--c-deprecated); box-shadow: none; }
 .sg-arrow { flex: none; color: var(--accent); font-size: 13px; font-weight: 800; }
 
 @media (max-width: 620px) {
@@ -1070,7 +1077,7 @@ body {
 
 .badge-deprecated {
   color: var(--c-deprecated-ink);
-  background: color-mix(in srgb, var(--c-deprecated) 12%, transparent);
+  background: color-mix(in srgb, var(--c-deprecated) 12%, var(--panel));
   border: 1px solid color-mix(in srgb, var(--c-deprecated) 30%, transparent);
 }
 
@@ -1085,20 +1092,20 @@ body {
    and amber Deprecated without ever shouting. */
 .badge-legacy {
   color: var(--c-legacy-ink);
-  background: color-mix(in srgb, var(--c-legacy) 10%, transparent);
+  background: color-mix(in srgb, var(--c-legacy) 10%, var(--panel));
   border: 1px dashed color-mix(in srgb, var(--c-legacy) 42%, transparent);
 }
 
 /* "current" = the name in use now; "former" = a superseded name (quiet, struck-through feel) */
 .badge-current {
   color: var(--c-active-ink);
-  background: color-mix(in srgb, var(--c-active) 12%, transparent);
+  background: color-mix(in srgb, var(--c-active) 12%, var(--panel));
   border: 1px solid color-mix(in srgb, var(--c-active) 30%, transparent);
 }
 
 .badge-former {
   color: var(--c-renamed-ink);
-  background: color-mix(in srgb, var(--c-renamed) 13%, transparent);
+  background: color-mix(in srgb, var(--c-renamed) 13%, var(--panel));
   border: 1px solid color-mix(in srgb, var(--c-renamed) 34%, transparent);
 }
 
@@ -1312,14 +1319,26 @@ body {
 
 .badge-ga {
   color: var(--c-active-ink);
-  background: color-mix(in srgb, var(--c-active) 12%, transparent);
+  background: color-mix(in srgb, var(--c-active) 12%, var(--panel));
   border: 1px solid color-mix(in srgb, var(--c-active) 30%, transparent);
 }
 
 .badge-preview {
-  color: var(--c-active-ink);
-  background: color-mix(in srgb, var(--c-active) 12%, transparent);
-  border: 1px dashed color-mix(in srgb, var(--c-active) 45%, transparent);
+  color: var(--c-preview-ink);
+  background: color-mix(in srgb, var(--c-preview) 12%, var(--panel));
+  border: 1px dashed color-mix(in srgb, var(--c-preview) 45%, transparent);
+}
+
+.badge-private-preview {
+  color: var(--c-private-preview-ink);
+  background: color-mix(in srgb, var(--c-private-preview) 14%, var(--panel));
+  border-color: color-mix(in srgb, var(--c-private-preview) 50%, transparent);
+}
+
+.badge-beta {
+  color: var(--c-beta-ink);
+  background: color-mix(in srgb, var(--c-beta) 12%, var(--panel));
+  border-color: color-mix(in srgb, var(--c-beta) 45%, transparent);
 }
 
 .row-what {
@@ -1356,17 +1375,16 @@ body {
 /* Status tag as a flush top-edge tab: it straddles the card's top border, inset from
    the left, like a fieldset legend. An opaque panel fill cuts the border line behind it;
    each status still reads through its own border, label, and dot colors. */
-.row.is-feature,
-.row.has-availability,
-.row.has-corner-status { padding-right: 112px; }
+.row.has-availability > .row-eyebrow,
+.row.has-corner-status > .row-eyebrow { padding-right: 94px; }
 
 .row-eyebrow .badge-availability,
 .row-eyebrow .badge-corner {
   position: absolute;
-  top: 12px;
+  top: 0;
   right: 14px;
   left: auto;
-  transform: none;
+  transform: translateY(-52%);
   margin: 0;
   padding: 3px 9px;
   border-radius: 999px;
@@ -1638,8 +1656,10 @@ mark {
 .connector-date { color: var(--faint); font-size: 10px; font-variant-numeric: tabular-nums; text-decoration: none; white-space: nowrap; }
 .connector-date:hover { color: var(--accent); }
 .connector-state { flex: none; border-radius: 999px; padding: 3px 8px; font-size: 10px; font-weight: 800; text-transform: uppercase; letter-spacing: .03em; text-decoration: none; }
-.state-beta, .state-private-preview, .state-public-preview { color: var(--c-deprecated); background: color-mix(in srgb, var(--c-deprecated) 12%, transparent); }
-.state-ga { color: var(--c-active); background: color-mix(in srgb, var(--c-active) 12%, transparent); }
+.state-beta { color: var(--c-beta-ink); background: color-mix(in srgb, var(--c-beta) 12%, var(--panel)); }
+.state-private-preview { color: var(--c-private-preview-ink); background: color-mix(in srgb, var(--c-private-preview) 14%, var(--panel)); }
+.state-public-preview { color: var(--c-preview-ink); background: color-mix(in srgb, var(--c-preview) 12%, var(--panel)); }
+.state-ga { color: var(--c-active); background: color-mix(in srgb, var(--c-active) 12%, var(--panel)); }
 .state-deprecated, .state-retired { color: var(--muted); background: var(--bg); }
 
 .error code {
@@ -1793,6 +1813,8 @@ mark {
   border-radius: 10px;
   font-size: 13px;
   color: var(--muted);
+  width: fit-content;
+  max-width: 100%;
 }
 
 .sp-tag {
@@ -1947,15 +1969,30 @@ mark {
   border-top-right-radius: 4px;
 }
 
-/* segment + legend colors, aligned with the status badges:
-   Active = emerald, Renamed = indigo, Deprecated = amber. Fills use the --seg-*
-   tokens, which step darker in dark mode so the stacked bars stay inside the
-   validator's dark lightness band. Only a light sheen at the top - a heavy white
-   mix washes out on the dark graph. */
+/* Segment and legend colors mirror the exact card statuses. */
+.tl-seg-ga,
 .tl-seg-current {
   background: linear-gradient(180deg,
       color-mix(in srgb, var(--seg-active) 90%, #fff),
       var(--seg-active));
+}
+
+.tl-seg-private-preview {
+  background: linear-gradient(180deg,
+      color-mix(in srgb, var(--c-private-preview) 90%, #fff),
+      var(--c-private-preview));
+}
+
+.tl-seg-beta {
+  background: linear-gradient(180deg,
+      color-mix(in srgb, var(--c-beta) 90%, #fff),
+      var(--c-beta));
+}
+
+.tl-seg-public-preview {
+  background: linear-gradient(180deg,
+      color-mix(in srgb, var(--c-preview) 90%, #fff),
+      var(--c-preview));
 }
 
 .tl-seg-renamed {
@@ -1964,10 +2001,17 @@ mark {
       var(--seg-renamed));
 }
 
-.tl-seg-deprecation {
+.tl-seg-legacy {
   background: linear-gradient(180deg,
-      color-mix(in srgb, var(--seg-deprecated) 90%, #fff),
-      var(--seg-deprecated));
+      color-mix(in srgb, var(--c-legacy) 90%, #fff),
+      var(--c-legacy));
+}
+
+.tl-seg-deprecated,
+.tl-seg-retired {
+  background: linear-gradient(180deg,
+      color-mix(in srgb, var(--c-deprecated) 90%, #fff),
+      var(--c-deprecated));
 }
 
 .tl-bar:hover .tl-h {
