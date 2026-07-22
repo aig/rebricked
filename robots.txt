@@ -1,0 +1,5 @@
+# REbricked - allow everything; the site is public and meant to be indexed.
+User-agent: *
+Allow: /
+
+Sitemap: https://rebricked.org/sitemap.xml

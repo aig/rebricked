@@ -1,0 +1,2936 @@
+/* ===== rebricked - Databricks-console styling ===== */
+
+:root {
+  /* main content = light, like the Databricks console */
+  --bg: #F6F7F9;
+  --panel: #FFFFFF;
+  --ink: #11171C;
+  --muted: #5A6472;
+  /* smallest text on the page - must stay ≥4.5:1 on --bg (WCAG AA) */
+  --faint: #5F6A7A;
+  --line: #E2E6EB;
+  --accent: #FF3621;
+  /* Databricks red */
+  --accent-ink: #C4260F;
+  --ok: #1A8754;
+  --warn: #B45309;
+  /* amber - deprecated / retired */
+  /* Lifecycle states - one deliberate, CVD-validated hue each (light):
+       Active = emerald · Renamed = orange (shared with the chart) · Legacy = slate · Deprecated = amber.
+     --c-*      = mark: chart fills, card spines, legend dots
+     --c-*-ink  = label text on the tinted badge (clears WCAG AA on --panel)
+     Renamed moved off slate so it no longer collides with Legacy; the charted
+     trio (active/renamed/deprecated) passes the colorblind + contrast validator.
+     Kept separate from --accent/--ok/--warn (which chrome + quiz reuse). */
+  --c-active: #0E8F5E;
+  --c-active-ink: #0A6E48;
+  --c-renamed: #EB6834;
+  --c-renamed-ink: #AD481B;
+  --c-legacy: #5F6B7A;
+  --c-legacy-ink: #4B5563;
+  --c-deprecated: #B45309;
+  --c-deprecated-ink: #92430A;
+  --c-retired-fg: #FFFFFF;
+  /* text on the solid "retired" badge */
+  /* chart-segment fills. Renamed reuses the card's --c-renamed (orange) and Legacy
+     reuses --c-legacy (slate), so the chart and the badges share those two colors.
+     Active is chart-specific: a teal-green that stays colorblind-safe beside the
+     orange (pure green ↔ orange fails CVD). Validated both themes; Active is stepped
+     brighter for the dark surface below. */
+  --seg-active: #10A37F;
+  --seg-renamed: var(--c-renamed);
+  --seg-deprecated: var(--c-legacy);
+  --sans: -apple-system, BlinkMacSystemFont, "Segoe UI", "Inter", Roboto, Helvetica, Arial, sans-serif;
+  --mono: ui-monospace, "SF Mono", "Cascadia Code", Menlo, Consolas, monospace;
+
+  /* sidebar rail - always dark, matching the console */
+  --rail: #0E1116;
+  --rail-2: #151A21;
+  --rail-ink: #C4CCD6;
+  --rail-muted: #6B7480;
+  --rail-hover: rgba(255, 255, 255, .06);
+  --rail-active-bg: rgba(120, 170, 255, .13);
+  --rail-line: #232833;
+}
+
+:root[data-theme="dark"] {
+  --bg: #0B0E12;
+  --panel: #141922;
+  --ink: #E7ECF2;
+  --muted: #97A2B0;
+  --faint: #7E8896;
+  --line: #232A34;
+  --accent: #FF5A3C;
+  --accent-ink: #FF7355;
+  --warn: #F0A93B;
+  /* same four states, stepped for the dark surface (not naively flipped);
+     ink == mark here since the brighter tones read cleanly on the dark tint. */
+  --c-active: #34D399;
+  --c-active-ink: #34D399;
+  --c-renamed: #F0774A;
+  --c-renamed-ink: #F0774A;
+  --c-legacy: #96A1B0;
+  --c-legacy-ink: #A7B0BD;
+  --c-deprecated: #FBBF24;
+  --c-deprecated-ink: #FBBF24;
+  --c-retired-fg: #241900;
+  /* dark text on the light-amber solid badge */
+  /* same chart palette on the dark surface; Renamed & Legacy reuse the badge tokens,
+     Active is the chart-specific teal-green, stepped brighter here. */
+  --seg-active: #17AC83;
+  --seg-renamed: var(--c-renamed);
+  --seg-deprecated: var(--c-legacy);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+/* the [hidden] attribute must beat class-level display (flex/inline-flex) */
+[hidden] {
+  display: none !important;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--sans);
+  font-size: 14px;
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+  /* Hidden hover affordances (e.g. the .ref-chip tooltip, an absolutely-positioned
+     max-content pseudo-element) can extend past the right edge and widen the page.
+     On mobile that expands the layout viewport, which throws the fixed quiz modal -
+     centred via inset:0 - off-screen. Clip the stray horizontal overflow. `clip`
+     (not `hidden`) so no scroll container is created and the sticky sidebar/topbar
+     keep working. */
+  overflow-x: clip;
+}
+
+.app {
+  display: flex;
+  min-height: 100vh;
+}
+
+/* ================= Sidebar ================= */
+.sidebar {
+  width: 236px;
+  flex: 0 0 236px;
+  position: sticky;
+  top: 0;
+  align-self: flex-start;
+  height: 100vh;
+  overflow-y: auto;
+  background: var(--rail);
+  border-right: 1px solid var(--rail-line);
+  color: var(--rail-ink);
+  padding: 8px 10px 24px;
+  scrollbar-width: thin;
+  scrollbar-color: #333b47 transparent;
+}
+
+.sidebar::-webkit-scrollbar {
+  width: 8px;
+}
+
+.sidebar::-webkit-scrollbar-thumb {
+  background: #2b323d;
+  border-radius: 8px;
+}
+
+/* One horizontal lockup: emblem · "RE" chip · stacked "bricked"/"latest edition".
+   All three items are ~one height and vertically centered, matching the wordmark. */
+.side-brand {
+  display: flex;
+  align-items: center;
+  gap: 1px;
+  /* RE chip sits right against "bricked" so it reads as one word */
+  padding: 12px 8px 14px;
+  /* it's a button now - clicking the logo goes Home */
+  width: 100%;
+  border: 0;
+  background: none;
+  color: inherit;
+  font-family: inherit;
+  text-align: left;
+  cursor: pointer;
+  border-radius: 8px;
+  transition: background .12s;
+}
+
+.side-brand:hover {
+  background: var(--rail-hover);
+}
+
+/* the "Re" of Rebricked as an inverted chip - the whole point (re-named).
+   Now a standalone block sized to lead the wordmark. */
+.brand-re {
+  display: inline-flex;
+  align-items: center;
+  background: #fff;
+  color: var(--rail);
+  padding: 1px 3px;
+  font-weight: 800;
+  font-size: 24px;
+  line-height: 1;
+  letter-spacing: -.02em;
+}
+
+/* "bricked" over "latest edition", stacked so together they match the RE chip's height;
+   right-aligned so the edition tag's right edge lines up under "bricked". */
+.brand-tail {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  justify-content: center;
+  margin-left: 1px;
+  line-height: 1;
+}
+
+.brand-word {
+  font-weight: 700;
+  font-size: 19px;
+  color: #fff;
+  letter-spacing: -.01em;
+  line-height: 1;
+}
+
+.brand-edition {
+  font-size: 8.5px;
+  color: var(--rail-muted);
+  letter-spacing: .04em;
+  margin-top: 1px;
+  line-height: 1;
+}
+
+.side-new {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  margin: 2px 0 10px;
+  padding: 9px 12px;
+  border: 1px solid transparent;
+  border-radius: 8px;
+  background: rgba(255, 54, 33, .10);
+  color: #fff;
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background .15s, border-color .15s;
+}
+
+.side-new .ic {
+  color: var(--accent);
+}
+
+.side-new:hover {
+  background: rgba(255, 54, 33, .18);
+  border-color: rgba(255, 54, 33, .4);
+}
+
+/* nav groups + items */
+.nav-group-label {
+  font-size: 10.5px;
+  text-transform: uppercase;
+  letter-spacing: .08em;
+  color: var(--rail-muted);
+  padding: 14px 12px 6px;
+  font-weight: 600;
+}
+
+.nav-item {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  width: 100%;
+  padding: 7px 12px;
+  border: none;
+  border-radius: 7px;
+  background: transparent;
+  color: var(--rail-ink);
+  font-family: inherit;
+  font-size: 13.5px;
+  text-align: left;
+  cursor: pointer;
+  position: relative;
+  transition: background .12s, color .12s;
+}
+
+.nav-item:hover {
+  background: var(--rail-hover);
+  color: #fff;
+}
+
+.nav-item.active {
+  background: var(--rail-active-bg);
+  color: #fff;
+}
+
+.nav-item.active::before {
+  content: "";
+  position: absolute;
+  left: -10px;
+  top: 6px;
+  bottom: 6px;
+  width: 3px;
+  border-radius: 0 3px 3px 0;
+  background: var(--accent);
+}
+
+.nav-item .ic {
+  flex: 0 0 18px;
+  color: var(--rail-muted);
+}
+
+.nav-item:hover .ic,
+.nav-item.active .ic {
+  color: #cdd6e2;
+}
+
+.nav-item .label {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.nav-item.is-renamed .label {
+  cursor: pointer;
+}
+
+.renamed-dot {
+  display: inline-block;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--accent);
+  flex: 0 0 7px;
+  box-shadow: 0 0 0 3px rgba(255, 54, 33, .15);
+}
+
+.side-foot {
+  margin-top: 18px;
+  padding: 12px 12px 0;
+  border-top: 1px solid var(--rail-line);
+}
+
+.dot-legend {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 11px;
+  color: var(--rail-muted);
+}
+
+/* icons: shared stroke style */
+.ic {
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+/* ================= Main ================= */
+.main {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.topbar {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 10px 22px;
+  background: var(--panel);
+  border-bottom: 1px solid var(--line);
+}
+
+.topsearch {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex: 1;
+  min-width: 0;
+  max-width: 620px;
+  background: var(--bg);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 0 12px;
+  transition: border-color .15s, box-shadow .15s;
+}
+
+.topsearch:focus-within {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px rgba(255, 54, 33, .12);
+}
+
+.topsearch .ic {
+  color: var(--faint);
+  flex: 0 0 16px;
+}
+
+.search-input {
+  flex: 1;
+  min-width: 0;
+  border: none;
+  outline: none;
+  background: transparent;
+  color: var(--ink);
+  font-family: inherit;
+  font-size: 14px;
+  padding: 10px 0;
+}
+
+.search-input::placeholder {
+  color: var(--faint);
+}
+
+.slash {
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--faint);
+  border: 1px solid var(--line);
+  border-radius: 5px;
+  padding: 1px 6px;
+  background: var(--panel);
+}
+
+.topactions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.counter {
+  font-size: 12px;
+  color: var(--muted);
+  background: var(--bg);
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  padding: 5px 12px;
+  white-space: nowrap;
+  max-width: 320px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.counter b {
+  color: var(--accent);
+}
+
+/* quiz call-to-action - advertised, not a bare icon */
+.quiz-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  height: 34px;
+  padding: 0 14px;
+  border: 1px solid color-mix(in srgb, var(--accent) 55%, var(--line));
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--accent) 10%, var(--panel));
+  color: var(--accent-ink);
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  white-space: nowrap;
+  box-shadow: 0 0 0 0 color-mix(in srgb, var(--accent) 45%, transparent);
+  animation: quiz-pulse 2.6s ease-out infinite;
+  transition: background .15s, border-color .15s, transform .1s;
+}
+
+.quiz-cta .ic {
+  color: var(--accent);
+}
+
+.quiz-cta:hover {
+  background: color-mix(in srgb, var(--accent) 18%, var(--panel));
+  border-color: var(--accent);
+}
+
+.quiz-cta:active {
+  transform: translateY(1px);
+}
+
+@keyframes quiz-pulse {
+  0% {
+    box-shadow: 0 0 0 0 color-mix(in srgb, var(--accent) 40%, transparent);
+  }
+
+  70% {
+    box-shadow: 0 0 0 7px color-mix(in srgb, var(--accent) 0%, transparent);
+  }
+
+  100% {
+    box-shadow: 0 0 0 0 color-mix(in srgb, var(--accent) 0%, transparent);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .quiz-cta {
+    animation: none;
+  }
+}
+
+@media (max-width: 640px) {
+  .quiz-cta span {
+    display: none;
+  }
+
+  .quiz-cta {
+    padding: 0 10px;
+  }
+
+  /* On phones the search shares one row with the menu button and the action
+     buttons, which squeezes it down to a sliver. Let the topbar wrap and give
+     the search its own full-width row underneath the controls. */
+  .topbar {
+    flex-wrap: wrap;
+    gap: 10px 12px;
+  }
+
+  .topsearch {
+    order: 3;
+    flex-basis: 100%;
+    max-width: none;
+  }
+
+  /* Card-header reflow for narrow screens lives at the end of the file, after the base
+     .row-head-right / .row-main rules - a mobile override placed here (before those base
+     rules) loses the cascade to them, since media queries add no specificity. */
+
+  /* Let the odds text wrap cleanly inside its pill rather than overflowing the card. */
+  .odds {
+    white-space: normal;
+  }
+
+  /* Shrink the title just enough to keep it on a single line across phone widths. */
+  .page-title {
+    font-size: clamp(16px, 4.8vw, 26px);
+  }
+}
+
+.icon-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--panel);
+  color: var(--muted);
+  cursor: pointer;
+  transition: color .15s, border-color .15s, background .15s;
+}
+
+.icon-btn:hover {
+  color: var(--accent);
+  border-color: var(--accent);
+}
+
+/* ================= Content ================= */
+.content {
+  padding: 28px 32px 64px;
+  max-width: 940px;
+  width: 100%;
+}
+
+.page-head {
+  display: grid;
+  grid-template-columns: minmax(0, 2fr) minmax(220px, 1fr);
+  align-items: stretch;
+  gap: 24px;
+  margin-bottom: 20px;
+}
+
+.page-head-copy {
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  gap: 16px;
+}
+
+/* The quiz banner (right column) is taller than the title + copy, so push the filters
+   to the bottom of the left column - their bottom edge then lines up with the banner. */
+.page-head-copy > .filters {
+  margin-top: auto;
+}
+
+.page-title {
+  margin: 0;
+  font-size: 26px;
+  font-weight: 700;
+  letter-spacing: -.02em;
+}
+
+.page-sub {
+  margin: 6px 0 0;
+  color: var(--muted);
+  font-size: 13.5px;
+  max-width: 640px;
+}
+
+.page-sub .renamed-dot {
+  transform: translateY(1px);
+  margin: 0 2px;
+}
+
+/* Home-page invitation to the same in-app quiz as the top-bar CTA. */
+.quiz-banner {
+  display: grid;
+  grid-template-columns: 72px minmax(0, 1fr) auto;
+  grid-template-rows: auto 1fr;
+  align-items: center;
+  align-self: stretch;
+  min-width: 0;
+  gap: 8px 12px;
+  padding: 12px;
+  border: 1px solid color-mix(in srgb, var(--accent) 55%, var(--line));
+  border-radius: 16px;
+  background:
+    radial-gradient(circle at 0% 100%, color-mix(in srgb, var(--accent) 16%, transparent), transparent 50%),
+    linear-gradient(135deg, color-mix(in srgb, var(--accent) 9%, var(--panel)), var(--panel) 65%);
+  color: var(--ink);
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+  box-shadow: 0 8px 24px color-mix(in srgb, var(--accent) 9%, transparent);
+  transition: border-color .15s, box-shadow .15s, transform .15s;
+}
+
+.quiz-banner:hover {
+  border-color: var(--accent);
+  box-shadow: 0 12px 30px color-mix(in srgb, var(--accent) 22%, transparent);
+  transform: translateY(-1px);
+}
+
+.quiz-banner:focus-visible {
+  outline: 3px solid color-mix(in srgb, var(--accent) 35%, transparent);
+  outline-offset: 2px;
+}
+
+.quiz-banner-badge {
+  grid-row: 2;
+  display: grid;
+  place-items: center;
+  width: 72px;
+  height: 88px;
+  overflow: hidden;
+  border: 1px solid color-mix(in srgb, var(--accent) 50%, #0E1116);
+  border-radius: 11px;
+  background: linear-gradient(145deg, #20293A, #0E1116);
+}
+
+.quiz-banner-emblem {
+  width: 68px;
+  height: 82px;
+  flex: none;
+  filter: drop-shadow(0 5px 7px rgba(0, 0, 0, .3));
+}
+
+.quiz-banner-copy {
+  grid-row: 2;
+  display: grid;
+  gap: 5px;
+  min-width: 0;
+}
+
+.quiz-banner-eyebrow {
+  grid-column: 1 / -1;
+  grid-row: 1;
+  width: 100%;
+  padding: 5px 8px;
+  border-radius: 7px;
+  background: color-mix(in srgb, var(--accent) 14%, transparent);
+  color: var(--accent-ink);
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: .1em;
+  line-height: 1.2;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+.quiz-banner-title {
+  font-size: 15px;
+  font-weight: 800;
+  line-height: 1.25;
+  letter-spacing: -.01em;
+}
+
+.quiz-banner-note {
+  color: var(--muted);
+  font-size: 11.5px;
+  line-height: 1.35;
+}
+
+.quiz-banner-detail {
+  padding-top: 5px;
+  border-top: 1px solid color-mix(in srgb, var(--accent) 22%, var(--line));
+  color: var(--ink);
+  font-size: 11.5px;
+  font-weight: 600;
+  line-height: 1.35;
+}
+
+.quiz-banner-arrow {
+  grid-row: 2;
+  align-self: end;
+  color: var(--accent);
+  font-size: 22px;
+  line-height: 1;
+}
+
+@media (max-width: 640px) {
+  .page-head {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
+  /* Flatten the left column so the banner and filters become siblings of the title,
+     letting `order` interleave them: title/sub, then banner, then filters. */
+  .page-head-copy {
+    display: contents;
+  }
+
+  .quiz-banner {
+    width: 100%;
+  }
+
+  .page-head-copy > .filters {
+    order: 1;
+  }
+}
+
+/* lifecycle filter - segmented control above the category chips */
+.filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  /* now the last item in the left column of .page-head; the column's gap handles
+     spacing, so no bottom margin is needed. */
+  padding: 4px;
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  width: fit-content;
+  max-width: 100%;
+}
+
+.filter {
+  font-family: inherit;
+  font-size: 12.5px;
+  font-weight: 600;
+  color: var(--muted);
+  background: transparent;
+  border: 0;
+  border-radius: 7px;
+  padding: 6px 12px;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  transition: color .15s, background .15s;
+}
+
+.filter:hover {
+  color: var(--ink);
+}
+
+.filter.active {
+  color: var(--ink);
+  background: var(--bg);
+  box-shadow: inset 0 0 0 1px var(--line);
+}
+
+.filter-count {
+  font-size: 10.5px;
+  font-weight: 700;
+  color: var(--faint);
+  background: var(--bg);
+  border-radius: 999px;
+  padding: 1px 7px;
+  min-width: 18px;
+  text-align: center;
+}
+
+.filter.active .filter-count {
+  color: var(--panel);
+  background: var(--muted);
+}
+
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 18px;
+}
+
+.chip {
+  font-family: inherit;
+  font-size: 12.5px;
+  color: var(--muted);
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  padding: 5px 13px;
+  cursor: pointer;
+  transition: all .15s;
+}
+
+.chip:hover {
+  color: var(--ink);
+  border-color: var(--faint);
+}
+
+.chip.active {
+  color: #fff;
+  background: var(--accent);
+  border-color: var(--accent);
+}
+
+/* result cards */
+.results {
+  display: grid;
+  gap: 12px;
+}
+
+/* year dividers: turn the sorted list into a chronological path */
+.year-sep {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 10px 2px 0;
+  user-select: none;
+}
+
+.year-sep:first-child {
+  margin-top: 0;
+}
+
+.year-num {
+  font-size: 13px;
+  font-weight: 800;
+  letter-spacing: .04em;
+  color: var(--accent);
+  font-variant-numeric: tabular-nums;
+}
+
+.year-rule {
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(to right,
+      color-mix(in srgb, var(--accent) 30%, var(--line)),
+      transparent);
+}
+
+.year-count {
+  font-size: 11px;
+  color: var(--faint);
+  white-space: nowrap;
+}
+
+.row {
+  position: relative;
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 16px 18px;
+  transition: border-color .15s, box-shadow .15s;
+}
+
+.row:hover {
+  border-color: color-mix(in srgb, var(--accent) 45%, var(--line));
+  box-shadow: 0 2px 14px rgba(20, 25, 35, .06);
+}
+
+.row-main {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: nowrap;
+  gap: 8px 12px;
+}
+
+/* Left of the top row: just the title (its name / lineage). Category + date ride in
+   the eyebrow above; the status pill moved to the right group. */
+.row-head-left {
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 6px 10px;
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+/* Right of the top row: the status pill and the action icons (copy link, share),
+   pinned top-right. Narrow enough now that it never bumps to its own line. */
+.row-head-right {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+.lineage {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  flex-wrap: wrap;
+  font-size: 17.5px;
+  letter-spacing: -.01em;
+}
+
+/* odds + AI guess, sitting inline right after the card title */
+.row-odds {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+.old {
+  color: var(--faint);
+  text-decoration: line-through;
+  text-decoration-thickness: 1.5px;
+}
+
+.old .yr {
+  text-decoration: none;
+  font-size: 11px;
+  opacity: .8;
+}
+
+.arrow {
+  color: var(--accent);
+  font-weight: 700;
+}
+
+.current {
+  color: var(--ink);
+  font-weight: 700;
+  cursor: pointer;
+  border-bottom: 1px dashed transparent;
+  transition: border-color .15s;
+}
+
+.current:hover {
+  border-bottom-color: var(--accent);
+}
+
+/* deprecations: amber accent - the deprecated/retired state */
+.row.is-deprecation {
+  --state: var(--c-deprecated);
+  border-left-width: 4px;
+  border-left-color: color-mix(in srgb, var(--state) 60%, var(--line));
+  padding-left: 15px;
+}
+
+/* renamed (former name): indigo accent - a superseded name, redirected */
+.row.is-former {
+  --state: var(--c-renamed);
+  border-left-width: 4px;
+  border-left-color: color-mix(in srgb, var(--state) 60%, var(--line));
+  padding-left: 15px;
+}
+
+/* legacy: slate accent, dashed - old/unsupported but never formally deprecated,
+   so its spine is quieter than the solid amber of a dated deprecation. */
+.row.is-legacy {
+  --state: var(--c-legacy);
+  border-left: 4px dashed color-mix(in srgb, var(--state) 60%, var(--line));
+  padding-left: 15px;
+}
+
+/* deprecated title: kept as a JS/copy hook only - styling comes from .current so the
+   title matches every other card type (plain ink, not amber, not struck) */
+.dep-name {
+  cursor: pointer;
+}
+
+.retired {
+  color: var(--c-deprecated);
+  font-weight: 700;
+}
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  border-radius: 999px;
+  padding: 3px 10px 3px 9px;
+  font-family: var(--mono);
+  font-size: 10.5px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: .06em;
+  white-space: nowrap;
+}
+
+/* the pill carries a status dot, so it doubles as the color legend */
+.badge::before {
+  content: "";
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: currentColor;
+  flex: none;
+}
+
+.badge-deprecated {
+  color: var(--c-deprecated-ink);
+  background: color-mix(in srgb, var(--c-deprecated) 12%, transparent);
+  border: 1px solid color-mix(in srgb, var(--c-deprecated) 30%, transparent);
+}
+
+.badge-retired {
+  color: var(--c-retired-fg);
+  background: var(--c-deprecated);
+  border: 1px solid var(--c-deprecated);
+}
+
+/* "legacy": docs call it legacy/unsupported but no formal deprecation exists -
+   its own quiet slate, dashed, so it reads as distinct from both indigo Renamed
+   and amber Deprecated without ever shouting. */
+.badge-legacy {
+  color: var(--c-legacy-ink);
+  background: color-mix(in srgb, var(--c-legacy) 10%, transparent);
+  border: 1px dashed color-mix(in srgb, var(--c-legacy) 42%, transparent);
+}
+
+/* "current" = the name in use now; "former" = a superseded name (quiet, struck-through feel) */
+.badge-current {
+  color: var(--c-active-ink);
+  background: color-mix(in srgb, var(--c-active) 12%, transparent);
+  border: 1px solid color-mix(in srgb, var(--c-active) 30%, transparent);
+}
+
+.badge-former {
+  color: var(--c-renamed-ink);
+  background: color-mix(in srgb, var(--c-renamed) 13%, transparent);
+  border: 1px solid color-mix(in srgb, var(--c-renamed) 34%, transparent);
+}
+
+/* a former name in a card title reads as retired: muted + struck through */
+.current.former {
+  color: var(--muted);
+  text-decoration: line-through;
+  text-decoration-thickness: 1.5px;
+  text-decoration-color: color-mix(in srgb, var(--muted) 55%, transparent);
+}
+
+/* ===== relationship sections (successors / predecessors) ===== */
+.rel-group {
+  margin-top: 12px;
+}
+
+.rel-label {
+  display: block;
+  font-size: 10.5px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: .06em;
+  color: var(--faint);
+  margin-bottom: 6px;
+}
+
+.rel-items {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+/* each linked mini-card pulls its info from the related record and jumps to it */
+.rel-item {
+  display: block;
+  text-decoration: none;
+  color: inherit;
+  border: 1px solid var(--line);
+  border-left: 3px solid color-mix(in srgb, var(--accent) 45%, var(--line));
+  border-radius: 8px;
+  padding: 8px 10px;
+  background: var(--bg);
+  transition: border-color .15s, background .15s;
+}
+
+.rel-item:hover {
+  border-color: var(--accent);
+  border-left-color: var(--accent);
+  background: color-mix(in srgb, var(--accent) 5%, var(--bg));
+}
+
+.rel-head {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.rel-name {
+  font-weight: 600;
+  font-size: 13px;
+  color: var(--ink);
+}
+
+.rel-when {
+  font-size: 11px;
+  color: var(--faint);
+}
+
+.rel-arrow {
+  margin-left: auto;
+  color: var(--accent);
+  font-weight: 700;
+}
+
+.rel-what {
+  display: block;
+  margin-top: 3px;
+  font-size: 12px;
+  color: var(--muted);
+}
+
+/* ===== classified reference links ===== */
+.row-refs {
+  margin-top: 14px;
+  padding-top: 12px;
+  border-top: 1px solid var(--line);
+}
+
+.ref-label {
+  display: block;
+  font-size: 10.5px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: .06em;
+  color: var(--faint);
+  margin-bottom: 7px;
+}
+
+.ref-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px;
+}
+
+.ref-chip {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  text-decoration: none;
+  font-size: 11.5px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  padding: 3px 10px;
+  background: var(--bg);
+  color: var(--muted);
+  transition: border-color .15s, background .15s, color .15s;
+}
+
+.ref-chip:hover {
+  border-color: var(--accent);
+  color: var(--ink);
+}
+
+/* styled tooltip: the source (label / domain) on hover or focus, since the chip text
+   is just its kind now. Dark on both themes, like the toast. */
+.ref-chip[data-tip]::after {
+  content: attr(data-tip);
+  position: absolute;
+  left: 0;
+  bottom: calc(100% + 8px);
+  width: max-content;
+  max-width: 240px;
+  padding: 6px 10px;
+  border-radius: 8px;
+  background: #11171C;
+  color: #fff;
+  border: 1px solid rgba(255, 255, 255, .12);
+  font-family: var(--mono);
+  font-size: 11px;
+  line-height: 1.4;
+  white-space: normal;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, .28);
+  opacity: 0;
+  transform: translateY(3px);
+  pointer-events: none;
+  transition: opacity .13s, transform .13s;
+  z-index: 10;
+}
+
+.ref-chip[data-tip]:hover::after,
+.ref-chip[data-tip]:focus-visible::after {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.ref-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  flex: none;
+  background: var(--faint);
+}
+
+/* official = accent, community = green, internet = neutral */
+.ref-official .ref-dot {
+  background: var(--accent);
+}
+
+.ref-community .ref-dot {
+  background: var(--ok);
+}
+
+.ref-internet .ref-dot {
+  background: var(--muted);
+}
+
+.ref-kind {
+  font-weight: 600;
+  color: var(--ink);
+}
+
+.ref-host {
+  color: var(--faint);
+}
+
+.ref-ext {
+  color: var(--accent);
+  font-weight: 700;
+}
+
+.nosrc {
+  color: var(--faint);
+  font-style: italic;
+}
+
+/* Active bucket (new/preview features + current-name renames): emerald accent */
+.row.is-feature,
+.row.is-current {
+  --state: var(--c-active);
+  border-left-width: 4px;
+  border-left-color: color-mix(in srgb, var(--state) 60%, var(--line));
+  padding-left: 15px;
+}
+
+/* feature title: no green tint - the title matches every other card type; the state
+   shows in the NEW pill and the spine. (.current supplies color + hover.) */
+.feature-name {
+  cursor: pointer;
+}
+
+.badge-ga {
+  color: var(--c-active-ink);
+  background: color-mix(in srgb, var(--c-active) 12%, transparent);
+  border: 1px solid color-mix(in srgb, var(--c-active) 30%, transparent);
+}
+
+.badge-preview {
+  color: var(--c-active-ink);
+  background: color-mix(in srgb, var(--c-active) 12%, transparent);
+  border: 1px dashed color-mix(in srgb, var(--c-active) 45%, transparent);
+}
+
+.row-what {
+  margin: 10px 0 0;
+  font-size: 13px;
+  color: var(--muted);
+}
+
+/* date strip - sits below the description (matching the design), monospace */
+.row-meta {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 12px;
+  font-family: var(--mono);
+  font-size: 11.5px;
+  color: var(--faint);
+  flex-wrap: wrap;
+}
+
+/* top strip: category eyebrow (left) + status badge (right) */
+.row-eyebrow {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+  min-height: 24px;
+  margin-bottom: 8px;
+}
+
+/* The status pill becomes a rectangular bookmark tab hooked over the card's top-left
+   corner: it overhangs the top edge with square lower corners so it reads as a tab
+   tucked into the card. The lineage chain follows it. */
+/* Status tag as a flush top-edge tab: it straddles the card's top border, inset from
+   the left, like a fieldset legend. An opaque panel fill cuts the border line behind it;
+   each status still reads through its own border, label, and dot colors. */
+.row-eyebrow .badge {
+  position: absolute;
+  top: 0;
+  left: 18px;
+  transform: translateY(-52%);
+  margin: 0;
+  padding: 2px 10px;
+  border-radius: 7px;
+  background: var(--panel);
+  box-shadow: none;
+}
+
+/* "retired" is a solid tab, not an outlined one - keep its filled amber + light label
+   rather than the panel fill the outlined statuses use. (Placed after the rule above so
+   it wins at equal specificity.) */
+.row-eyebrow .badge-retired {
+  background: var(--c-deprecated);
+}
+
+/* Flatten the chain into the eyebrow's own flex flow (display: contents) so its nodes
+   become direct siblings of the bookmark. The chain then starts on the same line as the
+   bookmark and, when it runs long, its overflow simply continues onto the next full-width
+   row (from the left edge) instead of the whole chain jumping to its own row or piling up
+   in a cramped column beside the tab. */
+.row-eyebrow .lineage-chain {
+  display: contents;
+}
+
+
+.meta-dot {
+  color: var(--faint);
+  opacity: .55;
+}
+
+/* the actionable lifecycle date (access ended / retires), pulled out and flagged */
+.meta-urgent {
+  font-weight: 700;
+  color: var(--c-deprecated-ink);
+  background: color-mix(in srgb, var(--c-deprecated) 12%, transparent);
+  border: 1px solid color-mix(in srgb, var(--c-deprecated) 30%, transparent);
+  border-radius: 999px;
+  padding: 1px 9px;
+}
+
+.row-meta a:not(.row-act) {
+  color: var(--accent);
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.row-meta a:not(.row-act):hover {
+  text-decoration: underline;
+}
+
+.row-meta .date {
+  color: var(--faint);
+  font-variant-numeric: tabular-nums;
+}
+
+/* action toolbar, bottom-right of the card - the conventional spot for per-item
+   controls. Icon buttons only: copy link, share on LinkedIn, open source. */
+.row-actions {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+/* docs comment: sits below the footer as a plain caveat - no rule, no box */
+.row-note {
+  margin: 12px 0 0;
+  font-size: 12.5px;
+  color: var(--muted);
+}
+
+/* "Previously" line under a rename title - the prior names, newest-first */
+.row-rename {
+  margin: 6px 0 0;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  font-size: 12px;
+  color: var(--faint);
+}
+
+.row-rename .rename-label {
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: .06em;
+  color: var(--faint);
+}
+
+.row-rename .prev-name {
+  color: var(--muted);
+  text-decoration: line-through;
+  text-decoration-thickness: 1.5px;
+  text-decoration-color: color-mix(in srgb, var(--muted) 55%, transparent);
+}
+
+.row-rename .prev-name .yr {
+  text-decoration: none;
+  font-size: 11px;
+  opacity: .8;
+}
+
+.row-rename .sep {
+  color: var(--faint);
+  opacity: .6;
+}
+
+/* real-but-fun fact line - genuinely true, our tone */
+/* the 💡 tip: no rule, no box - just the icon and italic text, above the footer */
+.row-fact {
+  margin: 12px 0 0;
+  font-size: 12.5px;
+  color: var(--muted);
+  font-style: italic;
+  display: flex;
+  gap: 8px;
+  align-items: baseline;
+}
+
+.row-fact .fact-icon {
+  flex: none;
+  font-style: normal;
+}
+
+/* lineage chain: the rename history as one scannable line - predecessors → this card
+   → successors. Replaces the mini-cards that repeated the description verbatim. */
+.lineage-chain {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 12px;
+  font-family: var(--mono);
+  font-size: 12px;
+  color: var(--muted);
+}
+
+.chain-node {
+  color: var(--faint);
+  text-decoration: none;
+  border-bottom: 1px solid transparent;
+  transition: color .15s, border-color .15s;
+}
+
+a.chain-node:hover {
+  color: var(--ink);
+  border-bottom-color: var(--state, var(--accent));
+}
+
+/* The current name is the card's title now, so it leads as an inverted chip -
+   the same move as the "RE" in the REbricked wordmark, flipped per theme so it
+   reads on either surface (dark-on-light in light mode, light-on-dark in dark). */
+.chain-node.now {
+  display: inline-flex;
+  align-items: center;
+  background: var(--ink);
+  color: var(--panel);
+  border-radius: 5px;
+  padding: 3px 7px;
+  font-weight: 800;
+  letter-spacing: -.01em;
+}
+
+.chain-node.former {
+  text-decoration: line-through;
+  text-decoration-thickness: 1.5px;
+  text-decoration-color: color-mix(in srgb, currentColor 55%, transparent);
+}
+
+.chain-yr {
+  opacity: .65;
+}
+
+/* Each arrow carries the color of its own change (the left node's status), not the
+   viewed card's --state, so a mixed chain reads deprecation -> rename -> active. */
+.chain-flow {
+  color: var(--state, var(--accent));
+  font-weight: 700;
+}
+.chain-flow.flow-active { color: var(--c-active); }
+.chain-flow.flow-renamed { color: var(--c-renamed); }
+.chain-flow.flow-deprecated { color: var(--c-deprecated); }
+.chain-flow.flow-legacy { color: var(--c-legacy); }
+
+/* card footer: references (left) and the "guess the sequel" gag (right) share one row
+   and one divider, so the wide pill no longer crowds the title. */
+.row-foot {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px 16px;
+  flex-wrap: wrap;
+  margin-top: 16px;
+}
+
+.row-foot .row-refs {
+  margin-top: 0;
+  padding-top: 0;
+  border-top: 0;
+  flex: 1 1 auto;
+}
+
+/* right cluster of the footer: copy / share icons next to the guess-the-sequel gag */
+.row-foot-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex: 0 0 auto;
+}
+
+.row-foot .row-odds {
+  flex: 0 0 auto;
+}
+
+mark {
+  background: color-mix(in srgb, var(--accent) 18%, transparent);
+  color: var(--accent-ink);
+  border-radius: 3px;
+  padding: 0 1px;
+  font-weight: inherit;
+}
+
+/* empty / error */
+.empty,
+.error {
+  color: var(--muted);
+  background: var(--panel);
+  border: 1px dashed var(--line);
+  border-radius: 12px;
+  padding: 40px 24px;
+  text-align: center;
+  line-height: 1.7;
+}
+
+.error code {
+  color: var(--accent);
+  background: var(--bg);
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-family: var(--mono);
+}
+
+/* footer */
+.footer {
+  margin-top: 40px;
+  padding-top: 18px;
+  border-top: 1px solid var(--line);
+  font-size: 12px;
+  color: var(--faint);
+}
+
+.footer p {
+  margin: 0 0 6px;
+}
+
+.disclaimer {
+  opacity: .8;
+}
+
+.footer a {
+  color: var(--accent);
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.footer a:hover {
+  text-decoration: underline;
+}
+
+.gh-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35em;
+}
+
+.gh-icon {
+  flex: none;
+  vertical-align: text-bottom;
+}
+
+/* toast */
+.toast {
+  position: fixed;
+  left: 50%;
+  bottom: 28px;
+  transform: translate(-50%, 20px);
+  background: #11171C;
+  color: #fff;
+  padding: 11px 18px;
+  border-radius: 9px;
+  font-size: 13px;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity .2s, transform .2s;
+  max-width: 90vw;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, .25);
+  z-index: 50;
+}
+
+.toast.show {
+  opacity: 1;
+  transform: translate(-50%, 0);
+}
+
+/* roulette flash */
+.row.flash {
+  animation: flash .6s ease;
+  border-color: var(--accent);
+}
+
+@keyframes flash {
+  0% {
+    background: color-mix(in srgb, var(--accent) 16%, var(--panel));
+  }
+
+  100% {
+    background: var(--panel);
+  }
+}
+
+/* ================= Quiz challenge banner (shared ?quiz= link) ================= */
+.challenge {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-bottom: 18px;
+  padding: 12px 16px;
+  background: color-mix(in srgb, var(--accent) 10%, var(--panel));
+  border: 1px solid color-mix(in srgb, var(--accent) 40%, var(--line));
+  border-radius: 12px;
+}
+
+.ch-badge {
+  font-size: 10.5px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: .06em;
+  color: #fff;
+  background: var(--accent);
+  border-radius: 5px;
+  padding: 3px 9px;
+  white-space: nowrap;
+}
+
+.ch-text {
+  font-size: 13.5px;
+  color: var(--ink);
+}
+
+.ch-btn {
+  margin-left: auto;
+  border: 1px solid var(--accent);
+  background: var(--accent);
+  color: #fff;
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 600;
+  border-radius: 8px;
+  padding: 8px 15px;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background .15s, border-color .15s;
+}
+
+.ch-btn:hover {
+  background: var(--accent-ink);
+  border-color: var(--accent-ink);
+}
+
+/* ================= "On this month" spotlight ================= */
+.spotlight {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-bottom: 16px;
+  padding: 10px 14px;
+  background: linear-gradient(90deg,
+      color-mix(in srgb, var(--accent) 8%, var(--panel)), var(--panel));
+  border: 1px solid var(--line);
+  border-left: 3px solid var(--accent);
+  border-radius: 10px;
+  font-size: 13px;
+  color: var(--muted);
+}
+
+.sp-tag {
+  font-size: 10.5px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: .06em;
+  color: var(--accent);
+  background: color-mix(in srgb, var(--accent) 12%, transparent);
+  border-radius: 5px;
+  padding: 3px 8px;
+  white-space: nowrap;
+}
+
+.sp-text b {
+  color: var(--ink);
+}
+
+.sp-link {
+  border: 0;
+  background: none;
+  color: var(--accent);
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  padding: 0;
+}
+
+.sp-link:hover {
+  text-decoration: underline;
+}
+
+/* Inside the home heading's left column, spacing comes from .page-head-copy. */
+.page-head-copy .spotlight {
+  margin-bottom: 0;
+}
+
+/* ================= Year timeline ================= */
+.timeline {
+  margin-bottom: 18px;
+  padding: 14px 16px 10px;
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+}
+
+.tl-title {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 6px 10px;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--muted);
+  margin-bottom: 12px;
+}
+
+.tl-hint {
+  font-weight: 400;
+  color: var(--faint);
+}
+
+/* legend: one swatch per active bucket, pushed to the right of the title */
+.tl-legend {
+  display: inline-flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 4px 12px;
+  margin-left: auto;
+}
+
+.tl-key {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-weight: 500;
+  color: var(--muted);
+}
+
+.tl-dot {
+  width: 9px;
+  height: 9px;
+  border-radius: 2px;
+}
+
+/* plot area: columns anchored to a single baseline rule */
+.tl-plot {
+  display: flex;
+  align-items: stretch;
+  gap: 10px;
+  height: 124px;
+  border-bottom: 1px solid var(--line);
+}
+
+.tl-bar {
+  flex: 1 1 0;
+  min-width: 18px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 6px;
+  height: 100%;
+  border: 0;
+  padding: 0;
+  background: none;
+  font-family: inherit;
+  cursor: pointer;
+}
+
+.tl-n {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--muted);
+  line-height: 1;
+  margin-bottom: 5px;
+}
+
+.tl-h {
+  width: 100%;
+  max-width: 32px;
+  height: var(--h);
+  /* reserve room above the tallest bar for its value label */
+  max-height: calc(100% - 22px);
+  min-height: 3px;
+  border-radius: 4px 4px 0 0;
+  overflow: hidden;
+  /* clip the stacked segments to the rounded top + square baseline */
+  display: flex;
+  flex-direction: column;
+  /* stack bucket segments top → bottom, with a 2px surface gap between fills */
+  gap: 2px;
+  transform-origin: bottom center;
+  animation: tl-grow .5s cubic-bezier(.2, .8, .25, 1) backwards;
+  animation-delay: calc(var(--i) * 55ms);
+  transition: filter .15s, box-shadow .15s;
+}
+
+/* one slice per active bucket; flex-grow (set inline) carries its count.
+   Each fill is a rounded block separated by the 2px gap above; the top slice
+   keeps the 4px bar-top corners so it meets the container edge cleanly. */
+.tl-seg {
+  width: 100%;
+  flex-basis: 0;
+  min-height: 2px;
+  border-radius: 2px;
+}
+
+.tl-seg:first-child {
+  border-top-left-radius: 4px;
+  border-top-right-radius: 4px;
+}
+
+/* segment + legend colors, aligned with the status badges:
+   Active = emerald, Renamed = indigo, Deprecated = amber. Fills use the --seg-*
+   tokens, which step darker in dark mode so the stacked bars stay inside the
+   validator's dark lightness band. Only a light sheen at the top - a heavy white
+   mix washes out on the dark graph. */
+.tl-seg-current {
+  background: linear-gradient(180deg,
+      color-mix(in srgb, var(--seg-active) 90%, #fff),
+      var(--seg-active));
+}
+
+.tl-seg-renamed {
+  background: linear-gradient(180deg,
+      color-mix(in srgb, var(--seg-renamed) 90%, #fff),
+      var(--seg-renamed));
+}
+
+.tl-seg-deprecation {
+  background: linear-gradient(180deg,
+      color-mix(in srgb, var(--seg-deprecated) 90%, #fff),
+      var(--seg-deprecated));
+}
+
+.tl-bar:hover .tl-h {
+  filter: brightness(1.09);
+}
+
+.tl-bar.active .tl-h {
+  box-shadow:
+    0 0 0 2px var(--panel),
+    0 0 0 4px color-mix(in srgb, var(--accent) 55%, transparent);
+}
+
+.tl-bar.active .tl-n {
+  color: var(--accent);
+}
+
+@keyframes tl-grow {
+  from {
+    transform: scaleY(0);
+  }
+
+  to {
+    transform: scaleY(1);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tl-h {
+    animation: none;
+  }
+}
+
+/* year axis under the baseline, columns aligned to the bars above */
+.tl-axis {
+  display: flex;
+  gap: 10px;
+  margin-top: 8px;
+}
+
+.tl-y {
+  flex: 1 1 0;
+  min-width: 18px;
+  text-align: center;
+  font-size: 11px;
+  color: var(--faint);
+}
+
+/* ================= Card actions + odds gag ================= */
+.odds {
+  font-size: 11px;
+  color: var(--faint);
+  border: 1px dashed var(--line);
+  border-radius: 5px;
+  padding: 2px 8px;
+  cursor: help;
+  font-style: italic;
+}
+
+/* the "ask the AI" button that reveals the made-up forecast */
+.odds-btn {
+  font-family: var(--mono);
+  font-size: 10.5px;
+  font-weight: 600;
+  letter-spacing: .04em;
+  color: var(--accent-ink);
+  background: transparent;
+  border: 1px dashed color-mix(in srgb, var(--accent) 40%, var(--line));
+  border-radius: 999px;
+  padding: 4px 12px;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background .12s, border-color .12s;
+}
+
+.odds-btn:hover {
+  background: color-mix(in srgb, var(--accent) 10%, transparent);
+  border-color: var(--accent);
+}
+
+.odds-btn.thinking {
+  opacity: .75;
+  cursor: default;
+}
+
+/* revealed guess: same pill, still clickable to roll another */
+.odds-btn.odds-guessed {
+  opacity: 1;
+  cursor: pointer;
+}
+
+/* icon action buttons in the card's bottom-right toolbar */
+.row-act {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border: 1px solid var(--line);
+  border-radius: 7px;
+  background: var(--bg);
+  color: var(--muted);
+  cursor: pointer;
+  padding: 0;
+  transition: color .15s, border-color .15s, background .15s;
+}
+
+.row-act:hover {
+  color: var(--accent);
+  border-color: var(--accent);
+}
+
+.row-act .ic {
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+/* ================= Brick confetti ================= */
+.confetti {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+  /* above the quiz modal (80) so a perfect-score shower is visible over the dialog */
+  z-index: 90;
+}
+
+.brick {
+  position: absolute;
+  top: -40px;
+  animation: brick-fall linear forwards;
+  will-change: transform, opacity;
+}
+
+@keyframes brick-fall {
+  0% {
+    transform: translateY(-40px) rotate(0deg);
+    opacity: 1;
+  }
+
+  100% {
+    transform: translateY(105vh) rotate(320deg);
+    opacity: .85;
+  }
+}
+
+/* ================= Quiz overlay ================= */
+body.modal-open {
+  overflow: hidden;
+}
+
+.quiz-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 80;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  background: rgba(8, 11, 15, .55);
+  backdrop-filter: blur(3px);
+}
+
+.quiz-card {
+  width: 100%;
+  max-width: 520px;
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, .35);
+  padding: 20px 22px 22px;
+}
+
+.quiz-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.quiz-title {
+  margin: 0;
+  font-size: 19px;
+  font-weight: 700;
+  letter-spacing: -.01em;
+}
+
+.quiz-tag {
+  margin: 3px 0 0;
+  font-size: 12.5px;
+  color: var(--muted);
+}
+
+.quiz-close {
+  flex: 0 0 auto;
+  width: 30px;
+  height: 30px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--bg);
+  color: var(--muted);
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.quiz-close:hover {
+  color: var(--accent);
+  border-color: var(--accent);
+}
+
+.quiz-scorebar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin: 14px 0 4px;
+  font-size: 12.5px;
+  font-weight: 600;
+  color: var(--muted);
+}
+
+#quiz-streak {
+  color: var(--accent);
+  margin-right: auto;
+}
+
+.quiz-share {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  border: 1px solid var(--line);
+  background: var(--bg);
+  color: #0A66C2;
+  font-family: inherit;
+  font-size: 12px;
+  font-weight: 600;
+  border-radius: 8px;
+  padding: 6px 11px;
+  cursor: pointer;
+  transition: border-color .12s, background .12s;
+}
+
+.quiz-share:hover {
+  border-color: #0A66C2;
+  background: color-mix(in srgb, #0A66C2 8%, var(--bg));
+}
+
+.quiz-share .li-ic {
+  fill: #0A66C2;
+  stroke: none;
+}
+
+.quiz-progress {
+  margin: 14px 0 0;
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: .06em;
+  color: var(--faint);
+}
+
+/* money-tree ladder - one segment per question */
+.quiz-ladder {
+  display: flex;
+  gap: 6px;
+  margin: 12px 0 16px;
+}
+
+.quiz-rung {
+  flex: 1;
+  height: 8px;
+  border-radius: 99px;
+  background: var(--bg);
+  border: 1px solid var(--line);
+  transition: background .25s, border-color .25s, box-shadow .25s;
+}
+
+.quiz-rung.done {
+  background: var(--c-active);
+  border-color: var(--c-active);
+}
+
+.quiz-rung.miss {
+  background: var(--c-deprecated);
+  border-color: var(--c-deprecated);
+}
+
+.quiz-rung.now {
+  background: var(--accent);
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 20%, transparent);
+}
+
+.quiz-q {
+  margin: 6px 0 14px;
+  font-size: 16px;
+  line-height: 1.5;
+}
+
+/* the old name, in the console's mono rename-chip idiom */
+.quiz-name {
+  font-family: var(--mono);
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--accent);
+  background: color-mix(in srgb, var(--accent) 12%, var(--panel));
+  border: 1px solid color-mix(in srgb, var(--accent) 30%, transparent);
+  padding: 1px 8px;
+  border-radius: 7px;
+  white-space: nowrap;
+}
+
+/* results screen */
+.quiz-result {
+  padding: 8px 0 2px;
+}
+
+.quiz-final {
+  margin: 8px 0 6px;
+  font-size: 20px;
+}
+
+.quiz-final b {
+  color: var(--accent);
+}
+
+.quiz-pct {
+  color: var(--faint);
+  font-size: 15px;
+}
+
+.quiz-verdict {
+  margin: 0 0 18px;
+  font-size: 13.5px;
+  color: var(--muted);
+}
+
+.quiz-recipient {
+  margin: 18px 0;
+  padding: 16px;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: var(--bg);
+}
+
+.quiz-recipient-title {
+  margin: 0;
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.quiz-recipient-optional {
+  font-weight: 500;
+  color: var(--faint);
+}
+
+.quiz-recipient-fields {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 10px;
+}
+
+.quiz-recipient label {
+  display: grid;
+  gap: 4px;
+  margin-top: 10px;
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--muted);
+}
+
+.quiz-recipient .new-input {
+  margin: 0;
+}
+
+.quiz-recipient-note {
+  margin: 9px 0 12px;
+  font-size: 11px;
+  line-height: 1.4;
+  color: var(--faint);
+}
+
+.quiz-recipient-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+/* answer lozenges - the Who-Wants-to-Be-a-Millionaire hexagon, 2×2 */
+.quiz-opts {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 11px;
+}
+
+/* .quiz-opt is the 1.5px border layer; .quiz-opt-in is the fill. Both clipped
+   to the same hexagon so the border traces the pointed ends. */
+.quiz-opt {
+  position: relative;
+  padding: 1.5px;
+  border: 0;
+  cursor: pointer;
+  font-family: inherit;
+  background: var(--line);
+  transition: transform .12s, background .14s;
+  clip-path: polygon(4.5% 0, 95.5% 0, 100% 50%, 95.5% 100%, 4.5% 100%, 0 50%);
+}
+
+.quiz-opt-in {
+  clip-path: polygon(4.5% 0, 95.5% 0, 100% 50%, 95.5% 100%, 4.5% 100%, 0 50%);
+  background: var(--panel);
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  padding: 12px 20px;
+  min-height: 54px;
+  text-align: left;
+}
+
+.quiz-key {
+  flex: 0 0 auto;
+  width: 15px;
+  font-family: var(--mono);
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--accent);
+}
+
+.quiz-val {
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1.2;
+  color: var(--ink);
+}
+
+.quiz-opt:not(:disabled):hover {
+  transform: translateY(-1px);
+  background: var(--accent);
+}
+
+.quiz-opt:not(:disabled):hover .quiz-opt-in {
+  background: color-mix(in srgb, var(--accent) 10%, var(--panel));
+}
+
+.quiz-opt:disabled {
+  cursor: default;
+}
+
+.quiz-opt:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+}
+
+/* lock-in suspense - the "final answer?" pause, in Databricks red */
+.quiz-opt.locked {
+  background: var(--accent);
+  animation: quiz-lock 1s ease-in-out infinite;
+}
+
+.quiz-opt.locked .quiz-opt-in {
+  background: color-mix(in srgb, var(--accent) 18%, var(--panel));
+}
+
+.quiz-opt.locked .quiz-key {
+  color: var(--accent-ink);
+}
+
+@keyframes quiz-lock {
+
+  0%,
+  100% {
+    filter: brightness(1);
+  }
+
+  50% {
+    filter: brightness(1.14);
+  }
+}
+
+.quiz-opt.correct {
+  background: var(--c-active);
+}
+
+.quiz-opt.correct .quiz-opt-in {
+  background: color-mix(in srgb, var(--c-active) 15%, var(--panel));
+}
+
+.quiz-opt.correct .quiz-key {
+  color: var(--c-active-ink);
+}
+
+.quiz-opt.wrong {
+  background: var(--c-deprecated);
+}
+
+.quiz-opt.wrong .quiz-opt-in {
+  background: color-mix(in srgb, var(--c-deprecated) 15%, var(--panel));
+}
+
+.quiz-opt.wrong .quiz-key {
+  color: var(--c-deprecated-ink);
+}
+
+@media (max-width: 480px) {
+  .quiz-opts {
+    grid-template-columns: 1fr;
+  }
+
+  .quiz-recipient-fields {
+    grid-template-columns: 1fr;
+  }
+
+  .quiz-recipient-actions {
+    align-items: stretch;
+    flex-direction: column;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .quiz-opt.locked {
+    animation: none;
+  }
+}
+
+.quiz-foot {
+  margin-top: 14px;
+}
+
+/* the reveal: former name → current name, in the rename-chain idiom */
+.quiz-chain {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin: 0 0 10px;
+  font-family: var(--mono);
+  font-size: 12.5px;
+}
+
+.quiz-chain .old {
+  color: var(--muted);
+  text-decoration: line-through;
+  text-decoration-color: color-mix(in srgb, var(--muted) 60%, transparent);
+}
+
+.quiz-chain .arw {
+  color: var(--c-active);
+}
+
+.quiz-chain .new {
+  color: var(--ink);
+  font-weight: 700;
+}
+
+.quiz-expl {
+  margin: 0 0 12px;
+  font-size: 13px;
+  color: var(--muted);
+}
+
+.quiz-ok {
+  color: var(--ok);
+  font-weight: 700;
+}
+
+.quiz-no {
+  color: var(--warn);
+  font-weight: 700;
+}
+
+.quiz-actions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.quiz-see {
+  border: 0;
+  background: none;
+  color: var(--accent);
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  padding: 0;
+}
+
+.quiz-see:hover {
+  text-decoration: underline;
+}
+
+.quiz-next {
+  border: 1px solid var(--accent);
+  background: var(--accent);
+  color: #fff;
+  font-family: inherit;
+  font-size: 13.5px;
+  font-weight: 600;
+  border-radius: 8px;
+  padding: 8px 16px;
+  cursor: pointer;
+}
+
+.quiz-next:hover {
+  background: var(--accent-ink);
+  border-color: var(--accent-ink);
+}
+
+.quiz-msg {
+  color: var(--muted);
+  padding: 20px 0;
+  text-align: center;
+}
+
+/* ================= "New product" overlay copy ================= */
+.new-copy {
+  margin: 16px 0 0;
+  font-size: 13.5px;
+  color: var(--muted);
+  line-height: 1.6;
+}
+
+.new-suggest {
+  margin: 14px 0;
+  font-size: 16px;
+  line-height: 1.5;
+}
+
+.new-fine {
+  margin: 0 0 16px;
+  font-size: 11px;
+  font-style: italic;
+  color: var(--faint);
+}
+
+.new-links {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.quiz-actions.end {
+  justify-content: flex-end;
+}
+
+.new-input {
+  width: 100%;
+  margin: 14px 0 4px;
+  padding: 10px 12px;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: inherit;
+  font-size: 14px;
+}
+
+.new-input:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 14%, transparent);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .brick {
+    display: none;
+  }
+}
+
+/* ================= Responsive ================= */
+/* hamburger only exists on narrow screens; the scrim sits under the open rail */
+.menu-btn {
+  display: none;
+}
+
+.scrim {
+  position: fixed;
+  inset: 0;
+  z-index: 35;
+  background: rgba(8, 11, 15, .45);
+}
+
+@media (max-width: 820px) {
+  .sidebar {
+    position: fixed;
+    z-index: 40;
+    transform: translateX(-100%);
+    transition: transform .2s;
+    box-shadow: 0 0 40px rgba(0, 0, 0, .4);
+  }
+
+  .sidebar.open {
+    transform: translateX(0);
+  }
+
+  .menu-btn {
+    display: inline-flex;
+    flex: 0 0 auto;
+  }
+
+  .counter {
+    display: none;
+  }
+
+  .content {
+    padding: 22px 18px 56px;
+  }
+}
+
+/* ================= Shareable badge pages (badges/<n>-of-5/) ================= */
+/* The badge is shown as a screen inside the app chrome; this stage centers the card
+   within the main content area. */
+.badge-stage {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /*min-height: 74vh;*/
+  padding: 24px 4px;
+  /*background: radial-gradient(1100px 460px at 50% -12%, color-mix(in srgb, var(--accent) 9%, transparent), transparent);*/
+}
+
+.badge-intro {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  max-width: 860px;
+  margin: 0 auto;
+  padding: 28px 4px 0;
+}
+
+.badge-intro h1 {
+  margin: 0;
+  font-size: 24px;
+  letter-spacing: -.02em;
+}
+
+.badge-intro p {
+  max-width: 62ch;
+  margin: 6px 0 0;
+  color: var(--muted);
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.badge-intro-cta {
+  flex: 0 0 auto;
+  border-radius: 999px;
+  padding: 10px 16px;
+  background: var(--accent);
+  color: #fff;
+  font-size: 13px;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.badge-intro-cta:hover {
+  background: var(--accent-ink);
+}
+
+/* rail/new/brand are anchors on the badge page - keep them looking like the app */
+.nav-item,
+.side-new,
+.side-brand,
+.quiz-cta {
+  text-decoration: none;
+}
+
+.badge-card {
+  --tier: var(--accent);
+  width: 100%;
+  max-width: 860px;
+  display: grid;
+  grid-template-columns: 250px minmax(0, 1fr);
+  grid-template-areas:
+    "emblem name"
+    "emblem stars"
+    "emblem score"
+    "emblem recipient"
+    "emblem blurb"
+    "emblem actions"
+    "emblem fine";
+  column-gap: 26px;
+  text-align: left;
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-top: 4px solid var(--tier);
+  border-radius: 18px;
+  padding: 30px 30px 26px;
+  box-shadow: 0 20px 60px rgba(20, 25, 35, .12);
+}
+
+.badge-emblem {
+  grid-area: emblem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.badge-emblem .emblem {
+  width: 132px;
+  height: 158px;
+  filter: drop-shadow(0 10px 20px rgba(20, 25, 35, .16));
+}
+
+.badge-stars {
+  grid-area: stars;
+  margin-top: 12px;
+  font-size: 22px;
+  letter-spacing: 5px;
+  line-height: 1;
+}
+
+.badge-stars .st {
+  color: #D7DBE0;
+}
+
+.badge-stars .st.on {
+  color: var(--tier);
+}
+
+.badge-score {
+  grid-area: score;
+  margin-top: 14px;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--tier);
+}
+
+.badge-name {
+  grid-area: name;
+  margin: 6px 0 0;
+  font-size: 27px;
+  font-weight: 800;
+  letter-spacing: -.02em;
+  color: var(--tier);
+}
+
+.badge-recipient {
+  grid-area: recipient;
+  margin: 16px 0 0;
+  font-size: 24px;
+  line-height: 1.2;
+  letter-spacing: -.02em;
+  color: var(--ink);
+}
+
+.badge-recipient strong {
+  color: var(--ink);
+}
+
+.badge-blurb {
+  grid-area: blurb;
+  margin: 12px 0 0;
+  max-width: 34ch;
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--muted);
+}
+
+.badge-actions {
+  grid-area: actions;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 22px;
+}
+
+.badge-primary-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.badge-share {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  border: 1px solid #0A66C2;
+  border-radius: 999px;
+  padding: 9px 18px;
+  background: #0A66C2;
+  color: #fff;
+  font: inherit;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.badge-share-mark {
+  color: #fff;
+  font-family: Arial, sans-serif;
+  font-size: 17px;
+  font-weight: 800;
+  line-height: 1;
+}
+
+.badge-share:hover {
+  background: #004182;
+  border-color: #004182;
+}
+
+.badge-export {
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  padding: 9px 15px;
+  background: transparent;
+  color: var(--ink);
+  font: inherit;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.badge-export:hover {
+  background: var(--bg);
+}
+
+.badge-link {
+  font-size: 12.5px;
+  font-weight: 600;
+  color: var(--muted);
+  text-decoration: none;
+}
+
+.badge-link:hover {
+  color: var(--accent);
+  text-decoration: underline;
+}
+
+.badge-fine {
+  grid-area: fine;
+  margin: 20px 0 0;
+  font-size: 10.5px;
+  font-style: italic;
+  color: var(--faint);
+}
+
+@media (max-width: 640px) {
+  .badge-intro {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 14px;
+  }
+
+  .badge-card {
+    display: block;
+    max-width: 440px;
+    text-align: center;
+  }
+
+  .badge-emblem {
+    display: flex;
+  }
+
+  .badge-blurb {
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .badge-actions {
+    align-items: center;
+  }
+
+  .badge-primary-actions {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .badge-share,
+  .badge-export {
+    justify-content: center;
+  }
+}
+
+@media print {
+  @page {
+    size: A4 landscape;
+    margin: 0;
+  }
+
+  html,
+  body {
+    width: 297mm;
+    height: 210mm;
+  }
+
+  .sidebar,
+  .topbar,
+  .badge-intro,
+  .badge-actions,
+  .badge-fine {
+    display: none !important;
+  }
+
+  .app,
+  .main,
+  .content {
+    display: block;
+    min-height: 0;
+    padding: 0;
+    background: #fff;
+  }
+
+  .badge-stage {
+    display: flex;
+    width: 297mm;
+    height: 210mm;
+    min-height: 0;
+    padding: 0;
+    background: #fff;
+  }
+
+  .badge-card {
+    box-sizing: border-box;
+    width: 270mm;
+    max-width: none;
+    min-height: 166mm;
+    margin: 0;
+    padding: 14mm;
+    grid-template-columns: 76mm minmax(0, 1fr);
+    column-gap: 12mm;
+    border: 1mm solid var(--tier);
+    border-top-width: 2mm;
+    border-radius: 6mm;
+    box-shadow: none;
+  }
+}
+
+/* one ascending tier ladder - more correct = higher metal.
+   0 Stone · 1 Bronze · 2 Silver · 3 Gold · 4 Platinum · 5 Diamond */
+.badge-tier-0 {
+  --tier: #7C8792;
+}
+
+.badge-tier-1 {
+  --tier: #B87333;
+}
+
+.badge-tier-2 {
+  --tier: #98A0AC;
+}
+
+.badge-tier-3 {
+  --tier: #D6A419;
+}
+
+.badge-tier-4 {
+  --tier: #4CB7C9;
+}
+
+.badge-tier-5 {
+  --tier: #6E8BF5;
+}
+
+/* ---- card header on narrow screens ----
+   The status pill + action icons are narrow now that the "guess the sequel" gag lives
+   in the footer, so the right group stays pinned beside the title without the
+   display:contents reflow the wide pill used to need.
+
+   This block stays at the end of the file: media queries add no specificity, so these
+   single-class overrides must come *after* the base rules to win the cascade. */
+@media (max-width: 640px) {
+  .row-main {
+    flex-wrap: wrap;
+  }
+
+  /* Grow from zero so the title always shares the first line with the pinned pill +
+     icons, rather than claiming the whole line and bumping them to a row of their own. */
+  .row-head-left {
+    flex-basis: 0;
+  }
+
+  /* Keep the copy/LinkedIn action cluster on the same row as the reference chips:
+     the chips block absorbs the remaining space (its own chips wrap internally when
+     needed) while the icons stay pinned to the right edge. */
+  .row-foot-actions {
+    flex: 0 0 auto;
+    margin-left: auto;
+  }
+}

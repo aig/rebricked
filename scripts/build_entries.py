@@ -1,0 +1,728 @@
+#!/usr/bin/env python3
+"""Static, crawlable pages per vendor and entry - the content SEO layer.
+
+The app renders everything client-side from databricks.json, so to a crawler index.html is
+an empty shell and the ?id= deep links are not distinct documents. This script emits real
+HTML the crawlers can index:
+
+  /{vendor}/            - a hub page listing every entry for that vendor, grouped by
+                          category (a strong landing page; also guarantees no entry page
+                          is orphaned).
+  /{vendor}/{id}/       - one page per entry, with a unique <title>, description, canonical
+                          URL, Open Graph/Twitter tags, JSON-LD, the full content, and
+                          internal links to related entries.
+
+The vendor segment future-proofs the URL scheme: today everything is `databricks`, but an
+entry may carry a `vendor` field and new vendors slot in as new top-level namespaces
+(/snowflake/..., /aws/...) with no structural change. It also (re)writes sitemap.xml.
+
+The visible chrome (sidebar rail + topbar) is reused verbatim from build_badges.py, with its
+root-relative `../../` rewritten to match each page's depth.
+
+Run:  python scripts/build_entries.py
+"""
+
+import html
+import json
+import re
+import shutil
+from pathlib import Path
+
+# Reuse the exact app chrome + constants the badge pages use.
+from build_badges import (
+    BASE_URL,
+    FAVICON,
+    INLINE_JS,
+    TOPBAR,
+    render_rail,
+)
+
+ROOT = Path(__file__).resolve().parent.parent
+DATA = ROOT / "databricks.json"
+SITEMAP = ROOT / "sitemap.xml"
+TOTAL_BADGES = 5
+
+DEFAULT_VENDOR = "databricks"
+VENDOR_LABEL = {"databricks": "Databricks"}
+
+MONTHS = [
+    "January",
+    "February",
+    "March",
+    "April",
+    "May",
+    "June",
+    "July",
+    "August",
+    "September",
+    "October",
+    "November",
+    "December",
+]
+
+REF_KINDS = {"official": "Official", "community": "Community", "internet": "Web"}
+
+
+def esc(s):
+    return html.escape(str(s if s is not None else ""))
+
+
+def attr(s):
+    return html.escape(str(s if s is not None else ""), quote=True)
+
+
+def fmt_date(s):
+    """Mirror app.js fmtDate: 'YYYY-MM' -> 'Month YYYY'; anything else unchanged."""
+    s = str(s or "").strip()
+    m = re.match(r"^(\d{4})-(\d{1,2})$", s)
+    if not m:
+        return s
+    idx = int(m.group(2)) - 1
+    return f"{MONTHS[idx]} {m.group(1)}" if 0 <= idx < 12 else s
+
+
+def vendor_of(d):
+    return d.get("vendor") or DEFAULT_VENDOR
+
+
+def vendor_name(v):
+    return VENDOR_LABEL.get(v, v.replace("-", " ").title())
+
+
+def kind_of(d):
+    return d["kind"] if d.get("kind") in ("deprecation", "feature") else "rename"
+
+
+def chrome(root):
+    """The shared rail/topbar/js, with `../../` (their root-relative prefix) rewritten to
+    `root` so the same chrome works at any directory depth."""
+    return (
+        render_rail().replace("../../", root),
+        TOPBAR.replace("../../", root),
+        INLINE_JS.replace("../../", root),
+    )
+
+
+def successors_of(d, by_id):
+    """Walk successorId forward to the current tip; returns [next, ..., tip]."""
+    out, seen, cur = [], {d["id"]}, d
+    while cur and cur.get("successorId") and cur["successorId"] not in seen:
+        nxt = by_id.get(cur["successorId"])
+        if not nxt:
+            break
+        seen.add(nxt["id"])
+        out.append(nxt)
+        cur = nxt
+    return out
+
+
+def predecessors_of(d, data):
+    """Everything that points here, walked back to the oldest name (oldest last)."""
+    out, seen = [], {d["id"]}
+    frontier = [x for x in data if x.get("successorId") == d["id"]]
+    while frontier:
+        nxt = []
+        for p in frontier:
+            if p["id"] in seen:
+                continue
+            seen.add(p["id"])
+            out.append(p)
+            nxt.extend(x for x in data if x.get("successorId") == p["id"])
+        frontier = nxt
+    return out
+
+
+def status_word(d):
+    s = d.get("status")
+    return s if s in ("legacy", "retired") else "deprecated"
+
+
+def rel_entry(from_vendor, other):
+    """Relative link from an entry page (/{vendor}/{id}/) to another entry page."""
+    ov = vendor_of(other)
+    if ov == from_vendor:
+        return f"../{attr(other['id'])}/"
+    return f"../../{attr(ov)}/{attr(other['id'])}/"
+
+
+def meta_for(d, by_id, data):
+    """Return (title, description, kicker, lead) tuned to the entry's kind/status."""
+    name = d["name"]
+    cat = d.get("category", "")
+    kind = kind_of(d)
+    what = (d.get("what") or "").strip()
+    vlabel = vendor_name(vendor_of(d))
+
+    if kind == "feature":
+        when = fmt_date(d.get("introducedAt"))
+        title = f"{name} - new in {vlabel}"
+        lead = f"{name} is a {vlabel} {cat.lower()} capability" + (
+            f", introduced {when}." if when else "."
+        )
+        kicker = "New feature"
+    elif kind == "deprecation":
+        word = status_word(d)
+        succ = successors_of(d, by_id)
+        repl = succ[-1]["name"] if succ else (d.get("replacement") or "")
+        when = fmt_date(d.get("removedAt") or d.get("deprecatedAt"))
+        verb = (
+            "legacy since"
+            if word == "legacy"
+            else ("retired" if word == "retired" else "deprecated")
+        )
+        title = f"{name} is {word} in {vlabel}" + (f" - use {repl}" if repl else "")
+        lead = (
+            f"{name} is {word}"
+            + (f", replaced by {repl}" if repl else "")
+            + (f" ({verb} {when})." if when else ".")
+        )
+        kicker = word.capitalize()
+    else:  # rename
+        if (d.get("status") or "current") == "renamed":
+            succ = successors_of(d, by_id)
+            current = succ[-1]["name"] if succ else None
+            when = fmt_date(d.get("to"))
+            if current:
+                title = f"{name} is now {current} ({vlabel})"
+                lead = f"{name} was renamed - {vlabel} now calls it {current}" + (
+                    f", as of {when}." if when else "."
+                )
+            else:
+                title = f"{name} - a former {vlabel} name"
+                lead = f"{name} is a former {vlabel} name."
+            kicker = "Renamed"
+        else:
+            preds = predecessors_of(d, data)
+            former = preds[0]["name"] if preds else None
+            when = fmt_date(d.get("from"))
+            title = f"{name} ({vlabel})" + (f" - formerly {former}" if former else "")
+            lead = (
+                f"{name} is the current {vlabel} name"
+                + (f", previously {former}" if former else "")
+                + (f" (since {when})." if when else ".")
+            )
+            kicker = "Current name"
+
+    title = f"{title} | REbricked"
+    desc = (lead + " " + what).strip()
+    if len(desc) > 300:
+        desc = desc[:297].rstrip() + "…"
+    return title, desc, kicker, lead
+
+
+def lineage_html(d, by_id, data):
+    """predecessors -> this -> successors, each other name linking to its own page."""
+    v = vendor_of(d)
+    preds = list(reversed(predecessors_of(d, data)))  # oldest first
+    succs = successors_of(d, by_id)
+    nodes = [f'<a href="{rel_entry(v, p)}">{esc(p["name"])}</a>' for p in preds]
+    nodes.append(f'<strong aria-current="page">{esc(d["name"])}</strong>')
+    nodes += [f'<a href="{rel_entry(v, s)}">{esc(s["name"])}</a>' for s in succs]
+    if len(nodes) == 1:
+        return ""
+    return (
+        '<p class="entry-lineage">'
+        + ' <span class="arw" aria-hidden="true">&rarr;</span> '.join(nodes)
+        + "</p>"
+    )
+
+
+def related_html(d, data):
+    """Up to 5 other entries in the same category - internal links so no page is orphaned."""
+    v = vendor_of(d)
+    peers = [
+        x
+        for x in data
+        if x.get("category") == d.get("category")
+        and x["id"] != d["id"]
+        and vendor_of(x) == v
+    ]
+    if not peers:
+        return ""
+    items = "".join(
+        f'<li><a href="{rel_entry(v, p)}">{esc(p["name"])}</a></li>' for p in peers[:5]
+    )
+    return f'<section class="entry-related"><h2>Related in {esc(d.get("category",""))}</h2><ul>{items}</ul></section>'
+
+
+def facts_html(d):
+    rows = [("Category", esc(d.get("category", "")))]
+    kind = kind_of(d)
+    if d.get("abbr"):
+        rows.append(("Abbreviation", esc(d["abbr"])))
+    if kind == "feature" and d.get("introducedAt"):
+        rows.append(("Introduced", esc(fmt_date(d["introducedAt"]))))
+    if kind == "rename":
+        if d.get("from"):
+            rows.append(("In use from", esc(fmt_date(d["from"]))))
+        if d.get("to"):
+            rows.append(("Renamed", esc(fmt_date(d["to"]))))
+    if kind == "deprecation":
+        if d.get("deprecatedAt"):
+            rows.append(("Deprecated", esc(fmt_date(d["deprecatedAt"]))))
+        if d.get("removedAt"):
+            rows.append(("Access ended", esc(fmt_date(d["removedAt"]))))
+    if d.get("occasion"):
+        rows.append(("Announced at", esc(d["occasion"])))
+    aliases = [a for a in (d.get("aliases") or []) if a]
+    if aliases:
+        rows.append(("Also known as", esc(", ".join(aliases))))
+    if d.get("verified"):
+        rows.append(("Verified", esc(fmt_date(d["verified"]))))
+    body = "".join(
+        f"<div class='fact-row'><dt>{k}</dt><dd>{v}</dd></div>" for k, v in rows if v
+    )
+    return f"<dl class='entry-facts'>{body}</dl>"
+
+
+def sources_html(d):
+    links = []
+    if d.get("source"):
+        links.append(
+            {
+                "url": d["source"],
+                "kind": "official",
+                "label": "Official Databricks / Microsoft docs",
+            }
+        )
+    links += [l for l in (d.get("links") or []) if l.get("url")]
+    if not links:
+        return ""
+    items = []
+    for l in links:
+        label = esc(l.get("label") or l["url"])
+        k = REF_KINDS.get(l.get("kind"), "Source")
+        items.append(
+            f'<li><span class="src-kind src-{attr(l.get("kind","internet"))}">{esc(k)}</span> '
+            f'<a href="{attr(l["url"])}" target="_blank" rel="noopener nofollow">{label}</a></li>'
+        )
+    return f'<section class="entry-sources"><h2>Sources</h2><ul>{"".join(items)}</ul></section>'
+
+
+def badge_html(d):
+    kind = kind_of(d)
+    if kind == "deprecation":
+        s = d.get("status", "deprecated")
+        return f'<span class="badge badge-{attr(s)}">{esc(s)}</span>'
+    if kind == "feature":
+        s = d.get("status", "ga")
+        return f'<span class="badge badge-{attr(s)}">{esc("preview" if s == "preview" else "new")}</span>'
+    if (d.get("status") or "current") == "renamed":
+        return '<span class="badge badge-former">renamed</span>'
+    return '<span class="badge badge-current">latest</span>'
+
+
+def entry_jsonld(d, url, hub_url, title, desc):
+    v = vendor_of(d)
+    about_names = [d["name"]] + [a for a in (d.get("aliases") or []) if a]
+    article = {
+        "@type": "TechArticle",
+        "@id": url + "#article",
+        "headline": d["name"],
+        "name": title.replace(" | REbricked", ""),
+        "description": desc,
+        "about": [{"@type": "Thing", "name": n} for n in about_names],
+        "articleSection": d.get("category", ""),
+        "inLanguage": "en",
+        "url": url,
+        "isPartOf": {"@id": f"{BASE_URL}/#website"},
+        "publisher": {
+            "@type": "Organization",
+            "name": "REbricked",
+            "url": f"{BASE_URL}/",
+        },
+    }
+    if d.get("verified"):
+        article["dateModified"] = d["verified"]
+        article["datePublished"] = d["verified"]
+    breadcrumb = {
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+            {
+                "@type": "ListItem",
+                "position": 1,
+                "name": "REbricked",
+                "item": f"{BASE_URL}/",
+            },
+            {
+                "@type": "ListItem",
+                "position": 2,
+                "name": vendor_name(v),
+                "item": hub_url,
+            },
+            {"@type": "ListItem", "position": 3, "name": d["name"], "item": url},
+        ],
+    }
+    return json.dumps(
+        {"@context": "https://schema.org", "@graph": [article, breadcrumb]},
+        ensure_ascii=False,
+        indent=2,
+    )
+
+
+ENTRY_STYLE = """  <style>
+    .entry-doc, .hub-doc { max-width: 780px; margin: 0 auto; padding: 8px 4px 48px; }
+    .entry-crumbs { font-size: 12px; color: var(--muted, #8a94a3); margin: 0 0 14px; }
+    .entry-crumbs a { color: inherit; }
+    .entry-kicker { text-transform: uppercase; letter-spacing: .12em; font-size: 11px; font-weight: 700; color: var(--muted, #8a94a3); }
+    .entry-doc h1 { font-size: 30px; line-height: 1.15; margin: 6px 0 12px; }
+    .entry-headrow { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; margin-bottom: 8px; }
+    .entry-lead { font-size: 17px; line-height: 1.5; margin: 0 0 18px; }
+    .entry-lineage { font-size: 14px; margin: 0 0 20px; padding: 10px 14px; background: var(--card, rgba(127,127,127,.06)); border-radius: 10px; }
+    .entry-lineage .arw { opacity: .5; margin: 0 2px; }
+    .entry-what { font-size: 15px; margin: 0 0 18px; }
+    .entry-fact { font-size: 15px; margin: 0 0 18px; padding: 12px 14px; border-left: 3px solid var(--accent, #FF3621); background: var(--card, rgba(127,127,127,.06)); border-radius: 0 10px 10px 0; }
+    .entry-note { font-size: 14px; color: var(--muted, #8a94a3); margin: 0 0 18px; }
+    .entry-facts { margin: 0 0 22px; border-top: 1px solid var(--rail-line, rgba(127,127,127,.2)); }
+    .fact-row { display: grid; grid-template-columns: 180px 1fr; gap: 12px; padding: 9px 2px; border-bottom: 1px solid var(--rail-line, rgba(127,127,127,.2)); }
+    .fact-row dt { color: var(--muted, #8a94a3); font-weight: 600; margin: 0; }
+    .fact-row dd { margin: 0; }
+    .entry-sources h2, .entry-related h2 { font-size: 14px; text-transform: uppercase; letter-spacing: .1em; color: var(--muted, #8a94a3); margin: 0 0 10px; }
+    .entry-sources ul, .entry-related ul { list-style: none; padding: 0; margin: 0 0 24px; }
+    .entry-sources li, .entry-related li { margin: 0 0 8px; font-size: 14px; }
+    .src-kind { display: inline-block; min-width: 68px; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .06em; color: var(--muted, #8a94a3); }
+    .entry-cta { display: inline-flex; align-items: center; gap: 8px; margin: 4px 0 26px; padding: 11px 18px; border-radius: 10px; background: var(--accent, #FF3621); color: #fff; font-weight: 700; text-decoration: none; }
+    .hub-doc h1 { font-size: 30px; margin: 6px 0 10px; }
+    .hub-lead { font-size: 16px; color: var(--muted, #8a94a3); margin: 0 0 26px; }
+    .hub-cat { font-size: 13px; text-transform: uppercase; letter-spacing: .1em; color: var(--muted, #8a94a3); margin: 26px 0 10px; }
+    .hub-list { list-style: none; padding: 0; margin: 0; display: grid; grid-template-columns: 1fr 1fr; gap: 6px 22px; }
+    .hub-list a { text-decoration: none; }
+    .hub-list .st { font-size: 11px; color: var(--muted, #8a94a3); }
+    @media (max-width: 560px) { .fact-row, .hub-list { grid-template-columns: 1fr; } .entry-doc h1, .hub-doc h1 { font-size: 24px; } }
+  </style>"""
+
+HEAD = """<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>{title}</title>
+  <meta name="description" content="{desc}" />
+  <link rel="canonical" href="{url}" />
+  <meta name="robots" content="index, follow, max-image-preview:large" />
+  <meta property="og:type" content="{og_type}" />
+  <meta property="og:site_name" content="REbricked" />
+  <meta property="og:title" content="{og_title}" />
+  <meta property="og:description" content="{desc}" />
+  <meta property="og:url" content="{url}" />
+  <meta property="og:image" content="{base}/assets/social-preview.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:image:alt" content="REbricked - a lookup for renamed and deprecated product names." />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="{og_title}" />
+  <meta name="twitter:description" content="{desc}" />
+  <meta name="twitter:image" content="{base}/assets/social-preview.png" />
+  <script type="application/ld+json">
+{jsonld}
+  </script>
+  <link rel="stylesheet" href="{root}styles.css" />
+  <link rel="icon" href="/assets/favicon.ico" sizes="any" />
+  <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon-16.png" />
+  <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png" />
+  <link rel="manifest" href="/site.webmanifest" />
+{style}
+</head>
+"""
+
+ENTRY_BODY = """
+<body>
+  <div class="app">
+    {rail}
+    <div class="main">
+      {topbar}
+      <div class="content">
+        <article class="entry-doc">
+          <nav class="entry-crumbs" aria-label="Breadcrumb">
+            <a href="{root}">REbricked</a> <span aria-hidden="true">/</span>
+            <a href="{hub_rel}">{vendor}</a> <span aria-hidden="true">/</span> {category}
+          </nav>
+          <div class="entry-headrow">
+            <span class="entry-kicker">{kicker}</span>
+            {badge}
+          </div>
+          <h1>{name}{abbr}</h1>
+          <p class="entry-lead">{lead}</p>
+          {lineage}
+          <p class="entry-what">{what}</p>
+          {fact}
+          {note}
+          <a class="entry-cta" href="{root}?id={id}">Open in REbricked &rarr;</a>
+          {facts}
+          {sources}
+          {related}
+        </article>
+        <footer class="footer" style="max-width:780px;margin:0 auto;">
+          <p class="disclaimer">Not affiliated with {vendor}. Console chrome is an homage; every entry is sourced and dated.</p>
+          <p class="disclaimer">Spotted an error or an out-of-date name?
+            <a href="https://github.com/aig/rebricked" target="_blank" rel="noopener">Contribute a fix on GitHub &nearr;</a>.
+          </p>
+        </footer>
+      </div>
+    </div>
+  </div>
+  <div class="scrim" id="scrim" hidden></div>
+  {js}
+</body>
+
+</html>
+"""
+
+HUB_BODY = """
+<body>
+  <div class="app">
+    {rail}
+    <div class="main">
+      {topbar}
+      <div class="content">
+        <div class="hub-doc">
+          <nav class="entry-crumbs" aria-label="Breadcrumb">
+            <a href="{root}">REbricked</a> <span aria-hidden="true">/</span> {vendor}
+          </nav>
+          <h1>{vendor} product name changes</h1>
+          <p class="hub-lead">Every {vendor} product and feature that's been renamed, deprecated, or newly shipped - sourced, dated, and linked. {count} entries.</p>
+          {sections}
+        </div>
+        <footer class="footer" style="max-width:780px;margin:0 auto;">
+          <p class="disclaimer">Not affiliated with {vendor}. Console chrome is an homage; every entry is sourced and dated.</p>
+        </footer>
+      </div>
+    </div>
+  </div>
+  <div class="scrim" id="scrim" hidden></div>
+  {js}
+</body>
+
+</html>
+"""
+
+
+def render_entry(d, by_id, data):
+    v = vendor_of(d)
+    url = f"{BASE_URL}/{v}/{d['id']}/"
+    hub_url = f"{BASE_URL}/{v}/"
+    root = "../../"  # /{vendor}/{id}/ is two levels deep
+    hub_rel = "../"  # -> /{vendor}/
+    title, desc, kicker, lead = meta_for(d, by_id, data)
+    og_title = title.replace(" | REbricked", "")
+    rail, topbar, js = chrome(root)
+    head = HEAD.format(
+        title=attr(title),
+        desc=attr(desc),
+        url=url,
+        base=BASE_URL,
+        og_type="article",
+        og_title=attr(og_title),
+        jsonld=entry_jsonld(d, url, hub_url, title, desc),
+        root=root,
+        favicon=FAVICON,
+        style=ENTRY_STYLE,
+    )
+    body = ENTRY_BODY.format(
+        rail=rail,
+        topbar=topbar,
+        js=js,
+        root=root,
+        hub_rel=hub_rel,
+        vendor=esc(vendor_name(v)),
+        category=esc(d.get("category", "")),
+        kicker=esc(kicker),
+        badge=badge_html(d),
+        name=esc(d["name"]),
+        abbr=(
+            f' <span style="color:var(--muted,#8a94a3);font-weight:400">({esc(d["abbr"])})</span>'
+            if d.get("abbr")
+            else ""
+        ),
+        lead=esc(lead),
+        lineage=lineage_html(d, by_id, data),
+        what=esc(d.get("what", "")),
+        fact=(
+            f'<p class="entry-fact"><span aria-hidden="true">💡</span> {esc(d["fact"])}</p>'
+            if d.get("fact")
+            else ""
+        ),
+        note=(f'<p class="entry-note">{esc(d["note"])}</p>' if d.get("note") else ""),
+        id=attr(d["id"]),
+        facts=facts_html(d),
+        sources=sources_html(d),
+        related=related_html(d, data),
+    )
+    return head + body
+
+
+def render_hub(v, entries):
+    url = f"{BASE_URL}/{v}/"
+    root = "../"  # /{vendor}/ is one level deep
+    vlabel = vendor_name(v)
+    title = f"{vlabel} renamed, deprecated & new product names | REbricked"
+    desc = (
+        f"Every {vlabel} product and feature that's been renamed, deprecated, or newly shipped "
+        f"- the full list, sourced and dated. {len(entries)} entries."
+    )
+    # Group by category, preserving first-seen order.
+    cats = {}
+    for d in entries:
+        cats.setdefault(d.get("category", "Other"), []).append(d)
+    sections = []
+    item_list = []
+    pos = 1
+    for cat, items in cats.items():
+        lis = []
+        for d in items:
+            status = badge_label(d)
+            lis.append(
+                f'<li><a href="{attr(d["id"])}/">{esc(d["name"])}</a> '
+                f'<span class="st">{esc(status)}</span></li>'
+            )
+            item_list.append(
+                {
+                    "@type": "ListItem",
+                    "position": pos,
+                    "name": d["name"],
+                    "item": f"{BASE_URL}/{v}/{d['id']}/",
+                }
+            )
+            pos += 1
+        sections.append(
+            f'<h2 class="hub-cat">{esc(cat)}</h2><ul class="hub-list">{"".join(lis)}</ul>'
+        )
+
+    jsonld = json.dumps(
+        {
+            "@context": "https://schema.org",
+            "@graph": [
+                {
+                    "@type": "CollectionPage",
+                    "@id": url + "#page",
+                    "url": url,
+                    "name": title.replace(" | REbricked", ""),
+                    "description": desc,
+                    "inLanguage": "en",
+                    "isPartOf": {"@id": f"{BASE_URL}/#website"},
+                    "mainEntity": {
+                        "@type": "ItemList",
+                        "numberOfItems": len(entries),
+                        "itemListElement": item_list,
+                    },
+                },
+                {
+                    "@type": "BreadcrumbList",
+                    "itemListElement": [
+                        {
+                            "@type": "ListItem",
+                            "position": 1,
+                            "name": "REbricked",
+                            "item": f"{BASE_URL}/",
+                        },
+                        {
+                            "@type": "ListItem",
+                            "position": 2,
+                            "name": vlabel,
+                            "item": url,
+                        },
+                    ],
+                },
+            ],
+        },
+        ensure_ascii=False,
+        indent=2,
+    )
+
+    rail, topbar, js = chrome(root)
+    head = HEAD.format(
+        title=attr(title),
+        desc=attr(desc),
+        url=url,
+        base=BASE_URL,
+        og_type="website",
+        og_title=attr(title.replace(" | REbricked", "")),
+        jsonld=jsonld,
+        root=root,
+        favicon=FAVICON,
+        style=ENTRY_STYLE,
+    )
+    body = HUB_BODY.format(
+        rail=rail,
+        topbar=topbar,
+        js=js,
+        root=root,
+        vendor=esc(vlabel),
+        count=len(entries),
+        sections="".join(sections),
+    )
+    return head + body
+
+
+def badge_label(d):
+    kind = kind_of(d)
+    if kind == "deprecation":
+        return d.get("status", "deprecated")
+    if kind == "feature":
+        return "preview" if d.get("status") == "preview" else "new"
+    return "renamed" if (d.get("status") or "current") == "renamed" else "latest"
+
+
+def write_sitemap(data):
+    urls = [(f"{BASE_URL}/", "weekly", "1.0")]
+    urls.append((f"{BASE_URL}/disclaimer/", "yearly", "0.3"))
+    for n in range(TOTAL_BADGES + 1):
+        urls.append((f"{BASE_URL}/badges/{n}-of-{TOTAL_BADGES}/", "yearly", "0.3"))
+    vendors = []
+    for d in data:
+        v = vendor_of(d)
+        if v not in vendors:
+            vendors.append(v)
+    for v in vendors:
+        urls.append((f"{BASE_URL}/{v}/", "weekly", "0.9"))
+    for d in data:
+        urls.append((f"{BASE_URL}/{vendor_of(d)}/{d['id']}/", "monthly", "0.8"))
+    body = "\n".join(
+        f"  <url>\n    <loc>{u}</loc>\n    <changefreq>{cf}</changefreq>\n    <priority>{p}</priority>\n  </url>"
+        for u, cf, p in urls
+    )
+    SITEMAP.write_text(
+        '<?xml version="1.0" encoding="UTF-8"?>\n'
+        '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'
+        f"{body}\n</urlset>\n",
+        encoding="utf-8",
+    )
+    return vendors
+
+
+def main():
+    data = json.loads(DATA.read_text(encoding="utf-8"))
+    by_id = {d["id"]: d for d in data}
+
+    # Group entries by vendor; wipe and rebuild each vendor namespace dir.
+    by_vendor = {}
+    for d in data:
+        by_vendor.setdefault(vendor_of(d), []).append(d)
+
+    shutil.rmtree(
+        ROOT / "e", ignore_errors=True
+    )  # remove the pre-vendor layout, if present
+    for v, entries in by_vendor.items():
+        vdir = ROOT / v
+        shutil.rmtree(vdir, ignore_errors=True)
+        vdir.mkdir(parents=True)
+        vdir.joinpath("index.html").write_text(render_hub(v, entries), encoding="utf-8")
+        for d in entries:
+            folder = vdir / d["id"]
+            folder.mkdir(parents=True)
+            folder.joinpath("index.html").write_text(
+                render_entry(d, by_id, data), encoding="utf-8"
+            )
+
+    vendors = write_sitemap(data)
+    total = len(data) + len(vendors) + TOTAL_BADGES + 2
+    print(
+        f"OK: wrote {len(data)} entry pages across {len(vendors)} vendor hub(s) "
+        f"({', '.join(vendors)}); sitemap.xml has {total} URLs."
+    )
+
+
+if __name__ == "__main__":
+    main()

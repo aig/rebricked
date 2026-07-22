@@ -1,0 +1,12 @@
+{
+  "$schema-note": "Registry of external reference-doc sources for fetch_reference.py. Add a new object to `sources` to track another site - no code change needed. A source discovers URLs one of two ways: `sitemap` (+ include/exclude regexes over the <loc> entries) or an explicit `urls` list. Fetching is incremental via conditional GET (ETag / Last-Modified) tracked in each source's manifest.json.",
+  "sources": [
+    {
+      "id": "databricks-release-notes",
+      "name": "Databricks Platform Release Notes (AWS)",
+      "sitemap": "https://docs.databricks.com/sitemap.xml",
+      "include": ["/aws/en/release-notes/product/\\d{4}/[a-z]+/?$"],
+      "exclude": []
+    }
+  ]
+}
