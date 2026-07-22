@@ -102,6 +102,17 @@ Format loosely follows [Keep a Changelog](https://keepachangelog.com/); dates ar
 - Included subcard statuses in parent-card filtering and timeline counts. Lakeflow Connect
   now matches its connector statuses, filtered views narrow its child rows, and connector
   status-history events appear as their own dated graph segments.
+- Added a current-feature status donut chart beside the yearly graph, including managed
+  connector subcards in the GA, Private Preview, Beta, and Public Preview totals.
+- Simplified the status visualization to a legend-free, solid pie chart.
+- Made pie sectors keyboard- and pointer-interactive status filters, added hover details,
+  and labeled the largest slices directly with their status and count.
+- Simplified large pie-slice labels to count-only text without a background.
+- Moved the yearly-chart legend below both charts and turned it into arrowed availability
+  and lifecycle progressions.
+- Added hover details to every yearly-chart segment with its year, status, count, and share.
+- Removed misleading progression arrows between Legacy, Deprecated, and Retired.
+- Moved pie values outside the chart and connected each number to its slice with a thin leader line.
 - Matched lifecycle highlights in status help to their card colors, including gray Legacy.
 - Made the Deprecated help highlight exactly match its card badge styling.
 

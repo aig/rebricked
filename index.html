@@ -213,7 +213,27 @@
           <div class="filters" id="filters" role="group" aria-label="Filter by lifecycle stage"></div>
         </div>
 
-        <div class="timeline" id="timeline" hidden aria-label="Changes per year"></div>
+        <div class="home-charts" id="home-charts" hidden>
+          <div class="timeline" id="timeline" aria-label="Changes per year"></div>
+          <div class="status-pie" id="status-pie" aria-label="Current feature statuses"></div>
+          <div class="chart-flow" aria-label="Status progression legend">
+            <span class="chart-flow-label">Availability</span>
+            <span class="chart-flow-status flow-private-preview"><i></i>Private Preview</span>
+            <span class="chart-flow-arrow" aria-hidden="true">→</span>
+            <span class="chart-flow-status flow-beta"><i></i>Beta</span>
+            <span class="chart-flow-arrow" aria-hidden="true">→</span>
+            <span class="chart-flow-status flow-public-preview"><i></i>Public Preview</span>
+            <span class="chart-flow-arrow" aria-hidden="true">→</span>
+            <span class="chart-flow-status flow-ga"><i></i>GA</span>
+            <span class="chart-flow-divider" aria-hidden="true"></span>
+            <span class="chart-flow-label">Lifecycle</span>
+            <span class="chart-flow-status flow-renamed"><i></i>Renamed</span>
+            <span class="chart-flow-divider chart-flow-divider-short" aria-hidden="true"></span>
+            <span class="chart-flow-status flow-legacy"><i></i>Legacy</span>
+            <span class="chart-flow-status flow-legacy"><i></i>Deprecated</span>
+            <span class="chart-flow-status flow-legacy"><i></i>Retired</span>
+          </div>
+        </div>
 
         <section class="results" id="results" aria-live="polite"></section>
 

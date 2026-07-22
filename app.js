@@ -499,6 +499,7 @@
 
   function updateHomeExtras() {
     const tl = $("#timeline");
+    const charts = $("#home-charts");
     const sp = $("#spotlight");
     // Home-ish view, ignoring the kind filter: on the main list with no entry/section/
     // category/search open. Toggling a filter must NOT hide the home extras, so neither
@@ -509,7 +510,8 @@
       // buckets are selected. Also visible while a year is selected.
       const visible = onList || activeYear;
       if (visible) renderTimeline();      // keep segments/heights in sync with the filter
-      tl.hidden = !visible;
+      if (charts) charts.hidden = !visible;
+      renderStatusPie();
       tl.querySelectorAll(".tl-bar").forEach((b) =>
         b.classList.toggle("active", b.dataset.year === activeYear)
       );
@@ -517,6 +519,88 @@
     // Spotlight stays up across filter toggles and year selections - anything on the
     // main list. It hides only when the user drills into an entry/section/category/search.
     if (sp) sp.hidden = !onList;
+  }
+
+  function renderStatusPie() {
+    const el = $("#status-pie");
+    if (!el) return;
+    const statuses = [
+      { key: "ga", label: "GA", color: "var(--c-active)" },
+      { key: "private-preview", label: "Private Preview", color: "var(--c-private-preview)" },
+      { key: "beta", label: "Beta", color: "var(--c-beta)" },
+      { key: "public-preview", label: "Public Preview", color: "var(--c-preview)" },
+    ];
+    const counts = Object.fromEntries(statuses.map((s) => [s.key, 0]));
+    DATA.filter((d) => kindOf(d) === "feature" || d.availability).forEach((d) => {
+      const key = filterBucket(d);
+      if (key in counts) counts[key]++;
+    });
+    CONNECTORS.forEach((c) => {
+      const key = filterBucketForStatus(c.status);
+      if (key in counts) counts[key]++;
+    });
+    const visible = statuses.filter((s) => counts[s.key] > 0);
+    const total = visible.reduce((sum, s) => sum + counts[s.key], 0);
+    const summary = visible.map((s) => `${s.label}: ${counts[s.key]}`).join(", ");
+    const polar = (angle, radius = 54) => {
+      const rad = (angle - 90) * Math.PI / 180;
+      return { x: 110 + radius * Math.cos(rad), y: 70 + radius * Math.sin(rad) };
+    };
+    const arc = (start, end) => {
+      if (end - start >= 359.999) return "M110 16a54 54 0 1 1 0 108a54 54 0 1 1 0-108Z";
+      const a = polar(start);
+      const b = polar(end);
+      return `M110 70L${a.x.toFixed(3)} ${a.y.toFixed(3)}A54 54 0 ${end - start > 180 ? 1 : 0} 1 ${b.x.toFixed(3)} ${b.y.toFixed(3)}Z`;
+    };
+    let cursor = 0;
+    const slices = visible.map((s) => {
+      const pct = counts[s.key] / total * 100;
+      const start = cursor;
+      const end = cursor + pct * 3.6;
+      const mid = (start + end) / 2;
+      const labelAt = polar(mid, 35);
+      const edge = polar(mid, 54);
+      const elbow = polar(mid, 64);
+      const right = Math.cos((mid - 90) * Math.PI / 180) >= 0;
+      const valueX = right ? 202 : 18;
+      const lineEndX = right ? valueX - 9 : valueX + 9;
+      cursor = end;
+      const selected = !allKindsSelected() && activeKinds.has(s.key);
+      const dimmed = !allKindsSelected() && !selected;
+      const path = `<path class="status-pie-slice${selected ? " is-active" : ""}${dimmed ? " is-dimmed" : ""}" d="${arc(start, end)}" fill="${escapeAttr(s.color)}" data-status="${escapeAttr(s.key)}" data-label="${escapeAttr(s.label)}" data-count="${counts[s.key]}" data-pct="${pct.toFixed(1)}" data-x="${labelAt.x.toFixed(1)}" data-y="${labelAt.y.toFixed(1)}" role="button" tabindex="0" aria-label="Filter by ${escapeAttr(s.label)}: ${counts[s.key]} features, ${pct.toFixed(1)} percent"></path>`;
+      const label = `<polyline class="status-pie-leader" points="${edge.x.toFixed(1)},${edge.y.toFixed(1)} ${elbow.x.toFixed(1)},${elbow.y.toFixed(1)} ${lineEndX},${elbow.y.toFixed(1)}"></polyline>` +
+        `<text class="status-pie-value" x="${valueX}" y="${elbow.y.toFixed(1)}">${counts[s.key]}</text>`;
+      return path + label;
+    }).join("");
+    el.innerHTML = `<div class="status-pie-title">Current feature status</div>` +
+      `<div class="status-pie-body">` +
+      `<svg class="status-pie-chart" viewBox="0 0 220 140" role="img" aria-label="${escapeAttr(summary)}">${slices}</svg>` +
+      `<div class="status-pie-tooltip" hidden></div></div>`;
+    const chart = el.querySelector(".status-pie-chart");
+    const tooltip = el.querySelector(".status-pie-tooltip");
+    const showTip = (slice) => {
+      tooltip.innerHTML = `<b>${escapeHtml(slice.dataset.label)}</b><span>${escapeHtml(slice.dataset.count)} features · ${escapeHtml(slice.dataset.pct)}%</span>`;
+      tooltip.style.left = `${chart.offsetLeft + slice.dataset.x / 220 * chart.clientWidth}px`;
+      tooltip.style.top = `${slice.dataset.y / 140 * 132}px`;
+      tooltip.hidden = false;
+    };
+    const hideTip = () => { tooltip.hidden = true; };
+    el.querySelectorAll(".status-pie-slice").forEach((slice) => {
+      slice.addEventListener("mouseenter", () => showTip(slice));
+      slice.addEventListener("mouseleave", hideTip);
+      slice.addEventListener("focus", () => showTip(slice));
+      slice.addEventListener("blur", hideTip);
+      const select = () => {
+        activeKinds = new Set([slice.dataset.status]);
+        track("pie-status-filter", { status: slice.dataset.status });
+        writeURL();
+        render();
+      };
+      slice.addEventListener("click", select);
+      slice.addEventListener("keydown", (event) => {
+        if (event.key === "Enter" || event.key === " ") { event.preventDefault(); select(); }
+      });
+    });
   }
 
   function rowHTML(d, q) {
@@ -1926,7 +2010,8 @@
       const segs = active.map((b) => {
         const n = timelineCount(y, b);
         if (!n) return "";
-        return `<span class="tl-seg tl-seg-${b.key}" style="flex-grow:${n}" title="${n} ${escapeHtml(b.label)}"></span>`;
+        const share = total ? n / total * 100 : 0;
+        return `<span class="tl-seg tl-seg-${b.key}" style="flex-grow:${n}" data-year="${escapeAttr(y)}" data-label="${escapeAttr(b.label)}" data-count="${n}" data-pct="${share.toFixed(1)}"></span>`;
       }).join("");
       const label = `${total} change${total === 1 ? "" : "s"} in ${escapeHtml(y)}${filtered ? " (filtered)" : ""}`;
       return `<button class="tl-bar" data-year="${escapeAttr(y)}" style="--h:${h}%;--i:${i}" title="${label}" aria-label="${label}"><span class="tl-n">${total}</span><span class="tl-h">${segs}</span></button>`;
@@ -1935,15 +2020,28 @@
     const axis = years
       .map((y) => `<span class="tl-y" data-year="${escapeAttr(y)}">'${escapeHtml(y.slice(2))}</span>`)
       .join("");
-    const legend = active
-      .map((b) => `<span class="tl-key"><i class="tl-dot tl-seg-${b.key}"></i>${escapeHtml(b.label)}</span>`)
-      .join("");
-
     el.innerHTML =
-      `<div class="tl-title">Changes by year <span class="tl-hint">- click a bar to filter</span>` +
-      `<span class="tl-legend">${legend}</span></div>` +
+      `<div class="tl-title">Changes by year <span class="tl-hint">- click a bar to filter</span></div>` +
       `<div class="tl-plot">${bars}</div>` +
-      `<div class="tl-axis">${axis}</div>`;
+      `<div class="tl-axis">${axis}</div>` +
+      `<div class="tl-tooltip" hidden></div>`;
+
+    const tooltip = el.querySelector(".tl-tooltip");
+    const showTip = (segment) => {
+      tooltip.innerHTML = `<b>${escapeHtml(segment.dataset.label)}</b><span>${escapeHtml(segment.dataset.year)} · ${escapeHtml(segment.dataset.count)} changes · ${escapeHtml(segment.dataset.pct)}%</span>`;
+      tooltip.hidden = false;
+      const host = el.getBoundingClientRect();
+      const box = segment.getBoundingClientRect();
+      const width = tooltip.offsetWidth;
+      const center = box.left - host.left + box.width / 2;
+      tooltip.style.left = `${Math.max(width / 2 + 6, Math.min(host.width - width / 2 - 6, center))}px`;
+      tooltip.style.top = `${box.top - host.top - 8}px`;
+    };
+    const hideTip = () => { tooltip.hidden = true; };
+    el.querySelectorAll(".tl-seg").forEach((segment) => {
+      segment.addEventListener("mouseenter", () => showTip(segment));
+      segment.addEventListener("mouseleave", hideTip);
+    });
 
     el.querySelectorAll(".tl-bar").forEach((b) => {
       b.addEventListener("click", () => {
