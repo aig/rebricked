@@ -546,7 +546,12 @@
       const status = d.status || "deprecated";
       spine = status === "legacy" ? "is-legacy" : "is-deprecation";
       const verb = status === "legacy" ? "Legacy since" : "Deprecated";
-      dateText = `${verb} ${escapeHtml(fmtDate(d.deprecatedAt || "?"))}${occasion}`;
+      // Lead with when it was first available/introduced so a deprecation shows its full
+      // span (e.g. "Available from 2016 · Deprecated 2024"); the origin date carries its
+      // confirmation link like renames do. Falls back to introducedAt if there's no `from`.
+      const origin = d.from != null ? d.from : d.introducedAt;
+      const intro = dateOf(origin) ? `Available from ${dateLinkHTML(origin)} · ` : "";
+      dateText = `${intro}${verb} ${escapeHtml(fmtDate(d.deprecatedAt || "?"))}${occasion}`;
       if (d.removedAt) urgent = `<span class="meta-urgent">⚠ Access ended ${escapeHtml(fmtDate(d.removedAt))}</span>`;
     } else if ((d.status || "current") === "renamed") {
       spine = "is-former";
