@@ -1052,6 +1052,13 @@ body {
   border-radius: 50%;
   background: currentColor;
   flex: none;
+  transition: background .15s;
+}
+
+/* On hover the dot lights up in the brand accent - so it visibly changes off the label
+   color (near-black on dark, white on light) rather than blending into it. */
+.badge:hover::before {
+  background: var(--accent);
 }
 
 /* Badges are filled: the state color is the background and the label is --panel (white on
