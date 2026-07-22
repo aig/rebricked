@@ -69,7 +69,7 @@
   const BUCKET_ORDER = { current: 0, deprecation: 1, renamed: 2 };
 
   // ---- sidebar config: mirrors the Databricks console rail ----
-  // Every item is clickable. `ids` lists the databricks.json entries that changed under
+  // Every item is clickable. `ids` lists the databricks.features.json entries that changed under
   // that section; those items get a dot. Sections with no renames show an empty state.
   // Home clears the filter and shows everything.
   const NAV = [
@@ -319,7 +319,7 @@
 
   async function loadData() {
     // Primary source of truth. On GitHub Pages / any http(s) server this just works.
-    const res = await fetch("databricks.json", { cache: "no-store" });
+    const res = await fetch("databricks.features.json", { cache: "no-store" });
     if (!res.ok) throw new Error("bad response " + res.status);
     return res.json();
   }
@@ -629,9 +629,9 @@
     if (!label) return "";
     const announced = cur.is_announced === true && cur.date == null;
     const text = announced ? label + " soon" : label;
-    // full stage history in the tooltip (e.g. "Beta 2025-06 -> Public Preview 2026-03",
+    // full stage history in the tooltip (e.g. "Beta June 2025 -> Public Preview March 2026",
     // or an announced-but-unreached stage as "GA (announced)")
-    const hist = rels.map((r) => `${RELEASE_LABELS[r.type] || r.type} ${r.date || "(announced)"}`).join(" -> ");
+    const hist = rels.map((r) => `${RELEASE_LABELS[r.type] || r.type} ${r.date ? fmtDate(r.date) : "(announced)"}`).join(" -> ");
     // one cool hue per stage; `badge-rel-soon` dashes the border for an announced stage
     const cls = `badge-rel-${escapeAttr(cur.type)}${announced ? " badge-rel-soon" : ""}`;
     return `<span class="badge ${cls} badge-release" title="${escapeAttr(hist)}">${escapeHtml(text)}</span>`;
@@ -790,7 +790,7 @@
     const preds = Array.isArray(d.prediction) ? d.prediction.filter(Boolean) : [];
     if (!preds.length) return "";
     const start = hashStr(d.id + "p") % preds.length;
-    return `<button class="odds-btn" data-preds="${escapeAttr(JSON.stringify(preds))}" data-i="${start}" title="Our AI's best guess at the next rebrand">✨ Ask Genie</button>`;
+    return `<button class="odds-btn" data-preds="${escapeAttr(JSON.stringify(preds))}" data-i="${start}" title="Our AI's best guess at the next rebrand" aria-label="Ask Genie">✨</button>`;
   }
 
   // The AI-guess button reveals a made-up next name: a beat of "thinking", then the
@@ -871,7 +871,7 @@
   function renderError() {
     resultsEl.innerHTML = `
       <div class="error">
-        <p><strong>Couldn't load <code>databricks.json</code>.</strong></p>
+        <p><strong>Couldn't load <code>databricks.features.json</code>.</strong></p>
         <p>If you opened this file directly, your browser blocked the fetch.<br>
         Serve it over http instead - from this folder run:</p>
         <p><code>python -m http.server</code></p>

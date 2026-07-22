@@ -1,4 +1,4 @@
-# Validate databricks.json, then deploy the static site to GitHub Pages
+# Validate databricks.features.json, then deploy the static site to GitHub Pages
 name: Validate and deploy to Pages
 
 on:
@@ -29,7 +29,7 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-      - name: Validate databricks.json
+      - name: Validate databricks.features.json
         run: python3 scripts/validate.py
 
   deploy:
@@ -43,7 +43,7 @@ jobs:
         uses: actions/checkout@v4
       - name: Build entry pages + sitemap
         # Regenerate the crawlable /{vendor}/... pages and sitemap.xml straight from
-        # databricks.json so they can never drift from the data. No browser needed.
+        # databricks.features.json so they can never drift from the data. No browser needed.
         run: python3 scripts/build_entries.py
       - name: Setup Pages
         uses: actions/configure-pages@v5

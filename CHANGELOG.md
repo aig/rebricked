@@ -6,6 +6,11 @@ Format loosely follows [Keep a Changelog](https://keepachangelog.com/); dates ar
 ## 2026-07-22 (Agent Bricks + status/release model rework)
 
 ### Changed
+- **Renamed the data file `databricks.json` → `databricks.features.json`** (first step of a
+  data-file refactor). Updated every reference: the `fetch()` and error message in `app.js`,
+  the `DATA` path in `scripts/validate.py` and `scripts/build_entries.py`, plus docs
+  (`README.md`, `AGENTS.md`, `CONTRIBUTING.md`, the add-entry skill), `.gitignore`, the CI
+  workflow labels, and `COVERAGE-GAPS.md`. `git mv` preserved history.
 - **The `active` status badge is no longer shown on cards.** `active` is the default state,
   so its badge was noise; only the noteworthy lifecycle states (renamed / deprecated / legacy
   / retired) now render a status badge. The release pill still shows on active cards, so an

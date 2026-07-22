@@ -35,10 +35,14 @@
   /* release-maturity ramp (orthogonal to the lifecycle colors above): a cool violet->green
      progression that never collides with warm renamed/deprecated or slate legacy. GA reuses
      the production green (--c-active). Pre-GA stages render dashed; GA solid. */
-  --rel-private-preview: #7C3AED;  /* violet */
-  --rel-beta: #4F46E5;             /* indigo */
-  --rel-public-preview: #2563EB;   /* blue */
-  --rel-ga: var(--c-active);       /* green (production) */
+  --rel-private-preview: #7C3AED;
+  /* violet */
+  --rel-beta: #4F46E5;
+  /* indigo */
+  --rel-public-preview: #2563EB;
+  /* blue */
+  --rel-ga: var(--c-active);
+  /* green (production) */
   /* text on the solid "retired" badge */
   /* chart-segment fills. Renamed reuses the card's --c-renamed (orange) and Legacy
      reuses --c-legacy (slate), so the chart and the badges share those two colors.
@@ -84,10 +88,14 @@
   --c-retired-fg: #241900;
   /* dark text on the light-amber solid badge */
   /* release ramp, brighter tones for the dark surface */
-  --rel-private-preview: #A78BFA;  /* violet */
-  --rel-beta: #818CF8;             /* indigo */
-  --rel-public-preview: #60A5FA;   /* blue */
-  --rel-ga: var(--c-active);       /* green */
+  --rel-private-preview: #A78BFA;
+  /* violet */
+  --rel-beta: #818CF8;
+  /* indigo */
+  --rel-public-preview: #60A5FA;
+  /* blue */
+  --rel-ga: var(--c-active);
+  /* green */
   /* same chart palette on the dark surface; Renamed & Legacy reuse the badge tokens,
      Active is the chart-specific teal-green, stepped brighter here. */
   --seg-active: #17AC83;
@@ -578,7 +586,7 @@ body {
 
 /* The quiz banner (right column) is taller than the title + copy, so push the filters
    to the bottom of the left column - their bottom edge then lines up with the banner. */
-.page-head-copy > .filters {
+.page-head-copy>.filters {
   margin-top: auto;
 }
 
@@ -723,7 +731,7 @@ body {
     width: 100%;
   }
 
-  .page-head-copy > .filters {
+  .page-head-copy>.filters {
     order: 1;
   }
 }
@@ -818,7 +826,7 @@ body {
 /* result cards */
 .results {
   display: grid;
-  gap: 12px;
+  gap: 20px;
 }
 
 /* year dividers: turn the sorted list into a chronological path */
@@ -1267,21 +1275,25 @@ body {
   background: color-mix(in srgb, var(--rel-private-preview) 12%, transparent);
   border: 1px dashed color-mix(in srgb, var(--rel-private-preview) 48%, transparent);
 }
+
 .badge-rel-beta {
   color: var(--rel-beta);
   background: color-mix(in srgb, var(--rel-beta) 12%, transparent);
   border: 1px dashed color-mix(in srgb, var(--rel-beta) 48%, transparent);
 }
+
 .badge-rel-public-preview {
   color: var(--rel-public-preview);
   background: color-mix(in srgb, var(--rel-public-preview) 12%, transparent);
   border: 1px dashed color-mix(in srgb, var(--rel-public-preview) 48%, transparent);
 }
+
 .badge-rel-ga {
   color: var(--rel-ga);
   background: color-mix(in srgb, var(--rel-ga) 12%, transparent);
   border: 1px solid color-mix(in srgb, var(--rel-ga) 34%, transparent);
 }
+
 /* An announced-but-unreached stage (e.g. "GA soon") is dashed even when its stage would
    normally be solid, signalling "not final yet". Placed after the stage rules so it wins. */
 .badge-rel-soon {
@@ -1513,10 +1525,22 @@ a.chain-node:hover {
   color: var(--state, var(--accent));
   font-weight: 700;
 }
-.chain-flow.flow-active { color: var(--c-active); }
-.chain-flow.flow-renamed { color: var(--c-renamed); }
-.chain-flow.flow-deprecated { color: var(--c-deprecated); }
-.chain-flow.flow-legacy { color: var(--c-legacy); }
+
+.chain-flow.flow-active {
+  color: var(--c-active);
+}
+
+.chain-flow.flow-renamed {
+  color: var(--c-renamed);
+}
+
+.chain-flow.flow-deprecated {
+  color: var(--c-deprecated);
+}
+
+.chain-flow.flow-legacy {
+  color: var(--c-legacy);
+}
 
 /* card footer: references (left) and the "guess the sequel" gag (right) share one row
    and one divider, so the wide pill no longer crowds the title. */

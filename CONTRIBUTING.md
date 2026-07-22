@@ -20,7 +20,7 @@ feature or the current name of a rename is *calculated*, not stored - a feature 
 own `introducedAt`; the current tip of a rename chain carries `from`. `status` is what the
 validator branches on to decide the entry's shape.
 
-Add one object to [`databricks.json`](databricks.json). That's the whole PR.
+Add one object to [`databricks.features.json`](databricks.features.json). That's the whole PR.
 
 ## Add a rename
 

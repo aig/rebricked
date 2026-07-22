@@ -10,6 +10,10 @@
     "to": "2025-06",
     "successorId": "lakeflow-declarative-pipelines",
     "status": "renamed",
+    "releases": [
+      { "type": "public-preview", "date": "2021-05" },
+      { "type": "ga", "date": "2022-04" }
+    ],
     "source": "https://docs.databricks.com/aws/en/ldp/where-is-dlt",
     "links": [
       { "url": "https://www.databricks.com/blog/2021/05/27/announcing-the-launch-of-delta-live-tables-reliable-data-engineering-made-easy.html", "kind": "community", "label": "Databricks blog: DLT launch (2021)" },
@@ -49,6 +53,10 @@
     "to": "2025",
     "successorId": "lakeflow-jobs",
     "status": "renamed",
+    "releases": [
+      { "type": "public-preview", "date": "2021-07" },
+      { "type": "ga", "date": "2021-10" }
+    ],
     "source": "https://learn.microsoft.com/en-us/azure/databricks/jobs/",
     "links": [
       { "url": "https://www.databricks.com/blog/2022/06/29/top-5-workflows-announcements-at-data-ai-summit.html", "kind": "community", "label": "Databricks blog: Top 5 Workflows (2022)" },
@@ -126,6 +134,9 @@
     "to": "2024-03",
     "successorId": "git-folders",
     "status": "renamed",
+    "releases": [
+      { "type": "ga", "date": "2021-08" }
+    ],
     "source": "https://learn.microsoft.com/en-us/azure/databricks/repos/what-happened-repos",
     "links": [
       { "url": "https://www.databricks.com/blog/2021/10/07/databricks-repos-is-now-generally-available.html", "kind": "community", "label": "Databricks blog: Repos GA (2021)" },
@@ -143,7 +154,7 @@
     "from": "2024-03",
     "status": "active",
     "releases": [
-      { "type": "ga", "date": "2024-03" }
+      { "type": "ga", "date": "2024-05" }
     ],
     "note": "Renamed March 21, 2024 per the platform release notes. Git folders support asset types Repos didn't and require a remote repo URL.",
     "prediction": ["Git Spaces", "Lakeflow Git", "Genie Repos"],
@@ -202,6 +213,9 @@
     "to": "2024-06",
     "successorId": "ai-bi-dashboards",
     "status": "renamed",
+    "releases": [
+      { "type": "public-preview", "date": "2023-09" }
+    ],
     "occasion": "Public preview September 28, 2023",
     "note": "Launched under the codename \"Lakeview\"; the announcement blog has since been retitled \"AI/BI Dashboards\" to match the June 2024 rename, but the API still uses the Lakeview name. Distinct from the older Redash-based legacy dashboards.",
     "source": "https://www.databricks.com/blog/announcing-public-preview-lakeview-dashboards",
@@ -260,7 +274,8 @@
     "from": "2026-03",
     "status": "active",
     "releases": [
-      { "type": "ga", "date": "2026-03" }
+      { "type": "public-preview", "date": "2023-10" },
+      { "type": "ga", "date": "2024-04" }
     ],
     "note": "Renamed March 16, 2026. Docs read \"Declarative Automation Bundles (formerly known as Databricks Asset Bundles)\"; the DABs acronym was kept. Supersedes the deprecated dbx deployment tool.",
     "prediction": ["Agentic Automation Bundles", "Unity Bundles", "Genie Bundles"],
@@ -397,6 +412,10 @@
     "to": "2026-06",
     "successorId": "databricks-ai-search",
     "status": "renamed",
+    "releases": [
+      { "type": "public-preview", "date": "2023-11" },
+      { "type": "ga", "date": "2024-05" }
+    ],
     "source": "https://docs.databricks.com/aws/en/vector-search/vector-search",
     "links": [
       { "url": "https://www.databricks.com/blog/announcing-mosaic-ai-vector-search-general-availability-databricks", "kind": "community", "label": "DB blog: Mosaic AI Vector Search GA" },
@@ -453,6 +472,7 @@
     "from": "2021-05",
     "status": "active",
     "releases": [
+      { "type": "public-preview", "date": "2020-11" },
       { "type": "ga", "date": "2021-12" }
     ],
     "occasion": "Renamed May 26, 2021; GA December 15, 2021",
@@ -475,6 +495,9 @@
     "to": "2019-04",
     "successorId": "delta-lake",
     "status": "renamed",
+    "releases": [
+      { "type": "private-preview", "date": "2018-05" }
+    ],
     "source": "https://www.databricks.com/blog/2019/04/24/open-sourcing-delta-lake.html",
     "links": [
       { "url": "https://www.databricks.com/blog/2017/10/25/databricks-delta-a-unified-management-system-for-real-time-big-data.html", "kind": "community", "label": "Databricks blog: Delta (2017)" },
@@ -492,7 +515,7 @@
     "from": "2019-04",
     "status": "active",
     "releases": [
-      { "type": "ga", "date": "2019-04" }
+      { "type": "ga", "date": "2019-02" }
     ],
     "occasion": "Open-sourced at Spark + AI Summit 2019",
     "note": "The proprietary \"Databricks Delta\" feature was open-sourced as Delta Lake on April 24, 2019 and donated to the Linux Foundation; the \"Databricks Delta\" name fell out of use. Same storage layer, new (and now OSS) name.",
@@ -532,6 +555,7 @@
     "from": "2026-02",
     "status": "active",
     "releases": [
+      { "type": "beta", "date": "2025-07" },
       { "type": "ga", "date": "2026-02" }
     ],
     "occasion": "Supervisor Agent GA, February 2026",
@@ -660,6 +684,10 @@
     "to": "2026-03",
     "successorId": "genie-code",
     "status": "renamed",
+    "releases": [
+      { "type": "public-preview", "date": "2023-07" },
+      { "type": "ga", "date": "2024-06" }
+    ],
     "source": "https://docs.databricks.com/aws/en/notebooks/code-assistant",
     "links": [
       { "url": "https://www.databricks.com/blog/introducing-databricks-assistant", "kind": "community", "label": "Databricks blog: intro Assistant" },
@@ -795,6 +823,9 @@
     "to": "2023-03",
     "successorId": "model-serving",
     "status": "renamed",
+    "releases": [
+      { "type": "public-preview", "date": "2022-08" }
+    ],
     "source": "https://learn.microsoft.com/en-us/azure/databricks/release-notes/product/2023/march",
     "links": [
       { "url": "https://community.databricks.com/t5/machine-learning/model-serving-with-serverless-real-time-inference-how-could-i/td-p/9625", "kind": "community", "label": "Community: Serverless Real-Time Inference" },
@@ -835,6 +866,10 @@
     "fact": "It tracked each model through named stages - None, Staging, Production, Archived - and lived inside a single workspace, one isolated registry per workspace.",
     "deprecatedAt": "2024",
     "status": "legacy",
+    "releases": [
+      { "type": "public-preview", "date": "2020-03" },
+      { "type": "ga", "date": "2020-11" }
+    ],
     "note": "Docs mark the page \"(legacy)\" and describe deprecation as a future event; since April 2024 the registry is disabled for workspaces in new accounts whose default catalog is in Unity Catalog, and it remains supported in MLflow 3. Databricks recommends Models in Unity Catalog. Stages are not supported there - the three-level namespace plus aliases (e.g. @champion) replace them; migrate versions with copy_model_version(). A replacement, not a rename: different governance model and API.",
     "source": "https://docs.databricks.com/aws/en/machine-learning/manage-model-lifecycle/",
     "links": [
@@ -854,6 +889,10 @@
     "fact": "It ran its own UI and metadata layer, separate from the rest of the catalog, and shipped as the databricks-feature-store Python package with its own client API.",
     "deprecatedAt": "2024",
     "status": "deprecated",
+    "releases": [
+      { "type": "public-preview", "date": "2021-05" },
+      { "type": "ga", "date": "2022-03" }
+    ],
     "note": "Available only for workspaces created before August 19, 2024 (16:00 UTC). Databricks recommends Feature Engineering in Unity Catalog, which unifies feature tables with Delta tables and UC lineage; the databricks-feature-store package moved to databricks-feature-engineering.",
     "source": "https://docs.databricks.com/aws/en/machine-learning/feature-store/workspace-feature-store/",
     "links": [
@@ -871,7 +910,8 @@
     "introducedAt": "2024",
     "status": "active",
     "releases": [
-      { "type": "ga", "date": "2024" }
+      { "type": "public-preview", "date": "2025-02" },
+      { "type": "ga", "date": "2025-06" }
     ],
     "occasion": "GA on Databricks Runtime 15.4 LTS and above",
     "note": "Databricks recommends liquid clustering for all new tables - over both Z-ordering and partitioning. Existing ZORDER BY columns can be reused directly as clustering keys.",
@@ -915,8 +955,8 @@
     "introducedAt": "2023",
     "status": "active",
     "releases": [
-      { "type": "public-preview", "date": "2023" },
-      { "type": "ga", "date": "2024" }
+      { "type": "public-preview", "date": "2023-07" },
+      { "type": "ga", "date": "2024-08" }
     ],
     "note": "Governed, read-only access to external data via Unity Catalog foreign catalogs. Introduced in Public Preview in 2023; the overview doc doesn't restate a single GA date.",
     "prediction": ["Lakehouse Confederation", "Unity Federation", "Genie Federation"],
@@ -974,6 +1014,11 @@
     "to": "2026-06",
     "successorId": "opensharing",
     "status": "renamed",
+    "releases": [
+      { "type": "private-preview", "date": "2022-01" },
+      { "type": "public-preview", "date": "2022-03" },
+      { "type": "ga", "date": "2022-08" }
+    ],
     "source": "https://docs.databricks.com/aws/en/opensharing/",
     "links": [
       { "url": "https://www.databricks.com/blog/2021/05/26/introducing-delta-sharing-an-open-protocol-for-secure-data-sharing.html", "kind": "community", "label": "Databricks blog: intro Delta Sharing" },
@@ -1067,8 +1112,8 @@
     "introducedAt": "2026-02",
     "status": "active",
     "releases": [
-      { "type": "public-preview", "date": "2025" },
-      { "type": "ga", "date": "2026-02" }
+      { "type": "public-preview", "date": "2025-06" },
+      { "type": "ga", "date": "2026-01" }
     ],
     "occasion": "GA February 2026",
     "note": "Brings transactional (OLTP) workloads to the lakehouse, with automatic scaling, instant branching, and native Unity Catalog integration. Entered Public Preview in mid-2025; Lakebase Autoscaling and Lakebase Provisioned were unified at GA. The Compute section's \"OLTP Database\" tab was renamed \"Lakebase Postgres\" in August 2025.",
@@ -1135,8 +1180,9 @@
     "introducedAt": "2026-05",
     "status": "active",
     "releases": [
+      { "type": "beta", "date": "2025-06" },
       { "type": "public-preview", "date": "2025-11" },
-      { "type": "ga", "date": "2026-05" }
+      { "type": "ga", "date": "2026-04" }
     ],
     "occasion": "GA May 2026",
     "note": "Supports row filters and column masks that follow governed tags across a catalog or schema instead of per-table grants. Entered Public Preview November 2025 and reached GA in May 2026 (GA announced on the Databricks blog dated May 13, 2026); ABAC GRANT policies were added later, in Beta since June 2026.",
@@ -1157,6 +1203,7 @@
     "introducedAt": "2026-05",
     "status": "active",
     "releases": [
+      { "type": "public-preview", "date": "2025-06" },
       { "type": "ga", "date": "2026-05" }
     ],
     "occasion": "GA May 21, 2026",
@@ -1372,7 +1419,8 @@
     "introducedAt": "2025-02",
     "status": "active",
     "releases": [
-      { "type": "ga", "date": "2025-02" }
+      { "type": "public-preview", "date": "2024-08" },
+      { "type": "ga", "date": "2025-01" }
     ],
     "occasion": "GA on AWS and Azure, February 2025",
     "note": "Built on Delta Sharing/OpenSharing and Unity Catalog with a no-trust model (all parties have equal privileges). Reached GA on AWS and Azure in February 2025, with GCP later in 2025.",
@@ -1394,7 +1442,8 @@
     "introducedAt": "2023",
     "status": "active",
     "releases": [
-      { "type": "ga", "date": "2024" }
+      { "type": "public-preview", "date": "2023-06" },
+      { "type": "ga", "date": "2026-05" }
     ],
     "note": "The successor to the legacy Python CLI (0.18 and below). Reached 0.205 in 2023 and GA in 2024; adds Databricks Asset Bundles support the legacy CLI never had.",
     "prediction": ["Genie CLI", "Unity CLI", "Databricks CLI One"],
@@ -1415,7 +1464,8 @@
     "introducedAt": "2023",
     "status": "active",
     "releases": [
-      { "type": "ga", "date": "2023" }
+      { "type": "public-preview", "date": "2023-04" },
+      { "type": "ga", "date": "2023-06" }
     ],
     "note": "The successor to the legacy Databricks Connect (Runtime 12.2 LTS and below). Available for Databricks Runtime 13.3 LTS and above.",
     "prediction": ["Genie Connect", "Spark Connect One", "Databricks Connect Prime"],
@@ -1435,6 +1485,7 @@
     "introducedAt": "2022",
     "status": "active",
     "releases": [
+      { "type": "public-preview", "date": "2022-03" },
       { "type": "ga", "date": "2022-08" }
     ],
     "note": "The successor to the per-workspace Hive metastore. Announced 2021; GA on AWS in August 2022. Adds cross-workspace access, row/column-level security, lineage, and auditing.",
@@ -1456,7 +1507,8 @@
     "introducedAt": "2024",
     "status": "active",
     "releases": [
-      { "type": "ga", "date": "2024" }
+      { "type": "public-preview", "date": "2023-06" },
+      { "type": "ga", "date": "2023-10" }
     ],
     "note": "The successor to the Workspace Model Registry. Stages give way to a three-level namespace plus aliases; migrate versions with copy_model_version().",
     "prediction": ["Genie Models", "Mosaic AI Registry", "Unity Models One"],
@@ -1476,7 +1528,8 @@
     "introducedAt": "2023",
     "status": "active",
     "releases": [
-      { "type": "ga", "date": "2023" }
+      { "type": "public-preview", "date": "2023-08" },
+      { "type": "ga", "date": "2023-10" }
     ],
     "note": "The successor to the Workspace Feature Store. Uses the databricks-feature-engineering package (formerly databricks-feature-store).",
     "prediction": ["Genie Features", "Mosaic AI Features", "Unity Feature Store"],
@@ -1517,6 +1570,7 @@
     "introducedAt": "2025",
     "status": "active",
     "releases": [
+      { "type": "beta", "date": "2025-05" },
       { "type": "public-preview", "date": "2025-11" },
       { "type": "ga", "date": "2026-05" }
     ],
@@ -1538,8 +1592,8 @@
     "introducedAt": "2024-11",
     "status": "active",
     "releases": [
-      { "type": "public-preview", "date": "2024-11" },
-      { "type": "ga", "date": "2025-06" }
+      { "type": "public-preview", "date": "2024-10" },
+      { "type": "ga", "date": "2025-05" }
     ],
     "occasion": "GA announced June 11, 2025",
     "note": "Launched in Public Preview November 2024 and reached GA June 11, 2025 - by which point Databricks reported 20,000+ apps built by 2,500+ customers, across 28 regions and all three clouds. Supports Python (Streamlit, Dash, Gradio, Plotly) and JavaScript/Node.js (React and friends).",

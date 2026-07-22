@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Validate databricks.json against the rebricked field rules.
+"""Validate databricks.features.json against the rebricked field rules.
 
 The one unforgivable bug is being confidently wrong. This gate keeps a
 malformed or unsourced entry from ever reaching GitHub Pages.
@@ -13,7 +13,7 @@ import sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
-DATA = ROOT / "databricks.json"
+DATA = ROOT / "databricks.features.json"
 APP_JS = ROOT / "app.js"
 
 DATE_RE = re.compile(r"^\d{4}(-(0[1-9]|1[0-2]))?$")  # YYYY or YYYY-MM (real months only)
@@ -122,11 +122,11 @@ def main():
     try:
         data = json.loads(raw)
     except json.JSONDecodeError as e:
-        print(f"FATAL: databricks.json is not valid JSON: {e}")
+        print(f"FATAL: databricks.features.json is not valid JSON: {e}")
         return 1
 
     if not isinstance(data, list):
-        print("FATAL: databricks.json must be a JSON array")
+        print("FATAL: databricks.features.json must be a JSON array")
         return 1
 
     seen_ids = set()
@@ -328,7 +328,7 @@ def main():
         for group in re.findall(r"ids:\s*\[([^\]]*)\]", app_js):
             nav_ids.update(re.findall(r"\"([a-z0-9-]+)\"", group))
         for missing in sorted(nav_ids - all_ids):
-            err(missing, "NAV in app.js references an id that is not in databricks.json")
+            err(missing, "NAV in app.js references an id that is not in databricks.features.json")
         for unreachable in sorted(all_ids - nav_ids):
             err(unreachable, "entry appears in no NAV section in app.js - unreachable from the rail")
 

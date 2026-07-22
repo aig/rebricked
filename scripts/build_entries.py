@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Static, crawlable pages per vendor and entry - the content SEO layer.
 
-The app renders everything client-side from databricks.json, so to a crawler index.html is
+The app renders everything client-side from databricks.features.json, so to a crawler index.html is
 an empty shell and the ?id= deep links are not distinct documents. This script emits real
 HTML the crawlers can index:
 
@@ -38,7 +38,7 @@ from build_badges import (
 )
 
 ROOT = Path(__file__).resolve().parent.parent
-DATA = ROOT / "databricks.json"
+DATA = ROOT / "databricks.features.json"
 SITEMAP = ROOT / "sitemap.xml"
 TOTAL_BADGES = 5
 
