@@ -2069,6 +2069,22 @@
     toastTimer = setTimeout(() => toastEl.classList.remove("show"), 2600);
   }
 
+  // Build the contact mailto link at runtime from split data attributes, so the full
+  // address never appears in the served HTML (basic protection against email scrapers).
+  (function setupContactEmail() {
+    const host = $("#contact-email");
+    if (!host) return;
+    const user = host.dataset.user;
+    const domain = host.dataset.domain;
+    if (!user || !domain) return;
+    const addr = user + "@" + domain;
+    const a = document.createElement("a");
+    a.href = "mailto:" + addr;
+    a.textContent = addr;
+    a.rel = "nofollow";
+    host.replaceChildren(a);
+  })();
+
   function escapeHtml(s) {
     return String(s ?? "")
       .replace(/&/g, "&amp;")

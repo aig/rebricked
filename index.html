@@ -229,6 +229,13 @@
             <a href="/disclaimer/">full legal notice, disclaimer, and trademarks</a>.
           </p>
 
+          <p class="disclaimer">Questions, corrections, or takedown requests? Reach us at
+            <!-- Email assembled in JS to keep the literal address out of the page source and away from
+                 scrapers. Parts are split so "user@domain" never appears verbatim in the markup. -->
+            <span id="contact-email" class="contact-email" data-user="mail" data-domain="rebricked.org"><noscript>mail
+                at rebricked dot org</noscript></span>.
+          </p>
+
           <p class="disclaimer">Spotted an error or an out-of-date name?
             <a href="https://github.com/aig/rebricked" target="_blank" rel="noopener" class="gh-link"><svg
                 class="gh-icon" viewBox="0 0 16 16" width="16" height="16" aria-hidden="true">
