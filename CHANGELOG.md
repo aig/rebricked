@@ -3,6 +3,15 @@
 All notable changes to **rebricked**, grouped by day.
 Format loosely follows [Keep a Changelog](https://keepachangelog.com/); dates are `YYYY-MM-DD`.
 
+## 2026-07-23 (Reveal results when a mobile search begins)
+
+### Fixed
+- **Search results no longer stranded off-screen on mobile.** When you scrolled deep into
+  the list and started typing (e.g. "dbx"), the filtered results rendered above the viewport
+  and you had to scroll up to see them. A search that *begins* (empty -> non-empty) now scrolls
+  the filters/results block back into view - but only upward, so it never tugs the page for
+  someone already at the top. New `revealFiltersIfBelow` helper in `app.js`.
+
 ## 2026-07-23 (Maturity "By stage" chart lens + AI Gateway / AI Runtime entries)
 
 ### Added

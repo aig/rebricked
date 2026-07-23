@@ -1027,6 +1027,7 @@
   // ---- interactions ----
   function wireStaticControls() {
     let searchTrackTimer = null;
+    let searchWasEmpty = searchEl.value.trim() === "";
     searchEl.addEventListener("input", () => {
       activeSection = null; // manual typing clears any rail-section filter
       focusId = null;
@@ -1034,6 +1035,13 @@
       setActiveNav(null);
       writeURL();
       render();
+      // On mobile you often type while scrolled deep into the list; the filtered
+      // results then sit above the viewport, off-screen. When a search *begins*
+      // (empty -> non-empty), bring the filters/results back into view. Only
+      // upward - never yank the page down on someone already looking at the top.
+      const isEmpty = searchEl.value.trim() === "";
+      if (searchWasEmpty && !isEmpty) revealFiltersIfBelow();
+      searchWasEmpty = isEmpty;
       // Track the settled query, not every keystroke. Terms are product names, not PII.
       clearTimeout(searchTrackTimer);
       searchTrackTimer = setTimeout(() => {
@@ -1844,6 +1852,18 @@
     const offset = (topbar ? topbar.offsetHeight : 0) + 12;
     const y = anchor.getBoundingClientRect().top + window.scrollY - offset;
     window.scrollTo({ top: Math.max(0, y), behavior: "smooth" });
+  }
+
+  // Like scrollToFilters, but only scrolls *up* - a no-op when the filters are
+  // already at or above the sticky top bar. Used when a search begins so results
+  // aren't stranded off-screen, without tugging the page for someone at the top.
+  function revealFiltersIfBelow() {
+    const anchor = $("#filters");
+    if (!anchor) return;
+    const topbar = $(".topbar");
+    const offset = (topbar ? topbar.offsetHeight : 0) + 12;
+    const y = anchor.getBoundingClientRect().top + window.scrollY - offset;
+    if (window.scrollY > y) window.scrollTo({ top: Math.max(0, y), behavior: "smooth" });
   }
 
   // Reflect current state into the address bar without spamming history.
