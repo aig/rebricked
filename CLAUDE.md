@@ -12,10 +12,12 @@ the flow from the validator or from memory.** In short:
 
 1. **Investigate + source** the thing's full history against live official docs (Databricks /
    Microsoft Learn). Real, sourced changes only - never be confidently wrong.
-2. **Classify** by `status` (`active` / `renamed` / `deprecated` / `legacy` / `retired`).
+2. **Classify** by `status.value` (`active` / `renamed` / `deprecated` / `legacy` / `retired`);
+   `status` is a `{ value, link, date }` object (value + backing doc + date confirmed).
 3. **Check collisions** - `id` is the name's slug, unique, permanent.
 4. **Write** the correctly-shaped object (right required fields; no em dashes; `verified` =
-   today; a real-but-fun `fact`; optional `releases` maturity timeline and sourced `limitations`
+   today; a `fact` array of 1-3 sourced real-but-fun `{ note, link }` one-liners; optional
+   `releases` maturity timeline and sourced `limitations`
    `{ note, link, date }`, omitted when the docs list none).
 5. **Wire the `id` into `app.js` `NAV`** - every entry must be reachable from a rail section.
 6. **Validate and log** - `python scripts/validate.py` must print `OK`, then add a

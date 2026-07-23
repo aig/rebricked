@@ -5,7 +5,8 @@ description: >-
   ancient - investigate its full history: what it was, every rename, whether it was
   deprecated or retired, and what it's called today. Then classify it (rename /
   deprecation / feature) and add the correctly-shaped, sourced entry to databricks.features.json -
-  including a funny-but-accurate `fact` line grounded in real Databricks history.
+  including one to three funny-but-accurate, individually-sourced `fact` entries grounded in
+  real Databricks history.
   Use whenever asked to "add a feature", "add X", or "track X" - even if X is old or you
   don't yet know what happened to it - and equally when correcting, re-verifying, or
   re-chaining an entry that already exists. Enforces the one rule: real, sourced changes only.
@@ -45,8 +46,10 @@ state, not just the historical one.
 
 ## Step 2 - Classify by `status` (the sole discriminator)
 
-There is **no `kind` field** - an entry's `status` names its family. The investigation
-decides which, not the user's wording:
+There is **no `kind` field** - an entry's `status` names its family. `status` is a
+`{ value, link, date }` object; `status.value` is the discriminator (the `active`/`renamed`/etc.
+shorthand below refers to it), `link` the official doc backing the call, and `date` the day you
+confirmed it. The investigation decides which family, not the user's wording:
 
 - **rename** (`status: "active"` for the current name + `"renamed"` for each former name) -
   Databricks gave a new name to *the same thing*. Add **one card per name**: an `"active"`
@@ -114,8 +117,8 @@ only its own names - don't leave them duplicated on the neighbour. Example: the
 **Rename** (`"renamed"` former names + an `"active"` current name) - one card per name. Each
 card: required `id`, `name`, `category`, `what`, `fact`, `status`, `source`, `verified`. A
 `"renamed"` card also needs `to` and `successorId` (the next name's id); the `"active"`
-current-name card has a `from` and no `to`. Each `fact` is self-contained - about that name,
-never mentioning the successor. Predecessors are derived from `successorId`.
+current-name card has a `from` and no `to`. Each `fact` entry is self-contained - about that
+name, never mentioning the successor. Predecessors are derived from `successorId`.
 
 ```json
 {
@@ -123,12 +126,14 @@ never mentioning the successor. Predecessors are derived from `successorId`.
   "name": "Old Name",
   "abbr": "ON",
   "category": "Data engineering",
-  "what": "One line: what the thing was under this name.",
-  "fact": "Self-contained real-but-fun one-liner about THIS name (a quirk, its origin, a detail).",
+  "what": { "note": "One line: what the thing was under this name.", "link": "https://docs.databricks.com/..." },
+  "fact": [
+    { "note": "Self-contained real-but-fun one-liner about THIS name (a quirk, its origin, a detail).", "link": "https://docs.databricks.com/..." }
+  ],
   "from": "2021",
   "to": "2023",
   "successorId": "the-newest-name",
-  "status": "renamed",
+  "status": { "value": "renamed", "link": "https://docs.databricks.com/...", "date": "YYYY-MM-DD" },
   "source": "https://docs.databricks.com/...",
   "verified": "YYYY-MM-DD"
 },
@@ -137,10 +142,13 @@ never mentioning the successor. Predecessors are derived from `successorId`.
   "name": "The Newest Name",
   "aliases": ["What people type", "ABBR"],
   "category": "Data engineering",
-  "what": "One line: what the thing is.",
-  "fact": "Real-but-fun one-liner about the current thing (what it does, a codename, a detail).",
+  "what": { "note": "One line: what the thing is.", "link": "https://docs.databricks.com/..." },
+  "fact": [
+    { "note": "Real-but-fun one-liner about the current thing (what it does, a codename, a detail).", "link": "https://docs.databricks.com/..." },
+    { "note": "Optional second sourced fun fact - up to three total, each with its own link.", "link": "https://docs.databricks.com/..." }
+  ],
   "from": "2023",
-  "status": "active",
+  "status": { "value": "active", "link": "https://docs.databricks.com/...", "date": "YYYY-MM-DD" },
   "source": "https://docs.databricks.com/...",
   "verified": "YYYY-MM-DD"
 }
@@ -159,11 +167,13 @@ never mentioning the successor. Predecessors are derived from `successorId`.
   "replacement": "What To Use Instead",
   "successorId": "id-of-successor-card",
   "category": "Developer experience",
-  "what": "One line: what the thing was.",
-  "fact": "Real-but-fun one-liner about the feature (e.g. why it was replaced, what changed under the hood).",
+  "what": { "note": "One line: what the thing was.", "link": "https://docs.databricks.com/..." },
+  "fact": [
+    { "note": "Real-but-fun one-liner about the feature (e.g. why it was replaced, what changed under the hood).", "link": "https://docs.databricks.com/..." }
+  ],
   "deprecatedAt": "2024",
   "removedAt": "2026-01",
-  "status": "deprecated",
+  "status": { "value": "deprecated", "link": "https://docs.databricks.com/...", "date": "YYYY-MM-DD" },
   "source": "https://docs.databricks.com/...",
   "verified": "YYYY-MM-DD"
 }
@@ -180,10 +190,12 @@ to it, and change this card's `status` to `renamed`.
   "name": "The New Thing",
   "aliases": ["what people type", "ABBR"],
   "category": "Data engineering",
-  "what": "One line: what the thing is.",
-  "fact": "Real-but-fun one-liner about the feature (e.g. a standout capability, a documented quirk).",
+  "what": { "note": "One line: what the thing is.", "link": "https://docs.databricks.com/..." },
+  "fact": [
+    { "note": "Real-but-fun one-liner about the feature (e.g. a standout capability, a documented quirk).", "link": "https://docs.databricks.com/..." }
+  ],
   "introducedAt": "2024",
-  "status": "active",
+  "status": { "value": "active", "link": "https://docs.databricks.com/...", "date": "YYYY-MM-DD" },
   "releases": [
     { "type": "public-preview", "date": "2024-03" },
     { "type": "ga", "date": "2024-11" }
@@ -211,15 +223,21 @@ Rules that apply to every entry:
   `Developer experience`, `Data governance`, `BI / Dashboards`, `AI / BI`, `AI / ML`.
   A new category means editing `scripts/validate.py` on purpose - never by typo.
 - `source` is required and must be an http(s) URL. No source, no entry.
-- Never use em dashes (`—`) in any text field (`what`, `fact`, `note`, `prediction`, etc.).
+- `what` (required, every entry) is an object `{ note, link }`, not a bare string: `note` is
+  the self-contained one-line description; `link` is the official doc it's drawn from. Both are
+  required and `link` must be an http(s) URL (it may equal `source`).
+- Never use em dashes (`—`) in any text field (`what.note`, `fact[].note`, `prediction`, etc.).
   Use a hyphen (`-`) instead.
 - `verified` is `YYYY-MM-DD` - the day *you* checked. Never a future date.
-- `fact` (required, every entry) is a real-but-fun one-liner about the feature itself. Unlike
-  `prediction`, it is **not** fiction - only the tone is ours; the fact underneath must be
-  true and sourceable. Anchor the fun to something real: what it actually does, how it works
-  under the hood, its rename history (a URL that still betrays the old name, an acronym kept
-  through a rebrand), an engine codename, or a documented quirk. Keep it about the *feature*,
-  not its pricing. One or two sentences. Prefer the official docs as evidence.
+- `fact` (required, every entry) is an **array of one to three** `{ note, link }` objects, each a
+  real-but-fun one-liner about the feature itself. `note` is the fun-fact text; `link` is
+  **required** on every fact and must be a real, verified official http(s) URL backing *that*
+  claim (it may reuse `source` or `what.link`). Unlike `prediction`, a fact is **not** fiction -
+  only the tone is ours; the fact underneath must be true and sourceable. Anchor the fun to
+  something real: what it actually does, how it works under the hood, its rename history (a URL
+  that still betrays the old name, an acronym kept through a rebrand), an engine codename, or a
+  documented quirk. Keep each self-contained and about the *feature*, not its pricing. There is
+  **no** top-level `note` field (it was folded into this array and removed).
 - `prediction` (renames and features only, optional) is the one deliberately fictional
   field: a non-empty array of deadpan-plausible made-up *next* names. Everything else
   stays sourced and real.

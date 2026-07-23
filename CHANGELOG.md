@@ -3,7 +3,107 @@
 All notable changes to **rebricked**, grouped by day.
 Format loosely follows [Keep a Changelog](https://keepachangelog.com/); dates are `YYYY-MM-DD`.
 
-## 2026-07-23 (Reveal results when a mobile search begins)
+## 2026-07-23 (source fact-check: corrected wrong/unsupported claims)
+
+### Fixed
+- **Fetched every entry's cited URLs and fact-checked the statements against the live docs.**
+  Corrected the confidently-wrong and mis-sourced items found:
+  - **model-serving** `limitations`: the "up to 200 provisioned concurrency per endpoint and per
+    model" figure was wrong - 200 is the non-route-optimized QPS cap. Rewritten to the documented
+    limits: provisioned concurrency up to 1024 per model / 4096 per workspace (raisable), and QPS
+    up to 300,000 with route optimization (200 without).
+  - **hive-metastore** `status`: `deprecated` -> `legacy`. The cited doc calls it a "legacy
+    feature" with no formal deprecation date, which is `legacy` per our own convention.
+  - **delta-lake** `fact`: the Linux Foundation donation was cited to the April 2019 Apache
+    open-sourcing blog, which doesn't cover it. Split into two facts - April 2019 open-sourcing
+    (original blog) and the Oct 16 2019 Linux Foundation donation (its own announcement).
+  - **data-explorer** `status.link`/`to.link`: repointed from the current Catalog Explorer docs
+    page and the 2024 revamp blog (neither documents the rename) to the September 2023 release
+    notes, which state "Data Explorer is renamed to Catalog Explorer." Revamp blog kept in `links`.
+  - **mosaic-ai-vector-search** `status.link`: repointed to the June 2026 release notes, which
+    state "Vector Search has been renamed to AI Search"; the old link (product docs page) didn't
+    document the rename.
+  - **databricks-sql-dashboards** `status.link`: repointed to the archived legacy-dashboards doc,
+    which backs the superseded status; the Nov 2020 release notes didn't.
+  - Bumped `verified` (and `status.date`) to 2026-07-23 on each corrected entry.
+- **Re-sourced ~72 mis-cited `what`/`fact`/`limitations` claims across ~50 entries.** Each
+  was true-but-mis-sourced: the cited `link` did not actually contain the specific statement.
+  Fetched the live docs and either repointed the claim to the official page/blog/release-note
+  that does substantiate it, or trimmed the overreaching part to what a real source supports.
+  Highlights:
+  - Repointed to the page that carries the claim: DLT/Lakeflow `what` -> `ldp/concepts`;
+    DLT `fact` -> the 2021 launch blog; Workflows -> the 2022 Repair-and-Rerun blog; Databricks
+    Delta -> the 2017 announcement blog (not the 2019 open-sourcing one); Git folders rename
+    date -> the March 2024 platform release notes; Data Explorer/Catalog Explorer rename ->
+    Sept 2023 release notes; legacy-sql-alerts -> the deprecated `alerts-legacy` CLI reference.
+  - Corrected outright-wrong facts: Databricks CLI "went GA in 2024" was Asset Bundles' GA -
+    the CLI itself hit 1.0.0/GA on May 21, 2026; removed the Feature Engineering "time travel"
+    claim (Databricks explicitly says its point-in-time lookups are not Delta time travel);
+    "SQL Analytics" is no longer called a "serverless data warehouse on the lakehouse" (both
+    terms postdate its 2020 launch); "Standalone pipelines" prior name corrected to "Pipelines
+    for Databricks SQL".
+  - Trimmed clauses no single official page backs (kept each claim self-contained + single-
+    sourced): dropped unverifiable specifics like the SQL warehouse "120 idle minutes" auto-off,
+    the vector-search/knowledge-assistant marketing stats moved onto the blogs that state them,
+    the "written in Go" CLI detail, and several "PP date -> GA date" arcs reduced to the sourced
+    GA milestone.
+  - Bumped `verified` to 2026-07-23 on every re-sourced entry. `python scripts/validate.py`
+    passes (89 entries).
+
+## 2026-07-23 (`what` becomes { note, link } + search UX polish)
+
+### Removed
+- **Card footer reference chips.** With `source`/`what`, each fact, `limitations`, and `status`
+  all now carrying their own inline links, the bottom-left "Doc/Blog/Other" chips were redundant
+  (the `source`/Doc chip duplicated the description 🔗 on all 89 cards). Removed `refsSection`
+  and its helpers (`refLinks`, `hostOf`, `REF_ORDER`, `REF_KINDS`) from `app.js` and the
+  `.row-refs`/`.ref-*` CSS; the footer now holds only the copy/share actions. The `links` array
+  stays in the data and still renders on the generated SEO entry pages.
+
+### Changed
+- **`status` is now a `{ value, link, date }` object, not a bare string.** `status.value` keeps
+  the sole-discriminator role (`active` / `renamed` / `deprecated` / `legacy` / `retired`);
+  `link` is the official doc backing the call and `date` (`YYYY-MM-DD`, never future) is when it
+  was confirmed. All 89 entries migrated - `value` from the old string, `link` seeded from each
+  entry's `source`, `date` from its `verified` (refine per entry over time). The validator
+  enforces the shape (value in the allowed set, `link` a URL, `date` a real non-future date, no
+  extra keys) and branches on `status.value`; `app.js` reads it via new `statusValue`/`statusLink`/
+  `statusDate` accessors (every `d.status` read updated) and the status badge now shows the
+  confirmed date in its tooltip; `build_entries.py` reads it via a new `status_value`. Docs
+  updated (`AGENTS.md`, `CLAUDE.md`, `CONTRIBUTING.md`, `agents/add-databricks-entry.md`).
+- **`fact` is now an array of 1-3 `{ note, link }` objects, and the top-level `note` field is
+  removed.** Each card can carry up to three sourced fun facts, each rendered as its own 💡 row
+  with a 🔗 to its source, instead of a single fun-fact line plus a separate plain note. All 89
+  entries migrated: the original fun fact became `fact[0]`, and each entry's former `note` was
+  reworked into self-contained extra fact(s) where it held a distinct, sourceable detail (64
+  entries gained a 2nd fact, one - `git-folders` - a 3rd; the remaining 24 stay at one). Every `fact.link`
+  is seeded from the entry's own `source`, so no link is unverified. The validator now requires
+  `fact` to be a non-empty array (max 3) of `{ note, link }` with a real `link`, and rejects any
+  leftover top-level `note`; `app.js` renders the rows via new `factList`/`factNote` accessors
+  (search/share blurbs use `factNote`), and `build_entries.py` via a new `fact_html`. Styling:
+  `.row-note`/`.entry-note` removed; a card's facts render as a `<ul>` (the `.row-fact` /
+  `.entry-fact` list) with a 💡 as each item's bullet marker (a hanging `::before`, so wrapped
+  lines align past it). Docs updated (`AGENTS.md`, `CLAUDE.md`, `CONTRIBUTING.md`,
+  `agents/add-databricks-entry.md`).
+- **Per-fact link refinement.** Most extra facts keep the entry's canonical `source` (the most
+  authoritative doc for the claim), but 12 whose fact makes a specific dated/GA/preview claim now
+  point at the dedicated doc that evidences it (a matching monthly release-notes page or GA
+  announcement already listed on that entry) instead of the generic overview: `classification`,
+  `databricks-clean-rooms`, `serverless-workspaces`, `ai-runtime`, `secrets-in-unity-catalog`,
+  `mission-critical`, `secureconnect`, `discover`, `managed-iceberg-materialized-views`,
+  `databricks-apps`, `lakeflow-designer`, `opensharing`.
+- **`what` is now a `{ note, link }` object, not a bare string.** Every entry's `what`
+  carries the one-line description (`note`) plus the official doc it's drawn from (`link`),
+  both required; `link` must be a real http(s) URL. All 89 existing entries migrated (their
+  `link` seeded from each entry's `source`, to be refined per entry over time). The validator
+  enforces the shape (`what.note` non-empty, `what.link` a URL); `app.js` reads it via new
+  `whatNote`/`whatLink` accessors and renders the description with a 🔗 to the doc; the SEO
+  builder (`build_entries.py`) reads it via `what_note`. Docs updated (`AGENTS.md`,
+  `CONTRIBUTING.md`, `agents/add-databricks-entry.md`).
+
+### Added
+- **"✨ Ask Genie" label on the AI-guess button.** The card's prediction button now reads
+  "✨ Ask Genie" at rest (was a bare ✨); its reveal states are unchanged.
 
 ### Fixed
 - **Search results no longer stranded off-screen on mobile.** When you scrolled deep into
@@ -11,6 +111,24 @@ Format loosely follows [Keep a Changelog](https://keepachangelog.com/); dates ar
   and you had to scroll up to see them. A search that *begins* (empty -> non-empty) now scrolls
   the filters/results block back into view - but only upward, so it never tugs the page for
   someone already at the top. New `revealFiltersIfBelow` helper in `app.js`.
+
+### Changed (UI)
+- **Status badge moved to the card's bottom-left corner.** It kept its bookmark treatment
+  (straddling the card edge, half on / half below) but moved from the top-right (`.fam-rel`,
+  `top:0; right:16px`) to the bottom-left (`.fam-badge`, `bottom:0; left:16px`).
+- **Copy/LinkedIn actions moved to the card's top-right corner** - the spot the status badge
+  vacated (`.fam-actions`, straddling the top edge). The card footer is gone entirely (its only
+  remaining content); removed `.row-foot`/`.row-foot-actions`/`.row-foot .row-odds` CSS. The
+  click handler still resolves the active member via the card's `data-id` (the whole article is
+  replaced on an in-place chain swap), so copy/share target the right entry.
+- **Search bar is more prominent** without changing its size: the magnifier icon now uses the
+  brand accent color, the field has a subtle lift shadow, and it gains a hover border state
+  (the accent focus glow is unchanged).
+- **The `/` badge clears the search.** Clicking it empties the query, re-renders back to the
+  list, and refocuses the input; it now shows a pointer cursor and an accent hover state.
+- **Home invitations get out of the way while searching.** Once a query is present, the
+  quiz/badge banner and the intro blurb under the "They changed it" title hide (on every
+  device); the title and the lifecycle filters stay put. Both return when the search clears.
 
 ## 2026-07-23 (Maturity "By stage" chart lens + AI Gateway / AI Runtime entries)
 

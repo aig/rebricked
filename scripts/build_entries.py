@@ -94,6 +94,15 @@ def link_of(v):
     return str(v["link"]) if isinstance(v, dict) and v.get("link") else ""
 
 
+def what_note(d):
+    """`what` is a required { note, link } object; return just its note text.
+    (Tolerates a legacy bare-string `what` so a half-migrated file still builds.)"""
+    w = d.get("what")
+    if isinstance(w, dict):
+        return str(w.get("note") or "").strip()
+    return str(w or "").strip()
+
+
 def src_link(text, url, title=""):
     """Escaped text followed by a bare 🔗 anchor when a URL is given; plain text otherwise."""
     label = esc(text)
@@ -121,11 +130,20 @@ def vendor_name(v):
     return VENDOR_LABEL.get(v, v.replace("-", " ").title())
 
 
+def status_value(d):
+    """`status` is a required { value, link, date } object; return its `value` string.
+    Tolerates a legacy bare string so a half-migrated file still builds."""
+    s = d.get("status")
+    if isinstance(s, dict):
+        return s.get("value") or ""
+    return s if isinstance(s, str) else ""
+
+
 def kind_of(d):
     # `status` is the sole discriminator (no `kind` field). "active" covers every live name;
     # whether it's a standalone feature or the current tip of a rename chain is calculated,
     # not stored - a feature has its own `introducedAt`, a rename tip carries `from`.
-    s = d.get("status")
+    s = status_value(d)
     if s in ("deprecated", "legacy", "retired"):
         return "deprecation"
     if s == "renamed":
@@ -173,7 +191,7 @@ def predecessors_of(d, data):
 
 
 def status_word(d):
-    s = d.get("status")
+    s = status_value(d)
     return s if s in ("legacy", "retired") else "deprecated"
 
 
@@ -190,7 +208,7 @@ def meta_for(d, by_id, data):
     name = d["name"]
     cat = d.get("category", "")
     kind = kind_of(d)
-    what = (d.get("what") or "").strip()
+    what = what_note(d)
     vlabel = vendor_name(vendor_of(d))
 
     if kind == "feature":
@@ -342,6 +360,28 @@ def sources_html(d):
     return f'<section class="entry-sources"><h2>Sources</h2><ul>{"".join(items)}</ul></section>'
 
 
+def fact_html(d):
+    """`fact` is a required array of up to three { note, link } - sourced real-but-fun
+    one-liners, each rendered as its own 💡 row with a link to its official source.
+    (Tolerates a legacy bare string so a half-migrated file still builds.)"""
+    facts = d.get("fact")
+    if isinstance(facts, str):
+        facts = [{"note": facts}] if facts.strip() else []
+    if not isinstance(facts, list):
+        return ""
+    items = []
+    for f in facts:
+        if not isinstance(f, dict) or not f.get("note"):
+            continue
+        link = f.get("link") or ""
+        src = f" {src_link('', link, 'Fun fact - source')}" if link else ""
+        items.append(f'<li class="entry-fact-item">{esc(f["note"])}{src}</li>')
+    if not items:
+        return ""
+    # A list; each item is bulleted with a 💡 marker (via CSS ::before).
+    return '<ul class="entry-fact">' + "".join(items) + "</ul>"
+
+
 def limitations_html(d):
     """Documented limitations, sourced: a single { note, link, date }. The date rides the
     source link's tooltip. No field -> nothing rendered (parity with app.js)."""
@@ -404,7 +444,7 @@ STATUS_BADGE_CLASS = {
 
 
 def badge_html(d):
-    s = d.get("status", "active")
+    s = status_value(d) or "active"
     # "active" is the default - don't render a status badge for it (release pill still shows).
     status_badge = "" if s == "active" else f'<span class="badge {STATUS_BADGE_CLASS.get(s, "badge-current")}">{esc(s)}</span>'
     return status_badge + release_pill(d)
@@ -469,8 +509,10 @@ ENTRY_STYLE = """  <style>
     .entry-lineage { font-size: 14px; margin: 0 0 20px; padding: 10px 14px; background: var(--card, rgba(127,127,127,.06)); border-radius: 10px; }
     .entry-lineage .arw { opacity: .5; margin: 0 2px; }
     .entry-what { font-size: 15px; margin: 0 0 18px; }
-    .entry-fact { font-size: 15px; margin: 0 0 18px; padding: 12px 14px; border-left: 3px solid var(--accent, #FF3621); background: var(--card, rgba(127,127,127,.06)); border-radius: 0 10px 10px 0; }
-    .entry-note { font-size: 14px; color: var(--muted, #8a94a3); margin: 0 0 18px; }
+    .entry-fact { font-size: 15px; margin: 0 0 18px; padding: 12px 14px; border-left: 3px solid var(--accent, #FF3621); background: var(--card, rgba(127,127,127,.06)); border-radius: 0 10px 10px 0; list-style: none; }
+    .entry-fact-item { padding-left: 1.8em; }
+    .entry-fact-item::before { content: "💡"; display: inline-block; width: 1.8em; margin-left: -1.8em; }
+    .entry-fact-item + .entry-fact-item { margin-top: 8px; }
     .entry-limitations { font-size: 14px; color: var(--muted, #8a94a3); margin: 0 0 18px; display: flex; gap: 8px; align-items: baseline; }
     .entry-limitations .lim-icon { flex: none; color: var(--c-deprecated, #B45309); }
     .entry-limitations .lim-label { font-weight: 600; color: var(--c-deprecated-ink, #92430A); }
@@ -571,7 +613,6 @@ ENTRY_BODY = """
           {lineage}
           <p class="entry-what">{what}</p>
           {fact}
-          {note}
           {limitations}
           <a class="entry-cta" href="{root}?id={id}">Open in REbricked &rarr;</a>
           {facts}
@@ -662,13 +703,8 @@ def render_entry(d, by_id, data):
         ),
         lead=esc(lead),
         lineage=lineage_html(d, by_id, data),
-        what=esc(d.get("what", "")),
-        fact=(
-            f'<p class="entry-fact"><span aria-hidden="true">💡</span> {esc(d["fact"])}</p>'
-            if d.get("fact")
-            else ""
-        ),
-        note=(f'<p class="entry-note">{esc(d["note"])}</p>' if d.get("note") else ""),
+        what=esc(what_note(d)),
+        fact=fact_html(d),
         limitations=limitations_html(d),
         id=attr(d["id"]),
         facts=facts_html(d),
@@ -783,7 +819,7 @@ def render_hub(v, entries):
 
 def badge_label(d):
     # The compact hub-list label is just the real status value.
-    return d.get("status", "active")
+    return status_value(d) or "active"
 
 
 def write_sitemap(data):
@@ -855,7 +891,7 @@ def feed_date(d):
         cands = [d.get("introducedAt"), d.get("from")]
     elif kind == "deprecation":
         cands = [d.get("removedAt"), d.get("deprecatedAt"), d.get("to")]
-    elif (d.get("status") or "") == "renamed":
+    elif status_value(d) == "renamed":
         cands = [d.get("to"), d.get("from")]
     else:  # current name of a rename chain
         cands = [d.get("from"), d.get("to")]
@@ -876,7 +912,7 @@ def release_feed_items(d):
         return
     url = f"{BASE_URL}/{vendor_of(d)}/{d['id']}/"
     vlabel = vendor_name(vendor_of(d))
-    what = (d.get("what") or "").strip()
+    what = what_note(d)
     for r in rels:
         rtype = r.get("type")
         label = RELEASE_LABELS.get(rtype)

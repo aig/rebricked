@@ -14,7 +14,9 @@ no framework, no backend. (rebricked = **re**named or de**pre**cated.)
 **Real, sourced changes only. Never be confidently wrong.**
 
 There is no `kind` field: **`status` is the sole discriminator**, and it stores only what
-can't be calculated. Its values:
+can't be calculated. `status` is a `{ value, link, date }` object: **`value`** holds the
+discriminator (the states listed below), `link` is the official doc backing that call, and
+`date` is the day it was confirmed. Its values (i.e. `status.value`):
 - **`active`** - any name in use now. This covers BOTH a genuinely new capability AND the
   current name of something that was renamed. The two are *not* stored separately (that would
   be redundant) - they're **calculated**: a standalone feature carries its own `introducedAt`;
@@ -81,9 +83,23 @@ enforces it. **Ids are permanent:** once set, an id never changes - a rename add
 with the new name's slug and repoints the old card's `successorId`; the old card keeps its
 id, never re-slugged. Dates are `YYYY` or `YYYY-MM`; `verified` is `YYYY-MM-DD`; `source`,
 `fact`, and `status` are required on every entry.
-- `fact` is a real-but-fun one-liner about **this card's** thing - **funny but accurate**,
-  true and sourceable, and **self-contained** (don't mention the successor/predecessor -
-  those are their own linked cards). Only the tone is ours. Not fiction; required on every entry.
+- `status` (required, every entry) is an object `{ value, link, date }`: `value` is the
+  lifecycle state (the sole discriminator - one of `active` / `renamed` / `deprecated` /
+  `legacy` / `retired`), `link` the official doc backing that call, and `date` (`YYYY-MM-DD`)
+  the day it was confirmed. **All three are required**; `link` must be a real, verified http(s)
+  URL (may equal `source`) and `date` may not be in the future. The status badge's tooltip shows
+  the confirmed date.
+- `what` (required, every entry) is an object `{ note, link }`: `note` is the self-contained
+  one-line description of the thing under this name, and `link` is the official doc it's drawn
+  from. **Both are required**; `link` must be a real, verified http(s) URL (may equal `source`).
+  The UI renders `note` as the card's description with a 🔗 to `link`.
+- `fact` is a **required array of one to three** `{ note, link }` objects - each a real-but-fun
+  one-liner about **this card's** thing: **funny but accurate**, true and sourceable, and
+  **self-contained** (don't mention the successor/predecessor - those are their own linked cards).
+  Only the tone is ours; not fiction. `note` is the fun-fact text; `link` is **required** on every
+  fact and must be a real, verified official http(s) URL backing that specific claim (it may reuse
+  `source` or `what.link`). The UI renders each fact as its own 💡 row with a 🔗 to its `link`.
+  (There is no top-level `note` field - it was folded into this array and removed.)
 - `links` (optional, any entry): extra classified references - an **array** of
   `{ "url", "kind": "official" | "community" | "internet", "label" }`. (That inner `kind`
   classifies the *link*, unrelated to the entry's `status`.) `source` stays the canonical
@@ -106,7 +122,7 @@ id, never re-slugged. Dates are `YYYY` or `YYYY-MM`; `verified` is `YYYY-MM-DD`;
 **Active feature** (`status: "active"` + `introducedAt`) - a standalone new capability.
 Required: `id`, `name`, `category`, `what`, `fact`, `status`, `introducedAt`, `source`,
 `verified`. Optional: `aliases`, `releases` (maturity timeline - see below), `occasion`,
-`note`, `prediction`, `links`, `limitations`. No `from`/`to`.
+`prediction`, `links`, `limitations`. No `from`/`to`.
 
 **Current rename tip** (`status: "active"` + `from`) - the name in use now for something that
 was renamed. Same required set but with `from` instead of `introducedAt` (never a `to`), and a
@@ -115,13 +131,13 @@ that is what makes the feature-vs-tip distinction calculable.
 
 **Renamed** (`status: "renamed"`) - a superseded former name. Required: `id`, `name`,
 `category`, `what`, `fact`, `status`, `to`, `successorId` (the next name's id), `source`,
-`verified`. Optional: `abbr`, `aliases`, `from`, `occasion`, `note`, `prediction`, `links`,
+`verified`. Optional: `abbr`, `aliases`, `from`, `occasion`, `prediction`, `links`,
 `limitations`. A rename is thus one-or-more `renamed` cards chained to an `active` current name.
 
 **Deprecation** (`status: "deprecated"`, `"legacy"`, or `"retired"`) - required: `id`,
 `name`, `category`, `what`, `fact`, `status`, `deprecatedAt`, `source`, `verified`. Optional:
 `aliases`, `replacement`, `successorId` (id of the successor's card), `removedAt`, `occasion`,
-`note`, `links`, `limitations`.
+`links`, `limitations`.
 - `"deprecated"` (still around, discouraged), `"retired"` (access ended), or `"legacy"`
   (docs call it legacy/unsupported but no formal deprecation date exists).
 - Omit `successorId`/`replacement` when nothing directly replaces it - the UI shows "retired".

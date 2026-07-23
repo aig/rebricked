@@ -36,12 +36,14 @@ not stored.
   "name": "Old Name",
   "abbr": "ON",
   "category": "Data engineering",
-  "what": "One line: what the thing was under this name.",
-  "fact": "Self-contained real-but-fun one-liner about THIS name - don't mention the newer name.",
+  "what": { "note": "One line: what the thing was under this name.", "link": "https://docs.databricks.com/..." },
+  "fact": [
+    { "note": "Self-contained real-but-fun one-liner about THIS name - don't mention the newer name.", "link": "https://docs.databricks.com/..." }
+  ],
   "from": "2021",
   "to": "2023",
   "successorId": "the-newest-name",
-  "status": "renamed",
+  "status": { "value": "renamed", "link": "https://docs.databricks.com/...", "date": "YYYY-MM-DD" },
   "source": "https://docs.databricks.com/...",
   "verified": "YYYY-MM-DD"
 },
@@ -50,12 +52,14 @@ not stored.
   "name": "The Newest Name",
   "aliases": ["What people actually type", "ABBR"],
   "category": "Data engineering",
-  "what": "One line: what the thing is.",
-  "fact": "Real-but-fun one-liner about the current thing - funny, but true and sourceable.",
+  "what": { "note": "One line: what the thing is.", "link": "https://docs.databricks.com/..." },
+  "fact": [
+    { "note": "Real-but-fun one-liner about the current thing - funny, but true and sourceable.", "link": "https://docs.databricks.com/..." },
+    { "note": "A second sourced fun fact (optional) - up to three total, each with its own link.", "link": "https://docs.databricks.com/..." }
+  ],
   "from": "2023",
-  "status": "active",
+  "status": { "value": "active", "link": "https://docs.databricks.com/...", "date": "YYYY-MM-DD" },
   "occasion": "Where it was announced (optional).",
-  "note": "Anything an engineer needs to know - does old code still run? (optional)",
   "source": "https://docs.databricks.com/...",
   "verified": "YYYY-MM-DD"
 }
@@ -71,13 +75,14 @@ not stored.
   "replacement": "What To Use Instead",
   "successorId": "id-of-the-successor-card (optional)",
   "category": "Developer experience",
-  "what": "One line: what the thing was.",
-  "fact": "Real-but-fun one-liner about the feature - funny, but the fact must be true and sourceable.",
+  "what": { "note": "One line: what the thing was.", "link": "https://docs.databricks.com/..." },
+  "fact": [
+    { "note": "Real-but-fun one-liner about the feature - funny, but the fact must be true and sourceable.", "link": "https://docs.databricks.com/..." }
+  ],
   "deprecatedAt": "2024",
   "removedAt": "2026-01",
-  "status": "deprecated",
+  "status": { "value": "deprecated", "link": "https://docs.databricks.com/...", "date": "YYYY-MM-DD" },
   "occasion": "End of life date, if any (optional).",
-  "note": "Why it's a replacement, not a rename; migration path (optional).",
   "source": "https://docs.databricks.com/...",
   "verified": "YYYY-MM-DD"
 }
@@ -91,16 +96,17 @@ not stored.
   "name": "The New Thing",
   "aliases": ["what people type", "ABBR"],
   "category": "Data engineering",
-  "what": "One line: what the thing is.",
-  "fact": "Real-but-fun one-liner about the feature - funny, but the fact must be true and sourceable.",
+  "what": { "note": "One line: what the thing is.", "link": "https://docs.databricks.com/..." },
+  "fact": [
+    { "note": "Real-but-fun one-liner about the feature - funny, but the fact must be true and sourceable.", "link": "https://docs.databricks.com/..." }
+  ],
   "introducedAt": "2024",
-  "status": "active",
+  "status": { "value": "active", "link": "https://docs.databricks.com/...", "date": "YYYY-MM-DD" },
   "releases": [
     { "type": "public-preview", "date": "2024-03" },
     { "type": "ga", "date": "2024-11" }
   ],
   "occasion": "Where/when it shipped (optional).",
-  "note": "Anything an engineer needs - what it replaces, GA vs preview caveats (optional).",
   "limitations": { "note": "Documented caveats - omit when the docs list none.", "link": "https://docs.databricks.com/...", "date": "YYYY-MM-DD" },
   "source": "https://docs.databricks.com/...",
   "verified": "YYYY-MM-DD"
@@ -108,10 +114,12 @@ not stored.
 ```
 
 ### Field rules
-- **`status` is the sole discriminator** (there is no `kind` field), and it stores only what
-  can't be calculated: `"active"` (any name in use now), `"renamed"` (a superseded former
-  name), `"deprecated"`/`"legacy"`/`"retired"` (retired or replaced). The validator branches
-  on it to pick the required fields.
+- **`status` is a required `{ value, link, date }` object and the sole discriminator** (there
+  is no `kind` field). `value` stores only what can't be calculated: `"active"` (any name in use
+  now), `"renamed"` (a superseded former name), `"deprecated"`/`"legacy"`/`"retired"` (retired or
+  replaced); the validator branches on `status.value` to pick the required fields. `link` is the
+  official doc backing the call (a real http(s) URL, may equal `source`) and `date` (`YYYY-MM-DD`,
+  never future) is the day you confirmed it. All three are required.
 - **Active = features *and* current rename tips.** Don't store which one a card is - it's
   calculated: a standalone **feature** carries its own `introducedAt`; the **current tip** of
   a rename chain carries `from` (and has a `renamed` card pointing at it). An `active` card
@@ -167,13 +175,22 @@ not stored.
   tells you whether a limit is hard (`Yes`) or soft (`No` - raisable on request via the account
   team); write soft limits as raisable defaults, not absolute caps. The UI renders it as a
   "Limitations" line on the card.
+- `what` is **required** on every entry: an object `{ "note", "link" }`. `note` is the one-line
+  description of the thing under this name (self-contained, like `fact`); `link` is the official
+  doc that description is drawn from - **both are required**, and `link` must be a real, verified
+  http(s) URL (it may be the same as `source`). The UI renders `note` as the card's description
+  with a 🔗 to `link`.
 - `source` is **required** on every entry. No source, no entry. Prefer official Databricks /
   Microsoft Learn docs - an archived "legacy"/"migrate from X" doc is ideal for deprecations.
 - `verified` is the date a human last confirmed it. Put the day you checked.
-- `fact` is **required** on every entry: a real-but-fun one-liner about the feature itself.
-  Unlike `prediction`, it is **not** fiction - only the tone is ours; the fact underneath
-  must be real and sourceable (what it does, how it works, its rename history, a documented
-  quirk or codename). Keep it about the feature, not its pricing. One or two sentences.
+- `fact` is **required** on every entry: an **array of one to three** `{ "note", "link" }`
+  objects, each a real-but-fun one-liner about the feature itself. `note` is the fun-fact text;
+  `link` is **required** on every fact and must be a real, verified official http(s) URL that
+  backs *that specific* claim (it may reuse `source` or `what.link`). Unlike `prediction`, a fact
+  is **not** fiction - only the tone is ours; the fact underneath must be real and sourceable
+  (what it does, how it works, its rename history, a documented quirk or codename). Keep each
+  about the feature, not its pricing, and self-contained. The UI renders each as its own 💡 row.
+  (There is **no** top-level `note` field - it was folded into this array and removed.)
 - `id` is the kebab-case slug of the entry's own `name`, with any parenthetical qualifier
   dropped, and unique across the whole file (all entries share one namespace). Examples:
   `"Unity Catalog Volumes"` → `unity-catalog-volumes`;
@@ -184,7 +201,8 @@ not stored.
   existing entry.
 - Dates use `YYYY` or `YYYY-MM`. Precision is optional; honesty about precision is not.
 - Never use em dashes (`—`) in any text field. Use a hyphen (`-`) instead.
-- If sources disagree on a date, use the official doc's date and say so in `note`.
+- If sources disagree on a date, use the official doc's date; if the discrepancy is worth
+  recording, note it in a `fact` entry with the source that disagrees.
 - `prediction` (renames and features only, optional) is the one **deliberately fictional**
   field: an **array** of made-up next names for the product, e.g.
   `["Genie Pipelines", "Unity Pipelines"]`. They power the "New" button gag, the card's

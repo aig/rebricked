@@ -122,7 +122,7 @@ body {
   font-size: 14px;
   line-height: 1.55;
   -webkit-font-smoothing: antialiased;
-  /* Hidden hover affordances (e.g. the .ref-chip tooltip, an absolutely-positioned
+  /* Hidden hover affordances (e.g. a tooltip built from an absolutely-positioned
      max-content pseudo-element) can extend past the right edge and widen the page.
      On mobile that expands the layout viewport, which throws the fixed quiz modal -
      centred via inset:0 - off-screen. Clip the stray horizontal overflow. `clip`
@@ -891,6 +891,29 @@ body {
   box-shadow: 0 2px 14px rgba(20, 25, 35, .06);
 }
 
+/* status badge as a bookmark straddling the card's top-left edge - half on the card, half
+   above. Its own opaque fill (see .badge-*) cuts the top border cleanly, clear of the chain
+   below. active/latest renders no badge. */
+.fam-badge {
+  position: absolute;
+  top: 0;
+  left: 16px;
+  transform: translateY(-50%);
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+/* copy/share actions perched on the card's bottom-right edge, on the badge's edge line.
+   Straddles the bottom border; the buttons' opaque fill keeps them clean over the line. */
+.fam-actions {
+  position: absolute;
+  bottom: 0;
+  right: 16px;
+  transform: translateY(50%);
+  z-index: 1;
+}
+
 /* ===== lineage as an inline flow chain (collapsed family card) =====
    The family's names read as one scannable line - former names → the current name as an
    inverted "now" chip - in a header strip above the active member's body. Clicking a former
@@ -910,23 +933,6 @@ body {
   margin-top: 0;
   min-width: 0;
 }
-
-/* the active member's release + status cluster (release pill then status badge, status
-   rightmost) straddles the card's top-right edge like a bookmark - half on the card, half
-   above - on its own line above the chain, never sharing the chain's row */
-.fam-rel {
-  position: absolute;
-  top: 0;
-  right: 16px;
-  transform: translateY(-50%);
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-}
-
-/* Each badge now carries its own opaque solid fill (see the .badge-* rules), which cuts the
-   card's top border just as cleanly as the old panel fill did - so no per-context override
-   is needed here anymore. */
 
 /* first block inside a body shouldn't add extra top margin under the chain header */
 .fam-body>.row-what:first-child {
@@ -1190,110 +1196,6 @@ body {
   color: var(--muted);
 }
 
-/* ===== classified reference links ===== */
-.row-refs {
-  margin-top: 14px;
-  padding-top: 12px;
-  border-top: 1px solid var(--line);
-}
-
-.ref-label {
-  display: block;
-  font-size: 10.5px;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: .06em;
-  color: var(--faint);
-  margin-bottom: 7px;
-}
-
-.ref-chips {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 7px;
-}
-
-.ref-chip {
-  position: relative;
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  text-decoration: none;
-  font-size: 11.5px;
-  border: 1px solid var(--line);
-  border-radius: 999px;
-  padding: 3px 10px;
-  background: var(--bg);
-  color: var(--muted);
-  transition: border-color .15s, background .15s, color .15s;
-}
-
-.ref-chip:hover {
-  border-color: var(--accent);
-  color: var(--ink);
-}
-
-/* styled tooltip: the source (label / domain) on hover or focus, since the chip text
-   is just its kind now. Dark on both themes, like the toast. */
-.ref-chip[data-tip]::after {
-  content: attr(data-tip);
-  position: absolute;
-  left: 0;
-  bottom: calc(100% + 8px);
-  width: max-content;
-  max-width: 240px;
-  padding: 6px 10px;
-  border-radius: 8px;
-  background: #11171C;
-  color: #fff;
-  border: 1px solid rgba(255, 255, 255, .12);
-  font-family: var(--mono);
-  font-size: 11px;
-  line-height: 1.4;
-  white-space: normal;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, .28);
-  opacity: 0;
-  transform: translateY(3px);
-  pointer-events: none;
-  transition: opacity .13s, transform .13s;
-  z-index: 10;
-}
-
-.ref-chip[data-tip]:hover::after,
-.ref-chip[data-tip]:focus-visible::after {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-.ref-dot {
-  width: 7px;
-  height: 7px;
-  border-radius: 50%;
-  flex: none;
-  background: var(--faint);
-}
-
-/* official = accent, community = green, internet = neutral */
-.ref-official .ref-dot {
-  background: var(--accent);
-}
-
-.ref-community .ref-dot {
-  background: var(--ok);
-}
-
-.ref-internet .ref-dot {
-  background: var(--muted);
-}
-
-.ref-kind {
-  font-weight: 600;
-  color: var(--ink);
-}
-
-.ref-host {
-  color: var(--faint);
-}
 
 .ref-ext {
   color: var(--accent);
@@ -1582,12 +1484,6 @@ a.badge-release-link {
 }
 
 /* docs comment: sits below the footer as a plain caveat - no rule, no box */
-.row-note {
-  margin: 12px 0 0;
-  font-size: 12.5px;
-  color: var(--muted);
-}
-
 /* "Previously" line under a rename title - the prior names, newest-first */
 .row-rename {
   margin: 6px 0 0;
@@ -1625,21 +1521,31 @@ a.badge-release-link {
   opacity: .6;
 }
 
-/* real-but-fun fact line - genuinely true, our tone */
-/* the 💡 tip: no rule, no box - just the icon and italic text, above the footer */
+/* real-but-fun facts - genuinely true, our tone. A list, each item bulleted with a 💡 marker */
 .row-fact {
   margin: 12px 0 0;
+  padding-left: 0;
   font-size: 12.5px;
   color: var(--muted);
   font-style: italic;
-  display: flex;
-  gap: 8px;
-  align-items: baseline;
+  list-style: none;
 }
 
-.row-fact .fact-icon {
-  flex: none;
+.row-fact .fact-item {
+  padding-left: 1.7em;
+}
+
+/* 💡 as the item bullet - a hanging marker so wrapped lines align past it */
+.row-fact .fact-item::before {
+  content: "💡";
+  display: inline-block;
+  width: 1.7em;
+  margin-left: -1.7em;
   font-style: normal;
+}
+
+.row-fact .fact-item + .fact-item {
+  margin-top: 6px;
 }
 
 /* documented limitations: a sourced caveat line, amber-keyed to read as "watch out" */
@@ -1737,36 +1643,6 @@ a.chain-node:hover {
 
 .chain-flow.flow-legacy {
   color: var(--c-legacy);
-}
-
-/* card footer: references (left) and the "guess the sequel" gag (right) share one row
-   and one divider, so the wide pill no longer crowds the title. */
-.row-foot {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 10px 16px;
-  flex-wrap: wrap;
-  margin-top: 16px;
-}
-
-.row-foot .row-refs {
-  margin-top: 0;
-  padding-top: 0;
-  border-top: 0;
-  flex: 1 1 auto;
-}
-
-/* right cluster of the footer: copy / share icons next to the guess-the-sequel gag */
-.row-foot-actions {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  flex: 0 0 auto;
-}
-
-.row-foot .row-odds {
-  flex: 0 0 auto;
 }
 
 mark {
@@ -3305,11 +3181,4 @@ body.modal-open {
     flex-basis: 0;
   }
 
-  /* Keep the copy/LinkedIn action cluster on the same row as the reference chips:
-     the chips block absorbs the remaining space (its own chips wrap internally when
-     needed) while the icons stay pinned to the right edge. */
-  .row-foot-actions {
-    flex: 0 0 auto;
-    margin-left: auto;
-  }
 }

@@ -157,11 +157,33 @@ def main():
             err(eid, "entry is not an object")
             continue
 
-        # `status` is the sole discriminator (no `kind` field). It decides both what the
-        # card is and which extra fields are required.
-        status = entry.get("status")
-        if status is not None and status not in VALID_STATUSES:
-            err(eid, f"status must be one of {VALID_STATUSES}, got {status!r}")
+        # `status` is a required { value, link, date } object and the sole discriminator
+        # (no `kind` field): `value` is the lifecycle state, `link` the official doc backing
+        # it, `date` the day it was confirmed. It decides both what the card is and which
+        # extra fields are required.
+        status_obj = entry.get("status")
+        status = None
+        if isinstance(status_obj, dict):
+            status = status_obj.get("value")
+            if status not in VALID_STATUSES:
+                err(eid, f"status.value must be one of {VALID_STATUSES}, got {status!r}")
+            slink = status_obj.get("link")
+            if not (isinstance(slink, str) and URL_RE.match(str(slink))):
+                err(eid, f"status.link must be a real http(s) URL, got {slink!r}")
+            sdate = status_obj.get("date")
+            if not (sdate and VERIFIED_RE.match(str(sdate))):
+                err(eid, f"status.date must be YYYY-MM-DD (when confirmed), got {sdate!r}")
+            else:
+                try:
+                    if datetime.date.fromisoformat(str(sdate)) > datetime.date.today():
+                        err(eid, f"status.date {sdate!r} is in the future")
+                except ValueError:
+                    err(eid, f"status.date is not a real date: {sdate!r}")
+            extra_keys = set(status_obj) - {"value", "link", "date"}
+            if extra_keys:
+                err(eid, f"status has unexpected keys: {sorted(extra_keys)}")
+        elif status_obj is not None:
+            err(eid, "status must be an object { value, link, date }")
         grp = status_group(status)
 
         required = list(REQUIRED_COMMON)
@@ -172,6 +194,20 @@ def main():
         for field in required:
             if field not in entry or entry[field] in (None, "", []):
                 err(eid, f"missing required field: {field}")
+
+        # `what` is a required { note, link } object: the one-line description plus the
+        # official doc it is drawn from. Both are required; link must be an http(s) URL.
+        w = entry.get("what")
+        if w is not None:
+            if not isinstance(w, dict):
+                err(eid, "what must be an object { note, link }")
+            else:
+                wnote = w.get("note")
+                if not (isinstance(wnote, str) and wnote.strip()):
+                    err(eid, "what.note must be a non-empty string")
+                wlink = w.get("link")
+                if not (isinstance(wlink, str) and URL_RE.match(wlink)):
+                    err(eid, f"what.link must be an http(s) URL, got {wlink!r}")
 
         # id uniqueness + shape
         if "id" in entry:
@@ -337,9 +373,29 @@ def main():
         if "aliases" in entry and not isinstance(entry["aliases"], list):
             err(eid, "aliases must be an array")
 
-        # fact must be a non-empty string (the required-field check catches absence)
-        if "fact" in entry and not (isinstance(entry["fact"], str) and entry["fact"].strip()):
-            err(eid, "fact must be a non-empty string")
+        # fact must be a non-empty array of { note, link }: 1-3 real-but-fun, self-contained
+        # one-liners about this card's thing, each with its own verified official source.
+        if "fact" in entry:
+            facts = entry["fact"]
+            if not isinstance(facts, list) or not facts:
+                err(eid, "fact must be a non-empty array of { note, link }")
+            elif len(facts) > 3:
+                err(eid, f"fact may have at most 3 entries, got {len(facts)}")
+            else:
+                for f in facts:
+                    if not isinstance(f, dict):
+                        err(eid, "each fact must be an object { note, link }")
+                        continue
+                    fnote = f.get("note")
+                    if not (isinstance(fnote, str) and fnote.strip()):
+                        err(eid, "fact.note must be a non-empty string")
+                    flink = f.get("link")
+                    if not (isinstance(flink, str) and URL_RE.match(str(flink))):
+                        err(eid, f"fact.link must be a real http(s) URL, got {flink!r}")
+
+        # `note` was folded into the fact array and removed; reject any leftover.
+        if "note" in entry:
+            err(eid, "note is removed - move its content into the fact array")
 
         # links (optional): extra classified references so claims are checkable.
         # `source` stays the canonical official link; these are additional.

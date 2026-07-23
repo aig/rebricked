@@ -339,7 +339,7 @@
   function entryMeta(entry) {
     const succ = entry.successorId && DATA.find((d) => d.id === entry.successorId);
     const title = (succ ? entry.name + " -> " + succ.name : entry.name) + " - REbricked";
-    const desc = (entry.what || entry.fact || "").trim();
+    const desc = (whatNote(entry) || factNote(entry) || "").trim();
     setMeta(title, desc || DEFAULT_DESC);
   }
 
@@ -519,8 +519,8 @@
   // deprecation is amber (slate when legacy), a superseded rename is orange, everything
   // live is green.
   function flowStatusOf(x) {
-    if (kindOf(x) === "deprecation") return (x.status === "legacy") ? "legacy" : "deprecated";
-    if (kindOf(x) === "rename" && (x.status || "current") === "renamed") return "renamed";
+    if (kindOf(x) === "deprecation") return (statusValue(x) === "legacy") ? "legacy" : "deprecated";
+    if (kindOf(x) === "rename" && (statusValue(x) || "current") === "renamed") return "renamed";
     return "active";
   }
 
@@ -529,9 +529,18 @@
   // above (see rowHTML); the release pill is removed for now. Returns { spine, html }.
   function memberBody(d) {
     const kind = kindOf(d);
-    const note = d.note ? `<p class="row-note">${escapeHtml(d.note)}</p>` : "";
-    const fact = d.fact
-      ? `<p class="row-fact"><span class="fact-icon" aria-hidden="true">💡</span> ${escapeHtml(d.fact)}</p>`
+    // `fact` is an array of up to three { note, link }, rendered as a list with a 💡 marker on
+    // each item (via CSS ::before); each item carries a 🔗 to its official source.
+    const factItems = factList(d);
+    const fact = factItems.length
+      ? `<ul class="row-fact">${factItems
+          .map(
+            (f) =>
+              `<li class="fact-item">${escapeHtml(f.note)}${
+                f.link ? " " + srcLink("", f.link, "Fun fact - source") : ""
+              }</li>`
+          )
+          .join("")}</ul>`
       : "";
     // `occasion` is now { date, link, note } - a dated milestone with its own confirmation.
     // We render its note text (linked to the source), still accepting a bare string.
@@ -545,7 +554,7 @@
       spine = "is-feature";
       dateText = `Introduced ${dateLinkHTML(d.introducedAt || "?")}${occasion}`;
     } else if (kind === "deprecation") {
-      const status = d.status || "deprecated";
+      const status = statusValue(d) || "deprecated";
       spine = status === "legacy" ? "is-legacy" : "is-deprecation";
       const verb = status === "legacy" ? "Legacy since" : "Deprecated";
       // Lead with when it was first available/introduced so a deprecation shows its full
@@ -555,7 +564,7 @@
       const intro = dateOf(origin) ? `Available from ${dateLinkHTML(origin)} · ` : "";
       dateText = `${intro}${verb} ${dateLinkHTML(d.deprecatedAt || "?")}${occasion}`;
       if (dateOf(d.removedAt)) urgent = `<span class="meta-urgent">⚠ Access ended ${dateLinkHTML(d.removedAt)}</span>`;
-    } else if ((d.status || "current") === "renamed") {
+    } else if ((statusValue(d) || "current") === "renamed") {
       spine = "is-former";
       const fromD = dateOf(d.from), toD = dateOf(d.to);
       const span = fromD && toD
@@ -567,12 +576,8 @@
       dateText = `Current since ${dateLinkHTML(d.from || "?")}${occasion}`;
     }
 
-    const refs = refsSection(d);
-    const actions = `<div class="row-actions">
-            <button class="row-act" data-act="link" title="Copy a link to this entry" aria-label="Copy link to this entry">${ICON.link}</button>
-            <button class="row-act" data-act="share" title="Share this entry on LinkedIn" aria-label="Share this entry on LinkedIn">${ICON.linkedin}</button>
-          </div>`;
-    const foot = `<div class="row-foot">${refs || "<span></span>"}<div class="row-foot-actions">${actions}</div></div>`;
+    // The copy/share actions now ride the card's top-right corner (see rowHTML), and sources
+    // live inline, so the body no longer has a footer.
     // Each member's body carries its own date line: "Current since / In use / Introduced …"
     // for live / former / feature members, "Deprecated …" for deprecations. (The flow-chain
     // header omits the current name's year, so the body is where that date now lives.)
@@ -582,8 +587,56 @@
       : "";
     return {
       spine,
-      html: `<p class="row-what">${escapeHtml(d.what || "")}</p>${meta}${fact}${note}${limitationsHTML(d)}${foot}`,
+      html: `<p class="row-what">${escapeHtml(whatNote(d))}${whatLink(d) ? " " + srcLink("", whatLink(d), "What it is - official docs") : ""}</p>${meta}${fact}${limitationsHTML(d)}`,
     };
+  }
+
+  // `what` is a required { note, link } object: the one-line description plus the official
+  // doc it's drawn from. (Older data stored a bare string; tolerate it so a half-migrated
+  // file still renders.) These accessors are the only spots that need to know the shape.
+  function whatNote(d) {
+    const w = d && d.what;
+    if (w && typeof w === "object") return w.note || "";
+    return typeof w === "string" ? w : "";
+  }
+  function whatLink(d) {
+    const w = d && d.what;
+    return w && typeof w === "object" && w.link ? String(w.link) : "";
+  }
+
+  // `fact` is a required array of up to three { note, link } - sourced real-but-fun one-liners
+  // about this card's thing. (Older data stored a bare string; tolerate it so a half-migrated
+  // file still renders.) factNote(d) is the first fact's text, used for share/meta blurbs.
+  function factList(d) {
+    const f = d && d.fact;
+    if (Array.isArray(f))
+      return f
+        .filter((x) => x && x.note)
+        .map((x) => ({ note: String(x.note), link: x.link ? String(x.link) : "" }));
+    if (typeof f === "string" && f.trim()) return [{ note: f, link: "" }];
+    return [];
+  }
+  function factNote(d) {
+    const l = factList(d);
+    return l.length ? l[0].note : "";
+  }
+
+  // `status` is a required { value, link, date } object: the lifecycle value (the sole
+  // discriminator), the official doc backing it, and the date it was confirmed. (Older data
+  // stored a bare string; tolerate it so a half-migrated file still renders.) statusValue is
+  // the only spot the rest of the app needs; statusLink/statusDate feed the badge tooltip.
+  function statusValue(d) {
+    const s = d && d.status;
+    if (s && typeof s === "object") return s.value || "";
+    return typeof s === "string" ? s : "";
+  }
+  function statusLink(d) {
+    const s = d && d.status;
+    return s && typeof s === "object" && s.link ? String(s.link) : "";
+  }
+  function statusDate(d) {
+    const s = d && d.status;
+    return s && typeof s === "object" && s.date ? String(s.date) : "";
   }
 
   // Documented limitations, sourced: a single { note, link, date } - a short summary of the
@@ -608,22 +661,24 @@
   // re-renders the card with that member active.
   function rowHTML(activeD) {
     const body = memberBody(activeD);
-    // right cluster: just the status badge now. The release-maturity pill is replaced by the
-    // four-rung stepper under the chain header (see releaseStepper), so it's no longer shown
-    // here - renamed / deprecated / legacy / retired members still show their status badge.
-    const cluster = `${statusBadge(activeD)}`;
-    // the status / release cluster is pinned to the card's top-right corner (see CSS)
-    const rel = cluster ? `<span class="fam-rel">${cluster}</span>` : "";
-    // the maturity stepper rides just below the chain header's hairline - after the divider,
-    // at the top of the body area, rather than sharing the header strip with the names
+    // The status badge is a bookmark on the card's top-right edge (active/latest shows none);
+    // the copy/share actions sit on the bottom-right edge, on the badge's line.
+    const badge = statusBadge(activeD);
+    const corner = badge ? `<span class="fam-badge">${badge}</span>` : "";
+    const actions = `<div class="row-actions fam-actions">
+            <button class="row-act" data-act="link" title="Copy a link to this entry" aria-label="Copy link to this entry">${ICON.link}</button>
+            <button class="row-act" data-act="share" title="Share this entry on LinkedIn" aria-label="Share this entry on LinkedIn">${ICON.linkedin}</button>
+          </div>`;
+    // the maturity stepper rides just below the chain header's hairline, at the top of the body
     const stepper = flowStatusOf(activeD) === "active" ? releaseStepper(activeD) : "";
     const head = `<div class="fam-chainbar">${lineageChain(activeD)}</div>`;
     return `
       <article class="row family-card ${body.spine}" data-id="${escapeAttr(activeD.id)}">
-        ${rel}
+        ${actions}
         ${head}
         ${stepper}
         <div class="fam-body ${body.spine}" data-mid="${escapeAttr(activeD.id)}">${body.html}</div>
+        ${corner}
       </article>`;
   }
 
@@ -639,10 +694,12 @@
   // The live/"latest" state (stored as "active"). Recognized either way; it shows no badge.
   const LIVE_STATUSES = new Set(["latest", "active"]);
   function statusBadge(d) {
-    const s = d.status || "latest";
+    const s = statusValue(d) || "latest";
     if (LIVE_STATUSES.has(s)) return "";
     const cls = STATUS_BADGE_CLASS[s] || "badge-current";
-    return `<span class="badge ${cls}">${escapeHtml(s)}</span>`;
+    const date = statusDate(d);
+    const title = date ? ` title="Status confirmed ${escapeAttr(date)}"` : "";
+    return `<span class="badge ${cls}"${title}>${escapeHtml(s)}</span>`;
   }
 
   // Release maturity is its own axis, orthogonal to the lifecycle badge above: a thing can
@@ -777,7 +834,7 @@
     // member in focus, so it shows on every card in the lineage - not only when the current
     // name is the one being viewed. A tip that is deprecated / superseded gets no forecast.
     const tip = succs.length ? succs[succs.length - 1] : d;
-    const guess = (kindOf(tip) !== "deprecation" && (tip.status || "current") !== "renamed")
+    const guess = (kindOf(tip) !== "deprecation" && (statusValue(tip) || "current") !== "renamed")
       ? oddsBadge(tip) : "";
     // The chain always renders: the card's title now lives here as the "now" node
     // (styled as an inverted chip), so even a card with no predecessors, successors,
@@ -786,7 +843,7 @@
     // or a deprecation, whether it's the card's own name or a predecessor in the chain.
     const isFormer = (x) =>
       kindOf(x) === "deprecation" ||
-      (kindOf(x) === "rename" && (x.status || "current") === "renamed");
+      (kindOf(x) === "rename" && (statusValue(x) || "current") === "renamed");
     // Compact start-date token for a node: its `from` (or a feature's introducedAt), as
     // "2026-07" -> "07’26", a bare year -> "’26". Shows when each name began.
     const nodeDate = (x) => {
@@ -812,8 +869,8 @@
     // (amber for a deprecation hop, orange for a rename hop, green at the live tip).
     const flowClass = (x) => {
       if (!x) return "flow-active"; // forecast tail: colored by the live tip before it
-      if (kindOf(x) === "deprecation") return (x.status === "legacy") ? "flow-legacy" : "flow-deprecated";
-      if (kindOf(x) === "rename" && (x.status || "current") === "renamed") return "flow-renamed";
+      if (kindOf(x) === "deprecation") return (statusValue(x) === "legacy") ? "flow-legacy" : "flow-deprecated";
+      if (kindOf(x) === "rename" && (statusValue(x) || "current") === "renamed") return "flow-renamed";
       return "flow-active";
     };
     const seq = [
@@ -848,45 +905,10 @@
           (when ? `<span class="rel-when">${escapeHtml(shortYear(when))}</span>` : "") +
           `<span class="rel-arrow" aria-hidden="true">↗</span>` +
         `</span>` +
-        (x.what ? `<span class="rel-what">${escapeHtml(x.what)}</span>` : "") +
+        (whatNote(x) ? `<span class="rel-what">${escapeHtml(whatNote(x))}</span>` : "") +
       `</a>`;
     }).join("");
     return `<div class="rel-group"><span class="rel-label">${escapeHtml(label)}${plural}</span><div class="rel-items">${rows}</div></div>`;
-  }
-
-  // Classified reference links. The canonical `source` is the official link; the
-  // optional `links` array adds more, each tagged official / community / internet.
-  const REF_ORDER = { official: 0, community: 1, internet: 2 };
-  const REF_KINDS = { official: "Doc", community: "Blog", internet: "Other" };
-  function refLinks(d) {
-    const out = [];
-    if (d.source) out.push({ url: d.source, kind: "official", label: "" });
-    if (Array.isArray(d.links)) {
-      for (const l of d.links) {
-        if (l && typeof l.url === "string" && REF_KINDS[l.kind]) {
-          out.push({ url: l.url, kind: l.kind, label: typeof l.label === "string" ? l.label : "" });
-        }
-      }
-    }
-    return out;
-  }
-  function hostOf(url) {
-    try { return new URL(url).hostname.replace(/^www\./, ""); } catch (e) { return ""; }
-  }
-  function refsSection(d) {
-    const links = refLinks(d);
-    if (!links.length) return "";
-    links.sort((a, b) => (REF_ORDER[a.kind] ?? 9) - (REF_ORDER[b.kind] ?? 9));
-    const chips = links.map((l) => {
-      // The link text is just its kind now; the source (label or domain) rides in a
-      // styled tooltip on hover/focus, so the chips stay compact.
-      const src = l.label || hostOf(l.url) || REF_KINDS[l.kind];
-      return `<a class="ref-chip ref-${escapeAttr(l.kind)}" href="${escapeAttr(l.url)}" target="_blank" rel="noopener" ` +
-        `data-tip="${escapeAttr(src)}" aria-label="${escapeAttr(REF_KINDS[l.kind])} - ${escapeAttr(src)}">` +
-        `<span class="ref-dot" aria-hidden="true"></span>` +
-        `<span class="ref-kind">${escapeHtml(REF_KINDS[l.kind])}</span></a>`;
-    }).join("");
-    return `<div class="row-refs"><div class="ref-chips">${chips}</div></div>`;
   }
 
   // The AI-guess button. No fake odds - just an invitation to have the "AI" make up
@@ -947,7 +969,7 @@
   // that points forward - not one that mislabels the old name as the current one.
   function renameTrail(d, q) {
     const name = d.name || d.id;
-    const renamed = (d.status || "current") === "renamed";
+    const renamed = (statusValue(d) || "current") === "renamed";
     const current = renamed ? currentNameOf(d) : "";
     // Only treat it as "former" for copy purposes when we actually know the name
     // it became; otherwise fall back to the plain current-name correction.
@@ -1437,7 +1459,7 @@
     return DATA.filter((d) => {
       const k = kindOf(d);
       // a former name whose current name is knowable, or a deprecation with a successor
-      if (k === "rename") return (d.status === "renamed") && !currentNameOf(d).startsWith("(");
+      if (k === "rename") return (statusValue(d) === "renamed") && !currentNameOf(d).startsWith("(");
       if (k === "deprecation") return !currentNameOf(d).startsWith("(");
       return false;
     });
@@ -1670,7 +1692,7 @@
           `<span class="old">${escapeHtml(quizPrompt(entry))}</span>` +
           `<span class="arw">→</span>` +
           `<span class="new">${escapeHtml(answer)}</span></p>` +
-          `<p class="quiz-expl">${verdict} ${escapeHtml(entry.what || "")}</p>` +
+          `<p class="quiz-expl">${verdict} ${escapeHtml(whatNote(entry))}</p>` +
           `<div class="quiz-actions">` +
           `<a class="quiz-see" href="${escapeAttr(entryURL(entry.id))}" target="_blank" rel="noopener">see the entry ↗</a>` +
           `<button class="quiz-next">${done ? "See results" : "Next →"}</button>` +
@@ -1957,7 +1979,7 @@
   // `aliases`, newest-first, so aliases[0] is the immediately-previous name.
   function formerNameOf(d) {
     if (kindOf(d) !== "rename") return "";
-    if ((d.status || "current") === "renamed") return d.name || "";
+    if ((statusValue(d) || "current") === "renamed") return d.name || "";
     return (d.aliases && d.aliases[0]) || "";
   }
 
@@ -1965,20 +1987,21 @@
   function cardBlurb(d, shareLink) {
     const kind = kindOf(d);
     const link = shareLink || entryURL(d.id);
-    const factLine = d.fact ? `\n💡 ${d.fact}` : "";
+    const fn = factNote(d);
+    const factLine = fn ? `\n💡 ${fn}` : "";
     if (kind === "feature") {
-      return `🧱 "${d.name}" - new in Databricks (${dateOf(d.introducedAt) || "?"}).\n${d.what || ""}${factLine}\n${link}`;
+      return `🧱 "${d.name}" - new in Databricks (${dateOf(d.introducedAt) || "?"}).\n${whatNote(d)}${factLine}\n${link}`;
     }
     if (kind === "deprecation") {
       const now = currentNameOf(d);
       const successor = now.startsWith("(") ? "retired, no direct replacement" : `use "${now}" now`;
-      return `🧱 "${d.name}" is deprecated - ${successor}.\n${d.what || ""}${factLine}\n${link}`;
+      return `🧱 "${d.name}" is deprecated - ${successor}.\n${whatNote(d)}${factLine}\n${link}`;
     }
     // rename card
-    if ((d.status || "current") === "renamed") {
-      return `🧱 It's not called "${d.name}" anymore - it's "${currentNameOf(d)}" now.\n${d.what || ""}${factLine}\n${link}`;
+    if ((statusValue(d) || "current") === "renamed") {
+      return `🧱 It's not called "${d.name}" anymore - it's "${currentNameOf(d)}" now.\n${whatNote(d)}${factLine}\n${link}`;
     }
-    return `🧱 "${d.name}" - the current Databricks name (since ${dateOf(d.from) || "?"}).\n${d.what || ""}${factLine}\n${link}`;
+    return `🧱 "${d.name}" - the current Databricks name (since ${dateOf(d.from) || "?"}).\n${whatNote(d)}${factLine}\n${link}`;
   }
 
   // Share a single entry on LinkedIn. Mirrors the quiz share: copy the blurb to the
@@ -2238,7 +2261,7 @@
       d.abbr,           // rename cards
       d.replacement,    // deprecations without a successor card
       d.category,
-      d.what,
+      whatNote(d),
       ...(d.aliases || []),
     ]
       .filter(Boolean)
@@ -2258,7 +2281,7 @@
     const k = kindOf(d);
     if (k === "feature") return dateOf(d.introducedAt) || "";
     if (k === "deprecation") return dateOf(d.deprecatedAt) || dateOf(d.removedAt) || "";
-    return (d.status || "current") === "renamed"
+    return (statusValue(d) || "current") === "renamed"
       ? (dateOf(d.to) || dateOf(d.from) || "")
       : (dateOf(d.from) || dateOf(d.to) || "");
   }
@@ -2269,7 +2292,7 @@
   // `introducedAt`; a rename tip carries `from`. deprecated/legacy/retired => deprecation;
   // renamed => rename; active => feature if it has introducedAt, else a rename (current tip).
   function kindOf(d) {
-    const s = d.status;
+    const s = statusValue(d);
     if (s === "deprecated" || s === "legacy" || s === "retired") return "deprecation";
     if (s === "renamed") return "rename";
     return d.introducedAt ? "feature" : "rename";
@@ -2284,7 +2307,7 @@
     const k = kindOf(d);
     if (k === "deprecation") return "deprecation";
     if (k === "feature") return "current";
-    return (d.status || "current") === "renamed" ? "renamed" : "current";
+    return (statusValue(d) || "current") === "renamed" ? "renamed" : "current";
   }
 
   // Mixed-precision dates ("2025" vs "2025-06") don't compare lexicographically -
