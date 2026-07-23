@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Subscribe via RSS | REbricked</title>
+  <meta name="description"
+    content="Subscribe to the REbricked RSS feed and get every Databricks rename, deprecation, and new feature in your reader - sourced, dated, newest first." />
+  <link rel="canonical" href="https://rebricked.org/subscribe/" />
+  <link rel="alternate" type="application/rss+xml"
+    title="REbricked - Databricks renames, deprecations & new features" href="/feed.xml" />
+  <meta name="robots" content="index, follow" />
+  <meta name="theme-color" content="#0E1116" media="(prefers-color-scheme: dark)" />
+  <meta name="theme-color" content="#F7F8FA" media="(prefers-color-scheme: light)" />
+
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="REbricked" />
+  <meta property="og:title" content="Subscribe via RSS | REbricked" />
+  <meta property="og:description"
+    content="Every Databricks rename, deprecation, and new feature in your reader - sourced, dated, newest first." />
+  <meta property="og:url" content="https://rebricked.org/subscribe/" />
+  <meta property="og:image" content="https://rebricked.org/assets/social-preview.png" />
+
+  <link rel="stylesheet" href="../styles.css" />
+  <script>
+    (function () {
+      try {
+        var t = localStorage.getItem("rebricked-theme");
+        document.documentElement.dataset.theme = t || "dark";
+      } catch (e) { document.documentElement.dataset.theme = "dark"; }
+    })();
+  </script>
+  <link rel="icon" href="/assets/favicon.ico" sizes="any" />
+  <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon-16.png" />
+  <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png" />
+  <link rel="manifest" href="/site.webmanifest" />
+
+  <style>
+    .sub-doc {
+      max-width: 780px;
+      margin: 0 auto;
+      padding: 8px 4px 48px;
+    }
+
+    .entry-crumbs {
+      font-size: 12px;
+      color: var(--muted);
+      margin: 0 0 18px;
+    }
+
+    .entry-crumbs a {
+      color: inherit;
+    }
+
+    .sub-hero {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin: 6px 0 10px;
+    }
+
+    .sub-rss-mark {
+      flex: 0 0 auto;
+      width: 46px;
+      height: 46px;
+      display: grid;
+      place-items: center;
+      border-radius: 11px;
+      background: var(--accent);
+      color: #fff;
+    }
+
+    .sub-doc h1 {
+      font-size: 30px;
+      line-height: 1.15;
+      margin: 0;
+    }
+
+    .sub-lead {
+      font-size: 16px;
+      color: var(--muted);
+      line-height: 1.55;
+      margin: 0 0 30px;
+    }
+
+    .sub-section-label {
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: .12em;
+      color: var(--muted);
+      margin: 32px 0 12px;
+    }
+
+    /* Feed URL + copy */
+    .sub-url {
+      display: flex;
+      align-items: stretch;
+      gap: 8px;
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      padding: 6px 6px 6px 14px;
+    }
+
+    .sub-url code {
+      flex: 1;
+      min-width: 0;
+      display: flex;
+      align-items: center;
+      font-family: var(--mono, ui-monospace, SFMono-Regular, Menlo, monospace);
+      font-size: 14px;
+      color: var(--ink);
+      overflow-x: auto;
+      white-space: nowrap;
+    }
+
+    .sub-copy {
+      flex: 0 0 auto;
+      border: 0;
+      border-radius: 7px;
+      background: var(--accent);
+      color: #fff;
+      font-family: inherit;
+      font-size: 13px;
+      font-weight: 600;
+      padding: 0 16px;
+      cursor: pointer;
+      transition: opacity .15s;
+    }
+
+    .sub-copy:hover {
+      opacity: .88;
+    }
+
+    .sub-copy.copied {
+      background: #2E7D32;
+    }
+
+    /* Reader grid */
+    .sub-readers {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 10px;
+    }
+
+    .sub-reader {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 13px 14px;
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      background: var(--panel);
+      color: var(--ink);
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 500;
+      transition: border-color .15s, transform .1s;
+    }
+
+    .sub-reader:hover {
+      border-color: var(--accent);
+      transform: translateY(-1px);
+    }
+
+    .sub-reader .sub-reader-mark {
+      flex: 0 0 auto;
+      width: 28px;
+      height: 28px;
+      display: grid;
+      place-items: center;
+      border-radius: 7px;
+      background: var(--bg);
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--muted);
+    }
+
+    .sub-reader small {
+      display: block;
+      font-size: 11.5px;
+      font-weight: 400;
+      color: var(--muted);
+    }
+
+    .sub-what {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .sub-what li {
+      position: relative;
+      padding: 0 0 0 22px;
+      margin: 0 0 10px;
+      font-size: 15px;
+      line-height: 1.55;
+    }
+
+    .sub-what li::before {
+      content: "";
+      position: absolute;
+      left: 2px;
+      top: 8px;
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--accent);
+    }
+
+    .sub-back {
+      display: inline-block;
+      margin-top: 34px;
+      font-size: 14px;
+      color: var(--muted);
+      text-decoration: none;
+    }
+
+    .sub-back:hover {
+      color: var(--ink);
+    }
+
+    @media (max-width: 560px) {
+      .sub-doc h1 { font-size: 24px; }
+      .sub-url { flex-direction: column; }
+      .sub-copy { padding: 10px; }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="app">
+    <div class="main">
+      <div class="content">
+        <div class="sub-doc">
+          <nav class="entry-crumbs" aria-label="Breadcrumb">
+            <a href="../">REbricked</a> <span aria-hidden="true">/</span> Subscribe
+          </nav>
+
+          <div class="sub-hero">
+            <span class="sub-rss-mark" aria-hidden="true">
+              <svg viewBox="0 0 24 24" width="26" height="26">
+                <path fill="currentColor"
+                  d="M6.18 15.64a2.18 2.18 0 0 1 2.18 2.18A2.18 2.18 0 0 1 6.18 20 2.18 2.18 0 0 1 4 17.82a2.18 2.18 0 0 1 2.18-2.18M4 4.44A15.56 15.56 0 0 1 19.56 20h-2.83A12.73 12.73 0 0 0 4 7.27V4.44m0 5.66a9.9 9.9 0 0 1 9.9 9.9H11.07A7.07 7.07 0 0 0 4 12.93V10.1Z" />
+              </svg>
+            </span>
+            <h1>Subscribe via RSS</h1>
+          </div>
+
+          <p class="sub-lead">Track every Databricks rename, deprecation, and new feature from your own reader -
+            sourced, dated, and newest first. No account, no email, no tracking. One item per change.</p>
+
+          <p class="sub-section-label">Feed URL</p>
+          <div class="sub-url">
+            <code id="feed-url">https://rebricked.org/feed.xml</code>
+            <button class="sub-copy" id="copy-btn" type="button" aria-label="Copy feed URL">Copy</button>
+          </div>
+
+          <p class="sub-section-label">Add to your reader in one click</p>
+          <div class="sub-readers">
+            <a class="sub-reader" href="https://feedly.com/i/subscription/feed/https%3A%2F%2Frebricked.org%2Ffeed.xml"
+              target="_blank" rel="noopener">
+              <span class="sub-reader-mark">Fl</span>
+              <span>Feedly<small>Open in Feedly</small></span>
+            </a>
+            <a class="sub-reader"
+              href="https://www.inoreader.com/?add_feed=https%3A%2F%2Frebricked.org%2Ffeed.xml" target="_blank"
+              rel="noopener">
+              <span class="sub-reader-mark">In</span>
+              <span>Inoreader<small>Open in Inoreader</small></span>
+            </a>
+            <a class="sub-reader" href="https://www.newsblur.com/?url=https%3A%2F%2Frebricked.org%2Ffeed.xml"
+              target="_blank" rel="noopener">
+              <span class="sub-reader-mark">Nb</span>
+              <span>NewsBlur<small>Open in NewsBlur</small></span>
+            </a>
+            <a class="sub-reader"
+              href="https://theoldreader.com/feeds/subscribe?url=https%3A%2F%2Frebricked.org%2Ffeed.xml"
+              target="_blank" rel="noopener">
+              <span class="sub-reader-mark">Or</span>
+              <span>The Old Reader<small>Open in The Old Reader</small></span>
+            </a>
+            <a class="sub-reader" href="https://feedbin.com/?subscribe=https%3A%2F%2Frebricked.org%2Ffeed.xml"
+              target="_blank" rel="noopener">
+              <span class="sub-reader-mark">Fb</span>
+              <span>Feedbin<small>Open in Feedbin</small></span>
+            </a>
+            <a class="sub-reader" href="/feed.xml">
+              <span class="sub-reader-mark">{ }</span>
+              <span>Raw feed<small>View the XML</small></span>
+            </a>
+          </div>
+
+          <p class="sub-section-label">What lands in your reader</p>
+          <ul class="sub-what">
+            <li>Renames - the old name, the new name, and the month it changed.</li>
+            <li>Deprecations - what is being retired and its replacement.</li>
+            <li>New features - what Databricks has newly shipped.</li>
+            <li>Every item links straight to its sourced, dated entry on REbricked.</li>
+          </ul>
+
+          <p class="sub-section-label">Using another app?</p>
+          <p style="font-size:15px;line-height:1.6;color:var(--muted);margin:0;">Most readers - Apple News,
+            NetNewsWire, Reeder, Thunderbird, Vivaldi - just want the feed URL above. Copy it and paste it into
+            your reader's "add feed" box.</p>
+
+          <a class="sub-back" href="../">&larr; Back to REbricked</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    (function () {
+      var btn = document.getElementById("copy-btn");
+      var url = document.getElementById("feed-url").textContent.trim();
+      btn.addEventListener("click", function () {
+        navigator.clipboard.writeText(url).then(function () {
+          btn.textContent = "Copied";
+          btn.classList.add("copied");
+          setTimeout(function () {
+            btn.textContent = "Copy";
+            btn.classList.remove("copied");
+          }, 1600);
+        });
+      });
+    })();
+  </script>
+</body>
+
+</html>
