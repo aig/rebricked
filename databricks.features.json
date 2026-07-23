@@ -1281,7 +1281,7 @@
     "releases": [
       { "type": "beta", "date": "2026-06", "link": "https://docs.databricks.com/aws/en/release-notes/product/2026/june#:~:text=Lakehouse%20Real%2DTime%20%28Lakehouse%2F%2FRT%29%20is%20now%20in%20Beta." }
     ],
-    "occasion": { "date": "2026-06", "link": "https://docs.databricks.com/aws/en/release-notes/product/2026/june#:~:text=Lakehouse%20Real%2DTime%20%28Lakehouse%2F%2FRT%29%20is%20now%20in%20Beta.", "note": "Announced June 30, 2026" },
+    "occasion": { "date": "2026-06", "link": "https://www.databricks.com/blog/introducing-lakehousert-real-time-performance-unified-lakehouse#:~:text=real%2Dtime%20data%20warehouse%20designed%20for%20operational%20analytics", "note": "Announced June 16, 2026" },
     "prediction": ["Genie Real-Time", "Lakehouse//RT One", "Unity Real-Time"],
     "source": "https://docs.databricks.com/aws/en/compute/sql-warehouse/real-time",
     "links": [

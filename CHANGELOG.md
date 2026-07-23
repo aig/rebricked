@@ -17,8 +17,11 @@ Format loosely follows [Keep a Changelog](https://keepachangelog.com/); dates ar
   - **databricks-apps**: `introducedAt` `2024-11` -> `2024-10` (Public Preview October 8, 2024);
     `occasion.note` clarified that June 11, 2025 is the GA *blog announcement* while GA per release
     notes was May 13, 2025; `fact` "June 2025 GA" softened to "2025 GA".
-  - **lakehouse-real-time**: `occasion.note` "Announced June 16, 2026" -> "Announced June 30,
-    2026" (the June 2026 release-notes date).
+  - **lakehouse-real-time**: `occasion` was mismatched - the note said "Announced June 16, 2026"
+    but the link pointed at the release-notes page (which stages the Beta on June 30, 2026).
+    Repointed `occasion` at the June 16, 2026 launch blog ("Introducing Lakehouse//RT"), which is
+    the actual announcement; the June 30 release-notes date remains the source for
+    `introducedAt`/`releases` (Beta).
   - Re-verified and left unchanged (flag was a text-fragment gap, not a data error):
     **legacy-databricks-cli** (`deprecatedAt 2023` is the house-convention legacy-onset marker -
     docs confirm no formal deprecation date exists), **databricks-cli** ("(v0.205+)" is the docs'
