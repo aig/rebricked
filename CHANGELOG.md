@@ -3,7 +3,33 @@
 All notable changes to **rebricked**, grouped by day.
 Format loosely follows [Keep a Changelog](https://keepachangelog.com/); dates are `YYYY-MM-DD`.
 
-## 2026-07-23 (generated pages: fix renamed-entry rendering)
+## 2026-07-23 (deep-link date/status/release confirmation links)
+
+### Changed
+- **`databricks.features.json`**: extended the text-fragment treatment to the confirmation links
+  on the date/lifecycle fields - `from`, `to`, `introducedAt`, `deprecatedAt`, `removedAt`,
+  `occasion`, `status`, and each `releases[]` stage. 297 of 350 such links now carry a
+  `#:~:text=` fragment landing on the on-page sentence that confirms that specific
+  date/rename/GA/deprecation event (e.g. a `status: renamed` link highlights the rename
+  sentence; a `releases` GA stage highlights the "now generally available" line). The remaining
+  53 were left as plain page links because the cited page does not state that date/event
+  verbatim (many are legacy pages with no formal deprecation date, or big release-notes pages
+  that don't name the product). Fragments are copied word-for-word from the live docs; edits are
+  scoped per-entry so shared URLs across entries get entry-specific highlights. Only link URL
+  suffixes changed - no dates, ids, or formatting.
+
+## 2026-07-23 (deep-link every note to its exact source passage)
+
+### Changed
+- **`databricks.features.json`**: upgraded 288 of 291 note links (`what`, `fact`, `limitations`)
+  from whole-page URLs to scroll-to-highlight **text fragments** (`#:~:text=`). Each entry's
+  cited page was fetched and a short, verbatim on-page phrase supporting that specific note was
+  appended so the link lands the reader on the exact sentence/heading rather than the page top.
+  Snippets are copied word-for-word from the live doc (Databricks / Microsoft Learn), so the
+  browser highlight matches; commas and hyphens are percent-encoded (they are structural in the
+  `:~:text=` syntax). 3 notes were left as plain page links because their pages carry no verbatim
+  supporting text (both ODBC-driver `what` descriptions, one AI/BI dashboards fact). No entry
+  content, ids, or formatting changed - only the fragment suffix on link URLs.
 
 ### Fixed
 - **`scripts/build_entries.py`**: after `status` became a `{ value, link, date }` object, `meta_for`
