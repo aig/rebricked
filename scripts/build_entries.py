@@ -14,7 +14,8 @@ HTML the crawlers can index:
 
 The vendor segment future-proofs the URL scheme: today everything is `databricks`, but an
 entry may carry a `vendor` field and new vendors slot in as new top-level namespaces
-(/snowflake/..., /aws/...) with no structural change. It also (re)writes sitemap.xml.
+(/snowflake/..., /aws/...) with no structural change. It also (re)writes sitemap.xml and
+feed.xml (an RSS 2.0 feed of every entry, newest tracked change first).
 
 The visible chrome (sidebar rail + topbar) is reused verbatim from build_badges.py, with its
 root-relative `../../` rewritten to match each page's depth.
@@ -26,6 +27,7 @@ import html
 import json
 import re
 import shutil
+from datetime import datetime, timezone
 from pathlib import Path
 
 # Reuse the exact app chrome + constants the badge pages use.
@@ -40,6 +42,7 @@ from build_badges import (
 ROOT = Path(__file__).resolve().parent.parent
 DATA = ROOT / "databricks.features.json"
 SITEMAP = ROOT / "sitemap.xml"
+FEED = ROOT / "feed.xml"
 TOTAL_BADGES = 5
 
 DEFAULT_VENDOR = "databricks"
@@ -493,6 +496,7 @@ HEAD = """<!DOCTYPE html>
   <title>{title}</title>
   <meta name="description" content="{desc}" />
   <link rel="canonical" href="{url}" />
+  <link rel="alternate" type="application/rss+xml" title="REbricked - Databricks renames, deprecations &amp; new features" href="/feed.xml" />
   <meta name="robots" content="index, follow, max-image-preview:large" />
   <meta property="og:type" content="{og_type}" />
   <meta property="og:site_name" content="REbricked" />
@@ -781,6 +785,109 @@ def write_sitemap(data):
     return vendors
 
 
+FEED_TITLE = "REbricked - Databricks renames, deprecations & new features"
+FEED_DESC = (
+    "Databricks product and feature renames, deprecations, and new features - "
+    "sourced and dated. One item per tracked change, newest first."
+)
+_WDAYS = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"]
+_MONS = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
+
+
+def parse_date(s):
+    """'YYYY' | 'YYYY-MM' | 'YYYY-MM-DD' -> a UTC datetime (missing parts default to 1);
+    None for anything unrecognised."""
+    s = str(s or "").strip()
+    m = re.match(r"^(\d{4})(?:-(\d{1,2}))?(?:-(\d{1,2}))?$", s)
+    if not m:
+        return None
+    y, mo, da = int(m.group(1)), int(m.group(2) or 1), int(m.group(3) or 1)
+    if not (1 <= mo <= 12 and 1 <= da <= 31):
+        return None
+    try:
+        return datetime(y, mo, da, tzinfo=timezone.utc)
+    except ValueError:
+        return None
+
+
+def rfc822(dt):
+    """RFC-822 date string, locale-independent (RSS pubDate format)."""
+    return (
+        f"{_WDAYS[dt.weekday()]}, {dt.day:02d} {_MONS[dt.month - 1]} {dt.year} "
+        f"{dt.hour:02d}:{dt.minute:02d}:{dt.second:02d} +0000"
+    )
+
+
+def feed_date(d):
+    """The date a tracked change happened, by kind - the item's pubDate.
+    Falls back through related dates, then to `verified`."""
+    kind = kind_of(d)
+    if kind == "feature":
+        cands = [d.get("introducedAt"), d.get("from")]
+    elif kind == "deprecation":
+        cands = [d.get("removedAt"), d.get("deprecatedAt"), d.get("to")]
+    elif (d.get("status") or "") == "renamed":
+        cands = [d.get("to"), d.get("from")]
+    else:  # current name of a rename chain
+        cands = [d.get("from"), d.get("to")]
+    cands.append(d.get("verified"))
+    for c in cands:
+        dt = parse_date(date_of(c))
+        if dt:
+            return dt
+    return None
+
+
+def write_feed(data, by_id):
+    """RSS 2.0 feed of every entry, newest tracked change first."""
+    items = []
+    for d in data:
+        dt = feed_date(d)
+        if dt is None:
+            continue
+        items.append((dt, d))
+    # Newest first; stable tie-break on id keeps output deterministic.
+    items.sort(key=lambda t: (t[0], t[1]["id"]), reverse=True)
+
+    built = rfc822(datetime.now(timezone.utc))
+    body = []
+    for dt, d in items:
+        url = f"{BASE_URL}/{vendor_of(d)}/{d['id']}/"
+        title, desc, kicker, _lead = meta_for(d, by_id, data)
+        # meta_for's title carries a " | REbricked" suffix meant for <title>; the feed
+        # prefixes the change kind instead, which reads better in a reader's item list.
+        # "Current name" (the active tip of a rename chain) reads as "New name" in a feed.
+        tag = "New name" if kicker == "Current name" else kicker
+        item_title = f"[{tag}] {d['name']}"
+        body.append(
+            "    <item>\n"
+            f"      <title>{esc(item_title)}</title>\n"
+            f"      <link>{esc(url)}</link>\n"
+            f'      <guid isPermaLink="true">{esc(url)}</guid>\n'
+            f"      <category>{esc(d.get('category', ''))}</category>\n"
+            f"      <pubDate>{rfc822(dt)}</pubDate>\n"
+            f"      <description>{esc(desc)}</description>\n"
+            "    </item>"
+        )
+
+    FEED.write_text(
+        '<?xml version="1.0" encoding="UTF-8"?>\n'
+        '<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">\n'
+        "  <channel>\n"
+        f"    <title>{esc(FEED_TITLE)}</title>\n"
+        f"    <link>{BASE_URL}/</link>\n"
+        f"    <description>{esc(FEED_DESC)}</description>\n"
+        "    <language>en</language>\n"
+        f"    <lastBuildDate>{built}</lastBuildDate>\n"
+        f'    <atom:link href="{BASE_URL}/feed.xml" rel="self" type="application/rss+xml" />\n'
+        f"{chr(10).join(body)}\n"
+        "  </channel>\n"
+        "</rss>\n",
+        encoding="utf-8",
+    )
+    return len(items)
+
+
 def main():
     data = json.loads(DATA.read_text(encoding="utf-8"))
     by_id = {d["id"]: d for d in data}
@@ -806,10 +913,12 @@ def main():
             )
 
     vendors = write_sitemap(data)
+    feed_items = write_feed(data, by_id)
     total = len(data) + len(vendors) + TOTAL_BADGES + 2
     print(
         f"OK: wrote {len(data)} entry pages across {len(vendors)} vendor hub(s) "
-        f"({', '.join(vendors)}); sitemap.xml has {total} URLs."
+        f"({', '.join(vendors)}); sitemap.xml has {total} URLs; "
+        f"feed.xml has {feed_items} items."
     )
 
 
