@@ -384,7 +384,7 @@ body {
   gap: 10px;
   flex: 1;
   min-width: 0;
-  max-width: 620px;
+  max-width: 522px;
   background: var(--bg);
   border: 1px solid var(--line);
   border-radius: 8px;
@@ -916,7 +916,7 @@ body {
    is needed here anymore. */
 
 /* first block inside a body shouldn't add extra top margin under the chain header */
-.fam-body > .row-what:first-child {
+.fam-body>.row-what:first-child {
   margin-top: 0;
 }
 
@@ -1393,8 +1393,7 @@ body {
 /* a stage that was skipped / never reached: hatched, no color */
 .rel-step-seg.is-skip {
   border: 1px solid var(--line);
-  background: repeating-linear-gradient(
-      45deg,
+  background: repeating-linear-gradient(45deg,
       color-mix(in srgb, var(--faint) 30%, transparent),
       color-mix(in srgb, var(--faint) 30%, transparent) 3px,
       transparent 3px,
