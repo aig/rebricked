@@ -573,8 +573,22 @@
       : "";
     return {
       spine,
-      html: `<p class="row-what">${escapeHtml(d.what || "")}</p>${meta}${fact}${note}${foot}`,
+      html: `<p class="row-what">${escapeHtml(d.what || "")}</p>${meta}${fact}${note}${limitationsHTML(d)}${foot}`,
     };
+  }
+
+  // Documented limitations, sourced: a single { note, link, date } - a short summary of the
+  // feature's caveats, the official page it came from, and the date it was fetched (shown in
+  // the source link's tooltip). Entries with no documented limitations carry no field and
+  // render nothing.
+  function limitationsHTML(d) {
+    const lim = d.limitations;
+    if (!lim || typeof lim !== "object" || !lim.note) return "";
+    const link = lim.link ? String(lim.link) : "";
+    const when = lim.date ? `Limitations - official docs, checked ${lim.date}` : "Limitations - official docs";
+    const src = link ? ` ${srcLink("", link, when)}` : "";
+    return `<p class="row-limitations"><span class="lim-icon" aria-hidden="true">⚠</span> ` +
+      `<span><span class="lim-label">Limitations:</span> ${escapeHtml(lim.note)}${src}</span></p>`;
   }
 
   // A whole lineage family collapsed into ONE card. Its names read as an inline flow chain

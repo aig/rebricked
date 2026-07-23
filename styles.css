@@ -1629,6 +1629,26 @@ a.badge-release-link {
   font-style: normal;
 }
 
+/* documented limitations: a sourced caveat line, amber-keyed to read as "watch out" */
+.row-limitations {
+  margin: 12px 0 0;
+  font-size: 12.5px;
+  color: var(--muted);
+  display: flex;
+  gap: 8px;
+  align-items: baseline;
+}
+
+.row-limitations .lim-icon {
+  flex: none;
+  color: var(--c-deprecated);
+}
+
+.row-limitations .lim-label {
+  font-weight: 600;
+  color: var(--c-deprecated-ink);
+}
+
 /* lineage chain: the rename history as one scannable line - predecessors → this card
    → successors. Replaces the mini-cards that repeated the description verbatim. */
 .lineage-chain {

@@ -308,6 +308,31 @@ def main():
                 if "note" in occ and not isinstance(occ.get("note"), str):
                     err(eid, "occasion.note must be a string")
 
+        # limitations (optional, any entry): a single { note, link, date } - a short summary
+        # of the feature's documented limitations, the official page it came from, and the
+        # date it was fetched. Sourced like everything else; omit it (don't invent one) when
+        # the official docs list no limitations.
+        lim = entry.get("limitations")
+        if lim is not None:
+            if not isinstance(lim, dict):
+                err(eid, "limitations must be an object { note, link, date }")
+            else:
+                lnote = lim.get("note")
+                if not (isinstance(lnote, str) and lnote.strip()):
+                    err(eid, "limitations.note must be a non-empty string")
+                llink = lim.get("link")
+                if not (isinstance(llink, str) and URL_RE.match(llink)):
+                    err(eid, f"limitations.link must be an http(s) URL, got {llink!r}")
+                ldate = lim.get("date")
+                if not (ldate and VERIFIED_RE.match(str(ldate))):
+                    err(eid, f"limitations.date must be YYYY-MM-DD (when fetched), got {ldate!r}")
+                else:
+                    try:
+                        if datetime.date.fromisoformat(str(ldate)) > datetime.date.today():
+                            err(eid, f"limitations.date {ldate!r} is in the future")
+                    except ValueError:
+                        err(eid, f"limitations.date is not a real date: {ldate!r}")
+
         # aliases shape (optional field)
         if "aliases" in entry and not isinstance(entry["aliases"], list):
             err(eid, "aliases must be an array")

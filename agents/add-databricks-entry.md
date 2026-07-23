@@ -222,6 +222,12 @@ Rules that apply to every entry:
 - `prediction` (renames and features only, optional) is the one deliberately fictional
   field: a non-empty array of deadpan-plausible made-up *next* names. Everything else
   stays sourced and real.
+- `limitations` (optional, any entry) is a single `{ note, link, date }`: a short summary of the
+  feature's officially documented limitations, the official docs page it came from, and the date
+  you fetched it (`date` is `YYYY-MM-DD`). Look it up on the feature's official page; write a
+  concise `note` (hyphens, no em dashes) and cite the exact URL. **Omit the field entirely when
+  the docs list no limitations - never invent one.** Held to the same real-and-sourced bar as
+  every other claim.
 
 ## Step 5 - Wire it into the sidebar
 

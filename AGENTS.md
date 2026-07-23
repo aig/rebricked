@@ -89,6 +89,10 @@ id, never re-slugged. Dates are `YYYY` or `YYYY-MM`; `verified` is `YYYY-MM-DD`;
   classifies the *link*, unrelated to the entry's `status`.) `source` stays the canonical
   official link; these are additional and every URL must be real and verified.
 - `successorId` (optional, any entry): id of the card this became / was replaced by.
+- `limitations` (optional, any entry): a single `{ note, link, date }` - a short summary of the
+  feature's officially documented limitations, the official page it came from, and the date you
+  fetched it (`date` is `YYYY-MM-DD`). Sourced like everything else; **omit it (never invent one)
+  when the docs list no limitations.** Rendered as a "Limitations" line on the card.
 - `prediction` is the one deliberately fictional field: an **array** of made-up *next*
   names (funny but plausible). Renames/features only (not deprecations); the UI always
   labels them invented.

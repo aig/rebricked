@@ -38,6 +38,19 @@ Format loosely follows [Keep a Changelog](https://keepachangelog.com/); dates ar
   2026-03, AI / ML). Wired into `app.js` `NAV` (Workspace, Catalog, Compute, Discover, Jobs &
   Pipelines, AI/ML Features). `python scripts/validate.py`: 89 entries valid.
 
+### Added
+- **`limitations` field: a sourced `{ note, link, date }`** on any entry - a short summary of a
+  feature's officially documented limitations, the docs page it came from, and the date fetched.
+  Plumbing: `validate.py` validates the shape (note non-empty, link an http(s) URL, date a real
+  non-future `YYYY-MM-DD`); `app.js` renders a "Limitations" line on the card (`limitationsHTML`,
+  `.row-limitations` styles, amber-keyed); documented in `AGENTS.md` and the add-entry skill.
+- **Populated limitations for 12 features** (subset), each looked up on its official Databricks
+  docs page and fetched 2026-07-23: AI Runtime, Secrets in Unity Catalog, Lakehouse Replay,
+  Lakebridge Agentic Converter, Mission Critical, SecureConnect, Discover, Standalone pipelines,
+  Databricks Apps, Managed Iceberg materialized views, Declarative Feature Engineering, and Genie
+  Agents. AI Gateway and Lakebase were checked but their docs list no limitations, so the field
+  was omitted rather than invented.
+
 ## 2026-07-22 (Agent Bricks + status/release model rework)
 
 ### Changed
