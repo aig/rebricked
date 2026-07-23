@@ -888,7 +888,7 @@
     const preds = Array.isArray(d.prediction) ? d.prediction.filter(Boolean) : [];
     if (!preds.length) return "";
     const start = hashStr(d.id + "p") % preds.length;
-    return `<button class="odds-btn" data-preds="${escapeAttr(JSON.stringify(preds))}" data-i="${start}" title="Our AI's best guess at the next rebrand" aria-label="Ask Genie">✨</button>`;
+    return `<button class="odds-btn" data-preds="${escapeAttr(JSON.stringify(preds))}" data-i="${start}" title="Our AI's best guess at the next rebrand" aria-label="Ask Genie">✨ Ask Genie</button>`;
   }
 
   // The AI-guess button reveals a made-up next name: a beat of "thinking", then the
