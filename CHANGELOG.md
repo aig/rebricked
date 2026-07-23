@@ -25,6 +25,18 @@ Format loosely follows [Keep a Changelog](https://keepachangelog.com/); dates ar
   (2026-07). Secrets as governed securables in the three-level namespace
   (`catalog.schema.secret`), distinct from the older workspace-scoped Secrets API. Wired into
   `app.js` `NAV` under Catalog. `python scripts/validate.py`: 81 entries valid.
+- **Eight more Preview/Beta feature entries** (found by scanning the 2026 release notes for
+  marquee, standalone products not yet tracked; connectors and `[adjacent]` sub-features
+  excluded). Public Preview: **Mission Critical** (DR + ESC workspace add-on, 2026-06,
+  Data governance), **SecureConnect** (OpenSharing behind a firewall, 2026-06, Data
+  governance), **Managed Iceberg materialized views** (2026-07, Data engineering). Beta:
+  **Discover** (UC discovery page + business domains, 2026-02, Data governance),
+  **Lakebridge Agentic Converter** (legacy-SQL-to-ANSI migration agent, 2026-07, Developer
+  experience), **Lakehouse Replay** (runtime regression testing, 2026-06, Developer
+  experience), **Standalone pipelines** (serverless general-compute pipelines, ex "DBSQL
+  pipelines", 2026-05, Data engineering), **Declarative Feature Engineering** (Feature Views,
+  2026-03, AI / ML). Wired into `app.js` `NAV` (Workspace, Catalog, Compute, Discover, Jobs &
+  Pipelines, AI/ML Features). `python scripts/validate.py`: 89 entries valid.
 
 ## 2026-07-22 (Agent Bricks + status/release model rework)
 

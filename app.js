@@ -77,12 +77,12 @@
     { label: "", items: [
       { label: "Home", icon: "home", home: true },
       { label: "Learn", icon: "learn" },
-      { label: "Workspace", icon: "workspace", ids: ["git-folders", "databricks-repos", "legacy-databricks-cli", "databricks-cli", "serverless-workspaces", "personal-access-tokens", "oauth-token-federation", "legacy-databricks-connect", "databricks-connect"] },
+      { label: "Workspace", icon: "workspace", ids: ["git-folders", "databricks-repos", "legacy-databricks-cli", "databricks-cli", "serverless-workspaces", "personal-access-tokens", "oauth-token-federation", "legacy-databricks-connect", "databricks-connect", "mission-critical", "lakebridge-agentic-converter"] },
       { label: "Recents", icon: "recents" },
-      { label: "Catalog", icon: "catalog", ids: ["catalog-explorer", "data-explorer", "unity-catalog", "unity-catalog-volumes", "secrets-in-unity-catalog", "dbfs-mounts", "lakehouse-federation", "opensharing", "delta-sharing", "delta-lake", "databricks-delta", "liquid-clustering", "hive-metastore", "attribute-based-access-control", "unity-catalog-managed-iceberg-tables", "databricks-clean-rooms"] },
-      { label: "Jobs & Pipelines", icon: "jobs", ids: ["lakeflow-declarative-pipelines", "delta-live-tables", "lakeflow-jobs", "workflows", "declarative-automation-bundles", "databricks-asset-bundles", "dbx", "lakeflow-pipelines-editor", "multi-file-editor"] },
-      { label: "Compute", icon: "compute", ids: ["lakebase", "ai-runtime", "standard-and-dedicated-access-modes", "shared-single-user-access-modes", "no-isolation-shared-access-mode", "init-scripts-on-dbfs"] },
-      { label: "Discover", icon: "discover" },
+      { label: "Catalog", icon: "catalog", ids: ["catalog-explorer", "data-explorer", "unity-catalog", "unity-catalog-volumes", "secrets-in-unity-catalog", "dbfs-mounts", "lakehouse-federation", "opensharing", "delta-sharing", "secureconnect", "delta-lake", "databricks-delta", "liquid-clustering", "hive-metastore", "attribute-based-access-control", "unity-catalog-managed-iceberg-tables", "managed-iceberg-materialized-views", "databricks-clean-rooms"] },
+      { label: "Jobs & Pipelines", icon: "jobs", ids: ["lakeflow-declarative-pipelines", "delta-live-tables", "lakeflow-jobs", "workflows", "declarative-automation-bundles", "databricks-asset-bundles", "dbx", "lakeflow-pipelines-editor", "multi-file-editor", "standalone-pipelines"] },
+      { label: "Compute", icon: "compute", ids: ["lakebase", "ai-runtime", "lakehouse-replay", "standard-and-dedicated-access-modes", "shared-single-user-access-modes", "no-isolation-shared-access-mode", "init-scripts-on-dbfs"] },
+      { label: "Discover", icon: "discover", ids: ["discover"] },
       { label: "Marketplace", icon: "marketplace" },
       { label: "Apps", icon: "apps", ids: ["databricks-apps"] },
     ]},
@@ -105,7 +105,7 @@
       { label: "Agents", icon: "agents", ids: ["databricks-ai-search", "databricks-vector-search", "mosaic-ai-vector-search", "agent-bricks", "information-extraction", "knowledge-assistant", "classification", "custom-llm", "supervisor-agent", "agent-bricks-multi-agent-supervisor"] },
       { label: "AI Gateway", icon: "gateway", ids: ["ai-gateway"] },
       { label: "Experiments", icon: "experiments" },
-      { label: "Features", icon: "features", ids: ["workspace-feature-store", "feature-engineering-in-unity-catalog"] },
+      { label: "Features", icon: "features", ids: ["workspace-feature-store", "feature-engineering-in-unity-catalog", "declarative-feature-engineering"] },
       { label: "Models", icon: "models", ids: ["workspace-model-registry", "models-in-unity-catalog"] },
       { label: "Serving", icon: "serving", ids: ["model-serving", "serverless-real-time-inference"] },
     ]},
@@ -2105,11 +2105,12 @@
       const n = counts[t];
       const w = Math.round((n / max) * 100);
       const share = total ? Math.round((n / total) * 100) : 0;
-      const label = RELEASE_LABELS[t] || t;
+      const label = RELEASE_LABELS[t] || t;        // full name - tooltip + aria
+      const short = RELEASE_SHORT[t] || label;      // compact axis label (Private / Public / …)
       const tip = `${label} - ${n} of ${total} (${share}%)`;
       // `t` is a trusted constant from RELEASE_ORDER, safe to interpolate into the var name.
       return `<div class="tl-srow" style="--i:${i}" title="${escapeAttr(tip)}">` +
-        `<span class="tl-slabel"><i class="tl-dot" style="background:var(--rel-${t})"></i>${escapeHtml(label)}</span>` +
+        `<span class="tl-slabel"><i class="tl-dot" style="background:var(--rel-${t})"></i>${escapeHtml(short)}</span>` +
         `<span class="tl-strack"><span class="tl-sfill" style="width:${w}%;background:var(--rel-${t});--i:${i}"></span></span>` +
         `<span class="tl-sval">${n}</span></div>`;
     }).join("");

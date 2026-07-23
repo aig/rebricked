@@ -1686,5 +1686,164 @@
       { "url": "https://docs.databricks.com/aws/en/release-notes/product/2026/july", "kind": "official", "label": "Databricks release notes: Secrets in Unity Catalog Public Preview (July 2026)" }
     ],
     "verified": "2026-07-23"
+  },
+  {
+    "id": "mission-critical",
+    "name": "Mission Critical",
+    "aliases": ["Mission Critical add-on"],
+    "category": "Data governance",
+    "what": "A workspace add-on that unlocks managed disaster recovery plus the Enhanced Security and Compliance (ESC) controls for a single compute rate, enabled per workspace from the account console.",
+    "fact": "It bundles managed disaster recovery with the Enhanced Security and Compliance controls into one per-workspace add-on billed at a single compute rate - and it's gated, so you turn it on by talking to your account team from a new Add-ons tab, not with a toggle.",
+    "introducedAt": { "date": "2026-06", "link": "https://docs.databricks.com/aws/en/release-notes/product/2026/june" },
+    "status": "active",
+    "releases": [
+      { "type": "public-preview", "date": "2026-06", "link": "https://docs.databricks.com/aws/en/release-notes/product/2026/june" }
+    ],
+    "note": "Public Preview June 12, 2026. Access is gated - enabled per workspace from the account console's Add-ons tab after your Databricks account team turns it on.",
+    "prediction": ["Lakehouse Assurance", "Mission Critical Pro", "Databricks Resilience"],
+    "source": "https://docs.databricks.com/aws/en/admin/mission-critical",
+    "links": [
+      { "url": "https://docs.databricks.com/aws/en/release-notes/product/2026/june", "kind": "official", "label": "Databricks release notes: Mission Critical add-on Public Preview (June 2026)" }
+    ],
+    "verified": "2026-07-23"
+  },
+  {
+    "id": "secureconnect",
+    "name": "SecureConnect",
+    "aliases": ["OpenSharing SecureConnect"],
+    "category": "Data governance",
+    "what": "An OpenSharing option that lets a provider share data from cloud storage behind a firewall or private endpoint without allowlisting each recipient's network.",
+    "fact": "It lets a provider share data sitting behind a firewall without adding every recipient's network to an allowlist - recipients just use their existing OpenSharing setup - and it works for clean rooms too.",
+    "introducedAt": { "date": "2026-06", "link": "https://docs.databricks.com/aws/en/release-notes/product/2026/june" },
+    "status": "active",
+    "releases": [
+      { "type": "public-preview", "date": "2026-06", "link": "https://docs.databricks.com/aws/en/release-notes/product/2026/june" }
+    ],
+    "note": "Public Preview June 15, 2026, as OpenSharing SecureConnect (OpenSharing is the former Delta Sharing). Also available for clean rooms.",
+    "prediction": ["OpenSharing Private", "Delta SecureShare", "Firewall Sharing"],
+    "source": "https://docs.databricks.com/aws/en/opensharing/secureconnect-provider",
+    "links": [
+      { "url": "https://docs.databricks.com/aws/en/release-notes/product/2026/june", "kind": "official", "label": "Databricks release notes: SecureConnect Public Preview (June 2026)" }
+    ],
+    "verified": "2026-07-23"
+  },
+  {
+    "id": "discover",
+    "name": "Discover",
+    "aliases": ["Discover page", "Business domains"],
+    "category": "Data governance",
+    "what": "A centralized Unity Catalog interface for searching, browsing, and previewing governed data assets, organized into business domains.",
+    "fact": "It's an internal data-marketplace front door to Unity Catalog: search, browse, and preview governed assets grouped into business domains, so consumers find data without spelunking the catalog tree.",
+    "introducedAt": { "date": "2026-02", "link": "https://docs.databricks.com/aws/en/release-notes/product/2026/february" },
+    "status": "active",
+    "releases": [
+      { "type": "beta", "date": "2026-02", "link": "https://docs.databricks.com/aws/en/release-notes/product/2026/february" }
+    ],
+    "note": "Entered Beta February 18, 2026. The Beta introduced the Discover page and business domains for organizing Unity Catalog assets.",
+    "prediction": ["Genie Discover", "Unity Marketplace", "Databricks Atlas"],
+    "source": "https://docs.databricks.com/aws/en/discover/discover-page",
+    "links": [
+      { "url": "https://docs.databricks.com/aws/en/release-notes/product/2026/february", "kind": "official", "label": "Databricks release notes: Discover page and domains Beta (February 2026)" }
+    ],
+    "verified": "2026-07-23"
+  },
+  {
+    "id": "managed-iceberg-materialized-views",
+    "name": "Managed Iceberg materialized views",
+    "aliases": ["Iceberg materialized views"],
+    "category": "Data engineering",
+    "what": "Unity Catalog managed materialized views that are readable by external Apache Iceberg clients.",
+    "fact": "It stretches Unity Catalog's managed Iceberg support from tables to materialized views, so an outside Iceberg reader like Snowflake or Trino can query a Databricks-maintained MV directly - though for now you enable it through your account team.",
+    "introducedAt": { "date": "2026-07", "link": "https://docs.databricks.com/aws/en/release-notes/product/2026/july" },
+    "status": "active",
+    "releases": [
+      { "type": "public-preview", "date": "2026-07", "link": "https://docs.databricks.com/aws/en/release-notes/product/2026/july" }
+    ],
+    "note": "Public Preview July 7, 2026. Gated - enabled via your Databricks account team. Extends the covered Unity Catalog managed Iceberg tables to materialized views.",
+    "prediction": ["Iceberg MV Sharing", "Managed Iceberg Views", "Delta Iceberg MVs"],
+    "source": "https://docs.databricks.com/aws/en/iceberg/",
+    "links": [
+      { "url": "https://docs.databricks.com/aws/en/release-notes/product/2026/july", "kind": "official", "label": "Databricks release notes: Managed Iceberg materialized views Public Preview (July 2026)" }
+    ],
+    "verified": "2026-07-23"
+  },
+  {
+    "id": "lakebridge-agentic-converter",
+    "name": "Lakebridge Agentic Converter",
+    "aliases": ["Lakebridge Converter"],
+    "category": "Developer experience",
+    "what": "An agent that converts legacy SQL dialects - T-SQL, Snowflake, Redshift, Oracle, BigQuery, Teradata - to ANSI SQL for migration projects, powered by Genie Code.",
+    "fact": "Powered by Genie Code, it reads each legacy SQL script, checks the syntax and the semantic intent, and iteratively fixes its own errors before writing ANSI SQL back to your workspace - a migration grunt that debugs its own output.",
+    "introducedAt": { "date": "2026-07", "link": "https://docs.databricks.com/aws/en/release-notes/product/2026/july" },
+    "status": "active",
+    "releases": [
+      { "type": "beta", "date": "2026-07", "link": "https://docs.databricks.com/aws/en/release-notes/product/2026/july" }
+    ],
+    "note": "Beta July 16, 2026. A workspace admin enables it from the Previews page. Part of the Lakebridge migration tooling.",
+    "prediction": ["Genie Migrate", "Lakebridge Autopilot", "SQL Rebridge"],
+    "source": "https://docs.databricks.com/aws/en/migration/lakebridge-agentic-converter",
+    "links": [
+      { "url": "https://docs.databricks.com/aws/en/release-notes/product/2026/july", "kind": "official", "label": "Databricks release notes: Lakebridge Agentic Converter Beta (July 2026)" }
+    ],
+    "verified": "2026-07-23"
+  },
+  {
+    "id": "lakehouse-replay",
+    "name": "Lakehouse Replay",
+    "category": "Developer experience",
+    "what": "Automatically replays a sample of read-only serverless workloads against upcoming Databricks Runtime releases to catch regressions before they reach production.",
+    "fact": "It quietly re-runs a sample of your read-only serverless workloads against the next Databricks Runtime before you upgrade, so a runtime regression shows up in a shadow run instead of in prod - no setup, your data never leaves the workspace, and the replay compute isn't billed.",
+    "introducedAt": { "date": "2026-06", "link": "https://docs.databricks.com/aws/en/release-notes/product/2026/june" },
+    "status": "active",
+    "releases": [
+      { "type": "beta", "date": "2026-06", "link": "https://docs.databricks.com/aws/en/release-notes/product/2026/june" }
+    ],
+    "note": "Beta June 10, 2026. Workspace admins enable it from the Previews page.",
+    "prediction": ["Runtime Shadow", "Lakehouse Rehearsal", "Genie Replay"],
+    "source": "https://docs.databricks.com/aws/en/compute/serverless/lakehouse-replay",
+    "links": [
+      { "url": "https://docs.databricks.com/aws/en/release-notes/product/2026/june", "kind": "official", "label": "Databricks release notes: Lakehouse Replay Beta (June 2026)" }
+    ],
+    "verified": "2026-07-23"
+  },
+  {
+    "id": "standalone-pipelines",
+    "name": "Standalone pipelines",
+    "aliases": ["DBSQL pipelines", "Pipelines on Databricks SQL"],
+    "category": "Data engineering",
+    "what": "Declarative pipelines - materialized views and streaming tables - created from a notebook on serverless general compute, in SQL or Python.",
+    "fact": "Renamed from \"pipelines on Databricks SQL,\" they let you build materialized views and streaming tables straight from a notebook on serverless general compute, in SQL or Python, with no dedicated pipeline cluster to stand up.",
+    "introducedAt": { "date": "2026-05", "link": "https://docs.databricks.com/aws/en/release-notes/product/2026/may" },
+    "status": "active",
+    "releases": [
+      { "type": "beta", "date": "2026-05", "link": "https://docs.databricks.com/aws/en/release-notes/product/2026/may" }
+    ],
+    "note": "Beta May 7, 2026. Renamed from \"pipelines on Databricks SQL\" (DBSQL pipelines) - kept here as one entry with the former descriptor as an alias, since it was never tracked under the old name.",
+    "prediction": ["Serverless Pipelines", "Lakeflow Standalone", "Notebook Pipelines"],
+    "source": "https://docs.databricks.com/aws/en/ldp/dbsql/compute",
+    "links": [
+      { "url": "https://docs.databricks.com/aws/en/release-notes/product/2026/may", "kind": "official", "label": "Databricks release notes: Standalone pipelines Beta (May 2026)" }
+    ],
+    "verified": "2026-07-23"
+  },
+  {
+    "id": "declarative-feature-engineering",
+    "name": "Declarative Feature Engineering",
+    "aliases": ["Declarative Feature Engineering APIs", "Feature Views"],
+    "category": "AI / ML",
+    "what": "APIs to declaratively define and compute time-windowed aggregation features in Unity Catalog, materialize them to Delta or Lakebase, and serve them to online model serving.",
+    "fact": "You declare a time-windowed aggregation once and it computes the feature for you - materializing to Delta or Lakebase and wiring into online model serving - the feature-engineering echo of the declarative-pipelines idea.",
+    "introducedAt": { "date": "2026-03", "link": "https://docs.databricks.com/aws/en/release-notes/product/2026/march" },
+    "status": "active",
+    "releases": [
+      { "type": "beta", "date": "2026-03", "link": "https://docs.databricks.com/aws/en/release-notes/product/2026/march" }
+    ],
+    "note": "Beta March 9, 2026, initially in the AWS us-east-1 and us-west-2 regions. Features are defined in Unity Catalog.",
+    "prediction": ["Feature Bricks", "Lakeflow Features", "Genie Features"],
+    "source": "https://docs.databricks.com/aws/en/release-notes/product/2026/march",
+    "links": [
+      { "url": "https://docs.databricks.com/aws/en/release-notes/product/2026/march", "kind": "official", "label": "Databricks release notes: Declarative Feature Engineering APIs Beta (March 2026)" }
+    ],
+    "verified": "2026-07-23"
   }
 ]
