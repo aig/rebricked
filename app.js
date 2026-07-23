@@ -27,6 +27,7 @@
   const filterOn = (key) => (key === "all" ? allKindsSelected() : activeKinds.has(key));
   const resetKinds = () => { activeKinds = new Set(KIND_KEYS); };
   let activeYear = null;    // "2025" etc. when a timeline bar is selected
+  let tlView = "year";      // which lens the Home chart shows: "year" (changes over time) or "stage" (current release maturity)
   let focusId = null;       // a deep-linked entry (#id / ?id=): sets its crawlable meta and gets scrolled to
   let lastRouletteId = null; // last randomizer winner, to avoid picking it twice running
 
@@ -80,7 +81,7 @@
       { label: "Recents", icon: "recents" },
       { label: "Catalog", icon: "catalog", ids: ["catalog-explorer", "data-explorer", "unity-catalog", "unity-catalog-volumes", "dbfs-mounts", "lakehouse-federation", "opensharing", "delta-sharing", "delta-lake", "databricks-delta", "liquid-clustering", "hive-metastore", "attribute-based-access-control", "unity-catalog-managed-iceberg-tables", "databricks-clean-rooms"] },
       { label: "Jobs & Pipelines", icon: "jobs", ids: ["lakeflow-declarative-pipelines", "delta-live-tables", "lakeflow-jobs", "workflows", "declarative-automation-bundles", "databricks-asset-bundles", "dbx", "lakeflow-pipelines-editor", "multi-file-editor"] },
-      { label: "Compute", icon: "compute", ids: ["lakebase", "standard-and-dedicated-access-modes", "shared-single-user-access-modes", "no-isolation-shared-access-mode", "init-scripts-on-dbfs"] },
+      { label: "Compute", icon: "compute", ids: ["lakebase", "ai-runtime", "standard-and-dedicated-access-modes", "shared-single-user-access-modes", "no-isolation-shared-access-mode", "init-scripts-on-dbfs"] },
       { label: "Discover", icon: "discover" },
       { label: "Marketplace", icon: "marketplace" },
       { label: "Apps", icon: "apps", ids: ["databricks-apps"] },
@@ -102,7 +103,7 @@
     { label: "AI/ML", items: [
       { label: "Playground", icon: "playground" },
       { label: "Agents", icon: "agents", ids: ["databricks-ai-search", "databricks-vector-search", "mosaic-ai-vector-search", "agent-bricks", "information-extraction", "knowledge-assistant", "classification", "custom-llm", "supervisor-agent", "agent-bricks-multi-agent-supervisor"] },
-      { label: "AI Gateway", icon: "gateway" },
+      { label: "AI Gateway", icon: "gateway", ids: ["ai-gateway"] },
       { label: "Experiments", icon: "experiments" },
       { label: "Features", icon: "features", ids: ["workspace-feature-store", "feature-engineering-in-unity-catalog"] },
       { label: "Models", icon: "models", ids: ["workspace-model-registry", "models-in-unity-catalog"] },
@@ -1966,11 +1967,59 @@
     return TL_DATA;
   }
 
+  // Current release stage, tallied per stage - but only for entries that are LIVE now
+  // (the same `current` bucket the "Latest" filter uses). Maturity is meaningless for the
+  // other two lifecycles and would lie if counted: a superseded former name freezes at
+  // whatever stage it last recorded (e.g. Databricks Delta reads "Private Preview" from
+  // 2018), and a deprecated/legacy thing is being retired, not sitting "at GA". The
+  // "current" stage of a live entry is the last one actually reached (has a date); entries
+  // with no `releases` - or only announced-but-unreached stages - are skipped too, so
+  // `total` is the count of live features that carry a real maturity. Computed once.
+  let STAGE_DATA = null;
+  function stageData() {
+    if (STAGE_DATA) return STAGE_DATA;
+    const counts = {};
+    RELEASE_ORDER.forEach((t) => (counts[t] = 0));
+    let total = 0;
+    DATA.forEach((d) => {
+      if (bucketOf(d) !== "current") return; // renamed + deprecated: maturity is moot
+      const rels = d.releases;
+      if (!Array.isArray(rels) || !rels.length) return;
+      let cur = null;
+      rels.forEach((r) => { if (r.date != null) cur = r.type; });
+      if (cur && counts[cur] != null) { counts[cur]++; total++; }
+    });
+    STAGE_DATA = { counts, total };
+    return STAGE_DATA;
+  }
+
+  // The chart's view switch, shared by both lenses. Selecting a tab only reskins the
+  // chart - it never touches the active filter, year, or search.
+  function tlTabsHTML() {
+    const tab = (v, label) =>
+      `<button class="tl-tab" type="button" data-view="${v}" role="tab" aria-selected="${tlView === v}">${escapeHtml(label)}</button>`;
+    return `<span class="tl-tabs" role="tablist" aria-label="Chart view">${tab("year", "By year")}${tab("stage", "By stage")}</span>`;
+  }
+  function wireTlTabs(el) {
+    el.querySelectorAll(".tl-tab").forEach((t) => {
+      t.addEventListener("click", () => {
+        const v = t.dataset.view;
+        if (v === tlView) return;
+        tlView = v;
+        tlRenderedKey = null; // force a rebuild (+ re-animate) on the next render
+        track("timeline-view", { view: v });
+        renderTimeline();
+      });
+    });
+  }
+
   function renderTimeline() {
     const el = $("#timeline");
     if (!el) return;
     const { years, byYear } = timelineData();
     if (years.length === 0) { el.hidden = true; return; }
+
+    if (tlView === "stage") { renderStageTimeline(el); return; }
 
     // Only the buckets the filter currently shows - this is what makes the plot react.
     // Heights rescale to the tallest *visible* year, so hiding a bucket redraws rather
@@ -2006,11 +2055,13 @@
       .map((b) => `<span class="tl-key"><i class="tl-dot tl-seg-${b.key}"></i>${escapeHtml(b.label)}</span>`)
       .join("");
 
+    el.setAttribute("aria-label", "Changes per year");
     el.innerHTML =
-      `<div class="tl-title">Changes by year <span class="tl-hint">- click a bar to filter</span>` +
+      `<div class="tl-title">${tlTabsHTML()}<span class="tl-hint">- click a bar to filter</span>` +
       `<span class="tl-legend">${legend}</span></div>` +
       `<div class="tl-plot">${bars}</div>` +
       `<div class="tl-axis">${axis}</div>`;
+    wireTlTabs(el);
 
     el.querySelectorAll(".tl-bar").forEach((b) => {
       b.addEventListener("click", () => {
@@ -2032,6 +2083,44 @@
     el.querySelectorAll(".tl-bar").forEach((b) =>
       b.classList.toggle("active", b.dataset.year === activeYear)
     );
+  }
+
+  // "By stage" lens: the current release maturity of every staged entry, as ordered
+  // horizontal bars (Private Preview -> Beta -> Public Preview -> GA). The ramp is an
+  // ordered journey and the split is heavily GA-weighted, so bars - not a pie - keep the
+  // order legible and the small stages readable. Each bar is directly labeled, so identity
+  // never rests on the cool-hue ramp alone (the previews are close in hue). Display-only:
+  // it reads the whole dataset and doesn't react to the status filter or feed the list.
+  function renderStageTimeline(el) {
+    // Already on screen? Skip the rebuild (and its grow animation). A tab switch resets
+    // tlRenderedKey to null, so the deliberate switch into this lens still re-animates.
+    if (tlRenderedKey === "stage" && el.querySelector(".tl-stage")) return;
+    const { counts, total } = stageData();
+    // Only the stages actually populated - an empty ramp rung (e.g. nothing in Private
+    // Preview right now) would read as a broken bar, so drop it; it returns the moment
+    // something lands there.
+    const stages = RELEASE_ORDER.filter((t) => counts[t] > 0);
+    const max = Math.max(1, ...stages.map((t) => counts[t]));
+    const rows = stages.map((t, i) => {
+      const n = counts[t];
+      const w = Math.round((n / max) * 100);
+      const share = total ? Math.round((n / total) * 100) : 0;
+      const label = RELEASE_LABELS[t] || t;
+      const tip = `${label} - ${n} of ${total} (${share}%)`;
+      // `t` is a trusted constant from RELEASE_ORDER, safe to interpolate into the var name.
+      return `<div class="tl-srow" style="--i:${i}" title="${escapeAttr(tip)}">` +
+        `<span class="tl-slabel"><i class="tl-dot" style="background:var(--rel-${t})"></i>${escapeHtml(label)}</span>` +
+        `<span class="tl-strack"><span class="tl-sfill" style="width:${w}%;background:var(--rel-${t});--i:${i}"></span></span>` +
+        `<span class="tl-sval">${n}</span></div>`;
+    }).join("");
+    const summary = stages.map((t) => `${RELEASE_LABELS[t] || t} ${counts[t]}`).join(", ");
+    el.setAttribute("aria-label", `Live features by current release stage: ${summary}`);
+    el.innerHTML =
+      `<div class="tl-title">${tlTabsHTML()}<span class="tl-hint">- current release stage</span></div>` +
+      `<div class="tl-stage" role="img" aria-label="${escapeAttr(summary)}">${rows}</div>` +
+      `<div class="tl-stage-foot">${total} live features by their current stage. Renamed and deprecated names are excluded - maturity is moot for them.</div>`;
+    wireTlTabs(el);
+    tlRenderedKey = "stage";
   }
 
   // ---- "on this day" spotlight (Home) ----

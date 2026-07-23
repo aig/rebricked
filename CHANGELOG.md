@@ -3,6 +3,25 @@
 All notable changes to **rebricked**, grouped by day.
 Format loosely follows [Keep a Changelog](https://keepachangelog.com/); dates are `YYYY-MM-DD`.
 
+## 2026-07-23 (Maturity "By stage" chart lens + AI Gateway / AI Runtime entries)
+
+### Added
+- **"By stage" lens on the Home chart.** The "Changes by year" card gained a "By year /
+  By stage" tab switch. The stage lens shows current release maturity (Private Preview ->
+  Beta -> Public Preview -> GA) as ordered horizontal bars - the ordered, GA-heavy funnel
+  reads far better as bars than a pie. Display-only: it reads the whole dataset and doesn't
+  touch the status filter or the list. It counts only **live** entries (`bucketOf === "current"`)
+  - renamed and deprecated names are excluded, since maturity is moot for a former or retiring
+  name - and hides zero-count stages. New: `tlView` state, `tlTabsHTML`/`wireTlTabs`,
+  `stageData`, `renderStageTimeline` in `app.js`; `.tl-tabs`/`.tl-tab` and `.tl-stage` styles
+  in `styles.css`; a `timeline-view` analytics event.
+- **Two feature entries: AI Gateway and AI Runtime (GPU serverless).** AI Gateway (Mosaic AI
+  Gateway) - `AI / ML`, active/GA (Public Preview 2024-09 -> GA 2025-06). AI Runtime (GPU
+  serverless) - `Compute / BI`, active/Public Preview (Beta 2025-06 as "Serverless GPU
+  compute" -> Public Preview 2026-03; the distributed multi-GPU training API remains Beta).
+  Both wired into `app.js` `NAV` (`ai-runtime` under Compute, `ai-gateway` into the existing
+  AI Gateway rail item). `python scripts/validate.py`: 80 entries valid.
+
 ## 2026-07-22 (Agent Bricks + status/release model rework)
 
 ### Changed

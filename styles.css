@@ -2132,6 +2132,108 @@ mark {
   color: var(--faint);
 }
 
+/* ---- chart view switch: "By year" | "By stage" ---- */
+.tl-tabs {
+  display: inline-flex;
+  gap: 2px;
+  padding: 2px;
+  background: var(--bg);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+}
+
+.tl-tab {
+  border: 0;
+  background: none;
+  font-family: inherit;
+  font-size: 11.5px;
+  font-weight: 600;
+  color: var(--muted);
+  padding: 4px 10px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background .15s, color .15s;
+}
+
+.tl-tab:hover {
+  color: var(--ink);
+}
+
+.tl-tab[aria-selected="true"] {
+  background: var(--accent);
+  color: #fff;
+}
+
+.tl-tab:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+/* ---- "By stage" lens: ordered horizontal maturity bars ---- */
+.tl-stage {
+  display: grid;
+  gap: 9px;
+  padding: 4px 0 2px;
+}
+
+.tl-srow {
+  display: grid;
+  grid-template-columns: 128px 1fr 30px;
+  align-items: center;
+  gap: 10px;
+  font-size: 12px;
+  color: var(--muted);
+}
+
+.tl-slabel {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+}
+
+.tl-strack {
+  height: 16px;
+  border-radius: 5px;
+  background: color-mix(in srgb, var(--ink) 6%, transparent);
+  overflow: hidden;
+}
+
+.tl-sfill {
+  display: block;
+  height: 100%;
+  min-width: 3px;
+  border-radius: 5px;
+  transform-origin: left center;
+  animation: tl-grow-x .5s cubic-bezier(.2, .8, .25, 1) backwards;
+  animation-delay: calc(var(--i) * 55ms);
+}
+
+.tl-sval {
+  text-align: right;
+  font-weight: 600;
+  color: var(--ink);
+  font-variant-numeric: tabular-nums;
+}
+
+.tl-stage-foot {
+  margin-top: 10px;
+  font-size: 11px;
+  color: var(--faint);
+}
+
+@keyframes tl-grow-x {
+  from { transform: scaleX(0); }
+  to { transform: scaleX(1); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tl-sfill { animation: none; }
+}
+
+@media (max-width: 520px) {
+  .tl-srow { grid-template-columns: 92px 1fr 26px; gap: 8px; }
+}
+
 /* ================= Card actions + odds gag ================= */
 .odds {
   font-size: 11px;

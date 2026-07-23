@@ -1620,5 +1620,51 @@
       { "url": "https://community.databricks.com/t5/get-started-discussions/databricks-apps-is-now-available-in-public-preview/td-p/95020", "kind": "community", "label": "Databricks Community: Apps Public Preview" }
     ],
     "verified": "2026-07-20"
+  },
+  {
+    "id": "ai-gateway",
+    "name": "AI Gateway",
+    "aliases": ["Mosaic AI Gateway", "Unity AI Gateway"],
+    "category": "AI / ML",
+    "what": "A centralized governance and monitoring layer for model serving endpoints - permissions, rate limits, payload logging, and safety guardrails for the generative-AI models an organization uses.",
+    "fact": "It bolts governance onto model serving without touching the model: flip it on and every request through an endpoint gets rate-limited, guardrailed, and logged to an inference table - and if an external model fails, it can fall back to another one on the same endpoint.",
+    "introducedAt": { "date": "2024-09", "link": "https://docs.databricks.com/aws/en/release-notes/product/2024/september" },
+    "status": "active",
+    "releases": [
+      { "type": "public-preview", "date": "2024-09", "link": "https://docs.databricks.com/aws/en/release-notes/product/2024/september" },
+      { "type": "ga", "date": "2025-06", "link": "https://docs.databricks.com/aws/en/release-notes/product/2025/june" }
+    ],
+    "occasion": { "date": "2025-06", "link": "https://docs.databricks.com/aws/en/release-notes/product/2025/june", "note": "GA June 11, 2025" },
+    "note": "Entered Public Preview September 9, 2024 as Mosaic AI Gateway and reached GA June 11, 2025. Docs also style it \"Unity AI Gateway\" in the endpoint-configuration UI.",
+    "prediction": ["Unity AI Gateway", "Genie Gateway", "Lakeflow AI Gateway"],
+    "source": "https://docs.databricks.com/aws/en/ai-gateway/",
+    "links": [
+      { "url": "https://docs.databricks.com/aws/en/release-notes/product/2024/september", "kind": "official", "label": "Databricks release notes: AI Gateway Public Preview (Sept 2024)" },
+      { "url": "https://docs.databricks.com/aws/en/release-notes/product/2025/june", "kind": "official", "label": "Databricks release notes: AI Gateway GA (June 2025)" }
+    ],
+    "verified": "2026-07-23"
+  },
+  {
+    "id": "ai-runtime",
+    "name": "AI Runtime (GPU serverless)",
+    "aliases": ["AI Runtime", "Serverless GPU compute"],
+    "category": "Compute / BI",
+    "what": "GPU support for Databricks serverless compute - on-demand accelerators for deep-learning training and fine-tuning, single-node and multi-node, with no clusters to provision.",
+    "fact": "It puts on-demand H100s behind serverless compute, so a deep-learning job spins up GPUs without anyone sizing a cluster - single-node tasks are in Public Preview while the distributed multi-GPU training API is still catching up in Beta.",
+    "introducedAt": { "date": "2025-06", "link": "https://docs.databricks.com/aws/en/release-notes/product/2025/june" },
+    "status": "active",
+    "releases": [
+      { "type": "beta", "date": "2025-06", "link": "https://docs.databricks.com/aws/en/release-notes/product/2025/june" },
+      { "type": "public-preview", "date": "2026-03", "link": "https://docs.databricks.com/aws/en/release-notes/product/2026/march" }
+    ],
+    "occasion": { "date": "2025-06", "link": "https://docs.databricks.com/aws/en/release-notes/product/2025/june", "note": "Debuted as Serverless GPU compute (Beta), Data + AI Summit June 2025" },
+    "note": "Launched June 6, 2025 as \"Serverless GPU compute\" (Beta), branded AI Runtime; single-node tasks reached Public Preview March 19, 2026, while the distributed multi-GPU training API remains in Beta.",
+    "prediction": ["Genie Runtime", "Lakeflow GPU", "Mosaic AI Runtime"],
+    "source": "https://docs.databricks.com/aws/en/machine-learning/ai-runtime/",
+    "links": [
+      { "url": "https://docs.databricks.com/aws/en/release-notes/product/2025/june", "kind": "official", "label": "Databricks release notes: Serverless GPU compute Beta (June 2025)" },
+      { "url": "https://docs.databricks.com/aws/en/release-notes/product/2026/march", "kind": "official", "label": "Databricks release notes: AI Runtime Public Preview (March 2026)" }
+    ],
+    "verified": "2026-07-23"
   }
 ]
