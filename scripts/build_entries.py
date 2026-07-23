@@ -353,6 +353,14 @@ RELEASE_LABELS = {
     "ga": "GA",
 }
 
+# How each stage reads as a past-tense milestone in a feed item's description.
+RELEASE_VERB = {
+    "private-preview": "entered Private Preview",
+    "beta": "entered Beta",
+    "public-preview": "entered Public Preview",
+    "ga": "reached general availability (GA)",
+}
+
 
 def release_pill(d):
     rels = d.get("releases")
@@ -760,6 +768,7 @@ def badge_label(d):
 
 def write_sitemap(data):
     urls = [(f"{BASE_URL}/", "weekly", "1.0")]
+    urls.append((f"{BASE_URL}/subscribe/", "monthly", "0.5"))
     urls.append((f"{BASE_URL}/disclaimer/", "yearly", "0.3"))
     for n in range(TOTAL_BADGES + 1):
         urls.append((f"{BASE_URL}/badges/{n}-of-{TOTAL_BADGES}/", "yearly", "0.3"))
@@ -787,8 +796,8 @@ def write_sitemap(data):
 
 FEED_TITLE = "REbricked - Databricks renames, deprecations & new features"
 FEED_DESC = (
-    "Databricks product and feature renames, deprecations, and new features - "
-    "sourced and dated. One item per tracked change, newest first."
+    "Databricks product and feature renames, deprecations, new features, and "
+    "release milestones (Private Preview through GA) - sourced and dated, newest first."
 )
 _WDAYS = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"]
 _MONS = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
@@ -838,33 +847,66 @@ def feed_date(d):
     return None
 
 
+def release_feed_items(d):
+    """One feed item per *dated* release stage (Private Preview -> ... -> GA).
+    Announced-but-undated stages have no pubDate, so they are skipped. Yields
+    (dt, sort_id, title, guid, is_permalink, description) tuples."""
+    rels = d.get("releases")
+    if not rels:
+        return
+    url = f"{BASE_URL}/{vendor_of(d)}/{d['id']}/"
+    vlabel = vendor_name(vendor_of(d))
+    what = (d.get("what") or "").strip()
+    for r in rels:
+        rtype = r.get("type")
+        label = RELEASE_LABELS.get(rtype)
+        verb = RELEASE_VERB.get(rtype)
+        dt = parse_date(date_of(r))
+        if not label or not verb or dt is None:
+            continue
+        when = fmt_date(date_of(r))
+        title = f"[{label}] {d['name']}"
+        desc = f"{d['name']} {verb} in {vlabel}" + (f" - {when}." if when else ".")
+        desc = (desc + " " + what).strip()
+        if len(desc) > 300:
+            desc = desc[:297].rstrip() + "…"
+        # guid must be unique per item; the fragment distinguishes each stage and is
+        # not a real page anchor, so isPermaLink is false.
+        guid = f"{url}#release-{rtype}"
+        yield (dt, f"{d['id']}#release-{rtype}", title, guid, False, desc)
+
+
 def write_feed(data, by_id):
-    """RSS 2.0 feed of every entry, newest tracked change first."""
+    """RSS 2.0 feed of every entry, newest tracked change first. Each entry contributes
+    its primary lifecycle change plus one item per dated release-maturity milestone."""
+    # Each item: (dt, sort_id, title, guid, is_permalink, description, category).
     items = []
     for d in data:
+        cat = d.get("category", "")
         dt = feed_date(d)
-        if dt is None:
-            continue
-        items.append((dt, d))
-    # Newest first; stable tie-break on id keeps output deterministic.
-    items.sort(key=lambda t: (t[0], t[1]["id"]), reverse=True)
+        if dt is not None:
+            url = f"{BASE_URL}/{vendor_of(d)}/{d['id']}/"
+            _title, desc, kicker, _lead = meta_for(d, by_id, data)
+            # meta_for's title carries a " | REbricked" suffix meant for <title>; the feed
+            # prefixes the change kind instead, which reads better in a reader's item list.
+            # "Current name" (the active tip of a rename chain) reads as "New name" in a feed.
+            tag = "New name" if kicker == "Current name" else kicker
+            items.append((dt, d["id"], f"[{tag}] {d['name']}", url, True, desc, cat))
+        for rel in release_feed_items(d):
+            items.append(rel + (cat,))
+    # Newest first; stable tie-break on sort_id keeps output deterministic.
+    items.sort(key=lambda t: (t[0], t[1]), reverse=True)
 
     built = rfc822(datetime.now(timezone.utc))
     body = []
-    for dt, d in items:
-        url = f"{BASE_URL}/{vendor_of(d)}/{d['id']}/"
-        title, desc, kicker, _lead = meta_for(d, by_id, data)
-        # meta_for's title carries a " | REbricked" suffix meant for <title>; the feed
-        # prefixes the change kind instead, which reads better in a reader's item list.
-        # "Current name" (the active tip of a rename chain) reads as "New name" in a feed.
-        tag = "New name" if kicker == "Current name" else kicker
-        item_title = f"[{tag}] {d['name']}"
+    for dt, _sid, item_title, guid, is_permalink, desc, cat in items:
+        link = guid.split("#", 1)[0]
         body.append(
             "    <item>\n"
             f"      <title>{esc(item_title)}</title>\n"
-            f"      <link>{esc(url)}</link>\n"
-            f'      <guid isPermaLink="true">{esc(url)}</guid>\n'
-            f"      <category>{esc(d.get('category', ''))}</category>\n"
+            f"      <link>{esc(link)}</link>\n"
+            f'      <guid isPermaLink="{"true" if is_permalink else "false"}">{esc(guid)}</guid>\n'
+            f"      <category>{esc(cat)}</category>\n"
             f"      <pubDate>{rfc822(dt)}</pubDate>\n"
             f"      <description>{esc(desc)}</description>\n"
             "    </item>"
