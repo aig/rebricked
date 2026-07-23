@@ -3,6 +3,28 @@
 All notable changes to **rebricked**, grouped by day.
 Format loosely follows [Keep a Changelog](https://keepachangelog.com/); dates are `YYYY-MM-DD`.
 
+## 2026-07-23 (fact-check dates flagged during deep-linking)
+
+### Fixed
+- **`databricks.features.json`**: investigated seven entries whose dates the cited page didn't
+  confirm during the deep-linking pass. Four had genuine errors, corrected against live docs:
+  - **legacy-dashboards**: `deprecatedAt` `2024` -> `2025-04` (support ended April 10, 2025, per
+    SQL release notes 2025); `removedAt` `2026-01` -> `2026-03` and `occasion` "End of life
+    January 12, 2026" -> "End of life March 5, 2026" (per AI/BI release notes 2026). The
+    "January 12, 2026" date exists only in stale search caches - no live official page states it.
+  - **models-in-unity-catalog**: `introducedAt` `2024` -> `2023` (Public Preview June 28, 2023;
+    GA October 17, 2023 - matching its own `releases` timeline).
+  - **databricks-apps**: `introducedAt` `2024-11` -> `2024-10` (Public Preview October 8, 2024);
+    `occasion.note` clarified that June 11, 2025 is the GA *blog announcement* while GA per release
+    notes was May 13, 2025; `fact` "June 2025 GA" softened to "2025 GA".
+  - **lakehouse-real-time**: `occasion.note` "Announced June 16, 2026" -> "Announced June 30,
+    2026" (the June 2026 release-notes date).
+  - Re-verified and left unchanged (flag was a text-fragment gap, not a data error):
+    **legacy-databricks-cli** (`deprecatedAt 2023` is the house-convention legacy-onset marker -
+    docs confirm no formal deprecation date exists), **databricks-cli** ("(v0.205+)" is the docs'
+    own new-CLI boundary; GA May 21, 2026 confirmed), **databricks-connect** ("(13.3 LTS+)" is
+    verbatim the current supported baseline). Bumped `verified` on the corrected entries.
+
 ## 2026-07-23 (deep-link date/status/release confirmation links)
 
 ### Changed

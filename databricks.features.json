@@ -857,10 +857,10 @@
       { "note": "Databricks had already stopped letting anyone create or clone them through the UI or API back on April 10, 2025.", "link": "https://learn.microsoft.com/en-us/azure/databricks/ai-bi/release-notes/2025#:~:text=no%20longer%20create%20or%20clone%20legacy%20dashboards%20using%20the%20UI%20or%20API" }
     ],
     "from": { "date": "2020-11", "link": "https://docs.databricks.com/aws/en/release-notes/product/2020/november#:~:text=rich%20visualizations%20and%20drag%2Dand%2Ddrop%20dashboards" },
-    "deprecatedAt": { "date": "2024", "link": "https://learn.microsoft.com/en-us/azure/databricks/archive/legacy/legacy-dashboards" },
-    "removedAt": { "date": "2026-01", "link": "https://learn.microsoft.com/en-us/azure/databricks/archive/legacy/legacy-dashboards" },
-    "status": { "value": "retired", "link": "https://learn.microsoft.com/en-us/azure/databricks/archive/legacy/legacy-dashboards#:~:text=You%20can%20no%20longer%20create%20new%20legacy%20dashboards.", "date": "2026-07-20" },
-    "occasion": { "date": "2026-01", "link": "https://learn.microsoft.com/en-us/azure/databricks/archive/legacy/legacy-dashboards", "note": "End of life January 12, 2026" },
+    "deprecatedAt": { "date": "2025-04", "link": "https://docs.databricks.com/aws/en/sql/release-notes/2025#:~:text=Official%20support%20for%20legacy%20dashboards%20has%20ended" },
+    "removedAt": { "date": "2026-03", "link": "https://docs.databricks.com/aws/en/ai-bi/release-notes/2026#:~:text=have%20reached%20end%20of%20life%20and%20are%20no%20longer%20available" },
+    "status": { "value": "retired", "link": "https://learn.microsoft.com/en-us/azure/databricks/archive/legacy/legacy-dashboards#:~:text=You%20can%20no%20longer%20create%20new%20legacy%20dashboards.", "date": "2026-07-23" },
+    "occasion": { "date": "2026-03", "link": "https://docs.databricks.com/aws/en/ai-bi/release-notes/2026#:~:text=have%20reached%20end%20of%20life%20and%20are%20no%20longer%20available", "note": "End of life March 5, 2026" },
     "source": "https://learn.microsoft.com/en-us/azure/databricks/archive/legacy/legacy-dashboards",
     "links": [
       { "url": "https://docs.databricks.com/aws/en/dashboards/clone-legacy-to-aibi", "kind": "community", "label": "Databricks docs: Clone a legacy dashboard to AI/BI" }
@@ -1281,7 +1281,7 @@
     "releases": [
       { "type": "beta", "date": "2026-06", "link": "https://docs.databricks.com/aws/en/release-notes/product/2026/june#:~:text=Lakehouse%20Real%2DTime%20%28Lakehouse%2F%2FRT%29%20is%20now%20in%20Beta." }
     ],
-    "occasion": { "date": "2026-06", "link": "https://docs.databricks.com/aws/en/release-notes/product/2026/june", "note": "Announced June 16, 2026" },
+    "occasion": { "date": "2026-06", "link": "https://docs.databricks.com/aws/en/release-notes/product/2026/june#:~:text=Lakehouse%20Real%2DTime%20%28Lakehouse%2F%2FRT%29%20is%20now%20in%20Beta.", "note": "Announced June 30, 2026" },
     "prediction": ["Genie Real-Time", "Lakehouse//RT One", "Unity Real-Time"],
     "source": "https://docs.databricks.com/aws/en/compute/sql-warehouse/real-time",
     "links": [
@@ -1699,7 +1699,7 @@
       { "note": "Registered models live in the catalog.schema namespace with aliases like @champion, so promoting a model to production is just repointing an alias - and every version carries Unity Catalog lineage and access control.", "link": "https://docs.databricks.com/aws/en/machine-learning/manage-model-lifecycle/#:~:text=centralized%20access%20control%2C%20auditing%2C%20lineage%2C%20and%20model%20discovery%20across%20workspaces" },
       { "note": "You migrate old model versions across with copy_model_version().", "link": "https://docs.databricks.com/aws/en/machine-learning/manage-model-lifecycle/#:~:text=copy_model_version%20MLflow%20Client%20API" }
     ],
-    "introducedAt": { "date": "2024", "link": "https://docs.databricks.com/aws/en/release-notes/product/2023/june#:~:text=Models%20in%20Unity%20Catalog%20%28Public%20Preview%29" },
+    "introducedAt": { "date": "2023", "link": "https://docs.databricks.com/aws/en/release-notes/product/2023/june#:~:text=Models%20in%20Unity%20Catalog%20%28Public%20Preview%29" },
     "status": { "value": "active", "link": "https://docs.databricks.com/aws/en/machine-learning/manage-model-lifecycle/#:~:text=Databricks%20recommends%20for%20governing%20and%20deploying%20models", "date": "2026-07-18" },
     "releases": [
       { "type": "public-preview", "date": "2023-06", "link": "https://docs.databricks.com/aws/en/release-notes/product/2023/june#:~:text=Models%20in%20Unity%20Catalog%20%28Public%20Preview%29" },
@@ -1710,7 +1710,7 @@
     "links": [
       { "url": "https://medium.com/towards-data-engineering/manage-databricks-ml-model-lifecycle-in-unity-catalog-with-mlflow-code-walkthrough-video-1e81c2fecf7b", "kind": "community", "label": "Medium: ML model lifecycle in UC" }
     ],
-    "verified": "2026-07-18"
+    "verified": "2026-07-23"
   },
   {
     "id": "feature-engineering-in-unity-catalog",
@@ -1793,15 +1793,15 @@
     "what": { "note": "A serverless way to build and deploy interactive data and AI applications - dashboards, chatbots, forms, ops tools - directly on Databricks, in common Python or JavaScript frameworks and governed by Unity Catalog.", "link": "https://docs.databricks.com/aws/en/dev-tools/databricks-apps/#:~:text=build%20and%20deploy%20secure%20data%20and%20AI%20applications%20directly%20on%20the%20Databricks%20platform" },
     "fact": [
       { "note": "It takes an off-the-shelf Streamlit, Dash, Gradio, or React app and runs it on Databricks' own serverless compute with no infrastructure to provision - and the app is governed by Unity Catalog like everything else on the platform.", "link": "https://docs.databricks.com/aws/en/dev-tools/databricks-apps/#:~:text=Popular%20Python%20frameworks%20include%20Streamlit%2C%20Dash%2C%20and%20Gradio" },
-      { "note": "By its June 2025 GA, Databricks reported 20,000+ apps built by 2,500+ customers across 28 regions.", "link": "https://www.databricks.com/blog/announcing-general-availability-databricks-apps#:~:text=Over%2020%2C000%20apps%20have%20already%20been%20built" }
+      { "note": "By its 2025 GA, Databricks reported 20,000+ apps built by 2,500+ customers across 28 regions.", "link": "https://www.databricks.com/blog/announcing-general-availability-databricks-apps#:~:text=Over%2020%2C000%20apps%20have%20already%20been%20built" }
     ],
-    "introducedAt": { "date": "2024-11", "link": "https://docs.databricks.com/aws/en/release-notes/product/2024/october#:~:text=with%20Databricks%20Apps%20%28Public%20Preview%29" },
+    "introducedAt": { "date": "2024-10", "link": "https://docs.databricks.com/aws/en/release-notes/product/2024/october#:~:text=with%20Databricks%20Apps%20%28Public%20Preview%29" },
     "status": { "value": "active", "link": "https://docs.databricks.com/aws/en/dev-tools/databricks-apps/#:~:text=Databricks%20Apps%20enables%20developers%20to%20build%20and%20deploy%20secure%20data%20and%20AI%20applications", "date": "2026-07-20" },
     "releases": [
       { "type": "public-preview", "date": "2024-10", "link": "https://docs.databricks.com/aws/en/release-notes/product/2024/october#:~:text=Databricks%20Apps%20%28Public%20Preview%29" },
       { "type": "ga", "date": "2025-05", "link": "https://docs.databricks.com/aws/en/release-notes/product/2025/may#:~:text=Databricks%20Apps%20is%20now%20generally%20available%20%28GA%29." }
     ],
-    "occasion": { "date": "2025-06", "link": "https://www.databricks.com/blog/announcing-general-availability-databricks-apps#:~:text=Databricks%20Apps%20is%20now%20generally%20available", "note": "GA announced June 11, 2025" },
+    "occasion": { "date": "2025-06", "link": "https://www.databricks.com/blog/announcing-general-availability-databricks-apps#:~:text=Databricks%20Apps%20is%20now%20generally%20available", "note": "GA blog announcement, June 11, 2025 (GA reached May 13, 2025)" },
     "prediction": ["Genie Apps", "Lakeflow Apps", "Databricks Apps One"],
     "limitations": { "note": "Up to 100 apps per workspace, with additional limits on Databricks Free Edition.", "link": "https://docs.databricks.com/aws/en/resources/limits#:~:text=For%20limits%20on%20Databricks%20Free%20Edition", "date": "2026-07-23" },
     "source": "https://docs.databricks.com/aws/en/dev-tools/databricks-apps/",
@@ -1809,7 +1809,7 @@
       { "url": "https://www.databricks.com/blog/announcing-general-availability-databricks-apps", "kind": "community", "label": "Databricks Blog: GA of Databricks Apps" },
       { "url": "https://community.databricks.com/t5/get-started-discussions/databricks-apps-is-now-available-in-public-preview/td-p/95020", "kind": "community", "label": "Databricks Community: Apps Public Preview" }
     ],
-    "verified": "2026-07-20"
+    "verified": "2026-07-23"
   },
   {
     "id": "ai-gateway",
