@@ -584,17 +584,21 @@
   // re-renders the card with that member active.
   function rowHTML(activeD) {
     const body = memberBody(activeD);
-    // right cluster: release pill (only while live) then the status badge (rightmost).
-    // renamed / deprecated / legacy / retired members show just their status badge.
-    const release = flowStatusOf(activeD) === "active" ? releasePill(activeD) : "";
-    const cluster = `${release}${statusBadge(activeD)}`;
+    // right cluster: just the status badge now. The release-maturity pill is replaced by the
+    // four-rung stepper under the chain header (see releaseStepper), so it's no longer shown
+    // here - renamed / deprecated / legacy / retired members still show their status badge.
+    const cluster = `${statusBadge(activeD)}`;
     // the status / release cluster is pinned to the card's top-right corner (see CSS)
     const rel = cluster ? `<span class="fam-rel">${cluster}</span>` : "";
+    // the maturity stepper rides just below the chain header's hairline - after the divider,
+    // at the top of the body area, rather than sharing the header strip with the names
+    const stepper = flowStatusOf(activeD) === "active" ? releaseStepper(activeD) : "";
     const head = `<div class="fam-chainbar">${lineageChain(activeD)}</div>`;
     return `
       <article class="row family-card ${body.spine}" data-id="${escapeAttr(activeD.id)}">
         ${rel}
         ${head}
+        ${stepper}
         <div class="fam-body ${body.spine}" data-mid="${escapeAttr(activeD.id)}">${body.html}</div>
       </article>`;
   }
@@ -652,6 +656,57 @@
         `target="_blank" rel="noopener" title="${escapeAttr(tip)}">${escapeHtml(text)}</a>`;
     }
     return `<span class="badge ${cls} badge-release" title="${escapeAttr(hist)}">${escapeHtml(text)}</span>`;
+  }
+
+  // The same four-stage maturity ramp as releasePill, drawn as a stepper instead of a single
+  // pill: one segment per canonical stage (Private Preview -> Beta -> Public Preview -> GA),
+  // so the whole journey - and any stage the thing skipped - reads at a glance under the chain
+  // header. A reached stage fills with its ramp color; the last reached is the bold "· now";
+  // a stage never hit reads hatched; an announced-but-unreached future stage reads dashed.
+  const RELEASE_ORDER = ["private-preview", "beta", "public-preview", "ga"];
+  const RELEASE_SHORT = {
+    "private-preview": "Private",
+    "beta": "Beta",
+    "public-preview": "Public",
+    "ga": "GA",
+  };
+  function releaseStepper(d) {
+    const rels = d.releases;
+    if (!Array.isArray(rels) || !rels.length) return ""; // no timeline -> no stepper
+    const byType = {};
+    rels.forEach((r) => { byType[r.type] = r; });
+    // last stage that was actually reached (has a date) = current maturity
+    let curType = null;
+    rels.forEach((r) => { if (r.date != null) curType = r.type; });
+    if (!curType) return ""; // only announced stages, nothing reached yet
+    const bars = RELEASE_ORDER.map((type) => {
+      const r = byType[type];
+      const short = RELEASE_SHORT[type];
+      const reached = r && r.date != null;
+      const announced = r && r.date == null && r.is_announced === true;
+      let segCls, tip;
+      if (reached) {
+        segCls = "is-on";
+        tip = `${RELEASE_LABELS[type]} ${fmtDate(r.date)}`;
+      } else if (announced) {
+        segCls = "is-soon";
+        tip = `${RELEASE_LABELS[type]} (announced)`;
+      } else {
+        segCls = "is-skip";
+        tip = `${RELEASE_LABELS[type]} - not reached`;
+      }
+      // ramp color rides an inline custom prop; `type` is a trusted constant from RELEASE_ORDER
+      const style = segCls === "is-skip" ? "" : ` style="--seg:var(--rel-${type})"`;
+      const isNow = type === curType;
+      return {
+        seg: `<span class="rel-step-seg ${segCls}"${style} title="${escapeAttr(tip)}"></span>`,
+        lab: `<span class="rel-step-lab${isNow ? " is-now" : ""}">${escapeHtml(isNow ? `${short} · now` : short)}</span>`,
+      };
+    });
+    return `<div class="rel-stepper" role="img" aria-label="Release maturity: reached ${escapeAttr(RELEASE_LABELS[curType] || curType)}">` +
+      `<div class="rel-step-bars">${bars.map((b) => b.seg).join("")}</div>` +
+      `<div class="rel-step-labs">${bars.map((b) => b.lab).join("")}</div>` +
+      `</div>`;
   }
 
   // Cross-card links. A card points forward via `successorId` (the name it became,

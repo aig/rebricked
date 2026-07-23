@@ -1353,6 +1353,72 @@ body {
   border-style: dashed;
 }
 
+/* ===== release-maturity stepper (four-rung ramp under the chain header) =====
+   One segment per canonical stage: Private Preview -> Beta -> Public Preview -> GA.
+   Mirrors the release pill's data (see releaseStepper). A reached stage fills with its
+   ramp color (carried on --seg); the last reached is the bold "· now" label; a stage the
+   thing never hit reads hatched; an announced-but-unreached future stage reads dashed.
+   Bars and labels share one 4-column grid so each label sits under its segment. */
+.rel-stepper {
+  margin: 0 0 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.rel-step-bars,
+.rel-step-labs {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 5px;
+}
+
+.rel-step-seg {
+  height: 7px;
+  border-radius: 4px;
+  background: var(--line);
+}
+
+/* a reached stage: solid ramp fill */
+.rel-step-seg.is-on {
+  background: var(--seg);
+}
+
+/* an announced-but-unreached future stage: dashed outline in the stage's ramp color */
+.rel-step-seg.is-soon {
+  background: none;
+  border: 1px dashed var(--seg);
+}
+
+/* a stage that was skipped / never reached: hatched, no color */
+.rel-step-seg.is-skip {
+  border: 1px solid var(--line);
+  background: repeating-linear-gradient(
+      45deg,
+      color-mix(in srgb, var(--faint) 30%, transparent),
+      color-mix(in srgb, var(--faint) 30%, transparent) 3px,
+      transparent 3px,
+      transparent 6px);
+}
+
+.rel-step-labs {
+  font-family: var(--mono);
+  font-size: 9px;
+  letter-spacing: .02em;
+  color: var(--faint);
+}
+
+.rel-step-lab {
+  text-align: center;
+  white-space: nowrap;
+}
+
+/* the current (last reached) stage's label, e.g. "GA · now" */
+.rel-step-lab.is-now {
+  color: var(--ink);
+  font-weight: 700;
+}
+
 .row-what {
   margin: 10px 0 0;
   font-size: 13px;
