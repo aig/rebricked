@@ -21,6 +21,10 @@ Format loosely follows [Keep a Changelog](https://keepachangelog.com/); dates ar
   compute" -> Public Preview 2026-03; the distributed multi-GPU training API remains Beta).
   Both wired into `app.js` `NAV` (`ai-runtime` under Compute, `ai-gateway` into the existing
   AI Gateway rail item). `python scripts/validate.py`: 80 entries valid.
+- **Feature entry: Secrets in Unity Catalog.** `Data governance`, active/Public Preview
+  (2026-07). Secrets as governed securables in the three-level namespace
+  (`catalog.schema.secret`), distinct from the older workspace-scoped Secrets API. Wired into
+  `app.js` `NAV` under Catalog. `python scripts/validate.py`: 81 entries valid.
 
 ## 2026-07-22 (Agent Bricks + status/release model rework)
 

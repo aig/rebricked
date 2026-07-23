@@ -79,7 +79,7 @@
       { label: "Learn", icon: "learn" },
       { label: "Workspace", icon: "workspace", ids: ["git-folders", "databricks-repos", "legacy-databricks-cli", "databricks-cli", "serverless-workspaces", "personal-access-tokens", "oauth-token-federation", "legacy-databricks-connect", "databricks-connect"] },
       { label: "Recents", icon: "recents" },
-      { label: "Catalog", icon: "catalog", ids: ["catalog-explorer", "data-explorer", "unity-catalog", "unity-catalog-volumes", "dbfs-mounts", "lakehouse-federation", "opensharing", "delta-sharing", "delta-lake", "databricks-delta", "liquid-clustering", "hive-metastore", "attribute-based-access-control", "unity-catalog-managed-iceberg-tables", "databricks-clean-rooms"] },
+      { label: "Catalog", icon: "catalog", ids: ["catalog-explorer", "data-explorer", "unity-catalog", "unity-catalog-volumes", "secrets-in-unity-catalog", "dbfs-mounts", "lakehouse-federation", "opensharing", "delta-sharing", "delta-lake", "databricks-delta", "liquid-clustering", "hive-metastore", "attribute-based-access-control", "unity-catalog-managed-iceberg-tables", "databricks-clean-rooms"] },
       { label: "Jobs & Pipelines", icon: "jobs", ids: ["lakeflow-declarative-pipelines", "delta-live-tables", "lakeflow-jobs", "workflows", "declarative-automation-bundles", "databricks-asset-bundles", "dbx", "lakeflow-pipelines-editor", "multi-file-editor"] },
       { label: "Compute", icon: "compute", ids: ["lakebase", "ai-runtime", "standard-and-dedicated-access-modes", "shared-single-user-access-modes", "no-isolation-shared-access-mode", "init-scripts-on-dbfs"] },
       { label: "Discover", icon: "discover" },

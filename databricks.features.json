@@ -1666,5 +1666,25 @@
       { "url": "https://docs.databricks.com/aws/en/release-notes/product/2026/march", "kind": "official", "label": "Databricks release notes: AI Runtime Public Preview (March 2026)" }
     ],
     "verified": "2026-07-23"
+  },
+  {
+    "id": "secrets-in-unity-catalog",
+    "name": "Secrets in Unity Catalog",
+    "aliases": ["Unity Catalog secrets", "UC secrets"],
+    "category": "Data governance",
+    "what": "Secrets stored and governed as securable objects in Unity Catalog, using the three-level namespace (catalog.schema.secret) and the same privileges and auditing as any other data asset.",
+    "fact": "Your API keys finally get the same treatment as your tables: a secret becomes a first-class Unity Catalog securable at catalog.schema.secret, so the GRANTs and audit logs you already use for data now cover credentials - no more workspace-scoped secret scopes off to the side.",
+    "introducedAt": { "date": "2026-07", "link": "https://docs.databricks.com/aws/en/release-notes/product/2026/july" },
+    "status": "active",
+    "releases": [
+      { "type": "public-preview", "date": "2026-07", "link": "https://docs.databricks.com/aws/en/release-notes/product/2026/july" }
+    ],
+    "note": "Entered Public Preview July 10, 2026. Distinct from the older workspace-scoped Secrets API (secret scopes): a UC secret is a governed securable in the three-level namespace, so access is controlled by Unity Catalog privileges rather than per-workspace scope ACLs.",
+    "prediction": ["Unity Secrets", "Genie Secrets", "Lakebase Vault"],
+    "source": "https://docs.databricks.com/aws/en/security/secrets/unity-catalog-secrets",
+    "links": [
+      { "url": "https://docs.databricks.com/aws/en/release-notes/product/2026/july", "kind": "official", "label": "Databricks release notes: Secrets in Unity Catalog Public Preview (July 2026)" }
+    ],
+    "verified": "2026-07-23"
   }
 ]
