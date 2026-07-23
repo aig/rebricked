@@ -855,7 +855,7 @@
   },
   {
     "id": "model-serving",
-    "limitations": { "note": "Documented limits include at most 1000 endpoints per workspace, a 16 MB request payload (4 MB for AI agent endpoints), a 597-second model execution duration per request, 50 create/update operations per 5-minute window, up to 1024 provisioned concurrency per model, and no logging for requests or responses over 1 MB.", "link": "https://docs.databricks.com/aws/en/machine-learning/model-serving/model-serving-limits", "date": "2026-07-23" },
+    "limitations": { "note": "Documented limits include at most 1000 endpoints per workspace, a 16 MB request payload (4 MB for AI agent endpoints), a 597-second model execution duration per request, 50 create/update operations per 5-minute window, up to 200 provisioned concurrency per endpoint and per model, and no logging for requests or responses over 1 MB.", "link": "https://docs.databricks.com/aws/en/machine-learning/model-serving/model-serving-limits", "date": "2026-07-23" },
     "name": "Model Serving",
     "aliases": ["Serverless Real-Time Inference", "Mosaic AI Model Serving", "Model Serving"],
     "category": "AI / ML",

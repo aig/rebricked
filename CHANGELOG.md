@@ -74,6 +74,14 @@ Format loosely follows [Keep a Changelog](https://keepachangelog.com/); dates ar
   authoritative figures: Databricks Apps (up to 100 apps per workspace) and Clean Rooms (up to
   100 per metastore, 10 collaborators). The add-entry skill now tells future runs to cross-check
   any numeric quota against this reference.
+- **Soft vs hard limits.** Using the resource-limits page's `Fixed` column (No = raisable on
+  request, Yes = hard), confirmed the numbers already cited in notes are all Fixed=Yes (hard),
+  and corrected a stale Model Serving figure (provisioned concurrency is 200 per endpoint and per
+  model, not 1024). Docs and the add-entry skill now instruct writing soft limits as raisable
+  defaults rather than absolute caps. Separately re-verified the Lakebase and Databricks AI Search
+  notes against their official docs - both cite hard limits (Lakebase's 10 instances / 1000
+  connections / 2 TB; AI Search's 10,000-ANN / 200-hybrid / 10 MB caps) - so no softening was
+  needed.
 
 ## 2026-07-22 (Agent Bricks + status/release model rework)
 

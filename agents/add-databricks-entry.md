@@ -232,7 +232,9 @@ Rules that apply to every entry:
   caps), cross-check it against the mirrored resource-limits reference at
   `reference/docs.databricks.com/aws/en/resources/limits.md` (refresh it with
   `python scripts/fetch_reference.py databricks-resource-limits`) - it is the authoritative index
-  of Databricks numeric limits.
+  of Databricks numeric limits. Its **`Fixed`** column says whether a limit is hard (`Yes`) or
+  soft (`No` - raisable by request through the account team); write soft limits as defaults that
+  can be increased ("up to N by default, raisable on request"), not as absolute caps.
 
 ## Step 5 - Wire it into the sidebar
 

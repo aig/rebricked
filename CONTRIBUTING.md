@@ -163,7 +163,9 @@ not stored.
   **omit it when the docs list none - never invent a limitation.** Cross-check any numeric quota
   against the mirrored resource-limits reference
   (`reference/docs.databricks.com/aws/en/resources/limits.md`, refreshed with
-  `python scripts/fetch_reference.py databricks-resource-limits`). The UI renders it as a
+  `python scripts/fetch_reference.py databricks-resource-limits`). That page's **`Fixed`** column
+  tells you whether a limit is hard (`Yes`) or soft (`No` - raisable on request via the account
+  team); write soft limits as raisable defaults, not absolute caps. The UI renders it as a
   "Limitations" line on the card.
 - `source` is **required** on every entry. No source, no entry. Prefer official Databricks /
   Microsoft Learn docs - an archived "legacy"/"migrate from X" doc is ideal for deprecations.

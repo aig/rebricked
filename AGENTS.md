@@ -93,8 +93,9 @@ id, never re-slugged. Dates are `YYYY` or `YYYY-MM`; `verified` is `YYYY-MM-DD`;
   feature's officially documented limitations, the official page it came from, and the date you
   fetched it (`date` is `YYYY-MM-DD`). Sourced like everything else; **omit it (never invent one)
   when the docs list no limitations.** Cross-check any numeric quota against the mirrored
-  resource-limits reference (`python scripts/fetch_reference.py databricks-resource-limits`).
-  Rendered as a "Limitations" line on the card.
+  resource-limits reference (`python scripts/fetch_reference.py databricks-resource-limits`); its
+  `Fixed` column marks a limit hard (`Yes`) or soft (`No` - raisable on request), so write soft
+  ones as raisable defaults, not absolute caps. Rendered as a "Limitations" line on the card.
 - `prediction` is the one deliberately fictional field: an **array** of made-up *next*
   names (funny but plausible). Renames/features only (not deprecations); the UI always
   labels them invented.
