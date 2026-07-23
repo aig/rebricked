@@ -1050,6 +1050,18 @@
       }, 800);
     });
 
+    // The "/" badge in the search box: click it to clear the current query and
+    // refocus, ready to type again. Dispatching a real input event reuses the
+    // handler above (reset + re-render) so clearing behaves like typing to empty.
+    const slashKey = $(".topsearch .slash");
+    if (slashKey) {
+      slashKey.addEventListener("click", () => {
+        searchEl.value = "";
+        searchEl.dispatchEvent(new Event("input", { bubbles: true }));
+        searchEl.focus();
+      });
+    }
+
     // Back/forward and pasted-in-place links.
     window.addEventListener("hashchange", () => { applyRoute(); render(); });
 
