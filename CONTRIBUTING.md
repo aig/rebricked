@@ -101,6 +101,7 @@ not stored.
   ],
   "occasion": "Where/when it shipped (optional).",
   "note": "Anything an engineer needs - what it replaces, GA vs preview caveats (optional).",
+  "limitations": { "note": "Documented caveats - omit when the docs list none.", "link": "https://docs.databricks.com/...", "date": "YYYY-MM-DD" },
   "source": "https://docs.databricks.com/...",
   "verified": "YYYY-MM-DD"
 }
@@ -156,6 +157,14 @@ not stored.
   `{ "url", "kind": "official"|"community"|"internet", "label" }`. (That inner `kind`
   classifies the *link* - it is unrelated to the entry's `status`.) Every URL must be real
   and verified - a dead or off-topic link is worse than none.
+- `limitations` (optional, any entry): a single `{ "note", "link", "date" }` - a concise
+  summary of the feature's **officially documented** limitations, the official page it came from,
+  and the date you fetched it (`date` is `YYYY-MM-DD`). Source it like everything else and
+  **omit it when the docs list none - never invent a limitation.** Cross-check any numeric quota
+  against the mirrored resource-limits reference
+  (`reference/docs.databricks.com/aws/en/resources/limits.md`, refreshed with
+  `python scripts/fetch_reference.py databricks-resource-limits`). The UI renders it as a
+  "Limitations" line on the card.
 - `source` is **required** on every entry. No source, no entry. Prefer official Databricks /
   Microsoft Learn docs - an archived "legacy"/"migrate from X" doc is ideal for deprecations.
 - `verified` is the date a human last confirmed it. Put the day you checked.

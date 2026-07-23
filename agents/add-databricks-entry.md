@@ -188,6 +188,7 @@ to it, and change this card's `status` to `renamed`.
     { "type": "public-preview", "date": "2024-03" },
     { "type": "ga", "date": "2024-11" }
   ],
+  "limitations": { "note": "Officially documented caveats - omit when the docs list none.", "link": "https://docs.databricks.com/...", "date": "YYYY-MM-DD" },
   "source": "https://docs.databricks.com/...",
   "verified": "YYYY-MM-DD"
 }
@@ -227,7 +228,11 @@ Rules that apply to every entry:
   you fetched it (`date` is `YYYY-MM-DD`). Look it up on the feature's official page; write a
   concise `note` (hyphens, no em dashes) and cite the exact URL. **Omit the field entirely when
   the docs list no limitations - never invent one.** Held to the same real-and-sourced bar as
-  every other claim.
+  every other claim. For any numeric quota in a `note` (counts, sizes, per-workspace/metastore
+  caps), cross-check it against the mirrored resource-limits reference at
+  `reference/docs.databricks.com/aws/en/resources/limits.md` (refresh it with
+  `python scripts/fetch_reference.py databricks-resource-limits`) - it is the authoritative index
+  of Databricks numeric limits.
 
 ## Step 5 - Wire it into the sidebar
 

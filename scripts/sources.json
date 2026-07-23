@@ -7,6 +7,11 @@
       "sitemap": "https://docs.databricks.com/sitemap.xml",
       "include": ["/aws/en/release-notes/product/\\d{4}/[a-z]+/?$"],
       "exclude": []
+    },
+    {
+      "id": "databricks-resource-limits",
+      "name": "Databricks Resource Limits (AWS)",
+      "urls": ["https://docs.databricks.com/aws/en/resources/limits"]
     }
   ]
 }

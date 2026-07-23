@@ -92,7 +92,9 @@ id, never re-slugged. Dates are `YYYY` or `YYYY-MM`; `verified` is `YYYY-MM-DD`;
 - `limitations` (optional, any entry): a single `{ note, link, date }` - a short summary of the
   feature's officially documented limitations, the official page it came from, and the date you
   fetched it (`date` is `YYYY-MM-DD`). Sourced like everything else; **omit it (never invent one)
-  when the docs list no limitations.** Rendered as a "Limitations" line on the card.
+  when the docs list no limitations.** Cross-check any numeric quota against the mirrored
+  resource-limits reference (`python scripts/fetch_reference.py databricks-resource-limits`).
+  Rendered as a "Limitations" line on the card.
 - `prediction` is the one deliberately fictional field: an **array** of made-up *next*
   names (funny but plausible). Renames/features only (not deprecations); the UI always
   labels them invented.
@@ -103,7 +105,7 @@ id, never re-slugged. Dates are `YYYY` or `YYYY-MM`; `verified` is `YYYY-MM-DD`;
 **Active feature** (`status: "active"` + `introducedAt`) - a standalone new capability.
 Required: `id`, `name`, `category`, `what`, `fact`, `status`, `introducedAt`, `source`,
 `verified`. Optional: `aliases`, `releases` (maturity timeline - see below), `occasion`,
-`note`, `prediction`, `links`. No `from`/`to`.
+`note`, `prediction`, `links`, `limitations`. No `from`/`to`.
 
 **Current rename tip** (`status: "active"` + `from`) - the name in use now for something that
 was renamed. Same required set but with `from` instead of `introducedAt` (never a `to`), and a
@@ -112,13 +114,13 @@ that is what makes the feature-vs-tip distinction calculable.
 
 **Renamed** (`status: "renamed"`) - a superseded former name. Required: `id`, `name`,
 `category`, `what`, `fact`, `status`, `to`, `successorId` (the next name's id), `source`,
-`verified`. Optional: `abbr`, `aliases`, `from`, `occasion`, `note`, `prediction`, `links`.
-A rename is thus one-or-more `renamed` cards chained to an `active` current name.
+`verified`. Optional: `abbr`, `aliases`, `from`, `occasion`, `note`, `prediction`, `links`,
+`limitations`. A rename is thus one-or-more `renamed` cards chained to an `active` current name.
 
 **Deprecation** (`status: "deprecated"`, `"legacy"`, or `"retired"`) - required: `id`,
 `name`, `category`, `what`, `fact`, `status`, `deprecatedAt`, `source`, `verified`. Optional:
 `aliases`, `replacement`, `successorId` (id of the successor's card), `removedAt`, `occasion`,
-`note`, `links`.
+`note`, `links`, `limitations`.
 - `"deprecated"` (still around, discouraged), `"retired"` (access ended), or `"legacy"`
   (docs call it legacy/unsupported but no formal deprecation date exists).
 - Omit `successorId`/`replacement` when nothing directly replaces it - the UI shows "retired".

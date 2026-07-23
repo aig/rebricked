@@ -342,6 +342,21 @@ def sources_html(d):
     return f'<section class="entry-sources"><h2>Sources</h2><ul>{"".join(items)}</ul></section>'
 
 
+def limitations_html(d):
+    """Documented limitations, sourced: a single { note, link, date }. The date rides the
+    source link's tooltip. No field -> nothing rendered (parity with app.js)."""
+    lim = d.get("limitations")
+    if not isinstance(lim, dict) or not lim.get("note"):
+        return ""
+    link = lim.get("link") or ""
+    when = f"Limitations - official docs, checked {lim['date']}" if lim.get("date") else "Limitations - official docs"
+    src = f" {src_link('', link, when)}" if link else ""
+    return (
+        f'<p class="entry-limitations"><span class="lim-icon" aria-hidden="true">&#9888;</span> '
+        f'<span><span class="lim-label">Limitations:</span> {esc(lim["note"])}{src}</span></p>'
+    )
+
+
 # Release maturity (orthogonal to lifecycle status) - Databricks' own stages. `releases` is
 # a stage timeline; the pill shows the LAST stage. A stage is reached (has a `date`) or only
 # announced (`is_announced: true`, no date -> rendered "<Stage> soon", dashed). Entries with
@@ -456,6 +471,9 @@ ENTRY_STYLE = """  <style>
     .entry-what { font-size: 15px; margin: 0 0 18px; }
     .entry-fact { font-size: 15px; margin: 0 0 18px; padding: 12px 14px; border-left: 3px solid var(--accent, #FF3621); background: var(--card, rgba(127,127,127,.06)); border-radius: 0 10px 10px 0; }
     .entry-note { font-size: 14px; color: var(--muted, #8a94a3); margin: 0 0 18px; }
+    .entry-limitations { font-size: 14px; color: var(--muted, #8a94a3); margin: 0 0 18px; display: flex; gap: 8px; align-items: baseline; }
+    .entry-limitations .lim-icon { flex: none; color: var(--c-deprecated, #B45309); }
+    .entry-limitations .lim-label { font-weight: 600; color: var(--c-deprecated-ink, #92430A); }
     .entry-facts { margin: 0 0 22px; border-top: 1px solid var(--rail-line, rgba(127,127,127,.2)); }
     .fact-row { display: grid; grid-template-columns: 180px 1fr; gap: 12px; padding: 9px 2px; border-bottom: 1px solid var(--rail-line, rgba(127,127,127,.2)); }
     .fact-row dt { color: var(--muted, #8a94a3); font-weight: 600; margin: 0; }
@@ -554,6 +572,7 @@ ENTRY_BODY = """
           <p class="entry-what">{what}</p>
           {fact}
           {note}
+          {limitations}
           <a class="entry-cta" href="{root}?id={id}">Open in REbricked &rarr;</a>
           {facts}
           {sources}
@@ -650,6 +669,7 @@ def render_entry(d, by_id, data):
             else ""
         ),
         note=(f'<p class="entry-note">{esc(d["note"])}</p>' if d.get("note") else ""),
+        limitations=limitations_html(d),
         id=attr(d["id"]),
         facts=facts_html(d),
         sources=sources_html(d),

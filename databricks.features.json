@@ -23,6 +23,7 @@
   },
   {
     "id": "lakeflow-declarative-pipelines",
+    "limitations": { "note": "A workspace is limited to 1000 concurrent pipeline updates; a pipeline allows at most 100 source files (or 50 folder entries referencing up to 1000 files); pivot() is unsupported, Delta time travel works only on streaming tables not materialized views, and identity columns are incompatible with AUTO CDC processing.", "link": "https://docs.databricks.com/aws/en/ldp/limitations", "date": "2026-07-23" },
     "name": "Lakeflow Declarative Pipelines",
     "aliases": ["Lakeflow Spark Declarative Pipelines", "Lakeflow pipelines", "DLT"],
     "category": "Data engineering",
@@ -66,6 +67,7 @@
   },
   {
     "id": "lakeflow-jobs",
+    "limitations": { "note": "A workspace is limited to 2000 concurrent task runs, 10000 job creations per hour, 12000 saved jobs, and 1000 tasks per job; job parameters using dynamic values are capped at 10000 characters.", "link": "https://docs.databricks.com/aws/en/jobs/", "date": "2026-07-23" },
     "name": "Lakeflow Jobs",
     "aliases": ["Workflows", "Jobs", "Jobs & Pipelines"],
     "category": "Data engineering",
@@ -105,6 +107,7 @@
   },
   {
     "id": "sql-warehouse",
+    "limitations": { "note": "The maximum number of queries in a warehouse queue is 1000 for all warehouse types, and pro/classic SKUs have a fixed limit of one cluster per 10 concurrent queries.", "link": "https://docs.databricks.com/aws/en/compute/sql-warehouse/warehouse-behavior", "date": "2026-07-23" },
     "name": "SQL Warehouse",
     "aliases": ["SQL Endpoint", "SQL Endpoints", "SQL Warehouses"],
     "category": "Compute / BI",
@@ -146,6 +149,7 @@
   },
   {
     "id": "git-folders",
+    "limitations": { "note": "Working branches are capped at 1 GB, files over 10 MB can't be viewed in the UI, each Git operation supports up to 2 GB memory and 4 GB disk, and Databricks recommends under 20000 files; GPG commit signing and SSH aren't supported, and Git operations that alter notebook source lose cell outputs and state.", "link": "https://docs.databricks.com/aws/en/repos/limits", "date": "2026-07-23" },
     "name": "Git folders",
     "aliases": ["Databricks Repos", "Repos"],
     "category": "Developer experience",
@@ -184,6 +188,7 @@
   },
   {
     "id": "catalog-explorer",
+    "limitations": { "note": "The Catalog Explorer UI is not available in all Databricks workspaces.", "link": "https://docs.databricks.com/aws/en/catalog-explorer/", "date": "2026-07-23" },
     "name": "Catalog Explorer",
     "aliases": ["Data Explorer", "Catalog"],
     "category": "Data governance",
@@ -227,6 +232,7 @@
   },
   {
     "id": "ai-bi-dashboards",
+    "limitations": { "note": "A dashboard supports up to 15 pages, 100 datasets, and 100 widgets per page; most charts render at most 10000 rows (tables up to 100K before truncation), and email-subscription attachments are capped at 9 MB combined with 100000 rows per Excel attachment.", "link": "https://docs.databricks.com/aws/en/dashboards/limits", "date": "2026-07-23" },
     "name": "AI/BI Dashboards",
     "aliases": ["Lakeview dashboards", "Lakeview", "Dashboards"],
     "category": "BI / Dashboards",
@@ -365,6 +371,7 @@
   },
   {
     "id": "genie-one",
+    "limitations": { "note": "Workspaces using the compliance security profile are excluded from account-level Genie One aggregation, and account-level Genie One may process Databricks-generated metadata in the US, so it should be disabled if compliance policies prohibit US metadata transmission.", "link": "https://docs.databricks.com/aws/en/genie-one/genie", "date": "2026-07-23" },
     "name": "Genie One",
     "aliases": ["Genie", "Databricks One"],
     "category": "AI / BI",
@@ -426,6 +433,7 @@
   },
   {
     "id": "databricks-ai-search",
+    "limitations": { "note": "Row- and column-level permissions aren't supported, indexes can't be cloned across workspaces, and the _id column name is reserved. Query results are capped (10000 rows for ANN, 200 for hybrid/full-text) with a 10 MB max response, and storage-optimized endpoints add limits such as no continuous sync, embedding dimensions divisible by 16, and no CMK or FedRAMP support.", "link": "https://docs.databricks.com/aws/en/generative-ai/vector-search", "date": "2026-07-23" },
     "name": "Databricks AI Search",
     "aliases": ["Mosaic AI Vector Search", "Databricks Vector Search", "Vector Search"],
     "category": "AI / ML",
@@ -464,6 +472,7 @@
   },
   {
     "id": "databricks-sql",
+    "limitations": { "note": "Databricks limits queries on a SQL warehouse by compute cost; classic and pro warehouses have a fixed limit of one cluster per 10 concurrent queries, and autoscaling only adds clusters up to the configured maximum.", "link": "https://docs.databricks.com/aws/en/compute/sql-warehouse/warehouse-behavior", "date": "2026-07-23" },
     "name": "Databricks SQL",
     "abbr": "DBSQL",
     "aliases": ["SQL Analytics", "DBSQL", "Databricks SQL Analytics"],
@@ -548,6 +557,7 @@
   },
   {
     "id": "supervisor-agent",
+    "limitations": { "note": "A single supervisor system can't use more than 50 agents, AI Search index subagents support only Delta Sync indexes, and workspaces with Enhanced Security and Compliance aren't supported. Web search requires databricks-gpt-5 in the system.ai allowlist and is unavailable in HIPAA/BAA workspaces or regions lacking web-search-capable models.", "link": "https://docs.databricks.com/aws/en/generative-ai/agent-bricks/multi-agent-supervisor", "date": "2026-07-23" },
     "name": "Supervisor Agent",
     "aliases": ["Multi-Agent Supervisor", "Agent Bricks: Multi-Agent Supervisor", "MAS"],
     "category": "AI / ML",
@@ -589,6 +599,7 @@
   },
   {
     "id": "information-extraction",
+    "limitations": { "note": "Information Extraction agents have a 128k-token maximum context length, and union schema types aren't supported.", "link": "https://docs.databricks.com/aws/en/generative-ai/agent-bricks/info-extraction", "date": "2026-07-23" },
     "name": "Information Extraction",
     "aliases": ["Key Information Extraction"],
     "category": "AI / ML",
@@ -612,6 +623,7 @@
   },
   {
     "id": "knowledge-assistant",
+    "limitations": { "note": "Files larger than 100 MB and documents over 500 pages (except text and markdown) are skipped during ingestion, as are files whose names start with an underscore or period. For table sources only the selected content column is processed, and AI Search indexes must use a supported embedding model (databricks-gte-large-en, databricks-bge-large-en, or databricks-qwen3-embedding-0-6b).", "link": "https://docs.databricks.com/aws/en/generative-ai/agent-bricks/knowledge-assistant", "date": "2026-07-23" },
     "name": "Knowledge Assistant",
     "aliases": ["Knowledge Assistant Agent"],
     "category": "AI / ML",
@@ -634,6 +646,7 @@
   },
   {
     "id": "classification",
+    "limitations": { "note": "Built on ai_classify, which isn't available on Databricks SQL Classic and can't be used with views. Labels must number between 2 and 500 unique values, with names of 1-100 characters and descriptions of 0-1000 characters, and total context is capped at 128000 tokens.", "link": "https://docs.databricks.com/aws/en/sql/language-manual/functions/ai_classify", "date": "2026-07-23" },
     "name": "Classification",
     "aliases": ["Text Classification"],
     "category": "AI / ML",
@@ -699,6 +712,7 @@
   },
   {
     "id": "genie-code",
+    "limitations": { "note": "Databricks recommends always reviewing generated code before running it, since it can make mistakes; auto-approve is a best-effort productivity heuristic, not a security boundary, and fair-usage limits apply to prevent abuse.", "link": "https://docs.databricks.com/aws/en/notebooks/use-databricks-assistant", "date": "2026-07-23" },
     "name": "Genie Code",
     "aliases": ["Databricks Assistant", "Assistant"],
     "category": "AI / ML",
@@ -841,6 +855,7 @@
   },
   {
     "id": "model-serving",
+    "limitations": { "note": "Documented limits include at most 1000 endpoints per workspace, a 16 MB request payload (4 MB for AI agent endpoints), a 597-second model execution duration per request, 50 create/update operations per 5-minute window, up to 1024 provisioned concurrency per model, and no logging for requests or responses over 1 MB.", "link": "https://docs.databricks.com/aws/en/machine-learning/model-serving/model-serving-limits", "date": "2026-07-23" },
     "name": "Model Serving",
     "aliases": ["Serverless Real-Time Inference", "Mosaic AI Model Serving", "Model Serving"],
     "category": "AI / ML",
@@ -910,6 +925,7 @@
   },
   {
     "id": "liquid-clustering",
+    "limitations": { "note": "Clustering-on-write doesn't support source queries with filters, joins, or aggregations (DBR 15.1 and below); you can't create a liquid-clustered table via Structured Streaming write (DBR 15.4 LTS and below); and automatic liquid clustering and row-level concurrency aren't available for managed Apache Iceberg v2 tables.", "link": "https://docs.databricks.com/aws/en/delta/clustering", "date": "2026-07-23" },
     "name": "Liquid Clustering",
     "aliases": ["CLUSTER BY", "liquid", "automatic liquid clustering"],
     "category": "Data engineering",
@@ -933,6 +949,7 @@
   },
   {
     "id": "unity-catalog-volumes",
+    "limitations": { "note": "Volumes require Databricks Runtime 13.3 LTS or above or a SQL warehouse, don't support dbutils.fs commands distributed to executors, can't be accessed from RDDs or Unity Catalog UDFs, can't back a custom Hadoop file system, and require fully qualified /Volumes paths (no abbreviated paths).", "link": "https://docs.databricks.com/aws/en/volumes/", "date": "2026-07-23" },
     "name": "Unity Catalog Volumes",
     "aliases": ["Volumes", "managed volumes", "external volumes"],
     "category": "Data governance",
@@ -955,6 +972,7 @@
   },
   {
     "id": "lakehouse-federation",
+    "limitations": { "note": "Federated queries are read-only (except legacy Hive metastore federation), don't use Databricks query caching (Result Cache and Disk Cache), lowercase table and schema names, ignore names invalid in Unity Catalog, and can't federate foreign tables with case-sensitive identifiers for Azure Synapse or Redshift.", "link": "https://docs.databricks.com/aws/en/query-federation/database-federation", "date": "2026-07-23" },
     "name": "Lakehouse Federation",
     "aliases": ["Query Federation", "foreign catalogs", "catalog federation"],
     "category": "Data governance",
@@ -994,6 +1012,7 @@
   },
   {
     "id": "databricks-odbc-driver",
+    "limitations": { "note": "Cloud Fetch applies only to query results larger than 1 MB, requires an E2 workspace and an S3 bucket without versioning, and needs ODBC driver 2.6.17 or above; with bucket versioning enabled, Databricks can't garbage-collect older result files after the 24-hour retention, which can grow storage.", "link": "https://docs.databricks.com/aws/en/integrations/odbc/capability", "date": "2026-07-23" },
     "name": "Databricks ODBC Driver",
     "aliases": ["Simba Spark ODBC Driver", "Simba ODBC", "Spark ODBC Driver"],
     "category": "Developer experience",
@@ -1037,6 +1056,7 @@
   },
   {
     "id": "opensharing",
+    "limitations": { "note": "Shared tabular data must be Delta or managed Iceberg; providers can't share tables using liquid clustering with partition filtering, collations, row filters, column masks, or SHALLOW CLONE; notebooks, volumes, and AI models can only be shared Databricks-to-Databricks; and shareable views must be defined on Delta tables or other shareable views.", "link": "https://docs.databricks.com/aws/en/delta-sharing/", "date": "2026-07-23" },
     "name": "OpenSharing",
     "aliases": ["Delta Sharing", "Open Sharing"],
     "category": "Data governance",
@@ -1115,6 +1135,7 @@
   },
   {
     "id": "lakebase",
+    "limitations": { "note": "Provisioned instances are scoped to a single workspace (no cross-workspace access) and capped at up to 1000 concurrent connections, 2 TB logical size across all databases, and ten instances per workspace; Lakebase Autoscaling limits each branch to 500 Postgres roles, 500 databases, and 16 TB storage, with a default of 20 concurrently active computes per project.", "link": "https://docs.databricks.com/aws/en/oltp/instances/", "date": "2026-07-23" },
     "name": "Lakebase",
     "aliases": ["Lakebase Postgres", "OLTP Database", "Databricks Postgres"],
     "category": "Data engineering",
@@ -1138,6 +1159,7 @@
   },
   {
     "id": "lakehouse-real-time",
+    "limitations": { "note": "Supports read (SELECT) queries only - no writes or ETL - and doesn't support Genie, Genie Agents, or Jobs tasks. It excludes many table types (system, Delta Sharing, UC default-storage/external, Hive metastore, foreign/federated), the ADBC/ODBC/Go drivers, GEOGRAPHY/GEOMETRY types, AI functions, Python UDFs, and the compliance security profile.", "link": "https://docs.databricks.com/aws/en/compute/sql-warehouse/real-time", "date": "2026-07-23" },
     "name": "Lakehouse Real-Time",
     "aliases": ["Lakehouse//RT", "Lakehouse RT", "Reyden"],
     "category": "Compute / BI",
@@ -1160,6 +1182,7 @@
   },
   {
     "id": "lakeflow-designer",
+    "limitations": { "note": "By default, operators process only a limited sample of data; setting Rows scanned to Max reruns all upstream operators over the complete, unbounded dataset and can take a long time.", "link": "https://docs.databricks.com/aws/en/designer/what-is-lakeflow-designer", "date": "2026-07-23" },
     "name": "Lakeflow Designer",
     "aliases": ["Designer", "Visual Data Prep"],
     "category": "Data engineering",
@@ -1183,6 +1206,7 @@
   },
   {
     "id": "attribute-based-access-control",
+    "limitations": { "note": "Requires serverless compute or Databricks Runtime 16.4+ and uses governed tags; policies can't be applied directly to views; quotas apply (e.g. 10000 policies per metastore, 50 per table, 20 principals per policy); time travel and cloning fail on policy-protected tables unless the principal is exempted; and there's no ABAC information schema (use the REST API).", "link": "https://docs.databricks.com/aws/en/data-governance/unity-catalog/abac/requirements", "date": "2026-07-23" },
     "name": "Attribute-based access control (ABAC)",
     "aliases": ["ABAC", "attribute-based access control"],
     "category": "Data governance",
@@ -1206,6 +1230,7 @@
   },
   {
     "id": "unity-catalog-managed-iceberg-tables",
+    "limitations": { "note": "Path-based access isn't supported except in Compatibility Mode (which bypasses access controls and risks corruption), credential vending isn't supported on default-storage workspaces, bucketing isn't supported, managed tables can't be shallow cloned to or from external tables, and multi-statement transactions are in Private Preview.", "link": "https://docs.databricks.com/aws/en/tables/managed", "date": "2026-07-23" },
     "name": "Unity Catalog managed Iceberg tables",
     "aliases": ["managed Iceberg tables", "Iceberg managed tables", "UC Iceberg"],
     "category": "Data engineering",
@@ -1229,6 +1254,7 @@
   },
   {
     "id": "serverless-workspaces",
+    "limitations": { "note": "A serverless workspace must be in a region that supports serverless compute, and because serverless compute and default storage aren't deployed in your own cloud account, cloud-provider credits or discounts don't apply to that usage.", "link": "https://docs.databricks.com/aws/en/admin/workspace/serverless-workspaces", "date": "2026-07-23" },
     "name": "Serverless workspaces",
     "aliases": ["serverless workspace"],
     "category": "Compute / BI",
@@ -1268,6 +1294,7 @@
   },
   {
     "id": "standard-and-dedicated-access-modes",
+    "limitations": { "note": "On Standard access mode, Databricks Runtime for ML, GPU compute, R, RDD APIs, spark-submit tasks, Hive UDFs, the Scala SparkContext, and streaming socket sources aren't supported; compute runs as a low-privilege user with restricted filesystem access and can't reach the instance metadata service or other services in the Databricks VPC.", "link": "https://docs.databricks.com/aws/en/compute/access-mode-limitations", "date": "2026-07-23" },
     "name": "Standard and Dedicated access modes",
     "aliases": ["Shared cluster", "Single user cluster", "shared access mode", "single-user access mode"],
     "category": "Compute / BI",
@@ -1308,6 +1335,7 @@
   },
   {
     "id": "oauth-token-federation",
+    "limitations": { "note": "Each service principal supports at most 20 federation policies (use separate service principals for separate workloads); the JWT must be signed with RS256 or ES256; inline JWKS JSON allows at most 5 keys (use a JWKS URI for more); and each access token's lifetime derives from the supplied federated token (commonly about one hour).", "link": "https://docs.databricks.com/aws/en/dev-tools/auth/oauth-federation-policy", "date": "2026-07-23" },
     "name": "OAuth token federation",
     "aliases": ["token federation", "workload identity federation"],
     "category": "Developer experience",
@@ -1428,6 +1456,7 @@
   },
   {
     "id": "databricks-clean-rooms",
+    "limitations": { "note": "Clean rooms are limited to at most ten collaborators and up to 100 clean rooms per metastore (with 10 clean-room notebook tasks running simultaneously), can't be renamed after creation, and require serverless compute plus Unity Catalog with OpenSharing enabled.", "link": "https://docs.databricks.com/aws/en/clean-rooms/", "date": "2026-07-23" },
     "name": "Databricks Clean Rooms",
     "aliases": ["Clean Rooms", "clean room"],
     "category": "Data governance",
@@ -1473,6 +1502,7 @@
   },
   {
     "id": "databricks-connect",
+    "limitations": { "note": "Doesn't support the display() API, Databricks Utilities (credentials, library, notebook workflow, widgets), SparkContext and RDDs, distributed ML training, or CREATE TABLE AS SELECT, with version-specific restrictions such as no streaming foreachBatch and no queries over 3600 seconds on Runtime 13.3 LTS and below.", "link": "https://docs.databricks.com/aws/en/dev-tools/databricks-connect/python/limitations", "date": "2026-07-23" },
     "name": "Databricks Connect (13.3 LTS+)",
     "aliases": ["Databricks Connect", "databricks-connect"],
     "category": "Developer experience",
@@ -1494,6 +1524,7 @@
   },
   {
     "id": "unity-catalog",
+    "limitations": { "note": "Doesn't support bucketing, prohibits cross-type table cloning (managed-to-managed and external-to-external only), disallows workspace-level groups in GRANT statements, and imposes Databricks Runtime version requirements for Python UDFs, Scala UDFs, and R in dynamic views used for row- or column-level security.", "link": "https://docs.databricks.com/aws/en/data-governance/unity-catalog/requirements", "date": "2026-07-23" },
     "name": "Unity Catalog",
     "aliases": ["UC", "Unity"],
     "category": "Data governance",
@@ -1516,6 +1547,7 @@
   },
   {
     "id": "models-in-unity-catalog",
+    "limitations": { "note": "Doesn't support stages, webhooks, email notifications, comment threads, or the activity log, and several search-API fields and operators (order_by, tag filters, and operators beyond exact equality) are unsupported.", "link": "https://docs.databricks.com/aws/en/machine-learning/manage-model-lifecycle/", "date": "2026-07-23" },
     "name": "Models in Unity Catalog",
     "aliases": ["UC models", "Models in UC"],
     "category": "AI / ML",
@@ -1537,6 +1569,7 @@
   },
   {
     "id": "feature-engineering-in-unity-catalog",
+    "limitations": { "note": "A FeatureSpec can contain at most 1000 features, at most 50 tables can train a model, and at most 100 on-demand features can be used in a model; Databricks Runtime ML clusters can't be used with Lakeflow pipelines (standard access mode clusters are required).", "link": "https://docs.databricks.com/aws/en/machine-learning/feature-store/troubleshooting-and-limitations", "date": "2026-07-23" },
     "name": "Feature Engineering in Unity Catalog",
     "aliases": ["Feature Engineering", "databricks-feature-engineering"],
     "category": "AI / ML",
@@ -1558,6 +1591,7 @@
   },
   {
     "id": "new-sql-editor",
+    "limitations": { "note": "Can't be used for queries you don't own or that contain query-based dropdown lists, and shared query results are limited to 64000 rows.", "link": "https://docs.databricks.com/aws/en/sql/user/sql-editor/", "date": "2026-07-23" },
     "name": "New SQL editor",
     "aliases": ["SQL editor", "Databricks SQL editor"],
     "category": "Compute / BI",
@@ -1579,6 +1613,7 @@
   },
   {
     "id": "databricks-sql-alerts",
+    "limitations": { "note": "An existing saved SQL query can't be reused when creating an alert (each alert owns its query definition), and alerts no longer support the legacy UNKNOWN status, resolving only to OK, TRIGGERED, or ERROR.", "link": "https://docs.databricks.com/aws/en/sql/user/alerts/", "date": "2026-07-23" },
     "name": "Databricks SQL alerts (new)",
     "aliases": ["SQL alerts", "Databricks SQL alerts"],
     "category": "BI / Dashboards",
@@ -1615,7 +1650,7 @@
     "occasion": { "date": "2025-06", "link": "https://www.databricks.com/blog/announcing-general-availability-databricks-apps", "note": "GA announced June 11, 2025" },
     "note": "Launched in Public Preview November 2024 and reached GA June 11, 2025 - by which point Databricks reported 20,000+ apps built by 2,500+ customers, across 28 regions and all three clouds. Supports Python (Streamlit, Dash, Gradio, Plotly) and JavaScript/Node.js (React and friends).",
     "prediction": ["Genie Apps", "Lakeflow Apps", "Databricks Apps One"],
-    "limitations": { "note": "The number of apps per workspace is capped (see Resource limits), with additional limits on Databricks Free Edition.", "link": "https://docs.databricks.com/aws/en/dev-tools/databricks-apps/", "date": "2026-07-23" },
+    "limitations": { "note": "Up to 100 apps per workspace, with additional limits on Databricks Free Edition.", "link": "https://docs.databricks.com/aws/en/resources/limits", "date": "2026-07-23" },
     "source": "https://docs.databricks.com/aws/en/dev-tools/databricks-apps/",
     "links": [
       { "url": "https://www.databricks.com/blog/announcing-general-availability-databricks-apps", "kind": "community", "label": "Databricks Blog: GA of Databricks Apps" },
