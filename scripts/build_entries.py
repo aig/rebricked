@@ -236,7 +236,7 @@ def meta_for(d, by_id, data):
         )
         kicker = word.capitalize()
     else:  # rename
-        if (d.get("status") or "current") == "renamed":
+        if status_value(d) == "renamed":
             succ = successors_of(d, by_id)
             current = succ[-1]["name"] if succ else None
             when = fmt_date(date_of(d.get("to")))

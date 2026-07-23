@@ -3,6 +3,15 @@
 All notable changes to **rebricked**, grouped by day.
 Format loosely follows [Keep a Changelog](https://keepachangelog.com/); dates are `YYYY-MM-DD`.
 
+## 2026-07-23 (generated pages: fix renamed-entry rendering)
+
+### Fixed
+- **`scripts/build_entries.py`**: after `status` became a `{ value, link, date }` object, `meta_for`
+  still compared `d.get("status")` (now a dict) to the string `"renamed"`, so every `renamed` entry
+  fell through to the "current name" branch and its static page rendered with the wrong
+  title/lead/kicker (e.g. Databricks One shown as the current name instead of "now Genie One").
+  Switched the check to `status_value(d)`; all 22 renamed entries now render correctly.
+
 ## 2026-07-23 (source fact-check: corrected wrong/unsupported claims)
 
 ### Fixed
