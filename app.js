@@ -504,6 +504,15 @@
     // Spotlight stays up across filter toggles and year selections - anything on the
     // main list. It hides only when the user drills into an entry/section/category/search.
     if (sp) sp.hidden = !onList;
+    // The quiz/badge banner and the page's intro blurb (the text under the "They changed
+    // it" title) are Home invitations - once someone is actively searching, they're just
+    // noise above the results, so tuck both away while a query is present. Applies on every
+    // device; the "They changed it" title and the filters stay put.
+    const searching = searchEl.value.trim() !== "";
+    const qb = $("#quiz-banner");
+    if (qb) qb.hidden = searching;
+    const sub = $(".page-sub");
+    if (sub) sub.hidden = searching;
   }
 
   // A record's lifecycle as a flow key shared by the chain arrows' colors: a
