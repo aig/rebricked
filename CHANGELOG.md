@@ -3,6 +3,41 @@
 All notable changes to **rebricked**, grouped by day.
 Format loosely follows [Keep a Changelog](https://keepachangelog.com/); dates are `YYYY-MM-DD`.
 
+## 2026-07-24 (validation pass + doc sync)
+
+### Changed
+- **`AGENTS.md`**: brought the Layout table back in sync with the repo. The
+  `build_entries.py` row now notes it also generates `feed.xml` (the RSS 2.0 feed, not just
+  `sitemap.xml`), and added rows for `scripts/fetch_reference.py` (+ `scripts/sources.json`),
+  the generated `sitemap.xml`/`feed.xml`, and `COVERAGE-GAPS.md` - all real files that were
+  missing from the table. Also gave the "Data shape" section the same object-shape treatment as
+  `CONTRIBUTING.md`: the date fields (`from`/`to`/`introducedAt`/`deprecatedAt`/`removedAt`) and
+  `occasion` are now documented as `{ date, link }` / `{ date, link, note }` objects rather than
+  bare strings.
+- **`CONTRIBUTING.md`**: brought the documented schema back in line with the actual data +
+  `app.js`. Several fields had drifted from string to object and the doc still showed the old
+  string form in every example:
+  - **Date fields** (`from`, `to`, `introducedAt`, `deprecatedAt`, `removedAt`) are each a
+    `{ date, link }` object in 100% of the data (the date plus its confirmation doc, mirroring
+    `status`); the examples showed bare strings (`"from": "2021"`). Converted all example
+    occurrences and added a field rule describing the object shape.
+  - **`occasion`** is a `{ date, link, note }` object (all 32 uses; `app.js` reads
+    `occasion.note`/`.link` and the validator requires an object), but all three examples wrote
+    it as a bare string. Fixed the examples and added the missing `occasion` field rule.
+  - Documented the `category` field's closed allow-list - the validator hard-fails any category
+    outside the seven-item `VALID_CATEGORIES` set, yet the doc only showed categories via
+    scattered inline examples; added a field rule enumerating the set and how to extend it.
+  - Verified every other claim still holds (the resource-limits mirror path, the
+    `fetch_reference.py databricks-resource-limits` source id, and the `releases` stage list all
+    match the code). The validator still tolerates the bare-string forms for legacy resilience,
+    so this is a docs-only correction - no data change.
+
+### Verified
+- Schema gate green: `python scripts/validate.py` -> `OK: 89 entries valid.`
+- Regenerated the SEO layer (`python scripts/build_entries.py`): 89 entry pages, 1 vendor hub,
+  `sitemap.xml` 97 URLs, `feed.xml` 190 items - byte-for-byte identical to what was committed,
+  confirming the generated docs are in sync with `databricks.features.json`.
+
 ## 2026-07-23 (fact-check dates flagged during deep-linking)
 
 ### Fixed

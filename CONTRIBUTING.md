@@ -40,8 +40,8 @@ not stored.
   "fact": [
     { "note": "Self-contained real-but-fun one-liner about THIS name - don't mention the newer name.", "link": "https://docs.databricks.com/..." }
   ],
-  "from": "2021",
-  "to": "2023",
+  "from": { "date": "2021", "link": "https://docs.databricks.com/..." },
+  "to": { "date": "2023", "link": "https://docs.databricks.com/..." },
   "successorId": "the-newest-name",
   "status": { "value": "renamed", "link": "https://docs.databricks.com/...", "date": "YYYY-MM-DD" },
   "source": "https://docs.databricks.com/...",
@@ -57,9 +57,9 @@ not stored.
     { "note": "Real-but-fun one-liner about the current thing - funny, but true and sourceable.", "link": "https://docs.databricks.com/..." },
     { "note": "A second sourced fun fact (optional) - up to three total, each with its own link.", "link": "https://docs.databricks.com/..." }
   ],
-  "from": "2023",
+  "from": { "date": "2023", "link": "https://docs.databricks.com/..." },
   "status": { "value": "active", "link": "https://docs.databricks.com/...", "date": "YYYY-MM-DD" },
-  "occasion": "Where it was announced (optional).",
+  "occasion": { "date": "2023", "link": "https://docs.databricks.com/...", "note": "Where it was announced, e.g. Data + AI Summit 2023 (optional)." },
   "source": "https://docs.databricks.com/...",
   "verified": "YYYY-MM-DD"
 }
@@ -79,10 +79,10 @@ not stored.
   "fact": [
     { "note": "Real-but-fun one-liner about the feature - funny, but the fact must be true and sourceable.", "link": "https://docs.databricks.com/..." }
   ],
-  "deprecatedAt": "2024",
-  "removedAt": "2026-01",
+  "deprecatedAt": { "date": "2024", "link": "https://docs.databricks.com/..." },
+  "removedAt": { "date": "2026-01", "link": "https://docs.databricks.com/..." },
   "status": { "value": "deprecated", "link": "https://docs.databricks.com/...", "date": "YYYY-MM-DD" },
-  "occasion": "End of life date, if any (optional).",
+  "occasion": { "date": "2026-01", "link": "https://docs.databricks.com/...", "note": "End of life, if any (optional)." },
   "source": "https://docs.databricks.com/...",
   "verified": "YYYY-MM-DD"
 }
@@ -100,13 +100,13 @@ not stored.
   "fact": [
     { "note": "Real-but-fun one-liner about the feature - funny, but the fact must be true and sourceable.", "link": "https://docs.databricks.com/..." }
   ],
-  "introducedAt": "2024",
+  "introducedAt": { "date": "2024", "link": "https://docs.databricks.com/..." },
   "status": { "value": "active", "link": "https://docs.databricks.com/...", "date": "YYYY-MM-DD" },
   "releases": [
     { "type": "public-preview", "date": "2024-03" },
     { "type": "ga", "date": "2024-11" }
   ],
-  "occasion": "Where/when it shipped (optional).",
+  "occasion": { "date": "2024-11", "link": "https://docs.databricks.com/...", "note": "Where/when it shipped, e.g. GA at Data + AI Summit (optional)." },
   "limitations": { "note": "Documented caveats - omit when the docs list none.", "link": "https://docs.databricks.com/...", "date": "YYYY-MM-DD" },
   "source": "https://docs.databricks.com/...",
   "verified": "YYYY-MM-DD"
@@ -120,6 +120,12 @@ not stored.
   replaced); the validator branches on `status.value` to pick the required fields. `link` is the
   official doc backing the call (a real http(s) URL, may equal `source`) and `date` (`YYYY-MM-DD`,
   never future) is the day you confirmed it. All three are required.
+- **`category` is a closed allow-list** (required, every entry). The validator rejects
+  anything outside this set - the same set the UI's chips are built from, so pick the closest
+  fit rather than coining a new one: `Data engineering`, `Compute / BI`, `Developer experience`,
+  `Data governance`, `BI / Dashboards`, `AI / BI`, `AI / ML`. A genuinely new category is
+  allowed, but add it deliberately to `VALID_CATEGORIES` in
+  [`scripts/validate.py`](scripts/validate.py) in the same PR - never by typo.
 - **Active = features *and* current rename tips.** Don't store which one a card is - it's
   calculated: a standalone **feature** carries its own `introducedAt`; the **current tip** of
   a rename chain carries `from` (and has a `renamed` card pointing at it). An `active` card
@@ -161,6 +167,12 @@ not stored.
   maturity is unknown or moot (e.g. a superseded former name). The UI shows the current (last)
   stage as a pill on a cool-hue ramp (violet -> indigo -> blue -> green; an announced stage
   renders "<Stage> soon", dashed), with the full timeline in the tooltip.
+- `occasion` (optional, any entry) is a dated milestone **object** `{ "date", "link", "note" }`,
+  not a bare string - the moment a name debuted or was retired (a summit, a launch blog, an end
+  of life), carrying its own confirmation link like the date fields do. `date` is `YYYY`/`YYYY-MM`,
+  `link` a real http(s) URL backing it, `note` the short human label (e.g. `"Data + AI Summit 2025"`).
+  The UI appends it to the card's date line. (A plain string is tolerated for legacy resilience,
+  but write new entries as the object.)
 - `links` (optional, every entry): additional classified references, an array of
   `{ "url", "kind": "official"|"community"|"internet", "label" }`. (That inner `kind`
   classifies the *link* - it is unrelated to the entry's `status`.) Every URL must be real
@@ -199,7 +211,12 @@ not stored.
   mismatch, not on a later rename. A rename adds a *new* card with the new name's slug and
   points the old card's `successorId` at it; the old card keeps its id. Never re-slug an
   existing entry.
-- Dates use `YYYY` or `YYYY-MM`. Precision is optional; honesty about precision is not.
+- **Date-bearing fields are `{ "date", "link" }` objects, not bare strings.** `from`, `to`,
+  `introducedAt`, `deprecatedAt`, and `removedAt` each carry the date **plus** the official doc
+  confirming it - the same pattern as `status`/`occasion`. `date` is `YYYY` or `YYYY-MM`; `link`
+  is a real, verified http(s) URL backing that date (it may reuse `source`). Precision is
+  optional; honesty about precision is not. (A bare date string still validates for legacy
+  resilience, but every current entry uses the object - write new ones that way.)
 - Never use em dashes (`—`) in any text field. Use a hyphen (`-`) instead.
 - If sources disagree on a date, use the official doc's date; if the discrepancy is worth
   recording, note it in a `fact` entry with the source that disagrees.
