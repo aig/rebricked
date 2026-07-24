@@ -1,18 +1,30 @@
 # rebricked — Coverage Gap Report
 
-**What was compared:** the project's data file (`databricks.features.json`, 71 curated entries — renames, deprecations, and notable features, plus 106 aliases) against the full Databricks product release notes in `reference/` (103 monthly files, Apr 2018 - Jul 2026).
+**What was compared:** the project's data file (`databricks.features.json`, 94 curated entries — renames, deprecations, and notable features, plus 157 aliases) against the full Databricks product release notes in `reference/` (103 monthly files, Apr 2018 - Jul 2026). The original diff was run against a 71-entry snapshot; see the update log below for gaps closed since.
 
 **Method:** five agents extracted every distinct named product/service/feature from the release notes (~600 raw mentions), deduped to distinct concepts (earliest mention kept), then diffed against every name and alias the project already covers. Nothing was dropped for being minor — per your instruction, this is the whole list.
 
 **Headline:** the project catalogs ~50 distinct product concepts. The release notes name **300+ distinct products/features that the project does not cover.** This is expected — `rebricked` is a *curated* timeline of renames/deprecations/marquee features, not an exhaustive catalog — but here is the complete gap list, grouped so it stays usable.
 
-> Legend: dates are first appearance in the release notes. Items marked **[adjacent]** are sub-features of something the project *does* cover (e.g. a Genie sub-feature) — listed because they are separately named, but they extend a covered entry rather than being wholly absent.
+> Legend: dates are first appearance in the release notes. Items marked **[adjacent]** are sub-features of something the project *does* cover (e.g. a Genie sub-feature) — listed because they are separately named, but they extend a covered entry rather than being wholly absent. Rows marked **✓ now covered** were gaps in the original snapshot that have since been added to the project.
+
+---
+
+## Update log
+
+- **2026-07-24** — Three items promoted from this gap list into the project (rows below marked **✓ now covered**):
+  **Databricks Marketplace** (§15), **Lakeflow Connect** (§2), and **AI Gateway** (§13) — the last added as a rename chain
+  `Mosaic AI Gateway`/`AI Gateway` → **Unity AI Gateway** (rebranded at Data + AI Summit 2026). Their AI-Gateway sub-features
+  (MCP governance, the Beta coding-agent control plane) are now **[adjacent]** to a covered entry rather than wholly absent.
+- **2026-07-24** — Added the free-tier lineage (§17): **Databricks Free Edition** (`active`, serverless no-cost tier launched
+  at Data + AI Summit 2025) and **Databricks Community Edition** (`retired` - the original 2016 free tier, access ended
+  January 1, 2026), chained `databricks-community-edition` → `databricks-free-edition`.
 
 ---
 
 ## Already covered (excluded from the gap list below)
 
-For reference, the project already covers these ~50 concepts (with their rename/deprecation history): Delta Lake, Delta Live Tables / Lakeflow Declarative Pipelines / Spark Declarative Pipelines, Workflows / Lakeflow Jobs, SQL Warehouse (ex SQL Endpoint), Databricks Repos / Git folders, Data Explorer / Catalog Explorer, Lakeview / AI/BI Dashboards, Databricks Asset Bundles / Declarative Automation Bundles, Genie Spaces / Genie Agents / Genie / Databricks One / Genie One, Databricks Assistant / Genie Code, Vector Search / Mosaic AI Vector Search / Databricks AI Search, SQL Analytics / Databricks SQL, Agent Bricks Multi-Agent Supervisor / Supervisor Agent, Model Serving (ex Serverless Real-Time Inference), Workspace Model Registry, Workspace Feature Store, Feature Engineering in UC, Liquid Clustering, Unity Catalog + UC Volumes + UC managed Iceberg tables + Models in UC, Lakehouse Federation, Databricks/Simba ODBC Driver, Delta Sharing / OpenSharing, Lakeflow Pipelines Editor (ex multi-file editor), Lakeflow Designer, Hive metastore (dep), Lakebase, Lakehouse Real-Time, ABAC, Serverless workspaces, Standard/Dedicated access modes, Personal access tokens (legacy), OAuth token federation, Databricks Clean Rooms, Databricks CLI (v0.205+) / Legacy CLI, Databricks Connect, New/Legacy SQL editor, new/legacy SQL alerts, dbx (dep), Legacy dashboards (dep), DBFS mounts (dep), Init scripts on DBFS (dep), No-isolation shared access mode (dep).
+For reference, the project already covers these ~50 concepts (with their rename/deprecation history): Delta Lake, Delta Live Tables / Lakeflow Declarative Pipelines / Spark Declarative Pipelines, Workflows / Lakeflow Jobs, SQL Warehouse (ex SQL Endpoint), Databricks Repos / Git folders, Data Explorer / Catalog Explorer, Lakeview / AI/BI Dashboards, Databricks Asset Bundles / Declarative Automation Bundles, Genie Spaces / Genie Agents / Genie / Databricks One / Genie One, Databricks Assistant / Genie Code, Vector Search / Mosaic AI Vector Search / Databricks AI Search, SQL Analytics / Databricks SQL, Agent Bricks Multi-Agent Supervisor / Supervisor Agent, Model Serving (ex Serverless Real-Time Inference), Workspace Model Registry, Workspace Feature Store, Feature Engineering in UC, Liquid Clustering, Unity Catalog + UC Volumes + UC managed Iceberg tables + Models in UC, Lakehouse Federation, Databricks/Simba ODBC Driver, Delta Sharing / OpenSharing, Lakeflow Pipelines Editor (ex multi-file editor), Lakeflow Designer, Hive metastore (dep), Lakebase, Lakehouse Real-Time, ABAC, Serverless workspaces, Standard/Dedicated access modes, Personal access tokens (legacy), OAuth token federation, Databricks Clean Rooms, Databricks CLI (v0.205+) / Legacy CLI, Databricks Connect, New/Legacy SQL editor, new/legacy SQL alerts, dbx (dep), Legacy dashboards (dep), DBFS mounts (dep), Init scripts on DBFS (dep), No-isolation shared access mode (dep), Databricks Marketplace, Lakeflow Connect, AI Gateway / Mosaic AI Gateway / Unity AI Gateway, Databricks Free Edition, Databricks Community Edition (retired).
 
 ---
 
@@ -61,7 +73,7 @@ For reference, the project already covers these ~50 concepts (with their rename/
 | 2020-02 | COPY INTO |
 | 2020-02 | Data Ingestion Network / Partner Integrations gallery |
 | 2024-02 | File arrival triggers |
-| 2024-07 | Lakeflow Connect (managed ingestion connectors framework) |
+| 2024-07 | Lakeflow Connect (managed ingestion connectors framework) — ✓ now covered |
 | 2025-05 | File events for external locations |
 | 2025-10 | Zerobus Ingest connector (gRPC record-by-record) |
 | 2026-04 | Query-based connectors (cursor-column, no CDC/gateway) |
@@ -299,7 +311,7 @@ For reference, the project already covers these ~50 concepts (with their rename/
 | 2024-07 | Mosaic AI Model Training (umbrella) |
 | 2024-07 | `ai_forecast()` |
 | 2024-09 | AI Playground |
-| 2024-09 | Mosaic AI Gateway (AI Gateway) |
+| 2024-09 | Mosaic AI Gateway (AI Gateway) — ✓ now covered (as `ai-gateway` → `unity-ai-gateway`) |
 | 2024-09 | AI Guardrails |
 | 2024-10 | Structured outputs (Model Serving) |
 | 2024-10 | Batch LLM inference (`ai_query`) |
@@ -325,12 +337,12 @@ For reference, the project already covers these ~50 concepts (with their rename/
 | 2026-03 | `ai_classify` / `ai_extract` (v2) |
 | 2026-04 | Supervisor API **[adjacent]** |
 | 2026-04 | `ai_prep_search` |
-| 2026-04 | AI Gateway MCP governance |
+| 2026-04 | AI Gateway MCP governance **[adjacent]** |
 | 2026-04 | Vector Search retrieval-quality evaluation **[adjacent]** |
 | 2026-06 | Managed agent memory |
 | 2026-06 | Omnigent (coding agent meta-harness) |
 | 2026-06 | `ai_query` (GA general-purpose) |
-| 2026-02 | AI Gateway (Beta / new UI, coding-agent control plane) |
+| 2026-02 | AI Gateway (Beta / new UI, coding-agent control plane) **[adjacent]** |
 | 2026-07 | Lakebridge Agentic Converter |
 | 2026-04 | Sample Data Explorer (Genie Code) **[adjacent]** |
 
@@ -352,7 +364,7 @@ Numerous and named individually in the release notes — not distinct products, 
 |---|---|
 | 2020-02 | Partner Integrations gallery / Data Ingestion Network |
 | 2021-11 | Databricks Partner Connect |
-| 2023-04 | Databricks Marketplace |
+| 2023-04 | Databricks Marketplace — ✓ now covered |
 | 2023-06 | Marketplace private exchanges |
 | 2023-11 | Solution Accelerators in Marketplace |
 | 2024-01 | Model sharing via Marketplace / Delta Sharing |
@@ -421,7 +433,7 @@ FedRAMP Moderate (2022-08), FedRAMP High / GovCloud (2024-04), PCI-DSS (2022-06)
 | 2020-06 | Billable usage log delivery |
 | 2020-06 | Multi-workspace API / Account API |
 | 2020-10 | Audit log delivery |
-| 2020-11 | Databricks Free Edition (later Free Edition, 2025-11) |
+| 2016-02 | Databricks Community Edition (free tier; retired 2026-01) / Databricks Free Edition (2025-06 replacement) — ✓ now covered |
 | 2020-12 | New account console |
 | 2023-06 | System tables |
 | 2024-06 | Budgets |
@@ -456,6 +468,6 @@ FedRAMP Moderate (2022-08), FedRAMP High / GovCloud (2024-04), PCI-DSS (2022-06)
 
 ## How to use this
 
-- **Genuinely absent marquee products** most worth adding to `rebricked`: Photon, Auto Loader, COPY INTO, Unity Catalog data lineage, Databricks Marketplace, Partner Connect, Databricks Apps, MLflow / Managed MLflow, MLflow Model Registry, AutoML, Foundation Model APIs, Mosaic AI Agent Framework, AI Gateway, Lakeflow Connect, Databricks Assistant→Genie Code sub-line, Cluster policies, Instance pools, System tables, Delta Sharing Marketplace, Databricks SQL Serverless / Photon, Databricks Connect, Terraform provider, VS Code extension, Databricks SDKs.
+- **Genuinely absent marquee products** most worth adding to `rebricked`: Photon, Auto Loader, COPY INTO, Unity Catalog data lineage, Partner Connect, MLflow / Managed MLflow, MLflow Model Registry, AutoML, Foundation Model APIs, Mosaic AI Agent Framework, Cluster policies, Instance pools, System tables, Databricks SQL Serverless / Photon, Terraform provider, VS Code extension, Databricks SDKs. *(Databricks Marketplace, AI Gateway, and Lakeflow Connect were on this list and have since been added — see the update log.)*
 - **[adjacent]** items extend something already covered — add only if you want sub-feature granularity.
 - The **hosted foundation models** and **Lakeflow Connect connectors** are the two highest-volume buckets; they are legitimately many, not minor, and are listed in full above.

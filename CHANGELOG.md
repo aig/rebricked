@@ -6,6 +6,47 @@ Format loosely follows [Keep a Changelog](https://keepachangelog.com/); dates ar
 ## 2026-07-24 (validation pass + doc sync)
 
 ### Changed
+- **`COVERAGE-GAPS.md`**: reconciled the gap report with the three entries added today. Updated the
+  header counts (71 -> 92 entries, 154 aliases), added an **Update log** section, marked the
+  Databricks Marketplace (§15), Lakeflow Connect (§2), and Mosaic/AI Gateway (§13) rows **✓ now
+  covered**, reclassified the AI Gateway sub-features as **[adjacent]**, added the three to the
+  "Already covered" list, and trimmed them from the "genuinely absent marquee products" summary.
+- **`ai-gateway` -> `unity-ai-gateway`** (rename chain): re-verification of AI Gateway against
+  live docs found it has been rebranded **Unity AI Gateway** (announced at Data + AI Summit 2026,
+  June 16, 2026; the docs page is now "AI governance with Unity AI Gateway"). Modeled per the
+  one-card-per-name rule: added a new `active` **`unity-ai-gateway`** card (current name, `from`
+  2026-06, carrying the current governance description, the guardrail/fallback mechanism fact, the
+  DAIS 2026 agents/tools Beta additions, and the GA maturity timeline PP 2024-09 -> GA 2025-06),
+  and converted the existing **`ai-gateway`** card to `status: renamed` (`to` 2026-06,
+  `successorId: unity-ai-gateway`), keeping "Mosaic AI Gateway" as its alias and its Sept-2024
+  Public-Preview history. The core gateway stays GA - only the 2026 agent/tool controls are Beta.
+  Wired `unity-ai-gateway` into the `AI Gateway` rail section.
+
+### Added
+- **`databricks-free-edition`** (feature, `active`, Developer experience) + **`databricks-community-edition`**
+  (deprecation, `retired`): the Databricks free-tier lineage. Free Edition is the no-cost, serverless-only
+  workspace announced at Data + AI Summit 2025 (June 2025). It replaced Community Edition, the original 2016
+  free tier (beta Feb 2016, GA June 7 2016), which was retired January 1, 2026. Modeled as a
+  replacement (different offering, serverless re-signup), not a rename: `databricks-community-edition`
+  carries `deprecatedAt` 2025, `removedAt` 2026-01, `replacement`, and `successorId: databricks-free-edition`.
+  Free Edition carries documented `limitations` (single 2X-Small warehouse, 5 concurrent tasks, no GPUs by
+  default, non-commercial use). Both wired into the `Workspace` rail section. Reconciled in `COVERAGE-GAPS.md`.
+- **`lakeflow-connect`** (feature, `active`, Data engineering): Lakeflow Connect, the managed
+  data-ingestion pillar of Lakeflow - point-and-click connectors (Salesforce, Workday,
+  ServiceNow, SQL Server, PostgreSQL, ...) that land data in Unity Catalog on serverless compute
+  with CDC. Sourced history: unveiled with Lakeflow at Data + AI Summit (June 12, 2024, "entering
+  preview soon"), first connectors (Salesforce Platform + Workday Reports) GA April 2, 2025,
+  Lakeflow overall GA June 12, 2025. `releases` `public-preview` (2024) -> `ga` (2025-04); a
+  `fact` notes the 2023 Arcion acquisition that powers native database ingestion. Wired into the
+  `Jobs & Pipelines` rail section. `python scripts/validate.py` -> `OK: 91 entries valid.`
+- **`databricks-marketplace`** (feature, `active`, Data governance): Databricks Marketplace, the
+  open marketplace for data sets, notebooks, ML models, dashboards, and AI assets, built on open
+  sharing (Delta Sharing / OpenSharing). Sourced history: unveiled at the 2022 Data + AI Summit
+  ("available in the coming months"), Public Preview April 27, 2023, GA June 28, 2023 at Data +
+  AI Summit 2023. `releases` timeline `public-preview` (2023-04) -> `ga` (2023-06). Wired into
+  the `Discover` rail section in `app.js`. `python scripts/validate.py` -> `OK: 90 entries valid.`
+
+### Changed
 - **`AGENTS.md`**: brought the Layout table back in sync with the repo. The
   `build_entries.py` row now notes it also generates `feed.xml` (the RSS 2.0 feed, not just
   `sitemap.xml`), and added rows for `scripts/fetch_reference.py` (+ `scripts/sources.json`),
