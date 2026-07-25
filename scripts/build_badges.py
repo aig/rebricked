@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Generate a shareable badge page for every quiz result (0..5 correct of 5).
 
-Each combination of right answers gets its own folder, badges/<n>-of-5/, holding:
+Each result gets its own folder, badges/<n>-of-5/, holding:
   - index.html : the badge shown as a screen INSIDE the app chrome (sidebar rail +
                  top bar), with a funny "achievement" card and Open Graph tags
   - og.png     : a clean 1200x630 preview image (rendered from an inline card)
@@ -11,8 +11,8 @@ like a screen of Rebricked, and every rail item / the logo / search link back in
 real app. The quiz's LinkedIn button shares the folder URL; its OG tags (incl. og:image)
 make the badge show in the preview, and "Take the quiz" carries the score back as ?quiz=.
 
-The quiz asks a random 5 of the eligible entries, so the meaningful outcome is the
-count of correct answers, not which specific ones - hence one page per score (0..5).
+The quiz asks a random set of eligible entries, so the meaningful outcome is the
+count of correct answers, not which specific ones - hence one page per score.
 
 Keep the NAV/ICONS below roughly in sync with app.js - it's a static mirror of the rail.
 
@@ -101,14 +101,15 @@ def stars_html(n, filled=None):
     return "".join(out)
 
 
-def badge_card_html(n, title_e, blurb_e):
+def badge_card_html(n, level, title_e, blurb_e):
     """The achievement card - one source of truth shared by the badge page and the
     og.png, so the LinkedIn preview is the exact same card the visitor lands on."""
     return (
         f'<div class="badge-card badge-tier-{n}">'
-        f'<div class="badge-emblem">{badge_emblem(TIERS[n])}</div>'
+        f'<div class="badge-emblem">{badge_emblem(TIERS[n])}'
+        f'<div class="badge-cert-level">{html.escape(level)}</div></div>'
         f'<h2 class="badge-name">{title_e}</h2>'
-        f'<div class="badge-stars" role="img" aria-label="{n} out of {TOTAL} stars">{stars_html(n)}</div>'
+        f'<div class="badge-stars" role="img" aria-label="{n} out of {TOTAL} correct">{stars_html(n)}</div>'
         f'<div class="badge-score">{n} / {TOTAL} correct</div>'
         '<p class="badge-recipient" id="badge-recipient" hidden><strong id="badge-recipient-name"></strong></p>'
         f'<p class="badge-blurb">{blurb_e}</p>'
@@ -301,23 +302,19 @@ PAGE = """<!DOCTYPE html>
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>{title} - REbricked badge ({n}/{total})</title>
+  <title>{level}: {title} - REbricked badge ({n}/{total})</title>
   <meta name="description" content="{blurb}" />
   <link rel="canonical" href="{page_url}" />
   <meta name="robots" content="index, follow, max-image-preview:large" />
   <meta property="og:type" content="website" />
   <meta property="og:site_name" content="REbricked" />
-  <meta property="og:title" content="REbricked Certified: {title} ({n}/{total})" />
+  <meta property="og:title" content="REbricked {level}: {title} ({n}/{total})" />
   <meta property="og:description" content="{blurb}" />
   <meta property="og:url" content="{page_url}" />
-  <meta property="og:image" content="{img_url}" />
-  <meta property="og:image:width" content="1200" />
-  <meta property="og:image:height" content="630" />
-  <meta property="og:image:alt" content="REbricked badge: {title}, {n} of {total} correct" />
+  {image_meta}
   <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="REbricked Certified: {title} ({n}/{total})" />
+  <meta name="twitter:title" content="REbricked {level}: {title} ({n}/{total})" />
   <meta name="twitter:description" content="{blurb}" />
-  <meta name="twitter:image" content="{img_url}" />
   <link rel="stylesheet" href="../../styles.css" />
   <link rel="icon" href="/assets/favicon.ico" sizes="any" />
   <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32.png" />
@@ -335,7 +332,7 @@ PAGE = """<!DOCTYPE html>
         <section class="badge-intro" aria-labelledby="badge-intro-title">
           <div>
             <h1 id="badge-intro-title">How well do you know Databricks renames?</h1>
-            <p>Answer five questions about names that changed, then earn your own shareable REbricked badge.</p>
+            <p>Choose a five-question rename round or ten definition questions, then earn your own shareable REbricked badge.</p>
           </div>
           <a class="badge-intro-cta" href="../../?startQuiz=1">Take the quiz and get your badge &rarr;</a>
         </section>
@@ -413,6 +410,11 @@ def render_png(browser, html_path, png_path, profile_dir):
 
 
 def main():
+    # Keep previously rendered previews when rebuilding on a machine without a browser.
+    cached_images = {
+        path.parent.name: path.read_bytes()
+        for path in OUT.glob("*/og.png")
+    } if OUT.exists() else {}
     if OUT.exists():
         shutil.rmtree(OUT)
     OUT.mkdir(parents=True)
@@ -420,35 +422,48 @@ def main():
     rail = render_rail()
     browser = find_browser()
     if not browser:
-        print("WARNING: no Chromium-based browser found - og.png images will NOT be "
-              "regenerated. Pages still reference og.png; install Edge/Chrome and re-run.")
+        print("WARNING: no Chromium-based browser found - new og.png images will NOT be "
+              "rendered. Existing previews are preserved; install Edge/Chrome and re-run "
+              "to add previews for new result pages.")
 
     styles_uri = (ROOT / "styles.css").as_uri()
     made_images = 0
     with tempfile.TemporaryDirectory() as tmp:
-        for n in range(TOTAL + 1):
+        for level, slug_suffix in (("Associate", ""), ("Professional", "-professional")):
+          for n in range(TOTAL + 1):
             _emoji, title, blurb = BADGES[n]
             title_e = html.escape(title)
             blurb_e = html.escape(blurb)
-            folder = OUT / f"{n}-of-{TOTAL}"
+            folder = OUT / f"{n}-of-{TOTAL}{slug_suffix}"
             folder.mkdir(parents=True)
-            page_url = f"{BASE_URL}/badges/{n}-of-{TOTAL}/"
-            card = badge_card_html(n, title_e, blurb_e)
+            page_url = f"{BASE_URL}/badges/{n}-of-{TOTAL}{slug_suffix}/"
+            card = badge_card_html(n, level, title_e, blurb_e)
+            image_key = folder.name
+            if image_key in cached_images:
+                folder.joinpath("og.png").write_bytes(cached_images[image_key])
+            image_url = page_url + "og.png"
+            image_meta = (
+                f'<meta property="og:image" content="{image_url}" />\n'
+                '  <meta property="og:image:width" content="1200" />\n'
+                '  <meta property="og:image:height" content="630" />\n'
+                f'  <meta property="og:image:alt" content="REbricked {level} badge: {title_e}, {n} of {TOTAL} correct" />\n'
+                f'  <meta name="twitter:image" content="{image_url}" />'
+            ) if browser or image_key in cached_images else ""
 
             folder.joinpath("index.html").write_text(PAGE.format(
-                n=n, total=TOTAL, pct=round(n / TOTAL * 100),
+                n=n, total=TOTAL, level=level, pct=round(n / TOTAL * 100),
                 card=card, title=title_e, blurb=blurb_e,
                 favicon=FAVICON, rail=rail, topbar=TOPBAR, js=INLINE_JS,
-                page_url=page_url, img_url=page_url + "og.png",
+                page_url=page_url, image_meta=image_meta,
             ), encoding="utf-8")
 
             if browser:
-                src = Path(tmp) / f"og-{n}.html"
+                src = Path(tmp) / f"og-{n}{slug_suffix}.html"
                 src.write_text(OG_PAGE.format(styles=styles_uri, card=card), encoding="utf-8")
-                if render_png(browser, src, folder / "og.png", Path(tmp) / f"prof-{n}"):
+                if render_png(browser, src, folder / "og.png", Path(tmp) / f"prof-{n}{slug_suffix}"):
                     made_images += 1
 
-    print(f"OK: wrote {TOTAL + 1} badge pages to {OUT.relative_to(ROOT)}/"
+    print(f"OK: wrote {(TOTAL + 1) * 2} badge pages to {OUT.relative_to(ROOT)}/"
           f" ({made_images} og.png image(s) rendered).")
     return 0
 
