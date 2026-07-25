@@ -2363,6 +2363,62 @@ body.modal-open {
   color: var(--faint);
 }
 
+.quiz-difficulties {
+  display: grid;
+  gap: 12px;
+  margin-top: 18px;
+}
+
+.quiz-difficulty {
+  display: grid;
+  gap: 4px;
+  width: 100%;
+  padding: 16px;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: inherit;
+  text-align: left;
+  cursor: pointer;
+  transition: border-color .12s, transform .12s, background .12s;
+}
+
+.quiz-difficulty:hover {
+  border-color: var(--accent);
+  background: color-mix(in srgb, var(--accent) 7%, var(--bg));
+  transform: translateY(-1px);
+}
+
+.quiz-difficulty-level {
+  color: var(--accent);
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: .07em;
+  text-transform: uppercase;
+}
+
+.quiz-difficulty-title {
+  font-size: 16px;
+  font-weight: 700;
+}
+
+.quiz-difficulty-copy {
+  color: var(--muted);
+  font-size: 12.5px;
+}
+
+.quiz-definition {
+  margin: -4px 0 16px;
+  padding: 12px 14px;
+  border-left: 3px solid var(--accent);
+  border-radius: 0 8px 8px 0;
+  background: var(--bg);
+  color: var(--ink);
+  font-size: 14px;
+  line-height: 1.5;
+}
+
 /* money-tree ladder - one segment per question */
 .quiz-ladder {
   display: flex;
@@ -2426,6 +2482,15 @@ body.modal-open {
 
 .quiz-final b {
   color: var(--accent);
+}
+
+.badge-cert-level {
+  margin-top: 8px;
+  color: var(--tier);
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: .08em;
+  text-transform: uppercase;
 }
 
 .quiz-pct {
@@ -2898,6 +2963,7 @@ body.modal-open {
 .badge-emblem {
   grid-area: emblem;
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
 }

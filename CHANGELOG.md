@@ -3,6 +3,22 @@
 All notable changes to **rebricked**, grouped by day.
 Format loosely follows [Keep a Changelog](https://keepachangelog.com/); dates are `YYYY-MM-DD`.
 
+## 2026-07-25
+
+### Added
+- Added a quiz difficulty picker. The existing five-question rename quiz is now **Associate**;
+  **Professional** asks ten definition-to-feature multiple-choice questions using the sourced
+  `what.note` descriptions of current entries.
+- Both levels continue to use the existing five-tier badge set; Professional scores are
+  mapped proportionally onto that scale.
+- Preserved the original `/badges/<score>-of-5/` URLs as **Associate** badges for links
+  already shared. Professional results use separate
+  `/badges/<score>-of-5-professional/` URLs, so their certification level is explicit
+  without breaking old links.
+- Professional now always opens with the Genie One definition; its answer options prioritize
+  the real rename lineage and fill remaining slots only with fictional predictions from that
+  same card.
+
 ## 2026-07-24 (validation pass + doc sync)
 
 ### Changed

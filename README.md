@@ -29,7 +29,8 @@ features** - sourced, dated, and searchable - dressed up as the Databricks conso
 
 ### The fun bits
 
-- **Quiz mode** - "guess the current name," 5 questions per round, score + streak, and a
+- **Quiz mode** - Associate ("guess the current name," 5 questions) or Professional
+  ("name the feature from its definition," 10 questions), with score + streak and a
   results screen. Share your score on LinkedIn via a link that encodes the result, so
   whoever opens it gets a "beat this score" challenge banner.
 - **Deep links** - `#<entry-id>` opens a single entry; `?q=<term>` reflects the search box.

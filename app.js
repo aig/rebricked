@@ -1447,15 +1447,23 @@
   }
 
   // ---- quiz: "guess the current name" ----
-  const QUIZ_LEN = 5; // questions per round
+  const QUIZ_LENGTHS = { easy: 5, medium: 10 };
   const QUIZ_KEYS = ["A", "B", "C", "D"]; // Millionaire-style answer labels
   // marks[] holds one true/false per answered question, driving the money-tree ladder.
-  const quizState = { score: 0, total: 0, streak: 0, answered: false, asked: [], lastId: null, marks: [], recipient: null };
+  const quizState = { difficulty: null, score: 0, total: 0, streak: 0, answered: false, asked: [], lastId: null, marks: [], recipient: null };
   let quizReturnFocus = null; // element to restore focus to when the dialog closes
+
+  function quizLength() {
+    return QUIZ_LENGTHS[quizState.difficulty] || QUIZ_LENGTHS.easy;
+  }
 
   // Entries that pose a fair "what's it called now?" question: renames (old → current)
   // and deprecations with a named replacement.
   function quizPool() {
+    if (quizState.difficulty === "medium") {
+      // One current card per capability keeps both the definition and its answer unambiguous.
+      return DATA.filter((d) => statusValue(d) === "active" && whatNote(d));
+    }
     return DATA.filter((d) => {
       const k = kindOf(d);
       // a former name whose current name is knowable, or a deprecation with a successor
@@ -1489,12 +1497,55 @@
     quizState.lastId = null;
     quizState.marks = [];
     quizState.recipient = null;
-    renderLadder();
+    quizState.difficulty = null;
     el.hidden = false;
     document.body.classList.add("modal-open");
     quizReturnFocus = document.activeElement;
     const closeBtn = $("#quiz-close");
     if (closeBtn) closeBtn.focus();
+    renderDifficultyPicker();
+  }
+
+  function renderDifficultyPicker() {
+    const body = $("#quiz-body");
+    const title = $("#quiz-title");
+    const tag = $(".quiz-tag");
+    const scorebar = $(".quiz-scorebar");
+    const ladder = $("#quiz-ladder");
+    if (!body) return;
+    if (title) title.textContent = "Choose your challenge";
+    if (tag) tag.textContent = "How well do you know the Databricks name game?";
+    if (scorebar) scorebar.hidden = true;
+    if (ladder) ladder.innerHTML = "";
+    body.innerHTML =
+      `<div class="quiz-difficulties">` +
+      `<button class="quiz-difficulty" data-difficulty="easy">` +
+      `<span class="quiz-difficulty-level">Associate</span>` +
+      `<span class="quiz-difficulty-title">Guess the current name</span>` +
+      `<span class="quiz-difficulty-copy">5 questions · old name → current name</span></button>` +
+      `<button class="quiz-difficulty" data-difficulty="medium">` +
+      `<span class="quiz-difficulty-level">Professional</span>` +
+      `<span class="quiz-difficulty-title">Name that feature</span>` +
+      `<span class="quiz-difficulty-copy">10 questions · definition → feature name</span></button>` +
+      `</div>`;
+    body.querySelectorAll(".quiz-difficulty").forEach((btn) => {
+      btn.addEventListener("click", () => startQuiz(btn.dataset.difficulty));
+    });
+  }
+
+  function startQuiz(difficulty) {
+    if (!QUIZ_LENGTHS[difficulty]) return;
+    quizState.difficulty = difficulty;
+    const title = $("#quiz-title");
+    const tag = $(".quiz-tag");
+    const scorebar = $(".quiz-scorebar");
+    if (title) title.textContent = difficulty === "medium" ? "Name that feature" : "Guess the current name";
+    if (tag) tag.textContent = difficulty === "medium"
+      ? "Match the definition to the Databricks feature."
+      : "It kept getting renamed. Did you keep up?";
+    if (scorebar) scorebar.hidden = false;
+    track("quiz-start", { difficulty });
+    renderLadder();
     nextQuestion();
   }
 
@@ -1507,7 +1558,11 @@
   // with Open Graph tags, so the badge shows in the preview. Only reachable once the
   // round is complete, which is also the only time the share button is shown.
   function quizResultURL() {
-    const url = new URL(location.origin + pageDir() + "badges/" + quizState.score + "-of-" + QUIZ_LEN + "/");
+    // Both certifications use the existing five-tier badge set. Professional has
+    // ten questions, so convert its score proportionally onto the 0..5 badge scale.
+    const badgeScore = Math.round((quizState.score / quizLength()) * 5);
+    const suffix = quizState.difficulty === "medium" ? "-professional" : "";
+    const url = new URL(location.origin + pageDir() + "badges/" + badgeScore + "-of-5" + suffix + "/");
     if (quizState.recipient) {
       url.searchParams.set("name", quizState.recipient);
     }
@@ -1523,7 +1578,7 @@
     });
     const text =
       `I scored ${quizState.score}/${quizState.total} (${pct}%) on REbricked - the quiz for ` +
-      `whether you can keep up with everything Databricks has renamed. Think you can beat me? ${link}`;
+      `how well you know Databricks features and their ever-changing names. Think you can beat me? ${link}`;
     const shareUrl =
       "https://www.linkedin.com/sharing/share-offsite/?url=" + encodeURIComponent(link);
     copy(text).then((ok) => {
@@ -1568,7 +1623,7 @@
     if (st) st.textContent = quizState.streak >= 2 ? `🔥 ${quizState.streak} in a row` : "";
     // Sharing sends the named badge page, so only offer it once a name was entered.
     const share = $("#quiz-share");
-    if (share) share.hidden = quizState.total < QUIZ_LEN;
+    if (share) share.hidden = quizState.total < quizLength();
   }
 
   // The money-tree ladder: one segment per question - answered ones show
@@ -1577,7 +1632,7 @@
     const el = $("#quiz-ladder");
     if (!el) return;
     let html = "";
-    for (let n = 0; n < QUIZ_LEN; n++) {
+    for (let n = 0; n < quizLength(); n++) {
       let cls = "quiz-rung";
       if (n < quizState.marks.length) cls += quizState.marks[n] ? " done" : " miss";
       else if (n === quizState.marks.length) cls += " now";
@@ -1593,8 +1648,8 @@
       if (body) body.innerHTML = `<p class="quiz-msg">Not enough data to build a quiz yet.</p>`;
       return;
     }
-    // A round is exactly QUIZ_LEN questions - after the last answer, show results.
-    if (quizState.total >= QUIZ_LEN) {
+    // End the round after the question count configured for this difficulty.
+    if (quizState.total >= quizLength()) {
       finishQuiz();
       return;
     }
@@ -1609,26 +1664,44 @@
       candidates = pool.filter((d) => d.id !== quizState.lastId);
       if (candidates.length === 0) candidates = pool;
     }
-    const correct = candidates[Math.floor(Math.random() * candidates.length)];
+    const fixedFirst = quizState.difficulty === "medium" && quizState.total === 0
+      ? candidates.find((d) => d.id === "genie-one")
+      : null;
+    const correct = fixedFirst || candidates[Math.floor(Math.random() * candidates.length)];
     quizState.asked.push(correct.id);
     quizState.lastId = correct.id;
-    const answer = currentNameOf(correct);
-    // Harder: seed distractors with THIS product's own plausible-but-fake future names
-    // (the most tempting wrong answers), then fill from every other name and predicted
-    // name across the dataset. A deprecation has no predictions of its own, so borrow
-    // the replacement's - same successor, plausible next rebrands (e.g. "DBFS mounts" →
-    // Unity Catalog volumes, decoyed by that product's "…Volumes" predictions).
-    const ownPreds = Array.isArray(correct.prediction) ? correct.prediction : [];
-    const repl = correct.successorId && DATA.find((d) => d.id === correct.successorId);
-    const seedPreds = repl ? [...ownPreds, ...(repl.prediction || [])] : ownPreds;
-    const own = shuffle(seedPreds.filter((n) => n && n !== answer));
-    const others = shuffle(
-      DATA.flatMap((d) => [currentNameOf(d), ...(d.prediction || [])])
-        .filter((n) => n && n !== answer && !n.startsWith("("))
-    );
+    const isMedium = quizState.difficulty === "medium";
+    const answer = isMedium ? correct.name : currentNameOf(correct);
+    let distractors;
+    if (isMedium) {
+      // Professional first uses every real former name from this feature's rename
+      // chain. Any empty slots come only from this same card's fictional predictions,
+      // so the decoys stay specific to the feature being asked about.
+      const formerNames = predecessorsOf(correct)
+        .filter((d) => statusValue(d) === "renamed")
+        .slice()
+        .reverse()
+        .map((d) => d.name);
+      const sameCardPredictions = shuffle(
+        (correct.prediction || []).filter((n) => n && n !== answer)
+      );
+      distractors = [...formerNames, ...sameCardPredictions];
+    } else {
+      // Associate starts with this product's own fictional future names, then fills
+      // from other current and predicted names across the catalogue.
+      const ownPreds = Array.isArray(correct.prediction) ? correct.prediction : [];
+      const repl = correct.successorId && DATA.find((d) => d.id === correct.successorId);
+      const seedPreds = repl ? [...ownPreds, ...(repl.prediction || [])] : ownPreds;
+      const own = shuffle(seedPreds.filter((n) => n && n !== answer));
+      const others = shuffle(
+        DATA.flatMap((d) => [currentNameOf(d), ...(d.prediction || [])])
+          .filter((n) => n && n !== answer && !n.startsWith("("))
+      );
+      distractors = [...own.slice(0, 3), ...others];
+    }
     const seen = new Set([answer]);
     const options = [answer];
-    for (const n of [...own.slice(0, 3), ...others]) {
+    for (const n of distractors) {
       if (options.length >= 4) break;
       if (!seen.has(n)) { seen.add(n); options.push(n); }
     }
@@ -1636,8 +1709,10 @@
 
     renderLadder();
     body.innerHTML =
-      `<p class="quiz-progress">Question ${quizState.total + 1} of ${QUIZ_LEN}</p>` +
-      `<p class="quiz-q">What is <span class="quiz-name">${escapeHtml(quizPrompt(correct))}</span> called now?</p>` +
+      `<p class="quiz-progress">Question ${quizState.total + 1} of ${quizLength()} · ${isMedium ? "Professional" : "Associate"}</p>` +
+      (isMedium
+        ? `<p class="quiz-q">Which feature matches this definition?</p><p class="quiz-definition">${escapeHtml(whatNote(correct))}</p>`
+        : `<p class="quiz-q">What is <span class="quiz-name">${escapeHtml(quizPrompt(correct))}</span> called now?</p>`) +
       `<div class="quiz-opts">` +
       choices
         .map(
@@ -1685,13 +1760,13 @@
         const verdict = right
           ? `<span class="quiz-ok">Correct - you kept up.</span>`
           : `<span class="quiz-no">Nope - it moved on without you.</span>`;
-        const done = quizState.total >= QUIZ_LEN;
+        const done = quizState.total >= quizLength();
         // The entry opens in a new tab so the quiz stays open behind it.
         foot.innerHTML =
-          `<p class="quiz-chain">` +
-          `<span class="old">${escapeHtml(quizPrompt(entry))}</span>` +
-          `<span class="arw">→</span>` +
-          `<span class="new">${escapeHtml(answer)}</span></p>` +
+          (quizState.difficulty === "medium"
+            ? `<p class="quiz-chain"><span class="new">${escapeHtml(answer)}</span></p>`
+            : `<p class="quiz-chain"><span class="old">${escapeHtml(quizPrompt(entry))}</span>` +
+              `<span class="arw">→</span><span class="new">${escapeHtml(answer)}</span></p>`) +
           `<p class="quiz-expl">${verdict} ${escapeHtml(whatNote(entry))}</p>` +
           `<div class="quiz-actions">` +
           `<a class="quiz-see" href="${escapeAttr(entryURL(entry.id))}" target="_blank" rel="noopener">see the entry ↗</a>` +
@@ -1706,7 +1781,7 @@
   function finishQuiz() {
     const body = $("#quiz-body");
     if (!body) return;
-    const pct = Math.round((quizState.score / QUIZ_LEN) * 100);
+    const pct = Math.round((quizState.score / quizLength()) * 100);
     let verdict;
     if (pct === 100) verdict = "Flawless. You've been reading the release notes.";
     else if (pct >= 60) verdict = "Not bad - you mostly kept up with the renaming.";
@@ -1715,7 +1790,7 @@
 
     body.innerHTML =
       `<div class="quiz-result">` +
-      `<p class="quiz-final">You scored <b>${quizState.score} / ${QUIZ_LEN}</b> <span class="quiz-pct">(${pct}%)</span></p>` +
+      `<p class="quiz-final">You scored <b>${quizState.score} / ${quizLength()}</b> <span class="quiz-pct">(${pct}%)</span></p>` +
       `<p class="quiz-verdict">${escapeHtml(verdict)}</p>` +
       `<form class="quiz-recipient" id="quiz-recipient">` +
       `<p class="quiz-recipient-title">Put your name on the badge <span class="quiz-recipient-optional">(optional)</span></p>` +
@@ -1733,7 +1808,7 @@
       `</form>` +
       `</div>`;
     // A perfect round gets the same celebratory brick shower as a roulette landing.
-    if (quizState.score === QUIZ_LEN) brickConfetti();
+    if (quizState.score === quizLength()) brickConfetti();
     const recipientForm = $("#quiz-recipient");
     // The name is optional: an empty field just yields an unnamed badge.
     function saveQuizRecipient() {
@@ -1747,7 +1822,7 @@
     if (recipientForm) recipientForm.addEventListener("submit", (e) => {
       e.preventDefault();
       if (!saveQuizRecipient()) return;
-      track("quiz-badge-created", { score: quizState.score });
+      track("quiz-badge-created", { score: quizState.score, difficulty: quizState.difficulty });
       window.open(quizResultURL(), "_blank", "noopener");
     });
     const share = $("#quiz-share");
