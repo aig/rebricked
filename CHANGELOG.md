@@ -6,6 +6,11 @@ Format loosely follows [Keep a Changelog](https://keepachangelog.com/); dates ar
 ## 2026-07-26
 
 ### Changed
+- **One-click status filtering.** The Latest / Legacy / Renamed filter buttons now use
+  legend-style clicks: from the default all-on state a click isolates that bucket (one
+  click shows only Renamed), clicking the sole active bucket restores all three, and any
+  other click toggles as before - multi-select combinations are still reachable. Tooltips
+  updated to say so.
 - **Moved the deployed site into `www/`.** Everything GitHub Pages publishes (`index.html`,
   `app.js`, `styles.css`, `databricks.features.json`, `assets/`, `badges/`, `disclaimer/`,
   `subscribe/`, `CNAME`, `robots.txt`, `site.webmanifest`, and the generated

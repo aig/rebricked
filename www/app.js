@@ -20,7 +20,9 @@
   let activeSection = null; // {label, ids} when a rail section is selected
   // Multi-select status filter, keyed on the badge a card shows (see bucketOf), not on
   // kindOf. "All" is derived: it's active exactly when all three buckets are selected.
-  // Toggling any bucket off deselects "All" too.
+  // Click semantics (legend-style): from the all-on default a click ISOLATES that bucket
+  // (one click = filter to just it); clicking the only active bucket restores all three;
+  // any other click toggles the bucket, so multi-select is still reachable.
   const KIND_KEYS = ["current", "deprecation", "renamed"];
   let activeKinds = new Set(KIND_KEYS);
   const allKindsSelected = () => KIND_KEYS.every((k) => activeKinds.has(k));
@@ -60,9 +62,9 @@
   // The status filter (top of results). Orthogonal to section/category/search.
   // Keys match the buckets bucketOf() returns and the badges the cards show.
   const FILTERS = [
-    { key: "current", label: "Latest", hint: "In use now - new, preview and current names" },
-    { key: "deprecation", label: "Legacy", hint: "Deprecated or retired" },
-    { key: "renamed", label: "Renamed", hint: "Superseded former names" },
+    { key: "current", label: "Latest", hint: "In use now - new, preview and current names. Click to show only these" },
+    { key: "deprecation", label: "Legacy", hint: "Deprecated or retired. Click to show only these" },
+    { key: "renamed", label: "Renamed", hint: "Superseded former names. Click to show only these" },
   ];
 
   // Status sort order within a year, and the order the filter buttons render in:
@@ -200,7 +202,11 @@
     el.querySelectorAll(".filter").forEach((btn) => {
       btn.addEventListener("click", () => {
         const key = btn.dataset.kind;
-        if (activeKinds.has(key)) {
+        if (allKindsSelected()) {
+          activeKinds = new Set([key]); // all-on default: one click isolates the bucket
+        } else if (activeKinds.size === 1 && activeKinds.has(key)) {
+          resetKinds(); // clicking the sole active bucket brings everything back
+        } else if (activeKinds.has(key)) {
           activeKinds.delete(key);
         } else {
           activeKinds.add(key);
