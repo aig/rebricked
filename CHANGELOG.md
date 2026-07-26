@@ -3,6 +3,18 @@
 All notable changes to **rebricked**, grouped by day.
 Format loosely follows [Keep a Changelog](https://keepachangelog.com/); dates are `YYYY-MM-DD`.
 
+## 2026-07-26
+
+### Changed
+- **Moved the deployed site into `www/`.** Everything GitHub Pages publishes (`index.html`,
+  `app.js`, `styles.css`, `databricks.features.json`, `assets/`, `badges/`, `disclaimer/`,
+  `subscribe/`, `CNAME`, `robots.txt`, `site.webmanifest`, and the generated
+  `databricks/` + `sitemap.xml` + `feed.xml`) now lives under `www/`; repo docs, `scripts/`,
+  `agents/`, and `reference/` stay at the root and are no longer deployed. The Pages workflow
+  uploads `www` instead of the whole repository; `validate.py`, `build_entries.py`, and
+  `build_badges.py` read/write the new paths; `.gitignore` and all doc links updated. Local
+  preview is now `python -m http.server 8777 -d www`. No URL on the published site changes.
+
 ## 2026-07-25
 
 ### Added

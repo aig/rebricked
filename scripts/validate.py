@@ -13,8 +13,9 @@ import sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
-DATA = ROOT / "databricks.features.json"
-APP_JS = ROOT / "app.js"
+WWW = ROOT / "www"
+DATA = WWW / "databricks.features.json"
+APP_JS = WWW / "app.js"
 
 DATE_RE = re.compile(r"^\d{4}(-(0[1-9]|1[0-2]))?$")  # YYYY or YYYY-MM (real months only)
 VERIFIED_RE = re.compile(r"^\d{4}-\d{2}-\d{2}$")     # YYYY-MM-DD

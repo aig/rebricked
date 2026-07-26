@@ -40,9 +40,10 @@ from build_badges import (
 )
 
 ROOT = Path(__file__).resolve().parent.parent
-DATA = ROOT / "databricks.features.json"
-SITEMAP = ROOT / "sitemap.xml"
-FEED = ROOT / "feed.xml"
+WWW = ROOT / "www"  # the deployed site root - everything GitHub Pages publishes lives here
+DATA = WWW / "databricks.features.json"
+SITEMAP = WWW / "sitemap.xml"
+FEED = WWW / "feed.xml"
 TOTAL_BADGES = 5
 
 DEFAULT_VENDOR = "databricks"
@@ -996,10 +997,10 @@ def main():
         by_vendor.setdefault(vendor_of(d), []).append(d)
 
     shutil.rmtree(
-        ROOT / "e", ignore_errors=True
+        WWW / "e", ignore_errors=True
     )  # remove the pre-vendor layout, if present
     for v, entries in by_vendor.items():
-        vdir = ROOT / v
+        vdir = WWW / v
         shutil.rmtree(vdir, ignore_errors=True)
         vdir.mkdir(parents=True)
         vdir.joinpath("index.html").write_text(render_hub(v, entries), encoding="utf-8")

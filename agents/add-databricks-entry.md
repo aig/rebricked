@@ -19,7 +19,7 @@ The user names a Databricks product/feature - it may be brand-new, decades old, 
 three times, or quietly retired. **You do not assume which.** "Add a feature" here means
 "figure out what happened to this thing and record it correctly." Your job is to
 **investigate first**, then classify, then add one sourced object to
-[`databricks.features.json`](../databricks.features.json).
+[`databricks.features.json`](../www/databricks.features.json).
 
 **The one rule: real, sourced changes only. Never be confidently wrong.** Every claim -
 the current name, each date, the lifecycle status - must trace to a live official Databricks
@@ -71,7 +71,7 @@ deprecated in 2024), record what's true and say so in your report.
 
 ## Step 3 - Check for collisions
 
-`Read` [`databricks.features.json`](../databricks.features.json) and grep for the name / candidate `id` and
+`Read` [`databricks.features.json`](../www/databricks.features.json) and grep for the name / candidate `id` and
 any historical names. If the thing is already tracked, update that entry rather than adding
 a duplicate. **When you edit an existing card** (new facts, corrected dates, a rerouted
 `successorId`, moved aliases), re-verify every changed claim against a live official doc and
@@ -256,7 +256,7 @@ Rules that apply to every entry:
 
 ## Step 5 - Wire it into the sidebar
 
-`Read` the `NAV` config in [`app.js`](../app.js) and add the new `id` to the `ids` array of
+`Read` the `NAV` config in [`app.js`](../www/app.js) and add the new `id` to the `ids` array of
 the rail section it belongs to (or add a section if the request calls for one). Every entry
 must be reachable from at least one section - the validator fails on an unreachable id.
 

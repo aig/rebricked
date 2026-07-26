@@ -42,12 +42,13 @@ features** - sourced, dated, and searchable - dressed up as the Databricks conso
 
 ## Running locally
 
-No build step, no framework, no backend - it's a static site. The page fetches
+No build step, no framework, no backend - it's a static site. The whole site lives in
+`www/` (that folder is what GitHub Pages publishes). The page fetches
 `databricks.features.json`, so it must be served over http (opening the file directly is blocked by
 the browser):
 
 ```bash
-python -m http.server 8777
+python -m http.server 8777 -d www
 ```
 
 Then open <http://localhost:8777/>.
@@ -56,10 +57,11 @@ Then open <http://localhost:8777/>.
 
 | File | What it is |
 |------|------------|
-| `databricks.features.json` | **The data. Source of truth.** An array of rename / deprecation / feature objects. |
-| `index.html` | App shell: Databricks-style sidebar rail + content area. |
-| `app.js` | Vanilla JS (single IIFE, no deps). Fetches the data, renders everything, wires search / filters / quiz / roulette / theme. |
-| `styles.css` | All styling. CSS variables; light default, `data-theme="dark"` toggle. |
+| `www/` | **The deployed site root** - everything GitHub Pages publishes. |
+| `www/databricks.features.json` | **The data. Source of truth.** An array of rename / deprecation / feature objects. |
+| `www/index.html` | App shell: Databricks-style sidebar rail + content area. |
+| `www/app.js` | Vanilla JS (single IIFE, no deps). Fetches the data, renders everything, wires search / filters / quiz / roulette / theme. |
+| `www/styles.css` | All styling. CSS variables; light default, `data-theme="dark"` toggle. |
 | `scripts/validate.py` | Schema / format gate for `databricks.features.json`. |
 | `CONTRIBUTING.md` | The entry schema and field rules. |
 | `AGENTS.md` | Guidance for AI agents (and humans) working in the repo. |

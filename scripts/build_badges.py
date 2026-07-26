@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Generate a shareable badge page for every quiz result (0..5 correct of 5).
 
-Each result gets its own folder, badges/<n>-of-5/, holding:
+Each result gets its own folder, www/badges/<n>-of-5/, holding:
   - index.html : the badge shown as a screen INSIDE the app chrome (sidebar rail +
                  top bar), with a funny "achievement" card and Open Graph tags
   - og.png     : a clean 1200x630 preview image (rendered from an inline card)
@@ -17,7 +17,7 @@ count of correct answers, not which specific ones - hence one page per score.
 Keep the NAV/ICONS below roughly in sync with app.js - it's a static mirror of the rail.
 
 Run:  python scripts/build_badges.py
-Rewrites badges/ from scratch. Regenerating og.png needs a Chromium-based browser
+Rewrites www/badges/ from scratch. Regenerating og.png needs a Chromium-based browser
 (Edge or Chrome); the pages themselves are pure static files.
 """
 import html
@@ -29,7 +29,8 @@ from pathlib import Path
 from urllib.parse import quote
 
 ROOT = Path(__file__).resolve().parent.parent
-OUT = ROOT / "badges"
+WWW = ROOT / "www"  # the deployed site root
+OUT = WWW / "badges"
 TOTAL = 5
 
 # Absolute base URL of the deployed site - og:image / og:url must be absolute.
@@ -426,7 +427,7 @@ def main():
               "rendered. Existing previews are preserved; install Edge/Chrome and re-run "
               "to add previews for new result pages.")
 
-    styles_uri = (ROOT / "styles.css").as_uri()
+    styles_uri = (WWW / "styles.css").as_uri()
     made_images = 0
     with tempfile.TemporaryDirectory() as tmp:
         for level, slug_suffix in (("Associate", ""), ("Professional", "-professional")):
