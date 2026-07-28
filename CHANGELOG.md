@@ -3,6 +3,15 @@
 All notable changes to **rebricked**, grouped by day.
 Format loosely follows [Keep a Changelog](https://keepachangelog.com/); dates are `YYYY-MM-DD`.
 
+## 2026-07-28
+
+### Added
+- **Lake Transactional/Analytical Processing (LTAP).** New `active` feature entry for the
+  data processing architecture Databricks launched at Data + AI Summit 2026 (June 16, 2026),
+  which unifies OLTP and OLAP on a single copy of data by combining Lakebase with the
+  Lakehouse. Sourced to the official launch press release; wired into the Compute rail next
+  to Lakebase.
+
 ## 2026-07-26
 
 ### Changed

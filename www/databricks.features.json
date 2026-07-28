@@ -2188,5 +2188,23 @@
       { "url": "https://docs.databricks.com/aws/en/release-notes/product/2026/march", "kind": "official", "label": "Databricks release notes: Declarative Feature Engineering APIs Beta (March 2026)" }
     ],
     "verified": "2026-07-23"
+  },
+  {
+    "id": "lake-transactional-analytical-processing",
+    "name": "Lake Transactional/Analytical Processing (LTAP)",
+    "aliases": ["LTAP"],
+    "category": "Data engineering",
+    "what": { "note": "A data processing architecture that unifies transactional (OLTP) and analytical (OLAP) workloads on a single copy of data in the lake, combining Lakebase (serverless Postgres on open object storage) with the Lakehouse under one governance model - so operational and analytical apps share one source of truth without ETL, replicas, or pipelines.", "link": "https://www.databricks.com/company/newsroom/press-releases/databricks-launches-ltap-first-lake-transactionalanalytical#:~:text=a%20new%20data%20processing%20architecture" },
+    "fact": [
+      { "note": "Databricks bills it as the world's first LTAP platform, putting transactions and analytics on one copy of data so there are no separate replicas to keep in sync.", "link": "https://www.databricks.com/company/newsroom/press-releases/databricks-launches-ltap-first-lake-transactionalanalytical#:~:text=world%27s%20first%20LTAP%20platform" },
+      { "note": "The foundation underneath is Lakebase, which was already handling 12 million database launches per day when LTAP was announced.", "link": "https://www.databricks.com/company/newsroom/press-releases/databricks-launches-ltap-first-lake-transactionalanalytical#:~:text=12%20million%20database%20launches%20per%20day" },
+      { "note": "It borrows a trick from software engineering: git-style branching and snapshots let you fork a live database to experiment, then throw the branch away.", "link": "https://www.databricks.com/company/newsroom/press-releases/databricks-launches-ltap-first-lake-transactionalanalytical#:~:text=git-style%20branching%20and%20snapshots" }
+    ],
+    "introducedAt": { "date": "2026-06", "link": "https://www.databricks.com/company/newsroom/press-releases/databricks-launches-ltap-first-lake-transactionalanalytical#:~:text=Lake%20Transactional%2FAnalytical%20Processing" },
+    "status": { "value": "active", "link": "https://www.databricks.com/company/newsroom/press-releases/databricks-launches-ltap-first-lake-transactionalanalytical", "date": "2026-07-28" },
+    "occasion": { "date": "2026-06", "link": "https://www.databricks.com/company/newsroom/press-releases/databricks-launches-ltap-first-lake-transactionalanalytical", "note": "Launched at Data + AI Summit 2026" },
+    "prediction": ["LTAP One", "Unity Transactional Processing", "Lakebase Analytical Processing"],
+    "source": "https://www.databricks.com/company/newsroom/press-releases/databricks-launches-ltap-first-lake-transactionalanalytical",
+    "verified": "2026-07-28"
   }
 ]
