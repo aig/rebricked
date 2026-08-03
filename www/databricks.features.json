@@ -101,7 +101,7 @@
     "name": "Lakeflow Connect",
     "aliases": ["Lakeflow ingestion", "managed connectors"],
     "category": "Data engineering",
-    "what": { "note": "The managed data-ingestion component of Lakeflow: point-and-click connectors that pull data from SaaS apps and databases (Salesforce, Workday, ServiceNow, SQL Server, PostgreSQL and more) into Unity Catalog on serverless compute, with incremental reads via change data capture.", "link": "https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/#:~:text=ingest%20data%20from%20SaaS%20applications%20and%20databases" },
+    "what": { "note": "The managed data-ingestion component of Lakeflow: point-and-click connectors that pull data from SaaS apps and databases (Salesforce, Workday, ServiceNow, SQL Server, PostgreSQL and more) into Unity Catalog on serverless compute, with incremental reads via change data capture.", "link": "https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/#:~:text=ingesting%20data%20from%20SaaS%20applications%20and%20databases" },
     "fact": [
       { "note": "Its database connectors do change data capture - reading only the rows that changed - so a full table isn't re-copied on every sync.", "link": "https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/#:~:text=change%20data%20capture" },
       { "note": "It was unveiled alongside the rest of Lakeflow at the 2024 Data + AI Summit, but the first connectors (Salesforce Platform and Workday Reports) didn't reach GA until April 2, 2025.", "link": "https://www.databricks.com/blog/announcing-general-availability-lakeflow-connect#:~:text=General%20Availability%20of%20Lakeflow%20Connect%20for%20Salesforce%20Platform%20and%20Workday%20Reports" },
@@ -121,7 +121,7 @@
       { "url": "https://www.databricks.com/blog/announcing-general-availability-databricks-lakeflow", "kind": "official", "label": "Databricks Blog: Lakeflow GA (June 2025)" },
       { "url": "https://www.databricks.com/blog/announcing-sql-server-connector-lakeflow-connect-now-generally-available", "kind": "community", "label": "Databricks Blog: SQL Server connector GA" }
     ],
-    "verified": "2026-07-24"
+    "verified": "2026-08-03"
   },
   {
     "id": "sql-endpoint",
@@ -220,7 +220,7 @@
     "category": "Data governance",
     "what": { "note": "In-workspace UI for browsing Unity Catalog data - schemas and tables - viewing sample data, and handing out grants.", "link": "https://docs.databricks.com/aws/en/catalog-explorer/#:~:text=a%20UI%20to%20explore%20and%20manage%20data" },
     "fact": [
-      { "note": "The point-and-click window into Unity Catalog: browse schemas, peek at sample data and hand out grants without writing a line of SQL.", "link": "https://docs.databricks.com/aws/en/catalog-explorer/#:~:text=previewing%20sample%20data" }
+      { "note": "The point-and-click window into Unity Catalog: browse schemas, peek at sample data and hand out grants without writing a line of SQL.", "link": "https://docs.databricks.com/aws/en/catalog-explorer/#:~:text=view%20schema%20details%2C%20preview%20sample%20data" }
     ],
     "from": { "date": "2022", "link": "https://docs.databricks.com/aws/en/catalog-explorer/" },
     "to": { "date": "2023-09", "link": "https://docs.databricks.com/aws/en/release-notes/product/2023/september#:~:text=Data%20Explorer%20is%20renamed%20to%20Catalog%20Explorer" },
@@ -232,7 +232,7 @@
       { "url": "https://community.databricks.com/t5/data-engineering/data-explorer-minimum-permissions/td-p/6689", "kind": "community", "label": "Community: Data Explorer permissions" },
       { "url": "https://campus.datacamp.com/courses/data-management-in-databricks/data-exploration-and-security?ex=1", "kind": "internet", "label": "DataCamp: exploring with Data Explorer" }
     ],
-    "verified": "2026-07-23"
+    "verified": "2026-08-03"
   },
   {
     "id": "catalog-explorer",
@@ -464,7 +464,7 @@
     "id": "databricks-vector-search",
     "name": "Databricks Vector Search",
     "category": "AI / ML",
-    "what": { "note": "Managed vector (similarity) search over Unity Catalog data, turning a Delta table into an auto-syncing vector index for RAG apps.", "link": "https://docs.databricks.com/aws/en/vector-search/vector-search#:~:text=generative%20AI%20applications%20such%20as%20RAG%20systems" },
+    "what": { "note": "Managed vector (similarity) search over Unity Catalog data, turning a Delta table into an auto-syncing vector index for RAG apps.", "link": "https://docs.databricks.com/aws/en/vector-search/vector-search#:~:text=AI%20applications%20such%20as%20RAG%20systems" },
     "fact": [
       { "note": "Launched to give RAG apps a serverless similarity search that could turn any Delta table into an auto-syncing vector index with one click, all governed by the same Unity Catalog permissions as the underlying data.", "link": "https://docs.databricks.com/aws/en/vector-search/vector-search#:~:text=appear%20in%20and%20are%20governed%20by%20Unity%20Catalog" }
     ],
@@ -477,7 +477,7 @@
       { "url": "https://www.databricks.com/blog/introducing-databricks-vector-search-public-preview", "kind": "community", "label": "Databricks blog: Vector Search preview" },
       { "url": "https://unstructured.io/blog/rag-seamlessly-integrating-context-from-multiple-sources-into-delta-tables-in-databricks", "kind": "internet", "label": "Unstructured: RAG with Vector Search" }
     ],
-    "verified": "2026-07-18"
+    "verified": "2026-08-03"
   },
   {
     "id": "mosaic-ai-vector-search",
@@ -1108,7 +1108,7 @@
     "status": { "value": "active", "link": "https://docs.databricks.com/aws/en/query-federation/#:~:text=the%20Databricks%20query%20federation%20platform", "date": "2026-07-18" },
     "releases": [
       { "type": "public-preview", "date": "2023-07", "link": "https://docs.databricks.com/aws/en/release-notes/product/2023/july#:~:text=Lakehouse%20Federation%20lets%20you%20run%20queries%20against%20external%20database%20providers%20%28Public%20Preview%29" },
-      { "type": "ga", "date": "2024-08", "link": "https://docs.databricks.com/aws/en/release-notes/product/2024/august#:~:text=Lakehouse%20Federation%20is%20generally%20available%20%28GA%29." }
+      { "type": "ga", "date": "2024-08", "link": "https://docs.databricks.com/aws/en/release-notes/product/2024/august#:~:text=Lakehouse%20Federation%20is%20generally%20available%20%28GA%29" }
     ],
     "prediction": ["Lakehouse Confederation", "Unity Federation", "Genie Federation"],
     "source": "https://docs.databricks.com/aws/en/query-federation/",
@@ -1116,7 +1116,7 @@
       { "url": "https://sanjeebiitg.medium.com/databricks-part-08-databricks-lakehouse-federation-fundamentals-729ba3e10cb0", "kind": "community", "label": "Medium: Lakehouse Federation basics" },
       { "url": "https://www.flexera.com/blog/finops/lakehouse-federation/", "kind": "internet", "label": "Flexera: Lakehouse Federation 101" }
     ],
-    "verified": "2026-07-18"
+    "verified": "2026-08-03"
   },
   {
     "id": "simba-spark-odbc-driver",
@@ -1685,7 +1685,7 @@
     "category": "Developer experience",
     "what": { "note": "A no-cost, serverless-only edition of the Databricks platform for students, educators, and hobbyists to learn and experiment - notebooks, SQL, dashboards, ML models, and AI apps in a single quota-limited workspace.", "link": "https://docs.databricks.com/aws/en/getting-started/free-edition#:~:text=no%2Dcost%20version%20of%20Databricks" },
     "fact": [
-      { "note": "It runs serverless-only with hard quotas - blow past them and the whole workspace shuts down for the rest of the day (or month, in extreme cases), though your data survives the timeout.", "link": "https://docs.databricks.com/aws/en/getting-started/free-edition-limitations#:~:text=for%20the%20remainder%20of%20the" },
+      { "note": "It runs serverless-only with hard quotas - blow past them and the whole workspace shuts down for the rest of the day (or month, in extreme cases), though your data survives the timeout.", "link": "https://docs.databricks.com/aws/en/getting-started/free-edition-limitations#:~:text=unavailable%20for%20the%20rest%20of%20the%20day%20%28and%20in%20extreme%20cases%2C%20the%20rest%20of%20the%20month%29" },
       { "note": "Verifying your identity through LinkedIn unlocks perks the base tier withholds - limited GPU compute and outbound internet access.", "link": "https://docs.databricks.com/aws/en/getting-started/free-edition-limitations#:~:text=LinkedIn" }
     ],
     "introducedAt": { "date": "2025-06", "link": "https://community.databricks.com/t5/community-articles/databricks-free-edition-the-announcement-from-data-ai-summit/td-p/129013" },
@@ -1693,12 +1693,12 @@
     "occasion": { "date": "2025-06", "link": "https://community.databricks.com/t5/community-articles/databricks-free-edition-the-announcement-from-data-ai-summit/td-p/129013", "note": "Announced at Data + AI Summit 2025" },
     "prediction": ["Databricks Student Edition", "Free Edition Pro", "Databricks Playground"],
     "source": "https://docs.databricks.com/aws/en/getting-started/free-edition",
-    "limitations": { "note": "Serverless-only and heavily capped: one 2X-Small SQL warehouse, at most 5 concurrent job tasks, up to 3 apps (auto-stopped after 24 hours), no GPUs or provisioned throughput by default, no R or Scala, no SSO/SCIM, a single workspace/metastore per account, and non-commercial use only; exceeding a quota shuts the workspace for the rest of the day.", "link": "https://docs.databricks.com/aws/en/getting-started/free-edition-limitations#:~:text=Serverless%20notebook", "date": "2026-07-24" },
+    "limitations": { "note": "Serverless-only and heavily capped: one 2X-Small SQL warehouse, at most 5 concurrent job tasks, up to 3 apps (auto-stopped after 24 hours), no GPUs or provisioned throughput by default, no R or Scala, no SSO/SCIM, a single workspace/metastore per account, and non-commercial use only; exceeding a quota shuts the workspace for the rest of the day.", "link": "https://docs.databricks.com/aws/en/getting-started/free-edition-limitations#:~:text=Free%20Edition%20users%20only%20have%20access%20to%20serverless%20compute%20resources", "date": "2026-07-24" },
     "links": [
       { "url": "https://docs.databricks.com/aws/en/getting-started/free-edition-limitations", "kind": "official", "label": "Databricks docs: Free Edition limitations" },
       { "url": "https://www.databricks.com/learn/free-edition", "kind": "official", "label": "Databricks: Free Edition (replacing Community Edition)" }
     ],
-    "verified": "2026-07-24"
+    "verified": "2026-08-03"
   },
   {
     "id": "databricks-community-edition",
@@ -1926,7 +1926,7 @@
     "category": "AI / ML",
     "what": { "note": "A centralized governance and monitoring layer for model serving endpoints - permissions, rate limits, payload logging, and safety guardrails for the generative-AI models an organization uses.", "link": "https://docs.databricks.com/aws/en/ai-gateway/#:~:text=from%20a%20central%20control%20plane%2C%20so%20you%20can%20manage%20capacity" },
     "fact": [
-      { "note": "It entered public preview in September 2024 as \"Mosaic AI Gateway,\" a centralized service that streamlines the usage and management of the generative-AI models an organization uses.", "link": "https://docs.databricks.com/aws/en/release-notes/product/2024/september#:~:text=streamlines%20the%20usage%20and%20management%20of%20generative%20AI%20models" },
+      { "note": "It entered public preview in September 2024 as \"Mosaic AI Gateway,\" a centralized service that streamlines the usage and management of the AI models an organization uses.", "link": "https://docs.databricks.com/aws/en/release-notes/product/2024/september#:~:text=streamlines%20the%20usage%20and%20management%20of%20AI%20models%20within%20an%20organization" },
       { "note": "Even its June 2025 general-availability announcement still carried the \"Mosaic\" prefix, reading \"Mosaic AI Gateway is now generally available.\"", "link": "https://docs.databricks.com/aws/en/release-notes/product/2025/june#:~:text=Mosaic%20AI%20Gateway%20is%20now%20generally%20available" }
     ],
     "from": { "date": "2024-09", "link": "https://docs.databricks.com/aws/en/release-notes/product/2024/september#:~:text=Mosaic%20AI%20Gateway%20is%20now%20Public%20Preview" },
@@ -1940,7 +1940,7 @@
       { "url": "https://docs.databricks.com/aws/en/release-notes/product/2024/september", "kind": "official", "label": "Databricks release notes: AI Gateway Public Preview (Sept 2024)" },
       { "url": "https://docs.databricks.com/aws/en/release-notes/product/2025/june", "kind": "official", "label": "Databricks release notes: AI Gateway GA (June 2025)" }
     ],
-    "verified": "2026-07-24"
+    "verified": "2026-08-03"
   },
   {
     "id": "unity-ai-gateway",

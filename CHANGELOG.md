@@ -19,8 +19,29 @@ Format loosely follows [Keep a Changelog](https://keepachangelog.com/); dates ar
   proves nothing and never fails the run); for the one or two blocked links, finish up
   with a web-fetch tool, which reads them normally. Needs the network, so it is a
   local/scheduled audit and deliberately **not** part of the deploy gate.
-  First full run over 100 entries: 913 URLs across 316 pages, **904 OK, 7 DEAD, 2
-  BLOCKED** (both since confirmed live by hand).
+  Its first run over 100 entries found 7 real citation drifts that the schema gate had
+  been passing silently (fixed below). After those repairs: 913 URLs across 316 pages,
+  **912 OK, 0 DEAD, 1 BLOCKED** - the one blocked link being techzine.eu, confirmed
+  live and on-topic with a web-fetch tool.
+
+### Fixed
+- **Repaired 7 drifted citations** whose quoted text Databricks had since reworded, so
+  the `#:~:text=` fragments silently stopped highlighting anything. `verified` bumped on
+  all six affected cards.
+  - `lakeflow-connect` `what` - the docs now say "ingest**ing** data from SaaS
+    applications and databases".
+  - `databricks-vector-search` `what` and `ai-gateway` `fact[0]` - both dropped the word
+    "generative" ("AI applications such as RAG systems"; "streamlines the usage and
+    management of AI models within an organization"). The `ai-gateway` fact text was
+    edited to match rather than keep asserting "generative-AI models".
+  - `lakehouse-federation` `releases[1]` - the quote carried a trailing period the
+    heading does not have.
+  - `data-explorer` `fact[0]` - re-quoted to "view schema details, preview sample data"
+    after the Catalog Explorer page was reorganised.
+  - `databricks-free-edition` `fact[0]` and `limitations` - re-quoted to the current
+    "unavailable for the rest of the day (and in extreme cases, the rest of the month)"
+    and "Free Edition users only have access to serverless compute resources", replacing
+    two fragments so short they were fragile anyway.
 - **Role-based access control (RBAC)** (`role-based-access-control`, `active`, Public Preview
   July 2026). Assume a role - implemented as an ordinary Databricks group you hold the Assume
   permission on - and act with only that role's permissions for the session, replacing your
