@@ -2421,5 +2421,99 @@
       { "url": "https://docs.databricks.com/aws/en/release-notes/product/2026/july", "kind": "official", "label": "Databricks release notes: Governance Hub Beta (July 2026)" }
     ],
     "verified": "2026-08-03"
+  },
+  {
+    "id": "lakehouse-monitoring",
+    "name": "Lakehouse Monitoring",
+    "aliases": ["Databricks Lakehouse Monitoring"],
+    "category": "Data governance",
+    "what": {
+      "note": "Databricks' built-in data and model quality monitoring: out-of-the-box summary statistics, changes in distribution over time, and model performance metrics for tables in the platform.",
+      "link": "https://docs.databricks.com/aws/en/release-notes/product/2023/august#:~:text=integrates%20data%20and%20model%20quality%20monitoring%20into%20the%20Databricks%20platform"
+    },
+    "fact": [
+      { "note": "It shipped with fairness and bias metrics in the box, so the same monitor you set up to catch stale numbers could also tell you your model was discriminating.", "link": "https://docs.databricks.com/aws/en/release-notes/product/2023/august#:~:text=including%20fairness%20and%20bias" },
+      { "note": "You never had to build the dashboard: it generated a summary dashboard for you automatically, then let you hang alerts off the data behind it.", "link": "https://docs.databricks.com/aws/en/release-notes/product/2023/august#:~:text=automatically%20generates%20a%20summary%20dashboard" },
+      { "note": "The name outlived the docs that used it: Databricks' own product page for this capability still answers at a /lakehouse-monitoring URL.", "link": "https://www.databricks.com/product/machine-learning/lakehouse-monitoring" }
+    ],
+    "from": { "date": "2023-08", "link": "https://docs.databricks.com/aws/en/release-notes/product/2023/august#:~:text=Lakehouse%20Monitoring%20is%20Public%20Preview" },
+    "to": { "date": "2026-02", "link": "https://docs.databricks.com/aws/en/release-notes/product/2026/february#:~:text=Data%20Quality%20Monitoring%20Anomaly%20Detection%20is%20now%20in%20Public%20Preview" },
+    "successorId": "data-profiling",
+    "status": { "value": "renamed", "link": "https://docs.databricks.com/aws/en/data-governance/unity-catalog/data-quality-monitoring/#:~:text=Data%20profiling%20was%20formerly%20known%20as%20Lakehouse%20Monitoring", "date": "2026-08-03" },
+    "releases": [
+      { "type": "public-preview", "date": "2023-08", "link": "https://docs.databricks.com/aws/en/release-notes/product/2023/august#:~:text=Lakehouse%20Monitoring%20is%20Public%20Preview" },
+      { "type": "ga", "date": "2024-06", "link": "https://docs.databricks.com/aws/en/release-notes/product/2024/june#:~:text=Lakehouse%20Monitoring%20is%20GA" }
+    ],
+    "prediction": ["Genie Monitoring", "Unity Quality Monitoring", "Lakehouse Observability"],
+    "source": "https://docs.databricks.com/aws/en/release-notes/product/2023/august",
+    "links": [
+      { "url": "https://docs.databricks.com/aws/en/release-notes/product/2024/june", "kind": "official", "label": "Databricks release notes: Lakehouse Monitoring is GA (June 2024)" },
+      { "url": "https://www.databricks.com/blog/lakehouse-monitoring-ga-profiling-diagnosing-and-enforcing-data-quality-intelligence", "kind": "community", "label": "Databricks Blog: Lakehouse Monitoring GA" }
+    ],
+    "verified": "2026-08-03"
+  },
+  {
+    "id": "data-profiling",
+    "name": "Data profiling",
+    "aliases": ["Data Quality Monitoring", "Monitors"],
+    "category": "Data governance",
+    "what": {
+      "note": "Summary statistics for a Unity Catalog table, computed as profiling metrics over time so you can view historical data quality trends and track model performance.",
+      "link": "https://docs.databricks.com/aws/en/data-governance/unity-catalog/data-quality-monitoring/data-profiling/#:~:text=summary%20statistics%20for%20a%20table%2C%20computing%20profiling%20metrics%20over%20time"
+    },
+    "fact": [
+      { "note": "Point it at a time series or inference table and it deliberately forgets: those two analysis modes only ever compute metrics over the last 30 days.", "link": "https://docs.databricks.com/aws/en/data-governance/unity-catalog/data-quality-monitoring/data-profiling/#:~:text=only%20compute%20metrics%20over%20the%20last%2030%20days" },
+      { "note": "It runs its jobs on serverless compute while insisting your account does not actually have to be enabled for serverless.", "link": "https://docs.databricks.com/aws/en/data-governance/unity-catalog/data-quality-monitoring/data-profiling/#:~:text=does%20not%20require%20that%20your%20account%20be%20enabled%20for%20serverless%20compute" },
+      { "note": "The snapshot mode has a ceiling you can quote at a capacity meeting: 4TB per table, and that is the documented maximum.", "link": "https://docs.databricks.com/aws/en/data-governance/unity-catalog/data-quality-monitoring/data-profiling/#:~:text=maximum%20table%20size%20for%20a%20snapshot%20profile%20is%204TB" }
+    ],
+    "from": { "date": "2026-02", "link": "https://docs.databricks.com/aws/en/release-notes/product/2026/february#:~:text=Data%20Quality%20Monitoring%20Anomaly%20Detection%20is%20now%20in%20Public%20Preview" },
+    "status": { "value": "active", "link": "https://docs.databricks.com/aws/en/data-governance/unity-catalog/data-quality-monitoring/#:~:text=Data%20profiling%20was%20formerly%20known%20as%20Lakehouse%20Monitoring", "date": "2026-08-03" },
+    "releases": [
+      { "type": "ga", "date": "2024-06", "link": "https://docs.databricks.com/aws/en/release-notes/product/2024/june#:~:text=Lakehouse%20Monitoring%20is%20GA" }
+    ],
+    "prediction": ["Genie Profiling", "Unity Catalog Profiler", "Data Profiling One"],
+    "limitations": {
+      "note": "Only Delta tables can be profiled and not all regions are supported. Time series and inference profiles compute metrics over the last 30 days only, profiles over materialized views do not support incremental processing, and a snapshot profile tops out at a 4TB table.",
+      "link": "https://docs.databricks.com/aws/en/data-governance/unity-catalog/data-quality-monitoring/data-profiling/#:~:text=Only%20Delta%20tables%20are%20supported%20for%20profiling",
+      "date": "2026-08-03"
+    },
+    "source": "https://docs.databricks.com/aws/en/data-governance/unity-catalog/data-quality-monitoring/data-profiling/",
+    "links": [
+      { "url": "https://docs.databricks.com/aws/en/data-governance/unity-catalog/data-quality-monitoring/", "kind": "official", "label": "Databricks docs: Data quality monitoring overview" },
+      { "url": "https://docs.databricks.com/aws/en/resources/limits", "kind": "official", "label": "Databricks resource limits: 100 monitors per metastore (raisable)" }
+    ],
+    "verified": "2026-08-03"
+  },
+  {
+    "id": "anomaly-detection",
+    "name": "Anomaly detection",
+    "aliases": ["Data Quality Monitoring Anomaly Detection", "DQM anomaly detection"],
+    "category": "Data governance",
+    "what": {
+      "note": "Schema-level data quality monitoring that learns each table's historical patterns and automatically evaluates its completeness and freshness, consolidating every monitored table's health into one system table and UI.",
+      "link": "https://docs.databricks.com/aws/en/data-governance/unity-catalog/data-quality-monitoring/anomaly-detection/#:~:text=monitor%20data%20quality%20across%20all%20tables%20in%20a%20schema"
+    },
+    "fact": [
+      { "note": "It judges freshness from the table's own commit history, so it can work out that a table has gone stale without reading a single row of it.", "link": "https://docs.databricks.com/aws/en/data-governance/unity-catalog/data-quality-monitoring/anomaly-detection/" },
+      { "note": "Its completeness check counts rows and little else - the docs openly admit it ignores the fraction of nulls, zero values, or NaN.", "link": "https://docs.databricks.com/aws/en/data-governance/unity-catalog/data-quality-monitoring/anomaly-detection/#:~:text=does%20not%20take%20into%20account%20metrics%20such%20as%20the%20fraction%20of%20nulls" },
+      { "note": "It arrived switched on per schema rather than per table, and spent its first six weeks unable to tell anyone what it found: in-UI alerts only followed in March 2026, still in Beta.", "link": "https://docs.databricks.com/aws/en/release-notes/product/2026/march#:~:text=create%20and%20view%20alerts%20for%20anomaly%20detection" }
+    ],
+    "introducedAt": { "date": "2026-02", "link": "https://docs.databricks.com/aws/en/release-notes/product/2026/february#:~:text=Data%20Quality%20Monitoring%20Anomaly%20Detection%20is%20now%20in%20Public%20Preview" },
+    "status": { "value": "active", "link": "https://docs.databricks.com/aws/en/data-governance/unity-catalog/data-quality-monitoring/anomaly-detection/#:~:text=monitor%20data%20quality%20across%20all%20tables%20in%20a%20schema", "date": "2026-08-03" },
+    "releases": [
+      { "type": "public-preview", "date": "2026-02", "link": "https://docs.databricks.com/aws/en/release-notes/product/2026/february#:~:text=Data%20Quality%20Monitoring%20Anomaly%20Detection%20is%20now%20in%20Public%20Preview" }
+    ],
+    "prediction": ["Genie Anomaly Detection", "Unity Anomaly Detection", "Data Health One"],
+    "limitations": {
+      "note": "Public Preview. Needs a Unity Catalog enabled workspace and serverless compute, plus MANAGE on the schema or catalog to switch it on. Views and foreign tables are not supported, and the completeness check does not take into account the fraction of nulls, zero values, or NaN.",
+      "link": "https://docs.databricks.com/aws/en/data-governance/unity-catalog/data-quality-monitoring/anomaly-detection/#:~:text=does%20not%20take%20into%20account%20metrics%20such%20as%20the%20fraction%20of%20nulls",
+      "date": "2026-08-03"
+    },
+    "source": "https://docs.databricks.com/aws/en/data-governance/unity-catalog/data-quality-monitoring/anomaly-detection/",
+    "links": [
+      { "url": "https://docs.databricks.com/aws/en/release-notes/product/2026/february", "kind": "official", "label": "Databricks release notes: Anomaly Detection Public Preview (February 2026)" },
+      { "url": "https://docs.databricks.com/aws/en/data-governance/unity-catalog/data-quality-monitoring/anomaly-detection/alerts", "kind": "official", "label": "Databricks docs: Alerts for anomaly detection (Beta)" }
+    ],
+    "verified": "2026-08-03"
   }
 ]

@@ -6,6 +6,17 @@ Format loosely follows [Keep a Changelog](https://keepachangelog.com/); dates ar
 ## 2026-08-03
 
 ### Added
+- **Lakehouse Monitoring -> Data profiling, plus Anomaly detection.** Three new entries
+  closing an uncovered rename. Databricks docs now state it outright ("Data profiling was
+  formerly known as Lakehouse Monitoring"), and the old `/lakehouse-monitoring/` docs URL
+  redirects to the data-profiling page under Unity Catalog. Cards: `lakehouse-monitoring`
+  (`renamed`, Public Preview August 2023, GA June 2024, `successorId` -> `data-profiling`),
+  `data-profiling` (`active`, GA, with the Delta-only / 30-day / 4TB limitations), and
+  `anomaly-detection` (`active`, Public Preview February 2026) as its own feature - the
+  docs treat Data Quality Monitoring as the umbrella over both, so the rename chain points
+  at data profiling rather than at the umbrella. All three wired into the Catalog rail.
+  Caveat: Databricks never published a dated rename announcement, so the `to`/`from` date
+  of `2026-02` is the earliest release note using the new name, not a rename notice.
 - **[`scripts/check_anchors.py`](scripts/check_anchors.py) - a citation rot check.**
   `validate.py` only checks that a link is a well-formed URL and never fetches, so the
   one failure that matters most goes unseen: Databricks edits a doc page, the
