@@ -61,6 +61,7 @@ publishes (the CI uploads `www`, nothing else). Repo docs, `scripts/`, `agents/`
 | [`www/app.js`](www/app.js) | Vanilla JS (IIFE, no deps). Fetches `databricks.features.json`, renders sidebar + result cards, wires search/chips/roulette/theme. |
 | [`www/styles.css`](www/styles.css) | All styling. CSS variables; light default, `data-theme="dark"` toggle. Sidebar rail is always dark. Status colors are three dedicated tokens - `--c-active` (green), `--c-renamed` (slate), `--c-deprecated` (amber), each with a dark value; the brand red (`--accent`) is chrome only. |
 | [`scripts/validate.py`](scripts/validate.py) | Schema/format gate for `databricks.features.json`. Branches on `status` (the sole discriminator). |
+| [`scripts/check_anchors.py`](scripts/check_anchors.py) | **Citation rot check.** `validate.py` only checks a link's *shape* and never fetches; this fetches every URL and confirms each `#:~:text=` quote is still on its page. Text fragments fail silently (the browser just doesn't highlight), so a reworded doc leaves a card looking sourced when it isn't. Reports `DEAD` (page gone, or readable but the quote is absent - fix the quote, or re-check the claim, since a dead quote on a live vendor doc is often the first sign of a rename) separately from `BLOCKED` (host refuses scripted requests - says nothing about the link, and never fails the run). For the one or two `BLOCKED` links, finish the job with your agent's standard web-fetch tool (`--list-blocked` prints them): it reads those pages normally. Needs the network, so it's a local/scheduled audit, **not** part of the deploy gate. |
 | [`scripts/build_badges.py`](scripts/build_badges.py) | Regenerates `www/badges/<n>-of-5/` - one shareable quiz-result page per score, plus its `og.png`. Run after editing badge copy. Rendering `og.png` needs Edge/Chrome installed; the pages themselves are plain static files. |
 | [`scripts/build_entries.py`](scripts/build_entries.py) | **SEO content layer.** Regenerates the crawlable static pages from `databricks.features.json`: a per-vendor hub at `/{vendor}/` and one page per entry at `/{vendor}/{id}/` (unique `<title>`/description/canonical/OG/JSON-LD + internal links), and rewrites `sitemap.xml` and `feed.xml` (an RSS 2.0 feed of every entry, newest tracked change first). No browser needed. Runs automatically in CI before deploy; run locally after editing entries to preview. Vendor comes from an optional `vendor` field (default `databricks`). |
 | [`scripts/fetch_reference.py`](scripts/fetch_reference.py) | Incrementally mirrors external reference docs (Databricks/MS Learn release notes, resource limits) into `reference/` so entries can be fact-checked and new renames spotted as release notes ship. Sources are declared in [`scripts/sources.json`](scripts/sources.json) - add one there to track another site, no code change. |
@@ -194,6 +195,11 @@ behind `track()`; never let analytics throw into a user path.
 1. Run the schema gate - it must pass (CI runs the same one):
    ```
    python scripts/validate.py
+   ```
+   If you added or edited entries, also check their citations actually resolve - the
+   schema gate never fetches anything, so a reworded doc page slips straight past it:
+   ```
+   python scripts/check_anchors.py <the-ids-you-touched>
    ```
 2. Preview the site (it fetches `databricks.features.json`, so serve over http - `file://` is blocked).
    Serve `www/` as the web root, mirroring what GitHub Pages publishes:

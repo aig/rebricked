@@ -6,6 +6,21 @@ Format loosely follows [Keep a Changelog](https://keepachangelog.com/); dates ar
 ## 2026-08-03
 
 ### Added
+- **[`scripts/check_anchors.py`](scripts/check_anchors.py) - a citation rot check.**
+  `validate.py` only checks that a link is a well-formed URL and never fetches, so the
+  one failure that matters most goes unseen: Databricks edits a doc page, the
+  `#:~:text=` fragment stops matching, and the card keeps looking sourced. Text
+  fragments fail silently (the browser just loads the page without highlighting), so
+  nothing surfaces it from either end. The script fetches every URL in the data file
+  and confirms each quote is still on its page, matching the way a browser resolves a
+  text fragment - case-insensitively and across inline markup - because naive matching
+  invents breakage that isn't there. It reports `DEAD` (page gone, or readable but the
+  quote is absent) separately from `BLOCKED` (host refuses scripted requests, which
+  proves nothing and never fails the run); for the one or two blocked links, finish up
+  with a web-fetch tool, which reads them normally. Needs the network, so it is a
+  local/scheduled audit and deliberately **not** part of the deploy gate.
+  First full run over 100 entries: 913 URLs across 316 pages, **904 OK, 7 DEAD, 2
+  BLOCKED** (both since confirmed live by hand).
 - **Role-based access control (RBAC)** (`role-based-access-control`, `active`, Public Preview
   July 2026). Assume a role - implemented as an ordinary Databricks group you hold the Assume
   permission on - and act with only that role's permissions for the session, replacing your
