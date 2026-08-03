@@ -18,6 +18,10 @@ Format loosely follows [Keep a Changelog](https://keepachangelog.com/); dates ar
 - Both wired into the **Catalog** rail section alongside `attribute-based-access-control`.
 - **Agentic code converter** (`agentic-code-converter`, `active`, Beta July 2026) as the current
   name of the SQL migration converter, wired into the **Workspace** rail section.
+- **Custom URL** (`custom-url`, `active`, Public Preview July 2026). One branded entry point per
+  account (for example `acme.databricks.com`) replacing per-workspace URLs, so users move
+  between workspaces and Genie One without reauthenticating. Wired into the **Workspace** rail
+  section.
 - **Zerobus Ingest** (`zerobus-ingest`, `active`, Public Preview October 2025). Push-based
   serverless ingestion straight into Unity Catalog Delta tables over gRPC, REST, or
   OpenTelemetry - no bus, no partitions, no brokers. Wired into the **Data Ingestion** rail
