@@ -2226,6 +2226,41 @@
     "verified": "2026-07-23"
   },
   {
+    "id": "variant",
+    "name": "Variant",
+    "aliases": ["VARIANT", "variant data type", "variant shredding"],
+    "category": "Data engineering",
+    "what": {
+      "note": "A column type for semi-structured data: one column holds arbitrary nested JSON-shaped data with no declared schema, created with parse_json() and queried by path, while shredding gives it query performance closer to real typed columns.",
+      "link": "https://docs.databricks.com/aws/en/release-notes/product/2026/july#:~:text=Variant%20is%20a%20flexible%20data%20type%20for%20semi%2Dstructured%20data%20that%20delivers%20structured%2Dlike%20query%20performance"
+    },
+    "fact": [
+      { "note": "Databricks recommends it as the replacement for keeping semi-structured data in JSON strings, but the swap can quietly change your answers: variant paths are matched case-sensitively, where JSON strings never cared.", "link": "https://docs.databricks.com/aws/en/semi-structured/variant-json-diff#:~:text=All%20variant%20path%20elements%20are%20matched%20in%20a%20case%2Dsensitive%20way.%20JSON%20strings%20are%20case%2Dinsensitive." },
+      { "note": "Its speed comes from quietly un-blobbing itself: shredding stores the fields that turn up often as real columns inside the Parquet files, so a query reads a column instead of picking through a binary blob.", "link": "https://docs.databricks.com/aws/en/tables/features/variant-shredding#:~:text=storing%20commonly%20occurring%20fields%20as%20separate%20columns%20in%20the%20underlying%20Parquet%20files" },
+      { "note": "Shredding turns itself on for a new CREATE TABLE but pointedly not for CREATE OR REPLACE TABLE or ALTER TABLE - a deliberate refusal to change how anyone's existing tables and workloads already behave.", "link": "https://docs.databricks.com/aws/en/tables/features/variant-shredding#:~:text=This%20avoids%20changing%20the%20shredding%20behavior%20of%20existing%20tables%20and%20workloads" }
+    ],
+    "introducedAt": { "date": "2024-06", "link": "https://docs.databricks.com/aws/en/release-notes/runtime/15.3#:~:text=Databricks%20released%20this%20version%20in%20June%202024" },
+    "status": { "value": "active", "link": "https://docs.databricks.com/aws/en/semi-structured/variant#:~:text=Databricks%20recommends%20using%20VARIANT%20over%20JSON%20strings%20for%20semi%2Dstructured%20data", "date": "2026-08-03" },
+    "releases": [
+      { "type": "public-preview", "date": "2024-06", "link": "https://docs.databricks.com/aws/en/release-notes/runtime/15.3#:~:text=Variant%20type%20syntax%20and%20functions%20in%20Public%20Preview" },
+      { "type": "ga", "date": "2026-07", "link": "https://docs.databricks.com/aws/en/release-notes/product/2026/july#:~:text=Variant%20and%20Variant%20shredding%20are%20now%20generally%20available" }
+    ],
+    "prediction": ["Unity Variant", "Genie Variant", "Liquid Variant"],
+    "limitations": {
+      "note": "A VARIANT column can't be a clustering key, partition, or Z-order key, and the type can't be used for comparisons, grouping, ordering, or set operations. Shredding adds write overhead, skips VARIANT nested inside arrays and maps, and never converts data already written (REORG TABLE ... APPLY (SHRED VARIANT) does that); reading or writing shredded tables needs Databricks Runtime 17.3 or above, with 18.1 or above recommended for variant statistics and data skipping. Migrating off JSON strings can break working queries, since paths become case-sensitive, the [*] array syntax is unsupported, and NULL is encoded differently.",
+      "link": "https://docs.databricks.com/aws/en/semi-structured/variant#:~:text=VARIANT%20columns%20cannot%20be%20used%20for%20clustering%20keys%2C%20partitions%2C%20or%20Z%2Dorder%20keys",
+      "date": "2026-08-03"
+    },
+    "source": "https://docs.databricks.com/aws/en/semi-structured/variant",
+    "links": [
+      { "url": "https://docs.databricks.com/aws/en/semi-structured/variant-json-diff", "kind": "official", "label": "Databricks docs: How is variant different than JSON strings?" },
+      { "url": "https://docs.databricks.com/aws/en/tables/features/variant-shredding", "kind": "official", "label": "Databricks docs: Use variant shredding to optimize performance" },
+      { "url": "https://docs.databricks.com/aws/en/tables/features/variant", "kind": "official", "label": "Databricks docs: Variant type support for Apache Iceberg and Delta Lake" },
+      { "url": "https://docs.databricks.com/aws/en/release-notes/runtime/15.3", "kind": "official", "label": "Databricks Runtime 15.3 release notes: Variant in Public Preview (June 2024)" }
+    ],
+    "verified": "2026-08-03"
+  },
+  {
     "id": "custom-url",
     "name": "Custom URL",
     "aliases": ["Custom URLs", "branded account URL", "account custom URL"],

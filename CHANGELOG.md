@@ -54,6 +54,16 @@ Format loosely follows [Keep a Changelog](https://keepachangelog.com/); dates ar
 - Both wired into the **Catalog** rail section alongside `attribute-based-access-control`.
 - **Agentic code converter** (`agentic-code-converter`, `active`, Beta July 2026) as the current
   name of the SQL migration converter, wired into the **Workspace** rail section.
+- **Variant** (`variant`, `active`, Public Preview June 2024 -> GA July 2026). The `VARIANT`
+  column type for semi-structured data, plus the shredding that makes it fast by storing
+  frequently seen fields as real Parquet columns instead of a binary blob. Earns a card
+  because it is a supersession, not just a new type: Databricks recommends it as the
+  replacement for storing semi-structured data in JSON strings, and that migration can
+  silently change results - variant paths are case-sensitive where JSON strings were not,
+  `[*]` is unsupported, and `NULL` is encoded differently. Wired into the **Catalog** rail.
+  Resolved a conflict between two live doc pages (one says the type arrived in Databricks
+  Runtime 15.4, the other 15.3) against the DBR 15.3 release notes, which announce it in
+  Public Preview and date that runtime to June 2024.
 - **Custom URL** (`custom-url`, `active`, Public Preview July 2026). One branded entry point per
   account (for example `acme.databricks.com`) replacing per-workspace URLs, so users move
   between workspaces and Genie One without reauthenticating. Wired into the **Workspace** rail
