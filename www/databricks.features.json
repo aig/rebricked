@@ -151,7 +151,8 @@
     "what": { "note": "SQL-optimized compute that powers Databricks SQL.", "link": "https://docs.databricks.com/aws/en/compute/sql-warehouse/#:~:text=compute%20resource%20that%20lets%20you%20query%20and%20explore%20data" },
     "fact": [
       { "note": "The serverless flavor spins up in seconds - typically 2 to 6 - where a classic warehouse takes several minutes (around four) to start.", "link": "https://docs.databricks.com/aws/en/compute/sql-warehouse/warehouse-types#:~:text=typically%20between%202%20and%206%20seconds" },
-      { "note": "Sources can't agree on when the rename happened: Databricks docs date it to 2023, while some write-ups swear it was 2022.", "link": "https://docs.databricks.com/aws/en/compute/sql-warehouse/#:~:text=SQL%20endpoints%20were%20renamed%20as%20SQL%20warehouses" }
+      { "note": "Sources can't agree on when the rename happened: Databricks docs date it to 2023, while some write-ups swear it was 2022.", "link": "https://docs.databricks.com/aws/en/compute/sql-warehouse/#:~:text=SQL%20endpoints%20were%20renamed%20as%20SQL%20warehouses" },
+      { "note": "There is a panel devoted to answering 'why is this thing still awake?' - color-coded annotations say whether a warehouse is held open by query activity, queries still fetching, open sessions, or plain idling.", "link": "https://docs.databricks.com/aws/en/release-notes/product/2026/july#:~:text=explain%20why%20a%20warehouse%20remains%20active%2C%20including%20query%20activity%2C%20fetching%20queries%2C%20open%20sessions%2C%20and%20idle%20states" }
     ],
     "from": { "date": "2023", "link": "https://docs.databricks.com/aws/en/compute/sql-warehouse/#:~:text=In%202023%2C%20SQL%20endpoints%20were%20renamed%20as%20SQL%20warehouses" },
     "status": { "value": "active", "link": "https://docs.databricks.com/aws/en/compute/sql-warehouse/#:~:text=SQL%20endpoints%20were%20renamed%20as%20SQL%20warehouses", "date": "2026-07-18" },
@@ -164,7 +165,7 @@
       { "url": "https://medium.com/@santosh_joshi_data/understanding-the-new-databricks-service-names-85e11465d1c1", "kind": "community", "label": "Medium: New Databricks Service Names" },
       { "url": "https://www.pulumi.com/registry/packages/databricks/api-docs/sqlendpoint/", "kind": "internet", "label": "Pulumi Registry: databricks.SqlEndpoint" }
     ],
-    "verified": "2026-07-23"
+    "verified": "2026-08-03"
   },
   {
     "id": "databricks-repos",
@@ -374,7 +375,8 @@
     "category": "AI / BI",
     "what": { "note": "Governed, curated conversational agents that give business users a natural-language chat interface to ask questions of their data in Databricks.", "link": "https://docs.databricks.com/aws/en/genie-agents/set-up#:~:text=natural%2Dlanguage%20chat%20interface%20that%20business%20users%20use%20to%20ask%20questions" },
     "fact": [
-      { "note": "There's real compute behind the chat box: every Genie Agent runs on a pro or serverless SQL warehouse and can only reach data you've registered in Unity Catalog.", "link": "https://docs.databricks.com/aws/en/genie-agents/set-up#:~:text=Genie%20Agents%20require%20a%20pro%20or%20serverless%20SQL%20warehouse" }
+      { "note": "There's real compute behind the chat box: every Genie Agent runs on a pro or serverless SQL warehouse and can only reach data you've registered in Unity Catalog.", "link": "https://docs.databricks.com/aws/en/genie-agents/set-up#:~:text=Genie%20Agents%20require%20a%20pro%20or%20serverless%20SQL%20warehouse" },
+      { "note": "Databricks shipped a Genie app for Microsoft Teams, so the people who never open a workspace can still ask data questions and get answers without leaving the chat window.", "link": "https://docs.databricks.com/aws/en/release-notes/product/2026/july#:~:text=so%20users%20can%20ask%20data%20questions%20and%20get%20answers%20without%20leaving%20Microsoft%20Teams" }
     ],
     "from": { "date": "2026-07", "link": "https://docs.databricks.com/aws/en/ai-bi/release-notes/2026#:~:text=Genie%20Agents%20%28formerly%20Genie%20Spaces%29" },
     "status": { "value": "active", "link": "https://docs.databricks.com/aws/en/genie-agents/set-up#:~:text=formerly%20known%20as%20Genie", "date": "2026-07-18" },
@@ -388,7 +390,7 @@
       { "url": "https://www.databricks.com/blog/data-dialogue-best-practices-guide-building-high-performing-genie-spaces", "kind": "community", "label": "Databricks Blog: Genie Spaces Best Practices" },
       { "url": "https://nimbleapproach.com/blog/exploring-databricks-genie-enhancing-insight-through-conversational-analytics/", "kind": "internet", "label": "Nimble Approach: Exploring Databricks Genie" }
     ],
-    "verified": "2026-07-23"
+    "verified": "2026-08-03"
   },
   {
     "id": "databricks-one",
@@ -508,7 +510,8 @@
     "category": "AI / ML",
     "what": { "note": "Managed search over Unity Catalog data; now supports full-text and hybrid search without pre-computed embeddings.", "link": "https://docs.databricks.com/aws/en/vector-search/vector-search#:~:text=hybrid%20keyword%2Dsimilarity%20search" },
     "fact": [
-      { "note": "It outgrew pure vector search - it now also does full-text keyword search and hybrid keyword-similarity search, and on storage-optimized endpoints you can even build an index with no precomputed embedding columns at all.", "link": "https://docs.databricks.com/aws/en/vector-search/vector-search#:~:text=combines%20vector%2Dbased%20embedding%20search%20with%20traditional%20keyword%2Dbased%20search" }
+      { "note": "It outgrew pure vector search - it now also does full-text keyword search and hybrid keyword-similarity search, and on storage-optimized endpoints you can even build an index with no precomputed embedding columns at all.", "link": "https://docs.databricks.com/aws/en/vector-search/vector-search#:~:text=combines%20vector%2Dbased%20embedding%20search%20with%20traditional%20keyword%2Dbased%20search" },
+      { "note": "Its high-QPS mode is enabled by default and yet changes nothing for the endpoints you already run - existing endpoints are pointedly left alone.", "link": "https://docs.databricks.com/aws/en/release-notes/product/2026/july#:~:text=High%20QPS%20is%20enabled%20by%20default%2C%20but%20existing%20endpoints%20are%20not%20affected" }
     ],
     "from": { "date": "2026-06", "link": "https://docs.databricks.com/aws/en/release-notes/product/2026/june#:~:text=Vector%20Search%20is%20now%20AI%20Search" },
     "status": { "value": "active", "link": "https://docs.databricks.com/aws/en/vector-search/vector-search#:~:text=Databricks%20AI%20Search%20%28formerly%20Databricks%20Vector%20Search%29", "date": "2026-07-18" },
@@ -521,7 +524,7 @@
       { "url": "https://www.databricks.com/blog/announcing-mosaic-ai-vector-search-general-availability-databricks", "kind": "community", "label": "Databricks Blog: Vector Search GA" },
       { "url": "https://www.matillion.com/blog/how-to-use-mosaic-ai-vector-search-in-databricks", "kind": "internet", "label": "Matillion: Use Mosaic AI Vector Search" }
     ],
-    "verified": "2026-07-23"
+    "verified": "2026-08-03"
   },
   {
     "id": "sql-analytics",
@@ -812,7 +815,8 @@
     "what": { "note": "AI coding assistant that generates and fixes SQL and Python across notebooks, the SQL editor, and pipelines, grounded in Unity Catalog metadata.", "link": "https://docs.databricks.com/aws/en/notebooks/code-assistant#:~:text=generates%20Python%20code%20or%20SQL%20queries%2C%20explains%20complex%20code" },
     "fact": [
       { "note": "Unlike a generic code assistant, it reads your Unity Catalog metadata - so its SQL and Python suggestions already know your real table and column names.", "link": "https://docs.databricks.com/aws/en/notebooks/code-assistant#:~:text=understand%20your%20tables%2C%20columns%2C%20descriptions" },
-      { "note": "Databricks' launch blog framed it as the newest member of the Genie family rather than a straight rename.", "link": "https://www.databricks.com/blog/introducing-genie-code#:~:text=the%20newest%20addition%20to%20the%20Databricks%20Genie%20family" }
+      { "note": "Databricks' launch blog framed it as the newest member of the Genie family rather than a straight rename.", "link": "https://www.databricks.com/blog/introducing-genie-code#:~:text=the%20newest%20addition%20to%20the%20Databricks%20Genie%20family" },
+      { "note": "You can put it on a schedule: a scheduled task runs your prompt as a full session and leaves behind a continuable chat with the results, turning recurring analysis into an unattended background job.", "link": "https://docs.databricks.com/aws/en/release-notes/product/2026/july#:~:text=produces%20a%20continuable%20Genie%20chat%20with%20the%20results" }
     ],
     "from": { "date": "2026-03", "link": "https://www.databricks.com/blog/introducing-genie-code#:~:text=Genie%20Code%20is%20Generally%20Available%20in%20your%20Databricks%20workspace" },
     "status": { "value": "active", "link": "https://docs.databricks.com/aws/en/notebooks/code-assistant#:~:text=Get%20coding%20help%20from%20Genie%20Code", "date": "2026-07-18" },
@@ -826,7 +830,7 @@
       { "url": "https://www.databricks.com/blog/introducing-genie-code", "kind": "community", "label": "Databricks Blog: Introducing Genie Code" },
       { "url": "https://www.prnewswire.com/news-releases/databricks-launches-genie-code-bringing-agentic-engineering-to-data-work-302711090.html", "kind": "internet", "label": "PR Newswire: Genie Code launch" }
     ],
-    "verified": "2026-07-23"
+    "verified": "2026-08-03"
   },
   {
     "id": "dbx",
@@ -926,7 +930,8 @@
     "what": { "note": "Mounting cloud object storage into the DBFS namespace under /mnt.", "link": "https://learn.microsoft.com/en-us/azure/databricks/dbfs/unity-catalog#:~:text=DBFS%20and%20mounted%20cloud%20object%20storage" },
     "fact": [
       { "note": "A single `dbutils.fs.mount` made a cloud storage bucket look like a local /mnt path to everyone on the cluster - convenient, and entirely outside per-user governance.", "link": "https://learn.microsoft.com/en-us/azure/databricks/dbfs/unity-catalog#:~:text=bypasses%20Unity%20Catalog%20entirely" },
-      { "note": "New workspaces are now provisioned without mount access at all.", "link": "https://learn.microsoft.com/en-us/azure/databricks/dbfs/unity-catalog#:~:text=New%20accounts%20are%20provisioned%20without%20access" }
+      { "note": "New workspaces are now provisioned without mount access at all.", "link": "https://learn.microsoft.com/en-us/azure/databricks/dbfs/unity-catalog#:~:text=New%20accounts%20are%20provisioned%20without%20access" },
+      { "note": "Even Databricks' own sample data moved out: the databricks-datasets collection long reached through a mount here is now served from the samples catalog through OpenSharing.", "link": "https://docs.databricks.com/aws/en/release-notes/product/2026/july#:~:text=made%20available%20through%20OpenSharing" }
     ],
     "from": { "date": "2016", "link": "https://learn.microsoft.com/en-us/azure/databricks/dbfs/unity-catalog" },
     "deprecatedAt": { "date": "2024", "link": "https://learn.microsoft.com/en-us/azure/databricks/dbfs/unity-catalog#:~:text=DBFS%20root%20and%20DBFS%20mounts%20are%20deprecated" },
@@ -936,7 +941,7 @@
       { "url": "https://community.databricks.com/t5/data-governance/dbfs-mounts-no-longer-recommended/td-p/15974", "kind": "community", "label": "Community: DBFS mounts no longer recommended" },
       { "url": "https://azureops.org/articles/mount-and-unmount-data-lake-in-databricks/", "kind": "internet", "label": "AzureOps: Mount/unmount Data Lake" }
     ],
-    "verified": "2026-07-18"
+    "verified": "2026-08-03"
   },
   {
     "id": "serverless-real-time-inference",
@@ -969,7 +974,8 @@
     "what": { "note": "Highly available, low-latency service for deploying ML and GenAI models behind autoscaling REST endpoints.", "link": "https://learn.microsoft.com/en-us/azure/databricks/release-notes/product/2023/march#:~:text=a%20highly%20available%20and%20low%2Dlatency%20service%20for%20deploying%20models" },
     "fact": [
       { "note": "It shed the tongue-twister name 'Serverless Real-Time Inference' when it reached general availability in March 2023.", "link": "https://learn.microsoft.com/en-us/azure/databricks/release-notes/product/2023/march#:~:text=Model%20Serving%2C%20formerly%20Serverless%20Real%2DTime%20Inference%2C%20is%20now%20generally%20available" },
-      { "note": "Some surfaces later slapped a 'Mosaic AI' prefix on it.", "link": "https://community.databricks.com/t5/announcements/databricks-genai-amp-ml-announcements-november-2024/td-p/101272#:~:text=Mosaic%20AI%20Model%20Serving%20is%20available" }
+      { "note": "Some surfaces later slapped a 'Mosaic AI' prefix on it.", "link": "https://community.databricks.com/t5/announcements/databricks-genai-amp-ml-announcements-november-2024/td-p/101272#:~:text=Mosaic%20AI%20Model%20Serving%20is%20available" },
+      { "note": "Custom endpoints can accept protobuf instead of JSON, but only if they were created after the option shipped: it is only available on endpoints deployed after July 9, 2026.", "link": "https://docs.databricks.com/aws/en/release-notes/product/2026/july#:~:text=is%20only%20available%20on%20endpoints%20deployed%20after%20July%209%2C%202026" }
     ],
     "from": { "date": "2023-03", "link": "https://learn.microsoft.com/en-us/azure/databricks/release-notes/product/2023/march#:~:text=Model%20Serving%2C%20formerly%20Serverless%20Real%2DTime%20Inference" },
     "status": { "value": "active", "link": "https://learn.microsoft.com/en-us/azure/databricks/release-notes/product/2023/march#:~:text=Model%20Serving%2C%20formerly%20Serverless%20Real%2DTime%20Inference%2C%20is%20now%20generally%20available", "date": "2026-07-18" },
@@ -983,7 +989,7 @@
       { "url": "https://www.databricks.com/blog/announcing-general-availability-databricks-model-serving", "kind": "community", "label": "Databricks Blog: Model Serving GA" },
       { "url": "https://siliconangle.com/2023/03/07/databricks-exposes-serverless-machine-learning-inferencing-engine-via-api/", "kind": "internet", "label": "SiliconANGLE: serverless inference API" }
     ],
-    "verified": "2026-07-23"
+    "verified": "2026-08-03"
   },
   {
     "id": "workspace-model-registry",
@@ -1188,7 +1194,8 @@
     "what": { "note": "Open protocol and Databricks service for securely sharing data and AI assets across organizations and platforms, with or without Databricks.", "link": "https://docs.databricks.com/aws/en/opensharing/#:~:text=share%20non%2DDatabricks%20data%20with%20recipients%20on%20any%20data%20platform" },
     "fact": [
       { "note": "It's an open protocol, so you can share a live table with someone who's never touched Databricks - and in 2026 the standard itself was open-sourced as OpenSharing at opensharing.io.", "link": "https://docs.databricks.com/aws/en/opensharing/#:~:text=available%20as%20an%20open%2Dsource%20project" },
-      { "note": "Its scope grew beyond data sharing to cover the full AI stack, with the standard handed to the Linux Foundation.", "link": "https://www.databricks.com/blog/introducing-opensharing-next-evolution-delta-sharing-agentic-era#:~:text=now%20hosted%20by%20the%20Linux%20Foundation" }
+      { "note": "Its scope grew beyond data sharing to cover the full AI stack, with the standard handed to the Linux Foundation.", "link": "https://www.databricks.com/blog/introducing-opensharing-next-evolution-delta-sharing-agentic-era#:~:text=now%20hosted%20by%20the%20Linux%20Foundation" },
+      { "note": "Streaming reads used to quietly downgrade a catch-up-on-everything trigger into a run-once one, so a job that promised to process all available data handled a single micro-batch per run.", "link": "https://docs.databricks.com/aws/en/release-notes/product/2026/july#:~:text=which%20processed%20a%20single%20micro%2Dbatch%20per%20run" }
     ],
     "from": { "date": "2026-06", "link": "https://www.databricks.com/blog/introducing-opensharing-next-evolution-delta-sharing-agentic-era#:~:text=We%27re%20excited%20to%20announce%20OpenSharing" },
     "status": { "value": "active", "link": "https://docs.databricks.com/aws/en/opensharing/#:~:text=an%20open%20protocol%20developed%20by%20Databricks%20for%20secure%20data%20sharing", "date": "2026-07-18" },
@@ -1202,7 +1209,7 @@
       { "url": "https://www.databricks.com/blog/introducing-opensharing-next-evolution-delta-sharing-agentic-era", "kind": "community", "label": "Databricks Blog: Introducing OpenSharing" },
       { "url": "https://www.techzine.eu/news/analytics/142046/the-linux-foundation-and-databricks-launch-opensharing/", "kind": "internet", "label": "Techzine: Linux Foundation & OpenSharing" }
     ],
-    "verified": "2026-07-18"
+    "verified": "2026-08-03"
   },
   {
     "id": "multi-file-editor",
@@ -1230,7 +1237,8 @@
     "what": { "note": "The IDE for developing Lakeflow (Spark Declarative) pipelines - code-first, folder-based, with selective execution, data previews, and pipeline graphs on one surface.", "link": "https://docs.databricks.com/aws/en/ldp/multi-file-editor#:~:text=combines%20all%20pipeline%20development%20tasks%20on%20a%20single%20surface" },
     "fact": [
       { "note": "A code-first IDE that shows your pipeline graph, data previews, and selective runs on one screen - though its URL still betrays the old name, 'multi-file editor.'", "link": "https://docs.databricks.com/aws/en/ldp/multi-file-editor#:~:text=interactive%20pipeline%20graph" },
-      { "note": "It became generally available in May 2026, bringing an agent-first Genie Code experience for creating and debugging production pipelines.", "link": "https://docs.databricks.com/aws/en/release-notes/product/2026/may#:~:text=The%20Lakeflow%20Pipelines%20Editor%20is%20now%20generally%20available" }
+      { "note": "It became generally available in May 2026, bringing an agent-first Genie Code experience for creating and debugging production pipelines.", "link": "https://docs.databricks.com/aws/en/release-notes/product/2026/may#:~:text=The%20Lakeflow%20Pipelines%20Editor%20is%20now%20generally%20available" },
+      { "note": "Pipelines can be unit tested from inside the editor: Python tests run against mock data by redirecting catalog tables, so transformations get checked without touching the real ones.", "link": "https://docs.databricks.com/aws/en/release-notes/product/2026/july#:~:text=Validate%20Python%20and%20SQL%20transformations%20against%20mock%20data%20using%20catalog%2Dtable%20redirection" }
     ],
     "from": { "date": "2025-09", "link": "https://docs.databricks.com/aws/en/release-notes/product/2025/september#:~:text=The%20Lakeflow%20Pipelines%20Editor%20%28previously%20called%20the%20multi%2Dfile%20editor%29" },
     "status": { "value": "active", "link": "https://docs.databricks.com/aws/en/ldp/multi-file-editor#:~:text=with%20the%20Lakeflow%20Pipelines%20Editor", "date": "2026-07-18" },
@@ -1243,7 +1251,7 @@
     "links": [
       { "url": "https://qubika.com/blog/lakeflow-pipeline-editor-declarative-data-engineering/", "kind": "internet", "label": "Qubika: Lakeflow Pipelines Editor" }
     ],
-    "verified": "2026-07-23"
+    "verified": "2026-08-03"
   },
   {
     "id": "hive-metastore",
@@ -1275,7 +1283,8 @@
     "what": { "note": "A fully managed, serverless Postgres (OLTP) database integrated into the Databricks platform, for building real-time transactional apps alongside lakehouse data.", "link": "https://docs.databricks.com/aws/en/oltp/#:~:text=a%20fully%20managed%20Postgres%20database%20integrated%20into%20the%20Databricks%20platform" },
     "fact": [
       { "note": "It's a managed serverless Postgres for transactional apps - with instant database branching, so you can fork a whole database's worth of state in seconds.", "link": "https://docs.databricks.com/aws/en/oltp/#:~:text=Create%20a%20new%20branch%20from%20any%20point%20in%20time" },
-      { "note": "In August 2025 the Compute section's 'OLTP Database' tab was quietly renamed 'Lakebase Postgres.'", "link": "https://docs.databricks.com/aws/en/release-notes/product/2025/august#:~:text=renamed%20to%20Lakebase%20Postgres" }
+      { "note": "In August 2025 the Compute section's 'OLTP Database' tab was quietly renamed 'Lakebase Postgres.'", "link": "https://docs.databricks.com/aws/en/release-notes/product/2025/august#:~:text=renamed%20to%20Lakebase%20Postgres" },
+      { "note": "You can debug it by talking to it - database issues and early warnings surface as Insights and you investigate them conversationally with Genie, all fed by database telemetry captured into Unity Catalog.", "link": "https://docs.databricks.com/aws/en/release-notes/product/2026/july#:~:text=Both%20draw%20on%20database%20telemetry%20captured%20to%20Unity%20Catalog" }
     ],
     "introducedAt": { "date": "2026-02", "link": "https://www.databricks.com/blog/databricks-lakebase-generally-available#:~:text=Databricks%20Lakebase%2C%20the%20first%20implementation%20of%20this%20category%2C%20is%20Generally%20Available%20on%20AWS" },
     "status": { "value": "active", "link": "https://docs.databricks.com/aws/en/oltp/#:~:text=a%20fully%20managed%20Postgres%20database", "date": "2026-07-18" },
@@ -1290,7 +1299,7 @@
       { "url": "https://www.databricks.com/blog/announcing-lakebase-public-preview", "kind": "community", "label": "Databricks Blog: Lakebase Public Preview" },
       { "url": "https://www.infoq.com/news/2026/02/databricks-lakebase-postgresql/", "kind": "internet", "label": "InfoQ: Databricks Lakebase Postgres" }
     ],
-    "verified": "2026-07-23"
+    "verified": "2026-08-03"
   },
   {
     "id": "lakehouse-real-time",
@@ -1326,7 +1335,8 @@
     "what": { "note": "A visual, no-code, AI-native experience for building ETL pipelines with a drag-and-drop canvas and natural language, backed by production-ready Lakeflow pipeline code.", "link": "https://docs.databricks.com/aws/en/designer/#:~:text=visual%2C%20no%2Dcode%2C%20AI%2Dnative%20experience" },
     "fact": [
       { "note": "Drag boxes on a canvas or describe the flow in plain English, and it emits real, production-ready pipeline code - so the prototype and the production job end up being the same thing.", "link": "https://docs.databricks.com/aws/en/designer/#:~:text=backed%20by%20production%2Dready%20code" },
-      { "note": "It went from Public Preview in April 2026 to GA just two months later, in June.", "link": "https://docs.databricks.com/aws/en/release-notes/product/2026/june#:~:text=Lakeflow%20Designer%20is%20now%20generally%20available" }
+      { "note": "It went from Public Preview in April 2026 to GA just two months later, in June.", "link": "https://docs.databricks.com/aws/en/release-notes/product/2026/june#:~:text=Lakeflow%20Designer%20is%20now%20generally%20available" },
+      { "note": "The no-code canvas quietly grew a spreadsheet: an Enter Data operator lets you type tabular data in by hand, sitting right beside the operators reading from Unity Catalog.", "link": "https://docs.databricks.com/aws/en/release-notes/product/2026/july#:~:text=Manually%20create%20tabular%20data%20in%20a%20spreadsheet%2Dstyle%20editor" }
     ],
     "introducedAt": { "date": "2026-06", "link": "https://docs.databricks.com/aws/en/release-notes/product/2026/june#:~:text=Lakeflow%20Designer%20is%20now%20generally%20available" },
     "status": { "value": "active", "link": "https://docs.databricks.com/aws/en/designer/#:~:text=a%20visual%2C%20no%2Dcode%2C%20AI%2Dnative%20experience", "date": "2026-07-18" },
@@ -1341,7 +1351,7 @@
       { "url": "https://www.databricks.com/blog/announcing-lakeflow-designer-no-code-etl", "kind": "community", "label": "Databricks Blog: Lakeflow Designer" },
       { "url": "https://www.prnewswire.com/news-releases/databricks-unveils-lakeflow-designer-for-data-analysts-to-build-reliable-pipelines-without-coding-302478809.html", "kind": "internet", "label": "PR Newswire: Lakeflow Designer" }
     ],
-    "verified": "2026-07-18"
+    "verified": "2026-08-03"
   },
   {
     "id": "attribute-based-access-control",

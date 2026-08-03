@@ -33,6 +33,18 @@ Format loosely follows [Keep a Changelog](https://keepachangelog.com/); dates ar
   "Multi-table transactions" wording kept as an alias rather than asserted as a rename.
 
 ### Changed
+- **Added a July 2026 fact to ten existing cards**, each sourced to that month's release notes
+  and each card's `verified` bumped: a Genie app for Microsoft Teams (`genie-agents`), scheduled
+  tasks that leave a continuable chat (`genie-code`), the Enter Data spreadsheet operator from
+  the Summer Release (`lakeflow-designer`), conversational troubleshooting off Unity Catalog
+  telemetry (`lakebase`), high-QPS-on-by-default-but-not-for-existing-endpoints
+  (`databricks-ai-search`), the sample datasets moving to the `samples` catalog over OpenSharing
+  (`dbfs-mounts`), the old `Trigger.AvailableNow` downgrade to a single micro-batch
+  (`opensharing`), protobuf input only on endpoints deployed after July 9 (`model-serving`),
+  the annotations explaining why a warehouse stays awake (`sql-warehouse`), and in-editor
+  pipeline unit tests via catalog-table redirection (`lakeflow-pipelines-editor`).
+  `git-folders` was skipped: it is already at the three-fact cap, so the Git CLI Public Preview
+  would have meant dropping an existing sourced fact.
 - **Re-chained the SQL migration converter.** Databricks retitled both the doc page and its own
   July 16 release-note entry from "Lakebridge Agentic Converter" to "agentic code converter" on
   AWS docs and Microsoft Learn alike, which left four of the existing card's citation anchors
