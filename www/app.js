@@ -79,9 +79,9 @@
     { label: "", items: [
       { label: "Home", icon: "home", home: true },
       { label: "Learn", icon: "learn" },
-      { label: "Workspace", icon: "workspace", ids: ["git-folders", "databricks-repos", "legacy-databricks-cli", "databricks-cli", "serverless-workspaces", "databricks-free-edition", "databricks-community-edition", "personal-access-tokens", "oauth-token-federation", "legacy-databricks-connect", "databricks-connect", "mission-critical", "lakebridge-agentic-converter"] },
+      { label: "Workspace", icon: "workspace", ids: ["git-folders", "databricks-repos", "legacy-databricks-cli", "databricks-cli", "serverless-workspaces", "databricks-free-edition", "databricks-community-edition", "personal-access-tokens", "oauth-token-federation", "legacy-databricks-connect", "databricks-connect", "mission-critical", "agentic-code-converter", "lakebridge-agentic-converter"] },
       { label: "Recents", icon: "recents" },
-      { label: "Catalog", icon: "catalog", ids: ["catalog-explorer", "data-explorer", "unity-catalog", "unity-catalog-volumes", "secrets-in-unity-catalog", "dbfs-mounts", "lakehouse-federation", "opensharing", "delta-sharing", "secureconnect", "delta-lake", "databricks-delta", "liquid-clustering", "hive-metastore", "attribute-based-access-control", "unity-catalog-managed-iceberg-tables", "managed-iceberg-materialized-views", "databricks-clean-rooms"] },
+      { label: "Catalog", icon: "catalog", ids: ["catalog-explorer", "data-explorer", "unity-catalog", "unity-catalog-volumes", "secrets-in-unity-catalog", "dbfs-mounts", "lakehouse-federation", "opensharing", "delta-sharing", "secureconnect", "delta-lake", "databricks-delta", "transactions", "liquid-clustering", "hive-metastore", "attribute-based-access-control", "role-based-access-control", "governance-hub", "unity-catalog-managed-iceberg-tables", "managed-iceberg-materialized-views", "databricks-clean-rooms"] },
       { label: "Jobs & Pipelines", icon: "jobs", ids: ["lakeflow-declarative-pipelines", "delta-live-tables", "lakeflow-jobs", "workflows", "lakeflow-connect", "declarative-automation-bundles", "databricks-asset-bundles", "dbx", "lakeflow-pipelines-editor", "multi-file-editor", "standalone-pipelines"] },
       { label: "Compute", icon: "compute", ids: ["lakebase", "ai-runtime", "lakehouse-replay", "standard-and-dedicated-access-modes", "shared-single-user-access-modes", "no-isolation-shared-access-mode", "init-scripts-on-dbfs"] },
       { label: "Discover", icon: "discover", ids: ["discover", "databricks-marketplace"] },
@@ -99,7 +99,7 @@
     ]},
     { label: "Data Engineering", items: [
       { label: "Runs", icon: "runs" },
-      { label: "Data Ingestion", icon: "ingestion" },
+      { label: "Data Ingestion", icon: "ingestion", ids: ["zerobus-ingest"] },
       { label: "Visual Data Prep", icon: "dataprep", ids: ["lakeflow-designer"] },
     ]},
     { label: "AI/ML", items: [

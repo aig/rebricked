@@ -3,6 +3,44 @@
 All notable changes to **rebricked**, grouped by day.
 Format loosely follows [Keep a Changelog](https://keepachangelog.com/); dates are `YYYY-MM-DD`.
 
+## 2026-08-03
+
+### Added
+- **Role-based access control (RBAC)** (`role-based-access-control`, `active`, Public Preview
+  July 2026). Assume a role - implemented as an ordinary Databricks group you hold the Assume
+  permission on - and act with only that role's permissions for the session, replacing your
+  accumulated ones. Sourced limitations: one role at a time, Agent Bricks agent creation /
+  alert management / Lakeflow pipelines unsupported as a role, Vector Search index creation
+  fails, workspace SCIM API can't manage groups.
+- **Governance Hub** (`governance-hub`, `active`, Beta July 2026). Account-console Data / AI /
+  Cost pages for monitoring data health and coverage, AI usage and spend, and cost drivers.
+  Adds no permissions of its own; each page is scoped to the viewer's admin role.
+- Both wired into the **Catalog** rail section alongside `attribute-based-access-control`.
+- **Agentic code converter** (`agentic-code-converter`, `active`, Beta July 2026) as the current
+  name of the SQL migration converter, wired into the **Workspace** rail section.
+- **Zerobus Ingest** (`zerobus-ingest`, `active`, Public Preview October 2025). Push-based
+  serverless ingestion straight into Unity Catalog Delta tables over gRPC, REST, or
+  OpenTelemetry - no bus, no partitions, no brokers. Wired into the **Data Ingestion** rail
+  section, which previously had no entries.
+- **Transactions** (`transactions`, `active`, Public Preview March 2026 -> GA July 2026).
+  Multi-statement, multi-table ACID transactions via `BEGIN ATOMIC ... END` /
+  `BEGIN TRANSACTION ... COMMIT` on Unity Catalog managed tables with catalog commits enabled.
+  Recorded as one card named for the current docs page, with the Public Preview's
+  "Multi-table transactions" wording kept as an alias rather than asserted as a rename.
+
+### Changed
+- **Re-chained the SQL migration converter.** Databricks retitled both the doc page and its own
+  July 16 release-note entry from "Lakebridge Agentic Converter" to "agentic code converter" on
+  AWS docs and Microsoft Learn alike, which left four of the existing card's citation anchors
+  pointing at text that no longer exists. Because a card's `id` must equal its name slug and ids
+  are permanent, an in-place rename is not representable: `lakebridge-agentic-converter` is now
+  `renamed` (`to` 2026-07, `successorId` -> `agentic-code-converter`) and keeps its id, name and
+  page, and the new card carries the current name. Every anchor on both cards re-verified against
+  live doc text. The old `/migration/lakebridge-agentic-converter` doc URL still resolves and is
+  cited as the evidence of the retitle.
+- Refreshed the mirrored reference docs (`scripts/fetch_reference.py`): 104 pages updated,
+  including July 2026 release notes now covering items through July 29.
+
 ## 2026-07-26
 
 ### Changed
