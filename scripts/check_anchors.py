@@ -1,11 +1,13 @@
 #!/usr/bin/env python3
-"""Check every URL in databricks.features.json: links still live, quotes still real.
+"""Check every URL in databricks.features.json and kb/posts/: links live, quotes real.
 
 `validate.py` checks a link's *shape* - that it is an http(s) URL, that dates parse.
 It never fetches, so it cannot see the failure this catches: Databricks edits a doc
 page, the `#:~:text=` fragment stops matching, and the card goes on looking sourced.
 Text fragments fail silently - a browser just loads the page without highlighting -
-so the rot is invisible from both ends.
+so the rot is invisible from both ends. Guides cite the same way (inline `[🔗]` links
+whose fragment selects the backing sentence), so their front-matter sources and every
+http(s) link in each body are swept too, under the id `post:<slug>`.
 
 Two kinds of URL, judged differently:
 
@@ -56,6 +58,7 @@ gate CI blocks on.
 Run locally:
     python scripts/check_anchors.py                    # everything
     python scripts/check_anchors.py unity-catalog       # just these entry ids
+    python scripts/check_anchors.py post:databricks-task-slots-not-more-nodes
     python scripts/check_anchors.py --list-blocked
 """
 import argparse
@@ -72,6 +75,7 @@ from urllib.request import Request, urlopen
 
 ROOT = Path(__file__).resolve().parent.parent
 DATA = ROOT / "www" / "databricks.features.json"
+POSTS = ROOT / "kb" / "posts"
 
 FRAGMENT = "#:~:text="
 TIMEOUT = 45
@@ -191,6 +195,23 @@ def anchors_of(entry):
     return found
 
 
+def post_anchors():
+    """Every ('post:<slug>', field, url) triple across kb/posts/*/index.md.
+
+    Reads the *source* Markdown, not the built page: front-matter `url:` lines (house
+    style is one URL per line) plus every inline `[text](http...)` link in the body.
+    """
+    found = []
+    for md in sorted(POSTS.glob("*/index.md")):
+        pid = f"post:{md.parent.name}"
+        text = md.read_text(encoding="utf-8")
+        for url in re.findall(r"^\s*(?:-\s*)?url:\s*(\S+)\s*$", text, flags=re.M):
+            found.append((pid, "sources", url))
+        for url in re.findall(r"\]\((https?://[^)\s]+)\)", text):
+            found.append((pid, "body", url))
+    return found
+
+
 def main(argv=None):
     reconfigure = getattr(sys.stdout, "reconfigure", None)
     if reconfigure:  # quoted text is often non-ASCII; don't die on a cp1252 console
@@ -213,11 +234,13 @@ def main(argv=None):
         print(f"FATAL: {DATA.name} not found - it is built from kb/. Run first:")
         print("       python scripts/build_features.py")
         return 1
+    posts = post_anchors()
     wanted = set(args.ids)
     if wanted:
-        unknown = sorted(wanted - {e.get("id") for e in data})
+        known = {e.get("id") for e in data} | {pid for pid, _, _ in posts}
+        unknown = sorted(wanted - known)
         if unknown:
-            print(f"unknown entry id(s): {', '.join(unknown)}", file=sys.stderr)
+            print(f"unknown entry/post id(s): {', '.join(unknown)}", file=sys.stderr)
             return 2
 
     todo = []  # (entry_id, field, base, fragment)
@@ -228,6 +251,11 @@ def main(argv=None):
         for field, url in anchors_of(entry):
             base, _, frag = url.partition(FRAGMENT)
             todo.append((eid, field, base, frag))
+    for pid, field, url in posts:
+        if wanted and pid not in wanted:
+            continue
+        base, _, frag = url.partition(FRAGMENT)
+        todo.append((pid, field, base, frag))
 
     bases = sorted({b for _, _, b, _ in todo})
     print(f"checking {len(todo)} URL(s) across {len(bases)} page(s)...")

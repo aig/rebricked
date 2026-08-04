@@ -40,8 +40,14 @@ jobs:
         # kb/<vendor>/<id>.yaml is the source of truth; the JSON the app fetches is
         # build output and is not tracked, so every job that reads it builds it first.
         run: python3 scripts/build_features.py
+      - name: Build guide pages from kb/posts/
+        # Resolves {{entry:id}} against the built data, so a guide can never link to a name
+        # the dataset does not have. Fails the build if one does.
+        run: python3 scripts/build_posts.py
       - name: Validate databricks.features.json
         run: python3 scripts/validate.py
+      - name: Validate kb/posts/
+        run: python3 scripts/validate_posts.py
 
   deploy:
     needs: validate
@@ -60,6 +66,10 @@ jobs:
         # The data the app fetches at runtime, assembled from the per-entry YAML in kb/.
         # Not tracked, so this must run before build_entries.py and before the upload.
         run: python3 scripts/build_features.py
+      - name: Build guide pages from kb/posts/
+        # Must run before build_entries.py: it writes posts.json, which build_entries.py reads
+        # to render the "Guides that mention this" links and to list guides in sitemap/feed.
+        run: python3 scripts/build_posts.py
       - name: Build entry pages + sitemap
         # Regenerate the crawlable /{vendor}/... pages and sitemap.xml straight from
         # databricks.features.json so they can never drift from the data. No browser needed.

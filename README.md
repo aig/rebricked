@@ -1,5 +1,5 @@
 <h1 align="center">
-  <img src="assets/logo.svg" alt="REbricked" width="320">
+  <img src="www/assets/logo.svg" alt="REbricked" width="320">
 </h1>
 
 <p align="center"><strong>Databricks renamed it.</strong></p>

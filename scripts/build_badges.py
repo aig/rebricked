@@ -156,6 +156,10 @@ ICONS = {
     "serving": '<circle cx="12" cy="12" r="2.2"/><path d="M7.5 7.5a6.5 6.5 0 0 0 0 9M16.5 7.5a6.5 6.5 0 0 1 0 9M4.8 4.8a10 10 0 0 0 0 14.4M19.2 4.8a10 10 0 0 1 0 14.4"/>',
 }
 
+# Rail items that leave the app for a static section of their own, keyed by label. Mirrors the
+# `href` items in app.js's NAV, and is why Learn is not just an inert link home.
+NAV_LINKS = {"Learn": "../../learn/"}
+
 # (group label, [(item label, icon, has_changes)]) - has_changes gets the dot + a
 # ?s= link into the app; the rest just link home.
 NAV = [
@@ -176,7 +180,9 @@ NAV = [
 ]
 
 
-def render_rail():
+def render_rail(active=None):
+    """The static mirror of the app rail. `active` is a rail item label (e.g. "Learn") to mark
+    as the current page, so a section with its own pages highlights the item that led there."""
     groups = []
     for label, items in NAV:
         parts = []
@@ -184,7 +190,10 @@ def render_rail():
             parts.append(f'<div class="nav-group-label">{html.escape(label)}</div>')
         for it_label, icon, changed in items:
             svg = f'<svg class="ic" viewBox="0 0 24 24" width="18" height="18">{ICONS.get(icon, "")}</svg>'
-            if changed is None:            # Home
+            if it_label in NAV_LINKS:      # section with its own static pages
+                href = NAV_LINKS[it_label]
+                cls, dot = "nav-item", ""
+            elif changed is None:          # Home
                 href = "../../"
                 cls, dot = "nav-item", ""
             elif changed:                  # section with entries - dot + deep link
@@ -194,8 +203,12 @@ def render_rail():
             else:                          # inert section - link home
                 href = "../../"
                 cls, dot = "nav-item", ""
+            current = ""
+            if active and it_label == active:
+                cls += " active"
+                current = ' aria-current="page"'
             parts.append(
-                f'<a class="{cls}" href="{href}"><span class="ic-wrap">{svg}</span>'
+                f'<a class="{cls}" href="{href}"{current}><span class="ic-wrap">{svg}</span>'
                 f'<span class="label">{html.escape(it_label)}</span>{dot}</a>'
             )
         groups.append("".join(parts))
@@ -228,6 +241,25 @@ TOPBAR = (
     '<a class="quiz-cta" href="../../?startQuiz=1"><svg viewBox="0 0 24 24" width="16" height="16" class="ic">'
     '<path d="M9.2 9a2.8 2.8 0 1 1 3.9 2.6c-.9.4-1.6 1.1-1.6 2.1v.4" /><path d="M12 17.5h.01" /></svg>'
     '<span>Take the quiz</span></a>'
+    # Same GitHub / RSS pair the app shell carries, so a reader who lands on a guide or an
+    # entry page from search has the source repo and the feed where they expect them.
+    '<a class="icon-btn" id="gh-top" href="https://github.com/aig/rebricked" target="_blank" '
+    'rel="noopener" title="View the project on GitHub" aria-label="View the project on GitHub">'
+    '<svg class="gh-icon" viewBox="0 0 16 16" width="18" height="18" aria-hidden="true">'
+    '<path fill="currentColor" fill-rule="evenodd" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 '
+    '7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 '
+    '1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 '
+    '0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 '
+    '1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 '
+    '3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 '
+    '8.01 0 0016 8c0-4.42-3.58-8-8-8z" /></svg></a>'
+    '<a class="icon-btn" id="rss-top" href="../../subscribe/" title="Subscribe via RSS" '
+    'aria-label="Subscribe via RSS">'
+    '<svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true">'
+    '<path fill="currentColor" d="M6.18 15.64a2.18 2.18 0 0 1 2.18 2.18A2.18 2.18 0 0 1 6.18 20 '
+    '2.18 2.18 0 0 1 4 17.82a2.18 2.18 0 0 1 2.18-2.18M4 4.44A15.56 15.56 0 0 1 19.56 20h-2.83A12.73 '
+    '12.73 0 0 0 4 7.27V4.44m0 5.66a9.9 9.9 0 0 1 9.9 9.9H11.07A7.07 7.07 0 0 0 4 12.93V10.1Z" />'
+    '</svg></a>'
     '<button class="icon-btn" id="theme-toggle" title="Toggle light / dark" aria-label="Toggle theme">'
     '<svg viewBox="0 0 24 24" width="18" height="18" class="ic">'
     '<path d="M12 3a9 9 0 1 0 9 9c-4.97 0-9-4.03-9-9Z" /></svg></button>'
