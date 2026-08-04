@@ -1,0 +1,42 @@
+id: databricks-cli
+name: Databricks CLI (v0.205+)
+aliases:
+  - Databricks CLI
+  - Go CLI
+  - databricks
+category: Developer experience
+what:
+  note: The modern Databricks command-line interface - a standalone, dependency-free binary with complete coverage of the Databricks REST API.
+  link: https://docs.databricks.com/aws/en/dev-tools/cli/migrate#:~:text=standalone%20executable%20and%20does%20not%20need%20any%20runtime%20dependencies
+fact:
+  - note: Databricks Asset Bundles aren't a separate tool - they're the `bundle` command group built into the CLI, so every `databricks bundle deploy` runs through it.
+    link: https://docs.databricks.com/aws/en/dev-tools/cli/bundle-commands#:~:text=bundle%20command%20group%20within%20the%20Databricks%20CLI
+  - note: It carried 0.x version numbers for years and only crossed into its 1.0.0 GA release - its first major version - on May 21, 2026.
+    link: https://github.com/databricks/cli/releases/tag/v1.0.0#:~:text=v1.0.0%20as%20the%20first%20major%20release
+status:
+  value: active
+  link: https://docs.databricks.com/aws/en/dev-tools/cli/#:~:text=allows%20you%20to%20interact%20with%20the%20Databricks%20platform%20from%20your%20local%20terminal
+  date: '2026-07-18'
+releases:
+  - type: public-preview
+    date: 2023-06
+    link: https://docs.databricks.com/aws/en/release-notes/product/2023/june#:~:text=Databricks%20CLI%20%28Public%20Preview%29
+  - type: ga
+    date: 2026-05
+    link: https://docs.databricks.com/aws/en/release-notes/product/2026/may#:~:text=Databricks%20CLI%20is%20now%20generally%20available%20%28GA%29
+introducedAt:
+  date: '2023'
+  link: https://docs.databricks.com/aws/en/release-notes/product/2023/june#:~:text=Databricks%20CLI%20%28Public%20Preview%29
+links:
+  - url: https://unogeeks.com/databricks-cli-0-205/
+    kind: community
+    label: 'UnoGeeks: Databricks CLI 0.205'
+  - url: https://www.datacamp.com/tutorial/databricks-cli
+    kind: internet
+    label: 'DataCamp: Databricks CLI tutorial'
+prediction:
+  - Genie CLI
+  - Unity CLI
+  - Databricks CLI One
+source: https://docs.databricks.com/aws/en/dev-tools/cli/
+verified: '2026-07-23'

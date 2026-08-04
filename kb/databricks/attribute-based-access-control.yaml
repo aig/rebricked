@@ -1,0 +1,49 @@
+id: attribute-based-access-control
+name: Attribute-based access control (ABAC)
+aliases:
+  - ABAC
+  - attribute-based access control
+category: Data governance
+what:
+  note: Unity Catalog access-control model that grants or restricts access by evaluating governed tags (attributes) on securables, so one policy on a catalog or schema applies to everything beneath it.
+  link: https://docs.databricks.com/aws/en/data-governance/unity-catalog/abac/#:~:text=access%20is%20determined%20by%20evaluating%20attributes
+fact:
+  - note: Tag a column 'pii' once and a single catalog-level policy masks it everywhere beneath - no more re-granting access table by table.
+    link: https://docs.databricks.com/aws/en/data-governance/unity-catalog/abac/#:~:text=attached%20at%20a%20level%20in%20the%20Unity%20Catalog%20hierarchy
+  - note: The same tag-driven policies do both row filtering and column masking, and tag-based GRANT policies arrived in Beta in June 2026.
+    link: https://docs.databricks.com/aws/en/data-governance/unity-catalog/abac/#:~:text=supports%20row%20and%20column%2Dlevel%20security%20through
+status:
+  value: active
+  link: https://docs.databricks.com/aws/en/data-governance/unity-catalog/abac/#:~:text=Attribute%2Dbased%20access%20control%20%28ABAC%29
+  date: '2026-07-18'
+releases:
+  - type: beta
+    date: 2025-06
+    link: https://docs.databricks.com/aws/en/release-notes/product/2025/june#:~:text=Attribute%2Dbased%20access%20control%20%28ABAC%29%20in%20Unity%20Catalog%20is%20in%20Beta
+  - type: public-preview
+    date: 2025-11
+    link: https://docs.databricks.com/aws/en/release-notes/product/2025/november#:~:text=Attribute%2Dbased%20access%20control%20%28ABAC%29%20now%20in%20Public%20Preview
+  - type: ga
+    date: 2026-04
+    link: https://docs.databricks.com/aws/en/release-notes/product/2026/april#:~:text=Attribute%2Dbased%20access%20control%20%28ABAC%29%20is%20now%20generally%20available%20%28GA%29.
+introducedAt:
+  date: 2026-05
+  link: https://www.databricks.com/blog/abac-row-filtering-and-column-masking-policies-governed-tags-and-data-classification-are-now#:~:text=Attribute%2DBased%20Access%20Control%20%28ABAC%29%20policies%20for%20row%20filtering%20and%20column%20masking
+occasion:
+  date: 2026-05
+  link: https://www.databricks.com/blog/abac-row-filtering-and-column-masking-policies-governed-tags-and-data-classification-are-now#:~:text=announce%20the%20General%20Availability%20of%20three%20complementary%20capabilities
+  note: GA May 2026
+limitations:
+  note: Requires serverless compute or Databricks Runtime 16.4+ and uses governed tags; policies can't be applied directly to views; quotas apply (e.g. 10000 policies per metastore, 50 per table, 20 principals per policy); time travel and cloning fail on policy-protected tables unless the principal is exempted; and there's no ABAC information schema (use the REST API).
+  link: https://docs.databricks.com/aws/en/data-governance/unity-catalog/abac/requirements#:~:text=You%20can%27t%20apply%20ABAC%20policies%20directly%20to%20views
+  date: '2026-07-23'
+links:
+  - url: https://www.databricks.com/blog/abac-row-filtering-and-column-masking-policies-governed-tags-and-data-classification-are-now
+    kind: community
+    label: 'Databricks Blog: ABAC GA in Unity Catalog'
+prediction:
+  - Agent-based access control (ABAC)
+  - Adaptive access control
+  - Unity ABAC
+source: https://docs.databricks.com/aws/en/data-governance/unity-catalog/abac/
+verified: '2026-07-18'

@@ -1,0 +1,51 @@
+id: lakeflow-designer
+name: Lakeflow Designer
+aliases:
+  - Designer
+  - Visual Data Prep
+category: Data engineering
+what:
+  note: A visual, no-code, AI-native experience for building ETL pipelines with a drag-and-drop canvas and natural language, backed by production-ready Lakeflow pipeline code.
+  link: https://docs.databricks.com/aws/en/designer/#:~:text=visual%2C%20no%2Dcode%2C%20AI%2Dnative%20experience
+fact:
+  - note: Drag boxes on a canvas or describe the flow in plain English, and it emits real, production-ready pipeline code - so the prototype and the production job end up being the same thing.
+    link: https://docs.databricks.com/aws/en/designer/#:~:text=backed%20by%20production%2Dready%20code
+  - note: It went from Public Preview in April 2026 to GA just two months later, in June.
+    link: https://docs.databricks.com/aws/en/release-notes/product/2026/june#:~:text=Lakeflow%20Designer%20is%20now%20generally%20available
+  - note: 'The no-code canvas quietly grew a spreadsheet: an Enter Data operator lets you type tabular data in by hand, sitting right beside the operators reading from Unity Catalog.'
+    link: https://docs.databricks.com/aws/en/release-notes/product/2026/july#:~:text=Manually%20create%20tabular%20data%20in%20a%20spreadsheet%2Dstyle%20editor
+status:
+  value: active
+  link: https://docs.databricks.com/aws/en/designer/#:~:text=a%20visual%2C%20no%2Dcode%2C%20AI%2Dnative%20experience
+  date: '2026-07-18'
+releases:
+  - type: public-preview
+    date: 2026-04
+    link: https://docs.databricks.com/aws/en/release-notes/product/2026/april#:~:text=drag%2Dand%2Ddrop%20canvas%20and%20natural%20language%20in%20Lakeflow%20Designer
+  - type: ga
+    date: 2026-06
+    link: https://docs.databricks.com/aws/en/release-notes/product/2026/june#:~:text=Lakeflow%20Designer%20is%20now%20generally%20available
+introducedAt:
+  date: 2026-06
+  link: https://docs.databricks.com/aws/en/release-notes/product/2026/june#:~:text=Lakeflow%20Designer%20is%20now%20generally%20available
+occasion:
+  date: 2026-06
+  link: https://docs.databricks.com/aws/en/release-notes/product/2026/june#:~:text=Lakeflow%20Designer%20is%20now%20generally%20available
+  note: GA June 16, 2026
+limitations:
+  note: By default, operators process only a limited sample of data; setting Rows scanned to Max reruns all upstream operators over the complete, unbounded dataset and can take a long time.
+  link: https://docs.databricks.com/aws/en/designer/what-is-lakeflow-designer#:~:text=operators%20process%20a%20limited%20sample%20of%20data
+  date: '2026-07-23'
+links:
+  - url: https://www.databricks.com/blog/announcing-lakeflow-designer-no-code-etl
+    kind: community
+    label: 'Databricks Blog: Lakeflow Designer'
+  - url: https://www.prnewswire.com/news-releases/databricks-unveils-lakeflow-designer-for-data-analysts-to-build-reliable-pipelines-without-coding-302478809.html
+    kind: internet
+    label: 'PR Newswire: Lakeflow Designer'
+prediction:
+  - Genie Designer
+  - Lakeflow Canvas
+  - Agentic Designer
+source: https://docs.databricks.com/aws/en/designer/
+verified: '2026-08-03'

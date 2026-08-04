@@ -1,0 +1,44 @@
+id: databricks-odbc-driver
+name: Databricks ODBC Driver
+aliases:
+  - Simba Spark ODBC Driver
+  - Simba ODBC
+  - Spark ODBC Driver
+category: Developer experience
+what:
+  note: The ODBC driver for connecting BI tools and applications to Databricks SQL warehouses and clusters.
+  link: https://docs.databricks.com/aws/en/integrations/odbc/migration
+fact:
+  - note: For years this was the third-party 'Simba Spark' driver in disguise - Databricks finally put its own name on it in 2026, and existing DSNs never noticed the change.
+    link: https://docs.databricks.com/aws/en/integrations/odbc/migration#:~:text=Databricks%20renamed%20the%20ODBC%20driver%20in%20February%202026
+  - note: Databricks stopped shipping new Simba-branded versions but promised to support existing ones for two more years.
+    link: https://docs.databricks.com/aws/en/integrations/odbc/migration#:~:text=existing%20versions%20remain%20supported%20for%20two%20years
+status:
+  value: active
+  link: https://docs.databricks.com/aws/en/integrations/odbc/migration#:~:text=Databricks%20renamed%20the%20ODBC%20driver
+  date: '2026-07-18'
+releases:
+  - type: ga
+    date: 2026-02
+    link: https://docs.databricks.com/aws/en/release-notes/product/2026/february#:~:text=The%20Databricks%20ODBC%20driver%20has%20been%20renamed%20from%20Simba%20Spark%20ODBC%20Driver%20to%20Databricks%20ODBC%20Driver.
+from:
+  date: 2026-02
+  link: https://docs.databricks.com/aws/en/release-notes/product/2026/february#:~:text=renamed%20from%20Simba%20Spark%20ODBC%20Driver%20to%20Databricks%20ODBC%20Driver
+occasion:
+  date: 2026-02
+  link: https://docs.databricks.com/aws/en/release-notes/product/2026/february#:~:text=renamed%20from%20Simba%20Spark%20ODBC%20Driver%20to%20Databricks%20ODBC%20Driver
+  note: Renamed February 2026
+limitations:
+  note: Cloud Fetch applies only to query results larger than 1 MB, requires an E2 workspace and an S3 bucket without versioning, and needs ODBC driver 2.6.17 or above; with bucket versioning enabled, Databricks can't garbage-collect older result files after the 24-hour retention, which can grow storage.
+  link: https://docs.databricks.com/aws/en/integrations/odbc/capability#:~:text=Cloud%20Fetch%20only%20applies%20to%20query%20results%20larger%20than%201%20MB
+  date: '2026-07-23'
+links:
+  - url: https://insightsoftware.com/drivers/databricks-odbc-jdbc-driver/
+    kind: internet
+    label: 'insightsoftware: Databricks ODBC/JDBC'
+prediction:
+  - Lakehouse ODBC Driver
+  - Unity ODBC Driver
+  - Genie Connect
+source: https://docs.databricks.com/aws/en/integrations/odbc/migration
+verified: '2026-07-18'

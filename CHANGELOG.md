@@ -3,59 +3,99 @@
 All notable changes to **rebricked**, grouped by day.
 Format loosely follows [Keep a Changelog](https://keepachangelog.com/); dates are `YYYY-MM-DD`.
 
+**How entries are written.** Each entry is a bold one-line summary, then **`Why:`** (the problem
+being solved), then **`What:`** (what changed). The why comes first, because the diff already
+shows the what. Plain, simple English: short sentences, common words, no jargon beyond the field
+and product names themselves. Some older entries have no `Why:` line - the reason was never
+recorded, and a made-up reason is worse than none.
+
 ## 2026-08-04
 
 ### Changed
-- **Tightened the LTAP entry from [#7](https://github.com/aig/rebricked/pull/7).** The merged
-  card was sourced entirely to the launch press release, which left it reading as shipped:
-  that same press release's Availability section says only "LTAP is coming soon as a part of
-  Lakebase." Added a `limitations` note (still rolling out; dual-writes row + columnar copies
-  to verify itself; tiny tables left unconverted; MVCC row versions hidden from Iceberg/Delta
-  readers) and said so in `what.note`, sourced to Reynold Xin's engineering deep dive. No
-  `releases` timeline: the announcement names no preview stage, so inventing one would be a
-  guess. Replaced the two facts that were really about Lakebase (its 12M daily database
-  launches, its git-style branching - already a fact on the `lakebase` card) with the
-  deliberate HTAP pun and the dual-write-during-rollout detail, and reframed the "world's
-  first LTAP platform" fact around the fact that Databricks coined the category the same day.
-  Added text fragments to the bare `status`/`occasion` links, added the engineering blog and a
-  Register write-up to `links`, and re-verified every citation with `check_anchors.py`.
+- **The data moved from one JSON array to one YAML file per entry: `kb/databricks/<id>.yaml`.**
+
+  **Why:** you could not read a change to one entry in git. Editing one card meant a change
+  buried in the middle of a 2,500-line file. All 105 entries shared one file's history, so
+  `git log` could not tell you anything about a single card. Two pull requests touching
+  completely different cards clashed on the same lines. Now the diff is just the change: a new
+  entry is one new file, and a rename is that file plus a one-line edit on the card before it.
+  `git log kb/databricks/delta-live-tables.yaml` now shows that one entry's whole history.
+
+  **What:** all 105 entries became `kb/databricks/<id>.yaml`, where the filename is the `id`.
+  `www/databricks.features.json` is now build output. The new
+  [`scripts/build_features.py`](scripts/build_features.py) builds it, git ignores it, and CI
+  rebuilds it before the validate gate and before deploy. No field changed and the site serves
+  the same data. To prove that, the built file was compared entry by entry against the last
+  committed one: all 105 matched exactly. If you edit entries, write YAML and never the JSON,
+  because an edit to the JSON is thrown away on the next build. Run
+  `python scripts/build_features.py` before `validate.py`, `check_anchors.py`, or a local
+  preview, because all three read the built file. The builder fails if the YAML is broken or if
+  an `id` does not match its filename, and `--check` tells you the built file is out of date.
+  PyYAML is now needed to run `scripts/` (`pip install pyyaml`), but the site itself still has no
+  dependencies and no JavaScript build. `CONTRIBUTING.md` and the `add-databricks-entry` skill
+  now show YAML examples, and `README.md`, `AGENTS.md`, `CLAUDE.md`, and the CI workflow match.
+- **Tightened the LTAP entry from [#7](https://github.com/aig/rebricked/pull/7).**
+
+  **Why:** the card read as if LTAP had shipped. Every claim on it came from the launch press
+  release, and the Availability section of that same press release says only "LTAP is coming soon
+  as a part of Lakebase". Two of its facts were really about Lakebase, not LTAP, and one of those
+  (the git-style branching) was already a fact on the `lakebase` card.
+
+  **What:** added a `limitations` note saying it is still rolling out, and said the same in
+  `what.note`, both sourced to Reynold Xin's engineering deep dive. The limits: it dual-writes a
+  row copy and a columnar copy to check itself, it leaves tiny tables unconverted, and it hides
+  MVCC row versions from Iceberg and Delta readers. Added no `releases` timeline, because the
+  announcement names no preview stage and inventing one would be a guess. Replaced the two
+  Lakebase facts with the deliberate HTAP pun and the dual-write detail, and rewrote the "world's
+  first LTAP platform" fact around the point that Databricks coined the category the same day.
+  Added text fragments to the bare `status` and `occasion` links, added the engineering blog and
+  a Register write-up to `links`, and re-checked every citation with `check_anchors.py`.
 
 ## 2026-08-03
 
 ### Added
-- **Lakehouse Monitoring -> Data profiling, plus Anomaly detection.** Three new entries
-  closing an uncovered rename. Databricks docs now state it outright ("Data profiling was
-  formerly known as Lakehouse Monitoring"), and the old `/lakehouse-monitoring/` docs URL
-  redirects to the data-profiling page under Unity Catalog. Cards: `lakehouse-monitoring`
-  (`renamed`, Public Preview August 2023, GA June 2024, `successorId` -> `data-profiling`),
-  `data-profiling` (`active`, GA, with the Delta-only / 30-day / 4TB limitations), and
-  `anomaly-detection` (`active`, Public Preview February 2026) as its own feature - the
-  docs treat Data Quality Monitoring as the umbrella over both, so the rename chain points
-  at data profiling rather than at the umbrella. All three wired into the Catalog rail.
-  Caveat: Databricks never published a dated rename announcement, so the `to`/`from` date
-  of `2026-02` is the earliest release note using the new name, not a rename notice.
+- **Lakehouse Monitoring -> Data profiling, plus Anomaly detection.**
+
+  **Why:** a rename had happened and the list did not cover it. The Databricks docs now say it
+  outright: "Data profiling was formerly known as Lakehouse Monitoring". The old
+  `/lakehouse-monitoring/` docs URL redirects to the data-profiling page under Unity Catalog.
+
+  **What:** three new cards. `lakehouse-monitoring` (`renamed`, Public Preview August 2023, GA
+  June 2024, `successorId` -> `data-profiling`), `data-profiling` (`active`, GA, with the
+  Delta-only, 30-day, and 4TB limits), and `anomaly-detection` (`active`, Public Preview February
+  2026) as its own feature. The docs treat Data Quality Monitoring as the umbrella over both, so
+  the rename chain points at data profiling and not at the umbrella. All three wired into the
+  Catalog rail. One caveat: Databricks never published a dated rename announcement, so the
+  `to`/`from` date of `2026-02` is the earliest release note that uses the new name, not a rename
+  notice.
 - **[`scripts/check_anchors.py`](scripts/check_anchors.py) - a citation rot check.**
-  `validate.py` only checks that a link is a well-formed URL and never fetches, so the
-  one failure that matters most goes unseen: Databricks edits a doc page, the
-  `#:~:text=` fragment stops matching, and the card keeps looking sourced. Text
-  fragments fail silently (the browser just loads the page without highlighting), so
-  nothing surfaces it from either end. The script fetches every URL in the data file
-  and confirms each quote is still on its page, matching the way a browser resolves a
-  text fragment - case-insensitively and across inline markup - because naive matching
-  invents breakage that isn't there. It reports `DEAD` (page gone, or readable but the
-  quote is absent) separately from `BLOCKED` (host refuses scripted requests, which
-  proves nothing and never fails the run); for the one or two blocked links, finish up
-  with a web-fetch tool, which reads them normally. Needs the network, so it is a
-  local/scheduled audit and deliberately **not** part of the deploy gate.
-  Its first run over 100 entries found 7 real citation drifts that the schema gate had
-  been passing silently (fixed below). After those repairs: 913 URLs across 316 pages,
-  **912 OK, 0 DEAD, 1 BLOCKED** - the one blocked link being techzine.eu, confirmed
-  live and on-topic with a web-fetch tool.
+
+  **Why:** the failure that matters most was invisible. `validate.py` only checks that a link
+  looks like a URL, and it never fetches the page. So when Databricks edits a doc page, the
+  `#:~:text=` fragment stops matching, and the card still looks sourced. Nothing tells you: a
+  broken text fragment fails silently, and the browser just loads the page without highlighting
+  anything.
+
+  **What:** the script fetches every URL in the data file and checks each quote is still on its
+  page. It matches the way a browser resolves a text fragment - ignoring case, and across inline
+  markup - because strict matching reports breakage that is not real. It reports `DEAD` (page
+  gone, or the page loads but the quote is not there) separately from `BLOCKED` (the host refuses
+  scripted requests, which tells you nothing, so it never fails the run). For the one or two
+  blocked links, check them with a web-fetch tool, which reads them normally. It needs the
+  network, so it is a local or scheduled audit and on purpose **not** part of the deploy gate.
+  Its first run over 100 entries found 7 real broken citations that the schema gate had been
+  passing (fixed below). After those repairs: 913 URLs across 316 pages, **912 OK, 0 DEAD, 1
+  BLOCKED**. The blocked one is techzine.eu, checked by hand with a web-fetch tool and confirmed
+  live and on topic.
 
 ### Fixed
-- **Repaired 7 drifted citations** whose quoted text Databricks had since reworded, so
-  the `#:~:text=` fragments silently stopped highlighting anything. `verified` bumped on
-  all six affected cards.
+- **Repaired 7 broken citations.**
+
+  **Why:** Databricks had reworded the quoted text on those pages, so the `#:~:text=` fragments
+  quietly stopped highlighting anything. The cards still looked sourced.
+
+  **What:** re-quoted each fragment from the live page and bumped `verified` on all six affected
+  cards.
   - `lakeflow-connect` `what` - the docs now say "ingest**ing** data from SaaS
     applications and databases".
   - `databricks-vector-search` `what` and `ai-gateway` `fact[0]` - both dropped the word
@@ -71,65 +111,71 @@ Format loosely follows [Keep a Changelog](https://keepachangelog.com/); dates ar
     and "Free Edition users only have access to serverless compute resources", replacing
     two fragments so short they were fragile anyway.
 - **Role-based access control (RBAC)** (`role-based-access-control`, `active`, Public Preview
-  July 2026). Assume a role - implemented as an ordinary Databricks group you hold the Assume
-  permission on - and act with only that role's permissions for the session, replacing your
-  accumulated ones. Sourced limitations: one role at a time, Agent Bricks agent creation /
-  alert management / Lakeflow pipelines unsupported as a role, Vector Search index creation
-  fails, workspace SCIM API can't manage groups.
-- **Governance Hub** (`governance-hub`, `active`, Beta July 2026). Account-console Data / AI /
-  Cost pages for monitoring data health and coverage, AI usage and spend, and cost drivers.
-  Adds no permissions of its own; each page is scoped to the viewer's admin role.
-- Both wired into the **Catalog** rail section alongside `attribute-based-access-control`.
+  July 2026). You assume a role - really just a Databricks group you hold the Assume permission
+  on - and for that session you act with only that role's permissions instead of all the ones you
+  have collected. Sourced limits: one role at a time; creating Agent Bricks agents, managing
+  alerts, and Lakeflow pipelines do not work as a role; creating a Vector Search index fails; and
+  the workspace SCIM API cannot manage groups.
+- **Governance Hub** (`governance-hub`, `active`, Beta July 2026). Data, AI, and Cost pages in the
+  account console for watching data health and coverage, AI usage and spend, and what drives
+  cost. It adds no permissions of its own, and each page only shows what the viewer's admin role
+  already covers.
+- Both wired into the **Catalog** rail section next to `attribute-based-access-control`.
 - **Agentic code converter** (`agentic-code-converter`, `active`, Beta July 2026) as the current
   name of the SQL migration converter, wired into the **Workspace** rail section.
-- **Variant** (`variant`, `active`, Public Preview June 2024 -> GA July 2026). The `VARIANT`
-  column type for semi-structured data, plus the shredding that makes it fast by storing
-  frequently seen fields as real Parquet columns instead of a binary blob. Earns a card
-  because it is a supersession, not just a new type: Databricks recommends it as the
-  replacement for storing semi-structured data in JSON strings, and that migration can
-  silently change results - variant paths are case-sensitive where JSON strings were not,
-  `[*]` is unsupported, and `NULL` is encoded differently. Wired into the **Catalog** rail.
-  Resolved a conflict between two live doc pages (one says the type arrived in Databricks
-  Runtime 15.4, the other 15.3) against the DBR 15.3 release notes, which announce it in
+- **Variant** (`variant`, `active`, Public Preview June 2024 -> GA July 2026).
+
+  **Why:** this is a replacement, not just a new column type, so it belongs on the list.
+  Databricks tells you to use it instead of storing semi-structured data in JSON strings, and
+  that switch can quietly change your results. Variant paths are case-sensitive where JSON
+  strings were not, `[*]` does not work, and `NULL` is stored differently.
+
+  **What:** a card for the `VARIANT` column type, plus the shredding that makes it fast by
+  storing often-used fields as real Parquet columns instead of one binary blob. Wired into the
+  **Catalog** rail. Two live doc pages disagree on when the type arrived - one says Databricks
+  Runtime 15.4, the other 15.3 - so this uses the DBR 15.3 release notes, which announce it in
   Public Preview and date that runtime to June 2024.
-- **Custom URL** (`custom-url`, `active`, Public Preview July 2026). One branded entry point per
-  account (for example `acme.databricks.com`) replacing per-workspace URLs, so users move
-  between workspaces and Genie One without reauthenticating. Wired into the **Workspace** rail
+- **Custom URL** (`custom-url`, `active`, Public Preview July 2026). One branded address per
+  account, for example `acme.databricks.com`, instead of a separate URL per workspace. Users move
+  between workspaces and Genie One without signing in again. Wired into the **Workspace** rail
   section.
 - **Zerobus Ingest** (`zerobus-ingest`, `active`, Public Preview October 2025). Push-based
   serverless ingestion straight into Unity Catalog Delta tables over gRPC, REST, or
-  OpenTelemetry - no bus, no partitions, no brokers. Wired into the **Data Ingestion** rail
-  section, which previously had no entries.
+  OpenTelemetry. No bus, no partitions, no brokers. Wired into the **Data Ingestion** rail
+  section, which until now had no entries at all.
 - **Transactions** (`transactions`, `active`, Public Preview March 2026 -> GA July 2026).
-  Multi-statement, multi-table ACID transactions via `BEGIN ATOMIC ... END` /
-  `BEGIN TRANSACTION ... COMMIT` on Unity Catalog managed tables with catalog commits enabled.
-  Recorded as one card named for the current docs page, with the Public Preview's
-  "Multi-table transactions" wording kept as an alias rather than asserted as a rename.
+  Multi-statement, multi-table ACID transactions using `BEGIN ATOMIC ... END` or
+  `BEGIN TRANSACTION ... COMMIT` on Unity Catalog managed tables with catalog commits turned on.
+  Recorded as one card named after the current docs page. The Public Preview called it
+  "Multi-table transactions", kept here as an alias rather than claimed as a rename.
 
 ### Changed
-- **Added a July 2026 fact to ten existing cards**, each sourced to that month's release notes
-  and each card's `verified` bumped: a Genie app for Microsoft Teams (`genie-agents`), scheduled
-  tasks that leave a continuable chat (`genie-code`), the Enter Data spreadsheet operator from
-  the Summer Release (`lakeflow-designer`), conversational troubleshooting off Unity Catalog
-  telemetry (`lakebase`), high-QPS-on-by-default-but-not-for-existing-endpoints
-  (`databricks-ai-search`), the sample datasets moving to the `samples` catalog over OpenSharing
-  (`dbfs-mounts`), the old `Trigger.AvailableNow` downgrade to a single micro-batch
-  (`opensharing`), protobuf input only on endpoints deployed after July 9 (`model-serving`),
-  the annotations explaining why a warehouse stays awake (`sql-warehouse`), and in-editor
-  pipeline unit tests via catalog-table redirection (`lakeflow-pipelines-editor`).
-  `git-folders` was skipped: it is already at the three-fact cap, so the Git CLI Public Preview
-  would have meant dropping an existing sourced fact.
-- **Re-chained the SQL migration converter.** Databricks retitled both the doc page and its own
-  July 16 release-note entry from "Lakebridge Agentic Converter" to "agentic code converter" on
-  AWS docs and Microsoft Learn alike, which left four of the existing card's citation anchors
-  pointing at text that no longer exists. Because a card's `id` must equal its name slug and ids
-  are permanent, an in-place rename is not representable: `lakebridge-agentic-converter` is now
-  `renamed` (`to` 2026-07, `successorId` -> `agentic-code-converter`) and keeps its id, name and
-  page, and the new card carries the current name. Every anchor on both cards re-verified against
-  live doc text. The old `/migration/lakebridge-agentic-converter` doc URL still resolves and is
-  cited as the evidence of the retitle.
+- **Added a July 2026 fact to ten existing cards.** Each fact is sourced to that month's release
+  notes, and each card's `verified` was bumped: a Genie app for Microsoft Teams (`genie-agents`),
+  scheduled tasks that leave a chat you can carry on (`genie-code`), the Enter Data spreadsheet
+  operator from the Summer Release (`lakeflow-designer`), troubleshooting by chat using Unity
+  Catalog telemetry (`lakebase`), high QPS now on by default but not for endpoints that already
+  exist (`databricks-ai-search`), the sample datasets moving to the `samples` catalog over
+  OpenSharing (`dbfs-mounts`), the old `Trigger.AvailableNow` dropping to a single micro-batch
+  (`opensharing`), protobuf input only on endpoints deployed after July 9 (`model-serving`), the
+  notes that explain why a warehouse stays awake (`sql-warehouse`), and pipeline unit tests in the
+  editor by redirecting catalog tables (`lakeflow-pipelines-editor`). `git-folders` was skipped
+  because it already has the maximum of three facts, so adding the Git CLI Public Preview would
+  have meant dropping a sourced fact.
+- **Re-chained the SQL migration converter.**
+
+  **Why:** Databricks retitled the doc page, and its own July 16 release note, from "Lakebridge
+  Agentic Converter" to "agentic code converter" on both AWS docs and Microsoft Learn. That left
+  four citations on the existing card pointing at text that no longer exists.
+
+  **What:** a card's `id` must match its name, and ids never change, so the card could not simply
+  be renamed in place. Instead `lakebridge-agentic-converter` became `renamed` (`to` 2026-07,
+  `successorId` -> `agentic-code-converter`) and kept its id, name, and page, while the new card
+  carries the current name. Every citation on both cards was re-checked against the live doc text.
+  The old `/migration/lakebridge-agentic-converter` URL still works, and it is cited as the proof
+  of the retitle.
 - Refreshed the mirrored reference docs (`scripts/fetch_reference.py`): 104 pages updated,
-  including July 2026 release notes now covering items through July 29.
+  including July 2026 release notes, which now cover items up to July 29.
 
 ## 2026-07-28
 
@@ -143,19 +189,29 @@ Format loosely follows [Keep a Changelog](https://keepachangelog.com/); dates ar
 ## 2026-07-26
 
 ### Changed
-- **One-click status filtering.** The Latest / Legacy / Renamed filter buttons now use
-  legend-style clicks: from the default all-on state a click isolates that bucket (one
-  click shows only Renamed), clicking the sole active bucket restores all three, and any
-  other click toggles as before - multi-select combinations are still reachable. Tooltips
-  updated to say so.
-- **Moved the deployed site into `www/`.** Everything GitHub Pages publishes (`index.html`,
-  `app.js`, `styles.css`, `databricks.features.json`, `assets/`, `badges/`, `disclaimer/`,
-  `subscribe/`, `CNAME`, `robots.txt`, `site.webmanifest`, and the generated
-  `databricks/` + `sitemap.xml` + `feed.xml`) now lives under `www/`; repo docs, `scripts/`,
-  `agents/`, and `reference/` stay at the root and are no longer deployed. The Pages workflow
-  uploads `www` instead of the whole repository; `validate.py`, `build_entries.py`, and
-  `build_badges.py` read/write the new paths; `.gitignore` and all doc links updated. Local
-  preview is now `python -m http.server 8777 -d www`. No URL on the published site changes.
+- **One-click status filtering.**
+
+  **Why:** all three buckets are on by default, so seeing only one of them took two clicks to
+  turn the other two off. The most common thing you want was the slowest thing to do.
+
+  **What:** the Latest / Legacy / Renamed buttons now behave like a chart legend. From the
+  all-on state one click isolates that bucket, so a single click on Renamed shows only renamed
+  cards. Clicking the one active bucket brings all three back. Any other click toggles as
+  before, so multi-select combinations are still reachable. Tooltips updated to say so.
+- **Moved the deployed site into `www/`.**
+
+  **Why:** GitHub Pages published the whole repository. The repo docs, `scripts/`, `agents/`,
+  and the `reference/` mirror were all shipped to the live site, even though none of them are
+  part of it.
+
+  **What:** everything Pages publishes now lives under `www/`: `index.html`, `app.js`,
+  `styles.css`, `databricks.features.json`, `assets/`, `badges/`, `disclaimer/`, `subscribe/`,
+  `CNAME`, `robots.txt`, `site.webmanifest`, and the generated `databricks/`, `sitemap.xml`,
+  and `feed.xml`. Repo docs, `scripts/`, `agents/`, and `reference/` stay at the root and are
+  no longer deployed. The Pages workflow uploads `www` instead of the whole repository.
+  `validate.py`, `build_entries.py`, and `build_badges.py` read and write the new paths, and
+  `.gitignore` and every doc link were updated. Local preview is now
+  `python -m http.server 8777 -d www`. No URL on the published site changes.
 
 ## 2026-07-25
 
@@ -181,16 +237,20 @@ Format loosely follows [Keep a Changelog](https://keepachangelog.com/); dates ar
   Databricks Marketplace (§15), Lakeflow Connect (§2), and Mosaic/AI Gateway (§13) rows **✓ now
   covered**, reclassified the AI Gateway sub-features as **[adjacent]**, added the three to the
   "Already covered" list, and trimmed them from the "genuinely absent marquee products" summary.
-- **`ai-gateway` -> `unity-ai-gateway`** (rename chain): re-verification of AI Gateway against
-  live docs found it has been rebranded **Unity AI Gateway** (announced at Data + AI Summit 2026,
-  June 16, 2026; the docs page is now "AI governance with Unity AI Gateway"). Modeled per the
-  one-card-per-name rule: added a new `active` **`unity-ai-gateway`** card (current name, `from`
-  2026-06, carrying the current governance description, the guardrail/fallback mechanism fact, the
-  DAIS 2026 agents/tools Beta additions, and the GA maturity timeline PP 2024-09 -> GA 2025-06),
-  and converted the existing **`ai-gateway`** card to `status: renamed` (`to` 2026-06,
-  `successorId: unity-ai-gateway`), keeping "Mosaic AI Gateway" as its alias and its Sept-2024
-  Public-Preview history. The core gateway stays GA - only the 2026 agent/tool controls are Beta.
-  Wired `unity-ai-gateway` into the `AI Gateway` rail section.
+- **`ai-gateway` -> `unity-ai-gateway`** (rename chain).
+
+  **Why:** re-verifying the AI Gateway card against live docs turned up a rename the list had
+  missed. It is now **Unity AI Gateway**, announced at Data + AI Summit 2026 on June 16, 2026,
+  and the docs page is titled "AI governance with Unity AI Gateway".
+
+  **What:** modelled by the one-card-per-name rule. A new `active` **`unity-ai-gateway`** card
+  holds the current name (`from` 2026-06) with the current governance description, the
+  guardrail and fallback fact, the DAIS 2026 agents and tools Beta additions, and the maturity
+  timeline Public Preview 2024-09 -> GA 2025-06. The existing **`ai-gateway`** card became
+  `status: renamed` (`to` 2026-06, `successorId: unity-ai-gateway`) and kept "Mosaic AI Gateway"
+  as an alias along with its September 2024 Public Preview history. The core gateway stays GA;
+  only the 2026 agent and tool controls are Beta. Wired `unity-ai-gateway` into the
+  `AI Gateway` rail section.
 
 ### Added
 - **`databricks-free-edition`** (feature, `active`, Developer experience) + **`databricks-community-edition`**
@@ -217,17 +277,25 @@ Format loosely follows [Keep a Changelog](https://keepachangelog.com/); dates ar
   the `Discover` rail section in `app.js`. `python scripts/validate.py` -> `OK: 90 entries valid.`
 
 ### Changed
-- **`AGENTS.md`**: brought the Layout table back in sync with the repo. The
-  `build_entries.py` row now notes it also generates `feed.xml` (the RSS 2.0 feed, not just
-  `sitemap.xml`), and added rows for `scripts/fetch_reference.py` (+ `scripts/sources.json`),
-  the generated `sitemap.xml`/`feed.xml`, and `COVERAGE-GAPS.md` - all real files that were
-  missing from the table. Also gave the "Data shape" section the same object-shape treatment as
-  `CONTRIBUTING.md`: the date fields (`from`/`to`/`introducedAt`/`deprecatedAt`/`removedAt`) and
-  `occasion` are now documented as `{ date, link }` / `{ date, link, note }` objects rather than
-  bare strings.
-- **`CONTRIBUTING.md`**: brought the documented schema back in line with the actual data +
-  `app.js`. Several fields had drifted from string to object and the doc still showed the old
-  string form in every example:
+- **Brought the `AGENTS.md` Layout table back in sync with the repo.**
+
+  **Why:** the table is where anyone new looks to find out what a file is for, and it had
+  fallen behind. Real files were missing from it, and the shapes it documented no longer
+  matched the data.
+
+  **What:** the `build_entries.py` row now says it also generates `feed.xml`, the RSS 2.0 feed,
+  not just `sitemap.xml`. Added rows for `scripts/fetch_reference.py` (and
+  `scripts/sources.json`), the generated `sitemap.xml` and `feed.xml`, and `COVERAGE-GAPS.md`.
+  The "Data shape" section got the same object-shape treatment as `CONTRIBUTING.md`: the date
+  fields (`from`, `to`, `introducedAt`, `deprecatedAt`, `removedAt`) and `occasion` are now
+  documented as `{ date, link }` and `{ date, link, note }` objects instead of bare strings.
+- **Brought the `CONTRIBUTING.md` schema back in line with the data and `app.js`.**
+
+  **Why:** several fields had changed from a string to an object, and the doc still showed the
+  old string form in every example. Anyone following it would write entries the validator
+  rejects.
+
+  **What:** three field rules brought up to date, plus a re-check that the rest still holds:
   - **Date fields** (`from`, `to`, `introducedAt`, `deprecatedAt`, `removedAt`) are each a
     `{ date, link }` object in 100% of the data (the date plus its confirmation doc, mirroring
     `status`); the examples showed bare strings (`"from": "2021"`). Converted all example
@@ -252,8 +320,13 @@ Format loosely follows [Keep a Changelog](https://keepachangelog.com/); dates ar
 ## 2026-07-23 (fact-check dates flagged during deep-linking)
 
 ### Fixed
-- **`databricks.features.json`**: investigated seven entries whose dates the cited page didn't
-  confirm during the deep-linking pass. Four had genuine errors, corrected against live docs:
+- **Corrected four wrong dates turned up by the deep-linking pass.**
+
+  **Why:** adding a text fragment to a link means reading the cited page for the exact
+  sentence that backs the claim. On seven entries that sentence was not on the page, so the
+  date the card showed was not confirmed by the doc it pointed at.
+
+  **What:** four of the seven had genuine errors, corrected against live docs:
   - **legacy-dashboards**: `deprecatedAt` `2024` -> `2025-04` (support ended April 10, 2025, per
     SQL release notes 2025); `removedAt` `2026-01` -> `2026-03` and `occasion` "End of life
     January 12, 2026" -> "End of life March 5, 2026" (per AI/BI release notes 2026). The
@@ -277,43 +350,64 @@ Format loosely follows [Keep a Changelog](https://keepachangelog.com/); dates ar
 ## 2026-07-23 (deep-link date/status/release confirmation links)
 
 ### Changed
-- **`databricks.features.json`**: extended the text-fragment treatment to the confirmation links
-  on the date/lifecycle fields - `from`, `to`, `introducedAt`, `deprecatedAt`, `removedAt`,
-  `occasion`, `status`, and each `releases[]` stage. 297 of 350 such links now carry a
-  `#:~:text=` fragment landing on the on-page sentence that confirms that specific
-  date/rename/GA/deprecation event (e.g. a `status: renamed` link highlights the rename
-  sentence; a `releases` GA stage highlights the "now generally available" line). The remaining
-  53 were left as plain page links because the cited page does not state that date/event
-  verbatim (many are legacy pages with no formal deprecation date, or big release-notes pages
-  that don't name the product). Fragments are copied word-for-word from the live docs; edits are
-  scoped per-entry so shared URLs across entries get entry-specific highlights. Only link URL
-  suffixes changed - no dates, ids, or formatting.
+- **Deep-linked the date and lifecycle confirmation links too.**
+
+  **Why:** the note links now landed the reader on the exact sentence, but the links that are
+  supposed to *prove a date* still dropped you at the top of a long release-notes page. The
+  claim most in need of evidence was the one hardest to check.
+
+  **What:** extended the text-fragment treatment to `from`, `to`, `introducedAt`,
+  `deprecatedAt`, `removedAt`, `occasion`, `status`, and each `releases[]` stage. 297 of 350
+  such links now carry a `#:~:text=` fragment that lands on the sentence confirming that
+  specific date, rename, GA, or deprecation: a `status: renamed` link highlights the rename
+  sentence, a `releases` GA stage highlights the "now generally available" line. The other 53
+  stay plain page links because the cited page does not state that date or event word for word.
+  Many of those are legacy pages with no formal deprecation date, or release-notes pages so
+  large they never name the product. Fragments are copied word for word from the live docs, and
+  edits are scoped per entry, so a URL shared by several entries gets a different highlight on
+  each. Only the link suffixes changed. No dates, ids, or formatting moved.
 
 ## 2026-07-23 (deep-link every note to its exact source passage)
 
 ### Changed
-- **`databricks.features.json`**: upgraded 288 of 291 note links (`what`, `fact`, `limitations`)
-  from whole-page URLs to scroll-to-highlight **text fragments** (`#:~:text=`). Each entry's
-  cited page was fetched and a short, verbatim on-page phrase supporting that specific note was
-  appended so the link lands the reader on the exact sentence/heading rather than the page top.
-  Snippets are copied word-for-word from the live doc (Databricks / Microsoft Learn), so the
-  browser highlight matches; commas and hyphens are percent-encoded (they are structural in the
-  `:~:text=` syntax). 3 notes were left as plain page links because their pages carry no verbatim
-  supporting text (both ODBC-driver `what` descriptions, one AI/BI dashboards fact). No entry
-  content, ids, or formatting changed - only the fragment suffix on link URLs.
+- **Deep-linked every note to the exact passage that backs it.**
+
+  **Why:** a card's source link dropped you at the top of the page and left you to find the
+  sentence yourself. On a long docs page that is real work, and it is work the reader has to
+  do before they can tell whether the claim is actually sourced.
+
+  **What:** upgraded 288 of 291 note links (`what`, `fact`, `limitations`) from whole-page URLs
+  to scroll-to-highlight **text fragments** (`#:~:text=`). Each cited page was fetched and a
+  short phrase from it, copied word for word, was appended so the link lands on the exact
+  sentence or heading. The snippets come straight from the live Databricks or Microsoft Learn
+  page, so the browser highlight matches. Commas and hyphens are percent-encoded, because they
+  are structural in the `:~:text=` syntax. Three notes stay plain page links because their
+  pages carry no supporting text to quote: both ODBC-driver `what` descriptions and one AI/BI
+  dashboards fact. No entry content, ids, or formatting changed. Only the fragment suffix on
+  link URLs.
 
 ### Fixed
-- **`scripts/build_entries.py`**: after `status` became a `{ value, link, date }` object, `meta_for`
-  still compared `d.get("status")` (now a dict) to the string `"renamed"`, so every `renamed` entry
-  fell through to the "current name" branch and its static page rendered with the wrong
-  title/lead/kicker (e.g. Databricks One shown as the current name instead of "now Genie One").
-  Switched the check to `status_value(d)`; all 22 renamed entries now render correctly.
+- **Every renamed entry's static page had the wrong title.**
+
+  **Why:** when `status` became a `{ value, link, date }` object, `meta_for` in
+  `scripts/build_entries.py` kept comparing `d.get("status")`, now a dict, to the string
+  `"renamed"`. That comparison never matched, so every renamed entry fell through to the
+  "current name" branch. Databricks One's crawlable page presented it as the current name
+  instead of "now Genie One" - the exact mistake this site exists to correct.
+
+  **What:** switched the check to `status_value(d)`. All 22 renamed entries render correctly.
 
 ## 2026-07-23 (source fact-check: corrected wrong/unsupported claims)
 
 ### Fixed
-- **Fetched every entry's cited URLs and fact-checked the statements against the live docs.**
-  Corrected the confidently-wrong and mis-sourced items found:
+- **Fact-checked every entry against the live docs it cites.**
+
+  **Why:** the one rule here is never be confidently wrong, and nothing had ever tested it.
+  The validator checks that a link is shaped like a URL and stops there, so a card could carry
+  a wrong number, a wrong status, or a claim its own source does not make, and still pass.
+
+  **What:** fetched every cited URL and read the statements against the page. Corrected the
+  items that were wrong or pointing at the wrong doc:
   - **model-serving** `limitations`: the "up to 200 provisioned concurrency per endpoint and per
     model" figure was wrong - 200 is the non-route-optimized QPS cap. Rewritten to the documented
     limits: provisioned concurrency up to 1024 per model / 4096 per workspace (raisable), and QPS
@@ -332,11 +426,17 @@ Format loosely follows [Keep a Changelog](https://keepachangelog.com/); dates ar
   - **databricks-sql-dashboards** `status.link`: repointed to the archived legacy-dashboards doc,
     which backs the superseded status; the Nov 2020 release notes didn't.
   - Bumped `verified` (and `status.date`) to 2026-07-23 on each corrected entry.
-- **Re-sourced ~72 mis-cited `what`/`fact`/`limitations` claims across ~50 entries.** Each
-  was true-but-mis-sourced: the cited `link` did not actually contain the specific statement.
-  Fetched the live docs and either repointed the claim to the official page/blog/release-note
-  that does substantiate it, or trimmed the overreaching part to what a real source supports.
-  Highlights:
+- **Re-sourced about 72 mis-cited `what`, `fact`, and `limitations` claims across about 50
+  entries.**
+
+  **Why:** each of these was true but mis-sourced - the `link` on the claim did not contain the
+  statement it was supposed to back. A reader who clicks through and cannot find the sentence
+  has no way to tell a sloppy citation from an invented fact, which costs the whole list its
+  credibility.
+
+  **What:** fetched the live docs and either repointed the claim at the official page, blog, or
+  release note that does substantiate it, or trimmed the overreaching part back to what a real
+  source supports. Highlights:
   - Repointed to the page that carries the claim: DLT/Lakeflow `what` -> `ldp/concepts`;
     DLT `fact` -> the 2021 launch blog; Workflows -> the 2022 Repair-and-Rerun blog; Databricks
     Delta -> the 2017 announcement blog (not the 2019 open-sourcing one); Git folders rename
@@ -359,30 +459,46 @@ Format loosely follows [Keep a Changelog](https://keepachangelog.com/); dates ar
 ## 2026-07-23 (`what` becomes { note, link } + search UX polish)
 
 ### Removed
-- **Card footer reference chips.** With `source`/`what`, each fact, `limitations`, and `status`
-  all now carrying their own inline links, the bottom-left "Doc/Blog/Other" chips were redundant
-  (the `source`/Doc chip duplicated the description 🔗 on all 89 cards). Removed `refsSection`
-  and its helpers (`refLinks`, `hostOf`, `REF_ORDER`, `REF_KINDS`) from `app.js` and the
-  `.row-refs`/`.ref-*` CSS; the footer now holds only the copy/share actions. The `links` array
-  stays in the data and still renders on the generated SEO entry pages.
+- **Card footer reference chips.**
+
+  **Why:** `source`, `what`, every fact, `limitations`, and `status` now each carry their own
+  inline link, which left the bottom-left "Doc / Blog / Other" chips repeating what the card
+  already showed. On all 89 cards the Doc chip pointed at the same place as the description 🔗.
+
+  **What:** removed `refsSection` and its helpers (`refLinks`, `hostOf`, `REF_ORDER`,
+  `REF_KINDS`) from `app.js`, and the `.row-refs` and `.ref-*` CSS. The footer now holds only
+  the copy and share actions. The `links` array stays in the data and still renders on the
+  generated SEO entry pages.
 
 ### Changed
-- **`status` is now a `{ value, link, date }` object, not a bare string.** `status.value` keeps
-  the sole-discriminator role (`active` / `renamed` / `deprecated` / `legacy` / `retired`);
-  `link` is the official doc backing the call and `date` (`YYYY-MM-DD`, never future) is when it
-  was confirmed. All 89 entries migrated - `value` from the old string, `link` seeded from each
-  entry's `source`, `date` from its `verified` (refine per entry over time). The validator
-  enforces the shape (value in the allowed set, `link` a URL, `date` a real non-future date, no
-  extra keys) and branches on `status.value`; `app.js` reads it via new `statusValue`/`statusLink`/
-  `statusDate` accessors (every `d.status` read updated) and the status badge now shows the
-  confirmed date in its tooltip; `build_entries.py` reads it via a new `status_value`. Docs
-  updated (`AGENTS.md`, `CLAUDE.md`, `CONTRIBUTING.md`, `agents/add-databricks-entry.md`).
+- **`status` is now a `{ value, link, date }` object, not a bare string.**
+
+  **Why:** calling something deprecated or renamed is the strongest claim a card makes, and as
+  a bare string it was the one claim with nothing behind it. The card could not say which doc
+  backed the call, or how long ago anyone had checked.
+
+  **What:** `status.value` keeps the sole-discriminator role (`active`, `renamed`,
+  `deprecated`, `legacy`, `retired`), `link` is the official doc backing the call, and `date`
+  (`YYYY-MM-DD`, never in the future) is when it was confirmed. All 89 entries migrated:
+  `value` from the old string, `link` seeded from each entry's `source`, `date` from its
+  `verified`, both to be refined per entry over time. The validator enforces the shape - value
+  in the allowed set, `link` a URL, `date` a real non-future date, no extra keys - and branches
+  on `status.value`. `app.js` reads it through new `statusValue`, `statusLink`, and `statusDate`
+  accessors, every `d.status` read was updated, and the status badge shows the confirmed date
+  in its tooltip. `build_entries.py` reads it through a new `status_value`. Docs updated
+  (`AGENTS.md`, `CLAUDE.md`, `CONTRIBUTING.md`, `agents/add-databricks-entry.md`).
 - **`fact` is now an array of 1-3 `{ note, link }` objects, and the top-level `note` field is
-  removed.** Each card can carry up to three sourced fun facts, each rendered as its own 💡 row
-  with a 🔗 to its source, instead of a single fun-fact line plus a separate plain note. All 89
-  entries migrated: the original fun fact became `fact[0]`, and each entry's former `note` was
-  reworked into self-contained extra fact(s) where it held a distinct, sourceable detail (64
-  entries gained a 2nd fact, one - `git-folders` - a 3rd; the remaining 24 stay at one). Every `fact.link`
+  removed.**
+
+  **Why:** a card had exactly one sourced fun fact and, beside it, a free-text `note` that
+  carried no link at all. Anything interesting beyond the first fact had nowhere to go except
+  that unsourced field, which is the opposite of how everything else here works.
+
+  **What:** each card can now carry up to three sourced facts, each rendered as its own 💡 row
+  with a 🔗 to its source. All 89 entries migrated: the original fun fact became `fact[0]`, and
+  each entry's former `note` was reworked into self-contained extra fact(s) where it held a
+  distinct, sourceable detail (64 entries gained a 2nd fact, one - `git-folders` - a 3rd; the
+  remaining 24 stay at one). Every `fact.link`
   is seeded from the entry's own `source`, so no link is unverified. The validator now requires
   `fact` to be a non-empty array (max 3) of `{ note, link }` with a real `link`, and rejects any
   leftover top-level `note`; `app.js` renders the rows via new `factList`/`factNote` accessors
@@ -398,11 +514,17 @@ Format loosely follows [Keep a Changelog](https://keepachangelog.com/); dates ar
   `databricks-clean-rooms`, `serverless-workspaces`, `ai-runtime`, `secrets-in-unity-catalog`,
   `mission-critical`, `secureconnect`, `discover`, `managed-iceberg-materialized-views`,
   `databricks-apps`, `lakeflow-designer`, `opensharing`.
-- **`what` is now a `{ note, link }` object, not a bare string.** Every entry's `what`
-  carries the one-line description (`note`) plus the official doc it's drawn from (`link`),
-  both required; `link` must be a real http(s) URL. All 89 existing entries migrated (their
-  `link` seeded from each entry's `source`, to be refined per entry over time). The validator
-  enforces the shape (`what.note` non-empty, `what.link` a URL); `app.js` reads it via new
+- **`what` is now a `{ note, link }` object, not a bare string.**
+
+  **Why:** the description is the first thing anyone reads on a card, and it was the one piece
+  of prose with no source of its own. It inherited whatever the entry's `source` happened to
+  be, even when the description came from somewhere else.
+
+  **What:** every entry's `what` now carries the one-line description (`note`) plus the
+  official doc it is drawn from (`link`), both required, with `link` a real http(s) URL. All 89
+  existing entries migrated, their `link` seeded from each entry's `source` and to be refined
+  per entry over time. The validator enforces the shape (`what.note` non-empty, `what.link` a
+  URL); `app.js` reads it via new
   `whatNote`/`whatLink` accessors and renders the description with a 🔗 to the doc; the SEO
   builder (`build_entries.py`) reads it via `what_note`. Docs updated (`AGENTS.md`,
   `CONTRIBUTING.md`, `agents/add-databricks-entry.md`).
@@ -412,11 +534,15 @@ Format loosely follows [Keep a Changelog](https://keepachangelog.com/); dates ar
   "✨ Ask Genie" at rest (was a bare ✨); its reveal states are unchanged.
 
 ### Fixed
-- **Search results no longer stranded off-screen on mobile.** When you scrolled deep into
-  the list and started typing (e.g. "dbx"), the filtered results rendered above the viewport
-  and you had to scroll up to see them. A search that *begins* (empty -> non-empty) now scrolls
-  the filters/results block back into view - but only upward, so it never tugs the page for
-  someone already at the top. New `revealFiltersIfBelow` helper in `app.js`.
+- **Search results no longer stranded off-screen on mobile.**
+
+  **Why:** if you scrolled deep into the list and then typed, say, "dbx", the filtered results
+  rendered above the viewport. The page looked empty and you had to scroll up to find your own
+  search results.
+
+  **What:** a search that *begins*, meaning the query goes from empty to non-empty, now scrolls
+  the filters and results block back into view. It only ever scrolls upward, so it never tugs
+  the page for someone already at the top. New `revealFiltersIfBelow` helper in `app.js`.
 
 ### Changed (UI)
 - **Status badge moved to the card's bottom-left corner.** It kept its bookmark treatment
@@ -524,22 +650,38 @@ Format loosely follows [Keep a Changelog](https://keepachangelog.com/); dates ar
   the `DATA` path in `scripts/validate.py` and `scripts/build_entries.py`, plus docs
   (`README.md`, `AGENTS.md`, `CONTRIBUTING.md`, the add-entry skill), `.gitignore`, the CI
   workflow labels, and `COVERAGE-GAPS.md`. `git mv` preserved history.
-- **The `active` status badge is no longer shown on cards.** `active` is the default state,
-  so its badge was noise; only the noteworthy lifecycle states (renamed / deprecated / legacy
-  / retired) now render a status badge. The release pill still shows on active cards, so an
-  active card reads as just its release pill (+ lineage chain). `statusBadge()` (app.js) and
-  `badge_html()` (build_entries.py) return no status badge for `active`.
-- **Release stages can be announced-but-unreached (`is_announced: true`); dropped `pre-ga`.**
-  A `releases` stage is now either reached - `{type, date}` - or merely announced -
-  `{type, is_announced: true}` (no date, only allowed as the last stage). That removes the
-  need for a `pre-ga` type: "GA approaching soon" is just `{type: "ga", is_announced: true}`.
-  Valid `type`s are now `private-preview` / `beta` / `public-preview` / `ga`. The pill renders
-  an announced stage as "<Stage> soon" with a dashed border (`badge-rel-soon`); the teal
-  `--rel-pre-ga` token/class were removed. `validate.py` enforces date-XOR-is_announced and
-  announced-only-last. (No data used `pre-ga` or an announced stage yet, so no entries changed.)
-- **`release` (single value) became `releases` (a `{type, date}` timeline).** Each entry now
-  records the ordered stages it passed through with the date it entered each - e.g.
-  `information-extraction` is `[{beta, 2025-06}, {public-preview, 2026-03}]`. The last stage
+- **The `active` status badge is no longer shown on cards.**
+
+  **Why:** `active` is the default state. Most cards carry it, so the badge said nothing and
+  crowded out the badges that do mean something.
+
+  **What:** only the noteworthy lifecycle states - renamed, deprecated, legacy, retired - now
+  render a status badge. The release pill still shows on active cards, so an active card reads
+  as just its release pill and lineage chain. `statusBadge()` in `app.js` and `badge_html()` in
+  `build_entries.py` return no status badge for `active`.
+- **Release stages can be announced but not yet reached (`is_announced: true`); dropped
+  `pre-ga`.**
+
+  **Why:** "GA soon" is not a stage a product has reached, it is a stage that has been
+  announced. Modelling it as its own `pre-ga` type meant inventing a rung on a ladder
+  Databricks does not have.
+
+  **What:** a `releases` stage is now either reached - `{type, date}` - or merely announced -
+  `{type, is_announced: true}`, with no date and only allowed as the last stage. So "GA
+  approaching soon" is just `{type: "ga", is_announced: true}` and `pre-ga` is gone. Valid
+  `type`s are now `private-preview`, `beta`, `public-preview`, and `ga`. The pill renders an
+  announced stage as "<Stage> soon" with a dashed border (`badge-rel-soon`), and the teal
+  `--rel-pre-ga` token and class were removed. `validate.py` enforces date-XOR-is_announced and
+  announced-only-last. No data used `pre-ga` or an announced stage yet, so no entries changed.
+- **`release` (a single value) became `releases` (a `{type, date}` timeline).**
+
+  **Why:** one value told you where a thing is now and threw away how it got there. Preview
+  dates are often the most interesting part of a feature's story, and there was nowhere to keep
+  them.
+
+  **What:** each entry now records the ordered stages it passed through with the date it
+  entered each - for example, `information-extraction` is
+  `[{beta, 2025-06}, {public-preview, 2026-03}]`. The last stage
   is the current maturity, so the pill shows it and the tooltip lists the whole history
   ("Beta 2025-06 -> Public Preview 2026-03"). Populated for all 42 entries that had a
   `release`, drawing each stage date from the entry's own sourced note; foundational GA
@@ -553,15 +695,24 @@ Format loosely follows [Keep a Changelog](https://keepachangelog.com/); dates ar
   `statusBadge()`/`releasePill()` in `app.js`, `badge_html()`/`badge_label()` in
   `build_entries.py`, and the `.row-eyebrow` bookmark positioning in `styles.css` were updated
   together.
-- **Dropped the `kind` field; `status` is now the sole discriminator.** `kind`
-  (`rename`/`deprecation`/`feature`) was fully derivable from `status`, so it was removed
-  from all 78 entries. `kindOf()` (app.js) and `kind_of()` (build_entries.py) now derive the
-  logical family from `status` instead of reading a field, so no downstream rendering changed.
-  Updated `validate.py` (status-keyed required fields, new `status_group()` helper) and the
-  schema docs in `AGENTS.md`, `CONTRIBUTING.md`, and `agents/add-databricks-entry.md`.
-- **Dropped the `current` status; every live name is now `active`.** `current` (the tip of a
-  rename chain) was itself derivable, so it's gone too. Whether an `active` card is a
-  standalone feature or a current rename tip is now **calculated** - a feature carries its own
+- **Dropped the `kind` field; `status` is now the sole discriminator.**
+
+  **Why:** `kind` and `status` could disagree, and when two stored fields can contradict each
+  other, one of them is going to be wrong eventually. `kind` was the redundant one: every value
+  of it followed from `status`.
+
+  **What:** removed `kind` (`rename`, `deprecation`, `feature`) from all 78 entries. `kindOf()`
+  in `app.js` and `kind_of()` in `build_entries.py` now derive the logical family from `status`
+  instead of reading a field, so nothing downstream renders differently. Updated `validate.py`
+  with status-keyed required fields and a new `status_group()` helper, and the schema docs in
+  `AGENTS.md`, `CONTRIBUTING.md`, and `agents/add-databricks-entry.md`.
+- **Dropped the `current` status; every live name is now `active`.**
+
+  **Why:** same reason as `kind`. `current`, the tip of a rename chain, was derivable from what
+  the card already carried, so storing it was one more thing that could drift out of step.
+
+  **What:** whether an `active` card is a standalone feature or a current rename tip is now
+  **calculated** - a feature carries its own
   `introducedAt`, a rename tip carries `from` (and has a `renamed` card pointing at it) - so
   the redundant status value isn't stored. The status set is now
   `active` / `renamed` / `deprecated` / `legacy` / `retired` (42 active, 22 renamed, 14
@@ -592,30 +743,40 @@ Format loosely follows [Keep a Changelog](https://keepachangelog.com/); dates ar
   it is Knowledge Assistant.
 
 ### Changed
-- **Split `status` into two orthogonal axes: `status` (lifecycle) + `release` (maturity).**
-  `status` previously overloaded lifecycle and release maturity - features used it for
-  `ga`/`preview` while renames/deprecations used it for lifecycle. Now `status` is purely
-  lifecycle (live names `active`; superseded names `renamed`; deprecations
-  `deprecated`/`legacy`/`retired`), and a new optional `release` axis carries Databricks'
-  own maturity stages: `private-preview` → `beta` → `public-preview` → `pre-ga` → `ga`
-  (omit when GA). This lets a card be `active`-but-`public-preview` or `legacy`-but-`beta` -
-  e.g. Agent Bricks Custom LLM, which shipped as Beta and was later marked legacy without
-  ever reaching GA. Migrated all 19 pre-existing feature entries (`ga`→`active`; the two
-  preview features gained a `release`). Updated `scripts/validate.py`, `scripts/build_entries.py`,
-  `app.js` (new `releasePill()` + amber maturity pill), `styles.css`, and the schema docs
-  in `AGENTS.md`/`CONTRIBUTING.md`.
+- **Split `status` into two independent axes: `status` (lifecycle) and `release` (maturity).**
+
+  **Why:** one field was doing two jobs. Features used `status` for `ga` and `preview` while
+  renames and deprecations used it for lifecycle, so the two vocabularies could not be held at
+  once. A thing that is both in Beta and marked legacy had no way to say so, and Agent Bricks
+  Custom LLM is exactly that: it shipped as Beta and was later called legacy without ever
+  reaching GA.
+
+  **What:** `status` is now purely lifecycle - `active` for live names, `renamed` for
+  superseded ones, and `deprecated`, `legacy`, or `retired` for deprecations. A new optional
+  `release` axis carries Databricks' own maturity stages: `private-preview` -> `beta` ->
+  `public-preview` -> `pre-ga` -> `ga`, omitted when GA. A card can now be active but public
+  preview, or legacy but beta. Migrated all 19 pre-existing feature entries (`ga` became
+  `active`, and the two preview features gained a `release`). Updated `scripts/validate.py`,
+  `scripts/build_entries.py`, `app.js` (new `releasePill()` and an amber maturity pill),
+  `styles.css`, and the schema docs in `AGENTS.md` and `CONTRIBUTING.md`.
 
 ## 2026-07-21 (lineage navigation)
 
 ### Changed
-- **Clicking a lineage chain node now scrolls to that card instead of collapsing to a
-  single card.** Focusing an entry (`#id` deep link, or a chain hop) renders the entry's
-  whole lineage family - every predecessor, the entry itself, and every successor - as one
-  stacked list, sorted like the main list. Clicking any chain node scrolls to the target
-  sibling card in place (with the existing flash highlight) rather than rebuilding the view
-  around just that card. New `lineageFamily()` helper, extracted `byRecency()` comparator,
-  and `rowEl()` / `scrollRowIntoView()` helpers; chain-node clicks are intercepted in
-  `wireRows()` and fall through to the normal `#id` route when the target isn't on screen.
+- **Clicking a lineage chain node now scrolls to that card instead of collapsing to a single
+  card.**
+
+  **Why:** the chain is the whole point of a rename, and clicking along it threw the chain
+  away. Each hop rebuilt the view around one card, so following a history meant losing sight of
+  the history.
+
+  **What:** focusing an entry, whether by `#id` deep link or by a chain hop, renders the
+  entry's whole lineage family - every predecessor, the entry itself, and every successor - as
+  one stacked list, sorted like the main list. Clicking any chain node scrolls to that sibling
+  card in place, with the existing flash highlight. New `lineageFamily()` helper, an extracted
+  `byRecency()` comparator, and `rowEl()` and `scrollRowIntoView()` helpers. Chain-node clicks
+  are intercepted in `wireRows()` and fall through to the normal `#id` route when the target is
+  not on screen.
 
 ## 2026-07-20 (legacy dashboards lineage)
 
@@ -630,20 +791,32 @@ Format loosely follows [Keep a Changelog](https://keepachangelog.com/); dates ar
 
 ### Changed
 - **Lineage arrows now carry the color of each hop's change, not the viewed card's.**
-  Every `→` in the chain took the current card's `--state`, so a mixed lineage rendered
-  in one flat color. Each arrow is now colored by its left node - the thing that changed:
-  amber for a deprecation hop, orange for a rename, green at the live tip. New
-  `.flow-*` modifier classes on `.chain-flow`, keyed off the source node's status.
+
+  **Why:** every `→` in the chain took the current card's `--state`, so a lineage with a
+  deprecation in it and a rename after it rendered in one flat color. The chain showed the
+  shape of a history but none of what happened at each step.
+
+  **What:** each arrow is now colored by its left node, the thing that changed: amber for a
+  deprecation hop, orange for a rename, green at the live tip. New `.flow-*` modifier classes
+  on `.chain-flow`, keyed off the source node's status.
 
 ### Fixed
-- **`no-isolation-shared-access-mode` now chains through Shared / Single user.** Its
-  `successorId` pointed straight at `standard-and-dedicated-access-modes`, skipping the
-  intermediate hop. Rerouted it to `shared-single-user-access-modes` (which already succeeds
-  to Standard/Dedicated) and updated `replacement` to match, so the chain is contiguous:
-  No isolation shared -> Shared / Single user -> Standard and Dedicated.
-- **`databricks-apps` was unreachable from the rail, failing the CI validate gate.** The Apps
-  entry had no NAV section, so `validate.py` errored and the deploy blocked. Added an "Apps"
-  rail item (new app-launcher icon) wired to `databricks-apps`.
+- **`no-isolation-shared-access-mode` now chains through Shared / Single user.**
+
+  **Why:** its `successorId` pointed straight at `standard-and-dedicated-access-modes` and
+  skipped the middle hop, so the chain silently dropped a name that really existed. A broken
+  chain is a history with a hole in it.
+
+  **What:** rerouted it to `shared-single-user-access-modes`, which already succeeds to
+  Standard and Dedicated, and updated `replacement` to match. The chain is now contiguous: No
+  isolation shared -> Shared / Single user -> Standard and Dedicated.
+- **`databricks-apps` was unreachable from the rail, which blocked the deploy.**
+
+  **Why:** every entry has to be reachable from a rail section, and the Apps entry had no NAV
+  section. `validate.py` failed the CI gate, so nothing could ship until it was wired up.
+
+  **What:** added an "Apps" rail item, with a new app-launcher icon, wired to
+  `databricks-apps`.
 
 ### Docs
 - **Folded this session's lessons into the `add-databricks-entry` skill and pointed AGENTS.md
@@ -654,11 +827,16 @@ Format loosely follows [Keep a Changelog](https://keepachangelog.com/); dates ar
   now directs readers to follow the skill for any add **or** edit instead of hand-rolling the flow.
 
 ### Changed
-- **Rerouted the legacy dashboards successor through Lakeview.** `legacy-dashboards`
-  pointed straight at `ai-bi-dashboards`, skipping the intermediate `lakeview-dashboards`
-  card (which itself chains to `ai-bi-dashboards`). Repointed `successorId` to
-  `lakeview-dashboards` (and `replacement` to "Lakeview dashboards") so the rename chain is
-  continuous: Legacy dashboards -> Lakeview dashboards -> AI/BI Dashboards.
+- **Rerouted the legacy dashboards successor through Lakeview.**
+
+  **Why:** `legacy-dashboards` pointed straight at `ai-bi-dashboards` and skipped
+  `lakeview-dashboards`, which sits between them and already chains onward. The card named the
+  right destination by the wrong route, so a real intermediate name went missing from the
+  history.
+
+  **What:** repointed `successorId` at `lakeview-dashboards` and `replacement` at "Lakeview
+  dashboards", so the chain is continuous: Legacy dashboards -> Lakeview dashboards -> AI/BI
+  Dashboards.
 - **Verified the `legacy-dashboards` timeline against Databricks docs.** Rewrote the `note`
   from the archived legacy-dashboards doc and the clone-to-AI/BI migration guide: new legacy
   dashboards already disabled, dismissable warning dialog Nov 3 2025, direct access + APIs
@@ -672,19 +850,27 @@ Format loosely follows [Keep a Changelog](https://keepachangelog.com/); dates ar
   "Lakeview" codename and the retitled announcement blog, repointed `source` at that blog,
   swapped in the 2023 Databricks SQL release notes as a link, and bumped `verified` to
   2026-07-20.
-- **Trimmed `legacy-dashboards` to just the deprecation story.** With the original name now
-  its own card, dropped the naming aliases and the Redash-acquisition links from this card
-  (moved to `databricks-sql-dashboards`), rewrote `what`/`fact` to focus on the retirement, and
-  reframed the `note` as the deprecation-era relabel plus the EOL timeline.
+- **Trimmed `legacy-dashboards` to just the deprecation story.**
+
+  **Why:** the original name is now its own card, so this one was carrying somebody else's
+  history. One card, one name: aliases and links belong on the card for the name they describe.
+
+  **What:** dropped the naming aliases and the Redash-acquisition links, which moved to
+  `databricks-sql-dashboards`, rewrote `what` and `fact` to focus on the retirement, and
+  reframed the `note` as the deprecation-era relabel plus the end-of-life timeline.
 
 ## 2026-07-19 (Genie rename lineage)
 
 ### Added
-- **Intermediate "Genie" rename card.** The Databricks One lineage was a single hop
-  (`databricks-one` -> `genie-one`); it actually went Databricks One -> **Genie**
-  (Apr 27, 2026) -> Genie One (Jun 9, 2026). Added the `genie` card, repointed
-  `databricks-one` at it, updated `genie-one` (aliases/occasion/note), and wired `genie` into
-  the "Genie Agents" rail section. Sourced from the AI/BI 2026 release notes.
+- **Intermediate "Genie" rename card.**
+
+  **Why:** the Databricks One lineage was recorded as a single hop, `databricks-one` ->
+  `genie-one`. It actually went Databricks One -> **Genie** on April 27, 2026 -> Genie One on
+  June 9, 2026, so the list was missing a name the product really had.
+
+  **What:** added the `genie` card, repointed `databricks-one` at it, updated `genie-one`
+  (aliases, occasion, note), and wired `genie` into the "Genie Agents" rail section. Sourced
+  from the AI/BI 2026 release notes.
 
 ### Changed
 - **Documented inserting an intermediate rename.** [AGENTS.md](AGENTS.md) and
@@ -713,50 +899,84 @@ Format loosely follows [Keep a Changelog](https://keepachangelog.com/); dates ar
 ## 2026-07-19 (status-based filter, palette, colour-coded timeline, analytics)
 
 ### Changed
-- **Ids now follow the name, and the gate enforces it.** Every card's `id` is the kebab
-  slug of its own `name` (parenthetical qualifiers dropped), so a deep link always lands on
-  the card for the product named in the link - and when that product was renamed, the card
-  shows it. 31 ids were normalised (e.g. `workflows` → `lakeflow-jobs` with the former name
-  reclaiming `workflows`; `dlt` → `lakeflow-declarative-pipelines`; `abac` →
-  `attribute-based-access-control`), with all `successorId` pointers and the `app.js` NAV
+- **Ids now follow the name, and the gate enforces it.**
+
+  **Why:** an id that does not match its card's name makes deep links lie. Someone links to
+  `#workflows` expecting the product called Workflows and lands on the card for whatever now
+  holds that id, which on a site about renames is the one mistake that matters.
+
+  **What:** every card's `id` is the kebab slug of its own `name`, with parenthetical
+  qualifiers dropped, so a deep link always lands on the card for the product named in the
+  link, and when that product was renamed the card says so. 31 ids were normalised - for
+  example `workflows` became `lakeflow-jobs` and the former name reclaimed `workflows`, `dlt`
+  became `lakeflow-declarative-pipelines`, and `abac` became
+  `attribute-based-access-control` - with every `successorId` pointer and the `app.js` NAV
   updated to match. `validate.py` gained a hard check that `id == name_slug(name)`. **Ids are
-  permanent from here on:** a rename adds a new card, it never re-slugs an existing id. Old
-  deep links to the retired ids no longer resolve (no redirects). Contributor/agent docs
-  updated to match.
-- **Merged `state` into `status` - one lifecycle field per card.** Renames previously used
-  `state` (`current`/`renamed`) while deprecations/features used `status` and redundantly
-  copied it into `state` (they were always equal). Now every card carries a single `status`
-  whose vocabulary depends on kind: `current`/`renamed` (rename), `deprecated`/`legacy`/
-  `retired` (deprecation), `ga`/`preview` (feature). Rename cards' `state` migrated to
-  `status`; the mirror copies were dropped. `validate.py`, `app.js`, and the contributor/agent
-  docs updated to match. No visible behaviour change - badges render identically.
-- **PAT reclassified `deprecated` → `legacy`.** Personal access tokens have no formal
-  deprecation date (the docs page is titled "…(legacy)"), so they now match the same
-  convention as the legacy CLI and Workspace Model Registry.
-- **The filter is now status-based, not kind-based.** Buckets are **Active / Renamed /
-  Deprecated**, keyed on the badge a card shows (`bucketOf`) rather than raw `kind`. A
-  new feature, a preview, and the current-name side of a rename all count as **Active**;
-  only superseded former names are **Renamed**. Unchecking **Active** now hides current
-  names too (previously they stayed, filed under the old rename bucket). The empty-state,
-  URL `kind=` param, and filter tooltips follow the new keys.
-- **New status palette via dedicated tokens.** `--c-active` (emerald), `--c-renamed`
-  (slate), `--c-deprecated` (amber), each with a light **and** dark value - the old green
-  never adapted to dark mode. Badges, card left-stripes, and timeline segments all read
-  from these tokens; the Databricks brand red (`--accent`) is now chrome-only. The solid
-  "retired" badge uses a theme-aware `--c-deprecated-ink` so its text stays legible on the
-  light-in-dark-mode amber.
+  permanent from here on:** a rename adds a new card and never re-slugs an existing id. Old
+  deep links to the retired ids no longer resolve, since there are no redirects. Contributor
+  and agent docs updated to match.
+- **Merged `state` into `status`, so there is one lifecycle field per card.**
+
+  **Why:** renames used `state` while deprecations and features used `status`, and the
+  deprecation and feature cards copied their `status` into `state` as well. Two fields always
+  holding the same value is two fields that can stop holding the same value.
+
+  **What:** every card now carries a single `status` whose vocabulary depends on kind:
+  `current` or `renamed` for a rename, `deprecated`, `legacy`, or `retired` for a deprecation,
+  and `ga` or `preview` for a feature. Rename cards' `state` migrated into `status` and the
+  mirror copies were dropped. `validate.py`, `app.js`, and the contributor and agent docs
+  updated to match. Nothing visible changed - badges render identically.
+- **PAT reclassified from `deprecated` to `legacy`.**
+
+  **Why:** personal access tokens have no formal deprecation date. The docs page is titled
+  "...(legacy)", and calling it deprecated claims a commitment Databricks has not made.
+
+  **What:** PATs now use `legacy`, matching the convention already applied to the legacy CLI
+  and the Workspace Model Registry.
+- **The filter is now status-based, not kind-based.**
+
+  **Why:** the filter buttons did not match the badges. Unchecking a bucket left cards on
+  screen that looked like they belonged to it, because the filter keyed off raw `kind` while
+  the card showed a badge derived from status.
+
+  **What:** the buckets are **Active**, **Renamed**, and **Deprecated**, keyed on the badge a
+  card actually shows (`bucketOf`). A new feature, a preview, and the current-name side of a
+  rename all count as Active, and only superseded former names are Renamed. Unchecking Active
+  now hides current names too, where before they stayed on screen filed under the old rename
+  bucket. The empty state, the URL `kind=` parameter, and the filter tooltips follow the new
+  keys.
+- **New status palette via dedicated tokens.**
+
+  **Why:** the old green never adapted to dark mode, and the status colors were entangled with
+  the Databricks brand red used for chrome.
+
+  **What:** `--c-active` (emerald), `--c-renamed` (slate), and `--c-deprecated` (amber), each
+  with a light **and** a dark value. Badges, card left stripes, and timeline segments all read
+  from these tokens, and the brand red (`--accent`) is now chrome only. The solid "retired"
+  badge uses a theme-aware `--c-deprecated-ink` so its text stays legible on the amber that
+  goes light in dark mode.
 - **Badge wording.** `former name` → `renamed`; the current-name badge `current` → `latest`.
 - **Logo relaid out as a one-height lockup.** The emblem (unchanged), the inverted **RE**
   chip, and a stacked **bricked** / **latest edition** block now sit in a single row, all
   sized to the same height, matching the wordmark. Previously "REbricked" was one small text
   line with the edition tag beneath the whole word.
-- **Year timeline is dynamic.** Each year's bar is now a stacked, colour-coded column
-  (Active / Renamed / Deprecated) with a legend, and it re-renders live as the filter
-  toggles - hiding a bucket rescales the plot instead of blanking it. Title is now
-  "Changes by year".
-- **Home extras persist across filtering.** The timeline and the "on this month" spotlight
-  no longer key off `allKindsSelected()`, so toggling a filter (or, for the spotlight,
-  selecting a year) keeps them visible instead of hiding the whole panel.
+- **Year timeline is dynamic.**
+
+  **Why:** the chart showed one undifferentiated bar per year and ignored the filter, so it
+  could not answer the question people actually bring to it: was this year mostly renames or
+  mostly retirements?
+
+  **What:** each year's bar is now a stacked, colour-coded column (Active, Renamed, Deprecated)
+  with a legend, and it re-renders live as the filter toggles. Hiding a bucket rescales the
+  plot instead of blanking it. The title is now "Changes by year".
+- **Home extras persist across filtering.**
+
+  **Why:** the timeline and the "on this month" spotlight keyed off `allKindsSelected()`, so
+  touching any filter hid the whole panel. The moment you started narrowing things down was the
+  moment the chart disappeared.
+
+  **What:** both now stay put when a filter toggles, and the spotlight stays when a year is
+  selected.
 
 ### Added
 - **Cookieless analytics (Umami).** No cookies, no personal data, no consent banner. A
@@ -768,11 +988,16 @@ Format loosely follows [Keep a Changelog](https://keepachangelog.com/); dates ar
   Umami. Card shares carry the entry id as `utm_content`.
 
 ### Fixed
-- **Card header on phones.** The wide "✨ Guess a new name using AI" pill was pinned in a
-  `flex-shrink:0` group top-right, so on a narrow card it held its full width, wrapped the
-  title to two lines, and pushed the status badge and category onto rows of their own. On
-  `≤640px` the right-hand group now collapses into the card flow (`display:contents`): the
-  compact action icons stay pinned beside the title and the pill drops to its own full-width
+- **Card header on phones.**
+
+  **Why:** the wide "✨ Guess a new name using AI" pill sat in a `flex-shrink:0` group pinned
+  top-right, so on a narrow card it kept its full width. It wrapped the title onto two lines
+  and pushed the status badge and the category onto rows of their own, which is three rows
+  spent on a joke button.
+
+  **What:** at `≤640px` the right-hand group now collapses into the card flow
+  (`display:contents`): the compact action icons stay pinned beside the title and the pill
+  drops to its own full-width
   row underneath. `.row-head-left` grows from `flex-basis:0` so a wide title never bumps the
   icons onto a separate line (regression seen on badge-only cards like deprecations). The
   override lives at the end of the stylesheet so it wins the cascade over the base
@@ -781,9 +1006,14 @@ Format loosely follows [Keep a Changelog](https://keepachangelog.com/); dates ar
 ## 2026-07-19 (card header reflow; click-to-copy correction fix)
 
 ### Fixed
-- **Clicking a card title no longer mislabels an old name as the current one.** A *former*
-  name (a `"renamed"` card) or a *deprecated* name used to copy "Actually, it's called
-  '<that name>' now" - presenting the superseded name as current. A former-name title now
+- **Clicking a card title no longer mislabels an old name as the current one.**
+
+  **Why:** clicking a *former* name (a `"renamed"` card) or a *deprecated* name copied
+  "Actually, it's called '<that name>' now", which presents the superseded name as the current
+  one. The site's whole job is telling people what a thing is called now, and this told them
+  the opposite.
+
+  **What:** a former-name title now
   copies the name it actually became (`Actually, "X" is the old name - it's "Y" now.`), and
   deprecated titles - previously not clickable at all - now copy `Actually, "X" is
   deprecated - use "Y" now.` (or just "…is deprecated." when nothing replaced it). Current
@@ -806,11 +1036,17 @@ Format loosely follows [Keep a Changelog](https://keepachangelog.com/); dates ar
 ## 2026-07-18 (one card per name - the rename-split)
 
 ### Changed
-- **Every historical name is now its own card.** The `lineage` array is gone; a rename
-  creates a new `"current"` card and "freezes" the old one as a `"renamed"` card, linked by
-  a single **`successorId`**. Predecessors are derived (any card whose `successorId` points
-  here), so a card shows its whole history in both directions as linked, jump-to cards.
-  50 entries → **71 cards**.
+- **Every historical name is now its own card.**
+
+  **Why:** old names lived as bare strings inside another card's `lineage` array. That gave
+  them no source, no fact, no deep link, and no place in search, the filter counts, or the
+  timeline. On a site whose entire subject is the names things used to have, the old names were
+  the one thing you could not look up.
+
+  **What:** the `lineage` array is gone. A rename now creates a new `"current"` card and
+  freezes the old one as a `"renamed"` card, linked by a single **`successorId`**.
+  Predecessors are derived - any card whose `successorId` points here - so a card shows its
+  whole history in both directions as linked, jump-to cards. 50 entries became **71 cards**.
 - **Unified link model**: `successorId` replaces both `lineage` and the deprecation
   `replacementId`. New per-card fields: `name`, `from`, `to`, `state` (`current`/`renamed`).
 - **Cards** now show a state badge (`current` / `former name`), a **Successor** and

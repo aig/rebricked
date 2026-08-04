@@ -1,0 +1,36 @@
+id: no-isolation-shared-access-mode
+name: No isolation shared access mode
+aliases:
+  - No isolation shared clusters
+  - no-isolation shared
+  - legacy shared (no isolation)
+category: Compute / BI
+what:
+  note: The legacy compute access mode that shares a cluster across users without process isolation or Unity Catalog governance.
+  link: https://docs.databricks.com/aws/en/admin/account-settings/no-isolation-shared#:~:text=run%20arbitrary%20code%20from%20multiple%20users%20in%20the%20same%20shared%20environment
+fact:
+  - note: It shared one cluster across users with no process isolation between them and no Unity Catalog governance - so, unsurprisingly, new accounts don't get it by default anymore.
+    link: https://docs.databricks.com/aws/en/admin/account-settings/legacy-features#:~:text=won%27t%20have%20access%20to%20legacy%20features%20by%20default
+  - note: Admins can flip an account setting that disables credential sharing on these clusters.
+    link: https://docs.databricks.com/aws/en/admin/account-settings/no-isolation-shared#:~:text=prevents%20automatic%20generation%20of%20Databricks%20API%20internal%20credentials
+status:
+  value: deprecated
+  link: https://docs.databricks.com/aws/en/admin/account-settings/no-isolation-shared
+  date: '2026-07-18'
+from:
+  date: '2022'
+  link: https://docs.databricks.com/aws/en/admin/account-settings/no-isolation-shared
+deprecatedAt:
+  date: '2025'
+  link: https://docs.databricks.com/aws/en/admin/account-settings/no-isolation-shared
+successorId: shared-single-user-access-modes
+replacement: Shared or Single user access mode
+links:
+  - url: https://www.databricks.com/blog/admin-isolation-shared-clusters
+    kind: community
+    label: 'Databricks Blog: Admin isolation on shared clusters'
+  - url: https://sec-consult.com/vulnerability-lab/advisory/bypassing-cluster-isolation-in-databricks-platform/
+    kind: internet
+    label: 'SEC Consult: cluster isolation advisory'
+source: https://docs.databricks.com/aws/en/admin/account-settings/no-isolation-shared
+verified: '2026-07-23'

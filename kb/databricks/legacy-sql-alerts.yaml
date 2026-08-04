@@ -1,0 +1,32 @@
+id: legacy-sql-alerts
+name: Legacy SQL alerts
+aliases:
+  - legacy alerts
+  - SQL alerts v1
+category: BI / Dashboards
+what:
+  note: The original Databricks SQL alerts that notified when a scheduled query crossed a threshold.
+  link: https://docs.databricks.com/aws/en/sql/user/alerts/legacy#:~:text=Legacy%20alerts%20are%20the%20first%20version%20of%20Databricks%20SQL%20alerts
+fact:
+  - note: These original SQL alerts fired when a scheduled query crossed a threshold - and each alert leaned on a separately saved query to do it.
+    link: https://docs.databricks.com/aws/en/sql/user/alerts/legacy#:~:text=executes%20its%20underlying%20query%20and%20checks%20the%20alert%20criteria
+  - note: Even its CLI command group is now marked deprecated.
+    link: https://learn.microsoft.com/en-us/azure/databricks/dev-tools/cli/reference/alerts-legacy-commands#:~:text=These%20commands%20are%20deprecated
+status:
+  value: deprecated
+  link: https://docs.databricks.com/aws/en/sql/user/alerts/legacy
+  date: '2026-07-18'
+from:
+  date: 2020-11
+  link: https://docs.databricks.com/aws/en/release-notes/product/2020/november#:~:text=automatic%20alerting%20for%20important%20data%20changes
+deprecatedAt:
+  date: '2025'
+  link: https://docs.databricks.com/aws/en/sql/user/alerts/legacy
+successorId: databricks-sql-alerts
+replacement: Databricks SQL alerts (new)
+links:
+  - url: https://community.databricks.com/t5/data-engineering/databricks-sql-alerts-and-jobs-integration-legacy-vs-v2/td-p/153053
+    kind: community
+    label: 'Community: Legacy vs V2 SQL alerts'
+source: https://docs.databricks.com/aws/en/sql/user/alerts/legacy
+verified: '2026-07-23'

@@ -1,0 +1,38 @@
+id: databricks-sql-dashboards
+name: Databricks SQL dashboards
+aliases:
+  - DBSQL dashboards
+  - Redash dashboards
+category: BI / Dashboards
+what:
+  note: Databricks SQL's original built-in dashboards for pinning query visualizations onto a shared, drag-and-drop canvas.
+  link: https://learn.microsoft.com/en-us/azure/databricks/release-notes/product/2020/november#:~:text=rich%20visualizations%20and%20drag%2Dand%2Ddrop%20dashboards
+fact:
+  - note: Databricks' dashboards trace back to Redash, the popular open-source visualization and dashboarding tool it acquired in June 2020.
+    link: https://www.databricks.com/blog/2020/06/24/welcoming-redash-to-databricks.html#:~:text=Databricks%20has%20acquired%20Redash
+  - note: They shipped as part of SQL Analytics, which Databricks unveiled in November 2020, letting analysts build shareable dashboards straight from their query visualizations.
+    link: https://www.databricks.com/company/newsroom/press-releases/databricks-launches-sql-analytics-to-enable-cloud-data-warehousing-on-data-lakes#:~:text=build%20dashboards%20and%20reports%20that%20can%20be%20easily%20shared
+status:
+  value: renamed
+  link: https://learn.microsoft.com/en-us/azure/databricks/archive/legacy/legacy-dashboards
+  date: '2026-07-23'
+from:
+  date: 2020-11
+  link: https://learn.microsoft.com/en-us/azure/databricks/release-notes/product/2020/november#:~:text=Databricks%20SQL%20%28Public%20Preview%29
+to:
+  date: '2023'
+  link: https://docs.databricks.com/aws/en/release-notes/product/2023/september
+successorId: legacy-dashboards
+occasion:
+  date: 2020-11
+  link: https://learn.microsoft.com/en-us/azure/databricks/release-notes/product/2020/november#:~:text=drag%2Dand%2Ddrop%20dashboards%20with%20automatic%20alerting
+  note: Launched with SQL Analytics, November 2020
+links:
+  - url: https://www.databricks.com/blog/2020/06/24/welcoming-redash-to-databricks.html
+    kind: community
+    label: 'Databricks Blog: Welcoming Redash'
+  - url: https://techcrunch.com/2020/06/24/databricks-acquires-redash-a-visualizations-service-for-data-scientists/
+    kind: internet
+    label: 'TechCrunch: Databricks acquires Redash'
+source: https://learn.microsoft.com/en-us/azure/databricks/release-notes/product/2020/november
+verified: '2026-07-23'

@@ -1,0 +1,37 @@
+id: delta-live-tables
+name: Delta Live Tables
+abbr: DLT
+category: Data engineering
+what:
+  note: Declarative framework for batch and streaming ETL pipelines.
+  link: https://docs.databricks.com/aws/en/ldp/concepts/#:~:text=declarative%20framework%20for%20building%20batch%20and%20streaming%20data%20pipelines
+fact:
+  - note: Introduced at the 2021 Data + AI Summit, it let engineers build entire production pipelines by sprinkling the keyword LIVE into ordinary SQL and letting the framework untangle the dependencies for them.
+    link: https://www.databricks.com/blog/2021/05/27/announcing-the-launch-of-delta-live-tables-reliable-data-engineering-made-easy.html#:~:text=DLT%20will%20begin%20to%20automatically%20take%20care
+status:
+  value: renamed
+  link: https://docs.databricks.com/aws/en/ldp/where-is-dlt#:~:text=formerly%20known%20as%20Delta%20Live%20Tables%20%28DLT%29%20has%20been%20updated
+  date: '2026-07-18'
+releases:
+  - type: public-preview
+    date: 2021-05
+    link: https://www.databricks.com/blog/2021/05/27/announcing-the-launch-of-delta-live-tables-reliable-data-engineering-made-easy.html#:~:text=Delta%20Live%20Tables%20is%20currently%20in%20Gated%20Public%20Preview
+  - type: ga
+    date: 2022-04
+    link: https://www.cdotrends.com/story/16335/databricks-announces-general-availability-delta-live-tables#:~:text=announced%20the%20general%20availability%20of%20Delta%20Live%20Tables
+from:
+  date: '2021'
+  link: https://www.databricks.com/blog/2021/05/27/announcing-the-launch-of-delta-live-tables-reliable-data-engineering-made-easy.html#:~:text=we%20announced%20Delta%20Live%20Tables%20%28DLT%29
+to:
+  date: 2025-06
+  link: https://docs.databricks.com/aws/en/release-notes/product/2025/june#:~:text=DLT%20is%20now%20Spark%20Declarative%20Pipelines%20on%20Lakeflow
+successorId: lakeflow-declarative-pipelines
+links:
+  - url: https://www.databricks.com/blog/2021/05/27/announcing-the-launch-of-delta-live-tables-reliable-data-engineering-made-easy.html
+    kind: community
+    label: 'Databricks blog: DLT launch (2021)'
+  - url: https://www.cdotrends.com/story/16335/databricks-announces-general-availability-delta-live-tables
+    kind: internet
+    label: 'CDOTrends: DLT reaches GA'
+source: https://docs.databricks.com/aws/en/ldp/where-is-dlt
+verified: '2026-07-23'

@@ -1,0 +1,40 @@
+id: lakeflow-pipelines-editor
+name: Lakeflow Pipelines Editor
+aliases:
+  - multi-file editor
+  - Lakeflow multi-file editor
+category: Data engineering
+what:
+  note: The IDE for developing Lakeflow (Spark Declarative) pipelines - code-first, folder-based, with selective execution, data previews, and pipeline graphs on one surface.
+  link: https://docs.databricks.com/aws/en/ldp/multi-file-editor#:~:text=combines%20all%20pipeline%20development%20tasks%20on%20a%20single%20surface
+fact:
+  - note: A code-first IDE that shows your pipeline graph, data previews, and selective runs on one screen - though its URL still betrays the old name, 'multi-file editor.'
+    link: https://docs.databricks.com/aws/en/ldp/multi-file-editor#:~:text=interactive%20pipeline%20graph
+  - note: It became generally available in May 2026, bringing an agent-first Genie Code experience for creating and debugging production pipelines.
+    link: https://docs.databricks.com/aws/en/release-notes/product/2026/may#:~:text=The%20Lakeflow%20Pipelines%20Editor%20is%20now%20generally%20available
+  - note: 'Pipelines can be unit tested from inside the editor: Python tests run against mock data by redirecting catalog tables, so transformations get checked without touching the real ones.'
+    link: https://docs.databricks.com/aws/en/release-notes/product/2026/july#:~:text=Validate%20Python%20and%20SQL%20transformations%20against%20mock%20data%20using%20catalog%2Dtable%20redirection
+status:
+  value: active
+  link: https://docs.databricks.com/aws/en/ldp/multi-file-editor#:~:text=with%20the%20Lakeflow%20Pipelines%20Editor
+  date: '2026-07-18'
+releases:
+  - type: public-preview
+    date: 2025-09
+    link: https://docs.databricks.com/aws/en/release-notes/product/2025/september#:~:text=Lakeflow%20Pipelines%20Editor%20%28previously%20called%20the%20multi%2Dfile%20editor%29%20is%20now%20in%20public%20preview
+  - type: ga
+    date: 2026-05
+    link: https://docs.databricks.com/aws/en/release-notes/product/2026/may#:~:text=Lakeflow%20Pipelines%20Editor%20is%20now%20generally%20available
+from:
+  date: 2025-09
+  link: https://docs.databricks.com/aws/en/release-notes/product/2025/september#:~:text=The%20Lakeflow%20Pipelines%20Editor%20%28previously%20called%20the%20multi%2Dfile%20editor%29
+links:
+  - url: https://qubika.com/blog/lakeflow-pipeline-editor-declarative-data-engineering/
+    kind: internet
+    label: 'Qubika: Lakeflow Pipelines Editor'
+prediction:
+  - Genie Pipelines Editor
+  - Lakeflow IDE
+  - Agentic Pipelines Editor
+source: https://docs.databricks.com/aws/en/ldp/multi-file-editor
+verified: '2026-08-03'

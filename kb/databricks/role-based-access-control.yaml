@@ -1,0 +1,49 @@
+id: role-based-access-control
+name: Role-based access control (RBAC)
+aliases:
+  - RBAC
+  - role-based access control
+  - exclusive access
+  - role switcher
+category: Data governance
+what:
+  note: Databricks access-control model where a user assumes a role - implemented as a group - and acts with only that role's permissions for the duration of the session, instead of the permissions they have accumulated.
+  link: https://docs.databricks.com/aws/en/security/auth/rbac/#:~:text=using%20only%20that%20role%27s%20permissions%20for%20the%20duration%20of%20the%20session
+fact:
+  - note: A 'role' here is not a new kind of object at all - it's an ordinary Databricks group that someone has been granted the Assume permission on, wearing a different hat.
+    link: https://docs.databricks.com/aws/en/security/auth/rbac/#:~:text=In%20Databricks%2C%20a%20role%20is%20implemented%20as%20a%20group
+  - note: Normally your permissions pile up from every group you belong to and follow you everywhere, so assuming a role is one of the rare logins that can leave you seeing less rather than more.
+    link: https://docs.databricks.com/aws/en/security/auth/rbac/#:~:text=their%20permissions%20accumulate%20as%20an%20ambient%20set%20that%20follows%20them%20everywhere
+  - note: Anything you make while acting as a role - notebooks, queries, SQL warehouses, jobs - is owned by the role rather than by you.
+    link: https://docs.databricks.com/aws/en/security/auth/rbac/#:~:text=The%20role%20owns%20any%20Unity%20Catalog%20and%20workspace%20assets%20created%20while%20acting%20as%20the%20role
+status:
+  value: active
+  link: https://docs.databricks.com/aws/en/security/auth/rbac/#:~:text=using%20only%20that%20role%27s%20permissions%20for%20the%20duration%20of%20the%20session
+  date: '2026-08-03'
+releases:
+  - type: public-preview
+    date: 2026-07
+    link: https://docs.databricks.com/aws/en/release-notes/product/2026/july#:~:text=Role%2Dbased%20access%20control%20%28RBAC%29%20is%20now%20in%20Public%20Preview
+introducedAt:
+  date: 2026-07
+  link: https://docs.databricks.com/aws/en/release-notes/product/2026/july#:~:text=Role%2Dbased%20access%20control%20%28RBAC%29%20is%20now%20in%20Public%20Preview
+limitations:
+  note: A user can act as only one role at a time. When acting as a role, creating Agent Bricks agents, managing alerts, and Lakeflow pipelines are unsupported, and creating Vector Search indexes fails (create as a user, then reassign ownership to the role); the workspace SCIM API cannot create or manage groups, and roles still inherit whatever the workspace users group can see.
+  link: https://docs.databricks.com/aws/en/security/auth/rbac/limitations#:~:text=Lakeflow%20pipelines%20are%20not%20supported%20for%20roles
+  date: '2026-08-03'
+links:
+  - url: https://docs.databricks.com/aws/en/release-notes/product/2026/july
+    kind: official
+    label: 'Databricks release notes: RBAC Public Preview (July 2026)'
+  - url: https://docs.databricks.com/aws/en/security/auth/rbac/abac-interaction
+    kind: official
+    label: 'Databricks docs: Use RBAC with ABAC'
+  - url: https://docs.databricks.com/aws/en/security/auth/rbac/limitations
+    kind: official
+    label: 'Databricks docs: RBAC limitations'
+prediction:
+  - Unity Catalog RBAC
+  - Genie Roles
+  - Adaptive access control
+source: https://docs.databricks.com/aws/en/security/auth/rbac/
+verified: '2026-08-03'

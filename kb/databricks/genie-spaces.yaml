@@ -1,0 +1,29 @@
+id: genie-spaces
+name: Genie Spaces
+category: AI / BI
+what:
+  note: Curated, governed conversational query spaces scoped to a business domain, letting business users ask questions of their structured data in plain English (text-to-SQL).
+  link: https://docs.databricks.com/aws/en/genie-agents/set-up#:~:text=ask%20questions%20of%20their%20data%20in%20Databricks
+fact:
+  - note: A Genie Space was a topic-scoped room where analysts hand-fed the AI tables, metric definitions and sample queries, so a business user could ask 'how's my sales pipeline?' and get an answer instead of Slacking the data team.
+    link: https://docs.databricks.com/aws/en/genie-agents/set-up#:~:text=the%20natural%2Dlanguage%20chat%20interface%20that%20business%20users
+status:
+  value: renamed
+  link: https://docs.databricks.com/aws/en/genie-agents/set-up#:~:text=formerly%20known%20as%20Genie
+  date: '2026-07-18'
+from:
+  date: '2024'
+  link: https://www.databricks.com/blog/aibi-genie-now-generally-available
+to:
+  date: 2026-07
+  link: https://docs.databricks.com/aws/en/ai-bi/release-notes/2026#:~:text=Genie%20Agents%20%28formerly%20Genie%20Spaces%29
+successorId: genie-agents
+links:
+  - url: https://www.databricks.com/blog/aibi-genie-now-generally-available
+    kind: community
+    label: 'Databricks blog: AI/BI Genie GA'
+  - url: https://atlan.com/know/databricks/databricks-ai-bi-genie/
+    kind: internet
+    label: 'Atlan: AI/BI Genie explainer'
+source: https://docs.databricks.com/aws/en/genie-agents/set-up
+verified: '2026-07-18'

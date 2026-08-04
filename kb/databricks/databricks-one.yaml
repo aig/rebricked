@@ -1,0 +1,29 @@
+id: databricks-one
+name: Databricks One
+category: AI / BI
+what:
+  note: Business-user-facing UI giving non-technical users a single conversational entry point to data and AI.
+  link: https://docs.databricks.com/aws/en/genie-one/genie#:~:text=single%20entry%20point%20for%20interacting%20with%20data%20and%20AI
+fact:
+  - note: A deliberately code-free front door for executives and marketers who never touch a notebook, bundling dashboards, natural-language questions and custom apps behind one un-technical home screen, with no seat-based licenses required.
+    link: https://www.databricks.com/blog/introducing-databricks-one#:~:text=a%20new%20product%20experience%20designed%20specifically%20for%20business%20users
+status:
+  value: renamed
+  link: https://docs.databricks.com/aws/en/genie-one/genie#:~:text=Genie%20One%20was%20previously%20known%20as%20Databricks%20One.
+  date: '2026-07-18'
+from:
+  date: '2025'
+  link: https://www.databricks.com/blog/introducing-databricks-one#:~:text=Introducing%20Databricks%20One
+to:
+  date: 2026-04
+  link: https://docs.databricks.com/aws/en/ai-bi/release-notes/2026#:~:text=Databricks%20One%2C%20the%20simplified%20Databricks%20interface%2C%20has%20been%20renamed%20to%20Genie.
+successorId: genie
+links:
+  - url: https://www.databricks.com/blog/introducing-databricks-one
+    kind: community
+    label: 'Databricks blog: Databricks One'
+  - url: https://www.prnewswire.com/news-releases/databricks-unveils-databricks-one-a-new-experience-to-bring-data-and-ai-to-every-corner-of-the-business-302478822.html
+    kind: internet
+    label: 'PR Newswire: Databricks One unveiled'
+source: https://docs.databricks.com/aws/en/genie-one/genie
+verified: '2026-07-23'

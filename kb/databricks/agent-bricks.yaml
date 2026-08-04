@@ -1,0 +1,37 @@
+id: agent-bricks
+name: Agent Bricks
+aliases:
+  - AgentBricks
+category: AI / ML
+what:
+  note: 'Databricks'' automated, declarative way to build production AI agents: you describe the task in natural language and connect your data, and it auto-generates evaluations and auto-optimizes the agent.'
+  link: https://www.databricks.com/blog/introducing-agent-bricks#:~:text=define%20in%20natural%20language%20a%20high%2Dlevel%20description
+fact:
+  - note: Instead of hand-tuning prompts, it automatically builds evaluation benchmarks specific to your task - sometimes synthetically generating new data or custom LLM judges - then searches across optimization techniques like prompt engineering and fine-tuning to auto-optimize the agent.
+    link: https://www.databricks.com/blog/introducing-agent-bricks#:~:text=automatically%20create%20evaluation%20benchmarks%20specific%20to%20your%20task
+  - note: There was never a single 'Agent Bricks GA' day - individual capabilities reach general availability on their own schedules (Document Intelligence, for instance, went GA at Data + AI Summit 2026), by which point Databricks says 100k+ agents had been built on it, together processing over a quadrillion tokens a year.
+    link: https://www.databricks.com/blog/agent-bricks-dais-2026#:~:text=over%20100k%2B%20agents%20have%20been%20built
+status:
+  value: active
+  link: https://docs.databricks.com/aws/en/generative-ai/agent-bricks/
+  date: '2026-07-22'
+introducedAt:
+  date: 2025-06
+  link: https://www.databricks.com/company/newsroom/press-releases/databricks-launches-agent-bricks-new-approach-building-ai-agents#:~:text=today%20introduced%20Agent%20Bricks
+occasion:
+  date: 2025-06
+  link: https://www.databricks.com/company/newsroom/press-releases/databricks-launches-agent-bricks-new-approach-building-ai-agents#:~:text=Agent%20Bricks%20and%20AI%20Runtime%20are%20available%20starting%20today%20in%20Beta
+  note: Data + AI Summit, June 2025 (beta).
+links:
+  - url: https://www.databricks.com/company/newsroom/press-releases/databricks-launches-agent-bricks-new-approach-building-ai-agents
+    kind: official
+    label: 'Press release: Agent Bricks launch (June 2025)'
+  - url: https://www.databricks.com/blog/agent-bricks-dais-2026
+    kind: community
+    label: 'Databricks blog: Agent Bricks at DAIS 2026'
+prediction:
+  - Agent Foundry
+  - Mosaic Agent Studio
+  - Genie Bricks
+source: https://docs.databricks.com/aws/en/generative-ai/agent-bricks/
+verified: '2026-07-23'

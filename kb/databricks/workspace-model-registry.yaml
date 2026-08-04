@@ -1,0 +1,43 @@
+id: workspace-model-registry
+name: Workspace Model Registry
+aliases:
+  - MLflow Model Registry
+  - workspace registry
+  - model stages
+category: AI / ML
+what:
+  note: The legacy per-workspace MLflow model registry, including model stages (None/Staging/Production/Archived).
+  link: https://docs.databricks.com/aws/en/machine-learning/manage-model-lifecycle/workspace-model-registry#:~:text=None%2C%20Staging%2C%20Production%2C%20or%20Archived
+fact:
+  - note: It tracked each model through named stages - None, Staging, Production, Archived - and lived inside a single workspace, one isolated registry per workspace.
+    link: https://docs.databricks.com/aws/en/machine-learning/manage-model-lifecycle/workspace-model-registry#:~:text=A%20model%20version%20has%20one%20of%20the%20following%20stages
+  - note: Since April 2024 it is switched off by default for new Unity Catalog accounts, though MLflow 3 still supports it.
+    link: https://docs.databricks.com/aws/en/machine-learning/manage-model-lifecycle/workspace-model-registry#:~:text=Starting%20in%20April%202024%2C%20Databricks%20disabled%20Workspace%20Model%20Registry
+status:
+  value: legacy
+  link: https://docs.databricks.com/aws/en/machine-learning/manage-model-lifecycle/#:~:text=Workspace%20Model%20Registry%20%28legacy%29
+  date: '2026-07-18'
+releases:
+  - type: public-preview
+    date: 2020-03
+    link: https://docs.databricks.com/aws/en/release-notes/product/2020/march#:~:text=The%20managed%20MLflow%20Model%20Registry%20is%20now%20available%20for%20Public%20Preview
+  - type: ga
+    date: 2020-11
+    link: https://docs.databricks.com/aws/en/release-notes/product/2020/november#:~:text=MLflow%20Model%20Registry%20is%20now%20GA
+from:
+  date: '2020'
+  link: https://docs.databricks.com/aws/en/release-notes/product/2020/march#:~:text=The%20managed%20MLflow%20Model%20Registry%20is%20now%20available%20for%20Public%20Preview
+deprecatedAt:
+  date: '2024'
+  link: https://docs.databricks.com/aws/en/machine-learning/manage-model-lifecycle/
+successorId: models-in-unity-catalog
+replacement: Models in Unity Catalog
+links:
+  - url: https://medium.com/marvelous-mlops/lessons-learned-from-migrating-models-to-unity-catalog-5cc5b8a973eb
+    kind: community
+    label: 'Marvelous MLOps: migrating off Workspace Registry'
+  - url: https://docs.zenml.io/stacks/stack-components/model-registries/mlflow
+    kind: internet
+    label: 'ZenML: MLflow registry stages'
+source: https://docs.databricks.com/aws/en/machine-learning/manage-model-lifecycle/
+verified: '2026-07-23'

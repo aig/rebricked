@@ -1,0 +1,29 @@
+id: sql-endpoint
+name: SQL Endpoint
+category: Compute / BI
+what:
+  note: SQL-optimized compute that powers Databricks SQL.
+  link: https://docs.databricks.com/aws/en/compute/sql-warehouse/#:~:text=compute%20resource%20that%20lets%20you%20query%20and%20explore%20data
+fact:
+  - note: It was the elastic compute you pointed your BI tool at, spinning up to run SQL queries - Databricks even creates a small 'Starter Warehouse' for you automatically.
+    link: https://docs.databricks.com/aws/en/compute/sql-warehouse/#:~:text=Starter%20Warehouse
+status:
+  value: renamed
+  link: https://docs.databricks.com/aws/en/compute/sql-warehouse/#:~:text=SQL%20endpoints%20were%20renamed%20as%20SQL%20warehouses
+  date: '2026-07-18'
+from:
+  date: '2021'
+  link: https://www.databricks.com/blog/2021/09/30/databricks-sql-delivering-a-production-sql-development-experience-on-the-data-lake.html#:~:text=tools%20of%20their%20choice%20to%20SQL%20endpoints
+to:
+  date: '2023'
+  link: https://docs.databricks.com/aws/en/compute/sql-warehouse/#:~:text=In%202023%2C%20SQL%20endpoints%20were%20renamed%20as%20SQL%20warehouses
+successorId: sql-warehouse
+links:
+  - url: https://www.databricks.com/blog/2021/09/30/databricks-sql-delivering-a-production-sql-development-experience-on-the-data-lake.html
+    kind: community
+    label: 'Databricks blog: SQL endpoints'
+  - url: https://towardsdatascience.com/running-sql-queries-against-delta-tables-using-databricks-sql-analytics-8d0fca4b79a2/
+    kind: internet
+    label: 'TDS: SQL Analytics & endpoints'
+source: https://docs.databricks.com/aws/en/compute/sql-warehouse/
+verified: '2026-07-23'

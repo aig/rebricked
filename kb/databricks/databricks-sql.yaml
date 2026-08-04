@@ -1,0 +1,51 @@
+id: databricks-sql
+name: Databricks SQL
+abbr: DBSQL
+aliases:
+  - SQL Analytics
+  - DBSQL
+  - Databricks SQL Analytics
+category: Compute / BI
+what:
+  note: The serverless data warehouse for running SQL queries, dashboards, and BI on the lakehouse.
+  link: https://learn.microsoft.com/en-us/azure/databricks/sql/release-notes/2021#:~:text=unifies%20data%2C%20AI%2C%20and%20BI%20workloads%20in%20one%20place
+fact:
+  - note: Easy to confuse with SQL Warehouse, but one's the product and the other's the compute engine that runs it - and it dropped the name 'SQL Analytics' back in 2021.
+    link: https://learn.microsoft.com/en-us/azure/databricks/sql/release-notes/2021#:~:text=SQL%20Analytics%20is%20renamed%20to%20Databricks%20SQL.
+  - note: 'When it was renamed in May 2021, even the access entitlement changed: ''SQL Analytics access'' became ''Databricks SQL access.'''
+    link: https://learn.microsoft.com/en-us/azure/databricks/sql/release-notes/2021#:~:text=The%20entitlement%20to%20grant%20access%20to%20Databricks%20SQL%20has%20been%20renamed
+status:
+  value: active
+  link: https://learn.microsoft.com/en-us/azure/databricks/sql/release-notes/2021#:~:text=Databricks%20SQL%20is%20Generally%20Available.
+  date: '2026-07-18'
+releases:
+  - type: public-preview
+    date: 2020-11
+    link: https://www.prnewswire.com/news-releases/databricks-launches-sql-analytics-to-enable-cloud-data-warehousing-on-data-lakes-301171524.html#:~:text=SQL%20Analytics%20is%20available%20in%20public%20preview%20effective%20on%20November%2018
+  - type: ga
+    date: 2021-12
+    link: https://learn.microsoft.com/en-us/azure/databricks/sql/release-notes/2021#:~:text=Databricks%20SQL%20is%20Generally%20Available.
+from:
+  date: 2021-05
+  link: https://learn.microsoft.com/en-us/azure/databricks/sql/release-notes/2021#:~:text=SQL%20Analytics%20is%20renamed%20to%20Databricks%20SQL.
+occasion:
+  date: 2021-05
+  link: https://learn.microsoft.com/en-us/azure/databricks/sql/release-notes/2021#:~:text=Databricks%20SQL%20is%20Generally%20Available.
+  note: Renamed May 26, 2021; GA December 15, 2021
+limitations:
+  note: Databricks limits queries on a SQL warehouse by compute cost; classic and pro warehouses have a fixed limit of one cluster per 10 concurrent queries, and autoscaling only adds clusters up to the configured maximum.
+  link: https://docs.databricks.com/aws/en/compute/sql-warehouse/warehouse-behavior#:~:text=one%20cluster%20per%2010%20concurrent%20queries
+  date: '2026-07-23'
+links:
+  - url: https://www.databricks.com/blog/announcing-general-availability-databricks-sql-serverless
+    kind: community
+    label: 'Databricks Blog: DBSQL Serverless GA'
+  - url: https://www.prnewswire.com/news-releases/databricks-launches-sql-analytics-to-enable-cloud-data-warehousing-on-data-lakes-301171524.html
+    kind: internet
+    label: 'PR Newswire: SQL Analytics launch'
+prediction:
+  - Lakehouse SQL
+  - Genie SQL
+  - Databricks SQL One
+source: https://learn.microsoft.com/en-us/azure/databricks/sql/release-notes/2021
+verified: '2026-07-18'

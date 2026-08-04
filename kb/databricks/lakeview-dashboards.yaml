@@ -1,0 +1,39 @@
+id: lakeview-dashboards
+name: Lakeview dashboards
+category: BI / Dashboards
+what:
+  note: AI-assisted dashboards for visualizing and sharing query results.
+  link: https://www.databricks.com/blog/announcing-public-preview-lakeview-dashboards#:~:text=delivers%20beautiful%2C%20interactive%20charts
+fact:
+  - note: Entered public preview on September 28, 2023 (AWS and Azure first, GCP in the first half of 2024), pairing a new visualization engine that rendered charts up to 10x faster with draft/publish editing and Unity Catalog lineage.
+    link: https://www.databricks.com/blog/announcing-public-preview-lakeview-dashboards#:~:text=renders%20them%20up%20to%2010x%20faster
+  - note: It launched as 'Lakeview dashboards,' and the REST API still answers to that name - endpoints live under /api/2.0/lakeview - long after the marketing stopped using it.
+    link: https://docs.databricks.com/aws/en/dashboards/tutorials/dashboard-crud-api#:~:text=The%20Lakeview%20API%20still%20retains%20that%20name
+status:
+  value: renamed
+  link: https://www.databricks.com/blog/announcing-public-preview-lakeview-dashboards#:~:text=dubbed%20AI%2FBI%20Dashboards
+  date: '2026-07-20'
+releases:
+  - type: public-preview
+    date: 2023-09
+    link: https://www.databricks.com/blog/announcing-public-preview-lakeview-dashboards#:~:text=next%20generation%20of%20Databricks%20SQL%20dashboards%2C%20dubbed%20AI%2FBI%20Dashboards
+from:
+  date: 2023-09
+  link: https://www.databricks.com/blog/announcing-public-preview-lakeview-dashboards#:~:text=public%20preview%20of%20the%20next%20generation%20of%20Databricks%20SQL%20dashboards
+to:
+  date: 2024-06
+  link: https://www.databricks.com/blog/introducing-aibi-intelligent-analytics-real-world-data
+successorId: ai-bi-dashboards
+occasion:
+  date: 2023-09
+  link: https://www.databricks.com/blog/announcing-public-preview-lakeview-dashboards#:~:text=AI%2FBI%20Dashboards%20are%20available%20in%20public%20preview%20today
+  note: Public preview September 28, 2023
+links:
+  - url: https://docs.databricks.com/aws/en/sql/release-notes/2023
+    kind: community
+    label: Databricks SQL release notes 2023
+  - url: https://www.element61.be/en/resource/unlocking-insights-databricks-lakeview-dashboards
+    kind: internet
+    label: 'element61: unlocking insights'
+source: https://www.databricks.com/blog/announcing-public-preview-lakeview-dashboards
+verified: '2026-07-23'

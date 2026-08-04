@@ -1,0 +1,36 @@
+id: workflows
+name: Workflows
+category: Data engineering
+what:
+  note: Orchestration for multi-task jobs and pipelines.
+  link: https://learn.microsoft.com/en-us/azure/databricks/jobs/#:~:text=providing%20orchestration%20for%20data%20processing%20workloads
+fact:
+  - note: Databricks' answer to 'do we really need Airflow for this?', it wired tasks into DAGs right inside the platform and added a Repair and Rerun button so you could retry only the tasks that flopped.
+    link: https://www.databricks.com/blog/2022/05/06/save-time-and-money-on-data-and-ml-workflows-with-repair-and-rerun.html#:~:text=without%20rerunning%20your%20entire%20flow
+status:
+  value: renamed
+  link: https://learn.microsoft.com/en-us/azure/databricks/jobs/
+  date: '2026-07-18'
+releases:
+  - type: public-preview
+    date: 2021-07
+    link: https://docs.databricks.com/aws/en/release-notes/product/2021/july#:~:text=Databricks%20jobs%20%28Public%20Preview%29
+  - type: ga
+    date: 2021-10
+    link: https://docs.databricks.com/aws/en/release-notes/product/2021/october#:~:text=Jobs%20orchestration%20is%20now%20GA
+from:
+  date: '2022'
+  link: https://www.databricks.com/blog/2022/06/29/top-5-workflows-announcements-at-data-ai-summit.html#:~:text=enhancements%20to%20Databricks%20Workflows
+to:
+  date: '2025'
+  link: https://docs.databricks.com/aws/en/release-notes/product/2025/june#:~:text=Databricks%20Jobs%20is%20now%20Lakeflow%20Jobs
+successorId: lakeflow-jobs
+links:
+  - url: https://www.databricks.com/blog/2022/06/29/top-5-workflows-announcements-at-data-ai-summit.html
+    kind: community
+    label: 'Databricks blog: Top 5 Workflows (2022)'
+  - url: https://www.element61.be/en/competence/databricks-workflow-managed-orchestration-lakehouse
+    kind: internet
+    label: 'element61: managed orchestration'
+source: https://learn.microsoft.com/en-us/azure/databricks/jobs/
+verified: '2026-07-23'

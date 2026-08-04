@@ -1,0 +1,47 @@
+id: zerobus-ingest
+name: Zerobus Ingest
+aliases:
+  - Zerobus
+  - Zerobus Ingest connector
+category: Data engineering
+what:
+  note: Push-based, serverless ingestion connector in Lakeflow Connect that writes records straight into Unity Catalog Delta tables over gRPC, REST, or OpenTelemetry, with no message bus to run.
+  link: https://docs.databricks.com/aws/en/ingestion/zerobus-overview#:~:text=push%2Dbased%20ingestion%20API%20that%20writes%20data%20directly%20into%20Unity%20Catalog%20Delta%20tables
+fact:
+  - note: 'The name is the whole pitch: there is no bus. No partitions to configure, no brokers to babysit, and the scaling strategy is simply to open more connections.'
+    link: https://docs.databricks.com/aws/en/ingestion/zerobus-overview#:~:text=It%20does%20not%20require%20configuring%20partitions%20or%20managing%20brokers
+  - note: Ordering is guaranteed per stream, so the obvious trick of spraying messages across several streams to go faster is also the way to lose your ordering.
+    link: https://docs.databricks.com/aws/en/ingestion/zerobus-overview#:~:text=If%20your%20client%20round%2Drobins%20messages%20to%20different%20streams%2C%20ordering%20will%20no%20longer%20be%20guaranteed
+  - note: If it cannot flush buffered records into your table it holds them in durable storage and grumbles with warning events for 31 days, then deletes them and logs exactly how much it just dropped.
+    link: https://docs.databricks.com/aws/en/ingestion/zerobus-limits#:~:text=the%20service%20deletes%20the%20buffered%20data%20and%20emits%20a%20per%2Dstream%20discard%20event
+status:
+  value: active
+  link: https://docs.databricks.com/aws/en/ingestion/zerobus-overview#:~:text=push%2Dbased%20ingestion%20API%20that%20writes%20data%20directly%20into%20Unity%20Catalog%20Delta%20tables
+  date: '2026-08-03'
+releases:
+  - type: public-preview
+    date: 2025-10
+    link: https://docs.databricks.com/aws/en/release-notes/product/2025/october#:~:text=Zerobus%20Ingest%20connector%20in%20Lakeflow%20Connect%20is%20in%20Public%20Preview
+introducedAt:
+  date: 2025-10
+  link: https://docs.databricks.com/aws/en/release-notes/product/2025/october#:~:text=Zerobus%20Ingest%20connector%20in%20Lakeflow%20Connect%20is%20in%20Public%20Preview
+limitations:
+  note: Region-limited, and the workspace and target table must sit in the same region. Delivery is at-least-once, it writes only to managed Delta tables, it never auto-evolves your schema, and it does not support catalog commits or recreating a target table. Records cap at 10 MB and protobuf schemas at 2000 columns; partitioned tables allow at most 100 partitions per 5-second window. The throughput defaults (100 MB/s per stream, 10 GB/s per table, 10000 REST requests/s) are raisable through your Databricks account representative.
+  link: https://docs.databricks.com/aws/en/ingestion/zerobus-limits#:~:text=Zerobus%20Ingest%20does%20not%20support%20catalog%20commits
+  date: '2026-08-03'
+links:
+  - url: https://docs.databricks.com/aws/en/ingestion/zerobus-ingest
+    kind: official
+    label: 'Databricks docs: Use the Zerobus Ingest connector'
+  - url: https://docs.databricks.com/aws/en/ingestion/zerobus-limits
+    kind: official
+    label: 'Databricks docs: Zerobus Ingest connector limitations'
+  - url: https://docs.databricks.com/aws/en/release-notes/product/2025/october
+    kind: official
+    label: 'Databricks release notes: Zerobus Ingest Public Preview (October 2025)'
+prediction:
+  - Zerobus One
+  - Genie Bus
+  - Lakeflow Zerobus
+source: https://docs.databricks.com/aws/en/ingestion/zerobus-overview
+verified: '2026-08-03'

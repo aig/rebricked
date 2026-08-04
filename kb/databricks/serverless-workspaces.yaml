@@ -1,0 +1,45 @@
+id: serverless-workspaces
+name: Serverless workspaces
+aliases:
+  - serverless workspace
+category: Compute / BI
+what:
+  note: A workspace preconfigured with serverless compute and default storage - a fully managed SaaS experience with no compute or storage running in your own cloud account.
+  link: https://docs.databricks.com/aws/en/admin/workspace/serverless-workspaces#:~:text=preconfigured%20with%20serverless%20compute%20and%20default%20storage
+fact:
+  - note: Nothing runs in your cloud account - compute and storage live entirely on Databricks' side, making it the closest thing to a pure-SaaS Databricks (and the reason your negotiated cloud discounts don't apply).
+    link: https://docs.databricks.com/aws/en/admin/workspace/serverless-workspaces#:~:text=your%20cloud%2Dprovider%20credits%20or%20discounts%20do%20not%20apply
+  - note: It reached GA in January 2026 after a Public Preview that opened in August 2025.
+    link: https://docs.databricks.com/aws/en/release-notes/product/2026/january#:~:text=Serverless%20workspaces%20are%20now%20generally%20available.
+status:
+  value: active
+  link: https://docs.databricks.com/aws/en/admin/workspace/serverless-workspaces#:~:text=comes%20preconfigured%20with%20serverless%20compute%20and%20default%20storage
+  date: '2026-07-18'
+releases:
+  - type: public-preview
+    date: 2025-08
+    link: https://docs.databricks.com/aws/en/release-notes/product/2025/august#:~:text=Serverless%20workspaces%20are%20now%20Public%20Preview
+  - type: ga
+    date: 2026-01
+    link: https://docs.databricks.com/aws/en/release-notes/product/2026/january#:~:text=Serverless%20workspaces%20are%20now%20generally%20available
+introducedAt:
+  date: 2026-01
+  link: https://docs.databricks.com/aws/en/release-notes/product/2026/january#:~:text=Serverless%20workspaces%20are%20now%20generally%20available
+occasion:
+  date: 2026-01
+  link: https://docs.databricks.com/aws/en/release-notes/product/2026/january#:~:text=Serverless%20workspaces%20are%20now%20generally%20available
+  note: GA January 29, 2026
+limitations:
+  note: A serverless workspace must be in a region that supports serverless compute, and because serverless compute and default storage aren't deployed in your own cloud account, cloud-provider credits or discounts don't apply to that usage.
+  link: https://docs.databricks.com/aws/en/admin/workspace/serverless-workspaces#:~:text=deployed%20in%20a%20region%20that%20supports%20serverless%20compute
+  date: '2026-07-23'
+links:
+  - url: https://www.databricks.com/blog/workspaces-seconds-introducing-serverless-workspaces
+    kind: community
+    label: 'Databricks Blog: Serverless Workspaces'
+prediction:
+  - Workspaceless servers
+  - Agentic workspaces
+  - Serverless workspaces One
+source: https://docs.databricks.com/aws/en/admin/workspace/serverless-workspaces
+verified: '2026-07-18'

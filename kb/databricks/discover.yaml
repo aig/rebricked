@@ -1,0 +1,39 @@
+id: discover
+name: Discover
+aliases:
+  - Discover page
+  - Business domains
+category: Data governance
+what:
+  note: A centralized Unity Catalog interface for searching, browsing, and previewing governed data assets, organized into business domains.
+  link: https://docs.databricks.com/aws/en/discover/discover-page#:~:text=Databricks%20Discover%20is%20a%20centralized%20discovery%20page
+fact:
+  - note: 'It''s an internal data-marketplace front door to Unity Catalog: search, browse, and preview governed assets grouped into business domains, so consumers find data without spelunking the catalog tree.'
+    link: https://docs.databricks.com/aws/en/discover/discover-page#:~:text=a%20business%2Daligned%20organization%20layer%20where%20you%20can%20organize%20data%20assets
+  - note: It entered Beta on February 18, 2026.
+    link: https://docs.databricks.com/aws/en/release-notes/product/2026/february#:~:text=searching%2C%20browsing%2C%20and%20previewing%20data%20assets
+status:
+  value: active
+  link: https://docs.databricks.com/aws/en/discover/discover-page#:~:text=The%20Discover%20page%20is%20a%20curated%20browsing%20experience
+  date: '2026-07-23'
+releases:
+  - type: beta
+    date: 2026-02
+    link: https://docs.databricks.com/aws/en/release-notes/product/2026/february#:~:text=This%20Beta%20release%20introduces
+introducedAt:
+  date: 2026-02
+  link: https://docs.databricks.com/aws/en/release-notes/product/2026/february#:~:text=The%20Discover%20page%20provides%20a%20centralized%20interface
+limitations:
+  note: Subdomains support only one level of nesting and must be created from a workspace-level Manage Discover page (no account-level subdomain management yet). Per-account domain and subdomain counts, and the number of tags you can apply, are capped (see Resource limits).
+  link: https://docs.databricks.com/aws/en/discover/discover-page#:~:text=Subdomains%20support%20only%20one%20level%20of%20nesting
+  date: '2026-07-23'
+links:
+  - url: https://docs.databricks.com/aws/en/release-notes/product/2026/february
+    kind: official
+    label: 'Databricks release notes: Discover page and domains Beta (February 2026)'
+prediction:
+  - Genie Discover
+  - Unity Marketplace
+  - Databricks Atlas
+source: https://docs.databricks.com/aws/en/discover/discover-page
+verified: '2026-07-23'

@@ -1,0 +1,47 @@
+id: databricks-marketplace
+name: Databricks Marketplace
+aliases:
+  - Marketplace
+  - Databricks data marketplace
+category: Data governance
+what:
+  note: An open marketplace where providers list data sets, notebooks, ML models, dashboards, and AI assets that Databricks customers discover, evaluate, and access directly from their workspace, built on open sharing so consumers get live data with no replication or platform lock-in.
+  link: https://docs.databricks.com/aws/en/marketplace/
+fact:
+  - note: Because it rides on the open Delta Sharing protocol, recipients can consume a listing without being Databricks customers, on the same cloud, or on any cloud at all - no copying or ETL required.
+    link: https://www.databricks.com/blog/announcing-public-preview-databricks-marketplace#:~:text=Delta%20Sharing
+  - note: Databricks unveiled it at the 2022 Data + AI Summit as 'available in the coming months' - an open marketplace for data and analytics assets with no vendor lock-in - then took the better part of a year to actually ship the preview.
+    link: https://www.databricks.com/blog/2022/07/25/recap-of-databricks-lakehouse-platform-announcements-at-data-and-ai-summit-2022.html
+  - note: At GA it started listing AI models, not just data, letting Databricks pitch it as the only marketplace for data, analytics, and AI in one place.
+    link: https://www.databricks.com/company/newsroom/press-releases/databricks-announces-lakehouse-apps-and-expands-databricks#:~:text=AI%20models
+status:
+  value: active
+  link: https://docs.databricks.com/aws/en/marketplace/
+  date: '2026-07-24'
+releases:
+  - type: public-preview
+    date: 2023-04
+    link: https://www.databricks.com/blog/announcing-public-preview-databricks-marketplace
+  - type: ga
+    date: 2023-06
+    link: https://www.databricks.com/company/newsroom/press-releases/databricks-announces-lakehouse-apps-and-expands-databricks
+introducedAt:
+  date: 2022-06
+  link: https://www.databricks.com/blog/2022/07/25/recap-of-databricks-lakehouse-platform-announcements-at-data-and-ai-summit-2022.html
+occasion:
+  date: 2023-06
+  link: https://www.databricks.com/company/newsroom/press-releases/databricks-announces-lakehouse-apps-and-expands-databricks
+  note: GA at Data + AI Summit 2023
+links:
+  - url: https://www.databricks.com/blog/announcing-public-preview-databricks-marketplace
+    kind: official
+    label: 'Databricks Blog: Marketplace Public Preview'
+  - url: https://www.databricks.com/blog/databricks-marketplace-welcomes-42-new-data-providers-q1-2024
+    kind: community
+    label: 'Databricks Blog: 42 new providers, Q1 2024'
+prediction:
+  - Unity Marketplace
+  - Databricks App Store
+  - Lakehouse Marketplace
+source: https://docs.databricks.com/aws/en/marketplace/
+verified: '2026-07-24'

@@ -1,0 +1,35 @@
+id: dbx
+name: dbx
+aliases:
+  - dbx by Databricks Labs
+  - Databricks CLI eXtensions
+category: Developer experience
+what:
+  note: Databricks Labs CLI that templated and deployed jobs via the Jobs API.
+  link: https://learn.microsoft.com/en-us/azure/databricks/archive/dev-tools/dbx/dbx#:~:text=works%20with%20the%20Jobs%20API
+fact:
+  - note: A Databricks Labs side project - the name is short for 'Databricks CLI eXtensions' - that templated and deployed jobs to the Jobs API straight from your terminal.
+    link: https://dbx.readthedocs.io/en/latest/#:~:text=Databricks%20CLI%20eXtensions
+  - note: Its config lived in a .dbx/project.json file, a different format entirely, which is why moving off it is a migration rather than a flip of a switch.
+    link: https://learn.microsoft.com/en-us/azure/databricks/archive/dev-tools/dbx/dbx#:~:text=.dbx%2Fproject.json
+status:
+  value: deprecated
+  link: https://learn.microsoft.com/en-us/azure/databricks/archive/dev-tools/dbx/#:~:text=by%20Databricks%20Labs%20is%20deprecated
+  date: '2026-07-18'
+from:
+  date: 2021-02
+  link: https://learn.microsoft.com/en-us/azure/databricks/archive/dev-tools/dbx/
+deprecatedAt:
+  date: '2023'
+  link: https://learn.microsoft.com/en-us/azure/databricks/archive/dev-tools/dbx/#:~:text=by%20Databricks%20Labs%20is%20deprecated
+successorId: databricks-asset-bundles
+replacement: Declarative Automation Bundles
+links:
+  - url: https://medium.com/d-one/how-to-streamline-data-pipelines-in-databricks-with-dbx-7c92e8ab1d2e
+    kind: community
+    label: 'Medium: Pipelines in Databricks with dbx'
+  - url: https://github.com/databrickslabs/dbx
+    kind: internet
+    label: 'GitHub: databrickslabs/dbx'
+source: https://learn.microsoft.com/en-us/azure/databricks/archive/dev-tools/dbx/
+verified: '2026-07-23'

@@ -4,7 +4,10 @@
 The one unforgivable bug is being confidently wrong. This gate keeps a
 malformed or unsourced entry from ever reaching GitHub Pages.
 
-Run locally:  python scripts/validate.py
+Entries are authored as kb/databricks/<id>.yaml; the JSON this reads is build output,
+so build it first:
+
+    python scripts/build_features.py && python scripts/validate.py
 """
 import datetime
 import json
@@ -136,7 +139,8 @@ def main():
     try:
         raw = DATA.read_text(encoding="utf-8")
     except FileNotFoundError:
-        print(f"FATAL: {DATA} not found")
+        print(f"FATAL: {DATA} not found - it is build output.")
+        print("       Build it from the kb/ entries: python scripts/build_features.py")
         return 1
 
     try:

@@ -1,0 +1,39 @@
+id: delta-sharing
+name: Delta Sharing
+category: Data governance
+what:
+  note: Open protocol and Databricks service for securely sharing live data across organizations and platforms, with or without Databricks.
+  link: https://docs.databricks.com/aws/en/opensharing/#:~:text=an%20open%20protocol%20developed%20by%20Databricks%20for%20secure%20data%20sharing
+fact:
+  - note: Launched as an open protocol that enabled secure data sharing across products for the first time, it lets a recipient pull Delta Lake or Parquet data straight into pandas or Tableau without first adopting the provider's platform.
+    link: https://www.databricks.com/blog/2021/05/26/introducing-delta-sharing-an-open-protocol-for-secure-data-sharing.html#:~:text=the%20shared%20data%20through%20pandas%2C%20Tableau
+status:
+  value: renamed
+  link: https://www.databricks.com/blog/introducing-opensharing-next-evolution-delta-sharing-agentic-era#:~:text=advances%20Delta%20Sharing%20into%20an%20independent%20open%2Dsource%20project
+  date: '2026-07-23'
+releases:
+  - type: private-preview
+    date: 2022-01
+    link: https://docs.databricks.com/aws/en/release-notes/product/2022/january#:~:text=Delta%20Sharing%20Private%20Preview%20includes%20new%20functionality
+  - type: public-preview
+    date: 2022-03
+    link: https://docs.databricks.com/aws/en/release-notes/product/2022/march#:~:text=Delta%20Sharing%20%28Preview%29%20is%20an%20open%20protocol
+  - type: ga
+    date: 2022-08
+    link: https://docs.databricks.com/aws/en/release-notes/product/2022/august#:~:text=Delta%20Sharing%20is%20now%20generally%20available
+from:
+  date: '2021'
+  link: https://www.databricks.com/blog/2021/05/26/introducing-delta-sharing-an-open-protocol-for-secure-data-sharing.html#:~:text=an%20open%20protocol%20for%20secure%20real%2Dtime%20exchange%20of%20large%20datasets
+to:
+  date: 2026-06
+  link: https://www.databricks.com/blog/introducing-opensharing-next-evolution-delta-sharing-agentic-era#:~:text=advances%20Delta%20Sharing%20into%20an%20independent%20open%2Dsource%20project
+successorId: opensharing
+links:
+  - url: https://www.databricks.com/blog/2021/05/26/introducing-delta-sharing-an-open-protocol-for-secure-data-sharing.html
+    kind: community
+    label: 'Databricks blog: intro Delta Sharing'
+  - url: https://www.prnewswire.com/news-releases/databricks-unveils-delta-sharing-the-worlds-first-open-protocol-for-real-time-secure-data-sharing-and-collaboration-between-organizations-301299496.html
+    kind: internet
+    label: 'PR Newswire: Delta Sharing launch'
+source: https://docs.databricks.com/aws/en/opensharing/
+verified: '2026-07-23'

@@ -1,0 +1,44 @@
+id: data-profiling
+name: Data profiling
+aliases:
+  - Data Quality Monitoring
+  - Monitors
+category: Data governance
+what:
+  note: Summary statistics for a Unity Catalog table, computed as profiling metrics over time so you can view historical data quality trends and track model performance.
+  link: https://docs.databricks.com/aws/en/data-governance/unity-catalog/data-quality-monitoring/data-profiling/#:~:text=summary%20statistics%20for%20a%20table%2C%20computing%20profiling%20metrics%20over%20time
+fact:
+  - note: 'Point it at a time series or inference table and it deliberately forgets: those two analysis modes only ever compute metrics over the last 30 days.'
+    link: https://docs.databricks.com/aws/en/data-governance/unity-catalog/data-quality-monitoring/data-profiling/#:~:text=only%20compute%20metrics%20over%20the%20last%2030%20days
+  - note: It runs its jobs on serverless compute while insisting your account does not actually have to be enabled for serverless.
+    link: https://docs.databricks.com/aws/en/data-governance/unity-catalog/data-quality-monitoring/data-profiling/#:~:text=does%20not%20require%20that%20your%20account%20be%20enabled%20for%20serverless%20compute
+  - note: 'The snapshot mode has a ceiling you can quote at a capacity meeting: 4TB per table, and that is the documented maximum.'
+    link: https://docs.databricks.com/aws/en/data-governance/unity-catalog/data-quality-monitoring/data-profiling/#:~:text=maximum%20table%20size%20for%20a%20snapshot%20profile%20is%204TB
+status:
+  value: active
+  link: https://docs.databricks.com/aws/en/data-governance/unity-catalog/data-quality-monitoring/#:~:text=Data%20profiling%20was%20formerly%20known%20as%20Lakehouse%20Monitoring
+  date: '2026-08-03'
+releases:
+  - type: ga
+    date: 2024-06
+    link: https://docs.databricks.com/aws/en/release-notes/product/2024/june#:~:text=Lakehouse%20Monitoring%20is%20GA
+from:
+  date: 2026-02
+  link: https://docs.databricks.com/aws/en/release-notes/product/2026/february#:~:text=Data%20Quality%20Monitoring%20Anomaly%20Detection%20is%20now%20in%20Public%20Preview
+limitations:
+  note: Only Delta tables can be profiled and not all regions are supported. Time series and inference profiles compute metrics over the last 30 days only, profiles over materialized views do not support incremental processing, and a snapshot profile tops out at a 4TB table.
+  link: https://docs.databricks.com/aws/en/data-governance/unity-catalog/data-quality-monitoring/data-profiling/#:~:text=Only%20Delta%20tables%20are%20supported%20for%20profiling
+  date: '2026-08-03'
+links:
+  - url: https://docs.databricks.com/aws/en/data-governance/unity-catalog/data-quality-monitoring/
+    kind: official
+    label: 'Databricks docs: Data quality monitoring overview'
+  - url: https://docs.databricks.com/aws/en/resources/limits
+    kind: official
+    label: 'Databricks resource limits: 100 monitors per metastore (raisable)'
+prediction:
+  - Genie Profiling
+  - Unity Catalog Profiler
+  - Data Profiling One
+source: https://docs.databricks.com/aws/en/data-governance/unity-catalog/data-quality-monitoring/data-profiling/
+verified: '2026-08-03'

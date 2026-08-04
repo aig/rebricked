@@ -1,0 +1,38 @@
+id: dbfs-mounts
+name: DBFS mounts
+aliases:
+  - /mnt
+  - dbutils.fs.mount
+  - mount points
+category: Data governance
+what:
+  note: Mounting cloud object storage into the DBFS namespace under /mnt.
+  link: https://learn.microsoft.com/en-us/azure/databricks/dbfs/unity-catalog#:~:text=DBFS%20and%20mounted%20cloud%20object%20storage
+fact:
+  - note: A single `dbutils.fs.mount` made a cloud storage bucket look like a local /mnt path to everyone on the cluster - convenient, and entirely outside per-user governance.
+    link: https://learn.microsoft.com/en-us/azure/databricks/dbfs/unity-catalog#:~:text=bypasses%20Unity%20Catalog%20entirely
+  - note: New workspaces are now provisioned without mount access at all.
+    link: https://learn.microsoft.com/en-us/azure/databricks/dbfs/unity-catalog#:~:text=New%20accounts%20are%20provisioned%20without%20access
+  - note: 'Even Databricks'' own sample data moved out: the databricks-datasets collection long reached through a mount here is now served from the samples catalog through OpenSharing.'
+    link: https://docs.databricks.com/aws/en/release-notes/product/2026/july#:~:text=made%20available%20through%20OpenSharing
+status:
+  value: deprecated
+  link: https://learn.microsoft.com/en-us/azure/databricks/dbfs/unity-catalog#:~:text=DBFS%20root%20and%20DBFS%20mounts%20are%20deprecated
+  date: '2026-07-18'
+from:
+  date: '2016'
+  link: https://learn.microsoft.com/en-us/azure/databricks/dbfs/unity-catalog
+deprecatedAt:
+  date: '2024'
+  link: https://learn.microsoft.com/en-us/azure/databricks/dbfs/unity-catalog#:~:text=DBFS%20root%20and%20DBFS%20mounts%20are%20deprecated
+successorId: init-scripts-on-dbfs
+replacement: Unity Catalog volumes & external locations
+links:
+  - url: https://community.databricks.com/t5/data-governance/dbfs-mounts-no-longer-recommended/td-p/15974
+    kind: community
+    label: 'Community: DBFS mounts no longer recommended'
+  - url: https://azureops.org/articles/mount-and-unmount-data-lake-in-databricks/
+    kind: internet
+    label: 'AzureOps: Mount/unmount Data Lake'
+source: https://learn.microsoft.com/en-us/azure/databricks/dbfs/unity-catalog
+verified: '2026-08-03'

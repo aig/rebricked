@@ -1,0 +1,33 @@
+id: serverless-real-time-inference
+name: Serverless Real-Time Inference
+category: AI / ML
+what:
+  note: Highly available, low-latency service for deploying ML and GenAI models behind autoscaling REST endpoints.
+  link: https://learn.microsoft.com/en-us/azure/databricks/release-notes/product/2023/march#:~:text=a%20highly%20available%20and%20low%2Dlatency%20service%20for%20deploying%20models
+fact:
+  - note: Puts a trained model behind a REST endpoint and manages the servers for you, elastically scaling capacity up under load and back down when the traffic dries up.
+    link: https://learn.microsoft.com/en-us/azure/databricks/release-notes/product/2023/march#:~:text=automatically%20scales%20up%20or%20down%20to%20meet%20demand%20changes
+status:
+  value: renamed
+  link: https://learn.microsoft.com/en-us/azure/databricks/release-notes/product/2023/march#:~:text=formerly%20Serverless%20Real%2DTime%20Inference
+  date: '2026-07-18'
+releases:
+  - type: public-preview
+    date: 2022-08
+    link: https://docs.databricks.com/aws/en/release-notes/product/2022/august#:~:text=Serverless%20Real%2DTime%20Inference%20in%20Public%20Preview
+from:
+  date: '2022'
+  link: https://docs.databricks.com/aws/en/release-notes/product/2022/august#:~:text=Serverless%20Real%2DTime%20Inference%20in%20Public%20Preview
+to:
+  date: 2023-03
+  link: https://learn.microsoft.com/en-us/azure/databricks/release-notes/product/2023/march#:~:text=formerly%20Serverless%20Real%2DTime%20Inference
+successorId: model-serving
+links:
+  - url: https://community.databricks.com/t5/machine-learning/model-serving-with-serverless-real-time-inference-how-could-i/td-p/9625
+    kind: community
+    label: 'Community: Serverless Real-Time Inference'
+  - url: https://siliconangle.com/2023/03/07/databricks-exposes-serverless-machine-learning-inferencing-engine-via-api/
+    kind: internet
+    label: 'SiliconANGLE: serverless inference'
+source: https://learn.microsoft.com/en-us/azure/databricks/release-notes/product/2023/march
+verified: '2026-07-18'

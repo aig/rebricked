@@ -1,0 +1,48 @@
+id: classification
+name: Classification
+aliases:
+  - Text Classification
+category: AI / ML
+what:
+  note: Agent Bricks capability with a no-code UI that sorts documents and unstructured text into categories you define, built on the ai_classify SQL function.
+  link: https://docs.databricks.com/aws/en/agents/agent-bricks/classification#:~:text=classify%20your%20documents%20into%20predefined%20categories%20with%20AI
+fact:
+  - note: The builder previews on just five rows at a time - it "classifies up to 5 documents and rows and displays the results" - so you tune labels on a tiny sample with thumbs-up/down feedback, then scale out via SQL or a Lakeflow pipeline.
+    link: https://docs.databricks.com/aws/en/agents/agent-bricks/classification#:~:text=classifies%20up%20to%205%20documents%20and%20rows%20and%20displays%20the%20results
+  - note: It leans on the ai_classify SQL function, whose v2 signature reached GA in June 2026.
+    link: https://docs.databricks.com/aws/en/release-notes/product/2026/june#:~:text=ai_classify%20function%20is%20now%20generally%20available
+status:
+  value: active
+  link: https://docs.databricks.com/aws/en/agents/agent-bricks/classification#:~:text=You%20can%20use%20Classification%20to%20classify%20your%20documents%20into%20predefined%20categories%20with%20AI.
+  date: '2026-07-22'
+releases:
+  - type: public-preview
+    date: 2026-03
+    link: https://learn.microsoft.com/en-us/azure/databricks/release-notes/product/2026/march#:~:text=Classification%20and%20Information%20Extraction%20are%20in%20Public%20Preview
+  - type: ga
+    date: 2026-06
+    link: https://docs.databricks.com/aws/en/release-notes/product/2026/june#:~:text=ai_classify%20is%20now%20generally%20available
+introducedAt:
+  date: 2026-03
+  link: https://learn.microsoft.com/en-us/azure/databricks/release-notes/product/2026/march#:~:text=Classification%20and%20Information%20Extraction%20are%20in%20Public%20Preview
+occasion:
+  date: 2026-03
+  link: https://learn.microsoft.com/en-us/azure/databricks/release-notes/product/2026/march#:~:text=Classification%20and%20Information%20Extraction%20are%20in%20Public%20Preview
+  note: Public Preview March 2026; ai_classify GA at Data + AI Summit June 2026.
+limitations:
+  note: Built on ai_classify, which isn't available on Databricks SQL Classic and can't be used with views. Labels must number between 2 and 500 unique values, with names of 1-100 characters and descriptions of 0-1000 characters, and total context is capped at 128000 tokens.
+  link: https://docs.databricks.com/aws/en/sql/language-manual/functions/ai_classify#:~:text=The%20maximum%20total%20context%20size%20is%20128%2C000%20tokens.
+  date: '2026-07-23'
+links:
+  - url: https://learn.microsoft.com/en-us/azure/databricks/release-notes/product/2026/march
+    kind: official
+    label: 'Azure Databricks release notes: March 2026 (Public Preview)'
+  - url: https://docs.databricks.com/aws/en/release-notes/product/2026/june
+    kind: official
+    label: 'Databricks release notes: June 2026 (ai_classify GA)'
+prediction:
+  - Genie Classify
+  - Label Bricks
+  - AutoLabel
+source: https://docs.databricks.com/aws/en/agents/agent-bricks/classification
+verified: '2026-07-22'

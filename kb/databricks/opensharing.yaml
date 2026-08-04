@@ -1,0 +1,48 @@
+id: opensharing
+name: OpenSharing
+aliases:
+  - Delta Sharing
+  - Open Sharing
+category: Data governance
+what:
+  note: Open protocol and Databricks service for securely sharing data and AI assets across organizations and platforms, with or without Databricks.
+  link: https://docs.databricks.com/aws/en/opensharing/#:~:text=share%20non%2DDatabricks%20data%20with%20recipients%20on%20any%20data%20platform
+fact:
+  - note: It's an open protocol, so you can share a live table with someone who's never touched Databricks - and in 2026 the standard itself was open-sourced as OpenSharing at opensharing.io.
+    link: https://docs.databricks.com/aws/en/opensharing/#:~:text=available%20as%20an%20open%2Dsource%20project
+  - note: Its scope grew beyond data sharing to cover the full AI stack, with the standard handed to the Linux Foundation.
+    link: https://www.databricks.com/blog/introducing-opensharing-next-evolution-delta-sharing-agentic-era#:~:text=now%20hosted%20by%20the%20Linux%20Foundation
+  - note: Streaming reads used to quietly downgrade a catch-up-on-everything trigger into a run-once one, so a job that promised to process all available data handled a single micro-batch per run.
+    link: https://docs.databricks.com/aws/en/release-notes/product/2026/july#:~:text=which%20processed%20a%20single%20micro%2Dbatch%20per%20run
+status:
+  value: active
+  link: https://docs.databricks.com/aws/en/opensharing/#:~:text=an%20open%20protocol%20developed%20by%20Databricks%20for%20secure%20data%20sharing
+  date: '2026-07-18'
+releases:
+  - type: ga
+    date: 2026-06
+    link: https://www.databricks.com/blog/introducing-opensharing-next-evolution-delta-sharing-agentic-era#:~:text=We%27re%20excited%20to%20announce%20OpenSharing
+from:
+  date: 2026-06
+  link: https://www.databricks.com/blog/introducing-opensharing-next-evolution-delta-sharing-agentic-era#:~:text=We%27re%20excited%20to%20announce%20OpenSharing
+occasion:
+  date: 2026-06
+  link: https://www.databricks.com/blog/introducing-opensharing-next-evolution-delta-sharing-agentic-era#:~:text=now%20hosted%20by%20the%20Linux%20Foundation
+  note: Open-sourcing of OpenSharing, June 2026
+limitations:
+  note: Shared tabular data must be Delta or managed Iceberg; providers can't share tables using liquid clustering with partition filtering, collations, row filters, column masks, or SHALLOW CLONE; notebooks, volumes, and AI models can only be shared Databricks-to-Databricks; and shareable views must be defined on Delta tables or other shareable views.
+  link: https://docs.databricks.com/aws/en/delta-sharing/#:~:text=must%20be%20in%20Delta%20or%20managed%20Iceberg%20table%20format
+  date: '2026-07-23'
+links:
+  - url: https://www.databricks.com/blog/introducing-opensharing-next-evolution-delta-sharing-agentic-era
+    kind: community
+    label: 'Databricks Blog: Introducing OpenSharing'
+  - url: https://www.techzine.eu/news/analytics/142046/the-linux-foundation-and-databricks-launch-opensharing/
+    kind: internet
+    label: 'Techzine: Linux Foundation & OpenSharing'
+prediction:
+  - OpenSharing One
+  - Unity Sharing
+  - Delta OpenSharing
+source: https://docs.databricks.com/aws/en/opensharing/
+verified: '2026-08-03'

@@ -1,0 +1,45 @@
+id: ai-bi-dashboards
+name: AI/BI Dashboards
+aliases:
+  - Lakeview dashboards
+  - Lakeview
+  - Dashboards
+category: BI / Dashboards
+what:
+  note: AI-assisted dashboards for visualizing and sharing query results.
+  link: https://docs.databricks.com/aws/en/dashboards/#:~:text=build%20data%20visualizations%20and%20share%20reports%20with%20your%20team
+fact:
+  - note: You can build most chart types just by describing them to Databricks Assistant in plain English on the dashboard canvas - though it sees only table and column metadata, not row values, so data-specific requests can trip it up.
+    link: https://docs.databricks.com/aws/en/dashboards/tutorials/create-w-db-assistant
+status:
+  value: active
+  link: https://docs.databricks.com/aws/en/dashboards/#:~:text=AI%2FBI%20dashboards%20feature%20AI%2Dassisted%20authoring
+  date: '2026-07-18'
+releases:
+  - type: ga
+    date: 2024-06
+    link: https://www.databricks.com/blog/introducing-aibi-intelligent-analytics-real-world-data#:~:text=AI%2FBI%20Dashboards%20are%20generally%20available%20on%20AWS
+from:
+  date: 2024-06
+  link: https://www.databricks.com/blog/introducing-aibi-intelligent-analytics-real-world-data#:~:text=AI%2FBI%20Dashboards%20are%20generally%20available%20on%20AWS
+occasion:
+  date: 2024-06
+  link: https://www.databricks.com/blog/introducing-aibi-intelligent-analytics-real-world-data
+  note: Data + AI Summit 2024
+limitations:
+  note: A dashboard supports up to 15 pages, 100 datasets, and 100 widgets per page; most charts render at most 10000 rows (tables up to 100K before truncation), and email-subscription attachments are capped at 9 MB combined with 100000 rows per Excel attachment.
+  link: https://docs.databricks.com/aws/en/dashboards/limits#:~:text=A%20canvas%20can%20contain%20up%20to%20fifteen%20pages.
+  date: '2026-07-23'
+links:
+  - url: https://www.databricks.com/blog/announcing-public-preview-lakeview-dashboards
+    kind: community
+    label: 'Databricks Blog: AI/BI Dashboards Preview'
+  - url: https://www.sunnydata.ai/blog/databricks-ai-bi-dashboards-genie
+    kind: internet
+    label: 'SunnyData: AI/BI Dashboards'
+prediction:
+  - Genie Dashboards
+  - AI/BI Dashboards One
+  - Lakeview One
+source: https://docs.databricks.com/aws/en/dashboards/
+verified: '2026-07-23'

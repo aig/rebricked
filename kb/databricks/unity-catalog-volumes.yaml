@@ -1,0 +1,46 @@
+id: unity-catalog-volumes
+name: Unity Catalog Volumes
+aliases:
+  - Volumes
+  - managed volumes
+  - external volumes
+category: Data governance
+what:
+  note: Unity Catalog objects that govern non-tabular data (files of any format) alongside tables - a recommended alternative to the deprecated DBFS mounts.
+  link: https://docs.databricks.com/aws/en/dbfs/unity-catalog#:~:text=Databricks%20recommends%20using%20Unity%20Catalog%20volumes
+fact:
+  - note: Volumes bring PDFs, images, and any other non-tabular files under the same Unity Catalog governance as your tables - a folder of files and a table, governed side by side.
+    link: https://docs.databricks.com/aws/en/volumes/#:~:text=Volumes%20govern%20non%2Dtabular%20data%20of%20any%20format
+  - note: 'They come in two flavors: managed volumes on Databricks-managed storage, and external volumes over your own cloud storage.'
+    link: https://docs.databricks.com/aws/en/volumes/#:~:text=registered%20against%20an%20existing%20cloud%20object%20storage%20path
+status:
+  value: active
+  link: https://docs.databricks.com/aws/en/volumes/#:~:text=Volumes%20are%20Unity%20Catalog%20objects%20that%20enable%20governance%20over%20non%2Dtabular%20datasets.
+  date: '2026-07-18'
+releases:
+  - type: public-preview
+    date: 2023-07
+    link: https://docs.databricks.com/aws/en/release-notes/product/2023/july#:~:text=Unity%20Catalog%20volumes%20are%20in%20Public%20Preview
+  - type: ga
+    date: 2024-02
+    link: https://www.databricks.com/blog/announcing-general-availability-unity-catalog-volumes#:~:text=Unity%20Catalog%20Volumes%20is%20now%20generally%20available%20on%20AWS%2C%20Azure%2C%20and%20GCP.
+introducedAt:
+  date: '2023'
+  link: https://docs.databricks.com/aws/en/release-notes/product/2023/july#:~:text=Unity%20Catalog%20volumes%20are%20in%20Public%20Preview
+limitations:
+  note: Volumes require Databricks Runtime 13.3 LTS or above or a SQL warehouse, don't support dbutils.fs commands distributed to executors, can't be accessed from RDDs or Unity Catalog UDFs, can't back a custom Hadoop file system, and require fully qualified /Volumes paths (no abbreviated paths).
+  link: https://docs.databricks.com/aws/en/volumes/#:~:text=create%20a%20custom%20Hadoop%20file%20system%20with%20volumes
+  date: '2026-07-23'
+links:
+  - url: https://www.databricks.com/blog/announcing-general-availability-unity-catalog-volumes
+    kind: community
+    label: 'Databricks Blog: UC Volumes GA'
+  - url: https://www.dsstream.com/post/unity-catalog-and-volumes-a-data-engineers-perspective-on-modern-data-governance-in-databricks
+    kind: internet
+    label: 'DS Stream: Unity Catalog & Volumes'
+prediction:
+  - Lakehouse Volumes
+  - Unity Volumes One
+  - Genie Volumes
+source: https://docs.databricks.com/aws/en/volumes/
+verified: '2026-07-23'

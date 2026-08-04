@@ -1,0 +1,36 @@
+id: mosaic-ai-vector-search
+name: Mosaic AI Vector Search
+category: AI / ML
+what:
+  note: Managed, serverless vector (similarity) search over Unity Catalog data, with one-click Delta-to-index sync, scaling to billions of embeddings.
+  link: https://docs.databricks.com/aws/en/vector-search/vector-search#:~:text=over%20one%20billion%20vectors%20at%20dimension%20768
+fact:
+  - note: Reached general availability as a serverless vector database boasting one-click Delta-to-index sync and, per its makers, up to 5x faster performance than rival vector stores while scaling to billions of embeddings.
+    link: https://www.databricks.com/blog/announcing-mosaic-ai-vector-search-general-availability-databricks#:~:text=up%20to%205x%20faster%20performance%20than%20other%20providers
+status:
+  value: renamed
+  link: https://docs.databricks.com/aws/en/release-notes/product/2026/june#:~:text=Vector%20Search%20is%20now%20AI%20Search
+  date: '2026-07-23'
+releases:
+  - type: public-preview
+    date: 2023-11
+    link: https://docs.databricks.com/aws/en/release-notes/product/2023/november#:~:text=Mosaic%20AI%20Vector%20Search%20is%20Public%20Preview
+  - type: ga
+    date: 2024-05
+    link: https://www.databricks.com/blog/announcing-mosaic-ai-vector-search-general-availability-databricks#:~:text=general%20availability%20of%20Databricks%20AI%20Search
+from:
+  date: '2024'
+  link: https://www.databricks.com/blog/announcing-mosaic-ai-vector-search-general-availability-databricks
+to:
+  date: 2026-06
+  link: https://docs.databricks.com/aws/en/release-notes/product/2026/june#:~:text=Vector%20Search%20is%20now%20AI%20Search
+successorId: databricks-ai-search
+links:
+  - url: https://www.databricks.com/blog/announcing-mosaic-ai-vector-search-general-availability-databricks
+    kind: community
+    label: 'DB blog: Mosaic AI Vector Search GA'
+  - url: https://techcommunity.microsoft.com/t5/analytics-on-azure-blog/announcing-mosaic-ai-vector-search-general-availability-in-azure/ba-p/4144712
+    kind: internet
+    label: 'Microsoft: Mosaic AI Vector Search GA'
+source: https://docs.databricks.com/aws/en/vector-search/vector-search
+verified: '2026-07-23'

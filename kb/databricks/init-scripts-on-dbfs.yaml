@@ -1,0 +1,36 @@
+id: init-scripts-on-dbfs
+name: Init scripts on DBFS
+aliases:
+  - DBFS init scripts
+  - legacy global init scripts
+  - cluster-named init scripts
+category: Developer experience
+what:
+  note: Cluster initialization shell scripts stored on DBFS, plus the older legacy global and cluster-named init-script mechanisms.
+  link: https://docs.databricks.com/aws/en/init-scripts/#:~:text=Legacy%20global%20and%20legacy%20cluster%2Dnamed%20init%20scripts
+fact:
+  - note: 'This deprecation has real teeth: leave your init scripts on DBFS and the cluster flatly refuses to start until you move them somewhere governed.'
+    link: https://docs.databricks.com/aws/en/init-scripts/#:~:text=You%20must%20migrate%20your%20init%20scripts%20to%20a%20supported%20location
+  - note: Legacy global init scripts were switched off for every workspace on September 1, 2023.
+    link: https://learn.microsoft.com/en-us/azure/databricks/init-scripts/legacy-global#:~:text=disable%20legacy%20global%20init%20scripts%20for%20all%20workspaces
+status:
+  value: retired
+  link: https://docs.databricks.com/aws/en/init-scripts/#:~:text=Init%20scripts%20on%20DBFS%20have%20reached%20end%2Dof%2Dlife%20and%20can%20no%20longer%20be%20used.
+  date: '2026-07-18'
+from:
+  date: '2018'
+  link: https://docs.databricks.com/aws/en/init-scripts/
+deprecatedAt:
+  date: '2023'
+  link: https://docs.databricks.com/aws/en/init-scripts/#:~:text=might%20be%20present%20in%20workspaces%20created%20before%20February%2021%2C%202023
+removedAt:
+  date: 2023-12
+  link: https://docs.databricks.com/aws/en/init-scripts/
+successorId: unity-catalog-volumes
+replacement: Init scripts in Unity Catalog volumes or workspace files
+links:
+  - url: https://community.databricks.com/t5/data-engineering/where-to-move-cluster-init-scripts-after-latest-message-storing/td-p/8344
+    kind: community
+    label: 'Community: Move init scripts off DBFS'
+source: https://docs.databricks.com/aws/en/init-scripts/
+verified: '2026-07-23'

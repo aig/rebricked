@@ -1,0 +1,41 @@
+id: databricks-free-edition
+name: Databricks Free Edition
+aliases:
+  - Free Edition
+category: Developer experience
+what:
+  note: A no-cost, serverless-only edition of the Databricks platform for students, educators, and hobbyists to learn and experiment - notebooks, SQL, dashboards, ML models, and AI apps in a single quota-limited workspace.
+  link: https://docs.databricks.com/aws/en/getting-started/free-edition#:~:text=no%2Dcost%20version%20of%20Databricks
+fact:
+  - note: It runs serverless-only with hard quotas - blow past them and the whole workspace shuts down for the rest of the day (or month, in extreme cases), though your data survives the timeout.
+    link: https://docs.databricks.com/aws/en/getting-started/free-edition-limitations#:~:text=unavailable%20for%20the%20rest%20of%20the%20day%20%28and%20in%20extreme%20cases%2C%20the%20rest%20of%20the%20month%29
+  - note: Verifying your identity through LinkedIn unlocks perks the base tier withholds - limited GPU compute and outbound internet access.
+    link: https://docs.databricks.com/aws/en/getting-started/free-edition-limitations#:~:text=LinkedIn
+status:
+  value: active
+  link: https://docs.databricks.com/aws/en/getting-started/free-edition#:~:text=no%2Dcost%20version%20of%20Databricks
+  date: '2026-07-24'
+introducedAt:
+  date: 2025-06
+  link: https://community.databricks.com/t5/community-articles/databricks-free-edition-the-announcement-from-data-ai-summit/td-p/129013
+occasion:
+  date: 2025-06
+  link: https://community.databricks.com/t5/community-articles/databricks-free-edition-the-announcement-from-data-ai-summit/td-p/129013
+  note: Announced at Data + AI Summit 2025
+limitations:
+  note: 'Serverless-only and heavily capped: one 2X-Small SQL warehouse, at most 5 concurrent job tasks, up to 3 apps (auto-stopped after 24 hours), no GPUs or provisioned throughput by default, no R or Scala, no SSO/SCIM, a single workspace/metastore per account, and non-commercial use only; exceeding a quota shuts the workspace for the rest of the day.'
+  link: https://docs.databricks.com/aws/en/getting-started/free-edition-limitations#:~:text=Free%20Edition%20users%20only%20have%20access%20to%20serverless%20compute%20resources
+  date: '2026-07-24'
+links:
+  - url: https://docs.databricks.com/aws/en/getting-started/free-edition-limitations
+    kind: official
+    label: 'Databricks docs: Free Edition limitations'
+  - url: https://www.databricks.com/learn/free-edition
+    kind: official
+    label: 'Databricks: Free Edition (replacing Community Edition)'
+prediction:
+  - Databricks Student Edition
+  - Free Edition Pro
+  - Databricks Playground
+source: https://docs.databricks.com/aws/en/getting-started/free-edition
+verified: '2026-08-03'

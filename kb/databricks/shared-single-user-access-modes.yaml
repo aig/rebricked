@@ -1,0 +1,29 @@
+id: shared-single-user-access-modes
+name: Shared / Single user access modes
+category: Compute / BI
+what:
+  note: Compute access modes that determine Unity Catalog support, language availability, and whether a cluster is shared.
+  link: https://www.databricks.com/blog/whats-new-unity-catalog-compute#:~:text=default%20multi%2Duser%20compute%20for%20workloads%20in%20Python%2C%20Scala%2C%20and%20SQL
+fact:
+  - note: 'The two original ways to attach compute to governed data: one isolated every user''s Python, SQL and Scala so a crowd could safely share one cluster, the other gave a lone user privileged machine access for GPUs, R and RDD APIs.'
+    link: https://www.databricks.com/blog/whats-new-unity-catalog-compute#:~:text=workloads%20requiring%20privileged%20machine%20access%2C%20such%20as%20ML%2C%20GPU%2C%20and%20R
+status:
+  value: renamed
+  link: https://www.databricks.com/blog/whats-new-unity-catalog-compute#:~:text=Standard%20clusters%20%28formerly%20shared%29%20are%20the%20new%20default%20classic%20compute%20type
+  date: '2026-07-18'
+from:
+  date: '2022'
+  link: https://www.databricks.com/blog/whats-new-unity-catalog-compute
+to:
+  date: 2025-03
+  link: https://www.databricks.com/blog/whats-new-unity-catalog-compute#:~:text=Standard%20clusters%20%28formerly%20shared%29%20are%20the%20new%20default%20classic%20compute%20type
+successorId: standard-and-dedicated-access-modes
+links:
+  - url: https://www.databricks.com/blog/shared-clusters-unity-catalog-win-introducing-cluster-libraries-python-udfs-scala-machine
+    kind: community
+    label: 'Databricks blog: shared clusters'
+  - url: https://www.tredence.com/blog/databricks-cluster-types
+    kind: internet
+    label: 'Tredence: Databricks cluster types'
+source: https://www.databricks.com/blog/whats-new-unity-catalog-compute
+verified: '2026-07-18'

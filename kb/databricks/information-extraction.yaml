@@ -1,0 +1,48 @@
+id: information-extraction
+name: Information Extraction
+aliases:
+  - Key Information Extraction
+category: AI / ML
+what:
+  note: Agent Bricks capability with a no-code UI that turns unstructured documents into a structured table by extracting fields against a schema.
+  link: https://docs.databricks.com/aws/en/generative-ai/agent-bricks/info-extraction#:~:text=transforms%20unstructured%20documents%20and%20text%20into%20key%2C%20structured%20insights
+fact:
+  - note: You describe what you want in plain English and click Generate Schema - it writes the extraction schema for you; under the hood it runs on the ai_extract SQL function.
+    link: https://docs.databricks.com/aws/en/generative-ai/agent-bricks/info-extraction#:~:text=Information%20Extraction%20is%20built%20on%20top%20of%20the%20AI%20function
+  - note: The original launch capability now sits at a '(legacy)' docs page, replaced by a rebuild on the ai_extract v2 signature.
+    link: https://docs.databricks.com/aws/en/generative-ai/agent-bricks/info-extraction#:~:text=This%20page%20covers%20the%20new%20version%20of%20Information%20Extraction
+status:
+  value: active
+  link: https://docs.databricks.com/aws/en/generative-ai/agent-bricks/info-extraction#:~:text=Information%20Extraction%20transforms%20unstructured%20documents%20and%20text%20into%20key%2C%20structured%20insights
+  date: '2026-07-22'
+releases:
+  - type: beta
+    date: 2025-06
+    link: https://www.databricks.com/blog/introducing-agent-bricks#:~:text=Agent%20Bricks%20is%20now%20available%20in%20beta.
+  - type: public-preview
+    date: 2026-03
+    link: https://learn.microsoft.com/en-us/azure/databricks/release-notes/product/2026/march#:~:text=Classification%20and%20Information%20Extraction%20are%20in%20Public%20Preview
+introducedAt:
+  date: 2025-06
+  link: https://www.databricks.com/blog/introducing-agent-bricks#:~:text=including%20structured%20information%20extraction
+occasion:
+  date: 2025-06
+  link: https://www.databricks.com/blog/introducing-agent-bricks#:~:text=Agent%20Bricks%20is%20now%20available%20in%20beta.
+  note: Data + AI Summit, June 2025 (beta); rebuilt on the ai_extract v2 signature, Public Preview March 2026.
+limitations:
+  note: Information Extraction agents have a 128k-token maximum context length, and union schema types aren't supported.
+  link: https://docs.databricks.com/aws/en/generative-ai/agent-bricks/info-extraction#:~:text=have%20a%20128k%20token%20max%20context%20length
+  date: '2026-07-23'
+links:
+  - url: https://www.databricks.com/blog/introducing-agent-bricks
+    kind: community
+    label: 'Databricks blog: Introducing Agent Bricks'
+  - url: https://learn.microsoft.com/en-us/azure/databricks/release-notes/product/2026/march
+    kind: official
+    label: 'Azure Databricks release notes: March 2026 (Public Preview)'
+prediction:
+  - Genie Extract
+  - Doc Miner
+  - Extract Bricks
+source: https://docs.databricks.com/aws/en/generative-ai/agent-bricks/info-extraction
+verified: '2026-07-23'

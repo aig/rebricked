@@ -1,0 +1,42 @@
+id: catalog-explorer
+name: Catalog Explorer
+aliases:
+  - Data Explorer
+  - Catalog
+category: Data governance
+what:
+  note: In-workspace UI for browsing and managing Unity Catalog securables - schemas, tables, models, functions, and other assets.
+  link: https://docs.databricks.com/aws/en/catalog-explorer/#:~:text=schemas%20%28databases%29%2C%20tables%2C%20models%2C%20functions
+fact:
+  - note: It got promoted from 'Data Explorer' once it started managing models, functions, and volumes too - not just tables - though the sidebar still just calls it 'Catalog.'
+    link: https://learn.microsoft.com/en-us/azure/databricks/release-notes/product/2023/september#:~:text=work%20with%20all%20securable%20objects%20in%20Unity%20Catalog%2C%20not%20just%20data%20objects
+  - note: Despite the promotion it still shows up as plain 'Catalog' in the sidebar, and it now governs every Unity Catalog securable, not just tables.
+    link: https://docs.databricks.com/aws/en/catalog-explorer/#:~:text=tables%2C%20models%2C%20functions%2C%20and%20other%20AI%20assets
+status:
+  value: active
+  link: https://docs.databricks.com/aws/en/catalog-explorer/#:~:text=What%20is%20Catalog%20Explorer%3F
+  date: '2026-07-18'
+releases:
+  - type: ga
+    date: 2023-09
+    link: https://www.databricks.com/blog/accelerating-discovery-unity-catalog-revamped-catalog-explorer
+from:
+  date: 2023-09
+  link: https://www.databricks.com/blog/accelerating-discovery-unity-catalog-revamped-catalog-explorer
+limitations:
+  note: The Catalog Explorer UI is not available in all Databricks workspaces.
+  link: https://docs.databricks.com/aws/en/catalog-explorer/#:~:text=not%20live%20in%20all%20Databricks%20workspaces
+  date: '2026-07-23'
+links:
+  - url: https://www.databricks.com/blog/accelerating-discovery-unity-catalog-revamped-catalog-explorer
+    kind: community
+    label: 'Databricks Blog: Revamped Catalog Explorer'
+  - url: https://tabulareditor.com/blog/explore-data-databricks-unity-catalog
+    kind: internet
+    label: 'Tabular Editor: Explore with Catalog Explorer'
+prediction:
+  - Catalog One
+  - Unity Explorer
+  - Genie Catalog
+source: https://docs.databricks.com/aws/en/catalog-explorer/
+verified: '2026-07-23'

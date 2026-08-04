@@ -1,0 +1,39 @@
+id: databricks-community-edition
+name: Databricks Community Edition
+aliases:
+  - Community Edition
+  - DCE
+category: Developer experience
+what:
+  note: 'The original free tier of Databricks (2016-2025): a single micro-cluster plus a cluster manager and notebook environment, aimed at learning Apache Spark at no cost with limited resources.'
+  link: https://www.databricks.com/blog/2016/02/17/introducing-databricks-community-edition-apache-spark-for-all.html#:~:text=Community%20Edition
+fact:
+  - note: It debuted at Spark Summit East in February 2016 under the banner 'Apache Spark for all,' handing anyone a free micro-cluster and notebook to start learning Spark.
+    link: https://www.databricks.com/blog/2016/02/17/introducing-databricks-community-edition-apache-spark-for-all.html#:~:text=Apache%20Spark%20for%20all
+  - note: It caught on fast - Databricks counted thousands of registered users and tens of thousands of notebooks within months of the beta - and reached general availability on June 7, 2016.
+    link: https://www.databricks.com/blog/2016/06/07/dce-ga.html#:~:text=generally%20available
+status:
+  value: retired
+  link: https://docs.databricks.com/aws/en/getting-started/free-edition#:~:text=retired
+  date: '2026-07-24'
+deprecatedAt:
+  date: '2025'
+  link: https://docs.databricks.com/aws/en/getting-started/free-edition#:~:text=retired
+removedAt:
+  date: 2026-01
+  link: https://community.databricks.com/t5/announcements/psa-community-edition-retires-on-january-1-2026-move-to-the-free/td-p/141888
+successorId: databricks-free-edition
+replacement: Databricks Free Edition
+occasion:
+  date: 2026-01
+  link: https://community.databricks.com/t5/announcements/psa-community-edition-retires-on-january-1-2026-move-to-the-free/td-p/141888
+  note: Access ended January 1, 2026
+links:
+  - url: https://www.databricks.com/blog/2016/02/17/introducing-databricks-community-edition-apache-spark-for-all.html
+    kind: official
+    label: 'Databricks blog: Introducing Community Edition (2016)'
+  - url: https://community.databricks.com/t5/announcements/psa-community-edition-retires-on-january-1-2026-move-to-the-free/td-p/141888
+    kind: community
+    label: 'Databricks Community: CE retires Jan 1, 2026'
+source: https://docs.databricks.com/aws/en/getting-started/free-edition
+verified: '2026-07-24'

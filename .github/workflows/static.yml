@@ -1,4 +1,4 @@
-# Validate databricks.features.json, then deploy the static site to GitHub Pages
+# Build databricks.features.json from kb/, validate it, then deploy the static site to Pages
 name: Validate and deploy to Pages
 
 on:
@@ -28,12 +28,18 @@ concurrency:
 
 jobs:
   # The schema gate - a malformed entry must never reach production.
-  # Same check contributors run locally: python scripts/validate.py
+  # Same two commands contributors run locally.
   validate:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+      - name: Install PyYAML
+        run: python3 -m pip install --disable-pip-version-check pyyaml
+      - name: Build databricks.features.json from kb/
+        # kb/<vendor>/<id>.yaml is the source of truth; the JSON the app fetches is
+        # build output and is not tracked, so every job that reads it builds it first.
+        run: python3 scripts/build_features.py
       - name: Validate databricks.features.json
         run: python3 scripts/validate.py
 
@@ -48,6 +54,12 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+      - name: Install PyYAML
+        run: python3 -m pip install --disable-pip-version-check pyyaml
+      - name: Build databricks.features.json from kb/
+        # The data the app fetches at runtime, assembled from the per-entry YAML in kb/.
+        # Not tracked, so this must run before build_entries.py and before the upload.
+        run: python3 scripts/build_features.py
       - name: Build entry pages + sitemap
         # Regenerate the crawlable /{vendor}/... pages and sitemap.xml straight from
         # databricks.features.json so they can never drift from the data. No browser needed.

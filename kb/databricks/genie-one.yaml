@@ -1,0 +1,49 @@
+id: genie-one
+name: Genie One
+aliases:
+  - Genie
+  - Databricks One
+category: AI / BI
+what:
+  note: Business-user-facing UI giving non-technical users a single conversational entry point to data and AI.
+  link: https://docs.databricks.com/aws/en/genie-one/genie#:~:text=single%20entry%20point%20for%20interacting%20with%20data%20and%20AI
+fact:
+  - note: A deliberately no-notebooks front door for business users - executives and marketers who never open a notebook - that launched as Databricks One, spent a few weeks as plain 'Genie', and settled on Genie One in June 2026.
+    link: https://docs.databricks.com/aws/en/ai-bi/release-notes/2026#:~:text=has%20been%20renamed%20to%20Genie%20One
+  - note: 'On top of the original no-notebooks experience it went mobile: Databricks launched native iOS and Android apps that, in its words, ''put Genie in your pocket.'''
+    link: https://www.databricks.com/blog/introducing-genie-one-genie-ontology-and-genie-agents#:~:text=apps%20that%20put%20Genie%20in%20your%20pocket
+status:
+  value: active
+  link: https://docs.databricks.com/aws/en/genie-one/genie#:~:text=Genie%20One%20is%20the%20simplified%20Databricks%20UI%20for%20business%20users
+  date: '2026-07-18'
+releases:
+  - type: public-preview
+    date: 2025-09
+    link: https://docs.databricks.com/aws/en/genie-one/genie
+  - type: ga
+    date: 2026-01
+    link: https://docs.databricks.com/aws/en/ai-bi/release-notes/2026#:~:text=Genie%20One%20is%20now%20generally%20available.
+from:
+  date: 2026-06
+  link: https://www.databricks.com/blog/introducing-genie-one-genie-ontology-and-genie-agents#:~:text=Genie%20One%20is%20the%20next%20step
+occasion:
+  date: 2026-06
+  link: https://www.databricks.com/blog/introducing-genie-one-genie-ontology-and-genie-agents
+  note: Renamed from Genie to Genie One, June 9, 2026
+limitations:
+  note: Workspaces using the compliance security profile are excluded from account-level Genie One aggregation, and account-level Genie One may process Databricks-generated metadata in the US, so it should be disabled if compliance policies prohibit US metadata transmission.
+  link: https://docs.databricks.com/aws/en/genie-one/genie#:~:text=workspaces%20with%20the%20compliance%20security%20profile%20enabled
+  date: '2026-07-23'
+links:
+  - url: https://www.databricks.com/blog/introducing-genie-one-genie-ontology-and-genie-agents
+    kind: community
+    label: 'Databricks Blog: Introducing Genie One'
+  - url: https://www.databricks.com/company/newsroom/press-releases/databricks-unveils-databricks-one-new-experience-bring-data-and-ai
+    kind: internet
+    label: 'Press Release: Databricks Unveils One'
+prediction:
+  - Genie Two
+  - Genie One Prime
+  - Databricks Two
+source: https://docs.databricks.com/aws/en/genie-one/genie
+verified: '2026-07-23'

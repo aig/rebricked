@@ -1,0 +1,48 @@
+id: transactions
+name: Transactions
+aliases:
+  - Multi-table transactions
+  - multi-statement transactions
+  - BEGIN ATOMIC
+category: Data engineering
+what:
+  note: Multi-statement, multi-table ACID transactions on Unity Catalog managed tables, grouped with BEGIN ATOMIC ... END or BEGIN TRANSACTION ... COMMIT so every change commits together or rolls back together.
+  link: https://docs.databricks.com/aws/en/transactions/#:~:text=Transactions%20allow%20you%20to%20coordinate%20operations%20across%20multiple%20SQL%20statements%20and%20tables
+fact:
+  - note: 'It brings plain BEGIN and COMMIT to the lakehouse, and the docs reach for the oldest example in the database textbook: debit one account, credit another, write an audit row, all or nothing.'
+    link: https://docs.databricks.com/aws/en/transactions/#:~:text=all%20changes%20roll%20back%20and%20Databricks%20terminates%20the%20transaction%20without%20side%20effects
+  - note: 'Only half of it is finished: writes to managed Delta tables went generally available while writes to managed Iceberg tables stayed in Private Preview, joinable only by filling in an enrollment form.'
+    link: https://docs.databricks.com/aws/en/transactions/#:~:text=Transactions%20that%20write%20to%20Unity%20Catalog%20managed%20Iceberg%20tables%20are%20in
+  - note: Every participating table needs catalog commits switched on, which promotes Unity Catalog to the table's system of coordination, brokering state across engines.
+    link: https://docs.databricks.com/aws/en/release-notes/product/2026/may#:~:text=Unity%20Catalog%20becomes%20the%20table%27s%20system%20of%20coordination%2C%20brokering%20access%20and%20state%20across%20engines
+status:
+  value: active
+  link: https://docs.databricks.com/aws/en/transactions/#:~:text=Transactions%20allow%20you%20to%20coordinate%20operations%20across%20multiple%20SQL%20statements%20and%20tables
+  date: '2026-08-03'
+releases:
+  - type: public-preview
+    date: 2026-03
+    link: https://docs.databricks.com/aws/en/release-notes/product/2026/march#:~:text=Multi%2Dtable%20transactions%20are%20now%20in%20Public%20Preview
+  - type: ga
+    date: 2026-07
+    link: https://docs.databricks.com/aws/en/release-notes/product/2026/july#:~:text=Transactions%20are%20now%20generally%20available
+introducedAt:
+  date: 2026-03
+  link: https://docs.databricks.com/aws/en/release-notes/product/2026/march#:~:text=Multi%2Dtable%20transactions%20are%20now%20in%20Public%20Preview
+limitations:
+  note: Writes to Unity Catalog managed Iceberg tables are still Private Preview. Every table written to must be a Unity Catalog managed table with catalog commits enabled; non-interactive transactions need a SQL warehouse, serverless, or Databricks Runtime 18.0+, interactive transactions need a SQL warehouse, and transactions over OpenSharing shared assets need Databricks Runtime 18.1+.
+  link: https://docs.databricks.com/aws/en/transactions/#:~:text=Transactions%20that%20write%20to%20Unity%20Catalog%20managed%20Iceberg%20tables%20are%20in
+  date: '2026-08-03'
+links:
+  - url: https://docs.databricks.com/aws/en/release-notes/product/2026/march
+    kind: official
+    label: 'Databricks release notes: Multi-table transactions Public Preview (March 2026)'
+  - url: https://docs.databricks.com/aws/en/release-notes/product/2026/july
+    kind: official
+    label: 'Databricks release notes: Transactions GA (July 2026)'
+prediction:
+  - Genie Transactions
+  - Unity Transactions
+  - Lakebase Transactions
+source: https://docs.databricks.com/aws/en/transactions/
+verified: '2026-08-03'

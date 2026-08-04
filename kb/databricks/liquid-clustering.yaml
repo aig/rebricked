@@ -1,0 +1,50 @@
+id: liquid-clustering
+name: Liquid Clustering
+aliases:
+  - CLUSTER BY
+  - liquid
+  - automatic liquid clustering
+category: Data engineering
+what:
+  note: Delta Lake data-layout optimization that supersedes Z-ordering and Hive-style partitioning; clustering keys can evolve without rewriting existing data.
+  link: https://docs.databricks.com/aws/en/delta/clustering#:~:text=redefine%20clustering%20keys%20without%20rewriting%20existing%20data
+fact:
+  - note: It replaces both partitioning and Z-ordering, and unlike either you can change the clustering keys later without rewriting a single existing file - old ZORDER columns can even be reused as-is.
+    link: https://docs.databricks.com/aws/en/delta/clustering#:~:text=ZORDER%20BY%20columns%20as%20clustering%20keys
+  - note: Databricks now recommends it for all new tables, over both partitioning and Z-ordering.
+    link: https://docs.databricks.com/aws/en/delta/clustering#:~:text=Databricks%20recommends%20liquid%20clustering%20for%20all%20new%20tables
+status:
+  value: active
+  link: https://docs.databricks.com/aws/en/delta/clustering#:~:text=Liquid%20clustering%20is%20generally%20available%20for%20Delta%20Lake%20tables
+  date: '2026-07-18'
+releases:
+  - type: public-preview
+    date: 2025-02
+    link: https://docs.databricks.com/aws/en/release-notes/product/2025/february#:~:text=Automatic%20liquid%20clustering%20%28Public%20Preview%29
+  - type: ga
+    date: 2025-06
+    link: https://docs.databricks.com/aws/en/release-notes/product/2025/june#:~:text=Automatic%20liquid%20clustering%20is%20now%20GA
+introducedAt:
+  date: '2024'
+  link: https://www.databricks.com/blog/announcing-general-availability-liquid-clustering#:~:text=General%20Availability%20of%20Delta%20Lake%20Liquid%20Clustering
+occasion:
+  date: 2025-06
+  link: https://docs.databricks.com/aws/en/release-notes/product/2025/june#:~:text=Automatic%20liquid%20clustering%20is%20now%20GA
+  note: GA on Databricks Runtime 15.4 LTS and above
+limitations:
+  note: Clustering-on-write doesn't support source queries with filters, joins, or aggregations (DBR 15.1 and below); you can't create a liquid-clustered table via Structured Streaming write (DBR 15.4 LTS and below); and automatic liquid clustering and row-level concurrency aren't available for managed Apache Iceberg v2 tables.
+  link: https://docs.databricks.com/aws/en/delta/clustering#:~:text=source%20queries%20that%20include%20filters%2C%20joins%2C%20or%20aggregations
+  date: '2026-07-23'
+links:
+  - url: https://www.databricks.com/blog/announcing-general-availability-liquid-clustering
+    kind: community
+    label: 'Databricks Blog: Liquid Clustering GA'
+  - url: https://delta.io/blog/liquid-clustering/
+    kind: internet
+    label: 'Delta Lake: Liquid Clustering'
+prediction:
+  - Solid Clustering
+  - Liquid Clustering 2.0
+  - Genie Clustering
+source: https://docs.databricks.com/aws/en/delta/clustering
+verified: '2026-07-18'

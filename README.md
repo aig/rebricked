@@ -42,12 +42,15 @@ features** - sourced, dated, and searchable - dressed up as the Databricks conso
 
 ## Running locally
 
-No build step, no framework, no backend - it's a static site. The whole site lives in
-`www/` (that folder is what GitHub Pages publishes). The page fetches
-`databricks.features.json`, so it must be served over http (opening the file directly is blocked by
-the browser):
+No framework, no backend, no JS toolchain - it's a static site, and the whole site lives in
+`www/` (that folder is what GitHub Pages publishes). The only build step assembles the data:
+entries are authored one YAML file per entry in `kb/databricks/`, and
+`www/databricks.features.json` is generated from them. The page fetches that JSON, so it must be
+served over http (opening the file directly is blocked by the browser):
 
 ```bash
+pip install pyyaml                    # one-time: the only dependency, and only for the build
+python scripts/build_features.py      # kb/databricks/*.yaml -> www/databricks.features.json
 python -m http.server 8777 -d www
 ```
 
@@ -58,11 +61,13 @@ Then open <http://localhost:8777/>.
 | File | What it is |
 |------|------------|
 | `www/` | **The deployed site root** - everything GitHub Pages publishes. |
-| `www/databricks.features.json` | **The data. Source of truth.** An array of rename / deprecation / feature objects. |
+| `kb/databricks/` | **The data. Source of truth.** One YAML file per entry, named `<id>.yaml` - a rename, deprecation, or feature. |
+| `www/databricks.features.json` | Generated from `kb/` by `scripts/build_features.py` (gitignored). What the page fetches at runtime; don't hand-edit. |
 | `www/index.html` | App shell: Databricks-style sidebar rail + content area. |
 | `www/app.js` | Vanilla JS (single IIFE, no deps). Fetches the data, renders everything, wires search / filters / quiz / roulette / theme. |
 | `www/styles.css` | All styling. CSS variables; light default, `data-theme="dark"` toggle. |
-| `scripts/validate.py` | Schema / format gate for `databricks.features.json`. |
+| `scripts/build_features.py` | Assembles `kb/<vendor>/*.yaml` into `www/<vendor>.features.json`. Run before validating or previewing; CI runs it before deploy. |
+| `scripts/validate.py` | Schema / format gate for the built `databricks.features.json`. |
 | `CONTRIBUTING.md` | The entry schema and field rules. |
 | `AGENTS.md` | Guidance for AI agents (and humans) working in the repo. |
 

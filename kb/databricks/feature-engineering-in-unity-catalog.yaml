@@ -1,0 +1,42 @@
+id: feature-engineering-in-unity-catalog
+name: Feature Engineering in Unity Catalog
+aliases:
+  - Feature Engineering
+  - databricks-feature-engineering
+category: AI / ML
+what:
+  note: Feature management built on Unity Catalog - any Delta table with a primary key can serve as a feature table, with UC lineage and governance.
+  link: https://docs.databricks.com/aws/en/machine-learning/feature-store/#:~:text=built%2Din%20governance%2C%20lineage%2C%20point%2Din%2Dtime%20joins
+fact:
+  - note: A feature table is nothing more than a Delta table with a primary key constraint in Unity Catalog - updated, browsed, and governed through Unity Catalog like any other table.
+    link: https://docs.databricks.com/aws/en/machine-learning/feature-store/uc/feature-tables-uc#:~:text=any%20Delta%20table%20with%20a%20primary%20key%20constraint
+  - note: Its Python package is databricks-feature-engineering, renamed from the older databricks-feature-store.
+    link: https://docs.databricks.com/aws/en/machine-learning/feature-store/python-api#:~:text=have%20been%20moved%20to%20databricks%2Dfeature%2Dengineering
+status:
+  value: active
+  link: https://docs.databricks.com/aws/en/machine-learning/feature-store/#:~:text=all%20versions%20of%20Feature%20Engineering%20in%20Unity%20Catalog
+  date: '2026-07-18'
+releases:
+  - type: public-preview
+    date: 2023-08
+    link: https://docs.databricks.com/aws/en/release-notes/product/2023/august#:~:text=Feature%20Engineering%20in%20Unity%20Catalog%20is%20Public%20Preview
+  - type: ga
+    date: 2023-10
+    link: https://docs.databricks.com/aws/en/release-notes/product/2023/october#:~:text=Feature%20Engineering%20in%20Unity%20Catalog%20is%20GA
+introducedAt:
+  date: '2023'
+  link: https://docs.databricks.com/aws/en/release-notes/product/2023/august#:~:text=Feature%20Engineering%20in%20Unity%20Catalog%20is%20Public%20Preview
+limitations:
+  note: A FeatureSpec can contain at most 1000 features, at most 50 tables can train a model, and at most 100 on-demand features can be used in a model; Databricks Runtime ML clusters can't be used with Lakeflow pipelines (standard access mode clusters are required).
+  link: https://docs.databricks.com/aws/en/machine-learning/feature-store/troubleshooting-and-limitations#:~:text=A%20FeatureSpec%20can%20contain%20a%20maximum%20of%201000%20features
+  date: '2026-07-23'
+links:
+  - url: https://www.flexera.com/blog/finops/databricks-feature-store/
+    kind: internet
+    label: 'Flexera: Feature Store 101'
+prediction:
+  - Genie Features
+  - Mosaic AI Features
+  - Unity Feature Store
+source: https://docs.databricks.com/aws/en/machine-learning/feature-store/
+verified: '2026-07-23'

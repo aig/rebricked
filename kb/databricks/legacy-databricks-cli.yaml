@@ -1,0 +1,36 @@
+id: legacy-databricks-cli
+name: Legacy Databricks CLI
+aliases:
+  - databricks-cli
+  - Databricks CLI v0.18
+  - Python Databricks CLI
+category: Developer experience
+what:
+  note: The original Python-based command-line interface (versions 0.18 and below).
+  link: https://learn.microsoft.com/en-us/azure/databricks/dev-tools/cli/migrate#:~:text=Databricks%20CLI%20versions%200.18%20and%20below
+fact:
+  - note: It was a Python package (versions 0.18 and below) that carried an official 'Experimental' label for its entire life and never graduated out of it.
+    link: https://learn.microsoft.com/en-us/azure/databricks/dev-tools/cli/migrate#:~:text=The%20legacy%20CLI%20remains%20in%20an%20Experimental%20state.
+  - note: Databricks says it 'has not established a date or timeline for deprecating the legacy CLI' - it is simply unsupported and frozen.
+    link: https://learn.microsoft.com/en-us/azure/databricks/dev-tools/cli/migrate#:~:text=Databricks%20has%20not%20established%20a%20date%20or%20timeline%20for%20deprecating%20the%20legacy%20CLI.
+status:
+  value: legacy
+  link: https://learn.microsoft.com/en-us/azure/databricks/dev-tools/cli/migrate#:~:text=The%20legacy%20CLI%20is%20still%20available%20but%20is%20not%20receiving%20any%20non%2Dcritical%20updates.
+  date: '2026-07-18'
+from:
+  date: 2017-06
+  link: https://learn.microsoft.com/en-us/azure/databricks/dev-tools/cli/migrate
+deprecatedAt:
+  date: '2023'
+  link: https://learn.microsoft.com/en-us/azure/databricks/dev-tools/cli/migrate
+successorId: databricks-cli
+replacement: Databricks CLI (v0.205+)
+links:
+  - url: https://community.databricks.com/t5/get-started-discussions/how-to-determine-which-cli-methods-to-use/td-p/71301
+    kind: community
+    label: 'Community: Legacy vs new CLI'
+  - url: https://pypi.org/project/databricks-cli/0.18.0/
+    kind: internet
+    label: 'PyPI: databricks-cli 0.18.0'
+source: https://learn.microsoft.com/en-us/azure/databricks/dev-tools/cli/migrate
+verified: '2026-07-18'

@@ -1,0 +1,45 @@
+id: databricks-sql-alerts
+name: Databricks SQL alerts (new)
+aliases:
+  - SQL alerts
+  - Databricks SQL alerts
+category: BI / Dashboards
+what:
+  note: The rebuilt Databricks SQL alerts - threshold notifications on scheduled queries, created and managed from a single UI.
+  link: https://docs.databricks.com/aws/en/sql/user/alerts/#:~:text=run%20queries%20on%20a%20schedule%20and%20notify%20you
+fact:
+  - note: It watches a scheduled query and fires when a threshold is crossed, with explicit OK / TRIGGERED / ERROR states and creation and management all in one UI.
+    link: https://docs.databricks.com/aws/en/sql/user/alerts/#:~:text=when%20a%20condition%20that%20you%20define%20is%20met
+  - note: The latest version of Databricks SQL alerts reached General Availability in May 2026, by which point Databricks reported more than 4,000 customers already using alerts in production.
+    link: https://www.databricks.com/blog/automate-data-kpi-monitoring-sql-alerts#:~:text=more%20than%204%2C000%20customers%20already%20using%20Alerts%20in%20production
+status:
+  value: active
+  link: https://docs.databricks.com/aws/en/sql/user/alerts/#:~:text=alerts%20no%20longer%20support%20the
+  date: '2026-07-18'
+releases:
+  - type: beta
+    date: 2025-05
+    link: https://docs.databricks.com/aws/en/release-notes/product/2025/may#:~:text=A%20new%20version%20of%20Databricks%20SQL%20alerts%20is%20now%20in%20Beta.
+  - type: public-preview
+    date: 2025-11
+    link: https://docs.databricks.com/aws/en/release-notes/product/2025/november#:~:text=Databricks%20SQL%20alerts%20are%20now%20in%20Public%20Preview
+  - type: ga
+    date: 2026-05
+    link: https://docs.databricks.com/aws/en/release-notes/product/2026/may#:~:text=Databricks%20SQL%20alerts%20is%20now%20generally%20available
+introducedAt:
+  date: '2025'
+  link: https://docs.databricks.com/aws/en/release-notes/product/2025/may#:~:text=A%20new%20version%20of%20Databricks%20SQL%20alerts%20is%20now%20in%20Beta.
+limitations:
+  note: An existing saved SQL query can't be reused when creating an alert (each alert owns its query definition), and alerts no longer support the legacy UNKNOWN status, resolving only to OK, TRIGGERED, or ERROR.
+  link: https://docs.databricks.com/aws/en/sql/user/alerts/#:~:text=An%20existing%20saved%20SQL%20query%20cannot%20be%20reused
+  date: '2026-07-23'
+links:
+  - url: https://www.databricks.com/blog/automate-data-kpi-monitoring-sql-alerts
+    kind: community
+    label: 'Databricks Blog: SQL Alerts'
+prediction:
+  - Genie Alerts
+  - Lakeflow Alerts
+  - SQL Alerts One
+source: https://docs.databricks.com/aws/en/sql/user/alerts/
+verified: '2026-07-23'

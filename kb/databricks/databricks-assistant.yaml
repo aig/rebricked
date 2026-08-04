@@ -1,0 +1,36 @@
+id: databricks-assistant
+name: Databricks Assistant
+category: AI / ML
+what:
+  note: AI coding assistant that generates and fixes SQL and Python across notebooks, the SQL editor, and pipelines, grounded in Unity Catalog metadata.
+  link: https://docs.databricks.com/aws/en/notebooks/code-assistant#:~:text=generates%20Python%20code%20or%20SQL%20queries%2C%20explains%20complex%20code
+fact:
+  - note: A context-aware helper wired into notebooks, the SQL editor and file editor that turns plain-English requests into SQL or Python, explains gnarly code, and quietly reads your Unity Catalog metadata to tailor answers.
+    link: https://docs.databricks.com/aws/en/notebooks/code-assistant#:~:text=uses%20Unity%20Catalog%20metadata%20to%20understand%20your%20tables
+status:
+  value: renamed
+  link: https://docs.databricks.com/aws/en/notebooks/code-assistant
+  date: '2026-07-18'
+releases:
+  - type: public-preview
+    date: 2023-07
+    link: https://www.databricks.com/blog/introducing-databricks-assistant#:~:text=announce%20the%20public%20preview%20of%20Databricks%20Assistant
+  - type: ga
+    date: 2024-06
+    link: https://docs.databricks.com/aws/en/release-notes/product/2024/june#:~:text=Databricks%20Assistant%20is%20released%20as%20GA.
+from:
+  date: '2023'
+  link: https://www.databricks.com/blog/introducing-databricks-assistant#:~:text=the%20public%20preview%20of%20Databricks%20Assistant
+to:
+  date: 2026-03
+  link: https://www.databricks.com/blog/introducing-genie-code
+successorId: genie-code
+links:
+  - url: https://www.databricks.com/blog/introducing-databricks-assistant
+    kind: community
+    label: 'Databricks blog: intro Assistant'
+  - url: https://www.flexera.com/blog/finops/databricks-assistant/
+    kind: internet
+    label: 'Flexera: Databricks Assistant guide'
+source: https://docs.databricks.com/aws/en/notebooks/code-assistant
+verified: '2026-07-18'

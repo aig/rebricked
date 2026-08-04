@@ -1,0 +1,44 @@
+id: git-folders
+name: Git folders
+aliases:
+  - Databricks Repos
+  - Repos
+category: Developer experience
+what:
+  note: In-workspace Git client for version-controlling notebooks and files.
+  link: https://learn.microsoft.com/en-us/azure/databricks/repos/what-happened-repos#:~:text=sync%20workspace%20folders%20with%20remote%20Git%20repositories%20for%20version%20control
+fact:
+  - note: It's a full Git client living inside the workspace - branch, commit, pull - and it was renamed 'Git folders' once it grew to version arbitrary files, not just notebooks.
+    link: https://learn.microsoft.com/en-us/azure/databricks/repos/what-happened-repos#:~:text=Repos%20are%20now%20called%20Git%20folders
+  - note: It can version arbitrary file types, not just notebooks, but it refuses to work without a remote repo URL.
+    link: https://learn.microsoft.com/en-us/azure/databricks/repos/what-happened-repos#:~:text=Git%20folders%20require%20a%20remote%20repository%20URL
+  - note: The switch to the 'Git folders' name landed in the March 21, 2024 platform release notes.
+    link: https://learn.microsoft.com/en-us/azure/databricks/release-notes/product/2024/march#:~:text=Databricks%20Repos%20changed%20to%20Git%20folders
+status:
+  value: active
+  link: https://learn.microsoft.com/en-us/azure/databricks/repos/what-happened-repos#:~:text=Databricks%20recommends%20creating%20new%20Git%20folders%20instead%20of%20Repos.
+  date: '2026-07-18'
+releases:
+  - type: ga
+    date: 2024-05
+    link: https://docs.databricks.com/aws/en/release-notes/product/2024/may#:~:text=Git%20folders%20are%20now%20generally%20available.
+from:
+  date: 2024-03
+  link: https://docs.databricks.com/aws/en/release-notes/product/2024/march#:~:text=former%20Databricks%20Repos%20feature%20is%20now%20called
+limitations:
+  note: Working branches are capped at 1 GB, files over 10 MB can't be viewed in the UI, each Git operation supports up to 2 GB memory and 4 GB disk, and Databricks recommends under 20000 files; GPG commit signing and SSH aren't supported, and Git operations that alter notebook source lose cell outputs and state.
+  link: https://docs.databricks.com/aws/en/repos/limits#:~:text=Working%20branches%20are%20limited%20to%201%20GB
+  date: '2026-07-23'
+links:
+  - url: https://www.flexera.com/blog/finops/how-to-set-up-databricks-git-folders-repos-from-scratch-2026/
+    kind: community
+    label: 'Flexera: Set Up Databricks Git Folders'
+  - url: https://dfe-analytical-services.github.io/analysts-guide/ADA/git_databricks.html
+    kind: internet
+    label: 'DfE Analysts'' Guide: Databricks + Git'
+prediction:
+  - Git Spaces
+  - Lakeflow Git
+  - Genie Repos
+source: https://learn.microsoft.com/en-us/azure/databricks/repos/what-happened-repos
+verified: '2026-07-23'

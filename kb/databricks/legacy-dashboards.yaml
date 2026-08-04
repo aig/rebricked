@@ -1,0 +1,36 @@
+id: legacy-dashboards
+name: Legacy dashboards
+category: BI / Dashboards
+what:
+  note: The deprecation-era name for the original Redash-based Databricks SQL dashboards.
+  link: https://learn.microsoft.com/en-us/azure/databricks/archive/legacy/legacy-dashboards#:~:text=You%20can%20no%20longer%20create%20new%20legacy%20dashboards
+fact:
+  - note: Databricks switched these off for good - any that were not converted first were permanently deleted on March 2, 2026.
+    link: https://docs.databricks.com/aws/en/dashboards/clone-legacy-to-aibi#:~:text=Legacy%20dashboards%20will%20be%20deleted%20on
+  - note: Databricks had already stopped letting anyone create or clone them through the UI or API back on April 10, 2025.
+    link: https://learn.microsoft.com/en-us/azure/databricks/ai-bi/release-notes/2025#:~:text=no%20longer%20create%20or%20clone%20legacy%20dashboards%20using%20the%20UI%20or%20API
+status:
+  value: retired
+  link: https://learn.microsoft.com/en-us/azure/databricks/archive/legacy/legacy-dashboards#:~:text=You%20can%20no%20longer%20create%20new%20legacy%20dashboards.
+  date: '2026-07-23'
+from:
+  date: 2020-11
+  link: https://docs.databricks.com/aws/en/release-notes/product/2020/november#:~:text=rich%20visualizations%20and%20drag%2Dand%2Ddrop%20dashboards
+deprecatedAt:
+  date: 2025-04
+  link: https://docs.databricks.com/aws/en/sql/release-notes/2025#:~:text=Official%20support%20for%20legacy%20dashboards%20has%20ended
+removedAt:
+  date: 2026-03
+  link: https://docs.databricks.com/aws/en/ai-bi/release-notes/2026#:~:text=have%20reached%20end%20of%20life%20and%20are%20no%20longer%20available
+successorId: lakeview-dashboards
+replacement: Lakeview dashboards
+occasion:
+  date: 2026-03
+  link: https://docs.databricks.com/aws/en/ai-bi/release-notes/2026#:~:text=have%20reached%20end%20of%20life%20and%20are%20no%20longer%20available
+  note: End of life March 5, 2026
+links:
+  - url: https://docs.databricks.com/aws/en/dashboards/clone-legacy-to-aibi
+    kind: community
+    label: 'Databricks docs: Clone a legacy dashboard to AI/BI'
+source: https://learn.microsoft.com/en-us/azure/databricks/archive/legacy/legacy-dashboards
+verified: '2026-07-23'

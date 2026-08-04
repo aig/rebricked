@@ -1,0 +1,33 @@
+id: databricks-delta
+name: Databricks Delta
+category: Data engineering
+what:
+  note: The proprietary Databricks table format that adds ACID transactions, schema enforcement, and time travel to data lakes.
+  link: https://www.databricks.com/blog/2019/04/24/open-sourcing-delta-lake.html#:~:text=brings%20reliability%20to%20your%20data%20lakes
+fact:
+  - note: Unveiled at Spark Summit Europe 2017 as a single system fusing a data lake's scale, a warehouse's query speed and a streaming pipe's low latency, storing everything as plain Parquet on S3 while promising up to 100x faster queries.
+    link: https://www.databricks.com/blog/2017/10/25/databricks-delta-a-unified-management-system-for-real-time-big-data.html#:~:text=combines%20the%20best%20of%20data%20warehouses%2C%20data%20lakes%2C%20and%20streaming
+status:
+  value: renamed
+  link: https://www.databricks.com/blog/2019/04/24/open-sourcing-delta-lake.html#:~:text=the%20open%20sourcing%20of%20the%20Delta%20Lake%20project
+  date: '2026-07-18'
+releases:
+  - type: private-preview
+    date: 2018-05
+    link: https://docs.databricks.com/aws/en/release-notes/product/2018/may#:~:text=This%20release%20remains%20in%20Private%20Preview
+from:
+  date: '2017'
+  link: https://www.databricks.com/blog/2017/10/25/databricks-delta-a-unified-management-system-for-real-time-big-data.html#:~:text=Today%20we%20are%20proud%20to%20introduce%20Databricks%20Delta
+to:
+  date: 2019-04
+  link: https://www.databricks.com/blog/2019/04/24/open-sourcing-delta-lake.html#:~:text=the%20open%20sourcing%20of%20the%20Delta%20Lake%20project
+successorId: delta-lake
+links:
+  - url: https://www.databricks.com/blog/2017/10/25/databricks-delta-a-unified-management-system-for-real-time-big-data.html
+    kind: community
+    label: 'Databricks blog: Delta (2017)'
+  - url: https://siliconangle.com/2017/10/25/databricks-adds-new-data-management-layer-apache-spark-platform/
+    kind: internet
+    label: 'SiliconANGLE: Databricks Delta'
+source: https://www.databricks.com/blog/2019/04/24/open-sourcing-delta-lake.html
+verified: '2026-07-23'

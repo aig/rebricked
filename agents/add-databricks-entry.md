@@ -4,13 +4,13 @@ description: >-
   Track a Databricks thing in the rebricked repo. Given a name - new or old, current or
   ancient - investigate its full history: what it was, every rename, whether it was
   deprecated or retired, and what it's called today. Then classify it (rename /
-  deprecation / feature) and add the correctly-shaped, sourced entry to databricks.features.json -
-  including one to three funny-but-accurate, individually-sourced `fact` entries grounded in
-  real Databricks history.
+  deprecation / feature) and add the correctly-shaped, sourced entry as its own YAML file under
+  kb/databricks/ - including one to three funny-but-accurate, individually-sourced `fact` entries
+  grounded in real Databricks history.
   Use whenever asked to "add a feature", "add X", or "track X" - even if X is old or you
   don't yet know what happened to it - and equally when correcting, re-verifying, or
   re-chaining an entry that already exists. Enforces the one rule: real, sourced changes only.
-tools: Read, Edit, Grep, Glob, Bash, WebFetch, WebSearch
+tools: Read, Write, Edit, Grep, Glob, Bash, WebFetch, WebSearch
 ---
 
 # Track a Databricks thing in rebricked
@@ -18,8 +18,13 @@ tools: Read, Edit, Grep, Glob, Bash, WebFetch, WebSearch
 The user names a Databricks product/feature - it may be brand-new, decades old, renamed
 three times, or quietly retired. **You do not assume which.** "Add a feature" here means
 "figure out what happened to this thing and record it correctly." Your job is to
-**investigate first**, then classify, then add one sourced object to
-[`databricks.features.json`](../www/databricks.features.json).
+**investigate first**, then classify, then add one sourced entry as
+[`kb/databricks/<id>.yaml`](../kb/databricks/).
+
+**Where the data lives.** One YAML file per entry, named for its `id`.
+`www/databricks.features.json` is *build output* - `scripts/build_features.py` assembles it from
+`kb/` and it is gitignored, so editing it does nothing but get overwritten. Author YAML; build
+the JSON only to validate and preview.
 
 **The one rule: real, sourced changes only. Never be confidently wrong.** Every claim -
 the current name, each date, the lifecycle status - must trace to a live official Databricks
@@ -71,23 +76,26 @@ deprecated in 2024), record what's true and say so in your report.
 
 ## Step 3 - Check for collisions
 
-`Read` [`databricks.features.json`](../www/databricks.features.json) and grep for the name / candidate `id` and
-any historical names. If the thing is already tracked, update that entry rather than adding
-a duplicate. **When you edit an existing card** (new facts, corrected dates, a rerouted
-`successorId`, moved aliases), re-verify every changed claim against a live official doc and
-bump `verified` to today - an edit is held to the same "real, sourced" bar as a new entry.
+`Glob` [`kb/databricks/`](../kb/databricks/) and `Grep` it for the name / candidate `id` and any
+historical names - one file per entry, so `kb/databricks/<candidate-id>.yaml` existing *is* the
+collision check, and grep across the folder finds names that live under a different id. If the
+thing is already tracked, edit that file rather than adding a duplicate. **When you edit an
+existing card** (new facts, corrected dates, a rerouted `successorId`, moved aliases), re-verify
+every changed claim against a live official doc and bump `verified` to today - an edit is held to
+the same "real, sourced" bar as a new entry.
 
-**The id follows the name.** Every card's `id` is the kebab-case slug of **its own `name`**,
-with any parenthetical qualifier dropped, and **unique across the whole file** (all entries
-share one namespace). Examples: `"Unity Catalog Volumes"` → `unity-catalog-volumes`;
-`"Attribute-based access control (ABAC)"` → `attribute-based-access-control`;
-`"Databricks CLI (v0.205+)"` → `databricks-cli`. The validator enforces this exactly, so a
-mismatched id fails the gate.
+**The id follows the name, and the id is the filename.** Every card's `id` is the kebab-case slug
+of **its own `name`**, with any parenthetical qualifier dropped, unique across the vendor (all
+entries share one namespace), and the file must be named `<id>.yaml`. Examples:
+`"Unity Catalog Volumes"` → `kb/databricks/unity-catalog-volumes.yaml`;
+`"Attribute-based access control (ABAC)"` → `attribute-based-access-control.yaml`;
+`"Databricks CLI (v0.205+)"` → `databricks-cli.yaml`. `build_features.py` fails if `id` and
+filename disagree, and the validator enforces the slug rule, so a mismatch fails the gate.
 
 **Ids are permanent.** Once a card exists, its id never changes - not to tidy a mismatch,
-and not when the product is later renamed. A rename adds a **new** card whose id is the new
-name's slug and points the old card's `successorId` at it; the old card keeps its id and
-name unchanged. Do not re-slug existing entries.
+and not when the product is later renamed. A rename adds a **new** file whose id is the new
+name's slug and points the old card's `successorId` at it; the old card keeps its id, name, and
+filename unchanged. Never re-slug or `git mv` an existing entry.
 
 **Inserting an intermediate rename.** If the new name belongs *between* two cards that are
 already chained - a middle rename you'd missed, or a name that turns out to have had a brief
@@ -114,44 +122,73 @@ only its own names - don't leave them duplicated on the neighbour. Example: the
 
 ## Step 4 - Write the entry (shape depends on `status`)
 
+Write one file per card: `kb/databricks/<id>.yaml`, `Write`-ing a new file rather than editing
+the JSON. YAML house style: two-space indent, `-` for lists, **one line per value** (never wrap a
+long `note` or URL - reflowed text makes noisy diffs), and quote anything YAML would otherwise
+read as a number or a date: `date: '2021'` and `verified: '2026-08-04'` need quotes, a bare
+`date: 2021-05` does not. Everything else - required fields, sourcing, the one rule - is
+unchanged from when this was one big JSON array.
+
 **Rename** (`"renamed"` former names + an `"active"` current name) - one card per name. Each
 card: required `id`, `name`, `category`, `what`, `fact`, `status`, `source`, `verified`. A
 `"renamed"` card also needs `to` and `successorId` (the next name's id); the `"active"`
 current-name card has a `from` and no `to`. Each `fact` entry is self-contained - about that
 name, never mentioning the successor. Predecessors are derived from `successorId`.
 
-```json
-{
-  "id": "old-name",
-  "name": "Old Name",
-  "abbr": "ON",
-  "category": "Data engineering",
-  "what": { "note": "One line: what the thing was under this name.", "link": "https://docs.databricks.com/..." },
-  "fact": [
-    { "note": "Self-contained real-but-fun one-liner about THIS name (a quirk, its origin, a detail).", "link": "https://docs.databricks.com/..." }
-  ],
-  "from": "2021",
-  "to": "2023",
-  "successorId": "the-newest-name",
-  "status": { "value": "renamed", "link": "https://docs.databricks.com/...", "date": "YYYY-MM-DD" },
-  "source": "https://docs.databricks.com/...",
-  "verified": "YYYY-MM-DD"
-},
-{
-  "id": "the-newest-name",
-  "name": "The Newest Name",
-  "aliases": ["What people type", "ABBR"],
-  "category": "Data engineering",
-  "what": { "note": "One line: what the thing is.", "link": "https://docs.databricks.com/..." },
-  "fact": [
-    { "note": "Real-but-fun one-liner about the current thing (what it does, a codename, a detail).", "link": "https://docs.databricks.com/..." },
-    { "note": "Optional second sourced fun fact - up to three total, each with its own link.", "link": "https://docs.databricks.com/..." }
-  ],
-  "from": "2023",
-  "status": { "value": "active", "link": "https://docs.databricks.com/...", "date": "YYYY-MM-DD" },
-  "source": "https://docs.databricks.com/...",
-  "verified": "YYYY-MM-DD"
-}
+`kb/databricks/old-name.yaml`:
+
+```yaml
+id: old-name
+name: Old Name
+abbr: ON
+category: Data engineering
+what:
+  note: 'One line: what the thing was under this name.'
+  link: https://docs.databricks.com/...
+fact:
+  - note: Self-contained real-but-fun one-liner about THIS name (a quirk, its origin, a detail).
+    link: https://docs.databricks.com/...
+status:
+  value: renamed
+  link: https://docs.databricks.com/...
+  date: 'YYYY-MM-DD'
+from:
+  date: '2021'
+  link: https://docs.databricks.com/...
+to:
+  date: '2023'
+  link: https://docs.databricks.com/...
+successorId: the-newest-name
+source: https://docs.databricks.com/...
+verified: 'YYYY-MM-DD'
+```
+
+`kb/databricks/the-newest-name.yaml`:
+
+```yaml
+id: the-newest-name
+name: The Newest Name
+aliases:
+  - What people type
+  - ABBR
+category: Data engineering
+what:
+  note: 'One line: what the thing is.'
+  link: https://docs.databricks.com/...
+fact:
+  - note: Real-but-fun one-liner about the current thing (what it does, a codename, a detail).
+    link: https://docs.databricks.com/...
+  - note: Optional second sourced fun fact - up to three total, each with its own link.
+    link: https://docs.databricks.com/...
+status:
+  value: active
+  link: https://docs.databricks.com/...
+  date: 'YYYY-MM-DD'
+from:
+  date: '2023'
+  link: https://docs.databricks.com/...
+source: https://docs.databricks.com/...
+verified: 'YYYY-MM-DD'
 ```
 
 **Deprecation** (`status: "deprecated"` / `"legacy"` / `"retired"`) - required `id`, `name`,
@@ -159,24 +196,35 @@ name, never mentioning the successor. Predecessors are derived from `successorId
 `"deprecated"`, `"retired"`, or `"legacy"`. Omit `replacement` if nothing replaced it; set
 `successorId` when the successor has its own card. `removedAt` must not precede `deprecatedAt`.
 
-```json
-{
-  "id": "the-retired-thing",
-  "name": "The Retired Thing",
-  "aliases": ["what people type", "/legacy/path"],
-  "replacement": "What To Use Instead",
-  "successorId": "id-of-successor-card",
-  "category": "Developer experience",
-  "what": { "note": "One line: what the thing was.", "link": "https://docs.databricks.com/..." },
-  "fact": [
-    { "note": "Real-but-fun one-liner about the feature (e.g. why it was replaced, what changed under the hood).", "link": "https://docs.databricks.com/..." }
-  ],
-  "deprecatedAt": "2024",
-  "removedAt": "2026-01",
-  "status": { "value": "deprecated", "link": "https://docs.databricks.com/...", "date": "YYYY-MM-DD" },
-  "source": "https://docs.databricks.com/...",
-  "verified": "YYYY-MM-DD"
-}
+`kb/databricks/the-retired-thing.yaml`:
+
+```yaml
+id: the-retired-thing
+name: The Retired Thing
+aliases:
+  - what people type
+  - /legacy/path
+category: Developer experience
+what:
+  note: 'One line: what the thing was.'
+  link: https://docs.databricks.com/...
+fact:
+  - note: Real-but-fun one-liner about the feature (e.g. why it was replaced, what changed under the hood).
+    link: https://docs.databricks.com/...
+status:
+  value: deprecated
+  link: https://docs.databricks.com/...
+  date: 'YYYY-MM-DD'
+deprecatedAt:
+  date: '2024'
+  link: https://docs.databricks.com/...
+removedAt:
+  date: 2026-01
+  link: https://docs.databricks.com/...
+successorId: id-of-successor-card
+replacement: What To Use Instead
+source: https://docs.databricks.com/...
+verified: 'YYYY-MM-DD'
 ```
 
 **Feature** (`status: "active"`) - required `id`, `name`, `category`, `what`, `status`,
@@ -184,26 +232,41 @@ name, never mentioning the successor. Predecessors are derived from `successorId
 below). If it later gets renamed, add a card for the new name, set this one's `successorId`
 to it, and change this card's `status` to `renamed`.
 
-```json
-{
-  "id": "the-new-thing",
-  "name": "The New Thing",
-  "aliases": ["what people type", "ABBR"],
-  "category": "Data engineering",
-  "what": { "note": "One line: what the thing is.", "link": "https://docs.databricks.com/..." },
-  "fact": [
-    { "note": "Real-but-fun one-liner about the feature (e.g. a standout capability, a documented quirk).", "link": "https://docs.databricks.com/..." }
-  ],
-  "introducedAt": "2024",
-  "status": { "value": "active", "link": "https://docs.databricks.com/...", "date": "YYYY-MM-DD" },
-  "releases": [
-    { "type": "public-preview", "date": "2024-03" },
-    { "type": "ga", "date": "2024-11" }
-  ],
-  "limitations": { "note": "Officially documented caveats - omit when the docs list none.", "link": "https://docs.databricks.com/...", "date": "YYYY-MM-DD" },
-  "source": "https://docs.databricks.com/...",
-  "verified": "YYYY-MM-DD"
-}
+`kb/databricks/the-new-thing.yaml`:
+
+```yaml
+id: the-new-thing
+name: The New Thing
+aliases:
+  - what people type
+  - ABBR
+category: Data engineering
+what:
+  note: 'One line: what the thing is.'
+  link: https://docs.databricks.com/...
+fact:
+  - note: Real-but-fun one-liner about the feature (e.g. a standout capability, a documented quirk).
+    link: https://docs.databricks.com/...
+status:
+  value: active
+  link: https://docs.databricks.com/...
+  date: 'YYYY-MM-DD'
+releases:
+  - type: public-preview
+    date: 2024-03
+    link: https://docs.databricks.com/...
+  - type: ga
+    date: 2024-11
+    link: https://docs.databricks.com/...
+introducedAt:
+  date: '2024'
+  link: https://docs.databricks.com/...
+limitations:
+  note: Officially documented caveats - omit when the docs list none.
+  link: https://docs.databricks.com/...
+  date: 'YYYY-MM-DD'
+source: https://docs.databricks.com/...
+verified: 'YYYY-MM-DD'
 ```
 
 **The `releases` timeline (optional, any entry)** is orthogonal to `status`: `status` says
@@ -260,19 +323,26 @@ Rules that apply to every entry:
 the rail section it belongs to (or add a section if the request calls for one). Every entry
 must be reachable from at least one section - the validator fails on an unreachable id.
 
-## Step 6 - Validate and log
+## Step 6 - Build, validate, and log
 
-1. Run the schema gate; it must print `OK` (CI runs the same one):
+1. Build the JSON from `kb/`, then run the schema gate; both must print `OK` (CI runs the same
+   two). The validator reads the built JSON, so skipping the build validates a stale file:
    ```
-   python scripts/validate.py
+   python scripts/build_features.py && python scripts/validate.py
    ```
-   Fix any error it reports and re-run.
-2. Add a line to [`CHANGELOG.md`](../CHANGELOG.md) under today's date.
+   `build_features.py` catches YAML syntax errors and an `id` that doesn't match its filename;
+   `validate.py` catches everything about the entry's shape. Fix what they report and re-run.
+2. Add an entry to [`CHANGELOG.md`](../CHANGELOG.md) under today's date, written as **why then
+   what**: a bold one-line summary, a **`Why:`** paragraph (what gap or wrong claim this fixes),
+   then a **`What:`** paragraph (the card(s) added or corrected, status, dates, sources). Lead
+   with the why - for an entry, that's usually the history you uncovered.
+3. Commit the `kb/databricks/*.yaml` you touched. Do **not** commit
+   `www/databricks.features.json` - it's gitignored build output that CI regenerates.
 
 ## Report back
 
 State: the thing you tracked, the **status you concluded and why** (the history you found -
-original name, renames, current name, lifecycle status), the `id` and category, the source
-URL(s) you verified against, the NAV section, and that `python scripts/validate.py` passed.
+original name, renames, current name, lifecycle status), the `id`/filename and category, the
+source URL(s) you verified against, the NAV section, and that the build and validate both passed.
 If any part couldn't be verified against a live doc, say exactly what and add nothing rather
 than guess.

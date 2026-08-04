@@ -1,0 +1,26 @@
+id: multi-file-editor
+name: multi-file editor
+category: Data engineering
+what:
+  note: The IDE for developing Lakeflow (Spark Declarative) pipelines - code-first, folder-based, with selective execution, data previews, and pipeline graphs on one surface.
+  link: https://docs.databricks.com/aws/en/ldp/multi-file-editor#:~:text=combines%20all%20pipeline%20development%20tasks%20on%20a%20single%20surface
+fact:
+  - note: A folder-based IDE that breaks pipeline logic out of single notebooks into modular Python and SQL files, complete with tabs, a dependency graph, per-table run buttons, and a cross-file issues panel.
+    link: https://docs.databricks.com/aws/en/ldp/multi-file-editor#:~:text=reference%20a%20table%20or%20view%20defined%20in%20another%20file
+status:
+  value: renamed
+  link: https://docs.databricks.com/aws/en/ldp/multi-file-editor
+  date: '2026-07-18'
+from:
+  date: 2025-06
+  link: https://docs.databricks.com/aws/en/ldp/multi-file-editor
+to:
+  date: 2025-09
+  link: https://docs.databricks.com/aws/en/release-notes/product/2025/september#:~:text=previously%20called%20the%20multi%2Dfile%20editor
+successorId: lakeflow-pipelines-editor
+links:
+  - url: https://qubika.com/blog/lakeflow-pipeline-editor-declarative-data-engineering/
+    kind: internet
+    label: 'Qubika: Lakeflow Pipelines Editor'
+source: https://docs.databricks.com/aws/en/ldp/multi-file-editor
+verified: '2026-07-18'

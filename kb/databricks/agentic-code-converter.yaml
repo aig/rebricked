@@ -1,0 +1,44 @@
+id: agentic-code-converter
+name: Agentic code converter
+aliases:
+  - agentic converter
+  - migration project
+category: Developer experience
+what:
+  note: Beta migration tool that uses Genie Code subagents to convert existing SQL from legacy dialects - T-SQL, Snowflake, Redshift, Oracle, BigQuery, Teradata - into ANSI SQL that runs on Databricks, tracked file by file in a migration project.
+  link: https://docs.databricks.com/aws/en/migration/agentic-code-converter#:~:text=dialects%20such%20as%20T%2DSQL%2C%20Snowflake%2C%20Redshift%2C%20Oracle%2C%20BigQuery%2C%20and%20Teradata
+fact:
+  - note: 'It does not convert your scripts one at a time: Genie Code deploys a swarm of subagents that translate files concurrently, each validating its own output and retrying the sections it got wrong.'
+    link: https://docs.databricks.com/aws/en/migration/agentic-code-converter#:~:text=deploys%20subagents%20that%20convert%20files%20concurrently
+  - note: 'You can teach it your house style: a custom skill encodes business rules - proprietary data types, preferred target patterns, corrections you keep making - that get applied automatically on every conversion.'
+    link: https://docs.databricks.com/aws/en/migration/agentic-code-converter#:~:text=Custom%20skills%20let%20you%20encode%20business%20rules%20that%20Genie%20Code%20applies%20automatically%20during%20every%20conversion
+  - note: 'For a one-off file there is a shortcut out of all the project ceremony: a plain /migrate command typed into a Genie Code conversation.'
+    link: https://docs.databricks.com/aws/en/migration/agentic-code-converter#:~:text=You%20can%20also%20convert%20a%20single%20file%20or%20folder%20without%20a%20project%20by%20using%20the
+status:
+  value: active
+  link: https://docs.databricks.com/aws/en/migration/agentic-code-converter#:~:text=Convert%20SQL%20with%20the%20agentic%20code%20converter
+  date: '2026-08-03'
+releases:
+  - type: beta
+    date: 2026-07
+    link: https://docs.databricks.com/aws/en/release-notes/product/2026/july#:~:text=Agentic%20code%20converter%20is%20in%20Beta
+from:
+  date: 2026-07
+  link: https://docs.databricks.com/aws/en/release-notes/product/2026/july#:~:text=Agentic%20code%20converter%20is%20in%20Beta
+limitations:
+  note: Beta, and a workspace admin must enable it from the Previews page. A batch can contain at most 300 files and a script at most 1,000 lines; Teradata BTEQ scripts are not yet supported, and the workspace must also meet the Genie Code requirements.
+  link: https://docs.databricks.com/aws/en/migration/agentic-code-converter#:~:text=A%20batch%20can%20contain%20a%20maximum%20of%20300%20files
+  date: '2026-08-03'
+links:
+  - url: https://docs.databricks.com/aws/en/release-notes/product/2026/july
+    kind: official
+    label: 'Databricks release notes: Agentic code converter Beta (July 2026)'
+  - url: https://databrickslabs.github.io/lakebridge/
+    kind: community
+    label: Lakebridge documentation (Databricks Labs)
+prediction:
+  - Genie Migrate
+  - Lakebridge Autopilot
+  - SQL Rebridge
+source: https://docs.databricks.com/aws/en/migration/agentic-code-converter
+verified: '2026-08-03'

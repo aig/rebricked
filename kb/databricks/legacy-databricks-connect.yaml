@@ -1,0 +1,30 @@
+id: legacy-databricks-connect
+name: Legacy Databricks Connect
+aliases:
+  - databricks-connect <=12.2
+  - Databricks Connect v1
+category: Developer experience
+what:
+  note: The original Databricks Connect client for running local code against a remote cluster, on Databricks Runtime 12.2 LTS and below.
+  link: https://docs.databricks.com/aws/en/dev-tools/databricks-connect-legacy#:~:text=run%20them%20remotely%20on%20a%20Databricks%20cluster
+fact:
+  - note: The original Databricks Connect ran local code against a remote cluster on Runtime 12.2 LTS and below, using its own bespoke client protocol that predated Spark Connect.
+    link: https://docs.databricks.com/aws/en/dev-tools/databricks-connect-legacy#:~:text=Databricks%20Runtime%2012.2%20LTS%20and%20below
+status:
+  value: deprecated
+  link: https://docs.databricks.com/aws/en/dev-tools/databricks-connect-legacy#:~:text=Databricks%20Runtime%2012.2%20LTS%20and%20below%20is%20deprecated
+  date: '2026-07-18'
+from:
+  date: 2019-06
+  link: https://docs.databricks.com/aws/en/release-notes/product/2019/june#:~:text=notebook%20server%20with%20Databricks%20Connect
+deprecatedAt:
+  date: '2023'
+  link: https://docs.databricks.com/aws/en/dev-tools/databricks-connect-legacy
+successorId: databricks-connect
+replacement: Databricks Connect (13.3 LTS+)
+links:
+  - url: https://medium.com/towards-data-engineering/moving-from-databricks-notebooks-to-local-development-a-practical-setup-guide-ce520becba4a
+    kind: community
+    label: 'Medium: Notebooks to local dev'
+source: https://docs.databricks.com/aws/en/dev-tools/databricks-connect-legacy
+verified: '2026-07-18'

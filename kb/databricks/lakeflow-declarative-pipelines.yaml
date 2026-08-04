@@ -1,0 +1,47 @@
+id: lakeflow-declarative-pipelines
+name: Lakeflow Declarative Pipelines
+aliases:
+  - Lakeflow Spark Declarative Pipelines
+  - Lakeflow pipelines
+  - DLT
+category: Data engineering
+what:
+  note: Declarative framework for batch and streaming ETL pipelines.
+  link: https://docs.databricks.com/aws/en/ldp/concepts/#:~:text=declarative%20framework%20for%20building%20batch%20and%20streaming%20data%20pipelines
+fact:
+  - note: You describe the tables you want and it works out the execution order and dependencies for you - and the DLT code written back in 2021 still runs unchanged under the new name.
+    link: https://docs.databricks.com/aws/en/ldp/where-is-dlt#:~:text=there%20is%20no%20migration%20required%20to%20use%20Lakeflow%20pipelines
+  - note: The open-source engine underneath is a separate project called Spark Declarative Pipelines, and Databricks docs increasingly shorten the product to just 'Lakeflow pipelines.'
+    link: https://docs.databricks.com/aws/en/ldp/where-is-dlt#:~:text=has%20been%20updated%20to%20Lakeflow%20pipelines
+status:
+  value: active
+  link: https://docs.databricks.com/aws/en/ldp/where-is-dlt#:~:text=has%20been%20updated%20to%20Lakeflow%20pipelines
+  date: '2026-07-18'
+releases:
+  - type: ga
+    date: 2025-06
+    link: https://docs.databricks.com/aws/en/release-notes/product/2025/june
+from:
+  date: 2025-06
+  link: https://docs.databricks.com/aws/en/release-notes/product/2025/june#:~:text=DLT%20is%20now%20Spark%20Declarative%20Pipelines%20on%20Lakeflow
+occasion:
+  date: 2025-06
+  link: https://docs.databricks.com/aws/en/release-notes/product/2025/june
+  note: Data + AI Summit 2025
+limitations:
+  note: A workspace is limited to 1000 concurrent pipeline updates; a pipeline allows at most 100 source files (or 50 folder entries referencing up to 1000 files); pivot() is unsupported, Delta time travel works only on streaming tables not materialized views, and identity columns are incompatible with AUTO CDC processing.
+  link: https://docs.databricks.com/aws/en/ldp/limitations#:~:text=limited%20to%201000%20concurrent%20pipeline%20updates
+  date: '2026-07-23'
+links:
+  - url: https://medium.com/@menezesnatalia/my-notes-on-databricks-lakeflow-declarative-pipelines-2cf7f98d0336
+    kind: community
+    label: 'Medium: Notes on Lakeflow Pipelines'
+  - url: https://www.infoq.com/news/2025/07/databricks-declarative-pipelines/
+    kind: internet
+    label: 'InfoQ: Spark Declarative Pipelines'
+prediction:
+  - Genie Pipelines
+  - Lakeflow Agentic Pipelines
+  - Unity Pipelines
+source: https://docs.databricks.com/aws/en/ldp/where-is-dlt
+verified: '2026-07-23'

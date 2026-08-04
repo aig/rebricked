@@ -1,0 +1,40 @@
+id: ai-gateway
+name: AI Gateway
+aliases:
+  - Mosaic AI Gateway
+category: AI / ML
+what:
+  note: A centralized governance and monitoring layer for model serving endpoints - permissions, rate limits, payload logging, and safety guardrails for the generative-AI models an organization uses.
+  link: https://docs.databricks.com/aws/en/ai-gateway/#:~:text=from%20a%20central%20control%20plane%2C%20so%20you%20can%20manage%20capacity
+fact:
+  - note: It entered public preview in September 2024 as "Mosaic AI Gateway," a centralized service that streamlines the usage and management of the AI models an organization uses.
+    link: https://docs.databricks.com/aws/en/release-notes/product/2024/september#:~:text=streamlines%20the%20usage%20and%20management%20of%20AI%20models%20within%20an%20organization
+  - note: Even its June 2025 general-availability announcement still carried the "Mosaic" prefix, reading "Mosaic AI Gateway is now generally available."
+    link: https://docs.databricks.com/aws/en/release-notes/product/2025/june#:~:text=Mosaic%20AI%20Gateway%20is%20now%20generally%20available
+status:
+  value: renamed
+  link: https://docs.databricks.com/aws/en/ai-gateway/#:~:text=Unity%20AI%20Gateway
+  date: '2026-07-24'
+from:
+  date: 2024-09
+  link: https://docs.databricks.com/aws/en/release-notes/product/2024/september#:~:text=Mosaic%20AI%20Gateway%20is%20now%20Public%20Preview
+to:
+  date: 2026-06
+  link: https://www.databricks.com/blog/ai-governance-data-ai-summit-2026-whats-new-unity-ai-gateway
+successorId: unity-ai-gateway
+occasion:
+  date: 2025-06
+  link: https://docs.databricks.com/aws/en/release-notes/product/2025/june#:~:text=Mosaic%20AI%20Gateway%20is%20now%20generally%20available
+  note: GA June 11, 2025
+links:
+  - url: https://docs.databricks.com/aws/en/release-notes/product/2024/september
+    kind: official
+    label: 'Databricks release notes: AI Gateway Public Preview (Sept 2024)'
+  - url: https://docs.databricks.com/aws/en/release-notes/product/2025/june
+    kind: official
+    label: 'Databricks release notes: AI Gateway GA (June 2025)'
+prediction:
+  - Genie AI Gateway
+  - Lakeflow AI Gateway
+source: https://docs.databricks.com/aws/en/ai-gateway/
+verified: '2026-08-03'

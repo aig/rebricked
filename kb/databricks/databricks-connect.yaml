@@ -1,0 +1,42 @@
+id: databricks-connect
+name: Databricks Connect (13.3 LTS+)
+aliases:
+  - Databricks Connect
+  - databricks-connect
+category: Developer experience
+what:
+  note: The client library for running local DataFrame and Python code against a remote Databricks cluster, rebuilt on Spark Connect.
+  link: https://docs.databricks.com/aws/en/dev-tools/databricks-connect/#:~:text=Databricks%20Connect%20is%20a%20client%20library%20for%20the%20Databricks%20Runtime
+fact:
+  - note: It's built on Spark Connect's gRPC client/server split, so ordinary PySpark DataFrame code on your laptop runs on a remote cluster with no code changes between local and remote.
+    link: https://docs.databricks.com/aws/en/dev-tools/databricks-connect/#:~:text=gRPC%2Dbased%20protocol%20within%20Apache%20Spark%20that%20allows%20remote%20execution
+  - note: It requires Databricks Runtime 13.3 LTS or above.
+    link: https://docs.databricks.com/aws/en/dev-tools/databricks-connect/#:~:text=Databricks%20Connect%20for%20Databricks%20Runtime%2013.3%20LTS%20and%20above
+status:
+  value: active
+  link: https://docs.databricks.com/aws/en/dev-tools/databricks-connect/#:~:text=Databricks%20Connect%20for%20Databricks%20Runtime%2013.3%20LTS%20and%20above
+  date: '2026-07-18'
+releases:
+  - type: public-preview
+    date: 2023-04
+    link: https://docs.databricks.com/aws/en/release-notes/product/2023/april#:~:text=Databricks%20Connect%20V2%20%28Public%20Preview%29
+  - type: ga
+    date: 2023-06
+    link: https://docs.databricks.com/aws/en/release-notes/product/2023/june#:~:text=Databricks%20Connect%20is%20now%20generally%20available%20for%20Python
+introducedAt:
+  date: '2023'
+  link: https://docs.databricks.com/aws/en/release-notes/product/2023/april#:~:text=Beginning%20with%20Databricks%20Runtime%2013.0
+limitations:
+  note: Doesn't support the display() API, Databricks Utilities (credentials, library, notebook workflow, widgets), SparkContext and RDDs, distributed ML training, or CREATE TABLE AS SELECT, with version-specific restrictions such as no streaming foreachBatch and no queries over 3600 seconds on Runtime 13.3 LTS and below.
+  link: https://docs.databricks.com/aws/en/dev-tools/databricks-connect/python/limitations#:~:text=Distributed%20ML%20training%20is%20not%20supported
+  date: '2026-07-23'
+links:
+  - url: https://medium.com/@santosh_joshi_data/databricks-connect-explained-from-local-code-to-remote-cluster-638274fded38
+    kind: community
+    label: 'Medium: Databricks Connect explained'
+prediction:
+  - Genie Connect
+  - Spark Connect One
+  - Databricks Connect Prime
+source: https://docs.databricks.com/aws/en/dev-tools/databricks-connect/
+verified: '2026-07-18'

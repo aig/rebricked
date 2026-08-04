@@ -1,0 +1,29 @@
+id: simba-spark-odbc-driver
+name: Simba Spark ODBC Driver
+category: Developer experience
+what:
+  note: The ODBC driver for connecting BI tools and applications to Databricks SQL warehouses and clusters.
+  link: https://docs.databricks.com/aws/en/integrations/odbc/migration
+fact:
+  - note: An OEM driver licensed from Simba Technologies that let Tableau and other BI tools speak ODBC to your cluster; its lineage traces back to a 2014 driver built for Shark, Spark's early SQL front-end.
+    link: https://www.databricks.com/blog/2014/04/30/databricks-partners-with-simba-to-deliver-shark-odbc-driver.html#:~:text=connectivity%20solution%20for%20Shark
+status:
+  value: renamed
+  link: https://docs.databricks.com/aws/en/integrations/odbc/migration#:~:text=Databricks%20renamed%20the%20ODBC%20driver
+  date: '2026-07-18'
+from:
+  date: '2014'
+  link: https://www.databricks.com/blog/2014/04/30/databricks-partners-with-simba-to-deliver-shark-odbc-driver.html#:~:text=standards%2Dbased%20connectivity%20solution%20for%20Shark
+to:
+  date: 2026-02
+  link: https://docs.databricks.com/aws/en/release-notes/product/2026/february#:~:text=renamed%20from%20Simba%20Spark%20ODBC%20Driver%20to%20Databricks%20ODBC%20Driver
+successorId: databricks-odbc-driver
+links:
+  - url: https://www.databricks.com/blog/2014/04/30/databricks-partners-with-simba-to-deliver-shark-odbc-driver.html
+    kind: community
+    label: 'Databricks blog: Simba ODBC (2014)'
+  - url: https://insightsoftware.com/drivers/databricks-odbc-jdbc-driver/
+    kind: internet
+    label: 'insightsoftware: Databricks ODBC'
+source: https://docs.databricks.com/aws/en/integrations/odbc/migration
+verified: '2026-07-23'

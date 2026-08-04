@@ -1,0 +1,34 @@
+id: hive-metastore
+name: Hive metastore
+aliases:
+  - Hive Metastore
+  - HMS
+  - legacy metastore
+  - hive_metastore
+category: Data governance
+what:
+  note: The per-workspace metastore that catalogs tables and views within a single workspace, predating Unity Catalog.
+  link: https://docs.databricks.com/aws/en/data-governance/unity-catalog/hive-metastore#:~:text=The%20per%2Dworkspace%20Hive%20metastore%20is%20a%20legacy%20feature
+fact:
+  - note: It scopes every table and view to a single workspace, and those tables still appear under a top-level catalog called hive_metastore.
+    link: https://docs.databricks.com/aws/en/data-governance/unity-catalog/hive-metastore#:~:text=appears%20as%20a%20top%2Dlevel%20catalog%20called
+  - note: Databricks accounts created after December 18, 2025 have no access to it, alongside DBFS root and mounts and no-isolation shared compute, all off by default.
+    link: https://docs.databricks.com/aws/en/release-notes/product/2025/december#:~:text=created%20after%20December%2018%2C%202025%20will%20not%20have%20access%20to%20certain%20legacy%20features
+status:
+  value: legacy
+  link: https://docs.databricks.com/aws/en/data-governance/unity-catalog/hive-metastore#:~:text=The%20per%2Dworkspace%20Hive%20metastore%20is%20a%20legacy%20feature
+  date: '2026-07-23'
+from:
+  date: '2015'
+  link: https://docs.databricks.com/aws/en/data-governance/unity-catalog/hive-metastore
+deprecatedAt:
+  date: '2025'
+  link: https://docs.databricks.com/aws/en/data-governance/unity-catalog/hive-metastore
+successorId: unity-catalog
+replacement: Unity Catalog
+links:
+  - url: https://medium.com/@avinash.a.ghanekar/migrating-legacy-hive-metastore-to-unity-catalog-in-databricks-7b79c39d83ea
+    kind: community
+    label: 'Medium: Migrating Hive Metastore to UC'
+source: https://docs.databricks.com/aws/en/data-governance/unity-catalog/hive-metastore
+verified: '2026-07-23'

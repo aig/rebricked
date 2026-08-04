@@ -1,0 +1,29 @@
+id: sql-analytics
+name: SQL Analytics
+category: Compute / BI
+what:
+  note: The SQL query, dashboard, and BI service that let data analysts run data-warehouse-style workloads directly on the data lake.
+  link: https://www.databricks.com/company/newsroom/press-releases/databricks-launches-sql-analytics-to-enable-cloud-data-warehousing-on-data-lakes#:~:text=workloads%20previously%20meant%20only%20for%20a%20data%20warehouse%20on%20a%20data%20lake
+fact:
+  - note: 'Debuted in November 2020 to let analysts run plain BI and reporting workloads directly on the data lake, with a SQL-native query and visualization interface and native connectors for major BI tools like Tableau and Power BI: warehouse habits at lake prices.'
+    link: https://www.databricks.com/company/newsroom/press-releases/databricks-launches-sql-analytics-to-enable-cloud-data-warehousing-on-data-lakes#:~:text=native%20connectors%20for%20all%20major%20BI%20tools
+status:
+  value: renamed
+  link: https://learn.microsoft.com/en-us/azure/databricks/sql/release-notes/2021#:~:text=SQL%20Analytics%20is%20renamed%20to%20Databricks%20SQL.
+  date: '2026-07-18'
+from:
+  date: '2020'
+  link: https://www.databricks.com/blog/2020/11/12/announcing-the-launch-of-databricks-sql.html#:~:text=Announcing%20the%20Launch%20of%20Databricks%20SQL
+to:
+  date: 2021-05
+  link: https://learn.microsoft.com/en-us/azure/databricks/sql/release-notes/2021#:~:text=SQL%20Analytics%20is%20renamed%20to%20Databricks%20SQL.
+successorId: databricks-sql
+links:
+  - url: https://www.databricks.com/blog/2020/11/12/announcing-the-launch-of-databricks-sql.html
+    kind: community
+    label: 'Databricks blog: SQL launch (2020)'
+  - url: https://techcrunch.com/2020/11/12/databricks-launches-sql-analytics-builds-itself-a-lake-house/
+    kind: internet
+    label: 'TechCrunch: SQL Analytics launch'
+source: https://learn.microsoft.com/en-us/azure/databricks/sql/release-notes/2021
+verified: '2026-07-23'

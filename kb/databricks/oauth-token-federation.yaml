@@ -1,0 +1,42 @@
+id: oauth-token-federation
+name: OAuth token federation
+aliases:
+  - token federation
+  - workload identity federation
+category: Developer experience
+what:
+  note: Lets external systems authenticate to Databricks using their own identity provider's OIDC/JWT tokens, exchanged for Databricks access - with no stored Databricks secrets.
+  link: https://docs.databricks.com/aws/en/dev-tools/auth/oauth-federation#:~:text=eliminates%20the%20need%20to%20manage%20and%20rotate%20Databricks%20secrets
+fact:
+  - note: Your own identity provider's OIDC tokens are exchanged for Databricks access on the fly, so there are no Databricks secrets to store, leak, or rotate at all.
+    link: https://docs.databricks.com/aws/en/dev-tools/auth/oauth-federation#:~:text=exchange%20JWT%20%28JSON%20Web%20Tokens%29%20tokens%20from%20your%20identity%20provider
+  - note: OAuth token federation became generally available in August 2025, letting you reach Databricks APIs with tokens from your own identity provider instead of managing Databricks secrets.
+    link: https://docs.databricks.com/aws/en/release-notes/product/2025/august#:~:text=OAuth%20token%20federation%20is%20now%20generally%20available
+status:
+  value: active
+  link: https://docs.databricks.com/aws/en/dev-tools/auth/oauth-federation#:~:text=OAuth%20token%20federation%20is%20a%20simpler%20and%20more%20secure%20method
+  date: '2026-07-18'
+releases:
+  - type: public-preview
+    date: 2025-01
+    link: https://docs.databricks.com/aws/en/release-notes/product/2025/january#:~:text=OAuth%20token%20federation%20is%20now%20available%20in%20Public%20Preview
+  - type: ga
+    date: 2025-08
+    link: https://docs.databricks.com/aws/en/release-notes/product/2025/august#:~:text=OAuth%20token%20federation%20is%20now%20GA
+introducedAt:
+  date: 2025-01
+  link: https://docs.databricks.com/aws/en/release-notes/product/2025/january#:~:text=OAuth%20token%20federation%20is%20now%20available%20in%20Public%20Preview
+limitations:
+  note: Each service principal supports at most 20 federation policies (use separate service principals for separate workloads); the JWT must be signed with RS256 or ES256; and inline JWKS JSON allows at most 5 keys (use a JWKS URI for more).
+  link: https://docs.databricks.com/aws/en/dev-tools/auth/oauth-federation-policy#:~:text=maximum%20of%2020%20service%20principal%20federation%20policies
+  date: '2026-07-23'
+links:
+  - url: https://medium.com/databricks-platform-sme/custom-app-oauth-token-federation-to-databricks-with-entra-c7ddca243cb0
+    kind: community
+    label: 'Medium: OAuth token federation with Entra'
+prediction:
+  - OAuth token confederation
+  - Unity token federation
+  - Genie Auth
+source: https://docs.databricks.com/aws/en/dev-tools/auth/oauth-federation
+verified: '2026-07-23'

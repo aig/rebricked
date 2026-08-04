@@ -1,0 +1,42 @@
+id: new-sql-editor
+name: New SQL editor
+aliases:
+  - SQL editor
+  - Databricks SQL editor
+category: Compute / BI
+what:
+  note: The redesigned Databricks SQL query editor, with multi-statement tabs, inline results, and Genie-assisted authoring.
+  link: https://docs.databricks.com/aws/en/sql/user/sql-editor/#:~:text=Run%20single%20or%20multi%2Dstatement%20queries%2C%20share%20them
+fact:
+  - note: It runs single or multi-statement queries and lets you chat with Genie Code to write, refine, or understand queries right in the editor.
+    link: https://docs.databricks.com/aws/en/sql/user/sql-editor/#:~:text=Chat%20with%20Genie%20Code%20to%20help%20you%20write%2C%20refine
+  - note: It became the default editor for every workspace in late May 2026.
+    link: https://docs.databricks.com/aws/en/sql/user/sql-editor/#:~:text=will%20be%20enabled%20by%20default%20for%20all%20workspaces
+status:
+  value: active
+  link: https://docs.databricks.com/aws/en/sql/user/sql-editor/#:~:text=the%20new%20SQL%20editor%20will%20be%20enabled%20by%20default%20for%20all%20workspaces
+  date: '2026-07-18'
+releases:
+  - type: ga
+    date: 2026-05
+    link: https://docs.databricks.com/aws/en/sql/user/sql-editor/#:~:text=Starting%20in%20late%20May%202026%2C%20the%20new%20SQL%20editor
+introducedAt:
+  date: '2025'
+  link: https://www.databricks.com/blog/introducing-new-sql-editor#:~:text=general%20availability%20of%20the%20new%20SQL%20editor
+limitations:
+  note: Can't be used for queries you don't own or that contain query-based dropdown lists, and shared query results are limited to 64000 rows.
+  link: https://docs.databricks.com/aws/en/sql/user/sql-editor/#:~:text=limited%20to%2064%2C000%20rows
+  date: '2026-07-23'
+links:
+  - url: https://www.databricks.com/blog/introducing-new-sql-editor
+    kind: community
+    label: 'Databricks Blog: Introducing the New SQL Editor'
+  - url: https://nidhig631.medium.com/databricks-the-new-sql-editor-cdd471b2960a
+    kind: community
+    label: 'Medium: The New SQL Editor'
+prediction:
+  - Genie SQL editor
+  - Lakeflow SQL editor
+  - SQL editor One
+source: https://docs.databricks.com/aws/en/sql/user/sql-editor/
+verified: '2026-07-23'

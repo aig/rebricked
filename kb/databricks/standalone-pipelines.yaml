@@ -1,0 +1,39 @@
+id: standalone-pipelines
+name: Standalone pipelines
+aliases:
+  - DBSQL pipelines
+  - Pipelines on Databricks SQL
+category: Data engineering
+what:
+  note: Declarative pipelines - materialized views and streaming tables - created from a notebook on serverless general compute, in SQL or Python.
+  link: https://docs.databricks.com/aws/en/ldp/dbsql/compute#:~:text=standalone%20materialized%20views%20and%20streaming%20tables%20from%20a%20notebook
+fact:
+  - note: Renamed from "Pipelines for Databricks SQL," they let you build materialized views and streaming tables straight from a notebook on serverless general compute, in SQL or Python, with no dedicated pipeline cluster to stand up.
+    link: https://docs.databricks.com/aws/en/ldp/dbsql/dbsql-for-ldp#:~:text=from%20a%20notebook%20running%20on%20serverless%20general%20compute
+  - note: They were previously called "Pipelines for Databricks SQL" - renamed once they could also run from a notebook on serverless general compute, not just a SQL warehouse.
+    link: https://docs.databricks.com/aws/en/ldp/dbsql/dbsql-for-ldp#:~:text=This%20section%20was%20previously%20called
+status:
+  value: active
+  link: https://docs.databricks.com/aws/en/ldp/dbsql/compute#:~:text=apply%20to%20all%20standalone%20pipelines
+  date: '2026-07-23'
+releases:
+  - type: beta
+    date: 2026-05
+    link: https://docs.databricks.com/aws/en/release-notes/product/2026/may#:~:text=Standalone%20pipelines%20are%20in%20Beta.
+introducedAt:
+  date: 2026-05
+  link: https://docs.databricks.com/aws/en/release-notes/product/2026/may#:~:text=Standalone%20pipelines%20are%20in%20Beta.
+limitations:
+  note: 'On serverless general compute: only the table owner can refresh; synchronous refresh only (no async); current channel only (no preview); a table refreshes only with the compute type it was created with; and cost attribution, vertical autoscaling on out-of-memory errors, schema-upgrade retries, and performance-mode selection aren''t available.'
+  link: https://docs.databricks.com/aws/en/ldp/dbsql/compute#:~:text=Only%20the%20table%20owner%20can%20refresh%20the%20table
+  date: '2026-07-23'
+links:
+  - url: https://docs.databricks.com/aws/en/release-notes/product/2026/may
+    kind: official
+    label: 'Databricks release notes: Standalone pipelines Beta (May 2026)'
+prediction:
+  - Serverless Pipelines
+  - Lakeflow Standalone
+  - Notebook Pipelines
+source: https://docs.databricks.com/aws/en/ldp/dbsql/compute
+verified: '2026-07-23'

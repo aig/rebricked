@@ -1,0 +1,47 @@
+id: lakeflow-jobs
+name: Lakeflow Jobs
+aliases:
+  - Workflows
+  - Jobs
+  - Jobs & Pipelines
+category: Data engineering
+what:
+  note: Orchestration for multi-task jobs and pipelines.
+  link: https://learn.microsoft.com/en-us/azure/databricks/jobs/#:~:text=providing%20orchestration%20for%20data%20processing%20workloads
+fact:
+  - note: A single job can chain notebooks, SQL, Python, dbt, and even other jobs into one dependency graph - Databricks' original orchestrator, now reunited with pipelines under the Lakeflow umbrella.
+    link: https://learn.microsoft.com/en-us/azure/databricks/jobs/#:~:text=visually%20represented%20by%20a%20Directed%20Acyclic%20Graph
+  - note: In the console it now lives under a combined 'Jobs & Pipelines' section of the sidebar.
+    link: https://docs.databricks.com/aws/en/jobs/jobs-quickstart#:~:text=Jobs%20%26%20Pipelines%20in%20the%20sidebar
+status:
+  value: active
+  link: https://learn.microsoft.com/en-us/azure/databricks/jobs/#:~:text=Lakeflow%20Jobs%20is%20workflow%20automation%20for%20Azure%20Databricks
+  date: '2026-07-18'
+releases:
+  - type: ga
+    date: '2025'
+    link: https://docs.databricks.com/aws/en/release-notes/product/2025/june
+from:
+  date: '2025'
+  link: https://docs.databricks.com/aws/en/release-notes/product/2025/june#:~:text=Databricks%20Jobs%20is%20now%20Lakeflow%20Jobs
+occasion:
+  date: '2025'
+  link: https://docs.databricks.com/aws/en/release-notes/product/2025/june
+  note: Lakeflow GA, 2025
+limitations:
+  note: A workspace is limited to 2000 concurrent task runs, 10000 job creations per hour, 12000 saved jobs, and 1000 tasks per job; job parameters using dynamic values are capped at 10000 characters.
+  link: https://docs.databricks.com/aws/en/jobs/#:~:text=A%20workspace%20is%20limited%20to%202000%20concurrent%20task%20runs
+  date: '2026-07-23'
+links:
+  - url: https://www.databricks.com/blog/whats-new-lakeflow-jobs-provides-more-efficient-data-orchestration
+    kind: community
+    label: 'Databricks Blog: What''s New Lakeflow Jobs'
+  - url: https://dataplatforms.ca/databricks-lakeflow/
+    kind: internet
+    label: 'Revolution Data Platforms: Lakeflow'
+prediction:
+  - Genie Jobs
+  - Lakeflow Agentic Jobs
+  - Jobs One
+source: https://learn.microsoft.com/en-us/azure/databricks/jobs/
+verified: '2026-07-23'

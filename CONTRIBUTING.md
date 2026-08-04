@@ -20,7 +20,28 @@ feature or the current name of a rename is *calculated*, not stored - a feature 
 own `introducedAt`; the current tip of a rename chain carries `from`. `status` is what the
 validator branches on to decide the entry's shape.
 
-Add one object to [`databricks.features.json`](www/databricks.features.json). That's the whole PR.
+## Where the data lives
+
+Add one YAML file per entry under [`kb/databricks/`](kb/databricks/), named `<id>.yaml`. That's
+the whole PR. `www/databricks.features.json` - the array the page fetches - is **build output**:
+`scripts/build_features.py` assembles it from `kb/`, it's gitignored, and CI regenerates it before
+validating and deploying. Editing it directly does nothing; your change gets overwritten.
+
+One file per entry keeps a change legible: adding a rename is a new file plus a one-line
+`successorId` edit on its predecessor, instead of a hunk in the middle of a 2,500-line array. And
+`git log kb/databricks/delta-live-tables.yaml` is that entry's whole history.
+
+```bash
+pip install pyyaml                    # one-time; the only dependency, and only for the build
+python scripts/build_features.py      # kb/*.yaml -> www/databricks.features.json
+python scripts/validate.py            # the schema gate CI runs
+python -m http.server 8777 -d www     # preview at http://localhost:8777/
+```
+
+YAML house style: two-space indent, `-` for lists, **one line per value** (don't wrap long notes
+or URLs - reflowed text makes noisy diffs), and quote values YAML would otherwise read as a number
+or date - `date: '2021'` and `verified: '2026-08-04'` need quotes; a bare `date: 2021-05` doesn't.
+Every field rule below is unchanged from when this was one big JSON file.
 
 ## Add a rename
 
@@ -30,87 +51,142 @@ current name, carrying a `from` date) plus one `"renamed"` card per former name 
 feature - what marks it as a rename tip is the `renamed` card pointing at it, so it's derived,
 not stored.
 
-```json
-{
-  "id": "old-name",
-  "name": "Old Name",
-  "abbr": "ON",
-  "category": "Data engineering",
-  "what": { "note": "One line: what the thing was under this name.", "link": "https://docs.databricks.com/..." },
-  "fact": [
-    { "note": "Self-contained real-but-fun one-liner about THIS name - don't mention the newer name.", "link": "https://docs.databricks.com/..." }
-  ],
-  "from": { "date": "2021", "link": "https://docs.databricks.com/..." },
-  "to": { "date": "2023", "link": "https://docs.databricks.com/..." },
-  "successorId": "the-newest-name",
-  "status": { "value": "renamed", "link": "https://docs.databricks.com/...", "date": "YYYY-MM-DD" },
-  "source": "https://docs.databricks.com/...",
-  "verified": "YYYY-MM-DD"
-},
-{
-  "id": "the-newest-name",
-  "name": "The Newest Name",
-  "aliases": ["What people actually type", "ABBR"],
-  "category": "Data engineering",
-  "what": { "note": "One line: what the thing is.", "link": "https://docs.databricks.com/..." },
-  "fact": [
-    { "note": "Real-but-fun one-liner about the current thing - funny, but true and sourceable.", "link": "https://docs.databricks.com/..." },
-    { "note": "A second sourced fun fact (optional) - up to three total, each with its own link.", "link": "https://docs.databricks.com/..." }
-  ],
-  "from": { "date": "2023", "link": "https://docs.databricks.com/..." },
-  "status": { "value": "active", "link": "https://docs.databricks.com/...", "date": "YYYY-MM-DD" },
-  "occasion": { "date": "2023", "link": "https://docs.databricks.com/...", "note": "Where it was announced, e.g. Data + AI Summit 2023 (optional)." },
-  "source": "https://docs.databricks.com/...",
-  "verified": "YYYY-MM-DD"
-}
+`kb/databricks/old-name.yaml`:
+
+```yaml
+id: old-name
+name: Old Name
+abbr: ON
+category: Data engineering
+what:
+  note: 'One line: what the thing was under this name.'
+  link: https://docs.databricks.com/...
+fact:
+  - note: Self-contained real-but-fun one-liner about THIS name - don't mention the newer name.
+    link: https://docs.databricks.com/...
+status:
+  value: renamed
+  link: https://docs.databricks.com/...
+  date: 'YYYY-MM-DD'
+from:
+  date: '2021'
+  link: https://docs.databricks.com/...
+to:
+  date: '2023'
+  link: https://docs.databricks.com/...
+successorId: the-newest-name
+source: https://docs.databricks.com/...
+verified: 'YYYY-MM-DD'
+```
+
+`kb/databricks/the-newest-name.yaml`:
+
+```yaml
+id: the-newest-name
+name: The Newest Name
+aliases:
+  - What people actually type
+  - ABBR
+category: Data engineering
+what:
+  note: 'One line: what the thing is.'
+  link: https://docs.databricks.com/...
+fact:
+  - note: Real-but-fun one-liner about the current thing - funny, but true and sourceable.
+    link: https://docs.databricks.com/...
+  - note: A second sourced fun fact (optional) - up to three total, each with its own link.
+    link: https://docs.databricks.com/...
+status:
+  value: active
+  link: https://docs.databricks.com/...
+  date: 'YYYY-MM-DD'
+from:
+  date: '2023'
+  link: https://docs.databricks.com/...
+occasion:
+  date: '2023'
+  link: https://docs.databricks.com/...
+  note: Where it was announced, e.g. Data + AI Summit 2023 (optional).
+source: https://docs.databricks.com/...
+verified: 'YYYY-MM-DD'
 ```
 
 ## Add a deprecation
 
-```json
-{
-  "id": "the-retired-thing",
-  "name": "The Retired Thing",
-  "aliases": ["what people type", "/legacy/path"],
-  "replacement": "What To Use Instead",
-  "successorId": "id-of-the-successor-card (optional)",
-  "category": "Developer experience",
-  "what": { "note": "One line: what the thing was.", "link": "https://docs.databricks.com/..." },
-  "fact": [
-    { "note": "Real-but-fun one-liner about the feature - funny, but the fact must be true and sourceable.", "link": "https://docs.databricks.com/..." }
-  ],
-  "deprecatedAt": { "date": "2024", "link": "https://docs.databricks.com/..." },
-  "removedAt": { "date": "2026-01", "link": "https://docs.databricks.com/..." },
-  "status": { "value": "deprecated", "link": "https://docs.databricks.com/...", "date": "YYYY-MM-DD" },
-  "occasion": { "date": "2026-01", "link": "https://docs.databricks.com/...", "note": "End of life, if any (optional)." },
-  "source": "https://docs.databricks.com/...",
-  "verified": "YYYY-MM-DD"
-}
+`kb/databricks/the-retired-thing.yaml`:
+
+```yaml
+id: the-retired-thing
+name: The Retired Thing
+aliases:
+  - what people type
+  - /legacy/path
+category: Developer experience
+what:
+  note: 'One line: what the thing was.'
+  link: https://docs.databricks.com/...
+fact:
+  - note: Real-but-fun one-liner about the feature - funny, but the fact must be true and sourceable.
+    link: https://docs.databricks.com/...
+status:
+  value: deprecated
+  link: https://docs.databricks.com/...
+  date: 'YYYY-MM-DD'
+deprecatedAt:
+  date: '2024'
+  link: https://docs.databricks.com/...
+removedAt:
+  date: 2026-01
+  link: https://docs.databricks.com/...
+successorId: id-of-the-successor-card (optional)
+replacement: What To Use Instead
+occasion:
+  date: 2026-01
+  link: https://docs.databricks.com/...
+  note: End of life, if any (optional).
+source: https://docs.databricks.com/...
+verified: 'YYYY-MM-DD'
 ```
 
 ## Add a feature
 
-```json
-{
-  "id": "the-new-thing",
-  "name": "The New Thing",
-  "aliases": ["what people type", "ABBR"],
-  "category": "Data engineering",
-  "what": { "note": "One line: what the thing is.", "link": "https://docs.databricks.com/..." },
-  "fact": [
-    { "note": "Real-but-fun one-liner about the feature - funny, but the fact must be true and sourceable.", "link": "https://docs.databricks.com/..." }
-  ],
-  "introducedAt": { "date": "2024", "link": "https://docs.databricks.com/..." },
-  "status": { "value": "active", "link": "https://docs.databricks.com/...", "date": "YYYY-MM-DD" },
-  "releases": [
-    { "type": "public-preview", "date": "2024-03" },
-    { "type": "ga", "date": "2024-11" }
-  ],
-  "occasion": { "date": "2024-11", "link": "https://docs.databricks.com/...", "note": "Where/when it shipped, e.g. GA at Data + AI Summit (optional)." },
-  "limitations": { "note": "Documented caveats - omit when the docs list none.", "link": "https://docs.databricks.com/...", "date": "YYYY-MM-DD" },
-  "source": "https://docs.databricks.com/...",
-  "verified": "YYYY-MM-DD"
-}
+`kb/databricks/the-new-thing.yaml`:
+
+```yaml
+id: the-new-thing
+name: The New Thing
+aliases:
+  - what people type
+  - ABBR
+category: Data engineering
+what:
+  note: 'One line: what the thing is.'
+  link: https://docs.databricks.com/...
+fact:
+  - note: Real-but-fun one-liner about the feature - funny, but the fact must be true and sourceable.
+    link: https://docs.databricks.com/...
+status:
+  value: active
+  link: https://docs.databricks.com/...
+  date: 'YYYY-MM-DD'
+releases:
+  - type: public-preview
+    date: 2024-03
+  - type: ga
+    date: 2024-11
+introducedAt:
+  date: '2024'
+  link: https://docs.databricks.com/...
+occasion:
+  date: 2024-11
+  link: https://docs.databricks.com/...
+  note: Where/when it shipped, e.g. GA at Data + AI Summit (optional).
+limitations:
+  note: Documented caveats - omit when the docs list none.
+  link: https://docs.databricks.com/...
+  date: 'YYYY-MM-DD'
+source: https://docs.databricks.com/...
+verified: 'YYYY-MM-DD'
 ```
 
 ### Field rules
@@ -204,13 +280,14 @@ not stored.
   about the feature, not its pricing, and self-contained. The UI renders each as its own 💡 row.
   (There is **no** top-level `note` field - it was folded into this array and removed.)
 - `id` is the kebab-case slug of the entry's own `name`, with any parenthetical qualifier
-  dropped, and unique across the whole file (all entries share one namespace). Examples:
-  `"Unity Catalog Volumes"` → `unity-catalog-volumes`;
-  `"Attribute-based access control (ABAC)"` → `attribute-based-access-control`. The validator
-  enforces this. **Ids are permanent:** once assigned, an id never changes - not to fix a
-  mismatch, not on a later rename. A rename adds a *new* card with the new name's slug and
-  points the old card's `successorId` at it; the old card keeps its id. Never re-slug an
-  existing entry.
+  dropped, unique across the vendor (all entries share one namespace), **and it is the
+  filename**: `kb/databricks/<id>.yaml`. Examples:
+  `"Unity Catalog Volumes"` → `unity-catalog-volumes.yaml`;
+  `"Attribute-based access control (ABAC)"` → `attribute-based-access-control.yaml`. The build
+  fails if `id` and filename disagree; the validator enforces the slug rule. **Ids are
+  permanent:** once assigned, an id never changes - not to fix a mismatch, not on a later rename.
+  A rename adds a *new* file with the new name's slug and points the old card's `successorId` at
+  it; the old card keeps its id and filename. Never re-slug or `git mv` an existing entry.
 - **Date-bearing fields are `{ "date", "link" }` objects, not bare strings.** `from`, `to`,
   `introducedAt`, `deprecatedAt`, and `removedAt` each carry the date **plus** the official doc
   confirming it - the same pattern as `status`/`occasion`. `date` is `YYYY` or `YYYY-MM`; `link`

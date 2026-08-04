@@ -1,0 +1,38 @@
+id: secureconnect
+name: SecureConnect
+aliases:
+  - OpenSharing SecureConnect
+category: Data governance
+what:
+  note: An OpenSharing option that lets a provider share data from cloud storage behind a firewall or private endpoint without allowlisting each recipient's network.
+  link: https://docs.databricks.com/aws/en/opensharing/secureconnect-provider#:~:text=storage%20behind%20a%20firewall%20or%20private%20endpoint
+fact:
+  - note: It lets a provider share data from storage behind a firewall or private endpoint without adding each collaborator's network to an allowlist, and it works for clean rooms too - Databricks brokers the connection through a managed proxy.
+    link: https://docs.databricks.com/aws/en/clean-rooms/manage-clean-room#:~:text=storage%20behind%20a%20firewall%20or%20private%20endpoint
+  - note: It debuted as 'OpenSharing SecureConnect' in June 2026.
+    link: https://docs.databricks.com/aws/en/release-notes/product/2026/june#:~:text=use%20OpenSharing%20SecureConnect%20to%20share%20data
+status:
+  value: active
+  link: https://docs.databricks.com/aws/en/opensharing/secureconnect-provider#:~:text=providers%20set%20up%20OpenSharing%20SecureConnect%20to%20share%20data
+  date: '2026-07-23'
+releases:
+  - type: public-preview
+    date: 2026-06
+    link: https://docs.databricks.com/aws/en/release-notes/product/2026/june#:~:text=Share%20data%20behind%20a%20firewall%20with%20SecureConnect%20%28Public%20Preview%29
+introducedAt:
+  date: 2026-06
+  link: https://docs.databricks.com/aws/en/release-notes/product/2026/june#:~:text=Share%20data%20behind%20a%20firewall%20with%20SecureConnect%20%28Public%20Preview%29
+limitations:
+  note: Assets can't be backed by Cloudflare R2; not available on AWS GovCloud; and AWS PrivateLink to S3 isn't compatible with the FIPS endpoints Databricks uses by default in US regions. Recipient-side limits (such as mTLS support) also apply.
+  link: https://docs.databricks.com/aws/en/opensharing/secureconnect-provider#:~:text=can%27t%20be%20backed%20by%20Cloudflare%20R2%20storage
+  date: '2026-07-23'
+links:
+  - url: https://docs.databricks.com/aws/en/release-notes/product/2026/june
+    kind: official
+    label: 'Databricks release notes: SecureConnect Public Preview (June 2026)'
+prediction:
+  - OpenSharing Private
+  - Delta SecureShare
+  - Firewall Sharing
+source: https://docs.databricks.com/aws/en/opensharing/secureconnect-provider
+verified: '2026-07-23'

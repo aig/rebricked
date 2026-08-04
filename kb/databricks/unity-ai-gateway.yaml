@@ -1,0 +1,44 @@
+id: unity-ai-gateway
+name: Unity AI Gateway
+aliases:
+  - AI Gateway
+category: AI / ML
+what:
+  note: 'Databricks'' governance solution for enterprise AI: a central control plane over model serving endpoints and AI traffic that sets permissions, rate limits, traffic routing, payload logging, and safety guardrails across the models, agents, and tools an organization uses.'
+  link: https://docs.databricks.com/aws/en/ai-gateway/#:~:text=the%20Databricks%20governance%20solution%20for%20enterprise%20AI
+fact:
+  - note: 'It bolts governance onto model serving without touching the model: flip it on and every request through an endpoint gets rate-limited, guardrailed, and logged to an inference table - and if an external model fails, it can fall back to another one on the same endpoint.'
+    link: https://docs.databricks.com/aws/en/ai-gateway/#:~:text=Service%20policies%2C%20also%20called%20guardrails
+  - note: At Data + AI Summit 2026 it stretched past models to govern agents and tools too, launching Contextual Service Policies and a managed 'Omnigent' runtime - both in Beta.
+    link: https://www.databricks.com/blog/ai-governance-data-ai-summit-2026-whats-new-unity-ai-gateway#:~:text=Contextual%20Service%20Policies
+status:
+  value: active
+  link: https://docs.databricks.com/aws/en/ai-gateway/#:~:text=Unity%20AI%20Gateway
+  date: '2026-07-24'
+releases:
+  - type: public-preview
+    date: 2024-09
+    link: https://docs.databricks.com/aws/en/release-notes/product/2024/september#:~:text=Mosaic%20AI%20Gateway%20is%20now%20Public%20Preview
+  - type: ga
+    date: 2025-06
+    link: https://docs.databricks.com/aws/en/release-notes/product/2025/june#:~:text=Mosaic%20AI%20Gateway%20is%20now%20generally%20available
+from:
+  date: 2026-06
+  link: https://www.databricks.com/blog/ai-governance-data-ai-summit-2026-whats-new-unity-ai-gateway#:~:text=Unity%20AI%20Gateway
+occasion:
+  date: 2026-06
+  link: https://www.databricks.com/blog/ai-governance-data-ai-summit-2026-whats-new-unity-ai-gateway
+  note: Rebranded Unity AI Gateway at Data + AI Summit 2026
+links:
+  - url: https://www.databricks.com/blog/ai-governance-data-ai-summit-2026-whats-new-unity-ai-gateway
+    kind: official
+    label: 'Databricks Blog: Unity AI Gateway at DAIS 2026'
+  - url: https://docs.databricks.com/aws/en/release-notes/product/2025/june
+    kind: official
+    label: 'Databricks release notes: AI Gateway GA (June 2025)'
+prediction:
+  - Genie AI Gateway
+  - Agent Control Plane
+  - MCP Gateway
+source: https://docs.databricks.com/aws/en/ai-gateway/
+verified: '2026-07-24'

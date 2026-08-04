@@ -1,0 +1,32 @@
+id: data-explorer
+name: Data Explorer
+category: Data governance
+what:
+  note: In-workspace UI for browsing Unity Catalog data - schemas and tables - viewing sample data, and handing out grants.
+  link: https://docs.databricks.com/aws/en/catalog-explorer/#:~:text=a%20UI%20to%20explore%20and%20manage%20data
+fact:
+  - note: 'The point-and-click window into Unity Catalog: browse schemas, peek at sample data and hand out grants without writing a line of SQL.'
+    link: https://docs.databricks.com/aws/en/catalog-explorer/#:~:text=view%20schema%20details%2C%20preview%20sample%20data
+status:
+  value: renamed
+  link: https://docs.databricks.com/aws/en/release-notes/product/2023/september#:~:text=Data%20Explorer%20is%20renamed%20to%20Catalog%20Explorer
+  date: '2026-07-23'
+from:
+  date: '2022'
+  link: https://docs.databricks.com/aws/en/catalog-explorer/
+to:
+  date: 2023-09
+  link: https://docs.databricks.com/aws/en/release-notes/product/2023/september#:~:text=Data%20Explorer%20is%20renamed%20to%20Catalog%20Explorer
+successorId: catalog-explorer
+links:
+  - url: https://www.databricks.com/blog/accelerating-discovery-unity-catalog-revamped-catalog-explorer
+    kind: community
+    label: 'Databricks Blog: revamped Catalog Explorer'
+  - url: https://community.databricks.com/t5/data-engineering/data-explorer-minimum-permissions/td-p/6689
+    kind: community
+    label: 'Community: Data Explorer permissions'
+  - url: https://campus.datacamp.com/courses/data-management-in-databricks/data-exploration-and-security?ex=1
+    kind: internet
+    label: 'DataCamp: exploring with Data Explorer'
+source: https://docs.databricks.com/aws/en/catalog-explorer/
+verified: '2026-08-03'

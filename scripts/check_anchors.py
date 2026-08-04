@@ -207,7 +207,12 @@ def main(argv=None):
                          "wall is not evidence that a link is broken)")
     args = ap.parse_args(argv)
 
-    data = json.loads(DATA.read_text(encoding="utf-8"))
+    try:
+        data = json.loads(DATA.read_text(encoding="utf-8"))
+    except FileNotFoundError:
+        print(f"FATAL: {DATA.name} not found - it is built from kb/. Run first:")
+        print("       python scripts/build_features.py")
+        return 1
     wanted = set(args.ids)
     if wanted:
         unknown = sorted(wanted - {e.get("id") for e in data})

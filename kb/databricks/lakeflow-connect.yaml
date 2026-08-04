@@ -1,0 +1,51 @@
+id: lakeflow-connect
+name: Lakeflow Connect
+aliases:
+  - Lakeflow ingestion
+  - managed connectors
+category: Data engineering
+what:
+  note: 'The managed data-ingestion component of Lakeflow: point-and-click connectors that pull data from SaaS apps and databases (Salesforce, Workday, ServiceNow, SQL Server, PostgreSQL and more) into Unity Catalog on serverless compute, with incremental reads via change data capture.'
+  link: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/#:~:text=ingesting%20data%20from%20SaaS%20applications%20and%20databases
+fact:
+  - note: Its database connectors do change data capture - reading only the rows that changed - so a full table isn't re-copied on every sync.
+    link: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/#:~:text=change%20data%20capture
+  - note: It was unveiled alongside the rest of Lakeflow at the 2024 Data + AI Summit, but the first connectors (Salesforce Platform and Workday Reports) didn't reach GA until April 2, 2025.
+    link: https://www.databricks.com/blog/announcing-general-availability-lakeflow-connect#:~:text=General%20Availability%20of%20Lakeflow%20Connect%20for%20Salesforce%20Platform%20and%20Workday%20Reports
+  - note: 'Some of its muscle came from acquisition: Databricks agreed to buy real-time replication startup Arcion in 2023 to help power native database ingestion.'
+    link: https://www.databricks.com/company/newsroom/press-releases/databricks-agrees-acquire-arcion-leading-provider-real-time#:~:text=Arcion
+status:
+  value: active
+  link: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/#:~:text=Lakeflow%20Connect
+  date: '2026-07-24'
+releases:
+  - type: public-preview
+    date: '2024'
+    link: https://www.databricks.com/company/newsroom/press-releases/introducing-databricks-lakeflow-unified-intelligent-solution-data#:~:text=preview
+  - type: ga
+    date: 2025-04
+    link: https://www.databricks.com/blog/announcing-general-availability-lakeflow-connect#:~:text=General%20Availability%20of%20Lakeflow%20Connect
+introducedAt:
+  date: 2024-06
+  link: https://www.databricks.com/company/newsroom/press-releases/introducing-databricks-lakeflow-unified-intelligent-solution-data#:~:text=LakeFlow%20Connect
+occasion:
+  date: 2024-06
+  link: https://www.databricks.com/company/newsroom/press-releases/introducing-databricks-lakeflow-unified-intelligent-solution-data
+  note: Unveiled with Lakeflow at Data + AI Summit 2024
+limitations:
+  note: Some sources and specific tables don't support incremental ingestion, and because connectors depend on external services Databricks may discontinue or stop maintaining one if upstream changes make it impractical; expired source credentials cause ingestion failures.
+  link: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/#:~:text=don%27t%20support%20incremental%20ingestion
+  date: '2026-07-24'
+links:
+  - url: https://www.databricks.com/blog/announcing-general-availability-databricks-lakeflow
+    kind: official
+    label: 'Databricks Blog: Lakeflow GA (June 2025)'
+  - url: https://www.databricks.com/blog/announcing-sql-server-connector-lakeflow-connect-now-generally-available
+    kind: community
+    label: 'Databricks Blog: SQL Server connector GA'
+prediction:
+  - Lakeflow Connect One
+  - Genie Connect
+  - Zerobus Connect
+source: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/
+verified: '2026-08-03'

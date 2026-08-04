@@ -1,0 +1,52 @@
+id: lakebase
+name: Lakebase
+aliases:
+  - Lakebase Postgres
+  - OLTP Database
+  - Databricks Postgres
+category: Data engineering
+what:
+  note: A fully managed, serverless Postgres (OLTP) database integrated into the Databricks platform, for building real-time transactional apps alongside lakehouse data.
+  link: https://docs.databricks.com/aws/en/oltp/#:~:text=a%20fully%20managed%20Postgres%20database%20integrated%20into%20the%20Databricks%20platform
+fact:
+  - note: It's a managed serverless Postgres for transactional apps - with instant database branching, so you can fork a whole database's worth of state in seconds.
+    link: https://docs.databricks.com/aws/en/oltp/#:~:text=Create%20a%20new%20branch%20from%20any%20point%20in%20time
+  - note: In August 2025 the Compute section's 'OLTP Database' tab was quietly renamed 'Lakebase Postgres.'
+    link: https://docs.databricks.com/aws/en/release-notes/product/2025/august#:~:text=renamed%20to%20Lakebase%20Postgres
+  - note: You can debug it by talking to it - database issues and early warnings surface as Insights and you investigate them conversationally with Genie, all fed by database telemetry captured into Unity Catalog.
+    link: https://docs.databricks.com/aws/en/release-notes/product/2026/july#:~:text=Both%20draw%20on%20database%20telemetry%20captured%20to%20Unity%20Catalog
+status:
+  value: active
+  link: https://docs.databricks.com/aws/en/oltp/#:~:text=a%20fully%20managed%20Postgres%20database
+  date: '2026-07-18'
+releases:
+  - type: public-preview
+    date: 2025-06
+    link: https://www.databricks.com/blog/announcing-lakebase-public-preview#:~:text=the%20Public%20Preview%20of%20Databricks%20Lakebase
+  - type: ga
+    date: 2026-01
+    link: https://docs.databricks.com/aws/en/release-notes/product/2026/january#:~:text=Lakebase%20is%20now%20generally%20available
+introducedAt:
+  date: 2026-02
+  link: https://www.databricks.com/blog/databricks-lakebase-generally-available#:~:text=Databricks%20Lakebase%2C%20the%20first%20implementation%20of%20this%20category%2C%20is%20Generally%20Available%20on%20AWS
+occasion:
+  date: 2026-02
+  link: https://www.databricks.com/blog/databricks-lakebase-generally-available#:~:text=Databricks%20Lakebase%2C%20the%20first%20implementation%20of%20this%20category%2C%20is%20Generally%20Available%20on%20AWS
+  note: GA February 2026
+limitations:
+  note: 'Lakebase Postgres Autoscaling enforces per-project limits: a default of 20 concurrently active computes (the default branch is exempt), up to 500 branches, 500 Postgres roles, and 500 databases per branch, a 16 TB storage quota per branch, and up to 1000 projects per workspace.'
+  link: https://learn.microsoft.com/en-us/azure/databricks/oltp/projects/manage-projects#limits#:~:text=20%20concurrently%20active%20computes%20per%20project
+  date: '2026-07-23'
+links:
+  - url: https://www.databricks.com/blog/announcing-lakebase-public-preview
+    kind: community
+    label: 'Databricks Blog: Lakebase Public Preview'
+  - url: https://www.infoq.com/news/2026/02/databricks-lakebase-postgresql/
+    kind: internet
+    label: 'InfoQ: Databricks Lakebase Postgres'
+prediction:
+  - Lakebase One
+  - Genie Base
+  - Lakehouse Postgres
+source: https://docs.databricks.com/aws/en/oltp/
+verified: '2026-08-03'

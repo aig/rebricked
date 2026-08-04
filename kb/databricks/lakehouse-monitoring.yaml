@@ -1,0 +1,46 @@
+id: lakehouse-monitoring
+name: Lakehouse Monitoring
+aliases:
+  - Databricks Lakehouse Monitoring
+category: Data governance
+what:
+  note: 'Databricks'' built-in data and model quality monitoring: out-of-the-box summary statistics, changes in distribution over time, and model performance metrics for tables in the platform.'
+  link: https://docs.databricks.com/aws/en/release-notes/product/2023/august#:~:text=integrates%20data%20and%20model%20quality%20monitoring%20into%20the%20Databricks%20platform
+fact:
+  - note: It shipped with fairness and bias metrics in the box, so the same monitor you set up to catch stale numbers could also tell you your model was discriminating.
+    link: https://docs.databricks.com/aws/en/release-notes/product/2023/august#:~:text=including%20fairness%20and%20bias
+  - note: 'You never had to build the dashboard: it generated a summary dashboard for you automatically, then let you hang alerts off the data behind it.'
+    link: https://docs.databricks.com/aws/en/release-notes/product/2023/august#:~:text=automatically%20generates%20a%20summary%20dashboard
+  - note: 'The name outlived the docs that used it: Databricks'' own product page for this capability still answers at a /lakehouse-monitoring URL.'
+    link: https://www.databricks.com/product/machine-learning/lakehouse-monitoring
+status:
+  value: renamed
+  link: https://docs.databricks.com/aws/en/data-governance/unity-catalog/data-quality-monitoring/#:~:text=Data%20profiling%20was%20formerly%20known%20as%20Lakehouse%20Monitoring
+  date: '2026-08-03'
+releases:
+  - type: public-preview
+    date: 2023-08
+    link: https://docs.databricks.com/aws/en/release-notes/product/2023/august#:~:text=Lakehouse%20Monitoring%20is%20Public%20Preview
+  - type: ga
+    date: 2024-06
+    link: https://docs.databricks.com/aws/en/release-notes/product/2024/june#:~:text=Lakehouse%20Monitoring%20is%20GA
+from:
+  date: 2023-08
+  link: https://docs.databricks.com/aws/en/release-notes/product/2023/august#:~:text=Lakehouse%20Monitoring%20is%20Public%20Preview
+to:
+  date: 2026-02
+  link: https://docs.databricks.com/aws/en/release-notes/product/2026/february#:~:text=Data%20Quality%20Monitoring%20Anomaly%20Detection%20is%20now%20in%20Public%20Preview
+successorId: data-profiling
+links:
+  - url: https://docs.databricks.com/aws/en/release-notes/product/2024/june
+    kind: official
+    label: 'Databricks release notes: Lakehouse Monitoring is GA (June 2024)'
+  - url: https://www.databricks.com/blog/lakehouse-monitoring-ga-profiling-diagnosing-and-enforcing-data-quality-intelligence
+    kind: community
+    label: 'Databricks Blog: Lakehouse Monitoring GA'
+prediction:
+  - Genie Monitoring
+  - Unity Quality Monitoring
+  - Lakehouse Observability
+source: https://docs.databricks.com/aws/en/release-notes/product/2023/august
+verified: '2026-08-03'

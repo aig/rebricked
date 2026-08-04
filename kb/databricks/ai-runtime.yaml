@@ -1,0 +1,49 @@
+id: ai-runtime
+name: AI Runtime (GPU serverless)
+aliases:
+  - AI Runtime
+  - Serverless GPU compute
+category: Compute / BI
+what:
+  note: GPU support for Databricks serverless compute - on-demand accelerators for deep-learning training and fine-tuning, single-node and multi-node, with no clusters to provision.
+  link: https://docs.databricks.com/aws/en/machine-learning/ai-runtime/#:~:text=brings%20GPU%20support%20for%20Databricks%20Serverless
+fact:
+  - note: It puts on-demand H100s behind serverless compute, so a deep-learning job spins up GPUs without anyone sizing a cluster - single-node tasks are in Public Preview while the distributed multi-GPU training API is still catching up in Beta.
+    link: https://docs.databricks.com/aws/en/machine-learning/ai-runtime/#:~:text=AI%20Runtime%20provides%20on%2Ddemand%20access%20to%20GPU%20resources.
+  - note: It first showed up in June 2025 under the plainer name 'Serverless GPU compute.'
+    link: https://docs.databricks.com/aws/en/release-notes/product/2025/june#:~:text=Serverless%20GPU%20compute%20is%20in%20Beta
+status:
+  value: active
+  link: https://docs.databricks.com/aws/en/machine-learning/ai-runtime/#:~:text=AI%20Runtime%20is%20a%20compute%20offering%20at%20Databricks
+  date: '2026-07-23'
+releases:
+  - type: beta
+    date: 2025-06
+    link: https://docs.databricks.com/aws/en/release-notes/product/2025/june#:~:text=Serverless%20GPU%20compute%20is%20in%20Beta
+  - type: public-preview
+    date: 2026-03
+    link: https://docs.databricks.com/aws/en/release-notes/product/2026/march#:~:text=AI%20Runtime%20for%20single%2Dnode%20tasks%20is%20now%20in%20Public%20Preview.
+introducedAt:
+  date: 2025-06
+  link: https://docs.databricks.com/aws/en/release-notes/product/2025/june#:~:text=Serverless%20GPU%20compute%20is%20in%20Beta
+occasion:
+  date: 2025-06
+  link: https://docs.databricks.com/aws/en/release-notes/product/2025/june#:~:text=Serverless%20GPU%20compute%20is%20in%20Beta
+  note: Debuted as Serverless GPU compute (Beta), Data + AI Summit June 2025
+limitations:
+  note: Only A10 and H100 accelerators; the maximum workload runtime is seven days; no FedRAMP High or DoD IL5 compliance. For scheduled jobs, Environments-panel dependencies and auto-recovery for incompatible packages aren't supported, and cross-region GPUs during peak demand can incur egress costs.
+  link: https://docs.databricks.com/aws/en/machine-learning/ai-runtime/#:~:text=The%20maximum%20runtime%20for%20a%20workload%20is%20seven%20days.
+  date: '2026-07-23'
+links:
+  - url: https://docs.databricks.com/aws/en/release-notes/product/2025/june
+    kind: official
+    label: 'Databricks release notes: Serverless GPU compute Beta (June 2025)'
+  - url: https://docs.databricks.com/aws/en/release-notes/product/2026/march
+    kind: official
+    label: 'Databricks release notes: AI Runtime Public Preview (March 2026)'
+prediction:
+  - Genie Runtime
+  - Lakeflow GPU
+  - Mosaic AI Runtime
+source: https://docs.databricks.com/aws/en/machine-learning/ai-runtime/
+verified: '2026-07-23'

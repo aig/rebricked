@@ -72,8 +72,9 @@
   const BUCKET_ORDER = { current: 0, deprecation: 1, renamed: 2 };
 
   // ---- sidebar config: mirrors the Databricks console rail ----
-  // Every item is clickable. `ids` lists the databricks.features.json entries that changed under
-  // that section; those items get a dot. Sections with no renames show an empty state.
+  // Every item is clickable. `ids` lists the entries that changed under that section - each id
+  // is a kb/databricks/<id>.yaml file; those items get a dot. Sections with no renames show an
+  // empty state.
   // Home clears the filter and shows everything.
   const NAV = [
     { label: "", items: [

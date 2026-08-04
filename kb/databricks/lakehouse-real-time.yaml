@@ -1,0 +1,47 @@
+id: lakehouse-real-time
+name: Lakehouse Real-Time
+aliases:
+  - Lakehouse//RT
+  - Lakehouse RT
+  - Reyden
+category: Compute / BI
+what:
+  note: A serverless compute engine for low-latency, high-concurrency analytical queries, delivering sub-second SQL reads directly on Unity Catalog Delta and Iceberg tables.
+  link: https://docs.databricks.com/aws/en/compute/sql-warehouse/real-time#:~:text=sub%2Dsecond%20latency%20on%20SQL%20read%20queries%20against%20your%20Unity%20Catalog%20tables
+fact:
+  - note: It delivers sub-second queries straight off Delta and Iceberg tables - no separate serving database required - powered by a brand-new engine codenamed 'Reyden.'
+    link: https://www.databricks.com/blog/introducing-lakehousert-real-time-performance-unified-lakehouse#:~:text=powered%20by%20Reyden%2C%20a%20breakthrough%20new%20engine
+  - note: It is in Beta for select read-only workloads - you contact your account team to switch it on.
+    link: https://docs.databricks.com/aws/en/compute/sql-warehouse/real-time#:~:text=This%20feature%20is%20in%20Beta
+status:
+  value: active
+  link: https://docs.databricks.com/aws/en/compute/sql-warehouse/real-time#:~:text=Lakehouse%20Real%2DTime%20%28Lakehouse%2F%2FRT%29%20is%20a%20serverless%20compute
+  date: '2026-07-18'
+releases:
+  - type: beta
+    date: 2026-06
+    link: https://docs.databricks.com/aws/en/release-notes/product/2026/june#:~:text=Lakehouse%20Real%2DTime%20%28Lakehouse%2F%2FRT%29%20is%20now%20in%20Beta.
+introducedAt:
+  date: 2026-06
+  link: https://docs.databricks.com/aws/en/release-notes/product/2026/june#:~:text=Lakehouse%20Real%2DTime%20%28Lakehouse%2F%2FRT%29%20is%20now%20in%20Beta.
+occasion:
+  date: 2026-06
+  link: https://www.databricks.com/blog/introducing-lakehousert-real-time-performance-unified-lakehouse#:~:text=real%2Dtime%20data%20warehouse%20designed%20for%20operational%20analytics
+  note: Announced June 16, 2026
+limitations:
+  note: Supports read (SELECT) queries only - no writes or ETL - and doesn't support Genie, Genie Agents, or Jobs tasks. It excludes many table types (system, Delta Sharing, UC default-storage/external, Hive metastore, foreign/federated), the ADBC/ODBC/Go drivers, GEOGRAPHY/GEOMETRY types, AI functions, Python UDFs, and the compliance security profile.
+  link: https://docs.databricks.com/aws/en/compute/sql-warehouse/real-time#:~:text=is%20for%20read%20%28SELECT%29%20queries%20only
+  date: '2026-07-23'
+links:
+  - url: https://www.databricks.com/blog/introducing-lakehousert-real-time-performance-unified-lakehouse
+    kind: community
+    label: 'Databricks Blog: Lakehouse//RT'
+  - url: https://www.heise.de/en/news/Databricks-Lakehouse-RT-aims-to-make-separate-real-time-databases-redundant-11338027.html
+    kind: internet
+    label: 'heise: Databricks Lakehouse//RT'
+prediction:
+  - Genie Real-Time
+  - Lakehouse//RT One
+  - Unity Real-Time
+source: https://docs.databricks.com/aws/en/compute/sql-warehouse/real-time
+verified: '2026-07-23'

@@ -1,0 +1,42 @@
+id: delta-lake
+name: Delta Lake
+aliases:
+  - Databricks Delta
+  - Delta
+category: Data engineering
+what:
+  note: The open table format that adds ACID transactions, schema enforcement, and time travel to data lakes.
+  link: https://www.databricks.com/blog/2019/04/24/open-sourcing-delta-lake.html#:~:text=ACID%20transactions%20between%20multiple%20writes
+fact:
+  - note: It lets you 'time travel' - query a table exactly as it looked versions ago - and the format went from proprietary 'Databricks Delta' to open source in April 2019.
+    link: https://www.databricks.com/blog/2019/04/24/open-sourcing-delta-lake.html#:~:text=open%20sourcing%20of%20the%20Delta%20Lake%20project
+  - note: Later in 2019 the format was donated to the Linux Foundation, which now hosts it under an open-governance model as an open standard for data lakes.
+    link: https://www.databricks.com/blog/2019/10/16/delta-lake-now-hosted-by-the-linux-foundation-to-become-the-open-standard-for-data-lakes.html#:~:text=open%2Dgovernance%20model%20to%20encourage%20participation%20and%20technical%20contributions
+status:
+  value: active
+  link: https://www.databricks.com/blog/2019/04/24/open-sourcing-delta-lake.html#:~:text=the%20open%20sourcing%20of%20the%20Delta%20Lake%20project
+  date: '2026-07-18'
+releases:
+  - type: ga
+    date: 2019-02
+    link: https://docs.databricks.com/aws/en/release-notes/product/2019/february#:~:text=Delta%20Lake%20generally%20available
+from:
+  date: 2019-04
+  link: https://www.databricks.com/blog/2019/04/24/open-sourcing-delta-lake.html#:~:text=the%20open%20sourcing%20of%20the%20Delta%20Lake%20project
+occasion:
+  date: 2019-04
+  link: https://www.databricks.com/blog/2019/04/24/open-sourcing-delta-lake.html
+  note: Open-sourced at Spark + AI Summit 2019
+links:
+  - url: https://dev.to/fagundesv/delta-lakes-acid-transactions-time-travel-delta-tables-4l4p
+    kind: community
+    label: 'dev.to: Delta Lake ACID & time travel'
+  - url: https://www.snowflake.com/en/fundamentals/delta-lake/
+    kind: internet
+    label: 'Snowflake: What is Delta Lake'
+prediction:
+  - Delta Lake One
+  - Unity Delta
+  - OpenDelta
+source: https://www.databricks.com/blog/2019/04/24/open-sourcing-delta-lake.html
+verified: '2026-07-23'

@@ -1,0 +1,36 @@
+id: lakehouse-replay
+name: Lakehouse Replay
+category: Developer experience
+what:
+  note: Automatically replays a sample of read-only serverless workloads against upcoming Databricks Runtime releases to catch regressions before they reach production.
+  link: https://docs.databricks.com/aws/en/compute/serverless/lakehouse-replay#:~:text=automatically%20replaying%20a%20small%20subset%20of%20read%2Donly%20workloads
+fact:
+  - note: It quietly re-runs a sample of your read-only serverless workloads against the next Databricks Runtime before you upgrade, so a runtime regression shows up in a shadow run instead of in prod - no setup, your data never leaves the workspace, and the replay compute isn't billed.
+    link: https://docs.databricks.com/aws/en/compute/serverless/lakehouse-replay#:~:text=customers%20are%20not%20billed%20for%20related%20compute%20costs
+  - note: It is in Beta, enabled by a workspace admin from the Previews page.
+    link: https://docs.databricks.com/aws/en/compute/serverless/lakehouse-replay#:~:text=from%20the%20workspace%20Previews%20page
+status:
+  value: active
+  link: https://docs.databricks.com/aws/en/compute/serverless/lakehouse-replay#:~:text=Lakehouse%20Replay%20improves%20the%20quality%20and%20stability
+  date: '2026-07-23'
+releases:
+  - type: beta
+    date: 2026-06
+    link: https://docs.databricks.com/aws/en/release-notes/product/2026/june#:~:text=Lakehouse%20Replay%20is%20now%20available%20in%20Beta.
+introducedAt:
+  date: 2026-06
+  link: https://docs.databricks.com/aws/en/release-notes/product/2026/june#:~:text=Lakehouse%20Replay%20is%20now%20available%20in%20Beta.
+limitations:
+  note: Replays only read-only SQL and DataFrame workloads on serverless SQL warehouses, notebooks, and jobs, reading Unity Catalog Delta tables. Writes, UDFs, AI functions like ai_query, federated queries, and ABAC/RBAC workloads are excluded; for DataFrames only the submitted Spark plan is replayed, not the preceding Python cells.
+  link: https://docs.databricks.com/aws/en/compute/serverless/lakehouse-replay#:~:text=Preceding%20Python%20cells%20are%20not%20executed
+  date: '2026-07-23'
+links:
+  - url: https://docs.databricks.com/aws/en/release-notes/product/2026/june
+    kind: official
+    label: 'Databricks release notes: Lakehouse Replay Beta (June 2026)'
+prediction:
+  - Runtime Shadow
+  - Lakehouse Rehearsal
+  - Genie Replay
+source: https://docs.databricks.com/aws/en/compute/serverless/lakehouse-replay
+verified: '2026-07-23'

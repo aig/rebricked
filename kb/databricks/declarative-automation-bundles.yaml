@@ -1,0 +1,42 @@
+id: declarative-automation-bundles
+name: Declarative Automation Bundles
+aliases:
+  - Databricks Asset Bundles
+  - DABs
+  - DAB
+category: Developer experience
+what:
+  note: Infrastructure-as-code format for defining and deploying Databricks resources (jobs, pipelines, etc.) as a versioned bundle.
+  link: https://docs.databricks.com/aws/en/dev-tools/bundles/#:~:text=infrastructure%2Das%2Dcode%20%28IaC%29%20approach%20to%20managing%20your%20Databricks%20projects
+fact:
+  - note: Describe an entire project's Databricks resources - jobs, pipelines, dashboards, model serving endpoints - as YAML source files, then validate, deploy, and run the whole bundle from the Databricks CLI.
+    link: https://docs.databricks.com/aws/en/dev-tools/bundles/#:~:text=Dashboards%2C%20Model%20Serving%20endpoints
+  - note: The 2026 rename kept the affectionate 'DABs' acronym, so the docs now read 'Declarative Automation Bundles (formerly Databricks Asset Bundles).'
+    link: https://docs.databricks.com/aws/en/dev-tools/bundles/#:~:text=formerly%20known%20as%20Databricks%20Asset%20Bundles
+status:
+  value: active
+  link: https://docs.databricks.com/aws/en/dev-tools/bundles/#:~:text=Declarative%20Automation%20Bundles%20%28formerly%20known%20as%20Databricks%20Asset%20Bundles%29
+  date: '2026-07-18'
+releases:
+  - type: public-preview
+    date: 2023-10
+    link: https://docs.databricks.com/aws/en/dev-tools/bundles/
+  - type: ga
+    date: 2024-04
+    link: https://www.databricks.com/blog/announcing-general-availability-databricks-asset-bundles#:~:text=General%20Availability%20%28GA%29%20of%20Databricks%20Asset%20Bundles
+from:
+  date: 2026-03
+  link: https://docs.databricks.com/aws/en/release-notes/product/2026/march#:~:text=Databricks%20Asset%20Bundles%20has%20been%20renamed%20to%20Declarative%20Automation%20Bundles.
+links:
+  - url: https://community.databricks.com/t5/community-articles/ci-cd-on-databricks-with-asset-bundles-dabs-and-github-actions/td-p/149565
+    kind: community
+    label: 'Databricks Community: CI/CD with DABs'
+  - url: https://www.mechanicalrock.io/blog/an-ode-to-databricks-asset-bundles
+    kind: internet
+    label: 'Mechanical Rock: An Ode to DABs'
+prediction:
+  - Agentic Automation Bundles
+  - Unity Bundles
+  - Genie Bundles
+source: https://docs.databricks.com/aws/en/dev-tools/bundles/
+verified: '2026-07-23'

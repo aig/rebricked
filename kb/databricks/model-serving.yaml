@@ -1,0 +1,49 @@
+id: model-serving
+name: Model Serving
+aliases:
+  - Serverless Real-Time Inference
+  - Mosaic AI Model Serving
+  - Model Serving
+category: AI / ML
+what:
+  note: Highly available, low-latency service for deploying ML and GenAI models behind autoscaling REST endpoints.
+  link: https://learn.microsoft.com/en-us/azure/databricks/release-notes/product/2023/march#:~:text=a%20highly%20available%20and%20low%2Dlatency%20service%20for%20deploying%20models
+fact:
+  - note: It shed the tongue-twister name 'Serverless Real-Time Inference' when it reached general availability in March 2023.
+    link: https://learn.microsoft.com/en-us/azure/databricks/release-notes/product/2023/march#:~:text=Model%20Serving%2C%20formerly%20Serverless%20Real%2DTime%20Inference%2C%20is%20now%20generally%20available
+  - note: Some surfaces later slapped a 'Mosaic AI' prefix on it.
+    link: https://community.databricks.com/t5/announcements/databricks-genai-amp-ml-announcements-november-2024/td-p/101272#:~:text=Mosaic%20AI%20Model%20Serving%20is%20available
+  - note: 'Custom endpoints can accept protobuf instead of JSON, but only if they were created after the option shipped: it is only available on endpoints deployed after July 9, 2026.'
+    link: https://docs.databricks.com/aws/en/release-notes/product/2026/july#:~:text=is%20only%20available%20on%20endpoints%20deployed%20after%20July%209%2C%202026
+status:
+  value: active
+  link: https://learn.microsoft.com/en-us/azure/databricks/release-notes/product/2023/march#:~:text=Model%20Serving%2C%20formerly%20Serverless%20Real%2DTime%20Inference%2C%20is%20now%20generally%20available
+  date: '2026-07-18'
+releases:
+  - type: ga
+    date: 2023-03
+    link: https://learn.microsoft.com/en-us/azure/databricks/release-notes/product/2023/march#:~:text=Model%20Serving%20is%20GA
+from:
+  date: 2023-03
+  link: https://learn.microsoft.com/en-us/azure/databricks/release-notes/product/2023/march#:~:text=Model%20Serving%2C%20formerly%20Serverless%20Real%2DTime%20Inference
+occasion:
+  date: 2023-03
+  link: https://learn.microsoft.com/en-us/azure/databricks/release-notes/product/2023/march#:~:text=Model%20Serving%20is%20GA
+  note: Model Serving GA, March 7, 2023
+limitations:
+  note: Documented limits include up to 1000 endpoints per workspace (raisable on request), a 16 MB request payload (4 MB for AI agent endpoints), a 597-second model execution duration per request, 50 create/update operations per 5-minute window, provisioned concurrency of up to 1024 per model and 4096 per workspace (raisable on request), a queries-per-second cap of 300,000 with route optimization (200 without, recommended only for small dev use), and no logging for requests or responses over 1 MB.
+  link: https://docs.databricks.com/aws/en/machine-learning/model-serving/model-serving-limits#:~:text=Any%20request%2Fresponse%20over%201%20MB%20will%20not%20be%20logged
+  date: '2026-07-23'
+links:
+  - url: https://www.databricks.com/blog/announcing-general-availability-databricks-model-serving
+    kind: community
+    label: 'Databricks Blog: Model Serving GA'
+  - url: https://siliconangle.com/2023/03/07/databricks-exposes-serverless-machine-learning-inferencing-engine-via-api/
+    kind: internet
+    label: 'SiliconANGLE: serverless inference API'
+prediction:
+  - Agent Serving
+  - Mosaic AI Serving
+  - Genie Serving
+source: https://learn.microsoft.com/en-us/azure/databricks/release-notes/product/2023/march
+verified: '2026-08-03'

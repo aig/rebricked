@@ -1,0 +1,43 @@
+id: lake-transactional-analytical-processing
+name: Lake Transactional/Analytical Processing (LTAP)
+aliases:
+  - LTAP
+category: Data engineering
+what:
+  note: A data processing architecture that unifies transactional (OLTP) and analytical (OLAP) workloads on a single copy of data in the lake, combining Lakebase (serverless Postgres on open object storage) with the Lakehouse under one governance model - so operational and analytical apps share one source of truth without ETL, replicas, or pipelines. Announced June 2026 and, per the press release's own availability note, coming soon as part of Lakebase.
+  link: https://www.databricks.com/company/newsroom/press-releases/databricks-launches-ltap-first-lake-transactionalanalytical#:~:text=unifies%20transactions%2C%20analytics%2C%20streaming%2C%20and%20operational%20data%20on%20a%20single%20copy%20of%20storage%20in%20the%20lake
+fact:
+  - note: Databricks declared itself the world's first LTAP platform on the same day it coined the term LTAP, which does make the claim hard to dispute.
+    link: https://www.databricks.com/company/newsroom/press-releases/databricks-launches-ltap-first-lake-transactionalanalytical#:~:text=world%27s%20first%20LTAP%20platform
+  - note: The name is a deliberate play on HTAP, the decades-old holy grail of one engine doing both jobs; LTAP gives up on that and keeps Postgres for the writes and Lakehouse engines for the reads, unifying only the storage underneath.
+    link: https://www.databricks.com/blog/lakebase-ltap-rethinking-database-storage#:~:text=LTAP%20is%20a%20deliberate%20play%20on%20HTAP
+  - note: 'The architecture whose whole pitch is that there is no second copy of your data currently keeps two: during the transitional rollout Databricks dual-writes row and columnar formats to object storage, purely to check its own arithmetic.'
+    link: https://www.databricks.com/blog/lakebase-ltap-rethinking-database-storage#:~:text=dual%20write%20both%20row%20format%20and%20columnar%20format%20in%20object%20stores%20for%20data%20verification
+status:
+  value: active
+  link: https://www.databricks.com/company/newsroom/press-releases/databricks-launches-ltap-first-lake-transactionalanalytical#:~:text=unifies%20OLAP%20and%20OLTP%20on%20a%20single%20copy%20of%20data%20in%20the%20lake
+  date: '2026-08-04'
+introducedAt:
+  date: 2026-06
+  link: https://www.databricks.com/company/newsroom/press-releases/databricks-launches-ltap-first-lake-transactionalanalytical#:~:text=today%20introduced%20Lake%20Transactional%2FAnalytical%20Processing%20%28LTAP%29
+occasion:
+  date: 2026-06
+  link: https://www.databricks.com/company/newsroom/press-releases/databricks-launches-ltap-first-lake-transactionalanalytical#:~:text=DATA%20%2B%20AI%20SUMMIT
+  note: Launched at Data + AI Summit 2026
+limitations:
+  note: 'Not shipped yet: Databricks says it is still ironing out the kinks and rolling it out ''in the coming months'', during which it dual-writes row and columnar copies of the data purely to verify itself. Very small tables are left unconverted rather than given Iceberg metadata (they stay queryable), and the intermediate Postgres row versions kept for MVCC and point-in-time recovery are not visible to Iceberg or Delta readers.'
+  link: https://www.databricks.com/blog/lakebase-ltap-rethinking-database-storage#:~:text=roll%20it%20out%20in%20the%20coming%20months
+  date: '2026-08-04'
+links:
+  - url: https://www.databricks.com/blog/lakebase-ltap-rethinking-database-storage
+    kind: community
+    label: 'Databricks Blog: From monolith to Lakebase to LTAP'
+  - url: https://www.theregister.com/databases/2026/07/03/databricks-unifies-oltp-and-olap-depending-on-what-counts-as-a-copy/5265733
+    kind: internet
+    label: 'The Register: Databricks unifies OLTP and OLAP'
+prediction:
+  - LTAP One
+  - Unity Transactional Processing
+  - Lakebase Analytical Processing
+source: https://www.databricks.com/company/newsroom/press-releases/databricks-launches-ltap-first-lake-transactionalanalytical
+verified: '2026-08-04'

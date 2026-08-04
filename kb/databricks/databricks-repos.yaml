@@ -1,0 +1,33 @@
+id: databricks-repos
+name: Databricks Repos
+category: Developer experience
+what:
+  note: In-workspace Git client for version-controlling notebooks and files.
+  link: https://learn.microsoft.com/en-us/azure/databricks/repos/what-happened-repos#:~:text=sync%20workspace%20folders%20with%20remote%20Git%20repositories%20for%20version%20control
+fact:
+  - note: Born to fix data teams' 'poor or no integration with Git,' it turned each notebook into a versioned file you could branch, review and commit without ever leaving the workspace.
+    link: https://www.databricks.com/blog/2021/10/07/databricks-repos-is-now-generally-available.html#:~:text=poor%20or%20no%20integration%20with%20Git%20version%20control%20systems
+status:
+  value: renamed
+  link: https://learn.microsoft.com/en-us/azure/databricks/repos/what-happened-repos#:~:text=Repos%20are%20now%20called%20Git%20folders.
+  date: '2026-07-18'
+releases:
+  - type: ga
+    date: 2021-08
+    link: https://docs.databricks.com/aws/en/release-notes/product/2021/august#:~:text=Databricks%20Repos%20is%20now%20generally%20available.
+from:
+  date: '2021'
+  link: https://docs.databricks.com/aws/en/release-notes/product/2021/august#:~:text=Databricks%20Repos%20is%20now%20generally%20available.
+to:
+  date: 2024-03
+  link: https://docs.databricks.com/aws/en/release-notes/product/2024/march#:~:text=former%20Databricks%20Repos%20feature%20is%20now%20called
+successorId: git-folders
+links:
+  - url: https://www.databricks.com/blog/2021/10/07/databricks-repos-is-now-generally-available.html
+    kind: community
+    label: 'Databricks blog: Repos GA (2021)'
+  - url: https://www.drivedatascience.com/databricks-git-integration-cicd-repos-github-actions-deployment/
+    kind: internet
+    label: 'DriveDataScience: Repos & Git CI/CD'
+source: https://learn.microsoft.com/en-us/azure/databricks/repos/what-happened-repos
+verified: '2026-07-23'

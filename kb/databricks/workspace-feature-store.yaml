@@ -1,0 +1,39 @@
+id: workspace-feature-store
+name: Workspace Feature Store
+aliases:
+  - Feature Store
+  - databricks-feature-store
+category: AI / ML
+what:
+  note: The legacy per-workspace feature store, for workspaces not enabled for Unity Catalog, with its own Feature Store UI to browse and search features.
+  link: https://docs.databricks.com/aws/en/machine-learning/feature-store/workspace-feature-store/#:~:text=browse%20and%20search%20for%20existing%20features
+fact:
+  - note: It shipped as the databricks-feature-store Python package, whose FeatureStoreClient API created and managed feature tables; that package is now deprecated, its modules folded into databricks-feature-engineering.
+    link: https://docs.databricks.com/aws/en/machine-learning/feature-store/python-api#:~:text=databricks%2Dfeature%2Dstore%20has%20been%20deprecated
+  - note: It is available only in workspaces created before August 19, 2024.
+    link: https://docs.databricks.com/aws/en/machine-learning/feature-store/workspace-feature-store/#:~:text=workspaces%20created%20before%20August%2019%2C%202024
+status:
+  value: deprecated
+  link: https://docs.databricks.com/aws/en/machine-learning/feature-store/workspace-feature-store/#:~:text=Workspace%20Feature%20Store%20is%20deprecated.
+  date: '2026-07-18'
+releases:
+  - type: public-preview
+    date: 2021-05
+    link: https://docs.databricks.com/aws/en/release-notes/product/2021/may#:~:text=make%20them%20available%20for%20training%20and%20serving%2C%20increasing%20reuse
+  - type: ga
+    date: 2022-03
+    link: https://docs.databricks.com/aws/en/release-notes/product/2022/march#:~:text=Databricks%20Feature%20Store%20is%20generally%20available
+from:
+  date: 2021-05
+  link: https://docs.databricks.com/aws/en/release-notes/product/2021/may#:~:text=a%20way%20to%20catalog%20ML%20features
+deprecatedAt:
+  date: '2024'
+  link: https://docs.databricks.com/aws/en/machine-learning/feature-store/workspace-feature-store/#:~:text=before%20August%2019%2C%202024%2C%204%3A00%3A00%20PM%20%28UTC%29
+successorId: feature-engineering-in-unity-catalog
+replacement: Feature Engineering in Unity Catalog
+links:
+  - url: https://www.flexera.com/blog/finops/databricks-feature-store/
+    kind: internet
+    label: 'Flexera: Databricks Feature Store 101'
+source: https://docs.databricks.com/aws/en/machine-learning/feature-store/workspace-feature-store/
+verified: '2026-07-23'

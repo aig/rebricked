@@ -1,0 +1,49 @@
+id: databricks-apps
+name: Databricks Apps
+aliases:
+  - Apps
+  - databricks apps
+category: Developer experience
+what:
+  note: A serverless way to build and deploy interactive data and AI applications - dashboards, chatbots, forms, ops tools - directly on Databricks, in common Python or JavaScript frameworks and governed by Unity Catalog.
+  link: https://docs.databricks.com/aws/en/dev-tools/databricks-apps/#:~:text=build%20and%20deploy%20secure%20data%20and%20AI%20applications%20directly%20on%20the%20Databricks%20platform
+fact:
+  - note: It takes an off-the-shelf Streamlit, Dash, Gradio, or React app and runs it on Databricks' own serverless compute with no infrastructure to provision - and the app is governed by Unity Catalog like everything else on the platform.
+    link: https://docs.databricks.com/aws/en/dev-tools/databricks-apps/#:~:text=Popular%20Python%20frameworks%20include%20Streamlit%2C%20Dash%2C%20and%20Gradio
+  - note: By its 2025 GA, Databricks reported 20,000+ apps built by 2,500+ customers across 28 regions.
+    link: https://www.databricks.com/blog/announcing-general-availability-databricks-apps#:~:text=Over%2020%2C000%20apps%20have%20already%20been%20built
+status:
+  value: active
+  link: https://docs.databricks.com/aws/en/dev-tools/databricks-apps/#:~:text=Databricks%20Apps%20enables%20developers%20to%20build%20and%20deploy%20secure%20data%20and%20AI%20applications
+  date: '2026-07-20'
+releases:
+  - type: public-preview
+    date: 2024-10
+    link: https://docs.databricks.com/aws/en/release-notes/product/2024/october#:~:text=Databricks%20Apps%20%28Public%20Preview%29
+  - type: ga
+    date: 2025-05
+    link: https://docs.databricks.com/aws/en/release-notes/product/2025/may#:~:text=Databricks%20Apps%20is%20now%20generally%20available%20%28GA%29.
+introducedAt:
+  date: 2024-10
+  link: https://docs.databricks.com/aws/en/release-notes/product/2024/october#:~:text=with%20Databricks%20Apps%20%28Public%20Preview%29
+occasion:
+  date: 2025-06
+  link: https://www.databricks.com/blog/announcing-general-availability-databricks-apps#:~:text=Databricks%20Apps%20is%20now%20generally%20available
+  note: GA blog announcement, June 11, 2025 (GA reached May 13, 2025)
+limitations:
+  note: Up to 100 apps per workspace, with additional limits on Databricks Free Edition.
+  link: https://docs.databricks.com/aws/en/resources/limits#:~:text=For%20limits%20on%20Databricks%20Free%20Edition
+  date: '2026-07-23'
+links:
+  - url: https://www.databricks.com/blog/announcing-general-availability-databricks-apps
+    kind: community
+    label: 'Databricks Blog: GA of Databricks Apps'
+  - url: https://community.databricks.com/t5/get-started-discussions/databricks-apps-is-now-available-in-public-preview/td-p/95020
+    kind: community
+    label: 'Databricks Community: Apps Public Preview'
+prediction:
+  - Genie Apps
+  - Lakeflow Apps
+  - Databricks Apps One
+source: https://docs.databricks.com/aws/en/dev-tools/databricks-apps/
+verified: '2026-07-23'

@@ -1,0 +1,50 @@
+id: unity-catalog-managed-iceberg-tables
+name: Unity Catalog managed Iceberg tables
+aliases:
+  - managed Iceberg tables
+  - Iceberg managed tables
+  - UC Iceberg
+category: Data engineering
+what:
+  note: Apache Iceberg tables created and fully managed by Unity Catalog, readable and writable by external Iceberg engines through the Unity Catalog Iceberg REST Catalog API.
+  link: https://docs.databricks.com/aws/en/iceberg/#:~:text=Iceberg%20tables%20that%20you%20create%20in%20Unity%20Catalog%20are%20managed%20Iceberg%20tables
+fact:
+  - note: These Iceberg tables are managed by Unity Catalog yet fully read/write to outside engines like Trino and Flink - through a REST catalog that even hands out temporary storage credentials.
+    link: https://docs.databricks.com/aws/en/iceberg/#:~:text=delivers%20temporary%20credentials%20to%20external%20engines
+  - note: The managed Iceberg tables still get Databricks perks like liquid clustering, predictive optimization, and materialized views.
+    link: https://docs.databricks.com/aws/en/iceberg/#:~:text=Predictive%20optimization
+status:
+  value: active
+  link: https://docs.databricks.com/aws/en/iceberg/#:~:text=you%20create%20in%20Unity%20Catalog%20are%20managed%20Iceberg%20tables
+  date: '2026-07-18'
+releases:
+  - type: public-preview
+    date: 2025-06
+    link: https://www.prnewswire.com/news-releases/databricks-eliminates-table-format-lock-in-and-adds-capabilities-for-business-users-with-unity-catalog-advancements-302478796.html#:~:text=Public%20Preview%20of%20full%20Apache%20Iceberg%20support%20in%20Unity%20Catalog
+  - type: ga
+    date: 2026-05
+    link: https://docs.databricks.com/aws/en/release-notes/product/2026/may#:~:text=Apache%20Iceberg%20v3%20features%20are%20generally%20available
+introducedAt:
+  date: 2026-05
+  link: https://docs.databricks.com/aws/en/release-notes/product/2026/may#:~:text=Unity%20Catalog%20managed%20Apache%20Iceberg%20tables%2C%20foreign%20Apache%20Iceberg%20tables
+occasion:
+  date: 2026-05
+  link: https://docs.databricks.com/aws/en/release-notes/product/2026/may#:~:text=Apache%20Iceberg%20v3%20features%20are%20generally%20available
+  note: GA May 21, 2026
+limitations:
+  note: Path-based access isn't supported except in Compatibility Mode (which bypasses Unity Catalog access controls), managed Iceberg tables support only deep cloning (not shallow clone), and transactions that write to managed Iceberg tables are in Private Preview.
+  link: https://docs.databricks.com/aws/en/tables/managed#:~:text=support%20only%20deep%20cloning
+  date: '2026-07-23'
+links:
+  - url: https://medium.com/databricks-unity-catalog-sme/unity-catalog-managed-iceberg-tables-bc405a811344
+    kind: community
+    label: 'Medium: UC Managed Iceberg Tables'
+  - url: https://www.prnewswire.com/news-releases/databricks-eliminates-table-format-lock-in-and-adds-capabilities-for-business-users-with-unity-catalog-advancements-302478796.html
+    kind: internet
+    label: 'PR Newswire: UC Iceberg support'
+prediction:
+  - Unity Catalog managed Glacier tables
+  - Unity Managed Iceberg 2.0
+  - Genie Iceberg
+source: https://docs.databricks.com/aws/en/iceberg/
+verified: '2026-07-23'

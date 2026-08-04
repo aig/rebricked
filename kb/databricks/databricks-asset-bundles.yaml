@@ -1,0 +1,29 @@
+id: databricks-asset-bundles
+name: Databricks Asset Bundles
+category: Developer experience
+what:
+  note: Infrastructure-as-code format for defining and deploying Databricks resources (jobs, pipelines, etc.) as a versioned bundle.
+  link: https://docs.databricks.com/aws/en/dev-tools/bundles/#:~:text=infrastructure%2Das%2Dcode%20%28IaC%29%20approach%20to%20managing%20your%20Databricks%20projects
+fact:
+  - note: 'Databricks'' take on infrastructure-as-code: a single databricks.yml that packaged jobs, pipelines and notebooks into one versioned unit you could test and ship from dev to prod.'
+    link: https://docs.databricks.com/aws/en/dev-tools/bundles/#:~:text=validate%2C%20deploy%2C%20and%20run%20bundles
+status:
+  value: renamed
+  link: https://docs.databricks.com/aws/en/dev-tools/bundles/#:~:text=formerly%20known%20as%20Databricks%20Asset%20Bundles
+  date: '2026-07-18'
+from:
+  date: '2023'
+  link: https://docs.databricks.com/aws/en/release-notes/product/2023/september
+to:
+  date: 2026-03
+  link: https://docs.databricks.com/aws/en/release-notes/product/2026/march#:~:text=Databricks%20Asset%20Bundles%20has%20been%20renamed%20to%20Declarative%20Automation%20Bundles.
+successorId: declarative-automation-bundles
+links:
+  - url: https://www.databricks.com/blog/announcing-general-availability-databricks-asset-bundles
+    kind: community
+    label: 'Databricks blog: DABs GA'
+  - url: https://dataengineeringcentral.substack.com/p/simplifying-cicd-with-databricks
+    kind: internet
+    label: 'Data Eng Central: CI/CD with DABs'
+source: https://docs.databricks.com/aws/en/dev-tools/bundles/
+verified: '2026-07-18'

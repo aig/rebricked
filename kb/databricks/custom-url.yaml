@@ -1,0 +1,45 @@
+id: custom-url
+name: Custom URL
+aliases:
+  - Custom URLs
+  - branded account URL
+  - account custom URL
+category: Developer experience
+what:
+  note: A single branded entry point for a whole Databricks account (for example acme.databricks.com) that replaces the per-workspace URLs users navigate today, letting them move between workspaces and Genie One without signing in again.
+  link: https://docs.databricks.com/aws/en/admin/account-settings/custom-url#:~:text=replaces%20the%20collection%20of%20per%2Dworkspace%20URLs%20that%20account%20users%20navigate%20today
+fact:
+  - note: 'You get the vanity domain on loan, not in freehold: the docs reserve Databricks the right to change, reclaim, or revoke a custom URL at any time, promising advance notice only where possible.'
+    link: https://docs.databricks.com/aws/en/admin/account-settings/custom-url#:~:text=Databricks%20reserves%20the%20right%20to%20change%2C%20reclaim%2C%20or%20revoke%20a%20custom%20URL%20at%20any%20time
+  - note: An eligible admin can claim the URL themselves with one button, but nobody can rename it themselves afterwards - changing it means contacting your Databricks account team.
+    link: https://docs.databricks.com/aws/en/admin/account-settings/custom-url#:~:text=To%20rename%20your%20custom%20URL%2C%20contact%20your%20Databricks%20account%20team
+  - note: 'The admin who claims it has to be on a company mailbox: the account must be a paying, verified customer and the claiming admin needs a non-reserved domain email address.'
+    link: https://docs.databricks.com/aws/en/admin/account-settings/custom-url#:~:text=The%20account%20admin%20enabling%20the%20custom%20URL%20must%20have%20a%20non%2Dreserved%20domain%20email%20address
+status:
+  value: active
+  link: https://docs.databricks.com/aws/en/admin/account-settings/custom-url#:~:text=replaces%20the%20collection%20of%20per%2Dworkspace%20URLs%20that%20account%20users%20navigate%20today
+  date: '2026-08-03'
+releases:
+  - type: public-preview
+    date: 2026-07
+    link: https://docs.databricks.com/aws/en/release-notes/product/2026/july#:~:text=claim%20and%20enable%20a%20Custom%20URL%20that%20gives%20your%20Databricks%20account%20a%20single%2C%20branded%20entry%20point
+introducedAt:
+  date: 2026-07
+  link: https://docs.databricks.com/aws/en/release-notes/product/2026/july#:~:text=claim%20and%20enable%20a%20Custom%20URL%20that%20gives%20your%20Databricks%20account%20a%20single%2C%20branded%20entry%20point
+limitations:
+  note: Public Preview, and the account must be enabled for unified login and must not use Chrome-managed passkeys. Workspaces behind front-end Private Link fall back to their legacy per-workspace URLs, and Private Link for account-level resources is only supported in Beta; the Publish to Power BI task does not support custom URLs. Developer tooling needs minimum versions (CLI/DABs 1.0.0, Terraform 1.114.0, Go SDK 0.130.0, Python SDK 0.103.0, Java SDK 0.105.0, VS Code extension 2.11.0).
+  link: https://docs.databricks.com/aws/en/admin/account-settings/custom-url#:~:text=URLs%20for%20inbound%20Private%20Link%2Dprotected%20workspaces%20fall%20back%20to%20legacy%20per%2Dworkspace%20URLs
+  date: '2026-08-03'
+links:
+  - url: https://docs.databricks.com/aws/en/release-notes/product/2026/july
+    kind: official
+    label: 'Databricks release notes: Custom URLs Public Preview (July 2026)'
+  - url: https://docs.databricks.com/aws/en/security/auth/single-sign-on/unified-login
+    kind: official
+    label: 'Databricks docs: Unified login (required for custom URLs)'
+prediction:
+  - Vanity Lakehouse URL
+  - Genie One Domains
+  - Unity Catalog URL
+source: https://docs.databricks.com/aws/en/admin/account-settings/custom-url
+verified: '2026-08-03'

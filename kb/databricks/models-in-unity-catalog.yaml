@@ -1,0 +1,42 @@
+id: models-in-unity-catalog
+name: Models in Unity Catalog
+aliases:
+  - UC models
+  - Models in UC
+category: AI / ML
+what:
+  note: Model lifecycle management governed by Unity Catalog - registered models live in the three-level namespace with aliases instead of stages.
+  link: https://docs.databricks.com/aws/en/machine-learning/manage-model-lifecycle/#:~:text=using%20aliases%20to%20promote%20models%20for%20deployment
+fact:
+  - note: Registered models live in the catalog.schema namespace with aliases like @champion, so promoting a model to production is just repointing an alias - and every version carries Unity Catalog lineage and access control.
+    link: https://docs.databricks.com/aws/en/machine-learning/manage-model-lifecycle/#:~:text=centralized%20access%20control%2C%20auditing%2C%20lineage%2C%20and%20model%20discovery%20across%20workspaces
+  - note: You migrate old model versions across with copy_model_version().
+    link: https://docs.databricks.com/aws/en/machine-learning/manage-model-lifecycle/#:~:text=copy_model_version%20MLflow%20Client%20API
+status:
+  value: active
+  link: https://docs.databricks.com/aws/en/machine-learning/manage-model-lifecycle/#:~:text=Databricks%20recommends%20for%20governing%20and%20deploying%20models
+  date: '2026-07-18'
+releases:
+  - type: public-preview
+    date: 2023-06
+    link: https://docs.databricks.com/aws/en/release-notes/product/2023/june#:~:text=Models%20in%20Unity%20Catalog%20%28Public%20Preview%29
+  - type: ga
+    date: 2023-10
+    link: https://docs.databricks.com/aws/en/release-notes/product/2023/october#:~:text=ML%20Models%20in%20Unity%20Catalog%20are%20now%20generally%20available.
+introducedAt:
+  date: '2023'
+  link: https://docs.databricks.com/aws/en/release-notes/product/2023/june#:~:text=Models%20in%20Unity%20Catalog%20%28Public%20Preview%29
+limitations:
+  note: Doesn't support stages, webhooks, email notifications, comment threads, or the activity log, and several search-API fields and operators (order_by, tag filters, and operators beyond exact equality) are unsupported.
+  link: https://docs.databricks.com/aws/en/machine-learning/manage-model-lifecycle/#:~:text=Webhooks%20are%20not%20supported%20for%20models%20in%20Unity%20Catalog.
+  date: '2026-07-23'
+links:
+  - url: https://medium.com/towards-data-engineering/manage-databricks-ml-model-lifecycle-in-unity-catalog-with-mlflow-code-walkthrough-video-1e81c2fecf7b
+    kind: community
+    label: 'Medium: ML model lifecycle in UC'
+prediction:
+  - Genie Models
+  - Mosaic AI Registry
+  - Unity Models One
+source: https://docs.databricks.com/aws/en/machine-learning/manage-model-lifecycle/
+verified: '2026-07-23'

@@ -1,0 +1,45 @@
+id: knowledge-assistant
+name: Knowledge Assistant
+aliases:
+  - Knowledge Assistant Agent
+category: AI / ML
+what:
+  note: 'Agent Bricks capability: a managed, document-grounded Q&A chatbot that answers questions over your uploaded documents with citations.'
+  link: https://docs.databricks.com/aws/en/generative-ai/agent-bricks/knowledge-assistant#:~:text=high%2Dquality%20responses%20with%20citations
+fact:
+  - note: Rather than plain similarity search it uses an "Instructed Retriever" that learns how each knowledge source is organized - Databricks claims up to 70% higher answer quality than simplistic RAG, with page-level citations on every response.
+    link: https://www.databricks.com/blog/agent-bricks-knowledge-assistant-now-generally-available-turning-enterprise-knowledge-answers#:~:text=up%20to%2070%25%20higher%20answer%20quality%20than%20simplistic%20RAG%20approaches
+  - note: Don't confuse it with 'Knowledge Assurance' - that isn't an official Databricks name.
+    link: https://docs.databricks.com/aws/en/generative-ai/agent-bricks/knowledge-assistant#:~:text=Use%20Knowledge%20Assistant%20to%20create%20a%20chatbot
+status:
+  value: active
+  link: https://docs.databricks.com/aws/en/generative-ai/agent-bricks/knowledge-assistant#:~:text=Use%20Knowledge%20Assistant%20to%20create%20a%20chatbot
+  date: '2026-07-22'
+releases:
+  - type: beta
+    date: 2025-06
+    link: https://www.databricks.com/blog/introducing-agent-bricks#:~:text=Agent%20Bricks%20is%20now%20available%20in%20beta.
+  - type: ga
+    date: 2026-01
+    link: https://www.databricks.com/blog/agent-bricks-knowledge-assistant-now-generally-available-turning-enterprise-knowledge-answers#:~:text=Knowledge%20Assistant%20is%20now%20GA
+introducedAt:
+  date: 2025-06
+  link: https://www.databricks.com/blog/introducing-agent-bricks#:~:text=reliable%20knowledge%20assistance
+occasion:
+  date: 2025-06
+  link: https://www.databricks.com/blog/introducing-agent-bricks#:~:text=Agent%20Bricks%20is%20now%20available%20in%20beta.
+  note: Data + AI Summit, June 2025 (beta); GA January 2026.
+limitations:
+  note: Files larger than 100 MB and documents over 500 pages (except text and markdown) are skipped during ingestion, as are files whose names start with an underscore or period. For table sources only the selected content column is processed, and AI Search indexes must use a supported embedding model (databricks-gte-large-en, databricks-bge-large-en, or databricks-qwen3-embedding-0-6b).
+  link: https://docs.databricks.com/aws/en/generative-ai/agent-bricks/knowledge-assistant#:~:text=Files%20larger%20than%20100%20MB%20are%20automatically%20skipped
+  date: '2026-07-23'
+links:
+  - url: https://www.databricks.com/blog/agent-bricks-knowledge-assistant-now-generally-available-turning-enterprise-knowledge-answers
+    kind: community
+    label: 'Databricks blog: Knowledge Assistant GA (Jan 2026)'
+prediction:
+  - Genie Assistant
+  - Knowledge Bricks
+  - Doc Genie
+source: https://docs.databricks.com/aws/en/generative-ai/agent-bricks/knowledge-assistant
+verified: '2026-07-23'

@@ -1,0 +1,30 @@
+id: agent-bricks-multi-agent-supervisor
+name: 'Agent Bricks: Multi-Agent Supervisor'
+abbr: MAS
+category: AI / ML
+what:
+  note: Agent Bricks capability that orchestrates multiple specialized agents, routing each request to the right one.
+  link: https://docs.databricks.com/aws/en/generative-ai/agent-bricks/multi-agent-supervisor#:~:text=coordinates%20Genie%20Agents%2C%20agent%20endpoints
+fact:
+  - note: 'A control-plane conductor for enterprise AI: it reads your intent, chops a messy question into subtasks, routes each to the best specialist agent, and stitches the replies back into a single cited answer.'
+    link: https://docs.databricks.com/aws/en/generative-ai/agent-bricks/multi-agent-supervisor#:~:text=complete%20complex%20tasks%20across%20different%2C%20specialized%20domains
+status:
+  value: renamed
+  link: https://docs.databricks.com/aws/en/generative-ai/agent-bricks/multi-agent-supervisor
+  date: '2026-07-18'
+from:
+  date: '2025'
+  link: https://www.databricks.com/blog/multi-agent-supervisor-architecture-orchestrating-enterprise-ai-scale
+to:
+  date: 2026-02
+  link: https://www.databricks.com/blog/agent-bricks-supervisor-agent-now-ga-orchestrate-enterprise-agents
+successorId: supervisor-agent
+links:
+  - url: https://www.databricks.com/blog/multi-agent-supervisor-architecture-orchestrating-enterprise-ai-scale
+    kind: community
+    label: 'Databricks blog: MAS architecture'
+  - url: https://hexaware.com/blogs/building-an-ai-powered-wealth-management-assistant-with-databricks-agent-bricks-and-multi-agent-ai/
+    kind: internet
+    label: 'Hexaware: Agent Bricks multi-agent'
+source: https://docs.databricks.com/aws/en/generative-ai/agent-bricks/multi-agent-supervisor
+verified: '2026-07-18'

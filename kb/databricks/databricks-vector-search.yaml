@@ -1,0 +1,29 @@
+id: databricks-vector-search
+name: Databricks Vector Search
+category: AI / ML
+what:
+  note: Managed vector (similarity) search over Unity Catalog data, turning a Delta table into an auto-syncing vector index for RAG apps.
+  link: https://docs.databricks.com/aws/en/vector-search/vector-search#:~:text=AI%20applications%20such%20as%20RAG%20systems
+fact:
+  - note: Launched to give RAG apps a serverless similarity search that could turn any Delta table into an auto-syncing vector index with one click, all governed by the same Unity Catalog permissions as the underlying data.
+    link: https://docs.databricks.com/aws/en/vector-search/vector-search#:~:text=appear%20in%20and%20are%20governed%20by%20Unity%20Catalog
+status:
+  value: renamed
+  link: https://docs.databricks.com/aws/en/vector-search/vector-search#:~:text=formerly%20Databricks%20Vector%20Search
+  date: '2026-07-18'
+from:
+  date: '2023'
+  link: https://www.databricks.com/blog/introducing-databricks-vector-search-public-preview#:~:text=public%20preview%20of%20Databricks%20AI%20Search
+to:
+  date: '2024'
+  link: https://docs.databricks.com/aws/en/release-notes/product/2024/may#:~:text=Mosaic%20AI%20Vector%20Search%20is%20now%20generally%20available.
+successorId: mosaic-ai-vector-search
+links:
+  - url: https://www.databricks.com/blog/introducing-databricks-vector-search-public-preview
+    kind: community
+    label: 'Databricks blog: Vector Search preview'
+  - url: https://unstructured.io/blog/rag-seamlessly-integrating-context-from-multiple-sources-into-delta-tables-in-databricks
+    kind: internet
+    label: 'Unstructured: RAG with Vector Search'
+source: https://docs.databricks.com/aws/en/vector-search/vector-search
+verified: '2026-08-03'

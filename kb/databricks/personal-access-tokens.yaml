@@ -1,0 +1,33 @@
+id: personal-access-tokens
+name: Personal access tokens (PATs)
+aliases:
+  - PAT
+  - personal access token
+  - token authentication
+category: Developer experience
+what:
+  note: Long-lived bearer tokens used to authenticate to the Databricks REST API, CLI, and integrations.
+  link: https://docs.databricks.com/aws/en/dev-tools/auth/pat#:~:text=authenticate%20to%20resources%20and%20APIs%20at%20the%20workspace%20level
+fact:
+  - note: These long-lived bearer tokens authenticate to the REST API, CLI, and integrations - but they can't automate account-level functionality, and have a habit of ending up pasted into notebooks.
+    link: https://docs.databricks.com/aws/en/dev-tools/auth/pat#:~:text=automate%20Databricks%20account%2Dlevel%20functionality
+  - note: Databricks now says, where possible, to use OAuth instead 'because OAuth provides stronger security.'
+    link: https://docs.databricks.com/aws/en/dev-tools/auth/pat#:~:text=because%20OAuth%20provides%20stronger%20security
+status:
+  value: legacy
+  link: https://docs.databricks.com/aws/en/dev-tools/auth/pat#:~:text=personal%20access%20tokens%20%28legacy%29
+  date: '2026-07-18'
+from:
+  date: '2017'
+  link: https://docs.databricks.com/aws/en/dev-tools/auth/pat
+deprecatedAt:
+  date: '2026'
+  link: https://docs.databricks.com/aws/en/dev-tools/auth/pat
+successorId: oauth-token-federation
+replacement: OAuth (U2M/M2M) & OAuth token federation
+links:
+  - url: https://community.databricks.com/t5/data-engineering/personal-access-token-retention-period-change/td-p/107534
+    kind: community
+    label: 'Community: PAT retention change'
+source: https://docs.databricks.com/aws/en/dev-tools/auth/pat
+verified: '2026-07-18'

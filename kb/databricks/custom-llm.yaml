@@ -1,0 +1,36 @@
+id: custom-llm
+name: Custom LLM
+aliases:
+  - 'Agent Bricks: Custom LLM'
+category: AI / ML
+what:
+  note: Agent Bricks capability for building a task-specialized text LLM from your own data - summarization, classification, transformation, and generation - with auto-optimized cost versus quality.
+  link: https://docs.databricks.com/aws/en/generative-ai/agent-bricks/custom-llm#:~:text=summarization%2C%20classification%2C%20text%20transformation%2C%20and%20content%20generation
+fact:
+  - note: On "Optimize" it races several strategies (including Foundation Model fine-tuning) and can deploy a cheaper model that matches the quality of a bigger one; the guidelines you accept double as auto-generated pass/fail evaluation metrics.
+    link: https://docs.databricks.com/aws/en/generative-ai/agent-bricks/custom-llm#:~:text=Each%20accepted%20guideline%20is%20used%20as%20an%20evaluation%20metric
+  - note: It shipped as Beta at the June 2025 summit and never reached GA - its docs page now carries a '(legacy)' title while still flagged Beta.
+    link: https://docs.databricks.com/aws/en/generative-ai/agent-bricks/custom-llm#:~:text=Create%20a%20custom%20LLM%20agent%20%28legacy%29
+status:
+  value: legacy
+  link: https://docs.databricks.com/aws/en/generative-ai/agent-bricks/custom-llm#:~:text=custom%20LLM%20agent%20%28legacy%29
+  date: '2026-07-22'
+releases:
+  - type: beta
+    date: 2025-06
+    link: https://www.databricks.com/blog/introducing-agent-bricks#:~:text=Agent%20Bricks%20is%20now%20available%20in%20beta.
+from:
+  date: 2025-06
+  link: https://www.databricks.com/blog/introducing-agent-bricks#:~:text=custom%20text%20transformation
+deprecatedAt:
+  date: '2026'
+  link: https://docs.databricks.com/aws/en/generative-ai/agent-bricks/custom-llm
+links:
+  - url: https://learn.microsoft.com/en-us/azure/databricks/generative-ai/agent-bricks/custom-llm
+    kind: official
+    label: 'Microsoft Learn: Custom LLM (legacy)'
+  - url: https://www.databricks.com/blog/introducing-agent-bricks
+    kind: community
+    label: 'Databricks blog: Introducing Agent Bricks'
+source: https://docs.databricks.com/aws/en/generative-ai/agent-bricks/custom-llm
+verified: '2026-07-22'

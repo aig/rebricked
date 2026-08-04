@@ -1,0 +1,39 @@
+id: declarative-feature-engineering
+name: Declarative Feature Engineering
+aliases:
+  - Declarative Feature Engineering APIs
+  - Feature Views
+category: AI / ML
+what:
+  note: APIs to declaratively define and compute time-windowed aggregation features in Unity Catalog, materialize them to Delta or Lakebase, and serve them to online model serving.
+  link: https://docs.databricks.com/aws/en/release-notes/product/2026/march#:~:text=Materialize%20batch%20features%20to%20Delta%20tables%20or%20Lakebase
+fact:
+  - note: You declare a time-windowed aggregation once and it computes the feature for you - materializing to Delta or Lakebase and wiring into online model serving - the feature-engineering echo of the declarative-pipelines idea.
+    link: https://docs.databricks.com/aws/en/release-notes/product/2026/march#:~:text=Serve%20Unity%20Catalog%20models%20using%20online%20model%20serving
+  - note: It launched in Beta in March 2026, initially only in the AWS us-east-1 and us-west-2 regions.
+    link: https://docs.databricks.com/aws/en/release-notes/product/2026/march#:~:text=now%20available%20in%20Beta%20in%20the%20AWS
+status:
+  value: active
+  link: https://docs.databricks.com/aws/en/release-notes/product/2026/march#:~:text=Declarative%20Feature%20Engineering%20APIs%20are%20now%20available%20in%20Beta
+  date: '2026-07-23'
+releases:
+  - type: beta
+    date: 2026-03
+    link: https://docs.databricks.com/aws/en/release-notes/product/2026/march#:~:text=Declarative%20Feature%20Engineering%20APIs%20are%20now%20available%20in%20Beta
+introducedAt:
+  date: 2026-03
+  link: https://docs.databricks.com/aws/en/release-notes/product/2026/march#:~:text=Declarative%20Feature%20Engineering%20APIs%20are%20now%20available%20in%20Beta
+limitations:
+  note: Beta, initially available only in the AWS us-east-1 and us-west-2 regions; features are defined in Unity Catalog.
+  link: https://docs.databricks.com/aws/en/release-notes/product/2026/march#:~:text=now%20available%20in%20Beta%20in%20the%20AWS
+  date: '2026-07-23'
+links:
+  - url: https://docs.databricks.com/aws/en/release-notes/product/2026/march
+    kind: official
+    label: 'Databricks release notes: Declarative Feature Engineering APIs Beta (March 2026)'
+prediction:
+  - Feature Bricks
+  - Lakeflow Features
+  - Genie Features
+source: https://docs.databricks.com/aws/en/release-notes/product/2026/march
+verified: '2026-07-23'

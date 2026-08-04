@@ -1,0 +1,38 @@
+id: managed-iceberg-materialized-views
+name: Managed Iceberg materialized views
+aliases:
+  - Iceberg materialized views
+category: Data engineering
+what:
+  note: Unity Catalog managed materialized views that are readable by external Apache Iceberg clients.
+  link: https://docs.databricks.com/aws/en/iceberg/#:~:text=External%20Iceberg%20readers%20can%20read%20the%20materialized%20view
+fact:
+  - note: It stretches Unity Catalog's managed Iceberg support from tables to materialized views, so an outside Iceberg reader like Snowflake or Trino can query a Databricks-maintained MV directly - though for now you enable it through your account team.
+    link: https://docs.databricks.com/aws/en/iceberg/#:~:text=reach%20out%20to%20your%20Databricks%20account%20team
+  - note: It entered Public Preview on July 7, 2026, and is gated behind your account team.
+    link: https://docs.databricks.com/aws/en/release-notes/product/2026/july#:~:text=reach%20out%20to%20your%20Databricks%20account%20team
+status:
+  value: active
+  link: https://docs.databricks.com/aws/en/iceberg/#:~:text=Managed%20Iceberg%20materialized%20views%20are%20in%20Public%20Preview
+  date: '2026-07-23'
+releases:
+  - type: public-preview
+    date: 2026-07
+    link: https://docs.databricks.com/aws/en/release-notes/product/2026/july#:~:text=Managed%20Iceberg%20materialized%20views%20are%20in%20Public%20Preview
+introducedAt:
+  date: 2026-07
+  link: https://docs.databricks.com/aws/en/release-notes/product/2026/july#:~:text=Managed%20Iceberg%20materialized%20views%20are%20in%20Public%20Preview
+limitations:
+  note: Public Preview is gated (enable via your Databricks account team). External Iceberg readers can read but not write the materialized view, and you must run REPAIR TABLE with SYNC METADATA before it's externally accessible.
+  link: https://docs.databricks.com/aws/en/iceberg/#:~:text=run%20REPAIR%20TABLE%20with%20SYNC%20METADATA
+  date: '2026-07-23'
+links:
+  - url: https://docs.databricks.com/aws/en/release-notes/product/2026/july
+    kind: official
+    label: 'Databricks release notes: Managed Iceberg materialized views Public Preview (July 2026)'
+prediction:
+  - Iceberg MV Sharing
+  - Managed Iceberg Views
+  - Delta Iceberg MVs
+source: https://docs.databricks.com/aws/en/iceberg/
+verified: '2026-07-23'

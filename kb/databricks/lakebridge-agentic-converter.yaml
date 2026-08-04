@@ -1,0 +1,36 @@
+id: lakebridge-agentic-converter
+name: Lakebridge Agentic Converter
+aliases:
+  - Lakebridge Converter
+category: Developer experience
+what:
+  note: An agent that converts legacy SQL dialects - T-SQL, Snowflake, Redshift, Oracle, BigQuery, Teradata - to ANSI SQL for migration projects, powered by Genie Code.
+  link: https://docs.databricks.com/aws/en/migration/lakebridge-agentic-converter#:~:text=dialects%20such%20as%20T%2DSQL%2C%20Snowflake%2C%20Redshift%2C%20Oracle%2C%20BigQuery%2C%20and%20Teradata
+fact:
+  - note: Powered by Genie Code, it reads each legacy SQL script, checks the syntax and the semantic intent, and iteratively fixes its own errors before writing ANSI SQL back to your workspace - a migration grunt that debugs its own output.
+    link: https://docs.databricks.com/aws/en/migration/lakebridge-agentic-converter#:~:text=validates%20the%20result%2C%20and%20retries%20sections%20that%20fail
+  - note: 'The name is gone from the page but not from the address bar: the /migration/lakebridge-agentic-converter doc URL still resolves, quietly outliving the title it was named after.'
+    link: https://docs.databricks.com/aws/en/migration/lakebridge-agentic-converter#:~:text=Convert%20SQL%20with%20the%20agentic%20code%20converter
+  - note: It carried the Lakebridge brand for a matter of weeks - announced in the July 2026 release notes and retitled in the same month's docs.
+    link: https://docs.databricks.com/aws/en/release-notes/product/2026/july#:~:text=Agentic%20code%20converter%20is%20in%20Beta
+status:
+  value: renamed
+  link: https://docs.databricks.com/aws/en/migration/lakebridge-agentic-converter#:~:text=Convert%20SQL%20with%20the%20agentic%20code%20converter
+  date: '2026-08-03'
+releases:
+  - type: beta
+    date: 2026-07
+    link: https://docs.databricks.com/aws/en/release-notes/product/2026/july#:~:text=Agentic%20code%20converter%20is%20in%20Beta
+from:
+  date: 2026-07
+  link: https://docs.databricks.com/aws/en/release-notes/product/2026/july#:~:text=Agentic%20code%20converter%20is%20in%20Beta
+to:
+  date: 2026-07
+  link: https://docs.databricks.com/aws/en/migration/lakebridge-agentic-converter#:~:text=Convert%20SQL%20with%20the%20agentic%20code%20converter
+successorId: agentic-code-converter
+links:
+  - url: https://docs.databricks.com/aws/en/release-notes/product/2026/july
+    kind: official
+    label: 'Databricks release notes: converter Beta (July 2026)'
+source: https://docs.databricks.com/aws/en/migration/lakebridge-agentic-converter
+verified: '2026-08-03'

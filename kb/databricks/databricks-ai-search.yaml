@@ -1,0 +1,43 @@
+id: databricks-ai-search
+name: Databricks AI Search
+aliases:
+  - Mosaic AI Vector Search
+  - Databricks Vector Search
+  - Vector Search
+category: AI / ML
+what:
+  note: Managed search over Unity Catalog data; now supports full-text and hybrid search without pre-computed embeddings.
+  link: https://docs.databricks.com/aws/en/vector-search/vector-search#:~:text=hybrid%20keyword%2Dsimilarity%20search
+fact:
+  - note: It outgrew pure vector search - it now also does full-text keyword search and hybrid keyword-similarity search, and on storage-optimized endpoints you can even build an index with no precomputed embedding columns at all.
+    link: https://docs.databricks.com/aws/en/vector-search/vector-search#:~:text=combines%20vector%2Dbased%20embedding%20search%20with%20traditional%20keyword%2Dbased%20search
+  - note: Its high-QPS mode is enabled by default and yet changes nothing for the endpoints you already run - existing endpoints are pointedly left alone.
+    link: https://docs.databricks.com/aws/en/release-notes/product/2026/july#:~:text=High%20QPS%20is%20enabled%20by%20default%2C%20but%20existing%20endpoints%20are%20not%20affected
+status:
+  value: active
+  link: https://docs.databricks.com/aws/en/vector-search/vector-search#:~:text=Databricks%20AI%20Search%20%28formerly%20Databricks%20Vector%20Search%29
+  date: '2026-07-18'
+releases:
+  - type: ga
+    date: 2024-05
+    link: https://www.databricks.com/blog/announcing-mosaic-ai-vector-search-general-availability-databricks#:~:text=general%20availability%20of%20Databricks%20AI%20Search
+from:
+  date: 2026-06
+  link: https://docs.databricks.com/aws/en/release-notes/product/2026/june#:~:text=Vector%20Search%20is%20now%20AI%20Search
+limitations:
+  note: Row- and column-level permissions aren't supported, indexes can't be cloned across workspaces, and the _id column name is reserved. Query results are capped (10000 rows for ANN, 200 for hybrid/full-text) with a 10 MB max response, and storage-optimized endpoints add limits such as no continuous sync, embedding dimensions divisible by 16, and no CMK or FedRAMP support.
+  link: https://docs.databricks.com/aws/en/generative-ai/vector-search#:~:text=Row%20and%20column%20level%20permissions%20are%20not%20supported
+  date: '2026-07-23'
+links:
+  - url: https://www.databricks.com/blog/announcing-mosaic-ai-vector-search-general-availability-databricks
+    kind: community
+    label: 'Databricks Blog: Vector Search GA'
+  - url: https://www.matillion.com/blog/how-to-use-mosaic-ai-vector-search-in-databricks
+    kind: internet
+    label: 'Matillion: Use Mosaic AI Vector Search'
+prediction:
+  - Genie Search
+  - Mosaic AI Search
+  - Unity Search
+source: https://docs.databricks.com/aws/en/vector-search/vector-search
+verified: '2026-08-03'

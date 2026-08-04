@@ -1,0 +1,39 @@
+id: legacy-sql-editor
+name: Legacy SQL editor
+aliases:
+  - old SQL editor
+  - SQL editor (legacy)
+category: Compute / BI
+what:
+  note: The original Databricks SQL query editor UI.
+  link: https://docs.databricks.com/aws/en/sql/user/sql-editor/legacy#:~:text=the%20query%20tabs%20at%20the%20top%20of%20the%20text%20editor
+fact:
+  - note: The original Databricks SQL query editor ran one statement per tab - and it's scheduled to retire entirely in late July 2026.
+    link: https://docs.databricks.com/aws/en/sql/user/sql-editor/legacy#:~:text=retired%20in%20late%20July%202026
+  - note: From late May 2026 the new editor became the default and the opt-out vanished - you can only switch back until the July retirement.
+    link: https://docs.databricks.com/aws/en/sql/user/sql-editor/legacy#:~:text=the%20workspace%2Dlevel%20opt%2Dout%20will%20be%20removed
+status:
+  value: deprecated
+  link: https://docs.databricks.com/aws/en/sql/user/sql-editor/legacy#:~:text=The%20legacy%20SQL%20editor%20will%20be%20retired%20in%20late%20July%202026.
+  date: '2026-07-18'
+from:
+  date: 2020-11
+  link: https://docs.databricks.com/aws/en/release-notes/product/2020/november#:~:text=an%20intuitive%20environment%20for%20running%20ad%2Dhoc%20queries
+deprecatedAt:
+  date: '2026'
+  link: https://docs.databricks.com/aws/en/sql/user/sql-editor/legacy#:~:text=The%20legacy%20SQL%20editor%20will%20be%20retired%20in%20late%20July%202026.
+removedAt:
+  date: 2026-07
+  link: https://docs.databricks.com/aws/en/sql/user/sql-editor/legacy#:~:text=The%20legacy%20SQL%20editor%20will%20be%20retired%20in%20late%20July%202026.
+successorId: new-sql-editor
+replacement: New SQL editor
+occasion:
+  date: 2026-07
+  link: https://docs.databricks.com/aws/en/sql/user/sql-editor/legacy#:~:text=The%20legacy%20SQL%20editor%20will%20be%20retired%20in%20late%20July%202026.
+  note: Retirement scheduled for late July 2026
+links:
+  - url: https://www.databricks.com/blog/introducing-new-sql-editor
+    kind: community
+    label: 'Databricks Blog: The New SQL Editor'
+source: https://docs.databricks.com/aws/en/sql/user/sql-editor/legacy
+verified: '2026-07-18'

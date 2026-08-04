@@ -1,0 +1,41 @@
+id: genie
+name: Genie
+aliases:
+  - Databricks One
+category: AI / BI
+what:
+  note: Business-user-facing UI giving non-technical users a single conversational entry point to data and AI.
+  link: https://docs.databricks.com/aws/en/ai-bi/release-notes/2026#databricks-one-renamed-to-genie#:~:text=the%20simplified%20Databricks%20interface
+fact:
+  - note: For a few weeks in the spring of 2026 the simplified business UI was simply called 'Genie' - Databricks reusing the name of its conversational-analytics feature for the whole front door - before June's rename tacked on 'One' to disambiguate.
+    link: https://docs.databricks.com/aws/en/ai-bi/release-notes/2026#databricks-one-renamed-to-genie#:~:text=has%20been%20renamed%20to%20Genie
+  - note: For a few weeks the AI/BI release notes literally said the simplified interface 'has been renamed to Genie. The feature and its capabilities are unchanged.'
+    link: https://docs.databricks.com/aws/en/ai-bi/release-notes/2026#databricks-one-renamed-to-genie#:~:text=The%20feature%20and%20its%20capabilities%20are%20unchanged
+status:
+  value: renamed
+  link: https://docs.databricks.com/aws/en/ai-bi/release-notes/2026#databricks-one-renamed-to-genie#:~:text=has%20been%20renamed%20to%20Genie
+  date: '2026-07-19'
+from:
+  date: 2026-04
+  link: https://docs.databricks.com/aws/en/ai-bi/release-notes/2026#:~:text=the%20simplified%20Databricks%20interface%2C%20has%20been%20renamed%20to%20Genie.
+to:
+  date: 2026-06
+  link: https://docs.databricks.com/aws/en/ai-bi/release-notes/2026#:~:text=has%20been%20renamed%20to%20Genie%20One.
+successorId: genie-one
+occasion:
+  date: 2026-04
+  link: https://docs.databricks.com/aws/en/ai-bi/release-notes/2026#:~:text=Databricks%20One%2C%20the%20simplified%20Databricks%20interface%2C%20has%20been%20renamed%20to%20Genie.
+  note: Renamed from Databricks One to Genie, April 27, 2026
+links:
+  - url: https://docs.databricks.com/aws/en/ai-bi/release-notes/2026
+    kind: community
+    label: Databricks AI/BI release notes (2026)
+  - url: https://www.databricks.com/blog/introducing-databricks-one
+    kind: internet
+    label: 'Databricks blog: Databricks One'
+prediction:
+  - Genie One
+  - Databricks Genie
+  - Genie Home
+source: https://docs.databricks.com/aws/en/ai-bi/release-notes/2026#databricks-one-renamed-to-genie
+verified: '2026-07-19'

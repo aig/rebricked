@@ -1,0 +1,46 @@
+id: lakehouse-federation
+name: Lakehouse Federation
+aliases:
+  - Query Federation
+  - foreign catalogs
+  - catalog federation
+category: Data governance
+what:
+  note: Query external databases (Postgres, MySQL, Snowflake, Redshift, and more) in place through Unity Catalog foreign catalogs, with query pushdown and governance - no data movement.
+  link: https://docs.databricks.com/aws/en/query-federation/#:~:text=external%20data%20through%20Unity%20Catalog%20foreign%20catalogs
+fact:
+  - note: Query Postgres, Snowflake, or Redshift right where they live through 'foreign catalogs' - with pushdown, so the filtering happens on the source system and the data never moves.
+    link: https://docs.databricks.com/aws/en/query-federation/#:~:text=automatic%20query%20pushdown%20and%20fine%2Dgrained%20access%20controls
+  - note: The access is strictly read-only - you can query the foreign system but never write back to it.
+    link: https://docs.databricks.com/aws/en/query-federation/#:~:text=governed%2C%20read%2Donly%20access%20to%20external%20data
+status:
+  value: active
+  link: https://docs.databricks.com/aws/en/query-federation/#:~:text=the%20Databricks%20query%20federation%20platform
+  date: '2026-07-18'
+releases:
+  - type: public-preview
+    date: 2023-07
+    link: https://docs.databricks.com/aws/en/release-notes/product/2023/july#:~:text=Lakehouse%20Federation%20lets%20you%20run%20queries%20against%20external%20database%20providers%20%28Public%20Preview%29
+  - type: ga
+    date: 2024-08
+    link: https://docs.databricks.com/aws/en/release-notes/product/2024/august#:~:text=Lakehouse%20Federation%20is%20generally%20available%20%28GA%29
+introducedAt:
+  date: '2023'
+  link: https://docs.databricks.com/aws/en/release-notes/product/2023/july#:~:text=Lakehouse%20Federation%20lets%20you%20run%20queries%20against%20external%20database%20providers%20%28Public%20Preview%29
+limitations:
+  note: Federated queries are read-only (except legacy Hive metastore federation), don't use Databricks query caching (Result Cache and Disk Cache), lowercase table and schema names, ignore names invalid in Unity Catalog, and can't federate foreign tables with case-sensitive identifiers for Azure Synapse or Redshift.
+  link: https://docs.databricks.com/aws/en/query-federation/database-federation#:~:text=Databricks%20query%20caching%20%28Result%20Cache%20and%20Disk%20Cache%29%20is%20not%20supported%20for%20federated%20queries.
+  date: '2026-07-23'
+links:
+  - url: https://sanjeebiitg.medium.com/databricks-part-08-databricks-lakehouse-federation-fundamentals-729ba3e10cb0
+    kind: community
+    label: 'Medium: Lakehouse Federation basics'
+  - url: https://www.flexera.com/blog/finops/lakehouse-federation/
+    kind: internet
+    label: 'Flexera: Lakehouse Federation 101'
+prediction:
+  - Lakehouse Confederation
+  - Unity Federation
+  - Genie Federation
+source: https://docs.databricks.com/aws/en/query-federation/
+verified: '2026-08-03'

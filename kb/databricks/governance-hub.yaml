@@ -1,0 +1,40 @@
+id: governance-hub
+name: Governance Hub
+aliases:
+  - Governance
+category: Data governance
+what:
+  note: A centralized, account-level UI in the account console for monitoring governance across a Databricks account, with Data, AI, and Cost pages covering data health and coverage, AI usage and spend, and cost drivers.
+  link: https://docs.databricks.com/aws/en/admin/governance-hub/#:~:text=a%20centralized%2C%20account%2Dlevel%20UI%20for%20monitoring%20governance%20across%20your
+fact:
+  - note: 'For a governance product it is deliberately powerless: it introduces no new permissions and manages no access itself, so it can only ever show you what you could already see.'
+    link: https://docs.databricks.com/aws/en/admin/governance-hub/#:~:text=does%20not%20introduce%20new%20permissions%2C%20nor%20does%20it%20manage%20access%20to%20data%20or%20resources
+  - note: 'Which of its three pages you get depends on what kind of admin you are: metastore admins see only Data, workspace admins only Cost and AI, and account admins get the lot down to per-metastore drill-downs.'
+    link: https://docs.databricks.com/aws/en/admin/governance-hub/#:~:text=all%20workspace%2Dlevel%20drill%2Ddowns%20for%20cost%20and%20AI%2C%20and%20all%20metastore%2Dlevel%20drill%2Ddowns%20for%20data
+  - note: Switch it on and there is nothing to govern at first - the docs warn the data might take up to a day to show up.
+    link: https://docs.databricks.com/aws/en/admin/governance-hub/#:~:text=Data%20might%20take%20up%20to%20a%20day%20to%20load%20after%20you%20enable%20the%20preview
+status:
+  value: active
+  link: https://docs.databricks.com/aws/en/admin/governance-hub/#:~:text=a%20centralized%2C%20account%2Dlevel%20UI%20for%20monitoring%20governance%20across%20your
+  date: '2026-08-03'
+releases:
+  - type: beta
+    date: 2026-07
+    link: https://docs.databricks.com/aws/en/release-notes/product/2026/july#:~:text=Governance%20Hub%20is%20a%20centralized%2C%20account%2Dlevel%20UI%20in%20the%20account%20console%20for%20monitoring%20governance
+introducedAt:
+  date: 2026-07
+  link: https://docs.databricks.com/aws/en/release-notes/product/2026/july#:~:text=Governance%20Hub%20is%20a%20centralized%2C%20account%2Dlevel%20UI%20in%20the%20account%20console%20for%20monitoring%20governance
+limitations:
+  note: Beta, and an account admin must enable it from the account console Previews page; data might take up to a day to load afterwards. It adds no permissions of its own, each page is scoped to your admin role, and Data page visualizations only ever show what your existing Unity Catalog privileges already allow.
+  link: https://docs.databricks.com/aws/en/admin/governance-hub/#:~:text=Data%20might%20take%20up%20to%20a%20day%20to%20load%20after%20you%20enable%20the%20preview
+  date: '2026-08-03'
+links:
+  - url: https://docs.databricks.com/aws/en/release-notes/product/2026/july
+    kind: official
+    label: 'Databricks release notes: Governance Hub Beta (July 2026)'
+prediction:
+  - Genie Governance
+  - Unity Governance Hub
+  - Governance One
+source: https://docs.databricks.com/aws/en/admin/governance-hub/
+verified: '2026-08-03'
