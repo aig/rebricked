@@ -3,6 +3,23 @@
 All notable changes to **rebricked**, grouped by day.
 Format loosely follows [Keep a Changelog](https://keepachangelog.com/); dates are `YYYY-MM-DD`.
 
+## 2026-08-04
+
+### Changed
+- **Tightened the LTAP entry from [#7](https://github.com/aig/rebricked/pull/7).** The merged
+  card was sourced entirely to the launch press release, which left it reading as shipped:
+  that same press release's Availability section says only "LTAP is coming soon as a part of
+  Lakebase." Added a `limitations` note (still rolling out; dual-writes row + columnar copies
+  to verify itself; tiny tables left unconverted; MVCC row versions hidden from Iceberg/Delta
+  readers) and said so in `what.note`, sourced to Reynold Xin's engineering deep dive. No
+  `releases` timeline: the announcement names no preview stage, so inventing one would be a
+  guess. Replaced the two facts that were really about Lakebase (its 12M daily database
+  launches, its git-style branching - already a fact on the `lakebase` card) with the
+  deliberate HTAP pun and the dual-write-during-rollout detail, and reframed the "world's
+  first LTAP platform" fact around the fact that Databricks coined the category the same day.
+  Added text fragments to the bare `status`/`occasion` links, added the engineering blog and a
+  Register write-up to `links`, and re-verified every citation with `check_anchors.py`.
+
 ## 2026-08-03
 
 ### Added
