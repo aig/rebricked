@@ -50,9 +50,6 @@ sources:
   - url: https://github.com/apache/spark/blob/16d4c73da4943b57996db2936a716b80a1eb6dfe/python/pyspark/taskcontext.py#L282
     kind: official
     label: 'Apache Spark master: TaskContext.cpuAmount(), fractional CPUs, added in 4.3.0'
-  - url: https://spark.apache.org/news/spark-4-2-0-released.html
-    kind: official
-    label: 'Apache Spark: 4.2.0 release announcement (July 2026), the latest release'
 ---
 
 Open the compute metrics page for one of your jobs. There is a good chance you will see this
@@ -177,10 +174,9 @@ The [migration guide for the upcoming Spark 4.3](https://github.com/apache/spark
 says that since Spark 4.3, `spark.task.cpus` accepts fractional values, and the Python
 `TaskContext` gains a
 [cpuAmount() method](https://github.com/apache/spark/blob/16d4c73da4943b57996db2936a716b80a1eb6dfe/python/pyspark/taskcontext.py#L282)
-that returns the possibly fractional amount. As of August 2026
-[the latest released Spark is 4.2](https://spark.apache.org/news/spark-4-2-0-released.html#:~:text=We%20are%20happy%20to%20announce%20the%20availability%20of%20Apache%20Spark%204.2.0),
-so no released Spark, and no Databricks Runtime, carries this yet. Until one does, the
-only lever for running more task threads than cores is still the undocumented one above.
+that returns the possibly fractional amount. Until a Databricks Runtime ships that Spark
+version, the only lever for running more task threads than cores is still the undocumented one
+above.
 
 :::judgement
 The day a Databricks Runtime ships Spark 4.3, a documented `spark.task.cpus` of 0.5 beats the
@@ -190,12 +186,26 @@ older runtimes. Check your runtime's Spark version before choosing.
 
 ## Not on single-node clusters
 
-A single-node cluster has no Worker process to configure. The driver runs Spark locally and
+A single-node cluster has no Worker process to configure. The
+["driver acts as both master and worker"](https://docs.databricks.com/aws/en/compute/configure#:~:text=Driver%20acts%20as%20both%20master%20and%20worker),
+running Spark locally and
 ["spawns one executor thread per logical core in the compute resource, minus 1 core for the driver"](https://docs.databricks.com/aws/en/compute/configure#:~:text=Spawns%20one%20executor%20thread%20per%20logical%20core).
-The equivalent knob would be the thread count in `spark.master`, and Databricks does not
+Read that layout twice: the task threads share one machine with the driver, and the documented
+default already holds a core back for it. The equivalent knob would be the thread count in
+`spark.master`, and Databricks does not
 support overriding it on single node in the UI. And no, the 4 in `local[*, 4]` is not a core
 count: it is
 [the number of allowed task failures](https://spark.apache.org/docs/latest/submitting-applications.html#:~:text=Run%20Spark%20locally%20with%20K%20worker%20threads%20and%20F%20maxFailures).
+
+:::judgement
+Which is a knob I would not want anyway. On a multi-node cluster, oversubscribing a worker
+risks that worker, and a lost executor gets retried. On single node there is no separate worker
+to risk: extra task threads take their cores from the process holding the SparkContext, and
+when the driver goes, the cluster goes with it. Databricks already warns that
+["large-scale data processing will exhaust the resources on a single node"](https://docs.databricks.com/aws/en/compute/configure#:~:text=will%20exhaust%20the%20resources%20on%20a%20single%20node)
+and to use multi-node instead. I read the missing knob as agreeing with that warning, not as an
+oversight to route around.
+:::
 
 ## What you actually save
 
