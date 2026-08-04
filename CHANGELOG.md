@@ -12,6 +12,19 @@ recorded, and a made-up reason is worse than none.
 ## 2026-08-04
 
 ### Added
+- **Guides: optional `authorLink` front-matter field - the byline can now link to the author.**
+
+  **Why:** a guide is the one place on the site where a named person stakes an opinion, but the
+  byline was plain text, so a reader who wanted to weigh that opinion (or follow the author) had
+  a name and nowhere to go. With the first guide being shared on LinkedIn, the page and the
+  author's profile should point at each other - the post links here, the byline links back.
+
+  **What:** guide front matter accepts an optional `authorLink` (any http(s) URL;
+  [`validate_posts.py`](scripts/validate_posts.py) checks the shape like every other link).
+  When present, [`build_posts.py`](scripts/build_posts.py) renders the "by <author>" byline as
+  a link to it and adds it as the JSON-LD Person's `url`; when absent, nothing changes. The
+  FinOps guide now carries the author's LinkedIn profile.
+
 - **Guides: a second content type at `/learn/`, written in `kb/posts/`, with the first article on
   Databricks cluster cost.**
 

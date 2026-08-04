@@ -646,7 +646,11 @@ def post_jsonld(post, url, title, desc):
         "url": url,
         "datePublished": str(post["published"]),
         "dateModified": str(post.get("updated") or post["published"]),
-        "author": {"@type": "Person", "name": str(post["author"])},
+        "author": (
+            {"@type": "Person", "name": str(post["author"]), "url": str(post["authorLink"])}
+            if post.get("authorLink")
+            else {"@type": "Person", "name": str(post["author"])}
+        ),
         "keywords": ", ".join(post.get("tags") or []),
         "isPartOf": {"@id": f"{BASE_URL}/#website"},
         "publisher": {"@type": "Organization", "name": "REbricked", "url": f"{BASE_URL}/"},
@@ -707,7 +711,11 @@ def render_post(post, idx, posts, by_id, entry_count, today):
         kicker=esc(KIND_LABEL.get(post.get("kind"), "Guide")),
         title=esc(post["title"]),
         minutes=post["readingMinutes"],
-        author=esc(post["author"]),
+        author=(
+            f'<a href="{attr(post["authorLink"])}" target="_blank" rel="author noopener">{esc(post["author"])}</a>'
+            if post.get("authorLink")
+            else esc(post["author"])
+        ),
         published=esc(fmt_date(str(post["published"])[:7])),
         strip=strip_html(post, today),
         description=esc(desc),

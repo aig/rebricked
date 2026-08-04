@@ -38,7 +38,7 @@ KB_POSTS = ROOT / "kb" / "posts"
 DATA = ROOT / "www" / "databricks.features.json"
 
 REQUIRED = ("slug", "title", "description", "kind", "category", "author", "published", "verified", "sources")
-OPTIONAL = ("updated", "staleAfter", "tags", "entries", "sources", "readingMinutes")
+OPTIONAL = ("updated", "staleAfter", "tags", "entries", "sources", "readingMinutes", "authorLink")
 KINDS = {"guide", "explainer", "opinion"}
 LINK_KINDS = {"official", "community", "internet"}
 DATE_RE = re.compile(r"^\d{4}-\d{2}-\d{2}$")
@@ -147,6 +147,10 @@ def main():
         desc = " ".join(str(fm.get("description") or "").split())
         if desc and len(desc) > 320:
             err(slug, f"description is {len(desc)} chars; keep it under 320")
+
+        # authorLink, when present, must be a real http(s) URL like every other link
+        if fm.get("authorLink") and not URL_RE.match(str(fm["authorLink"])):
+            err(slug, f"authorLink is not a valid http(s) URL: {fm['authorLink']!r}")
 
         # sources
         srcs = fm.get("sources")

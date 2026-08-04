@@ -7,6 +7,7 @@ description: A cluster can grow while CPU sits at 30 percent, because what runs 
 kind: guide
 category: Compute
 author: Ilya Aniskovets
+authorLink: https://www.linkedin.com/in/aniskovets/
 published: '2026-08-04'
 updated: '2026-08-04'
 verified: '2026-08-04'
@@ -15,7 +16,6 @@ tags: [cost, compute, finops, spark, autoscaling, performance]
 entries:
   - lakeflow-jobs
   - standard-and-dedicated-access-modes
-  - shared-single-user-access-modes
 sources:
   - url: https://docs.databricks.com/aws/en/compute/configure
     kind: official
@@ -50,6 +50,9 @@ sources:
   - url: https://github.com/apache/spark/blob/16d4c73da4943b57996db2936a716b80a1eb6dfe/python/pyspark/taskcontext.py#L282
     kind: official
     label: 'Apache Spark master: TaskContext.cpuAmount(), fractional CPUs, added in 4.3.0'
+  - url: https://spark.apache.org/news/spark-4-2-0-released.html
+    kind: official
+    label: 'Apache Spark: 4.2.0 release announcement (July 2026), the latest release'
 ---
 
 Open the compute metrics page for one of your jobs. There is a good chance you will see this
@@ -174,8 +177,9 @@ The [migration guide for the upcoming Spark 4.3](https://github.com/apache/spark
 says that since Spark 4.3, `spark.task.cpus` accepts fractional values, and the Python
 `TaskContext` gains a
 [cpuAmount() method](https://github.com/apache/spark/blob/16d4c73da4943b57996db2936a716b80a1eb6dfe/python/pyspark/taskcontext.py#L282)
-that returns the possibly fractional amount. As of August 2026 the latest released Spark is
-4.2, so no released Spark, and no Databricks Runtime, carries this yet. Until one does, the
+that returns the possibly fractional amount. As of August 2026
+[the latest released Spark is 4.2](https://spark.apache.org/news/spark-4-2-0-released.html#:~:text=We%20are%20happy%20to%20announce%20the%20availability%20of%20Apache%20Spark%204.2.0),
+so no released Spark, and no Databricks Runtime, carries this yet. Until one does, the
 only lever for running more task threads than cores is still the undocumented one above.
 
 :::judgement

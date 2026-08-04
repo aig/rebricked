@@ -243,8 +243,9 @@ The rules that keep guides from eroding the data's credibility:
   mention this" on each referenced entry page, which is the main reason the guides live here.
 - **Front matter fields:** required `slug` (= folder name, permanent), `title`, `description`,
   `kind` (`guide`/`explainer`/`opinion`), `category` (reuse the entry categories), `author`,
-  `published`, `verified`, `sources`. Optional `updated`, `staleAfter`, `tags`, `entries`.
-  `readingMinutes` is computed by the builder, never authored.
+  `published`, `verified`, `sources`. Optional `updated`, `staleAfter`, `tags`, `entries`,
+  `authorLink` (an http(s) URL - the byline renders as a link to it, and it becomes the
+  JSON-LD Person's `url`). `readingMinutes` is computed by the builder, never authored.
 - **Body syntax** is a deliberate Markdown *subset*: `##`/`###` headings, paragraphs, lists,
   pipe tables, fenced code, `![alt](images/x.jpg "caption")` figures, `:::note` / `:::warning` /
   `:::judgement` callouts, inline `**bold**`, `*italic*`, `` `code` ``, links, and
