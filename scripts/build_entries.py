@@ -656,7 +656,7 @@ ENTRY_BODY = """
             <a href="{hub_rel}">{vendor}</a> <span aria-hidden="true">/</span> {category}
           </nav>
           <div class="entry-headrow">
-            <span class="entry-kicker">{kicker}</span>
+            {kicker}
             {badge}
           </div>
           <h1>{name}{abbr}</h1>
@@ -723,6 +723,15 @@ def render_entry(d, by_id, data, posts=()):
     root = "../../"  # /{vendor}/{id}/ is two levels deep
     hub_rel = "../"  # -> /{vendor}/
     title, desc, kicker, lead = meta_for(d, by_id, data)
+    # The status badge prints the lifecycle word itself ("renamed", "legacy", ...), so an
+    # eyebrow repeating it rendered as "RENAMED  * RENAMED". Only active entries get no
+    # badge, so they are the ones that still need the eyebrow. meta_for keeps returning the
+    # full kicker either way - feed.xml uses it as the "[Renamed] <name>" item prefix.
+    kicker_html = (
+        f'<span class="entry-kicker">{esc(kicker)}</span>'
+        if (status_value(d) or "active") == "active"
+        else ""
+    )
     og_title = title.replace(" | REbricked", "")
     rail, topbar, js = chrome(root)
     head = HEAD.format(
@@ -745,7 +754,7 @@ def render_entry(d, by_id, data, posts=()):
         hub_rel=hub_rel,
         vendor=esc(vendor_name(v)),
         category=esc(d.get("category", "")),
-        kicker=esc(kicker),
+        kicker=kicker_html,
         badge=badge_html(d),
         name=esc(d["name"]),
         abbr=(
