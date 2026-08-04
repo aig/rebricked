@@ -358,25 +358,25 @@ POST_STYLE = """  <style>
     :root {
       --read: "Iowan Old Style", "Charter", "Palatino Linotype", Palatino, "Book Antiqua", Georgia, serif;
     }
-    .post-doc { max-width: 680px; margin: 0 auto; padding: 8px 4px 48px; }
+    .post-doc { max-width: 780px; margin: 0; padding: 8px 4px 48px; }
     .post-headrow { display: flex; align-items: center; gap: 9px; flex-wrap: wrap; margin-bottom: 10px; }
     /* The kicker occupies the exact slot an entry page prints New feature / Renamed in. */
     .post-kicker { font-family: var(--mono); font-size: 9.5px; font-weight: 700; letter-spacing: .15em; text-transform: uppercase; color: var(--accent-ink); border: 1px solid color-mix(in srgb, var(--accent) 42%, transparent); background: color-mix(in srgb, var(--accent) 9%, transparent); border-radius: 999px; padding: 3px 9px; }
     .post-cat { font-family: var(--mono); font-size: 9.5px; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); border: 1px solid var(--line); border-radius: 999px; padding: 3px 9px; }
     .post-doc h1 { font-family: var(--read); font-size: 34px; font-weight: 600; line-height: 1.13; letter-spacing: -.018em; text-wrap: balance; margin: 0 0 12px; }
     .post-meta { font-family: var(--mono); font-size: 10.5px; letter-spacing: .05em; text-transform: uppercase; color: var(--faint); font-variant-numeric: tabular-nums; margin: 0 0 16px; }
-    .post-lead { font-family: var(--read); font-size: 19px; line-height: 1.55; color: var(--muted); margin: 0 0 22px; max-width: 58ch; }
+    .post-lead { font-family: var(--read); font-size: 19px; line-height: 1.55; color: var(--muted); margin: 0 0 22px; }
     .post-hr, .post-sep { height: 1px; background: var(--line); border: 0; margin: 26px 0; }
     /* Prose. 66ch measure, 17.5/1.68 - the whole point of a separate canvas. */
     .post-body { font-family: var(--read); font-size: 17.5px; line-height: 1.68; }
-    .post-p { margin: 0 0 18px; max-width: 66ch; }
+    .post-p { margin: 0 0 18px; }
     /* Headings stay in the console voice against the serif body. */
     .post-h2 { font-family: var(--sans); font-size: 21px; font-weight: 700; letter-spacing: -.012em; margin: 32px 0 12px; text-wrap: balance; scroll-margin-top: 72px; }
     .post-h3 { font-family: var(--sans); font-size: 17px; font-weight: 700; margin: 24px 0 10px; scroll-margin-top: 72px; }
     .post-h4 { font-family: var(--sans); font-size: 15px; font-weight: 700; margin: 20px 0 8px; scroll-margin-top: 72px; }
-    .post-list { margin: 0 0 18px; padding-left: 1.5em; max-width: 66ch; }
+    .post-list { margin: 0 0 18px; padding-left: 1.5em; }
     .post-list li { margin-bottom: 6px; }
-    .post-quote { margin: 0 0 20px; padding: 4px 0 4px 16px; border-left: 3px solid var(--line); color: var(--muted); max-width: 64ch; }
+    .post-quote { margin: 0 0 20px; padding: 4px 0 4px 16px; border-left: 3px solid var(--line); color: var(--muted); }
     .post-body code { font-family: var(--mono); font-size: .84em; background: var(--card, rgba(127,127,127,.09)); border: 1px solid var(--line); border-radius: 4px; padding: 1px 5px; }
     .post-code { margin: 0 0 20px; padding: 13px 15px; overflow-x: auto; background: var(--card, rgba(127,127,127,.07)); border: 1px solid var(--line); border-radius: 10px; }
     .post-code code { font-family: var(--mono); font-size: 13px; background: none; border: 0; padding: 0; line-height: 1.6; }
@@ -387,7 +387,7 @@ POST_STYLE = """  <style>
     /* The callout family: one shape, three jobs, distinguished by the left rule's token.
        This is where the site's one rule becomes visual - facts read as prose, advice is
        boxed and labelled. */
-    .post-note { display: flex; gap: 10px; padding: 11px 14px; border-radius: 10px; font-size: 15px; line-height: 1.55; background: var(--card, rgba(127,127,127,.06)); border-left: 3px solid var(--c-legacy); color: var(--muted); margin: 0 0 20px; max-width: 66ch; }
+    .post-note { display: flex; gap: 10px; padding: 11px 14px; border-radius: 10px; font-size: 15px; line-height: 1.55; background: var(--card, rgba(127,127,127,.06)); border-left: 3px solid var(--c-legacy); color: var(--muted); margin: 0 0 20px; }
     .post-note .pn-i { flex: none; font-size: 14px; line-height: 1.5; }
     .post-note b { color: var(--ink); font-weight: 650; }
     .post-note.is-note { border-left-color: var(--c-active); }
@@ -435,9 +435,9 @@ POST_STYLE = """  <style>
     .post-pn-t { font-family: var(--read); font-size: 14.5px; color: var(--ink); line-height: 1.35; }
     .post-pn.is-next { text-align: right; }
     /* Learn index: rows, not tiles. Reads the same at 3 guides and at 30. */
-    .learn-doc { max-width: 720px; margin: 0 auto; padding: 8px 4px 48px; }
+    .learn-doc { max-width: 780px; margin: 0; padding: 8px 4px 48px; }
     .learn-doc h1 { font-family: var(--read); font-size: 30px; font-weight: 600; letter-spacing: -.015em; margin: 6px 0 8px; }
-    .learn-lead { font-family: var(--read); font-size: 16.5px; color: var(--muted); margin: 0 0 26px; max-width: 58ch; }
+    .learn-lead { font-family: var(--read); font-size: 16.5px; color: var(--muted); margin: 0 0 26px; }
     .learn-rows { display: flex; flex-direction: column; gap: 10px; }
     .learn-row { border: 1px solid var(--line); border-radius: 12px; background: var(--panel); padding: 16px 18px; display: flex; flex-direction: column; gap: 6px; transition: border-color .15s; }
     .learn-row:hover { border-color: color-mix(in srgb, var(--accent) 45%, var(--line)); }
@@ -503,7 +503,7 @@ POST_BODY = """
           {prevnext}
           <a class="entry-cta" href="{learn_rel}">Browse all guides &rarr;</a>
         </article>
-        <footer class="footer" style="max-width:680px;margin:0 auto;">
+        <footer class="footer" style="max-width:780px;margin:0;">
           <p class="disclaimer">Guides are opinionated; entries are not. Every fact above is
             sourced, and the judgement is labelled as judgement.</p>
           <p class="disclaimer">Not affiliated with Databricks. Databricks and related names are
@@ -539,7 +539,7 @@ LEARN_BODY = """
             <a href="{root}databricks/" style="color:var(--accent-ink)">Browse every rename and
             deprecation &rarr;</a></p>
         </div>
-        <footer class="footer" style="max-width:720px;margin:0 auto;">
+        <footer class="footer" style="max-width:780px;margin:0;">
           <p class="disclaimer">Not affiliated with Databricks. Console chrome is an homage; every
             entry is sourced and dated.</p>
         </footer>

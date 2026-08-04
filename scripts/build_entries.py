@@ -541,7 +541,7 @@ def entry_jsonld(d, url, hub_url, title, desc):
 
 
 ENTRY_STYLE = """  <style>
-    .entry-doc, .hub-doc { max-width: 780px; margin: 0 auto; padding: 8px 4px 48px; }
+    .entry-doc, .hub-doc { max-width: 780px; margin: 0; padding: 8px 4px 48px; }
     .entry-crumbs { font-size: 12px; color: var(--muted, #8a94a3); margin: 0 0 14px; }
     .entry-crumbs a { color: inherit; }
     .entry-kicker { text-transform: uppercase; letter-spacing: .12em; font-size: 11px; font-weight: 700; color: var(--muted, #8a94a3); }
@@ -671,7 +671,7 @@ ENTRY_BODY = """
           {related}
           {guides}
         </article>
-        <footer class="footer" style="max-width:780px;margin:0 auto;">
+        <footer class="footer" style="max-width:780px;margin:0;">
           <p class="disclaimer">Not affiliated with {vendor}. Console chrome is an homage; every entry is sourced and dated.</p>
           <p class="disclaimer">Spotted an error or an out-of-date name?
             <a href="https://github.com/aig/rebricked" target="_blank" rel="noopener">Contribute a fix on GitHub &nearr;</a>.
@@ -702,7 +702,7 @@ HUB_BODY = """
           <p class="hub-lead">Every {vendor} product and feature that's been renamed, deprecated, or newly shipped - sourced, dated, and linked. {count} entries.</p>
           {sections}
         </div>
-        <footer class="footer" style="max-width:780px;margin:0 auto;">
+        <footer class="footer" style="max-width:780px;margin:0;">
           <p class="disclaimer">Not affiliated with {vendor}. Console chrome is an homage; every entry is sourced and dated.</p>
         </footer>
       </div>
