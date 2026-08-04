@@ -103,6 +103,27 @@ recorded, and a made-up reason is worse than none.
   which no released Spark or Databricks Runtime carries yet.
 
 ### Changed
+- **The task-slots guide now states it was tested with Photon off, and stopped calling vCPUs
+  physical cores.**
+
+  **Why:** two credibility holes found by fact-checking the guide against the live docs. First,
+  Photon is enabled by default on Databricks Runtime 9.1 LTS and above, and it holds most of its
+  working memory off the JVM heap - so the guide's whole "what breaks first is heap, GC, and
+  spill" analysis describes a cluster most readers do not have, and the test behind the guide
+  never covered the default engine. A reader on stock settings would have followed advice whose
+  failure mode was measured somewhere else. Second, the guide sized the fix against "physical
+  cores", but an `rd-fleet.xlarge` reports 4 vCPUs, which is 2 physical cores on hyperthreaded
+  x86. Read literally, "2 times the physical cores" meant 4, not the 8 the guide actually
+  recommends and screenshots - the ceiling advice contradicted the fix.
+
+  **What:** the undocumented-behavior warning gained a scope line naming the tested shape
+  (multi-node, Photon disabled), with a text-fragment citation for the Photon default and an
+  explicit statement that neither the behavior nor the memory ceiling carries over to Photon
+  untested. The word "physical" came out of both core-count statements, so they now count the
+  cores the machine reports, which is the same unit `SPARK_WORKER_CORES` and the Spark UI
+  Executors column use. Anyone editing this guide: keep core counts in logical cores / vCPUs,
+  the unit Databricks' own single-node docs use.
+
 - **Guide citations moved inline onto the claim, guide pages exit to Learn, and the guide
   workflow became a skill.**
 

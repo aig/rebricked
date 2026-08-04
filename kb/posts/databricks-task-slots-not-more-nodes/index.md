@@ -107,6 +107,9 @@ where it configures a standalone-mode Worker. The undocumented part is that it w
 Databricks. Databricks does not document the
 variable, does not document the standalone master and worker that run under your cluster, and
 commits to neither. Any runtime upgrade could change this behavior without notice.
+
+Scope of what I tested: a multi-node cluster with **Photon disabled**. Photon is
+[enabled by default on Databricks Runtime 9.1 LTS and above](https://docs.databricks.com/aws/en/compute/configure#:~:text=Photon%20is%20enabled%20by%20default), so neither the behavior below nor the memory ceiling in "What breaks first" carries over to a Photon cluster untested.
 :::
 
 ## The fix: more slots, not more nodes
@@ -135,7 +138,7 @@ arrives. You need the dedicated flavor of
 {{entry:standard-and-dedicated-access-modes}}. Second, the cluster shape: single-node clusters
 have no Worker process at all, see the last section.
 
-Start with 6, about 1.5 times the physical cores. Run one full cycle of the job. Check
+Start with 6, about 1.5 times the cores. Run one full cycle of the job. Check
 utilization, task duration, and memory. If all three look healthy, move to 8.
 
 ## Check that it worked
@@ -164,7 +167,7 @@ appear, lower the value, or move to a memory-optimized instance type.
 
 :::judgement
 If you own the process that writes the files, compact the files first, before touching any of
-this. And I stop at 2 times the physical cores. That is a personal rule, not a documented
+this. And I stop at 2 times the cores. That is a personal rule, not a documented
 ceiling. There is no documented ceiling, because there is no documented technique.
 :::
 
