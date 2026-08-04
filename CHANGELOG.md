@@ -12,6 +12,25 @@ recorded, and a made-up reason is worse than none.
 ## 2026-08-04
 
 ### Added
+- **The generated pages (guides, entries, badges) now carry the same GitHub and RSS buttons as
+  the app shell.**
+
+  **Why:** the topbar exists twice - once hand-written in [`index.html`](www/index.html) for the
+  app, once as the shared `TOPBAR` constant every generated page renders. Only the app's copy had
+  the GitHub and RSS icons, so a reader who arrived at `/learn/` or an entry page from search saw
+  a topbar that looked the same but was missing the two links that let them check the source or
+  subscribe. Those are exactly the pages search sends people to first, which made it the wrong
+  place to drop them.
+
+  **What:** `TOPBAR` in [`build_badges.py`](scripts/build_badges.py) - imported by
+  [`build_posts.py`](scripts/build_posts.py) and [`build_entries.py`](scripts/build_entries.py),
+  so one edit covers all three page types - gained the GitHub anchor and the RSS anchor to
+  `subscribe/`, both reusing the app's markup, ids, and icons. The RSS href is written
+  root-relative (`../../subscribe/`) like the rest of the constant, so `chrome()` rewrites it per
+  page depth. The tracked badge pages were regenerated to pick it up (which also pulled in two
+  older drifts: the rail's Learn item now points at `/learn/`, and the Professional badge
+  variants got their `og.png` previews, so their `og:image` tags are no longer empty).
+
 - **Guides: optional `authorLink` front-matter field - the byline can now link to the author.**
 
   **Why:** a guide is the one place on the site where a named person stakes an opinion, but the
@@ -58,7 +77,7 @@ recorded, and a made-up reason is worse than none.
   `build_features.py` now skips `kb/posts/` when discovering vendor folders, and `.nav-item` no
   longer underlines, since one rail item is an anchor now.
 
-- **First guide: "FinOps for Databricks: the simple change that save you money."**
+- **First guide: "Undocumented Databricks: more task slots, not more nodes."**
 
   **Why:** it is the clearest demonstration of what the format is for. Three layers of claim sit
   in one article. The mechanics are documented (one task takes one core; small files each carry a
@@ -69,7 +88,7 @@ recorded, and a made-up reason is worse than none.
   detail. An entry could never carry the second and third layers. A guide can, as long as the
   reader can see which layer they are standing on.
 
-  **What:** `kb/posts/finops-for-databricks-the-simple-change-that-saves-you-money/`, with three
+  **What:** `kb/posts/databricks-task-slots-not-more-nodes/`, with three
   figures (the CPU-versus-active-nodes chart, the environment-variable panel, and Spark UI showing
   8 cores on a 4-core instance) and eleven official sources across Apache Spark docs, JIRA,
   GitHub and Databricks docs.

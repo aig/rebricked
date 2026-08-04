@@ -1,9 +1,9 @@
 ---
-slug: finops-for-databricks-the-simple-change-that-saves-you-money
-title: 'FinOps for Databricks: the simple change that saves you money'
-description: A cluster can grow while CPU sits at 30 percent, because what runs out is task
-  slots, not cores. When tasks are waiting on Kafka or object storage, more threads on the
-  same cores beats another worker node, for the bill and for the runtime.
+slug: databricks-task-slots-not-more-nodes
+title: 'Undocumented Databricks: more task slots, not more nodes'
+description: CPU sits at 30 percent while the node count climbs, because what ran out is task
+  slots, not cores. SPARK_WORKER_CORES runs more task threads on the same cores. Undocumented
+  on Databricks, and paid for in heap.
 kind: guide
 category: Compute
 author: Ilya Aniskovets

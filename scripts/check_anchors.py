@@ -58,7 +58,7 @@ gate CI blocks on.
 Run locally:
     python scripts/check_anchors.py                    # everything
     python scripts/check_anchors.py unity-catalog       # just these entry ids
-    python scripts/check_anchors.py post:finops-for-databricks-the-simple-change-that-saves-you-money
+    python scripts/check_anchors.py post:databricks-task-slots-not-more-nodes
     python scripts/check_anchors.py --list-blocked
 """
 import argparse
