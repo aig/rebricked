@@ -11,7 +11,94 @@ recorded, and a made-up reason is worse than none.
 
 ## 2026-08-04
 
+### Added
+- **Guides: a second content type at `/learn/`, written in `kb/posts/`, with the first article on
+  Databricks cluster cost.**
+
+  **Why:** the site could answer "what is this called now" and nothing else. Every question a
+  reader actually arrives with - why does this cost so much, which compute should I run this on,
+  what changed and does it matter - had no home here, because an entry is one sourced line about
+  one name and cannot hold an argument. The tempting fix was to publish that writing somewhere
+  else, but the value of writing it here is the linking: a guide points at the entries it
+  discusses, and each of those entry pages gains a link back. Prose makes the data denser instead
+  of competing with it. The risk being managed is the opposite direction: the site's whole worth
+  is that every card is sourced and dated, so opinion had to arrive without contaminating that.
+
+  **What:** `kb/posts/<slug>/` is now the source of truth for prose - one folder per guide, with
+  `index.md` (YAML front matter plus a Markdown body), `images/` for figures, and `materials/` for
+  working source that never deploys. [`scripts/build_posts.py`](scripts/build_posts.py) renders it
+  to `www/learn/` and `www/learn/<slug>/` and writes `www/posts.json`;
+  [`scripts/validate_posts.py`](scripts/validate_posts.py) gates it. Both are gitignored build
+  output, and CI runs the chain `build_features.py` -> `build_posts.py` -> `build_entries.py`.
+  Three mechanisms carry the credibility rules. `{{entry:<id>}}` in the body resolves at build
+  time to that entry's *current* name plus a link, so a future rename cannot strand the prose, and
+  an unknown id fails the build. The reverse of that link renders as "Guides that mention this" on
+  each referenced entry page. And `staleAfter` makes a guide announce its own decay: past that
+  date the page prints an amber "past its review date" strip and the validator warns, because cost
+  advice rots in a way that historical rename facts do not. Judgement is boxed and labelled
+  (`:::judgement`), so a reader can see where sourcing stops. Guides also join `sitemap.xml` and
+  `feed.xml` (as `[Guide]` items), and the rail's previously inert **Learn** item now goes to
+  `/learn/`. The namespace is named after that rail item rather than `/blog/`, so the address bar,
+  the breadcrumb, and the thing the reader clicked all say one word; guide pages render that item
+  as the active one, the way a real console section would. No new dependency: rather than pull in a Markdown library, `build_posts.py` carries a
+  small renderer covering exactly the subset a guide uses. Two adjustments fell out of this -
+  `build_features.py` now skips `kb/posts/` when discovering vendor folders, and `.nav-item` no
+  longer underlines, since one rail item is an anchor now.
+
+- **First guide: "FinOps for Databricks: the simple change that save you money."**
+
+  **Why:** it is the clearest demonstration of what the format is for. Three layers of claim sit
+  in one article. The mechanics are documented (one task takes one core; small files each carry a
+  4 MB opening cost, so a directory of them becomes hundreds of tasks). The trigger is *not*:
+  Databricks publishes the shape of autoscaling and its scale-down windows, but never says what
+  makes it scale up, so the causal story is inference from measured behaviour. And the conclusion,
+  raise `SPARK_WORKER_CORES` rather than add a node, rests on an undocumented implementation
+  detail. An entry could never carry the second and third layers. A guide can, as long as the
+  reader can see which layer they are standing on.
+
+  **What:** `kb/posts/finops-for-databricks-the-simple-change-that-saves-you-money/`, with three
+  figures (the CPU-versus-active-nodes chart, the environment-variable panel, and Spark UI showing
+  8 cores on a 4-core instance) and eleven official sources across Apache Spark docs, JIRA,
+  GitHub and Databricks docs.
+  It links four entries: Lakeflow Jobs, Lakeflow Declarative Pipelines, and both access-mode
+  cards, each of which now carries a link back. One claim from the draft was pulled rather than
+  shipped unsourced: Spark dynamic allocation's `ceil((pending + running) / tasks per executor)`
+  formula, which was standing in as evidence for a Databricks trigger Databricks does not document
+  (and describes a feature the same page tells you not to enable). A second, `spark.task.cpus`
+  accepting fractional values, was pulled for the same reason and later returned with its full
+  sourced history once validated against the Spark JIRA, source, and master migration guide:
+  rejected in 2018, GPU-only fractions in Spark 3.0.0, and merged for the upcoming Spark 4.3,
+  which no released Spark or Databricks Runtime carries yet.
+
 ### Changed
+- **Guide citations moved inline onto the claim, guide pages exit to Learn, and the guide
+  workflow became a skill.**
+
+  **Why:** a guide's Sources block at the bottom of the page cannot say which sentence each link
+  backs, so a reader checking one claim had to guess - while the entry cards already solved this
+  with a 🔗 on the fact itself, landing on the exact quoted sentence. The article's closing
+  button had the same misdirection problem: it sent a reader who had just finished a guide back
+  to the Home lookup instead of to the other guides. And the workflow that keeps a guide honest
+  (verify each claim on the live page, capture the exact sentence, label the judgement) existed
+  only as practice, not as a skill an agent could follow.
+
+  **What:** facts in a guide body are now hyperlinked where they are made - the phrase stating
+  the claim is the anchor text, and its `#:~:text=` fragment selects the backing sentence on
+  the source page. Those links needed a style of their own: `.post-body` had no `a` rule, so
+  every citation fell through to the browser default and a dark-theme page came out speckled
+  with bright blue and visited purple under thick underlines. Citations now take the body ink
+  with a thin brand-tinted underline and colour only on hover, which also draws a useful line:
+  outbound proof reads calm, while `.entry-ref` links into our own data keep the accent colour
+  and advertise themselves. A `code` chip inside a citation takes the link's colour and a
+  tinted border so chip and underline read as one anchor;
+  `build_posts.py` appends any prose-linked URL to the rendered Sources block, so the bottom
+  list stays complete. `check_anchors.py` now sweeps guides as well as entries - each post's
+  front-matter sources and body links check under the id `post:<slug>` - so those quotes get
+  the same rot audit the cards get (the first run cleared all 28 of this guide's URLs). The convention is recorded in
+  AGENTS.md, and a new [`agents/write-guide.md`](agents/write-guide.md) skill - the guide
+  sibling of `add-databricks-entry` - carries the whole workflow. The guide page's bottom CTA
+  now reads "Browse all guides" and goes to `/learn/` instead of Home.
+
 - **The data moved from one JSON array to one YAML file per entry: `kb/databricks/<id>.yaml`.**
 
   **Why:** you could not read a change to one entry in git. Editing one card meant a change

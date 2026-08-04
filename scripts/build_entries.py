@@ -42,6 +42,9 @@ from build_badges import (
 ROOT = Path(__file__).resolve().parent.parent
 WWW = ROOT / "www"  # the deployed site root - everything GitHub Pages publishes lives here
 DATA = WWW / "databricks.features.json"
+# Guides, built by build_posts.py. Optional: this script still works with no guides at all, so
+# the two builds stay independently runnable.
+POSTS = WWW / "posts.json"
 SITEMAP = WWW / "sitemap.xml"
 FEED = WWW / "feed.xml"
 TOTAL_BADGES = 5
@@ -283,6 +286,44 @@ def lineage_html(d, by_id, data):
         '<p class="entry-lineage">'
         + ' <span class="arw" aria-hidden="true">&rarr;</span> '.join(nodes)
         + "</p>"
+    )
+
+
+def load_posts():
+    """The guides, newest first, or [] when no guides have been built. Read rather than imported
+    so this script never depends on build_posts.py having run."""
+    if not POSTS.exists():
+        return []
+    try:
+        posts = json.loads(POSTS.read_text(encoding="utf-8"))
+    except json.JSONDecodeError:
+        return []
+    return posts if isinstance(posts, list) else []
+
+
+def guides_html(d, posts):
+    """"Guides that mention this" - the reverse of a guide's `entries` array.
+
+    This is the whole reason the guides live in this repo rather than on a blogging platform:
+    each guide adds itself to the five or six entry pages it references, so writing prose makes
+    the data denser and better linked. Arrow rows rather than chips, so a guide never reads as
+    just another entry peer; nothing at all when no guide references this entry."""
+    mine = [p for p in posts if d["id"] in (p.get("entries") or [])]
+    if not mine:
+        return ""
+    rows = []
+    for p in mine:
+        when = fmt_date(str(p.get("published", ""))[:7])
+        meta = f'{p.get("readingMinutes", "")} min &middot; {esc(when)}' if when else ""
+        rows.append(
+            '<li class="entry-guide">'
+            f'<span class="eg-arw" aria-hidden="true">&rarr;</span>'
+            f'<a href="/learn/{attr(p["slug"])}/">{esc(p["title"])}</a>'
+            f'<span class="eg-meta">{meta}</span></li>'
+        )
+    return (
+        '<section class="entry-guides"><h2>Guides that mention this</h2>'
+        f'<ul>{"".join(rows)}</ul></section>'
     )
 
 
@@ -537,6 +578,15 @@ ENTRY_STYLE = """  <style>
     .entry-related li { margin: 0; }
     .entry-related a { display: inline-block; text-decoration: none; color: var(--ink, #11171C); border: 1px solid var(--line, #E2E6EB); border-radius: 999px; padding: 5px 13px; font-size: 13px; background: var(--panel, #fff); transition: border-color .15s, color .15s, background .15s; }
     .entry-related a:hover { border-color: var(--accent, #FF3621); color: var(--accent-ink, #C4260F); background: color-mix(in srgb, var(--accent) 6%, var(--panel, #fff)); }
+    /* "Guides that mention this": arrow rows, not chips, so a guide never reads as another
+       entry peer. Rendered only when a guide actually references this entry. */
+    .entry-guides h2 { font-size: 14px; text-transform: uppercase; letter-spacing: .1em; color: var(--muted, #8a94a3); margin: 0 0 10px; }
+    .entry-guides ul { list-style: none; padding: 0; margin: 0 0 24px; }
+    .entry-guide { display: flex; align-items: baseline; gap: 9px; flex-wrap: wrap; padding: 4px 0; font-size: 14px; }
+    .entry-guide .eg-arw { color: var(--accent, #FF3621); flex: none; }
+    .entry-guide a { color: var(--accent-ink, #C4260F); text-decoration: none; font-weight: 550; }
+    .entry-guide a:hover { text-decoration: underline; }
+    .entry-guide .eg-meta { font-family: var(--mono); font-size: 10.5px; color: var(--muted, #8a94a3); white-space: nowrap; }
     .entry-cta { display: inline-flex; align-items: center; gap: 8px; margin: 4px 0 26px; padding: 11px 18px; border-radius: 10px; background: var(--accent, #FF3621); color: #fff; font-weight: 700; text-decoration: none; transition: filter .15s, box-shadow .15s; }
     .entry-cta:hover { filter: brightness(1.05); box-shadow: 0 6px 18px color-mix(in srgb, var(--accent) 30%, transparent); }
     .hub-doc h1 { font-size: 30px; margin: 6px 0 10px; }
@@ -619,6 +669,7 @@ ENTRY_BODY = """
           {facts}
           {sources}
           {related}
+          {guides}
         </article>
         <footer class="footer" style="max-width:780px;margin:0 auto;">
           <p class="disclaimer">Not affiliated with {vendor}. Console chrome is an homage; every entry is sourced and dated.</p>
@@ -665,7 +716,7 @@ HUB_BODY = """
 """
 
 
-def render_entry(d, by_id, data):
+def render_entry(d, by_id, data, posts=()):
     v = vendor_of(d)
     url = f"{BASE_URL}/{v}/{d['id']}/"
     hub_url = f"{BASE_URL}/{v}/"
@@ -711,6 +762,7 @@ def render_entry(d, by_id, data):
         facts=facts_html(d),
         sources=sources_html(d),
         related=related_html(d, data),
+        guides=guides_html(d, posts),
     )
     return head + body
 
@@ -823,10 +875,14 @@ def badge_label(d):
     return status_value(d) or "active"
 
 
-def write_sitemap(data):
+def write_sitemap(data, posts=()):
     urls = [(f"{BASE_URL}/", "weekly", "1.0")]
     urls.append((f"{BASE_URL}/subscribe/", "monthly", "0.5"))
     urls.append((f"{BASE_URL}/disclaimer/", "yearly", "0.3"))
+    if posts:
+        urls.append((f"{BASE_URL}/learn/", "weekly", "0.9"))
+        for p in posts:
+            urls.append((f"{BASE_URL}/learn/{p['slug']}/", "monthly", "0.8"))
     for n in range(TOTAL_BADGES + 1):
         urls.append((f"{BASE_URL}/badges/{n}-of-{TOTAL_BADGES}/", "yearly", "0.3"))
     vendors = []
@@ -933,11 +989,24 @@ def release_feed_items(d):
         yield (dt, f"{d['id']}#release-{rtype}", title, guid, False, desc)
 
 
-def write_feed(data, by_id):
+def write_feed(data, by_id, posts=()):
     """RSS 2.0 feed of every entry, newest tracked change first. Each entry contributes
-    its primary lifecycle change plus one item per dated release-maturity milestone."""
+    its primary lifecycle change plus one item per dated release-maturity milestone, and each
+    guide contributes one item tagged [Guide] - subscribers already following rename news get
+    the writing in the same reader."""
     # Each item: (dt, sort_id, title, guid, is_permalink, description, category).
     items = []
+    for p in posts:
+        dt = parse_date(str(p.get("published", "")))
+        if dt is None:
+            continue
+        url = f"{BASE_URL}/learn/{p['slug']}/"
+        desc = str(p.get("description") or "")
+        if len(desc) > 300:
+            desc = desc[:297].rstrip() + "…"
+        items.append(
+            (dt, f"learn-{p['slug']}", f"[Guide] {p['title']}", url, True, desc, p.get("category", ""))
+        )
     for d in data:
         cat = d.get("category", "")
         dt = feed_date(d)
@@ -990,6 +1059,7 @@ def write_feed(data, by_id):
 def main():
     data = json.loads(DATA.read_text(encoding="utf-8"))
     by_id = {d["id"]: d for d in data}
+    posts = load_posts()
 
     # Group entries by vendor; wipe and rebuild each vendor namespace dir.
     by_vendor = {}
@@ -1008,16 +1078,18 @@ def main():
             folder = vdir / d["id"]
             folder.mkdir(parents=True)
             folder.joinpath("index.html").write_text(
-                render_entry(d, by_id, data), encoding="utf-8"
+                render_entry(d, by_id, data, posts), encoding="utf-8"
             )
 
-    vendors = write_sitemap(data)
-    feed_items = write_feed(data, by_id)
-    total = len(data) + len(vendors) + TOTAL_BADGES + 2
+    vendors = write_sitemap(data, posts)
+    feed_items = write_feed(data, by_id, posts)
+    total = len(data) + len(vendors) + TOTAL_BADGES + 2 + (len(posts) + 1 if posts else 0)
+    linked = sum(1 for d in data if any(d["id"] in (p.get("entries") or []) for p in posts))
     print(
         f"OK: wrote {len(data)} entry pages across {len(vendors)} vendor hub(s) "
         f"({', '.join(vendors)}); sitemap.xml has {total} URLs; "
-        f"feed.xml has {feed_items} items."
+        f"feed.xml has {feed_items} items"
+        + (f"; {len(posts)} guide(s) reverse-linked from {linked} entry page(s)." if posts else ".")
     )
 
 

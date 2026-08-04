@@ -79,7 +79,9 @@
   const NAV = [
     { label: "", items: [
       { label: "Home", icon: "home", home: true },
-      { label: "Learn", icon: "learn" },
+      // The one rail item that leaves the app: guides are static pages under /learn/, not
+      // entries, so this navigates instead of filtering. `href` items render as anchors.
+      { label: "Learn", icon: "learn", href: "/learn/" },
       { label: "Workspace", icon: "workspace", ids: ["git-folders", "databricks-repos", "legacy-databricks-cli", "databricks-cli", "serverless-workspaces", "custom-url", "databricks-free-edition", "databricks-community-edition", "personal-access-tokens", "oauth-token-federation", "legacy-databricks-connect", "databricks-connect", "mission-critical", "agentic-code-converter", "lakebridge-agentic-converter"] },
       { label: "Recents", icon: "recents" },
       { label: "Catalog", icon: "catalog", ids: ["catalog-explorer", "data-explorer", "unity-catalog", "unity-catalog-volumes", "secrets-in-unity-catalog", "dbfs-mounts", "lakehouse-federation", "opensharing", "delta-sharing", "secureconnect", "delta-lake", "databricks-delta", "transactions", "variant", "liquid-clustering", "hive-metastore", "attribute-based-access-control", "role-based-access-control", "governance-hub", "data-profiling", "lakehouse-monitoring", "anomaly-detection", "unity-catalog-managed-iceberg-tables", "managed-iceberg-materialized-views", "databricks-clean-rooms"] },
@@ -260,6 +262,11 @@
         const svg = `<svg class="ic" viewBox="0 0 24 24" width="18" height="18">${ICONS[it.icon] || ""}</svg>`;
         const dot = renamed ? `<span class="renamed-dot" title="${ids.length} change${ids.length === 1 ? "" : "s"} under this section"></span>` : "";
         const cls = "nav-item" + (renamed ? " is-renamed" : "");
+        // An item with an href leaves the app (the guides live at /learn/), so it renders as a
+        // real anchor - middle-click and "open in new tab" work, and no click handler is wired.
+        if (it.href) {
+          return `<a class="${cls}" href="${escapeAttr(it.href)}" data-nav-link="1"><span class="ic-wrap">${svg}</span><span class="label">${escapeHtml(it.label)}</span>${dot}</a>`;
+        }
         const data = it.home ? ` data-home="1"` : ` data-ids="${escapeAttr(ids.join(","))}"`;
         return `<button class="${cls}"${data}><span class="ic-wrap">${svg}</span><span class="label">${escapeHtml(it.label)}</span>${dot}</button>`;
       }).join("");
@@ -267,6 +274,11 @@
     }).join("");
 
     nav.querySelectorAll(".nav-item").forEach((el) => {
+      // Link items navigate on their own; wiring a handler would only fight the browser.
+      if (el.dataset.navLink) {
+        el.addEventListener("click", () => track("nav", { section: "Learn" }));
+        return;
+      }
       el.addEventListener("click", () => {
         setActiveNav(el);
         setSidebarOpen(false); // on mobile the rail overlays the content - close it after a pick

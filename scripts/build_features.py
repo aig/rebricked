@@ -28,6 +28,11 @@ ROOT = Path(__file__).resolve().parents[1]
 KB = ROOT / "kb"
 WWW = ROOT / "www"
 
+# kb/ holds two kinds of collection, and only one of them is vendor data: kb/<vendor>/ is the
+# per-entry YAML this script assembles, while kb/posts/ is the guides (Markdown, one folder per
+# post) built by build_posts.py. Anything listed here is not a vendor and is skipped.
+NON_VENDOR_DIRS = {"posts"}
+
 # Canonical key order for the emitted JSON, so the built file never reshuffles just
 # because a contributor wrote the YAML keys in a different order. Keys not listed here
 # are appended (sorted) rather than dropped - validate.py is what rejects unknown fields.
@@ -121,7 +126,11 @@ def main():
     )
     args = ap.parse_args()
 
-    vendor_dirs = sorted(d for d in KB.iterdir() if d.is_dir()) if KB.is_dir() else []
+    vendor_dirs = (
+        sorted(d for d in KB.iterdir() if d.is_dir() and d.name not in NON_VENDOR_DIRS)
+        if KB.is_dir()
+        else []
+    )
     if not vendor_dirs:
         sys.exit(f"FATAL: no vendor folders under {KB.relative_to(ROOT)}/")
 

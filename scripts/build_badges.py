@@ -156,6 +156,10 @@ ICONS = {
     "serving": '<circle cx="12" cy="12" r="2.2"/><path d="M7.5 7.5a6.5 6.5 0 0 0 0 9M16.5 7.5a6.5 6.5 0 0 1 0 9M4.8 4.8a10 10 0 0 0 0 14.4M19.2 4.8a10 10 0 0 1 0 14.4"/>',
 }
 
+# Rail items that leave the app for a static section of their own, keyed by label. Mirrors the
+# `href` items in app.js's NAV, and is why Learn is not just an inert link home.
+NAV_LINKS = {"Learn": "../../learn/"}
+
 # (group label, [(item label, icon, has_changes)]) - has_changes gets the dot + a
 # ?s= link into the app; the rest just link home.
 NAV = [
@@ -176,7 +180,9 @@ NAV = [
 ]
 
 
-def render_rail():
+def render_rail(active=None):
+    """The static mirror of the app rail. `active` is a rail item label (e.g. "Learn") to mark
+    as the current page, so a section with its own pages highlights the item that led there."""
     groups = []
     for label, items in NAV:
         parts = []
@@ -184,7 +190,10 @@ def render_rail():
             parts.append(f'<div class="nav-group-label">{html.escape(label)}</div>')
         for it_label, icon, changed in items:
             svg = f'<svg class="ic" viewBox="0 0 24 24" width="18" height="18">{ICONS.get(icon, "")}</svg>'
-            if changed is None:            # Home
+            if it_label in NAV_LINKS:      # section with its own static pages
+                href = NAV_LINKS[it_label]
+                cls, dot = "nav-item", ""
+            elif changed is None:          # Home
                 href = "../../"
                 cls, dot = "nav-item", ""
             elif changed:                  # section with entries - dot + deep link
@@ -194,8 +203,12 @@ def render_rail():
             else:                          # inert section - link home
                 href = "../../"
                 cls, dot = "nav-item", ""
+            current = ""
+            if active and it_label == active:
+                cls += " active"
+                current = ' aria-current="page"'
             parts.append(
-                f'<a class="{cls}" href="{href}"><span class="ic-wrap">{svg}</span>'
+                f'<a class="{cls}" href="{href}"{current}><span class="ic-wrap">{svg}</span>'
                 f'<span class="label">{html.escape(it_label)}</span>{dot}</a>'
             )
         groups.append("".join(parts))
