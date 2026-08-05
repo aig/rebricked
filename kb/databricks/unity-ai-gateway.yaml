@@ -11,10 +11,12 @@ fact:
     link: https://docs.databricks.com/aws/en/ai-gateway/#:~:text=Service%20policies%2C%20also%20called%20guardrails
   - note: At Data + AI Summit 2026 it stretched past models to govern agents and tools too, launching Contextual Service Policies and a managed 'Omnigent' runtime - both in Beta.
     link: https://www.databricks.com/blog/ai-governance-data-ai-summit-2026-whats-new-unity-ai-gateway#:~:text=Contextual%20Service%20Policies
+  - note: It was declared generally available on August 4, 2026 with parts of itself openly still in Beta - the same announcement notes that service policies and agent services have not caught up.
+    link: https://docs.databricks.com/aws/en/release-notes/product/2026/august#:~:text=Some%20capabilities%2C%20including%20service%20policies%20and%20agent%20services%2C%20remain%20in%20Beta
 status:
   value: active
   link: https://docs.databricks.com/aws/en/ai-gateway/#:~:text=Unity%20AI%20Gateway
-  date: '2026-07-24'
+  date: '2026-08-05'
 releases:
   - type: public-preview
     date: 2024-09
@@ -36,9 +38,12 @@ links:
   - url: https://docs.databricks.com/aws/en/release-notes/product/2025/june
     kind: official
     label: 'Databricks release notes: AI Gateway GA (June 2025)'
+  - url: https://docs.databricks.com/aws/en/release-notes/product/2026/august
+    kind: official
+    label: 'Databricks release notes: Unity AI Gateway GA (August 2026)'
 prediction:
   - Genie AI Gateway
   - Agent Control Plane
   - MCP Gateway
 source: https://docs.databricks.com/aws/en/ai-gateway/
-verified: '2026-07-24'
+verified: '2026-08-05'

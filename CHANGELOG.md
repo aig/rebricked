@@ -9,6 +9,34 @@ shows the what. Plain, simple English: short sentences, common words, no jargon 
 and product names themselves. Some older entries have no `Why:` line - the reason was never
 recorded, and a made-up reason is worse than none.
 
+## 2026-08-05
+
+### Changed
+- **August 2026 release notes swept in: the Unity AI Gateway card records its August 4 GA, and
+  the Azure mirror can now see August at all.**
+
+  **Why:** the dataset was last checked against the docs on August 3-4, and Databricks shipped
+  the month's most rebricked-relevant item on August 4: it declared **Unity AI Gateway** generally
+  available. The card already read `active` with a GA maturity, so nothing looked wrong - which is
+  exactly the failure mode to worry about, because the GA on the card was the June 2025 one earned
+  under the old *Mosaic AI Gateway* name. A reader checking whether the *renamed* product had
+  actually shipped for real found no evidence either way. Separately, the Azure release-notes
+  source lists its monthly URLs explicitly, and the list stopped at July 2026, so
+  [`fetch_reference.py`](scripts/fetch_reference.py) could not fetch the current month on the
+  cross-cloud side - the one place an Azure-only rename would show up first.
+
+  **What:** [`unity-ai-gateway.yaml`](kb/databricks/unity-ai-gateway.yaml) gained a third `fact`
+  for the August 4, 2026 GA (deep-linked to the release note's own admission that service policies
+  and agent services remain in Beta inside the GA product), a `links` entry for the August 2026
+  notes, and refreshed `status.date` / `verified`. The `releases` timeline was deliberately left
+  alone: it already ends at GA, and a second `ga` stage would render as "reached GA twice" in the
+  maturity pill's tooltip, so the re-declaration is recorded as a sourced fact instead.
+  [`sources.json`](scripts/sources.json) gained the August 2026 Azure URL, and the whole mirror
+  was refetched (2 new pages, 111 updated). Nothing else in the August notes is a rename or a
+  deprecation: the SharePoint / Google Drive / PagerDuty connectors, full-page Genie Code, editor
+  spaces, and the Genie free-usage extension are all either maturity moves inside features the
+  dataset does not track per-connector, or pricing, which entries stay out of.
+
 ## 2026-08-04
 
 ### Added
