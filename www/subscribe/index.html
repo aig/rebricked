@@ -320,7 +320,12 @@
     (function () {
       var btn = document.getElementById("copy-btn");
       var url = document.getElementById("feed-url").textContent.trim();
+      // Guarded exactly like app.js's track(): a blocked script must not break the copy.
+      function track(name, data) {
+        try { if (window.umami) window.umami.track(name, data); } catch (e) {}
+      }
       btn.addEventListener("click", function () {
+        track("feed-copy", { url: url });
         navigator.clipboard.writeText(url).then(function () {
           btn.textContent = "Copied";
           btn.classList.add("copied");
@@ -330,8 +335,17 @@
           }, 1600);
         });
       });
+      // Which reader people actually leave with - the only real conversion on this page.
+      document.addEventListener("click", function (e) {
+        var a = e.target.closest && e.target.closest("a[href]");
+        if (a && /^https?:/i.test(a.getAttribute("href"))) {
+          track("feed-subscribe-click", { url: a.getAttribute("href") });
+        }
+      });
     })();
   </script>
+  <!-- Umami: privacy-first, cookieless analytics (no consent banner required) -->
+  <script defer src="https://cloud.umami.is/script.js" data-website-id="9d8f35c0-f2e1-4d45-a24d-a97559fa8361" data-domains="rebricked.org"></script>
 </body>
 
 </html>

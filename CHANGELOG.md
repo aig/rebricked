@@ -11,6 +11,50 @@ recorded, and a made-up reason is worse than none.
 
 ## 2026-08-05
 
+### Fixed
+- **Analytics only ever covered the home page: the 122 generated and static pages, guides
+  included, were invisible. Every page now loads Umami, and the guides report the events a blog
+  actually needs.**
+
+  **Why:** the Umami tag was hand-written into [`index.html`](www/index.html) and nowhere else.
+  Every other page is emitted by a generator - the guides by
+  [`build_posts.py`](scripts/build_posts.py), the entry pages and vendor hub by
+  [`build_entries.py`](scripts/build_entries.py), the quiz badges by
+  [`build_badges.py`](scripts/build_badges.py) - and none of those templates carried the script,
+  so 122 of the site's 123 pages recorded no pageviews and no events at all. That silently
+  falsified the one thing the stats were being read for: the SEO content layer and the guides
+  exist to be found from search, they are the pages a search visitor lands on first, and they were
+  the pages reporting zero. Traffic to a guide looked like traffic that never happened, so a guide
+  could not be told from a dead one. Worse, the shared inline chrome script had no tracking at all,
+  meaning the theme toggle, the chrome search box, and the badge share and export buttons - real
+  interactions on real pages - fired nothing. The local preview was the mirror-image problem:
+  with no domain restriction, every `python -m http.server` session wrote into the production
+  dataset, so the little traffic that *was* recorded was partly the developer.
+
+  **What:** one `ANALYTICS` constant now lives in [`build_badges.py`](scripts/build_badges.py)
+  beside the chrome the other generators already import, carrying the same website id
+  `index.html` uses so everything reports into a single dataset instead of several partial ones.
+  It is injected into `build_entries.py`'s shared `HEAD` (which covers the entry pages, the hub,
+  and - since `build_posts.py` imports that same `HEAD` - the guides and the Learn index) and into
+  the badge page template; the two hand-written pages,
+  [`disclaimer`](www/disclaimer/index.html) and [`subscribe`](www/subscribe/index.html), got the
+  tag directly. It is deliberately **not** injected into `OG_PAGE`, the template a headless
+  browser loads to render `og.png`, which would otherwise register the build as real traffic.
+  Coverage is now 123 of 123 pages. The shared `INLINE_JS` gained the same guarded `track()`
+  wrapper `app.js` uses - a blocked or absent script can never throw into a user path - plus a
+  `surface` discriminator (`guide` / `entry` / `hub` / `learn-index` / `badge`) so one event name
+  can be sliced by page type, and a single delegated click listener that matches the classes the
+  generators already emit rather than per-element handlers that would rot with the templates.
+  Event names reuse `app.js`'s where they overlap (`search`, `theme-toggle`, `quiz-open`) so the
+  app and the static pages land in one funnel. New signals: `source-click` (which cited doc a
+  reader goes to verify, on both the guide Sources block and an entry card's inline 🔗 chips),
+  `guide-outbound`, `guide-toc`, `guide-prevnext`, `guide-read-depth` (quartiles, once each, on a
+  passive listener, guides only - the one metric that separates a read from a bounce),
+  `guide-open`, `hub-entry-open`, `related-click`, `badge-share`, and `badge-export`. Finally,
+  every tag now carries `data-domains="rebricked.org"`, which keeps local previews out of the
+  production stats; `www.rebricked.org` needs no entry because it 301s to the apex before any
+  page loads.
+
 ### Changed
 - **August 2026 release notes swept in: the Unity AI Gateway card records its August 4 GA, and
   the Azure mirror can now see August at all.**

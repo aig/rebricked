@@ -32,6 +32,7 @@ from pathlib import Path
 
 # Reuse the exact app chrome + constants the badge pages use.
 from build_badges import (
+    ANALYTICS,
     BASE_URL,
     FAVICON,
     INLINE_JS,
@@ -639,6 +640,7 @@ HEAD = """<!DOCTYPE html>
   <link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon-16.png" />
   <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png" />
   <link rel="manifest" href="/site.webmanifest" />
+""" + ANALYTICS + """
 {style}
 </head>
 """

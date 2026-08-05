@@ -27,6 +27,8 @@
   <link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon-16.png" />
   <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png" />
   <link rel="manifest" href="/site.webmanifest" />
+  <!-- Umami: privacy-first, cookieless analytics (no consent banner required) -->
+  <script defer src="https://cloud.umami.is/script.js" data-website-id="9d8f35c0-f2e1-4d45-a24d-a97559fa8361" data-domains="rebricked.org"></script>
 </head>
 
 <body>
@@ -51,16 +53,74 @@
   <div class="scrim" id="scrim" hidden></div>
   <script>
 (function () {
+  // Same guarded wrapper as app.js's track(): a blocked or absent umami script must never
+  // throw into a user path. Event names match app.js so the SPA and the static pages report
+  // into the same funnel instead of two half-datasets.
+  function track(name, data) {
+    try { if (window.umami) window.umami.track(name, data); } catch (e) {}
+  }
+  // Which kind of static page this is, so one event name can be sliced by surface.
+  var surface = document.querySelector('.post-doc') ? 'guide'
+    : document.querySelector('.learn-doc') ? 'learn-index'
+    : document.querySelector('.entry-doc') ? 'entry'
+    : document.querySelector('.hub-doc') ? 'hub'
+    : document.querySelector('.badge-card') ? 'badge' : 'other';
+  // The page's own identity: the slug of /learn/<slug>/ or /databricks/<id>/, '' at an index.
+  var slug = (location.pathname.replace(/\/+$/, '').split('/').pop() || '');
   try { var t = localStorage.getItem('rebricked-theme'); if (t) document.documentElement.dataset.theme = t; } catch (e) {}
   var tt = document.getElementById('theme-toggle');
   if (tt) tt.addEventListener('click', function () {
     var r = document.documentElement, c = r.dataset.theme || 'light', n = c === 'dark' ? 'light' : 'dark';
     r.dataset.theme = n; try { localStorage.setItem('rebricked-theme', n); } catch (e) {}
+    track('theme-toggle', { theme: n, surface: surface });
   });
   var s = document.getElementById('search');
   if (s) s.addEventListener('keydown', function (e) {
-    if (e.key === 'Enter') { var v = s.value.trim(); location.href = '../../' + (v ? ('?q=' + encodeURIComponent(v)) : ''); }
+    if (e.key === 'Enter') {
+      var v = s.value.trim();
+      if (v) track('search', { term: v, surface: surface });
+      location.href = '../../' + (v ? ('?q=' + encodeURIComponent(v)) : '');
+    }
   });
+  // One delegated listener for every link that says something about intent. Cheaper than
+  // per-element handlers and it survives template changes, since it matches on the classes
+  // the generators already emit.
+  document.addEventListener('click', function (e) {
+    var a = e.target.closest && e.target.closest('a');
+    if (!a) return;
+    var href = a.getAttribute('href') || '';
+    if (a.closest('.post-toc')) return track('guide-toc', { slug: slug, to: href });
+    if (a.closest('.entry-sources')) return track('source-click', { surface: surface, slug: slug, url: href });
+    if (a.closest('.entry-related')) return track('related-click', { surface: surface, slug: slug, to: href });
+    if (a.closest('.post-prevnext')) return track('guide-prevnext', { slug: slug, to: href });
+    if (a.closest('.learn-row')) return track('guide-open', { to: href, source: 'learn-index' });
+    if (a.classList.contains('hub-link')) return track('hub-entry-open', { to: href });
+    if (a.classList.contains('entry-cta')) return track('cta-click', { surface: surface, slug: slug, to: href });
+    if (a.classList.contains('quiz-cta')) return track('quiz-open', { source: surface });
+    if (a.classList.contains('badge-intro-cta')) return track('quiz-open', { source: 'badge-page' });
+    if (a.id === 'gh-top') return track('github-click', { surface: surface });
+    if (a.id === 'rss-top') return track('rss-click', { surface: surface });
+    // The inline 🔗 citation chips on an entry card - the entry-page equivalent of a
+    // guide's prose link, and the signal for which sourced claim readers go verify.
+    if (a.classList.contains('date-src')) return track('source-click', { surface: surface, slug: slug, url: href });
+    // Anything else leaving for an official doc: the citations readers actually follow.
+    if (a.closest('.post-body') && /^https?:/i.test(href)) {
+      return track('guide-outbound', { slug: slug, url: href });
+    }
+  });
+  // Read depth, guides only - the one metric that tells a blog post from a bounce. Fires each
+  // quarter once, on a passive listener so it cannot cost scroll performance.
+  if (surface === 'guide') {
+    var seen = {};
+    window.addEventListener('scroll', function () {
+      var h = document.documentElement, max = h.scrollHeight - h.clientHeight;
+      if (max <= 0) return;
+      var pct = Math.min(100, Math.round(((window.scrollY || h.scrollTop) / max) * 100));
+      [25, 50, 75, 100].forEach(function (m) {
+        if (pct >= m && !seen[m]) { seen[m] = 1; track('guide-read-depth', { slug: slug, percent: m }); }
+      });
+    }, { passive: true });
+  }
   var mb = document.getElementById('menu-toggle'), sb = document.querySelector('.sidebar'), sc = document.getElementById('scrim');
   function setOpen(o) { if (sb) sb.classList.toggle('open', o); if (sc) sc.hidden = !o; if (mb) mb.setAttribute('aria-expanded', String(o)); }
   if (mb) mb.addEventListener('click', function () { setOpen(!(sb && sb.classList.contains('open'))); });
@@ -76,10 +136,11 @@
     // LinkedIn's crawler cannot reach localhost, so always share the public canonical
     // URL while preserving the path and the recipient's query parameters.
     var url = 'https://rebricked.org' + location.pathname + location.search;
+    track('badge-share', { badge: slug, named: !!recipient });
     window.open('https://www.linkedin.com/sharing/share-offsite/?url=' + encodeURIComponent(url), '_blank', 'noopener,noreferrer');
   });
   var pdf = document.getElementById('badge-export-pdf');
-  if (pdf) pdf.addEventListener('click', function () { window.print(); });
+  if (pdf) pdf.addEventListener('click', function () { track('badge-export', { badge: slug, format: 'pdf' }); window.print(); });
   function loadImage(src) { return new Promise(function (resolve, reject) { var i = new Image(); i.onload = function () { resolve(i); }; i.onerror = reject; i.src = src; }); }
   function wrap(ctx, text, x, y, width, lineHeight) {
     var words = text.split(/\s+/), line = '', lines = [];
@@ -91,6 +152,7 @@
   if (jpg) jpg.addEventListener('click', async function () {
     var card = document.querySelector('.badge-card'), emblem = document.querySelector('.badge-emblem svg');
     if (!card || !emblem) return;
+    track('badge-export', { badge: slug, format: 'jpg' });
     var canvas = document.createElement('canvas'), ctx = canvas.getContext('2d'), tier = getComputedStyle(card).getPropertyValue('--tier').trim() || '#FF3621';
     canvas.width = 1200; canvas.height = 630;
     ctx.fillStyle = '#F7F8FA'; ctx.fillRect(0, 0, 1200, 630);

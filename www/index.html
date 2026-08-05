@@ -303,7 +303,8 @@
 
   <script src="app.js"></script>
   <!-- Umami: privacy-first, cookieless analytics (no consent banner required) -->
-  <script defer src="https://cloud.umami.is/script.js" data-website-id="9d8f35c0-f2e1-4d45-a24d-a97559fa8361"></script>
+  <!-- data-domains keeps local previews (localhost:8777) out of the production stats. -->
+  <script defer src="https://cloud.umami.is/script.js" data-website-id="9d8f35c0-f2e1-4d45-a24d-a97559fa8361" data-domains="rebricked.org"></script>
 </body>
 
 </html>
