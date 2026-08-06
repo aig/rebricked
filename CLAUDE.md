@@ -30,6 +30,11 @@ the validator or from memory.** In short:
    what** (bold summary, a `Why:` paragraph, a `What:` paragraph). *(All required; the changelog
    is the step most often forgotten.)* Commit the YAML, not the built JSON.
 
+**Any change that alters behaviour also updates [`docs/`](docs/) in the same commit** - the
+Diataxis documentation set (tutorials / how-to / reference / explanation).
+[`docs/README.md`](docs/README.md) carries the change-to-page map. Adding data (an entry, a
+guide) needs no docs change; changing *how* data is added always does.
+
 Everything else - the data model, layout, conventions, and the pre-commit checklist - is in
 AGENTS.md below.
 

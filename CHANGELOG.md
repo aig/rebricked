@@ -9,6 +9,54 @@ shows the what. Plain, simple English: short sentences, common words, no jargon 
 and product names themselves. Some older entries have no `Why:` line - the reason was never
 recorded, and a made-up reason is worse than none.
 
+## 2026-08-06
+
+### Added
+- **The repo's guidance was three long prose files that mixed teaching, recipes, field rules, and
+  rationale in the same paragraphs. There is now a [`docs/`](docs/) set organised with
+  [Diataxis](https://diataxis.fr/) - tutorials, how-to guides, reference, explanation - and any
+  change that alters behaviour must update it in the same commit.**
+
+  **Why:** everything a newcomer or an agent needed was real and correct, but it was stored in a
+  shape that made it hard to use. [`AGENTS.md`](AGENTS.md) had grown to 28 KB and answered four
+  different questions at once: what the project is, how to add an entry, what every field means,
+  and why the schema is shaped that way. Those four have different readers and different reading
+  patterns. Someone adding their first entry wants ordered steps and does not care why `status` is
+  the sole discriminator; someone changing the validator wants exactly that rationale and nothing
+  else; someone mid-task wants to look up one field and leave. Interleaving them meant every reader
+  paid for the other three, so in practice people skimmed and then guessed. Two costs followed.
+  Newcomers had no path in at all - no page said "start here, run these commands, see it work" -
+  so the first contribution was reverse-engineered from a validator error message. And the
+  reasoning behind the hard-won decisions (why ids are permanent, why `BLOCKED` never fails a run,
+  why maturity is a separate axis from status) sat in code comments and scattered sentences, which
+  is the knowledge most expensive to lose: the next person does not know a rule is load-bearing, so
+  they route around it, and the rule stops protecting anything. Diataxis was chosen because it
+  solves precisely this: it separates documentation by what the reader is trying to do, and it
+  gives a mechanical test for where a new page belongs.
+
+  **What:** 32 new files under `docs/`. **Tutorials** (three ordered lessons, disposable practice
+  data, then deleted): get the site running, add your first entry, publish your first guide - each
+  one deliberately breaks the gates so you learn what they enforce. **How-to** (13 pages, one task
+  each): add a rename / deprecation / feature, insert a name into a rename chain, re-verify an
+  entry, write a guide, add a sidebar section, add a category, check citations, refresh the
+  reference mirror, regenerate the badge pages, fix a failing build (a message-by-message decode
+  table), preview and deploy. **Reference** (six pages of lookup tables): the entry schema, guide
+  front matter and the Markdown subset, all eight scripts with their flags and inputs and outputs,
+  every generated file and the published URL scheme, the `app.js` contracts (`NAV`, filter buckets,
+  routing parameters, what is derived versus stored), and every tracked analytics event.
+  **Explanation** (six pages): the one rule and what it costs, why `status` is the sole
+  discriminator, why one file per entry and why ids are permanent, why no framework but yes a build
+  step, why citation rot needs its own checker, why a client-rendered app also ships hundreds of
+  static pages. Authority is stated explicitly and runs validators first, then `CONTRIBUTING.md`
+  and `agents/`, then these docs - so a disagreement is a bug in the page, never a licence to work
+  around the code. [`docs/README.md`](docs/README.md) carries a change-to-page map, and the
+  keep-it-updated rule is now pinned in [`CLAUDE.md`](CLAUDE.md), the
+  [`AGENTS.md`](AGENTS.md) layout table, conventions, and pre-commit checklist, and both
+  [`agents/`](agents/) skills. Adding an entry or a guide still needs no docs change - that is the
+  documented workflow working; changing *how* one is added always does. One drift found and
+  recorded while writing this: the status filter buttons read **Latest / Legacy / Renamed** in
+  [`app.js`](www/app.js), not Active / Deprecated / Renamed as the prose elsewhere says.
+
 ## 2026-08-05
 
 ### Fixed

@@ -68,8 +68,23 @@ Then open <http://localhost:8777/>.
 | `www/styles.css` | All styling. CSS variables; light default, `data-theme="dark"` toggle. |
 | `scripts/build_features.py` | Assembles `kb/<vendor>/*.yaml` into `www/<vendor>.features.json`. Run before validating or previewing; CI runs it before deploy. |
 | `scripts/validate.py` | Schema / format gate for the built `databricks.features.json`. |
+| `docs/` | **The documentation**, organised with [Diátaxis](https://diataxis.fr/): tutorials, how-to guides, reference, explanation. |
 | `CONTRIBUTING.md` | The entry schema and field rules. |
 | `AGENTS.md` | Guidance for AI agents (and humans) working in the repo. |
+
+## Documentation
+
+[`docs/`](docs/) is the full documentation set, organised with
+[Diátaxis](https://diataxis.fr/):
+
+- **[Tutorials](docs/tutorials/)** - start here: get the site running, add your first entry,
+  publish your first guide.
+- **[How-to guides](docs/how-to/)** - one task per page: add a rename, add a deprecation,
+  insert a name into a rename chain, check citations, fix a failing build.
+- **[Reference](docs/reference/)** - the entry schema, guide front matter, every script and its
+  flags, every generated file, the frontend contracts, the tracked analytics events.
+- **[Explanation](docs/explanation/)** - why `status` is the sole discriminator, why the data is
+  one file per entry, why there is no framework, why citation rot has its own checker.
 
 ## Analytics & privacy
 

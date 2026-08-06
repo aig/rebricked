@@ -112,6 +112,9 @@ Rules for these links:
 3. Preview: `python -m http.server 8777 -d www`, open `http://localhost:8777/learn/`.
 4. Add a `CHANGELOG.md` entry under today's date, **why then what**.
 5. Commit `kb/posts/<slug>/` (including `images/`), never `www/learn/` or `www/posts.json`.
+6. Writing a guide needs **no** docs change. If you changed *how* guides work (a front-matter
+   field, the Markdown subset, a `validate_posts.py` rule), update [`docs/`](../docs/) in the same
+   commit - [`docs/reference/guide-schema.md`](../docs/reference/guide-schema.md) is the page.
 
 ## Report back
 

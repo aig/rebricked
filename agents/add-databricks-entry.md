@@ -338,6 +338,10 @@ must be reachable from at least one section - the validator fails on an unreacha
    with the why - for an entry, that's usually the history you uncovered.
 3. Commit the `kb/databricks/*.yaml` you touched. Do **not** commit
    `www/databricks.features.json` - it's gitignored build output that CI regenerates.
+4. Adding or correcting an entry needs **no** docs change - that is this workflow working as
+   documented. But if you changed *how* entries work (a field rule, `VALID_CATEGORIES`, a
+   validator check, a script flag), update [`docs/`](../docs/) in the same commit;
+   [`docs/README.md`](../docs/README.md) maps each kind of change to its page.
 
 ## Report back
 
