@@ -1,0 +1,37 @@
+id: unity-catalog-functions-mcp-server
+name: Unity Catalog functions MCP server
+aliases:
+  - UC Functions MCP server
+  - functions MCP server
+category: AI / ML
+what:
+  note: Databricks managed MCP server that exposes the custom Python and SQL functions registered in Unity Catalog as predefined tools for agents to call, governed by Unity Catalog permissions.
+  link: https://docs.databricks.com/aws/en/agents/mcp-tools/uc-functions#:~:text=exposes%20the%20custom%20Python%20and%20SQL%20functions%20you%20register%20in%20Unity%20Catalog
+fact:
+  - note: No tool authoring required - a Python or SQL function someone already registered in a catalog becomes a predefined tool an agent can call.
+    link: https://docs.databricks.com/aws/en/agents/mcp-tools/uc-functions#:~:text=predefined%20tools%20for%20agents%20to%20call
+  - note: It was in the first batch of managed servers Databricks announced in June 2025, alongside the Genie space and AI Search index servers.
+    link: https://www.databricks.com/blog/announcing-managed-mcp-servers-unity-catalog-and-mosaic-ai-integration#:~:text=managed%20servers%20for%20UC%20Functions%2C%20Genie%20spaces%2C%20and%20AI%20Search%20Indexes
+status:
+  value: active
+  link: https://docs.databricks.com/aws/en/agents/mcp-tools/uc-functions#:~:text=is%20a%20Databricks%20managed%20MCP%20server
+  date: '2026-08-10'
+releases:
+  - type: beta
+    date: 2025-06
+    link: https://docs.databricks.com/aws/en/release-notes/product/2025/june#:~:text=for%20AI%20agents%20is%20in%20Beta
+  - type: public-preview
+    date: 2026-01
+    link: https://docs.databricks.com/aws/en/release-notes/product/2026/january#:~:text=Managed%20MCP%20servers%20is%20now%20Public%20Preview
+introducedAt:
+  date: 2025-06
+  link: https://www.databricks.com/blog/announcing-managed-mcp-servers-unity-catalog-and-mosaic-ai-integration#:~:text=managed%20servers%20for%20UC%20Functions%2C%20Genie%20spaces%2C%20and%20AI%20Search%20Indexes
+links:
+  - url: https://www.databricks.com/blog/announcing-managed-mcp-servers-unity-catalog-and-mosaic-ai-integration
+    kind: official
+    label: 'Databricks Blog: Announcing managed MCP servers'
+prediction:
+  - Unity Tool Server
+  - Genie Functions MCP server
+source: https://docs.databricks.com/aws/en/agents/mcp-tools/uc-functions
+verified: '2026-08-10'

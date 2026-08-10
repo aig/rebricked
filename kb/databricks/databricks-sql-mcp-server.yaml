@@ -1,0 +1,35 @@
+id: databricks-sql-mcp-server
+name: Databricks SQL MCP server
+aliases:
+  - SQL MCP server
+  - DBSQL MCP server
+category: AI / ML
+what:
+  note: Databricks managed MCP server that runs AI-generated SQL against Unity Catalog tables on a SQL warehouse, so an agent can read and write data under Unity Catalog permissions.
+  link: https://docs.databricks.com/aws/en/agents/mcp-tools/databricks-sql#:~:text=run%20AI%2Dgenerated%20SQL%20against%20your%20Unity%20Catalog%20tables
+fact:
+  - note: It is the managed server that writes - the others fetch context, this one runs generated SQL to read and write your data.
+    link: https://docs.databricks.com/aws/en/agents/mcp-tools/databricks-sql#:~:text=to%20read%20and%20write%20data
+  - note: Omit the warehouse_id and it picks a SQL warehouse for you, based on the resources and permissions it can see.
+    link: https://docs.databricks.com/aws/en/agents/mcp-tools/databricks-sql#:~:text=the%20system%20automatically%20selects%20a%20warehouse
+  - note: 'It came late to its own party, arriving in Beta in October 2025 with the shortest URL of the set: /api/2.0/mcp/sql.'
+    link: https://docs.databricks.com/aws/en/release-notes/product/2025/october#:~:text=SQL%20MCP%20server%20now%20available
+status:
+  value: active
+  link: https://docs.databricks.com/aws/en/agents/mcp-tools/databricks-sql#:~:text=This%20feature%20is%20in%20Public%20Preview
+  date: '2026-08-10'
+releases:
+  - type: beta
+    date: 2025-10
+    link: https://docs.databricks.com/aws/en/release-notes/product/2025/october#:~:text=SQL%20MCP%20server%20now%20available
+  - type: public-preview
+    date: 2026-01
+    link: https://docs.databricks.com/aws/en/release-notes/product/2026/january#:~:text=Managed%20MCP%20servers%20is%20now%20Public%20Preview
+introducedAt:
+  date: 2025-10
+  link: https://docs.databricks.com/aws/en/release-notes/product/2025/october#:~:text=execute%20SQL%20queries%20directly%20against%20Unity%20Catalog%20tables
+prediction:
+  - Genie SQL MCP server
+  - Managed Warehouse Protocol
+source: https://docs.databricks.com/aws/en/agents/mcp-tools/databricks-sql
+verified: '2026-08-10'

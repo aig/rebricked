@@ -107,7 +107,7 @@
     ]},
     { label: "AI/ML", items: [
       { label: "Playground", icon: "playground" },
-      { label: "Agents", icon: "agents", ids: ["databricks-ai-search", "databricks-vector-search", "mosaic-ai-vector-search", "agent-bricks", "information-extraction", "knowledge-assistant", "classification", "custom-llm", "supervisor-agent", "agent-bricks-multi-agent-supervisor"] },
+      { label: "Agents", icon: "agents", ids: ["databricks-ai-search", "databricks-vector-search", "mosaic-ai-vector-search", "agent-bricks", "information-extraction", "knowledge-assistant", "classification", "custom-llm", "supervisor-agent", "agent-bricks-multi-agent-supervisor", "databricks-managed-mcp-servers", "genie-one-mcp-server", "genie-agent-mcp-server", "ai-search-mcp-server", "databricks-sql-mcp-server", "unity-catalog-functions-mcp-server"] },
       { label: "AI Gateway", icon: "gateway", ids: ["unity-ai-gateway", "ai-gateway"] },
       { label: "Experiments", icon: "experiments" },
       { label: "Features", icon: "features", ids: ["workspace-feature-store", "feature-engineering-in-unity-catalog", "declarative-feature-engineering"] },

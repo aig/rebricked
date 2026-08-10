@@ -1,0 +1,41 @@
+id: genie-one-mcp-server
+name: Genie One MCP server
+aliases:
+  - Genie One Managed MCP Server
+  - Genie MCP server
+category: AI / BI
+what:
+  note: Databricks managed MCP server that exposes Genie as a conversational tool, so any MCP client can ask a natural-language question of workspace data and get an answer grounded in Genie Ontology with deep links back to the cited sources.
+  link: https://docs.databricks.com/aws/en/agents/mcp-tools/genie-mcp#:~:text=exposes%20Genie%20as%20a%20conversational%20tool
+fact:
+  - note: It can answer with more than text - on clients that support MCP Apps it returns an interactive View that renders Genie's progress, visualizations, and Ontology citations inside the client.
+    link: https://docs.databricks.com/aws/en/agents/mcp-tools/genie-mcp#:~:text=render%20an%20interactive%20View
+  - note: 'Because a whole agent runs behind the question, answers are asynchronous: the client calls genie_ask, then keeps polling genie_poll_response until Genie has finished thinking.'
+    link: https://docs.databricks.com/aws/en/agents/mcp-tools/genie-mcp#:~:text=The%20agent%20polls%20genie_poll_response%20until%20the%20response%20completes
+  - note: It shares a URL prefix with the per-agent Genie server and is still a different thing, which the docs have to say out loud - this one is served at /api/2.0/mcp/genie and answers across the workspace.
+    link: https://docs.databricks.com/aws/en/agents/mcp-tools/genie-mcp#:~:text=It's%20distinct%20from%20the%20per%2Dagent%20Genie%20server
+status:
+  value: active
+  link: https://docs.databricks.com/aws/en/agents/mcp-tools/genie-mcp#:~:text=is%20a%20Databricks%20managed%20MCP%20server
+  date: '2026-08-10'
+releases:
+  - type: beta
+    date: 2026-05
+    link: https://docs.databricks.com/aws/en/ai-bi/release-notes/2026#:~:text=Genie%20One%20now%20has%20a%20Managed%20MCP%20Server
+introducedAt:
+  date: 2026-05
+  link: https://docs.databricks.com/aws/en/ai-bi/release-notes/2026#:~:text=Genie%20One%20now%20has%20a%20Managed%20MCP%20Server
+occasion:
+  date: 2026-07
+  link: https://docs.databricks.com/aws/en/ai-bi/release-notes/2026#:~:text=The%20Genie%20One%20MCP%20App%20adds%20rich%20UI%20interactions
+  note: Genie One MCP App shipped in Beta, July 2026
+limitations:
+  note: Requires the Managed MCP Servers workspace preview; query results come back truncated to protect the model context window, so an agent needs genie_get_query_result for the full set, and it must wait for one poll call to finish before polling again.
+  link: https://docs.databricks.com/aws/en/agents/mcp-tools/genie-mcp#:~:text=return%20truncated%20query%20results
+  date: '2026-08-10'
+prediction:
+  - Genie One MCP Server One
+  - Genie Ontology Protocol
+  - Genie Everywhere Server
+source: https://docs.databricks.com/aws/en/agents/mcp-tools/genie-mcp
+verified: '2026-08-10'

@@ -1,0 +1,42 @@
+id: genie-agent-mcp-server
+name: Genie Agent MCP server
+aliases:
+  - Genie Spaces MCP server
+  - Genie space MCP server
+  - per-agent Genie MCP server
+category: AI / BI
+what:
+  note: Databricks managed MCP server scoped to a single Genie Agent, letting an agent ask that curated set of Unity Catalog tables a plain-language question and get the results without writing SQL.
+  link: https://docs.databricks.com/aws/en/agents/mcp-tools/genie-agent#:~:text=query%20a%20single%20Genie%20Agent%20with%20natural%20language
+fact:
+  - note: The scope is baked into the URL - the Genie space id sits in the path, so a client is pointed at one curated agent's tables rather than the whole workspace.
+    link: https://docs.databricks.com/aws/en/agents/mcp-tools/genie-agent#:~:text=scoped%20to%20that%20curated%20data%20rather%20than%20your%20whole%20workspace
+  - note: For a while it was accidentally discreet - conversations sent through it were saved as private until Databricks fixed the sharing default in May 2026.
+    link: https://docs.databricks.com/aws/en/ai-bi/release-notes/2026#:~:text=conversations%20sent%20via%20Genie%20Agents
+status:
+  value: active
+  link: https://docs.databricks.com/aws/en/agents/mcp-tools/genie-agent#:~:text=is%20a%20Databricks%20managed%20MCP%20server
+  date: '2026-08-10'
+releases:
+  - type: beta
+    date: 2025-06
+    link: https://docs.databricks.com/aws/en/release-notes/product/2025/june#:~:text=for%20AI%20agents%20is%20in%20Beta
+  - type: public-preview
+    date: 2026-01
+    link: https://docs.databricks.com/aws/en/release-notes/product/2026/january#:~:text=Managed%20MCP%20servers%20is%20now%20Public%20Preview
+introducedAt:
+  date: 2025-06
+  link: https://www.databricks.com/blog/announcing-managed-mcp-servers-unity-catalog-and-mosaic-ai-integration#:~:text=managed%20servers%20for%20UC%20Functions%2C%20Genie%20spaces%2C%20and%20AI%20Search%20Indexes
+limitations:
+  note: Read-only, so it queries data and never writes to your tables, and it passes no conversation history to the Genie API, so each turn starts cold unless you wrap it in a multi-agent system.
+  link: https://docs.databricks.com/aws/en/agents/mcp-tools/genie-agent#:~:text=No%20conversation%20history
+  date: '2026-08-10'
+links:
+  - url: https://www.databricks.com/blog/announcing-managed-mcp-servers-unity-catalog-and-mosaic-ai-integration
+    kind: official
+    label: 'Databricks Blog: Announcing managed MCP servers'
+prediction:
+  - Genie Agent Protocol Server
+  - Managed Genie Tool Server
+source: https://docs.databricks.com/aws/en/agents/mcp-tools/genie-agent
+verified: '2026-08-10'

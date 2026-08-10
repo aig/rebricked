@@ -1,0 +1,40 @@
+id: ai-search-mcp-server
+name: AI Search MCP server
+aliases:
+  - Vector Search MCP server
+category: AI / ML
+what:
+  note: Databricks managed MCP server that lets agents run semantic search over AI Search indexes to find relevant documents, with results governed by Unity Catalog permissions.
+  link: https://docs.databricks.com/aws/en/agents/mcp-tools/ai-search#:~:text=run%20semantic%20search%20over%20your%20AI%20Search%20indexes
+fact:
+  - note: The rename left fossils in the API - AI Search was formerly Vector Search, and the old /api/2.0/mcp/vector-search/ URL prefix and vector-search OAuth scope still work.
+    link: https://docs.databricks.com/aws/en/agents/mcp-tools/ai-search#:~:text=AI%20Search%20was%20formerly%20Vector%20Search
+  - note: 'The model asks the question but does not choose the retrieval strategy: preset _meta parameters pin the result count, filters, score threshold, reranked columns, and whether the search is pure vector or hybrid.'
+    link: https://docs.databricks.com/aws/en/agents/mcp-tools/ai-search#:~:text=AI%20Search%20supports%20the%20following%20_meta%20parameters
+status:
+  value: active
+  link: https://docs.databricks.com/aws/en/agents/mcp-tools/ai-search#:~:text=This%20feature%20is%20in%20Public%20Preview
+  date: '2026-08-10'
+releases:
+  - type: beta
+    date: 2025-06
+    link: https://docs.databricks.com/aws/en/release-notes/product/2025/june#:~:text=for%20AI%20agents%20is%20in%20Beta
+  - type: public-preview
+    date: 2026-01
+    link: https://docs.databricks.com/aws/en/release-notes/product/2026/january#:~:text=Managed%20MCP%20servers%20is%20now%20Public%20Preview
+introducedAt:
+  date: 2025-06
+  link: https://www.databricks.com/blog/announcing-managed-mcp-servers-unity-catalog-and-mosaic-ai-integration#:~:text=managed%20servers%20for%20UC%20Functions%2C%20Genie%20spaces%2C%20and%20AI%20Search%20Indexes
+limitations:
+  note: Querying an index through the server requires Databricks managed embeddings.
+  link: https://docs.databricks.com/aws/en/agents/mcp-tools/ai-search#:~:text=requires%20Databricks%20managed%20embeddings
+  date: '2026-08-10'
+links:
+  - url: https://www.databricks.com/blog/announcing-managed-mcp-servers-unity-catalog-and-mosaic-ai-integration
+    kind: official
+    label: 'Databricks Blog: Announcing managed MCP servers'
+prediction:
+  - Genie Search MCP server
+  - Unity Retrieval Server
+source: https://docs.databricks.com/aws/en/agents/mcp-tools/ai-search
+verified: '2026-08-10'

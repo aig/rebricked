@@ -9,6 +9,35 @@ shows the what. Plain, simple English: short sentences, common words, no jargon 
 and product names themselves. Some older entries have no `Why:` line - the reason was never
 recorded, and a made-up reason is worse than none.
 
+## 2026-08-10
+
+### Added
+- **The whole MCP story was missing from the data: six new cards now track Databricks managed MCP
+  servers and each of the five servers Databricks hosts.**
+
+  **Why:** the word "MCP" appeared exactly once in `kb/`, as an invented `prediction` on the Unity
+  AI Gateway card. Meanwhile the real thing had a year of tracked history the site was silent on:
+  Beta in June 2025, a SQL server added in October 2025, a Marketplace listing type and a workspace
+  tab in November 2025, Public Preview in January 2026, a workspace-wide Genie One server in May
+  2026, and a migration under Unity AI Gateway in August 2026 that forced every user to
+  reauthenticate. Anyone landing on rebricked asking "is the Databricks MCP server GA yet?" got
+  nothing. One lump card would have hidden the interesting part, which is that the five servers do
+  not share a maturity: the umbrella feature is Public Preview, but the Genie One server is still
+  Beta, and the AI Search server still answers on its pre-rename `vector-search` URL prefix. Each
+  server also has its own doc page, its own OAuth scope, and its own documented limitations, so
+  each one is its own name to look up.
+
+  **What:** six `active` cards. `databricks-managed-mcp-servers` is the umbrella and carries the
+  release history (Beta June 2025 to Public Preview January 2026) plus the August 2026 move under
+  Unity AI Gateway. The five servers are `genie-one-mcp-server` (Beta since May 2026, with the
+  Genie One MCP App as its `occasion`), `genie-agent-mcp-server` (read-only, no conversation
+  history), `ai-search-mcp-server` (needs Databricks managed embeddings; keeps the old
+  `/api/2.0/mcp/vector-search/` prefix working), `databricks-sql-mcp-server` (Beta October 2025,
+  the one server that writes), and `unity-catalog-functions-mcp-server`. All six are wired into the
+  AI/ML **Agents** rail section. Every claim is sourced to a live Databricks docs page, a dated
+  release note, or the June 2025 announcement blog; `check_anchors.py` confirms all 56 URLs and
+  quotes resolve.
+
 ## 2026-08-06
 
 ### Added
