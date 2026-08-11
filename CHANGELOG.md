@@ -9,6 +9,33 @@ shows the what. Plain, simple English: short sentences, common words, no jargon 
 and product names themselves. Some older entries have no `Why:` line - the reason was never
 recorded, and a made-up reason is worse than none.
 
+## 2026-08-11
+
+### Added
+- **The thing that actually makes Genie work had no card: `genie-ontology` tracks the context layer
+  behind Genie One and Genie Agents.**
+
+  **Why:** the Genie family was tracked five cards deep - `genie-agents`, `genie-spaces`,
+  `genie-one`, `genie`, `genie-code` - and the site still could not answer "what is Genie
+  Ontology?", even though it is the third name in the June 2026 announcement that renamed Genie to
+  Genie One, and the one people are most likely to look up because it sounds like a governance
+  feature and behaves like one. It also has the kind of naming history rebricked exists for: the
+  docs call it the Genie Ontology, the release notes shipped it as "ontology snippets", and both
+  refer to the same context layer. Worse, its status reads as a contradiction unless you have the
+  dates - it went Public Preview on July 2, 2026, then Databricks enabled it by default on August
+  6, 2026 while leaving it a preview you have to ask your account team to join.
+
+  **What:** one `active` card, `kb/databricks/genie-ontology.yaml`, category AI / BI, with
+  `introducedAt` June 2026 (the announcement blog) and a `releases` timeline whose current stage is
+  `public-preview` July 2026, so the card shows a preview pill rather than implying GA. `aliases`
+  cover "ontology snippets" and "Genie context layer". `limitations` records the two real
+  constraints the docs state: preview access goes through the account team, and inferred snippets
+  are gated by Unity Catalog permissions. The three facts are the PageRank-style authority scoring
+  that decides whose metric definition wins, the "living graph" it builds from tables, queries,
+  dashboards and pipelines, and the enabled-by-default-while-still-preview move. Wired into the
+  AI / BI **Genie Agents** rail section. `check_anchors.py` confirms all 11 URLs and quotes
+  resolve.
+
 ## 2026-08-10
 
 ### Added
