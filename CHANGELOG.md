@@ -36,6 +36,26 @@ recorded, and a made-up reason is worse than none.
   AI / BI **Genie Agents** rail section. `check_anchors.py` confirms all 11 URLs and quotes
   resolve.
 
+### Fixed
+- **`genie-one`'s rename date was correct but cited a blog that never states it; the `occasion` now
+  points at the dated release note.**
+
+  **Why:** the card said "Renamed from Genie to Genie One, June 9, 2026" and linked the June 2026
+  announcement blog as proof. The date is right - the AI/BI release notes carry a "Genie renamed to
+  Genie One" note dated June 9, 2026 - but the blog it cited was published June 16, so the link did
+  not back the claim it was attached to. `check_anchors.py` cannot catch this: the URL was live and
+  carried no text fragment to verify, so it passed while proving nothing. That is the quiet failure
+  mode the one rule exists to prevent - a card that looks sourced, with a date nobody can confirm
+  from the link provided.
+
+  **What:** `occasion.link` now points at the release note itself, with a `#:~:text=` fragment on
+  the "Genie renamed to Genie One" heading so the quote is checkable and the reader lands on the
+  dated note. The fragment stops at the heading rather than reaching down to the date line: `norm()`
+  in `check_anchors.py` collapses whitespace and would have accepted a fragment spanning both, but a
+  browser will not highlight across a block boundary, so it would have been a quote that passes the
+  checker and highlights nothing. `verified` bumped to 2026-08-11. The announcement blog is still on
+  the card under `links`, where a blog belongs.
+
 ## 2026-08-10
 
 ### Added
