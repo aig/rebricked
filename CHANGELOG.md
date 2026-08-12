@@ -11,6 +11,67 @@ recorded, and a made-up reason is worse than none.
 
 ## 2026-08-12
 
+### Added
+- **Nineteen cards closing the oldest gaps in the dataset, including four rename chains the docs
+  half-admit to: Serverless pools -> High Concurrency clusters, Delta cache -> disk cache, and Tag
+  policies -> Governed tags.**
+
+  **Why:** the coverage gap report had sat as a list of suggestions rather than work, and the most
+  valuable items on it were not the missing marquee products but the missing *predecessors*. The
+  access-mode chain started at Shared / Single user, so the site could not answer "what happened to
+  High Concurrency clusters?" even though it already tracked the three names that replaced them.
+  Three renames were sitting in plain sight in official docs and had no cards at all: Databricks
+  itself writes that disk caching "was formerly referred to as the Delta cache and the DBIO cache",
+  the July 2018 note says the Serverless Pool option "has been replaced by High Concurrency cluster
+  mode", and the June 2025 note announcing Tag policies already pointed readers at a page titled
+  Governed tags. Those are exactly the questions this site exists to answer, and searching the old
+  name returned nothing. The deprecations were worse: credential passthrough and Hive metastore
+  table ACLs were both deprecated in one May 2024 release note, are both still live in real
+  workspaces, and neither had a card.
+
+  **What:** 19 new entries, all verified against live docs today, `check_anchors.py` confirming all
+  143 URLs and every text-fragment quote across them. Three chains: `serverless-pools` ->
+  `high-concurrency-clusters` -> the existing `shared-single-user-access-modes` (so the access-mode
+  lineage now runs from 2018 to today), `delta-cache` -> `disk-cache`, and `tag-policies` ->
+  `governed-tags`. DBIO cache is an alias on `delta-cache` rather than its own card, because the
+  docs name it as a former name but never date the change. Deprecations: `credential-passthrough`
+  and `hive-metastore-table-access-control` (both `deprecated`, May 2024, successor Unity Catalog),
+  `databricks-light` (`retired`, support ended 2021, extended support gone July 2022), and
+  `high-concurrency-clusters` as `legacy` since the docs give no formal deprecation date. Marquee
+  features that simply had no card: `photon`, `auto-loader`, `system-tables`,
+  `foundation-model-apis`, `automl`. New names from recent release notes: `omnigent`,
+  `model-services`, `tag-automations`, `spaces`, `databricks-online-feature-stores`. Two candidates
+  were investigated and deliberately **not** added, because the claim could not be verified against
+  a live page: the Databricks online tables retirement (the migration page now redirects to Online
+  Feature Stores, so the January 15, 2026 end-of-access date appears in search results but on no
+  reachable doc) and a Mosaic AI Agent Framework rename (the phrase has vanished from its own docs
+  page and from every 2026 release note, but nothing official says what it became). Both are worth
+  revisiting when the docs catch up.
+
+- **A second, harder pass at those two gaps: both are confirmed unwriteable, and the reason is the
+  same in each case - Databricks deleted the page, and only Google still has a copy.**
+
+  **Why:** the first pass rejected both on two checked URLs each, which is thin grounds for a
+  permanent "cannot source this". If the evidence exists, a card should exist; if it does not, that
+  conclusion should be strong enough that nobody re-opens the question in three months.
+
+  **What:** eight more URLs were fetched for online tables (AWS, Azure and GCP variants of the
+  migration page, the feature store release notes, the concepts glossary, `online-workflows`, and
+  the Lakebase Autoscaling upgrade page). Every path that should carry the deprecation now serves
+  the Online Feature Stores page instead - the page was not updated, it was deleted and folded in -
+  so the January 15, 2026 date exists in search snippets and on no reachable page. Seven URLs were
+  checked for Mosaic AI Agent Framework, including the one whose *indexed* title is still "Monitor
+  apps deployed using Agent Framework (MLflow 2)"; that page's live H1 is now "Monitor GenAI apps in
+  production" and neither "Agent Framework" nor "Mosaic AI" appears anywhere on it. The phrase
+  survives only in Google's index and in historical release notes, which is exactly why search
+  results keep quoting it back. Two sourced things did come out of the dig and are now recorded:
+  `agent-bricks` gains a third fact for the March 27, 2026 note that it "expanded beyond declarative
+  agents to serve as the umbrella for all Databricks AI capabilities" (the closest official
+  statement to where the Mosaic AI-branded features went), and
+  `databricks-online-feature-stores` gains the old `feature-store/online-tables` URL under `links`,
+  labelled as what it now is - a URL that serves a different page. `check_anchors.py` confirms all
+  18 URLs on the two edited cards.
+
 ### Changed
 - **Refreshed the release-notes mirror and caught the one card the news had made stale:
   `secrets-in-unity-catalog` still said Public Preview a week after it went GA.**

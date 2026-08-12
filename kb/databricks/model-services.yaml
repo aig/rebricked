@@ -1,0 +1,37 @@
+id: model-services
+name: Model services
+aliases:
+  - model service
+  - system.ai model services
+category: AI / ML
+what:
+  note: A Unity Catalog securable that represents a governed LLM endpoint, so an endpoint is defined once and shared across workspaces through Unity Catalog privileges instead of being duplicated per workspace.
+  link: https://docs.databricks.com/aws/en/release-notes/product/2026/june#:~:text=a%20Unity%20Catalog%20securable%20that%20represents%20a%20governed%20LLM%20endpoint
+fact:
+  - note: It turns a model endpoint into a catalog object, which means GRANT is now a reasonable way to hand someone access to an LLM.
+    link: https://docs.databricks.com/aws/en/release-notes/product/2026/june#:~:text=share%20it%20across%20workspaces%20using%20Unity%20Catalog%20privileges
+  - note: Databricks pre-populates them for you in a schema literally called system.ai, so the hosted foundation models show up as governable objects without anyone creating anything.
+    link: https://docs.databricks.com/aws/en/release-notes/product/2026/june#:~:text=ready%2Dto%2Duse%20model%20services%20in%20the
+  - note: Within two months of launch they were pulled into attribute-based access control, where a policy can grant privileges to any model service whose governed tags match a condition.
+    link: https://docs.databricks.com/aws/en/release-notes/product/2026/august#:~:text=but%20now%20also%20support%20model%20services
+status:
+  value: active
+  link: https://docs.databricks.com/aws/en/release-notes/product/2026/june#:~:text=a%20Unity%20Catalog%20securable%20that%20represents%20a%20governed%20LLM%20endpoint
+  date: '2026-08-12'
+releases:
+  - type: beta
+    date: 2026-06
+    link: https://docs.databricks.com/aws/en/release-notes/product/2026/june#:~:text=using%20model%20services%2C%20currently%20in%20Beta
+introducedAt:
+  date: 2026-06
+  link: https://docs.databricks.com/aws/en/release-notes/product/2026/june#:~:text=using%20model%20services%2C%20currently%20in%20Beta
+links:
+  - url: https://docs.databricks.com/aws/en/ai-gateway/model-services
+    kind: official
+    label: 'Databricks docs: model services'
+prediction:
+  - Unity model services
+  - Governed endpoints
+  - Model securables
+source: https://docs.databricks.com/aws/en/release-notes/product/2026/june
+verified: '2026-08-12'

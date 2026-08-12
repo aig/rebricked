@@ -1,0 +1,30 @@
+id: serverless-pools
+name: Serverless pools
+aliases:
+  - Serverless Pool
+  - Serverless pool cluster type
+category: Compute / BI
+what:
+  note: The original Cluster Type option for auto-managed compute shared by several concurrently active users, swapped out of the cluster dropdown in July 2018 for the High Concurrency cluster mode.
+  link: https://docs.databricks.com/aws/en/release-notes/product/2018/july#:~:text=option%20has%20been%20replaced%20by
+fact:
+  - note: It was the cluster type you could not tune - its replacement was announced as providing all the same benefits 'while also allowing flexibility in Spark and resource configuration', which is a polite way of saying serverless pools had none.
+    link: https://docs.databricks.com/aws/en/release-notes/product/2018/july#:~:text=while%20also%20allowing%20flexibility%20in%20Spark%20and%20resource%20configuration
+  - note: The release note that retired it also renamed the dropdown it lived in, turning Cluster Type into Cluster Mode in the same breath.
+    link: https://docs.databricks.com/aws/en/release-notes/product/2018/july#:~:text=option%20has%20been%20renamed%20to
+  - note: Databricks used the word serverless for a cluster type in 2018, years before serverless compute came back as a platform-wide idea - and one of the last things this one learned to do was run R.
+    link: https://docs.databricks.com/aws/en/release-notes/product/2018/february#:~:text=Serverless%20pools%20now%20support%20R
+status:
+  value: renamed
+  link: https://docs.databricks.com/aws/en/release-notes/product/2018/july#:~:text=option%20has%20been%20replaced%20by
+  date: '2026-08-12'
+to:
+  date: 2018-07
+  link: https://docs.databricks.com/aws/en/release-notes/product/2018/july#:~:text=option%20has%20been%20replaced%20by
+successorId: high-concurrency-clusters
+prediction:
+  - Serverless pools (again)
+  - Auto pools
+  - Pool mode
+source: https://docs.databricks.com/aws/en/release-notes/product/2018/july
+verified: '2026-08-12'

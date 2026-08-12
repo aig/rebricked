@@ -1,0 +1,40 @@
+id: photon
+name: Photon
+aliases:
+  - Photon engine
+  - Photon acceleration
+category: Compute / BI
+what:
+  note: The Databricks-native vectorized query engine that accelerates SQL workloads, DataFrame API calls, ETL pipelines and stateless streaming, written to be drop-in compatible with existing Apache Spark code.
+  link: https://docs.databricks.com/aws/en/compute/photon#:~:text=the%20Databricks%2Dnative%20vectorized%20query%20engine
+fact:
+  - note: The engine under your Spark code is not Spark - Photon is written in C++ and processes data in columnar batches rather than row by row, while still answering to the same Spark APIs.
+    link: https://docs.databricks.com/aws/en/compute/photon#:~:text=processes%20data%20in%20columnar%20batches
+  - note: You can spot it working by colour in the query plan, where Photon operators and stages render peach against the blue of everything still running on Spark.
+    link: https://learn.microsoft.com/en-us/azure/databricks/archive/compute/configure#:~:text=Photon%20operators%20and%20stages%20are%20colored%20peach
+  - note: When it meets something it cannot do it does not fail, it silently hands the work back to Spark - which is why an unsupported UDF just makes your query mysteriously ordinary again.
+    link: https://docs.databricks.com/aws/en/compute/photon#:~:text=falls%20back
+status:
+  value: active
+  link: https://docs.databricks.com/aws/en/compute/photon#:~:text=the%20Databricks%2Dnative%20vectorized%20query%20engine
+  date: '2026-08-12'
+releases:
+  - type: public-preview
+    date: 2021-06
+    link: https://docs.databricks.com/aws/en/release-notes/product/2021/june#:~:text=the%20new%20native%20vectorized%20engine%20on%20Databricks
+  - type: ga
+    date: 2022-07
+    link: https://docs.databricks.com/aws/en/release-notes/product/2022/july#:~:text=Photon%20is%20now%20generally%20available%2C%20beginning%20with%20Databricks%20Runtime%2011.1
+introducedAt:
+  date: 2021-06
+  link: https://docs.databricks.com/aws/en/release-notes/product/2021/june#:~:text=the%20new%20native%20vectorized%20engine%20on%20Databricks
+limitations:
+  note: No support for UDFs, RDD APIs or Dataset APIs, and only stateless streaming - stateful streaming is unsupported. Queries that already finish in under two seconds see little benefit.
+  link: https://docs.databricks.com/aws/en/compute/photon#:~:text=Photon%20supports%20stateless%20streaming%20only
+  date: '2026-08-12'
+prediction:
+  - Photon 2
+  - Lakehouse Engine
+  - Unity Engine
+source: https://docs.databricks.com/aws/en/compute/photon
+verified: '2026-08-12'

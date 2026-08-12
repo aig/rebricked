@@ -1,0 +1,37 @@
+id: foundation-model-apis
+name: Foundation Model APIs
+aliases:
+  - FMAPI
+  - pay-per-token
+  - provisioned throughput
+category: AI / ML
+what:
+  note: Access to state-of-the-art open models from a Databricks-hosted serving endpoint, so you can query a high-quality model without deploying or maintaining one yourself.
+  link: https://docs.databricks.com/aws/en/machine-learning/foundation-model-apis/#:~:text=access%20and%20query%20state%2Dof%2Dthe%2Dart%20open%20models
+fact:
+  - note: It sells the same models two ways - pay-per-token for getting started and provisioned throughput when you need performance guarantees - so the pricing model, not the model, is the thing you choose.
+    link: https://docs.databricks.com/aws/en/machine-learning/foundation-model-apis/#:~:text=performance%20guarantees
+  - note: 'It reached GA one half at a time: provisioned throughput went generally available in March 2024 and pay-per-token followed five months later.'
+    link: https://docs.databricks.com/aws/en/release-notes/product/2024/august#:~:text=Foundation%20Model%20APIs%20pay%2Dper%2Dtoken%20is%20now%20generally%20available
+  - note: The endpoints arrive already existing in your workspace, which is why a brand-new account can query a frontier model before it has created a single table.
+    link: https://docs.databricks.com/aws/en/release-notes/product/2023/december#:~:text=the%20supported%20models%20are%20accessible%20in%20your%20Databricks%20Workspace
+status:
+  value: active
+  link: https://docs.databricks.com/aws/en/machine-learning/foundation-model-apis/#:~:text=access%20and%20query%20state%2Dof%2Dthe%2Dart%20open%20models
+  date: '2026-08-12'
+releases:
+  - type: public-preview
+    date: 2023-12
+    link: https://docs.databricks.com/aws/en/release-notes/product/2023/december#:~:text=Foundation%20Model%20APIs%20is%20Public%20Preview
+  - type: ga
+    date: 2024-08
+    link: https://docs.databricks.com/aws/en/release-notes/product/2024/august#:~:text=Foundation%20Model%20APIs%20pay%2Dper%2Dtoken%20is%20now%20generally%20available
+introducedAt:
+  date: 2023-12
+  link: https://docs.databricks.com/aws/en/release-notes/product/2023/december#:~:text=Foundation%20Model%20APIs%20is%20Public%20Preview
+prediction:
+  - Unity Model APIs
+  - Genie Model APIs
+  - Foundation Model Gateway
+source: https://docs.databricks.com/aws/en/machine-learning/foundation-model-apis/
+verified: '2026-08-12'

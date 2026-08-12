@@ -1,0 +1,37 @@
+id: automl
+name: AutoML
+aliases:
+  - Databricks AutoML
+  - databricks-automl-runtime
+category: AI / ML
+what:
+  note: Automated model selection that applies machine learning to a dataset by searching for the best algorithm and hyperparameter configuration on your behalf.
+  link: https://docs.databricks.com/aws/en/machine-learning/automl/#:~:text=automatically%20finding%20the%20best%20algorithm%20and%20hyperparameter%20configuration
+fact:
+  - note: Its whole pitch was skipping the boring part of machine learning, generating models from a dataset to shorten the path to production.
+    link: https://docs.databricks.com/aws/en/release-notes/product/2021/may#:~:text=automatically%20generate%20ML%20models%20from%20data
+  - note: 'Its GA was announced against a runtime version rather than a date: generally available in Databricks Runtime 10.4 LTS ML and above.'
+    link: https://docs.databricks.com/aws/en/release-notes/product/2022/april#:~:text=generally%20available%20in%20Databricks%20Runtime%2010.4%20LTS%20ML
+  - note: It has quietly been evicted from the runtime it was pinned to - from Databricks Runtime 18.0 ML onward it is no longer a built-in library and has to be installed like any third-party package.
+    link: https://docs.databricks.com/aws/en/machine-learning/automl/#:~:text=AutoML%20is%20not%20included%20as%20a%20built%2Din%20library
+status:
+  value: active
+  link: https://docs.databricks.com/aws/en/machine-learning/automl/#:~:text=automatically%20finding%20the%20best%20algorithm%20and%20hyperparameter%20configuration
+  date: '2026-08-12'
+releases:
+  - type: ga
+    date: 2022-04
+    link: https://docs.databricks.com/aws/en/release-notes/product/2022/april#:~:text=generally%20available%20in%20Databricks%20Runtime%2010.4%20LTS%20ML
+introducedAt:
+  date: 2021-05
+  link: https://docs.databricks.com/aws/en/release-notes/product/2021/may#:~:text=automatically%20generate%20ML%20models%20from%20data
+limitations:
+  note: In Databricks Runtime 18.0 ML and above AutoML is not included as a built-in library, so it must be installed from PyPI rather than assumed present on ML compute.
+  link: https://docs.databricks.com/aws/en/machine-learning/automl/#:~:text=AutoML%20is%20not%20included%20as%20a%20built%2Din%20library
+  date: '2026-08-12'
+prediction:
+  - Agent Bricks AutoML
+  - Genie AutoML
+  - Auto Modeling
+source: https://docs.databricks.com/aws/en/machine-learning/automl/
+verified: '2026-08-12'

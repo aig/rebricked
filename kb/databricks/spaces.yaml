@@ -1,0 +1,29 @@
+id: spaces
+name: Spaces
+aliases:
+  - editor spaces
+  - workspace spaces
+category: Developer experience
+what:
+  note: An organizational tool in the Databricks editor that groups your work by focusing the editor window on a single folder or set of open tabs, preserving them so you can pick up where you left off.
+  link: https://docs.databricks.com/aws/en/notebooks/spaces#:~:text=an%20organizational%20tool%20you%20can%20use%20to%20group%20your%20work
+fact:
+  - note: 'It is a folder that is not a folder: deleting a space removes the space and its saved tabs while every notebook and file inside it stays exactly where it was in the workspace.'
+    link: https://docs.databricks.com/aws/en/notebooks/spaces#:~:text=private%20to%20each%20user
+  - note: 'The selling point is not organisation but memory: each space keeps your open tabs, so switching projects stops meaning re-opening nine notebooks.'
+    link: https://docs.databricks.com/aws/en/release-notes/product/2026/august#:~:text=while%20preserving%20your%20open%20tabs
+  - note: Databricks now has Genie Spaces for asking questions and plain Spaces for keeping tabs tidy, which are entirely unrelated products sharing one very reusable word.
+    link: https://docs.databricks.com/aws/en/release-notes/product/2026/august#:~:text=Organize%20your%20work%20with%20spaces
+status:
+  value: active
+  link: https://docs.databricks.com/aws/en/notebooks/spaces#:~:text=an%20organizational%20tool%20you%20can%20use%20to%20group%20your%20work
+  date: '2026-08-12'
+introducedAt:
+  date: 2026-08
+  link: https://docs.databricks.com/aws/en/release-notes/product/2026/august#:~:text=You%20can%20now%20use%20spaces%20to%20organize%20your%20work
+prediction:
+  - Genie Spaces (again)
+  - Projects
+  - Workspaces
+source: https://docs.databricks.com/aws/en/notebooks/spaces
+verified: '2026-08-12'

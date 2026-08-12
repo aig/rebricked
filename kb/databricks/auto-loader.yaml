@@ -1,0 +1,29 @@
+id: auto-loader
+name: Auto Loader
+aliases:
+  - cloudFiles
+  - autoloader
+category: Data engineering
+what:
+  note: Incremental ingestion that processes new data files as they arrive in cloud storage without any additional setup, exposed as a Structured Streaming source rather than a separate service.
+  link: https://docs.databricks.com/aws/en/ingestion/cloud-object-storage/auto-loader/#:~:text=incrementally%20and%20efficiently%20processes%20new%20data%20files%20as%20they%20arrive
+fact:
+  - note: 'You do not type its name to use it: the feature is called Auto Loader but the thing you write in code is a Structured Streaming source called cloudFiles.'
+    link: https://docs.databricks.com/aws/en/ingestion/cloud-object-storage/auto-loader/#:~:text=cloudFiles
+  - note: It remembers every file it has ever seen by keeping the metadata in a RocksDB key-value store inside the stream's checkpoint, which is how it promises exactly-once processing without re-listing your bucket.
+    link: https://docs.databricks.com/aws/en/ingestion/cloud-object-storage/auto-loader/#:~:text=RocksDB
+  - note: Databricks quotes its scale in units that sound like typos, describing backfills of billions of files and near real-time ingestion of millions of files per hour.
+    link: https://docs.databricks.com/aws/en/ingestion/cloud-object-storage/auto-loader/#:~:text=millions%20of%20files%20per%20hour
+status:
+  value: active
+  link: https://docs.databricks.com/aws/en/ingestion/cloud-object-storage/auto-loader/#:~:text=incrementally%20and%20efficiently%20processes%20new%20data%20files%20as%20they%20arrive
+  date: '2026-08-12'
+introducedAt:
+  date: 2020-02
+  link: https://docs.databricks.com/aws/en/release-notes/product/2020/february#:~:text=Process%20new%20data%20files%20incrementally%20with%20Auto%20Loader
+prediction:
+  - Lakeflow Auto Loader
+  - Auto Ingest
+  - Genie Loader
+source: https://docs.databricks.com/aws/en/ingestion/cloud-object-storage/auto-loader/
+verified: '2026-08-12'

@@ -11,6 +11,8 @@ fact:
     link: https://www.databricks.com/blog/introducing-agent-bricks#:~:text=automatically%20create%20evaluation%20benchmarks%20specific%20to%20your%20task
   - note: There was never a single 'Agent Bricks GA' day - individual capabilities reach general availability on their own schedules (Document Intelligence, for instance, went GA at Data + AI Summit 2026), by which point Databricks says 100k+ agents had been built on it, together processing over a quadrillion tokens a year.
     link: https://www.databricks.com/blog/agent-bricks-dais-2026#:~:text=over%20100k%2B%20agents%20have%20been%20built
+  - note: In March 2026 it stopped being one product and became the label on the door, expanding past declarative agents to serve as the umbrella for all Databricks AI capabilities.
+    link: https://docs.databricks.com/aws/en/release-notes/product/2026/march#:~:text=serve%20as%20the%20umbrella%20for%20all%20Databricks%20AI%20capabilities
 status:
   value: active
   link: https://docs.databricks.com/aws/en/generative-ai/agent-bricks/
@@ -34,4 +36,4 @@ prediction:
   - Mosaic Agent Studio
   - Genie Bricks
 source: https://docs.databricks.com/aws/en/generative-ai/agent-bricks/
-verified: '2026-07-23'
+verified: '2026-08-12'

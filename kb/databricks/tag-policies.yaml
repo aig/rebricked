@@ -1,0 +1,32 @@
+id: tag-policies
+name: Tag policies
+category: Data governance
+what:
+  note: The first name for account-level rules that define which tag keys and values are allowed on Unity Catalog assets and who is permitted to assign them.
+  link: https://docs.databricks.com/aws/en/release-notes/product/2025/june#:~:text=Tag%20policies%20define%20allowed%20tag%20keys%20and%20values
+fact:
+  - note: The release note announcing it already gave the game away, sending readers to a documentation page titled Governed tags for more information.
+    link: https://docs.databricks.com/aws/en/release-notes/product/2025/june#:~:text=Tag%20policies%20are%20managed%20at%20the%20account%20level
+  - note: It shipped as a governance feature with a name that described the rule rather than the thing being ruled, which is presumably why the thing being ruled won.
+    link: https://docs.databricks.com/aws/en/release-notes/product/2025/june#:~:text=enforce%20consistent%20tagging%20across%20data%20assets
+status:
+  value: renamed
+  link: https://docs.databricks.com/aws/en/release-notes/product/2025/june#:~:text=Tag%20policies%20are%20managed%20at%20the%20account%20level
+  date: '2026-08-12'
+releases:
+  - type: beta
+    date: 2025-06
+    link: https://docs.databricks.com/aws/en/release-notes/product/2025/june#:~:text=Tag%20policies%20enables%20admins%20to%20enforce%20consistent%20tagging
+from:
+  date: 2025-06
+  link: https://docs.databricks.com/aws/en/release-notes/product/2025/june#:~:text=Tag%20policies%20enables%20admins%20to%20enforce%20consistent%20tagging
+to:
+  date: 2025-08
+  link: https://docs.databricks.com/aws/en/release-notes/product/2025/august#:~:text=You%20can%20now%20create%20governed%20tags%20to%20enforce%20consistent%20tagging
+successorId: governed-tags
+prediction:
+  - Tag governance policies
+  - Unity tag rules
+  - Governed tag policies
+source: https://docs.databricks.com/aws/en/release-notes/product/2025/june
+verified: '2026-08-12'

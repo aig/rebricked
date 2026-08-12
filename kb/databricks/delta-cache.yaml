@@ -1,0 +1,28 @@
+id: delta-cache
+name: Delta cache
+aliases:
+  - DBIO cache
+  - Delta caching
+category: Compute / BI
+what:
+  note: The name Databricks used for the automatic caching that copies remote Parquet files onto a worker's local SSDs so repeated reads hit fast local storage instead of cloud object storage.
+  link: https://docs.databricks.com/aws/en/optimizations/disk-cache#:~:text=creating%20copies%20of%20remote%20Parquet%20data%20files%20in%20nodes
+fact:
+  - note: The name was always a little bit of a lie - it caches remote Parquet files, so it worked on plenty of data that was never a Delta table.
+    link: https://docs.databricks.com/aws/en/optimizations/disk-cache#:~:text=creating%20copies%20of%20remote%20Parquet%20data%20files%20in%20nodes
+  - note: 'This was the second name, not the first: the same feature shipped earlier as the DBIO cache, making the 2022 change the third label for one cache.'
+    link: https://docs.databricks.com/aws/en/optimizations/disk-cache#:~:text=formerly%20referred%20to%20as%20the
+status:
+  value: renamed
+  link: https://docs.databricks.com/aws/en/release-notes/product/2022/september#:~:text=caching%20functionality%20previously%20referred%20to%20as%20the
+  date: '2026-08-12'
+to:
+  date: 2022-09
+  link: https://docs.databricks.com/aws/en/release-notes/product/2022/september#:~:text=caching%20functionality%20previously%20referred%20to%20as%20the
+successorId: disk-cache
+prediction:
+  - Lakehouse cache
+  - Predictive cache
+  - Unity cache
+source: https://docs.databricks.com/aws/en/optimizations/disk-cache
+verified: '2026-08-12'

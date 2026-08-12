@@ -1,0 +1,33 @@
+id: disk-cache
+name: Disk cache
+aliases:
+  - Disk caching
+  - SSD cache
+category: Compute / BI
+what:
+  note: Automatic caching that accelerates data reads by copying remote Parquet files into a node's local storage in a fast intermediate format, so repeated queries never re-fetch them from cloud storage.
+  link: https://docs.databricks.com/aws/en/optimizations/disk-cache#:~:text=to%20accelerate%20data%20reads%20by%20creating%20copies%20of%20remote%20Parquet%20data%20files
+fact:
+  - note: It carries two former names in a single sentence of its own docs, having been the DBIO cache and then the Delta cache before anyone settled on describing what it actually is.
+    link: https://docs.databricks.com/aws/en/optimizations/disk-cache#:~:text=formerly%20referred%20to%20as%20the
+  - note: 'The rename came with an explicit promise of nothing happening: the September 2022 note says the behaviour did not change at all, only the words.'
+    link: https://docs.databricks.com/aws/en/release-notes/product/2022/september#:~:text=with%20no%20changes%20to%20existing%20behavior
+  - note: To get it you pick the hardware, not a setting - Databricks tells you to choose a worker type with SSD volumes, and those workers arrive with disk caching already enabled.
+    link: https://docs.databricks.com/aws/en/optimizations/disk-cache#:~:text=Such%20workers%20are%20enabled%20and%20configured%20for%20disk%20caching
+status:
+  value: active
+  link: https://docs.databricks.com/aws/en/optimizations/disk-cache#:~:text=Databricks%20uses%20disk%20caching%20to%20accelerate%20data%20reads
+  date: '2026-08-12'
+from:
+  date: 2022-09
+  link: https://docs.databricks.com/aws/en/release-notes/product/2022/september#:~:text=caching%20functionality%20previously%20referred%20to%20as%20the
+limitations:
+  note: On SQL warehouses and Databricks Runtime 14.2 and above the CACHE SELECT command is ignored, and with autoscaling enabled a decommissioned worker takes its cache with it, so the data has to be read from the source again.
+  link: https://docs.databricks.com/aws/en/optimizations/disk-cache#:~:text=command%20is%20ignored
+  date: '2026-08-12'
+prediction:
+  - Predictive cache
+  - Lakehouse cache
+  - Local cache
+source: https://docs.databricks.com/aws/en/optimizations/disk-cache
+verified: '2026-08-12'

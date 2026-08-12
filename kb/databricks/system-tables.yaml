@@ -1,0 +1,40 @@
+id: system-tables
+name: System tables
+aliases:
+  - system catalog
+  - system.billing
+category: Data governance
+what:
+  note: A Databricks-hosted analytical store of an account's own operational data - billing, access, compute, lineage and more - exposed as read-only Unity Catalog tables in the system catalog.
+  link: https://docs.databricks.com/aws/en/admin/system-tables/#:~:text=analytical%20store%20of%20your%20account
+fact:
+  - note: 'Your own platform becomes a dataset you can join: the billing, audit and lineage data behind the console arrives as ordinary tables you query with SQL.'
+    link: https://docs.databricks.com/aws/en/release-notes/product/2023/june#:~:text=easily%2Daccessed%20account%2Dwide%20observability%20data
+  - note: They are read-only, so this is the rare Unity Catalog schema where your write privileges mean nothing at all.
+    link: https://docs.databricks.com/aws/en/admin/system-tables/#:~:text=read%2Donly
+  - note: The platform went generally available before most of its own tables did - the September 2024 GA covered the system tables platform plus exactly two billing tables.
+    link: https://docs.databricks.com/aws/en/release-notes/product/2024/september#:~:text=system%20tables%20platform%20is%20now%20generally%20available
+status:
+  value: active
+  link: https://docs.databricks.com/aws/en/admin/system-tables/#:~:text=analytical%20store%20of%20your%20account
+  date: '2026-08-12'
+releases:
+  - type: public-preview
+    date: 2023-06
+    link: https://docs.databricks.com/aws/en/release-notes/product/2023/june#:~:text=Account%20admins%20can%20now%20enable%20access%20to%20system%20tables
+  - type: ga
+    date: 2024-09
+    link: https://docs.databricks.com/aws/en/release-notes/product/2024/september#:~:text=system%20tables%20platform%20is%20now%20generally%20available
+introducedAt:
+  date: 2023-06
+  link: https://docs.databricks.com/aws/en/release-notes/product/2023/june#:~:text=Account%20admins%20can%20now%20enable%20access%20to%20system%20tables
+limitations:
+  note: Read-only and unmodifiable, they must be enabled from a Unity Catalog-enabled workspace before anything appears, and free retention varies per table rather than being one number.
+  link: https://docs.databricks.com/aws/en/admin/system-tables/#:~:text=read%2Donly
+  date: '2026-08-12'
+prediction:
+  - Unity system tables
+  - Observability Catalog
+  - system.genie
+source: https://docs.databricks.com/aws/en/admin/system-tables/
+verified: '2026-08-12'

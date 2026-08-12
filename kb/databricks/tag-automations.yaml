@@ -1,0 +1,37 @@
+id: tag-automations
+name: Tag automations
+aliases:
+  - tag automation
+  - automate tag assignment
+category: Data governance
+what:
+  note: Rules that assign or remove governed tags on the Unity Catalog tables or volumes matching conditions you define, so tags keep up with data and metadata that keep changing.
+  link: https://docs.databricks.com/aws/en/admin/governed-tags/automate-tag-assignment#:~:text=then%20assigns%20or%20removes%20governed%20tags%20on%20the%20matching%20assets
+fact:
+  - note: You can write the rule by describing it to Genie in natural language, which makes this one of the few governance features you can argue your way into configuring.
+    link: https://docs.databricks.com/aws/en/release-notes/product/2026/august#:~:text=by%20describing%20your%20rule%20to%20Genie%20in%20natural%20language
+  - note: 'Saving one does not run it: the first thing it does is a dry run that records everything it would have tagged, so you get to see the blast radius before it happens.'
+    link: https://docs.databricks.com/aws/en/admin/governed-tags/automate-tag-assignment#:~:text=starts%20a%20dry%20run
+  - note: Among its intended uses is deprecating stale data, so Databricks now ships automation for marking things obsolete - a feature this site takes personally.
+    link: https://docs.databricks.com/aws/en/release-notes/product/2026/august#:~:text=deprecate%20stale%20data
+status:
+  value: active
+  link: https://docs.databricks.com/aws/en/release-notes/product/2026/august#:~:text=Tag%20automations%20are%20now%20in
+  date: '2026-08-12'
+releases:
+  - type: beta
+    date: 2026-08
+    link: https://docs.databricks.com/aws/en/release-notes/product/2026/august#:~:text=Tag%20automations%20are%20now%20in
+introducedAt:
+  date: 2026-08
+  link: https://docs.databricks.com/aws/en/release-notes/product/2026/august#:~:text=Tag%20automations%20are%20now%20in
+limitations:
+  note: One automation targets tables or volumes but not both, is scoped to a single catalog, matches at most 500 assets per run and can assign or remove at most 5 governed tags; recurring results usually land within 24 hours, and an automation's scope and action cannot be changed after it is created.
+  link: https://docs.databricks.com/aws/en/admin/governed-tags/automate-tag-assignment#:~:text=500
+  date: '2026-08-12'
+prediction:
+  - Governed tag automations
+  - Tag agents
+  - Genie tagging
+source: https://docs.databricks.com/aws/en/admin/governed-tags/automate-tag-assignment
+verified: '2026-08-12'

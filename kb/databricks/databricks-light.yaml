@@ -1,0 +1,32 @@
+id: databricks-light
+name: Databricks Light
+aliases:
+  - Data Engineering Light
+  - Light 2.4
+category: Compute / BI
+what:
+  note: Databricks' packaging of the plain open source Apache Spark runtime, offered as a cheaper runtime option for jobs that did not need Databricks Runtime's performance, reliability or autoscaling.
+  link: https://docs.databricks.com/aws/en/release-notes/product/2019/march#:~:text=the%20Databricks%20packaging%20of%20the%20open%20source%20Apache%20Spark%20runtime
+fact:
+  - note: It went by two names at once from the day it launched, being introduced as Databricks Light and also known as Data Engineering Light.
+    link: https://docs.databricks.com/aws/en/release-notes/product/2019/march#:~:text=also%20known%20as%20Data%20Engineering%20Light
+  - note: You could not use it interactively - it was selectable only when creating a cluster for a JAR, Python or spark-submit job, never for notebook work.
+    link: https://docs.databricks.com/aws/en/release-notes/product/2019/march#:~:text=you%20cannot%20select%20this%20runtime%20for%20clusters
+  - note: Its final chapter was an Extended Support edition whose entire reason for existing was swapping a deprecated Ubuntu 16.04 for 18.04, and that ran out in July 2022.
+    link: https://docs.databricks.com/aws/en/release-notes/product/2021/july#:~:text=uses%20Ubuntu%2018.04.5%20LTS%20instead%20of%20the%20deprecated%20Ubuntu%2016.04.6%20LTS
+status:
+  value: retired
+  link: https://docs.databricks.com/aws/en/archive/runtime/light#:~:text=no%20longer%20supported
+  date: '2026-08-12'
+deprecatedAt:
+  date: 2021-07
+  link: https://docs.databricks.com/aws/en/release-notes/product/2021/july#:~:text=Support%20for%20the%20original%20Databricks%20Light%202.4%20ends
+removedAt:
+  date: 2022-07
+  link: https://docs.databricks.com/aws/en/release-notes/product/2021/july#:~:text=will%20be%20supported%20through%20July%2027%2C%202022
+links:
+  - url: https://docs.databricks.com/aws/en/release-notes/product/2019/march
+    kind: official
+    label: 'Databricks release notes: Databricks Light generally available (March 2019)'
+source: https://docs.databricks.com/aws/en/archive/runtime/light
+verified: '2026-08-12'

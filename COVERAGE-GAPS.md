@@ -12,6 +12,17 @@
 
 ## Update log
 
+- **2026-08-12** - Nineteen items promoted from this gap list into the project. Four of them turned out to be
+  **rename chains**, not standalone features: **Serverless pools** (§1) -> **High Concurrency clusters** (§1) ->
+  the already-covered access modes; **Delta cache** -> **Disk cache** (§4, "Disk cache (formerly Delta cache)" -
+  DBIO cache is an alias, since the docs name it but never date it); and **Tag policies** -> **Governed tags**
+  (§6). Deprecations added: **Credential passthrough** (§16) and **Hive metastore table access control** (§16,
+  "Table Access Control"), both deprecated May 2024 with Unity Catalog as successor, and **Databricks Light**
+  (§18, retired). Marquee features added: **Photon** (§7), **Auto Loader** (§2), **System tables** (§18),
+  **Foundation Model APIs** (§13), **AutoML** (§11). Newer names added: **Omnigent** (§13), **Model services**
+  (§6), **Tag automations**, **Spaces**, **Databricks Online Feature Stores** (§12). Two were investigated and
+  **not** added for lack of a live source: the **Databricks Online Tables** (§6) retirement date and a
+  **Mosaic AI Agent Framework** (§13) rename.
 - **2026-07-24** — Three items promoted from this gap list into the project (rows below marked **✓ now covered**):
   **Databricks Marketplace** (§15), **Lakeflow Connect** (§2), and **AI Gateway** (§13) — the last added as a rename chain
   `Mosaic AI Gateway`/`AI Gateway` → **Unity AI Gateway** (rebranded at Data + AI Summit 2026). Their AI-Gateway sub-features

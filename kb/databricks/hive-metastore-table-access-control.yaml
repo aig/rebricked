@@ -1,0 +1,32 @@
+id: hive-metastore-table-access-control
+name: Hive metastore table access control
+aliases:
+  - Table ACLs
+  - Table access control
+  - table ACL
+category: Data governance
+what:
+  note: The pre-Unity-Catalog governance model, where privileges on Hive metastore tables were defined and enforced per workspace by the cluster running the query rather than centrally.
+  link: https://docs.databricks.com/aws/en/data-governance/unity-catalog/access-control/table-acls/table-acl#:~:text=legacy%20data%20governance%20model
+fact:
+  - note: It arrived in July 2018 as a single checkbox, and only High Concurrency clusters were allowed to show it.
+    link: https://docs.databricks.com/aws/en/release-notes/product/2018/july#:~:text=checkbox%20is%20available%20only%20for%20High%20Concurrency%20clusters
+  - note: Databricks' own docs open by calling it a legacy data governance model, then recommend Unity Catalog in the next breath.
+    link: https://docs.databricks.com/aws/en/data-governance/unity-catalog/access-control/table-acls/table-acl#:~:text=legacy%20data%20governance%20model
+  - note: It is still switched on by default for Standard access mode compute, quietly outliving its own deprecation notice.
+    link: https://docs.databricks.com/aws/en/data-governance/unity-catalog/access-control/table-acls/table-acl#:~:text=enabled%20by%20default%20in%20clusters%20with%20Standard%20access%20mode
+status:
+  value: deprecated
+  link: https://docs.databricks.com/aws/en/release-notes/product/2024/may#:~:text=are%20deprecated%20on%20Databricks%20Runtime%2015.0
+  date: '2026-08-12'
+deprecatedAt:
+  date: 2024-05
+  link: https://docs.databricks.com/aws/en/release-notes/product/2024/may#:~:text=are%20deprecated%20on%20Databricks%20Runtime%2015.0
+successorId: unity-catalog
+replacement: Unity Catalog
+limitations:
+  note: Privileges are workspace-local rather than account-wide, and a cluster configured for table ACLs only cannot reach Unity Catalog data at all.
+  link: https://learn.microsoft.com/en-us/azure/databricks/archive/compute/configure#:~:text=but%20cannot%20access%20Unity%20Catalog%20data
+  date: '2026-08-12'
+source: https://docs.databricks.com/aws/en/data-governance/unity-catalog/access-control/table-acls/table-acl
+verified: '2026-08-12'

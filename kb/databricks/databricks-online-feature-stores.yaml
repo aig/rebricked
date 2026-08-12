@@ -1,0 +1,41 @@
+id: databricks-online-feature-stores
+name: Databricks Online Feature Stores
+aliases:
+  - Online Feature Store
+  - online store
+category: AI / ML
+what:
+  note: Low-latency serving of feature data to online applications and real-time models, powered by Lakebase and kept consistent with the offline feature tables it publishes from.
+  link: https://docs.databricks.com/aws/en/machine-learning/feature-store/online-feature-store#:~:text=a%20high%2Dperformance%2C%20scalable%20solution%20for%20serving%20feature%20data
+fact:
+  - note: 'The feature store is a Postgres database wearing a machine-learning hat: it is powered by Databricks Lakebase, and every online store you create provisions a Lakebase project behind the scenes.'
+    link: https://docs.databricks.com/aws/en/machine-learning/feature-store/online-feature-store#:~:text=Powered%20by%20Databricks%20Lakebase
+  - note: New ones quietly changed shape in 2026 - they are now created as Lakebase Autoscaling projects rather than the provisioned instances the original stores used.
+    link: https://docs.databricks.com/aws/en/machine-learning/feature-store/online-feature-store#:~:text=are%20now%20created%20as%20Lakebase%20Autoscaling%20projects
+  - note: Publish the same feature table twice and endpoints will not let you choose between the copies - they always resolve to the oldest online table by creation timestamp.
+    link: https://docs.databricks.com/aws/en/machine-learning/feature-store/online-feature-store#:~:text=always%20resolve%20to%20the%20oldest%20online%20table
+status:
+  value: active
+  link: https://docs.databricks.com/aws/en/machine-learning/feature-store/online-feature-store#:~:text=a%20high%2Dperformance%2C%20scalable%20solution%20for%20serving%20feature%20data
+  date: '2026-08-12'
+releases:
+  - type: public-preview
+    date: 2025-09
+    link: https://docs.databricks.com/aws/en/release-notes/product/2025/september#:~:text=Databricks%20Online%20Feature%20Stores%2C%20powered%20by%20Lakebase
+introducedAt:
+  date: 2025-09
+  link: https://docs.databricks.com/aws/en/release-notes/product/2025/september#:~:text=Databricks%20Online%20Feature%20Stores%2C%20powered%20by%20Lakebase
+limitations:
+  note: Requires Databricks Runtime 16.4 LTS ML or above (or serverless) and only Unity Catalog feature tables; you cannot target a specific online table, a store supports at most 3 read replicas, Lakebase scale-to-zero is unsupported, and Autoscaling instances created through the projects API or UI cannot be updated.
+  link: https://docs.databricks.com/aws/en/machine-learning/feature-store/online-feature-store#:~:text=Only%20feature%20tables%20in%20Unity%20Catalog%20are%20supported
+  date: '2026-08-12'
+links:
+  - url: https://docs.databricks.com/aws/en/machine-learning/feature-store/online-tables
+    kind: official
+    label: 'Databricks docs: the online tables URL, which now serves this page'
+prediction:
+  - Lakebase Feature Store
+  - Genie Feature Store
+  - Online Features
+source: https://docs.databricks.com/aws/en/machine-learning/feature-store/online-feature-store
+verified: '2026-08-12'

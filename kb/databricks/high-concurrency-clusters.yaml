@@ -1,0 +1,36 @@
+id: high-concurrency-clusters
+name: High Concurrency clusters
+aliases:
+  - High Concurrency cluster mode
+  - HC clusters
+  - High Concurrency with Table ACLs
+category: Compute / BI
+what:
+  note: The legacy cluster mode tuned for many concurrent users, running each user's code in separate processes for fine-grained sharing, and the only mode that supported Hive metastore table access control.
+  link: https://learn.microsoft.com/en-us/azure/databricks/archive/compute/configure#:~:text=provide%20fine%2Dgrained%20sharing%20for%20maximum%20resource%20utilization
+fact:
+  - note: It was the only cluster mode that supported table access control, which is how a security feature ended up bundled with a performance setting.
+    link: https://learn.microsoft.com/en-us/azure/databricks/archive/compute/configure#:~:text=only%20High%20Concurrency%20clusters%20support
+  - note: Alone among cluster modes, it did not terminate automatically by default - Standard and Single Node shut off after 120 minutes, High Concurrency just kept running.
+    link: https://learn.microsoft.com/en-us/azure/databricks/archive/compute/configure#:~:text=terminate%20automatically%20by%20default
+  - note: Without table ACLs it was indistinguishable from a Standard cluster, and Databricks eventually said so out loud, folding both into the No isolation shared access mode.
+    link: https://learn.microsoft.com/en-us/azure/databricks/archive/compute/cluster-ui-preview#:~:text=no%20longer%20differentiates%20High%20Concurrency%20clusters%20without
+status:
+  value: legacy
+  link: https://learn.microsoft.com/en-us/azure/databricks/archive/compute/configure#:~:text=included%20only%20for%20historical%20accuracy
+  date: '2026-08-12'
+deprecatedAt:
+  date: 2022-08
+  link: https://docs.databricks.com/aws/en/release-notes/product/2022/august#:~:text=Cluster%20UI%20preview%20and%20access%20mode%20replaces%20security%20mode
+successorId: shared-single-user-access-modes
+replacement: Shared access mode
+limitations:
+  note: Not available at all in workspaces assigned to a Unity Catalog metastore, and limited to SQL, Python and R - Scala is unsupported because user code runs in separate processes.
+  link: https://learn.microsoft.com/en-us/azure/databricks/archive/compute/configure#:~:text=High%20Concurrency%20clusters%20are%20not%20available
+  date: '2026-08-12'
+links:
+  - url: https://learn.microsoft.com/en-us/azure/databricks/archive/compute/cluster-ui-preview
+    kind: official
+    label: 'MS Learn (archived): Clusters UI changes and cluster access modes'
+source: https://learn.microsoft.com/en-us/azure/databricks/archive/compute/configure
+verified: '2026-08-12'
