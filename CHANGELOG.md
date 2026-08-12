@@ -96,6 +96,29 @@ recorded, and a made-up reason is worse than none.
   `status.date`, `limitations.date`, and `verified` to today, and added the August release notes to
   `links`. `check_anchors.py` confirms all 11 URLs and quotes resolve.
 
+### Fixed
+- **The `spaces` card told the collision joke using a name that had been dead for a month: it
+  said Databricks "now has Genie Spaces", which the July rename to Genie Agents made false.**
+
+  **Why:** the card was written the day Spaces shipped, and its third fact leaned on the funniest
+  thing about it - that Databricks freed up the word Space and reused it for something unrelated.
+  But the fact was phrased in the present tense about Genie Spaces, a name that stopped being
+  current in July 2026. So the one card whose entire point is name collisions was itself using a
+  retired name, on a site whose only rule is never being confidently wrong. Worse, it was the kind
+  of staleness nothing catches: the schema gate has no opinion on tense, and `check_anchors.py`
+  passed because the quote it cited was still on the page. Only a human rereading the sentence
+  finds it.
+
+  **What:** rewrote the third fact on `spaces` around what the live doc actually says. The Spaces
+  page still carries the line "Spaces in the editor are a different concept from Genie spaces", so
+  the card now points at that: Databricks is disambiguating against a name it had already retired
+  the month before. The fact is stronger than the one it replaces, because the evidence is the
+  vendor's own page rather than our observation, and the link is now a text fragment on that exact
+  sentence instead of a generic release-note anchor. Considered adding a `limitations` block for
+  "Spaces are private to each user account" and did not: the page states it as behaviour, not as a
+  documented limit, and fact one already cites it. `verified` and `status.date` were already today.
+  `check_anchors.py` confirms all 6 URLs and quotes on the card resolve.
+
 ## 2026-08-11
 
 ### Added
