@@ -9,6 +9,32 @@ shows the what. Plain, simple English: short sentences, common words, no jargon 
 and product names themselves. Some older entries have no `Why:` line - the reason was never
 recorded, and a made-up reason is worse than none.
 
+## 2026-08-12
+
+### Changed
+- **Refreshed the release-notes mirror and caught the one card the news had made stale:
+  `secrets-in-unity-catalog` still said Public Preview a week after it went GA.**
+
+  **Why:** the reference mirror was last fetched on August 5, so everything Databricks shipped
+  between August 5 and August 11 was invisible to the repo. Refetching it surfaced eleven new
+  release-note items, and a sweep of every non-GA card against them found exactly one real
+  staleness: Secrets in Unity Catalog was declared generally available on August 3, 2026, but its
+  card still ended at `public-preview` July 2026, so the site showed a preview pill for a GA
+  feature. That is the failure mode rebricked is meant to prevent, and it is the kind that only
+  a maturity change causes - the name did not move, so nothing else looked wrong. The rest of
+  August's news (Unity AI Gateway GA, the managed MCP connectors moving under it, full-page Genie
+  Code GA) was already recorded on its cards.
+
+  **What:** refetched all 209 mirrored release-note pages with `fetch_reference.py`. Added a `ga`
+  August 2026 stage to `secrets-in-unity-catalog`, so the card's current maturity is GA, plus a
+  third fact on how short the preview was (Public Preview July 10, GA August 3). Corrected the
+  `limitations` note on two points the live doc now states differently: retrieval needs Databricks
+  Runtime 17.3 LTS or above on Unity Catalog-enabled compute or serverless (not just "a
+  Runtime-backed notebook"), and the 100-per-schema / 1,000-per-metastore quotas are marked `Fixed:
+  No` in the resource-limits reference, so they are raisable defaults rather than hard caps. Bumped
+  `status.date`, `limitations.date`, and `verified` to today, and added the August release notes to
+  `links`. `check_anchors.py` confirms all 11 URLs and quotes resolve.
+
 ## 2026-08-11
 
 ### Added
