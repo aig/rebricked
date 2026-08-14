@@ -9,6 +9,80 @@ shows the what. Plain, simple English: short sentences, common words, no jargon 
 and product names themselves. Some older entries have no `Why:` line - the reason was never
 recorded, and a made-up reason is worse than none.
 
+## 2026-08-14
+
+### Added
+- **A card for Pages, the human-written half of the Genie Ontology, two days after it shipped.**
+
+  **Why:** the mirrored release notes gained ten new items since the last refresh, and only one of
+  them was a name: Pages, announced August 12 as part of Unity Catalog semantics. It matters more
+  than its size suggests, because the dataset already carries Genie Ontology and describes it as a
+  context layer that mixes governed semantics with context Genie infers. Pages is the governed half
+  of that sentence, and until now the site had no card for it. The rest of the new items were
+  Lakeflow Connect connectors (SendGrid, Gmail, Notion, Google Drive Audit Logs, Google Search
+  Console), two more hosted models, and features inside products that already have cards - none of
+  them a new or changed name, so none of them belongs here.
+
+  **What:** `pages` - `active`, `beta` since August 2026, category Data governance, verified against
+  both the Databricks and Microsoft Learn pages today, and wired into the Discover rail section next
+  to `discover`, since Pages is built into the Discover page. Its limitations are the interesting
+  part and are all sourced: Page data has no customer-managed key encryption and sits in plain text
+  that may be replicated globally, so the official home for a company's business definitions is
+  explicitly not for PII; every Page hangs off a domain, so a domain must exist first; and accepting
+  one batch of suggested edits wipes every other pending batch, including other people's, with no
+  undo.
+
+- **The AI/BI and Genie One release notes are now a mirrored source, because the Genie half of the
+  dataset was being sourced from pages nobody was watching.**
+
+  **Why:** the Genie Ontology card claimed that joining its preview meant contacting your account
+  team. That stopped being true on August 13, when Databricks opened ontology snippets to every
+  customer - and the sweep of the platform release notes never saw it, because AI/BI and Genie One
+  publish their own release notes on a different page. That page is where "Genie renamed to Genie
+  One" and "Genie Spaces renamed to Genie Agents" were announced too. Nine cards cite it. Missing it
+  is not a small gap: it is the single most rename-dense source the project uses, and it was the one
+  source not mirrored, so its changes could only be caught by chance.
+
+  **What:** a `databricks-ai-bi-release-notes` source in `scripts/sources.json` covering the 2024,
+  2025, and 2026 archive pages (explicit urls, since the notes are archived one page per year). No
+  code change was needed, which is the point of that file. `refresh-the-reference-mirror.md` gained
+  the row plus a note on why the AI/BI notes are tracked separately, so the next person sweeping for
+  news knows there are two places to look.
+
+### Changed
+- **The Genie Ontology card described a preview gate that was lifted the day before.**
+
+  **Why:** its limitations line said joining the preview required contacting your Databricks account
+  team. The August 13 AI/BI note says the opposite in as many words - "Customers no longer need to
+  request access" - and the sentence the card's text fragment quoted has been deleted from the Genie
+  One chat page. A stale limitation is worse than a missing one: it tells a reader they cannot have
+  something they already have, and it does it from behind a citation.
+
+  **What:** the limitations line now says what is true - still Public Preview, but on by default and
+  with no access request - and keeps the half that is still accurate, that snippets are gated by
+  Unity Catalog permissions so Genie One answers only from sources the asking user may see. Its link
+  moved to that gating sentence, which is still on the page. The August fun fact now covers both
+  moves in one line: switched on by default, then ungated a week later, all while still officially a
+  Public Preview. `status.date`, `limitations.date`, and `verified` moved to today, and
+  `check_anchors.py` was run across all nine cards citing the AI/BI notes - 81 URLs, every quote
+  still matching.
+
+- **SecureConnect is generally available, and its card said Public Preview.**
+
+  **Why:** the August 13 release note declared OpenSharing SecureConnect generally available, and
+  the provider doc has dropped its preview notice. A maturity pill that still reads Public Preview
+  two months after GA is the kind of small wrongness that makes a reader distrust the dated ones
+  too.
+
+  **What:** a `ga` stage dated August 2026 appended to `secureconnect`'s `releases` timeline, so the
+  card now shows the full Public Preview -> GA path rather than stopping at June. `status.date`,
+  `limitations.date`, and `verified` all moved to today. The limitations line gained the detail that
+  keeps the GA claim honest: provider support on GCP is still Private Preview, which is also the
+  card's new third fact - the same feature is GA or pre-preview depending on which cloud you share
+  from. `status.link` was repointed at the provider page's current opening sentence, since the
+  sentence the old text fragment quoted was rewritten in the same edit. `check_anchors.py` confirms
+  all 22 URLs across both cards resolve and every quote still matches.
+
 ## 2026-08-12
 
 ### Added

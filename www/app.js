@@ -87,7 +87,7 @@
       { label: "Catalog", icon: "catalog", ids: ["catalog-explorer", "data-explorer", "unity-catalog", "unity-catalog-volumes", "secrets-in-unity-catalog", "dbfs-mounts", "lakehouse-federation", "opensharing", "delta-sharing", "secureconnect", "delta-lake", "databricks-delta", "transactions", "variant", "liquid-clustering", "hive-metastore", "attribute-based-access-control", "role-based-access-control", "governance-hub", "data-profiling", "lakehouse-monitoring", "anomaly-detection", "unity-catalog-managed-iceberg-tables", "managed-iceberg-materialized-views", "databricks-clean-rooms", "governed-tags", "tag-policies", "tag-automations", "system-tables", "credential-passthrough", "hive-metastore-table-access-control"] },
       { label: "Jobs & Pipelines", icon: "jobs", ids: ["lakeflow-declarative-pipelines", "delta-live-tables", "lakeflow-jobs", "workflows", "lakeflow-connect", "declarative-automation-bundles", "databricks-asset-bundles", "dbx", "lakeflow-pipelines-editor", "multi-file-editor", "standalone-pipelines"] },
       { label: "Compute", icon: "compute", ids: ["lakebase", "lake-transactional-analytical-processing", "ai-runtime", "lakehouse-replay", "standard-and-dedicated-access-modes", "shared-single-user-access-modes", "no-isolation-shared-access-mode", "high-concurrency-clusters", "serverless-pools", "init-scripts-on-dbfs", "photon", "disk-cache", "delta-cache", "databricks-light"] },
-      { label: "Discover", icon: "discover", ids: ["discover", "databricks-marketplace"] },
+      { label: "Discover", icon: "discover", ids: ["discover", "pages", "databricks-marketplace"] },
       { label: "Marketplace", icon: "marketplace" },
       { label: "Apps", icon: "apps", ids: ["databricks-apps"] },
     ]},

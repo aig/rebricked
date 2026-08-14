@@ -9,6 +9,16 @@
       "exclude": []
     },
     {
+      "id": "databricks-ai-bi-release-notes",
+      "name": "Databricks AI/BI and Genie One Release Notes (AWS)",
+      "note": "The AI/BI and Genie One product lines keep their own release notes, outside the platform notes that databricks-release-notes mirrors. Genie naming and preview-gate changes land here first and often never appear in the platform notes at all, so a sweep of the platform notes alone silently misses them. Archived one page per year, so the URLs are listed explicitly.",
+      "urls": [
+        "https://docs.databricks.com/aws/en/ai-bi/release-notes/2024",
+        "https://docs.databricks.com/aws/en/ai-bi/release-notes/2025",
+        "https://docs.databricks.com/aws/en/ai-bi/release-notes/2026"
+      ]
+    },
+    {
       "id": "databricks-resource-limits",
       "name": "Databricks Resource Limits (AWS)",
       "urls": ["https://docs.databricks.com/aws/en/resources/limits"]

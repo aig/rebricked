@@ -54,8 +54,16 @@ Current source ids:
 | id | What it mirrors |
 |---|---|
 | `databricks-release-notes` | Databricks product release notes |
+| `databricks-ai-bi-release-notes` | AI/BI and Genie One release notes, one page per year |
 | `databricks-resource-limits` | The Databricks resource limits page |
 | `azure-databricks-release-notes` | Azure Databricks release notes on Microsoft Learn |
+
+**The AI/BI notes are separate for a reason.** The AI/BI and Genie One product lines publish their
+own release notes, and Genie naming and preview-gate changes land there *first* - sometimes only
+there. "Genie renamed to Genie One" and "Genie Spaces renamed to Genie Agents" were both announced
+in that archive, not in the platform notes. A sweep of `databricks-release-notes` alone therefore
+misses the Genie half of the dataset silently, which is exactly how a card ends up citing a preview
+gate that was lifted a week earlier.
 
 Add an entry to `sources.json`, run `--list` to confirm it is picked up, then fetch it by id.
 
