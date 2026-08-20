@@ -1,0 +1,45 @@
+id: lakebase-autoscaling
+name: Lakebase Autoscaling
+aliases:
+  - Lakebase (Autoscaling Beta)
+  - Lakebase projects
+  - postgres_projects
+category: Data engineering
+what:
+  note: The latest version of Lakebase, organising Postgres into projects and branches on elastic compute with autoscaling, scale-to-zero, branching, and instant restore.
+  link: https://docs.databricks.com/aws/en/release-notes/product/2026/march#:~:text=Lakebase%20Autoscaling%20is%20the%20latest%20version%20of%20Lakebase%2C%20with%20autoscaling%20compute%2C%20scale-to-zero%2C%20branching%2C%20and%20instant%20restore
+fact:
+  - note: 'Compute comes in CUs of 2 GB each, and the spread itself is capped: the maximum minus the minimum cannot exceed 16 CU, so you can autoscale wide but not infinitely wide.'
+    link: https://docs.databricks.com/aws/en/oltp/projects/autoscaling#:~:text=The%20difference%20between%20your%20maximum%20and%20minimum%20cannot%20exceed%2016%20CU
+  - note: Scaling decisions rest on three signals, one of which is openly an estimate - CPU load, memory usage, and a guess at how much of your data you actually keep touching.
+    link: https://docs.databricks.com/aws/en/oltp/projects/autoscaling#:~:text=Working%20set%20size%3A%20Estimates%20your%20frequently%20accessed%20data
+  - note: New projects arrive with native Postgres password authentication switched off, so the classic password-in-the-connection-string has to be deliberately opted back into.
+    link: https://docs.databricks.com/aws/en/release-notes/product/2026/may#:~:text=New%20Lakebase%20Autoscaling%20projects%20now%20have%20native%20Postgres%20password%20authentication%20disabled%20by%20default
+status:
+  value: active
+  link: https://docs.databricks.com/aws/en/release-notes/product/2026/march#:~:text=Lakebase%20Autoscaling%20is%20the%20latest%20version%20of%20Lakebase
+  date: '2026-08-20'
+releases:
+  - type: beta
+    date: 2025-10
+    link: https://docs.databricks.com/aws/en/release-notes/product/2025/october#:~:text=Lakebase%20%28Autoscaling%20Beta%29%20is%20now%20available%20on%20AWS%20as%20a%20new%20app%20in%20the%20app%20switcher
+  - type: ga
+    date: 2026-01
+    link: https://docs.databricks.com/aws/en/release-notes/product/2026/january#:~:text=GA%20includes%20autoscaling%2C%20scale-to-zero%2C%20instant%20branching%2C%20automated%20backups%2C%20point-in-time%20recovery
+introducedAt:
+  date: 2025-10
+  link: https://docs.databricks.com/aws/en/release-notes/product/2025/october#:~:text=This%20new%20version%20introduces%20autoscaling%2C%20scale-to-zero%2C%20database%20branching%2C%20instant%20restore%2C%20and%20project-based%20organization%20with%20a%20redesigned%20UI
+limitations:
+  note: 'Autoscaling compute has bounds: computes autoscale only up to 64 CU (128 GB), the gap between the configured minimum and maximum cannot exceed 16 CU, and changing that minimum or maximum can briefly interrupt active connections.'
+  link: https://docs.databricks.com/aws/en/oltp/projects/autoscaling#:~:text=Autoscaling%20is%20available%20for%20computes%20up%20to%2064%20CU%20%28128%20GB%29
+  date: '2026-08-20'
+links:
+  - url: https://docs.databricks.com/aws/en/oltp/projects/autoscaling
+    kind: official
+    label: 'Databricks docs: Autoscaling'
+prediction:
+  - Lakebase Elastic
+  - Lakebase Serverless Postgres
+  - Lakebase Flow
+source: https://docs.databricks.com/aws/en/oltp/projects/
+verified: '2026-08-20'

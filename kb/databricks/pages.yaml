@@ -14,7 +14,7 @@ fact:
 status:
   value: active
   link: https://docs.databricks.com/aws/en/uc-semantics/pages#:~:text=A%20Page%20is%20a%20governed%2C%20authoritative%20definition
-  date: '2026-08-14'
+  date: '2026-08-20'
 releases:
   - type: beta
     date: 2026-08
@@ -25,7 +25,7 @@ introducedAt:
 limitations:
   note: Beta, gated on the account console Previews page. Page data has no customer-managed key encryption and is stored in plain text that may be replicated globally, so PII and regulated data must stay out of it. Every Page hangs off a domain, so at least one domain must exist first, and permissions are inherited from that domain rather than granted per Page.
   link: https://docs.databricks.com/aws/en/uc-semantics/pages#:~:text=does%20not%20support%20customer%2Dmanaged%20key%20%28CMK%29%20encryption
-  date: '2026-08-14'
+  date: '2026-08-20'
 links:
   - url: https://learn.microsoft.com/en-us/azure/databricks/uc-semantics/pages
     kind: official
@@ -41,4 +41,4 @@ prediction:
   - Genie Pages
   - Semantic Pages
 source: https://docs.databricks.com/aws/en/uc-semantics/pages
-verified: '2026-08-14'
+verified: '2026-08-20'

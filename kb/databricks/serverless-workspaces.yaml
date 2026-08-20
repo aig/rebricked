@@ -14,7 +14,7 @@ fact:
 status:
   value: active
   link: https://docs.databricks.com/aws/en/admin/workspace/serverless-workspaces#:~:text=comes%20preconfigured%20with%20serverless%20compute%20and%20default%20storage
-  date: '2026-07-18'
+  date: '2026-08-20'
 releases:
   - type: public-preview
     date: 2025-08
@@ -23,8 +23,8 @@ releases:
     date: 2026-01
     link: https://docs.databricks.com/aws/en/release-notes/product/2026/january#:~:text=Serverless%20workspaces%20are%20now%20generally%20available
 introducedAt:
-  date: 2026-01
-  link: https://docs.databricks.com/aws/en/release-notes/product/2026/january#:~:text=Serverless%20workspaces%20are%20now%20generally%20available
+  date: 2025-08
+  link: https://docs.databricks.com/aws/en/release-notes/product/2025/august#:~:text=Serverless%20workspaces%20are%20now%20Public%20Preview
 occasion:
   date: 2026-01
   link: https://docs.databricks.com/aws/en/release-notes/product/2026/january#:~:text=Serverless%20workspaces%20are%20now%20generally%20available
@@ -32,7 +32,7 @@ occasion:
 limitations:
   note: A serverless workspace must be in a region that supports serverless compute, and because serverless compute and default storage aren't deployed in your own cloud account, cloud-provider credits or discounts don't apply to that usage.
   link: https://docs.databricks.com/aws/en/admin/workspace/serverless-workspaces#:~:text=deployed%20in%20a%20region%20that%20supports%20serverless%20compute
-  date: '2026-07-23'
+  date: '2026-08-20'
 links:
   - url: https://www.databricks.com/blog/workspaces-seconds-introducing-serverless-workspaces
     kind: community
@@ -42,4 +42,4 @@ prediction:
   - Agentic workspaces
   - Serverless workspaces One
 source: https://docs.databricks.com/aws/en/admin/workspace/serverless-workspaces
-verified: '2026-07-18'
+verified: '2026-08-20'

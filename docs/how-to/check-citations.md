@@ -36,6 +36,10 @@ Two kinds of URL are judged differently. A URL with `#:~:text=` claims a specifi
 so the quote must actually be on the page. A plain URL only claims the page exists, so only
 liveness is checked.
 
+Every URL in an entry is swept: values under `link`, `url`, **and `source`**, at any depth. If you
+are reading an older run and wondering why the canonical `source` never appeared, that is why - it
+was added to the collected keys in August 2026.
+
 ## Fixing DEAD
 
 A dead quote has three possible causes, in increasing order of importance:
@@ -52,19 +56,31 @@ unchecked one.
 
 ## Fixing BLOCKED
 
-`BLOCKED` says **nothing** about the link. These hosts turn away real headless Chrome too, yet
-serve the same page fine to a person. It never fails the run unless you pass `--fail-on-blocked`.
+`BLOCKED` says **nothing** about the link. The host refused a scripted request (403/429) or served
+no readable text. It never fails the run unless you pass `--fail-on-blocked`.
 
-There are usually only one or two, and no `#:~:text=` quote in the dataset depends on a blocked
-host. The procedure is to finish them off with a different fetch path:
+Finish the job with a real browser, which these hosts serve normally:
+
+```bash
+python scripts/check_anchors.py --chrome            # retry every blocked page
+python scripts/check_anchors.py --chrome <ids>      # or just the ones you touched
+```
+
+`--chrome` drives headless Edge or Chrome (whichever is installed) against only the pages already
+judged `BLOCKED`, then re-checks their quotes exactly as it would for any other page - so a
+recovered page becomes a normal `OK` or a normal `DEAD`, not a shrug. It is serial and slow, which
+is why it is opt-in rather than the default.
+
+If no browser is installed it says so and leaves the pages blocked. In that case list them and read
+each one with your agent's own web-fetch tool instead:
 
 ```bash
 python scripts/check_anchors.py --list-blocked
 ```
 
-Then fetch each URL with your agent's standard web-fetch tool (Claude Code's `WebFetch` or
-equivalent), which reads these pages normally. Confirm the page is real and still says what the
-card cites it for.
+Historical note: this page used to claim these hosts turn away headless Chrome as well. They do
+not - Medium's bot wall in particular yields immediately to `--headless=new --dump-dom`, which is
+what prompted the flag.
 
 ## When to run it
 

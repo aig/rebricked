@@ -17,7 +17,7 @@ fact:
 status:
   value: active
   link: https://docs.databricks.com/aws/en/opensharing/#:~:text=an%20open%20protocol%20developed%20by%20Databricks%20for%20secure%20data%20sharing
-  date: '2026-07-18'
+  date: '2026-08-20'
 releases:
   - type: ga
     date: 2026-06
@@ -30,9 +30,9 @@ occasion:
   link: https://www.databricks.com/blog/introducing-opensharing-next-evolution-delta-sharing-agentic-era#:~:text=now%20hosted%20by%20the%20Linux%20Foundation
   note: Open-sourcing of OpenSharing, June 2026
 limitations:
-  note: Shared tabular data must be Delta or managed Iceberg; providers can't share tables using liquid clustering with partition filtering, collations, row filters, column masks, or SHALLOW CLONE; notebooks, volumes, and AI models can only be shared Databricks-to-Databricks; and shareable views must be defined on Delta tables or other shareable views.
-  link: https://docs.databricks.com/aws/en/delta-sharing/#:~:text=must%20be%20in%20Delta%20or%20managed%20Iceberg%20table%20format
-  date: '2026-07-23'
+  note: Shared tabular data must be Delta or managed Iceberg; providers can't share tables using liquid clustering with partition filtering, collations, row filters, column masks, or SHALLOW CLONE, and foreign key constraints don't carry over; notebooks, volumes, and AI models can only be shared Databricks-to-Databricks; and shareable views must be defined on Delta tables or other shareable views.
+  link: https://docs.databricks.com/aws/en/opensharing/#:~:text=must%20be%20in%20Delta%20or%20managed%20Iceberg%20table%20format
+  date: '2026-08-20'
 links:
   - url: https://www.databricks.com/blog/introducing-opensharing-next-evolution-delta-sharing-agentic-era
     kind: community
@@ -45,4 +45,4 @@ prediction:
   - Unity Sharing
   - Delta OpenSharing
 source: https://docs.databricks.com/aws/en/opensharing/
-verified: '2026-08-03'
+verified: '2026-08-20'

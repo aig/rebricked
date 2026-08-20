@@ -11,19 +11,21 @@ what:
 fact:
   - note: Describe an entire project's Databricks resources - jobs, pipelines, dashboards, model serving endpoints - as YAML source files, then validate, deploy, and run the whole bundle from the Databricks CLI.
     link: https://docs.databricks.com/aws/en/dev-tools/bundles/#:~:text=Dashboards%2C%20Model%20Serving%20endpoints
-  - note: The 2026 rename kept the affectionate 'DABs' acronym, so the docs now read 'Declarative Automation Bundles (formerly Databricks Asset Bundles).'
+  - note: The 2026 rename kept the affectionate 'DABs' acronym, so the docs now read 'Declarative Automation Bundles (formerly known as Databricks Asset Bundles).'
     link: https://docs.databricks.com/aws/en/dev-tools/bundles/#:~:text=formerly%20known%20as%20Databricks%20Asset%20Bundles
+  - note: The rename was applied retroactively, so the September 2023 release note that first announced the Public Preview now reads as if it always said 'Declarative Automation Bundles'.
+    link: https://docs.databricks.com/aws/en/release-notes/product/2023/september#:~:text=Declarative%20Automation%20Bundles%20%28Public%20Preview%29
 status:
   value: active
   link: https://docs.databricks.com/aws/en/dev-tools/bundles/#:~:text=Declarative%20Automation%20Bundles%20%28formerly%20known%20as%20Databricks%20Asset%20Bundles%29
-  date: '2026-07-18'
+  date: '2026-08-20'
 releases:
   - type: public-preview
-    date: 2023-10
-    link: https://docs.databricks.com/aws/en/dev-tools/bundles/
+    date: 2023-09
+    link: https://docs.databricks.com/aws/en/release-notes/product/2023/september#:~:text=now%20in%20Public%20Preview%2C%20enable%20end%2Dto%2Dend%20data%2C%20analytics%2C%20and%20ML%20projects
   - type: ga
     date: 2024-04
-    link: https://www.databricks.com/blog/announcing-general-availability-databricks-asset-bundles#:~:text=General%20Availability%20%28GA%29%20of%20Databricks%20Asset%20Bundles
+    link: https://www.databricks.com/blog/announcing-general-availability-databricks-asset-bundles#:~:text=General%20Availability%20%28GA%29%20of%20Declarative%20Automation%20Bundles
 from:
   date: 2026-03
   link: https://docs.databricks.com/aws/en/release-notes/product/2026/march#:~:text=Databricks%20Asset%20Bundles%20has%20been%20renamed%20to%20Declarative%20Automation%20Bundles.
@@ -39,4 +41,4 @@ prediction:
   - Unity Bundles
   - Genie Bundles
 source: https://docs.databricks.com/aws/en/dev-tools/bundles/
-verified: '2026-07-23'
+verified: '2026-08-20'

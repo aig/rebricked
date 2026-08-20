@@ -17,11 +17,11 @@ fact:
 status:
   value: active
   link: https://docs.databricks.com/aws/en/genie-one/chat#:~:text=The%20Genie%20Ontology%20is%20the%20unified%20context%20layer
-  date: '2026-08-14'
+  date: '2026-08-20'
 releases:
   - type: public-preview
-    date: 2026-07
-    link: https://docs.databricks.com/aws/en/ai-bi/release-notes/2026#:~:text=Ontology%20snippets
+    date: 2026-06
+    link: https://docs.databricks.com/aws/en/ai-bi/release-notes/2026#:~:text=automatically%20builds%20and%20maintains%20a%20map%20of%20your%20business
 introducedAt:
   date: 2026-06
   link: https://www.databricks.com/blog/introducing-genie-one-genie-ontology-and-genie-agents#:~:text=powered%20by%20Genie%20Ontology
@@ -32,7 +32,7 @@ occasion:
 limitations:
   note: Still Public Preview, though it is now on by default and no longer needs an access request. Snippets are gated by Unity Catalog permissions, so Genie One answers using only the sources the asking user is permitted to see.
   link: https://docs.databricks.com/aws/en/genie-one/chat#:~:text=Snippets%20are%20also%20gated%20using%20Unity%20Catalog%20permissions
-  date: '2026-08-14'
+  date: '2026-08-20'
 links:
   - url: https://www.databricks.com/blog/introducing-genie-one-genie-ontology-and-genie-agents
     kind: community
@@ -45,4 +45,4 @@ prediction:
   - Unity Ontology
   - Genie Knowledge Graph
 source: https://docs.databricks.com/aws/en/genie-one/chat
-verified: '2026-08-14'
+verified: '2026-08-20'

@@ -17,7 +17,7 @@ fact:
 status:
   value: active
   link: https://learn.microsoft.com/en-us/azure/databricks/repos/what-happened-repos#:~:text=Databricks%20recommends%20creating%20new%20Git%20folders%20instead%20of%20Repos.
-  date: '2026-07-18'
+  date: '2026-08-20'
 releases:
   - type: ga
     date: 2024-05
@@ -26,9 +26,9 @@ from:
   date: 2024-03
   link: https://docs.databricks.com/aws/en/release-notes/product/2024/march#:~:text=former%20Databricks%20Repos%20feature%20is%20now%20called
 limitations:
-  note: Working branches are capped at 1 GB, files over 10 MB can't be viewed in the UI, each Git operation supports up to 2 GB memory and 4 GB disk, and Databricks recommends under 20000 files; GPG commit signing and SSH aren't supported, and Git operations that alter notebook source lose cell outputs and state.
+  note: Working branches are capped at 1 GB, files over 10 MB can't be viewed in the UI, each Git operation supports up to 2 GB memory and 4 GB disk, and Databricks recommends under 20000 files; GPG commit signing and SSH aren't supported, standard Git folders don't support Git submodules, and Git operations that alter notebook source lose cell outputs and state.
   link: https://docs.databricks.com/aws/en/repos/limits#:~:text=Working%20branches%20are%20limited%20to%201%20GB
-  date: '2026-07-23'
+  date: '2026-08-20'
 links:
   - url: https://www.flexera.com/blog/finops/how-to-set-up-databricks-git-folders-repos-from-scratch-2026/
     kind: community
@@ -41,4 +41,4 @@ prediction:
   - Lakeflow Git
   - Genie Repos
 source: https://learn.microsoft.com/en-us/azure/databricks/repos/what-happened-repos
-verified: '2026-07-23'
+verified: '2026-08-20'

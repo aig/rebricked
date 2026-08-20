@@ -13,16 +13,18 @@ fact:
     link: https://docs.databricks.com/aws/en/admin/account-settings/legacy-features#:~:text=won%27t%20have%20access%20to%20legacy%20features%20by%20default
   - note: Admins can flip an account setting that disables credential sharing on these clusters.
     link: https://docs.databricks.com/aws/en/admin/account-settings/no-isolation-shared#:~:text=prevents%20automatic%20generation%20of%20Databricks%20API%20internal%20credentials
+  - note: From September 30, 2026 every new workspace is provisioned without it, so the mode survives only in workspaces old enough to remember asking for it.
+    link: https://docs.databricks.com/aws/en/data-governance/unity-catalog/upgrade/uc-only-migration#:~:text=Starting%20on%20September%2030%2C%202026
 status:
-  value: deprecated
-  link: https://docs.databricks.com/aws/en/admin/account-settings/no-isolation-shared
-  date: '2026-07-18'
+  value: legacy
+  link: https://docs.databricks.com/aws/en/admin/account-settings/no-isolation-shared#:~:text=use%20the%20legacy%20access%20mode
+  date: '2026-08-20'
 from:
   date: '2022'
-  link: https://docs.databricks.com/aws/en/admin/account-settings/no-isolation-shared
+  link: https://docs.databricks.com/aws/en/release-notes/product/2022/august#:~:text=Cluster%20UI%20preview%20and%20access%20mode%20replaces%20security%20mode
 deprecatedAt:
-  date: '2025'
-  link: https://docs.databricks.com/aws/en/admin/account-settings/no-isolation-shared
+  date: 2025-12
+  link: https://docs.databricks.com/aws/en/admin/account-settings/legacy-features#:~:text=accounts%20created%20after%20December%2019%2C%202025
 successorId: shared-single-user-access-modes
 replacement: Shared or Single user access mode
 links:
@@ -33,4 +35,4 @@ links:
     kind: internet
     label: 'SEC Consult: cluster isolation advisory'
 source: https://docs.databricks.com/aws/en/admin/account-settings/no-isolation-shared
-verified: '2026-07-23'
+verified: '2026-08-20'

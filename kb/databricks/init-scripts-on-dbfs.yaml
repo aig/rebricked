@@ -16,16 +16,16 @@ fact:
 status:
   value: retired
   link: https://docs.databricks.com/aws/en/init-scripts/#:~:text=Init%20scripts%20on%20DBFS%20have%20reached%20end%2Dof%2Dlife%20and%20can%20no%20longer%20be%20used.
-  date: '2026-07-18'
+  date: '2026-08-20'
 from:
   date: '2018'
   link: https://docs.databricks.com/aws/en/init-scripts/
 deprecatedAt:
-  date: '2023'
-  link: https://docs.databricks.com/aws/en/init-scripts/#:~:text=might%20be%20present%20in%20workspaces%20created%20before%20February%2021%2C%202023
+  date: 2023-05
+  link: https://docs.databricks.com/aws/en/release-notes/product/2023/may#:~:text=Cluster%2Dscoped%20init%20scripts%20on%20DBFS%20are%20deprecated
 removedAt:
   date: 2023-12
-  link: https://docs.databricks.com/aws/en/init-scripts/
+  link: https://docs.databricks.com/aws/en/release-notes/product/2023/december#:~:text=Init%20scripts%20on%20DBFS%20are%20now%20end%2Dof%2Dlife
 successorId: unity-catalog-volumes
 replacement: Init scripts in Unity Catalog volumes or workspace files
 links:
@@ -33,4 +33,4 @@ links:
     kind: community
     label: 'Community: Move init scripts off DBFS'
 source: https://docs.databricks.com/aws/en/init-scripts/
-verified: '2026-07-23'
+verified: '2026-08-20'

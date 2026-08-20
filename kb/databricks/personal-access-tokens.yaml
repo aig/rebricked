@@ -13,16 +13,15 @@ fact:
     link: https://docs.databricks.com/aws/en/dev-tools/auth/pat#:~:text=automate%20Databricks%20account%2Dlevel%20functionality
   - note: Databricks now says, where possible, to use OAuth instead 'because OAuth provides stronger security.'
     link: https://docs.databricks.com/aws/en/dev-tools/auth/pat#:~:text=because%20OAuth%20provides%20stronger%20security
+  - note: 'Being labelled legacy did not stop the feature work: scoped personal access tokens, which restrict a token to only the API operations you name, went generally available in April 2026.'
+    link: https://docs.databricks.com/aws/en/release-notes/product/2026/april#:~:text=Scoped%20personal%20access%20tokens%20are%20now%20generally%20available
 status:
   value: legacy
   link: https://docs.databricks.com/aws/en/dev-tools/auth/pat#:~:text=personal%20access%20tokens%20%28legacy%29
-  date: '2026-07-18'
-from:
-  date: '2017'
-  link: https://docs.databricks.com/aws/en/dev-tools/auth/pat
+  date: '2026-08-20'
 deprecatedAt:
-  date: '2026'
-  link: https://docs.databricks.com/aws/en/dev-tools/auth/pat
+  date: 2024-12
+  link: https://docs.databricks.com/aws/en/release-notes/product/2024/december#:~:text=Authenticate%20with%20Databricks%20personal%20access%20tokens%20%28legacy%29
 successorId: oauth-token-federation
 replacement: OAuth (U2M/M2M) & OAuth token federation
 links:
@@ -30,4 +29,4 @@ links:
     kind: community
     label: 'Community: PAT retention change'
 source: https://docs.databricks.com/aws/en/dev-tools/auth/pat
-verified: '2026-07-18'
+verified: '2026-08-20'

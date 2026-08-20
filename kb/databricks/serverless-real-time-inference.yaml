@@ -10,7 +10,7 @@ fact:
 status:
   value: renamed
   link: https://learn.microsoft.com/en-us/azure/databricks/release-notes/product/2023/march#:~:text=formerly%20Serverless%20Real%2DTime%20Inference
-  date: '2026-07-18'
+  date: '2026-08-20'
 releases:
   - type: public-preview
     date: 2022-08
@@ -30,4 +30,4 @@ links:
     kind: internet
     label: 'SiliconANGLE: serverless inference'
 source: https://learn.microsoft.com/en-us/azure/databricks/release-notes/product/2023/march
-verified: '2026-07-18'
+verified: '2026-08-20'

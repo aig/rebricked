@@ -10,7 +10,7 @@ fact:
 status:
   value: renamed
   link: https://docs.databricks.com/aws/en/compute/sql-warehouse/#:~:text=SQL%20endpoints%20were%20renamed%20as%20SQL%20warehouses
-  date: '2026-07-18'
+  date: '2026-08-20'
 from:
   date: '2021'
   link: https://www.databricks.com/blog/2021/09/30/databricks-sql-delivering-a-production-sql-development-experience-on-the-data-lake.html#:~:text=tools%20of%20their%20choice%20to%20SQL%20endpoints
@@ -26,4 +26,4 @@ links:
     kind: internet
     label: 'TDS: SQL Analytics & endpoints'
 source: https://docs.databricks.com/aws/en/compute/sql-warehouse/
-verified: '2026-07-23'
+verified: '2026-08-20'

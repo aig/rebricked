@@ -19,22 +19,28 @@ fact:
 status:
   value: active
   link: https://docs.databricks.com/aws/en/security/auth/rbac/#:~:text=using%20only%20that%20role%27s%20permissions%20for%20the%20duration%20of%20the%20session
-  date: '2026-08-03'
+  date: '2026-08-20'
 releases:
   - type: public-preview
     date: 2026-07
     link: https://docs.databricks.com/aws/en/release-notes/product/2026/july#:~:text=Role%2Dbased%20access%20control%20%28RBAC%29%20is%20now%20in%20Public%20Preview
+  - type: ga
+    date: 2026-08
+    link: https://docs.databricks.com/aws/en/release-notes/product/2026/august#:~:text=Role%2Dbased%20access%20control%20%28RBAC%29%20is%20now%20generally%20available
 introducedAt:
   date: 2026-07
   link: https://docs.databricks.com/aws/en/release-notes/product/2026/july#:~:text=Role%2Dbased%20access%20control%20%28RBAC%29%20is%20now%20in%20Public%20Preview
 limitations:
-  note: A user can act as only one role at a time. When acting as a role, creating Agent Bricks agents, managing alerts, and Lakeflow pipelines are unsupported, and creating Vector Search indexes fails (create as a user, then reassign ownership to the role); the workspace SCIM API cannot create or manage groups, and roles still inherit whatever the workspace users group can see.
+  note: A user can act as only one role at a time. When acting as a role, creating Agent Bricks agents, managing alerts, and Lakeflow pipelines are unsupported, and creating Vector Search indexes fails (create as a user, then reassign ownership to the role); the workspace SCIM API cannot create or manage groups, workspace asset sharing controls reach 100 groups by default, and roles still inherit whatever the workspace users group can see.
   link: https://docs.databricks.com/aws/en/security/auth/rbac/limitations#:~:text=Lakeflow%20pipelines%20are%20not%20supported%20for%20roles
-  date: '2026-08-03'
+  date: '2026-08-20'
 links:
   - url: https://docs.databricks.com/aws/en/release-notes/product/2026/july
     kind: official
     label: 'Databricks release notes: RBAC Public Preview (July 2026)'
+  - url: https://docs.databricks.com/aws/en/release-notes/product/2026/august
+    kind: official
+    label: 'Databricks release notes: RBAC generally available (August 2026)'
   - url: https://docs.databricks.com/aws/en/security/auth/rbac/abac-interaction
     kind: official
     label: 'Databricks docs: Use RBAC with ABAC'
@@ -46,4 +52,4 @@ prediction:
   - Genie Roles
   - Adaptive access control
 source: https://docs.databricks.com/aws/en/security/auth/rbac/
-verified: '2026-08-03'
+verified: '2026-08-20'

@@ -15,7 +15,7 @@ fact:
 status:
   value: active
   link: https://docs.databricks.com/aws/en/data-governance/unity-catalog/#:~:text=Unity%20Catalog%20is%20the%20unified%20governance%20layer%20for%20data%20and%20AI
-  date: '2026-07-18'
+  date: '2026-08-20'
 releases:
   - type: public-preview
     date: 2022-03
@@ -29,7 +29,7 @@ introducedAt:
 limitations:
   note: Doesn't support bucketing, prohibits cross-type table cloning (managed-to-managed and external-to-external only), disallows workspace-level groups in GRANT statements, and imposes Databricks Runtime version requirements for Python UDFs, Scala UDFs, and R in dynamic views used for row- or column-level security.
   link: https://docs.databricks.com/aws/en/data-governance/unity-catalog/requirements#:~:text=Bucketing%20is%20not%20supported%20for%20Unity%20Catalog%20tables
-  date: '2026-07-23'
+  date: '2026-08-20'
 links:
   - url: https://medium.com/@kanerika/databricks-unity-catalog-implementation-a-complete-guide-to-secure-and-scalable-data-governance-79ad0cb57df1
     kind: community
@@ -42,4 +42,4 @@ prediction:
   - Genie Catalog
   - Lakehouse Catalog
 source: https://docs.databricks.com/aws/en/data-governance/unity-catalog/
-verified: '2026-07-23'
+verified: '2026-08-20'

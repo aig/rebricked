@@ -5,35 +5,46 @@ aliases:
   - Feature Views
 category: AI / ML
 what:
-  note: APIs to declaratively define and compute time-windowed aggregation features in Unity Catalog, materialize them to Delta or Lakebase, and serve them to online model serving.
-  link: https://docs.databricks.com/aws/en/release-notes/product/2026/march#:~:text=Materialize%20batch%20features%20to%20Delta%20tables%20or%20Lakebase
+  note: APIs to define features declaratively from Delta tables, Kafka streams, and request-time data, with time-windowed aggregations that Databricks computes, materializes, and serves for training and online inference.
+  link: https://docs.databricks.com/aws/en/machine-learning/feature-store/feature-views#:~:text=Features%20can%20be%20defined%20using%20a%20variety%20of%20sources
 fact:
   - note: You declare a time-windowed aggregation once and it computes the feature for you - materializing to Delta or Lakebase and wiring into online model serving - the feature-engineering echo of the declarative-pipelines idea.
     link: https://docs.databricks.com/aws/en/release-notes/product/2026/march#:~:text=Serve%20Unity%20Catalog%20models%20using%20online%20model%20serving
   - note: It launched in Beta in March 2026, initially only in the AWS us-east-1 and us-west-2 regions.
     link: https://docs.databricks.com/aws/en/release-notes/product/2026/march#:~:text=now%20available%20in%20Beta%20in%20the%20AWS
+  - note: Graduating to Public Preview left the Beta-era definitions behind, so the client ships an is_beta_feature_view() check and a Feature.clone() to drag them across.
+    link: https://docs.databricks.com/aws/en/release-notes/feature-store/databricks-feature-store#:~:text=need%20migration%20to%20the%20Public%20Preview%20representation
 status:
   value: active
-  link: https://docs.databricks.com/aws/en/release-notes/product/2026/march#:~:text=Declarative%20Feature%20Engineering%20APIs%20are%20now%20available%20in%20Beta
-  date: '2026-07-23'
+  link: https://docs.databricks.com/aws/en/machine-learning/feature-store/feature-views#:~:text=This%20feature%20is%20in%20Public%20Preview
+  date: '2026-08-20'
 releases:
   - type: beta
     date: 2026-03
     link: https://docs.databricks.com/aws/en/release-notes/product/2026/march#:~:text=Declarative%20Feature%20Engineering%20APIs%20are%20now%20available%20in%20Beta
+  - type: public-preview
+    date: 2026-07
+    link: https://www.databricks.com/blog/introducing-feature-views#:~:text=Public%20Preview%20of%20Feature%20Views
 introducedAt:
   date: 2026-03
   link: https://docs.databricks.com/aws/en/release-notes/product/2026/march#:~:text=Declarative%20Feature%20Engineering%20APIs%20are%20now%20available%20in%20Beta
 limitations:
-  note: Beta, initially available only in the AWS us-east-1 and us-west-2 regions; features are defined in Unity Catalog.
-  link: https://docs.databricks.com/aws/en/release-notes/product/2026/march#:~:text=now%20available%20in%20Beta%20in%20the%20AWS
-  date: '2026-07-23'
+  note: Needs serverless or Databricks Runtime 17.0 ML and above plus databricks-feature-engineering 0.16.0 or later; entity columns cannot be DATE or TIMESTAMP, only a limited set of aggregation functions is supported, RequestSource takes scalar types only and no aggregations or time windows, and entity, timeseries, and request feature column names must be globally unique across all sources in a training set or serving endpoint.
+  link: https://docs.databricks.com/aws/en/machine-learning/feature-store/feature-views#:~:text=Entity%20columns%20cannot%20be%20of%20type%20DATE%20or%20TIMESTAMP
+  date: '2026-08-20'
 links:
   - url: https://docs.databricks.com/aws/en/release-notes/product/2026/march
     kind: official
     label: 'Databricks release notes: Declarative Feature Engineering APIs Beta (March 2026)'
+  - url: https://docs.databricks.com/aws/en/release-notes/feature-store/databricks-feature-store
+    kind: official
+    label: 'Databricks docs: Feature Store client release notes (Feature Views Public Preview)'
+  - url: https://www.databricks.com/blog/introducing-feature-views
+    kind: official
+    label: 'Databricks blog: Introducing Feature Views, announcing the Public Preview (July 10, 2026)'
 prediction:
   - Feature Bricks
   - Lakeflow Features
   - Genie Features
-source: https://docs.databricks.com/aws/en/release-notes/product/2026/march
-verified: '2026-07-23'
+source: https://docs.databricks.com/aws/en/machine-learning/feature-store/feature-views
+verified: '2026-08-20'

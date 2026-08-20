@@ -15,7 +15,7 @@ fact:
 status:
   value: deprecated
   link: https://docs.databricks.com/aws/en/machine-learning/feature-store/workspace-feature-store/#:~:text=Workspace%20Feature%20Store%20is%20deprecated.
-  date: '2026-07-18'
+  date: '2026-08-20'
 releases:
   - type: public-preview
     date: 2021-05
@@ -36,4 +36,4 @@ links:
     kind: internet
     label: 'Flexera: Databricks Feature Store 101'
 source: https://docs.databricks.com/aws/en/machine-learning/feature-store/workspace-feature-store/
-verified: '2026-07-23'
+verified: '2026-08-20'

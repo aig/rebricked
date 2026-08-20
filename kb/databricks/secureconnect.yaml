@@ -16,7 +16,7 @@ fact:
 status:
   value: active
   link: https://docs.databricks.com/aws/en/opensharing/secureconnect-provider#:~:text=SecureConnect%20simplifies%20networking%20for%20data%20sharing
-  date: '2026-08-14'
+  date: '2026-08-20'
 releases:
   - type: public-preview
     date: 2026-06
@@ -28,9 +28,9 @@ introducedAt:
   date: 2026-06
   link: https://docs.databricks.com/aws/en/release-notes/product/2026/june#:~:text=Share%20data%20behind%20a%20firewall%20with%20SecureConnect%20%28Public%20Preview%29
 limitations:
-  note: Assets can't be backed by Cloudflare R2; not available on AWS GovCloud; and AWS PrivateLink to S3 isn't compatible with the FIPS endpoints Databricks uses by default in US regions. Provider support on GCP is still Private Preview, and recipient-side limits (such as mTLS support) also apply.
+  note: Assets can't be backed by Cloudflare R2; volumes, notebooks, AI models, and Iceberg tables are unsupported across all sharing protocols; it isn't available on AWS GovCloud; and AWS PrivateLink to S3 isn't compatible with the FIPS endpoints Databricks uses by default in US regions. mTLS is supported only for Databricks recipients on serverless compute, and provider support on GCP is still Private Preview.
   link: https://docs.databricks.com/aws/en/opensharing/secureconnect-provider#:~:text=can%27t%20be%20backed%20by%20Cloudflare%20R2%20storage
-  date: '2026-08-14'
+  date: '2026-08-20'
 links:
   - url: https://docs.databricks.com/aws/en/release-notes/product/2026/june
     kind: official
@@ -43,4 +43,4 @@ prediction:
   - Delta SecureShare
   - Firewall Sharing
 source: https://docs.databricks.com/aws/en/opensharing/secureconnect-provider
-verified: '2026-08-14'
+verified: '2026-08-20'

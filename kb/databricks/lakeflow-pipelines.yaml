@@ -1,0 +1,32 @@
+id: lakeflow-pipelines
+name: Lakeflow pipelines
+aliases:
+  - LDP
+category: Data engineering
+what:
+  note: Databricks' declarative framework for building batch and streaming data pipelines in SQL and Python, running on the Databricks Runtime.
+  link: https://docs.databricks.com/aws/en/ldp/concepts/#:~:text=Lakeflow%20pipelines%20provide%20a%20declarative%20framework%20for%20building%20batch%20and%20streaming%20data%20pipelines
+fact:
+  - note: This is the name the docs settled on without ever announcing it - no release note declares it, the pages were simply retitled.
+    link: https://docs.databricks.com/aws/en/ldp/where-is-dlt#:~:text=has%20been%20updated%20to%20Lakeflow%20pipelines
+  - note: It is built on Apache Spark Declarative Pipelines, an upstream open-source project, and adds the production parts on top - AUTO CDC, data quality expectations, and a queryable event log.
+    link: https://docs.databricks.com/aws/en/ldp/concepts/spark-declarative-pipelines#:~:text=add%20production%20features%20such%20as
+  - note: The pipelines are versionless, so Databricks upgrades the runtime underneath you rather than asking you to pick a version.
+    link: https://docs.databricks.com/aws/en/release-notes/dlt/#:~:text=Lakeflow%20pipelines%20are%20versionless
+status:
+  value: active
+  link: https://docs.databricks.com/aws/en/ldp/concepts/#:~:text=What%20are%20Lakeflow%20pipelines
+  date: '2026-08-20'
+from:
+  date: '2026'
+  link: https://docs.databricks.com/aws/en/ldp/where-is-dlt#:~:text=has%20been%20updated%20to%20Lakeflow%20pipelines
+limitations:
+  note: A workspace is limited to 1000 concurrent pipeline updates; a pipeline allows at most 100 source files (or 50 folder entries referencing up to 1000 files); pivot() is unsupported, Delta time travel works only on streaming tables not materialized views, and identity columns are incompatible with AUTO CDC processing.
+  link: https://docs.databricks.com/aws/en/ldp/limitations#:~:text=limited%20to%201000%20concurrent%20pipeline%20updates
+  date: '2026-08-20'
+prediction:
+  - Genie pipelines
+  - Lakeflow Agentic Pipelines
+  - Lakeflow Declarative Pipelines (again)
+source: https://docs.databricks.com/aws/en/ldp/concepts/
+verified: '2026-08-20'

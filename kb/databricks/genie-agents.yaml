@@ -14,19 +14,22 @@ fact:
     link: https://docs.databricks.com/aws/en/release-notes/product/2026/july#:~:text=so%20users%20can%20ask%20data%20questions%20and%20get%20answers%20without%20leaving%20Microsoft%20Teams
 status:
   value: active
-  link: https://docs.databricks.com/aws/en/genie-agents/set-up#:~:text=formerly%20known%20as%20Genie
-  date: '2026-07-18'
+  link: https://docs.databricks.com/aws/en/genie-agents/set-up#:~:text=Genie%20Agents%20were%20formerly%20known%20as%20Genie%20Spaces.
+  date: '2026-08-20'
 releases:
+  - type: public-preview
+    date: 2024-06
+    link: https://www.databricks.com/company/newsroom/press-releases/introducing-databricks-aibi-intelligent-analytics-real-world-data#:~:text=Genie%20is%20in%20public%20preview%20starting%20today
   - type: ga
-    date: 2026-07
-    link: https://docs.databricks.com/aws/en/ai-bi/release-notes/2026#:~:text=Genie%20Agents%20%28formerly%20Genie%20Spaces%29%20is%20now%20generally%20available
+    date: 2024-12
+    link: https://docs.databricks.com/aws/en/ai-bi/release-notes/2024#:~:text=Genie%20Agents%20%28formerly%20Genie%20Spaces%29%20are%20now%20generally%20available
 from:
   date: 2026-07
-  link: https://docs.databricks.com/aws/en/ai-bi/release-notes/2026#:~:text=Genie%20Agents%20%28formerly%20Genie%20Spaces%29
+  link: https://docs.databricks.com/aws/en/ai-bi/release-notes/2026#:~:text=are%20now%20called%20Genie%20Agents
 limitations:
   note: Up to 30 tables or views per Genie Agent; up to 10,000 conversations, each with up to 10,000 messages; requires a pro or serverless SQL warehouse, with data registered in Unity Catalog.
   link: https://docs.databricks.com/aws/en/genie-agents/set-up#:~:text=add%20up%20to%2030%20tables%20or%20views%20to%20a%20Genie%20Agent
-  date: '2026-07-23'
+  date: '2026-08-20'
 links:
   - url: https://www.databricks.com/blog/data-dialogue-best-practices-guide-building-high-performing-genie-spaces
     kind: community
@@ -39,4 +42,4 @@ prediction:
   - Genie Agents One
   - Agentic Genie Spaces
 source: https://docs.databricks.com/aws/en/genie-agents/set-up
-verified: '2026-08-03'
+verified: '2026-08-20'

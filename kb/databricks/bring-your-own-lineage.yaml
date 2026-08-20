@@ -1,0 +1,34 @@
+id: bring-your-own-lineage
+name: Bring Your Own Lineage
+abbr: BYOL
+aliases:
+  - Bring your own data lineage
+  - BYOL
+category: Data governance
+what:
+  note: Unity Catalog's Public Preview capability for registering assets and workflows that run outside Databricks, so first-mile ETL sources and last-mile BI tools join the lineage graph.
+  link: https://docs.databricks.com/aws/en/release-notes/product/2025/june#:~:text=Data%20lineage%20can%20now%20include%20external%20assets%20and%20workflows%20that%20are%20run%20outside%20of%20Databricks
+fact:
+  - note: A governance feature named like a bring-your-own-bottle policy - you supply the lineage metadata, Unity Catalog supplies the graph it hangs on.
+    link: https://docs.databricks.com/aws/en/release-notes/product/2025/june#:~:text=Unity%20Catalog%20lets%20you%20add%20external%20lineage%20metadata%20to%20augment%20the%20Databricks%20data%20lineage
+  - note: The release note that launched it carried an extra word the short name dropped, heading the announcement "Bring your own data lineage (Public Preview)".
+    link: https://docs.databricks.com/aws/en/release-notes/product/2025/june#:~:text=Bring%20your%20own%20data%20lineage%20%28Public%20Preview%29
+  - note: Its debut examples were resolutely un-Databricks - Salesforce and MySQL upstream, Tableau and PowerBI downstream, the latter spelled as one word in the announcement.
+    link: https://docs.databricks.com/aws/en/release-notes/product/2025/june#:~:text=Tableau%20or%20PowerBI
+status:
+  value: renamed
+  link: https://docs.databricks.com/aws/en/release-notes/product/2026/june#:~:text=External%20lineage%20%28formerly%20Bring%20Your%20Own%20Lineage%29%20in%20Unity%20Catalog%20is%20now%20generally%20available
+  date: '2026-08-20'
+releases:
+  - type: public-preview
+    date: 2025-06
+    link: https://docs.databricks.com/aws/en/release-notes/product/2025/june#:~:text=This%20external%20lineage%20metadata%20feature%20is%20in%20Public%20Preview
+from:
+  date: 2025-06
+  link: https://docs.databricks.com/aws/en/release-notes/product/2025/june#:~:text=Bring%20your%20own%20data%20lineage%20%28Public%20Preview%29
+to:
+  date: 2026-06
+  link: https://docs.databricks.com/aws/en/release-notes/product/2026/june#:~:text=External%20lineage%20%28formerly%20Bring%20Your%20Own%20Lineage%29%20in%20Unity%20Catalog%20is%20now%20generally%20available
+successorId: external-lineage
+source: https://docs.databricks.com/aws/en/release-notes/product/2025/june
+verified: '2026-08-20'

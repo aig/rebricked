@@ -65,7 +65,10 @@ import argparse
 import concurrent.futures
 import gzip
 import json
+import os
 import re
+import shutil
+import subprocess
 import sys
 from html.parser import HTMLParser
 from pathlib import Path
@@ -80,6 +83,7 @@ POSTS = ROOT / "kb" / "posts"
 FRAGMENT = "#:~:text="
 TIMEOUT = 45
 WORKERS = 8
+CHROME_TIMEOUT = 60
 # A 200 carrying less text than this is a challenge page or an empty shell, not
 # something we can honestly search for a quote.
 MIN_READABLE = 200
@@ -176,14 +180,67 @@ def fetch(url):
     return "unreachable", ""
 
 
+def is_blocked(why):
+    """A bot wall or an unreadably thin page: says nothing about whether the link is good."""
+    return why.startswith(("HTTP 403", "HTTP 429")) or "only" in why
+
+
+def find_browser():
+    """Locate a Chromium-family browser. Mirrors build_badges.find_browser() rather than
+    importing it, so this script stays runnable on its own."""
+    for name in ("msedge", "chrome", "chromium", "google-chrome", "chromium-browser"):
+        p = shutil.which(name)
+        if p:
+            return p
+    pf = os.environ.get("ProgramFiles", r"C:\Program Files")
+    pfx86 = os.environ.get("ProgramFiles(x86)", r"C:\Program Files (x86)")
+    for base in (pfx86, pf):
+        for rel in (r"Microsoft\Edge\Application\msedge.exe",
+                    r"Google\Chrome\Application\chrome.exe"):
+            cand = Path(base) / rel
+            if cand.exists():
+                return str(cand)
+    return None
+
+
+def chrome_fetch(browser, url):
+    """Same contract as fetch(), but through headless Chrome/Edge.
+
+    A `BLOCKED` verdict means a host turned away urllib, not that the link is broken - these
+    hosts serve the page perfectly to a real browser. Driving the browser the repo already
+    depends on for `og.png` closes that gap, so a bot wall stops being a permanent blind spot
+    in the citation check. Slow and serial by nature, so it is opt-in via --chrome and only
+    ever retries pages that were already blocked.
+    """
+    cmd = [
+        browser, "--headless=new", "--disable-gpu", "--no-sandbox",
+        "--no-first-run", "--no-default-browser-check", "--hide-scrollbars",
+        "--virtual-time-budget=8000", "--dump-dom", url,
+    ]
+    try:
+        proc = subprocess.run(cmd, stdout=subprocess.PIPE, stderr=subprocess.DEVNULL,
+                              timeout=CHROME_TIMEOUT)
+    except (subprocess.SubprocessError, OSError) as e:
+        return f"chrome: {type(e).__name__}", ""
+    text = page_text(proc.stdout or b"")
+    if len(text.strip()) < MIN_READABLE:
+        return f"chrome read only {len(text.strip())}B of text", text
+    return None, text
+
+
 def anchors_of(entry):
-    """Every ('field.path', url) pair in an entry, however deeply nested."""
+    """Every ('field.path', url) pair in an entry, however deeply nested.
+
+    `source` counts as much as `link`/`url`: it is the one URL the schema demands on
+    every entry, so leaving it out meant the canonical citation was the only one the
+    rot check never fetched.
+    """
     found = []
 
     def walk(node, path=""):
         if isinstance(node, dict):
             for key, value in node.items():
-                if key in ("link", "url") and isinstance(value, str):
+                if key in ("link", "url", "source") and isinstance(value, str):
                     found.append((path or key, value))
                 else:
                     walk(value, f"{path}.{key}" if path else key)
@@ -226,6 +283,9 @@ def main(argv=None):
     ap.add_argument("--fail-on-blocked", action="store_true",
                     help="exit non-zero for blocked pages too (off by default: a bot "
                          "wall is not evidence that a link is broken)")
+    ap.add_argument("--chrome", action="store_true",
+                    help="retry blocked pages through headless Chrome/Edge, which these "
+                         "hosts serve normally. Slower and serial; needs a browser installed")
     args = ap.parse_args(argv)
 
     try:
@@ -264,11 +324,28 @@ def main(argv=None):
         for base, result in zip(bases, pool.map(fetch, bases)):
             pages[base] = result
 
+    if args.chrome:
+        walled = sorted(b for b, (why, _) in pages.items() if why and is_blocked(why))
+        if not walled:
+            print("--chrome: nothing was blocked, so there is nothing to retry.")
+        else:
+            browser = find_browser()
+            if not browser:
+                print("--chrome: no Chrome/Edge found. Leaving blocked pages as BLOCKED.")
+            else:
+                print(f"--chrome: retrying {len(walled)} blocked page(s) via "
+                      f"{Path(browser).name}...")
+                for base in walled:
+                    why, text = chrome_fetch(browser, base)
+                    pages[base] = (why, text)
+                    print(f"  {'recovered ' if why is None else 'still blocked'}  {base}"
+                          + ("" if why is None else f"  ({why})"))
+
     ok, dead, blocked = 0, [], {}
     for eid, field, base, frag in todo:
         why, text = pages[base]
         if why:
-            if why.startswith(("HTTP 403", "HTTP 429")) or "only" in why:
+            if is_blocked(why):
                 blocked[base] = why
             else:
                 dead.append((eid, field, None, base, why))

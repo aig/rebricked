@@ -17,7 +17,7 @@ fact:
 status:
   value: active
   link: https://learn.microsoft.com/en-us/azure/databricks/sql/release-notes/2021#:~:text=Databricks%20SQL%20is%20Generally%20Available.
-  date: '2026-07-18'
+  date: '2026-08-20'
 releases:
   - type: public-preview
     date: 2020-11
@@ -35,7 +35,7 @@ occasion:
 limitations:
   note: Databricks limits queries on a SQL warehouse by compute cost; classic and pro warehouses have a fixed limit of one cluster per 10 concurrent queries, and autoscaling only adds clusters up to the configured maximum.
   link: https://docs.databricks.com/aws/en/compute/sql-warehouse/warehouse-behavior#:~:text=one%20cluster%20per%2010%20concurrent%20queries
-  date: '2026-07-23'
+  date: '2026-08-20'
 links:
   - url: https://www.databricks.com/blog/announcing-general-availability-databricks-sql-serverless
     kind: community
@@ -48,4 +48,4 @@ prediction:
   - Genie SQL
   - Databricks SQL One
 source: https://learn.microsoft.com/en-us/azure/databricks/sql/release-notes/2021
-verified: '2026-07-18'
+verified: '2026-08-20'

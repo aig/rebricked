@@ -10,14 +10,14 @@ what:
 fact:
   - note: 'Each governed tag has a policy attached to it, which is a neat inversion of how it started: the policy used to be the product and the tag was the detail.'
     link: https://docs.databricks.com/aws/en/release-notes/product/2025/august#:~:text=admins%20define%20the%20allowed%20keys%20and%20values
-  - note: They took roughly ten months to go from Public Preview to generally available, arriving in April 2026 after being announced in August 2025.
+  - note: They took roughly eight months to go from Public Preview to generally available, arriving in April 2026 after being announced in August 2025.
     link: https://docs.databricks.com/aws/en/release-notes/product/2026/april#:~:text=Governed%20tags%20are%20generally%20available
   - note: As of August 2026 they can also assign themselves - a tag automation applies or removes governed tags on whatever matches your conditions, and you can describe the rule to Genie in plain language.
     link: https://docs.databricks.com/aws/en/release-notes/product/2026/august#:~:text=by%20describing%20your%20rule%20to%20Genie%20in%20natural%20language
 status:
   value: active
   link: https://docs.databricks.com/aws/en/admin/governed-tags/#:~:text=Governed%20tags%20are%20account%2Dlevel%20tags%20with%20built%2Din%20rules
-  date: '2026-08-12'
+  date: '2026-08-20'
 releases:
   - type: public-preview
     date: 2025-08
@@ -31,7 +31,7 @@ from:
 limitations:
   note: Hard caps of 1,000 governed tags per account and 500 allowed values per tag, with keys and values limited to 256 characters; control characters and the characters * . / < > % & ? \ = are disallowed.
   link: https://docs.databricks.com/aws/en/admin/governed-tags/#:~:text=1%2C000
-  date: '2026-08-12'
+  date: '2026-08-20'
 links:
   - url: https://docs.databricks.com/aws/en/admin/governed-tags/automate-tag-assignment
     kind: official
@@ -41,4 +41,4 @@ prediction:
   - Genie tags
   - Governed metadata
 source: https://docs.databricks.com/aws/en/admin/governed-tags/
-verified: '2026-08-12'
+verified: '2026-08-20'

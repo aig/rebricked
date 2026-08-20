@@ -15,7 +15,7 @@ fact:
 status:
   value: active
   link: https://docs.databricks.com/aws/en/machine-learning/feature-store/#:~:text=all%20versions%20of%20Feature%20Engineering%20in%20Unity%20Catalog
-  date: '2026-07-18'
+  date: '2026-08-20'
 releases:
   - type: public-preview
     date: 2023-08
@@ -29,7 +29,7 @@ introducedAt:
 limitations:
   note: A FeatureSpec can contain at most 1000 features, at most 50 tables can train a model, and at most 100 on-demand features can be used in a model; Databricks Runtime ML clusters can't be used with Lakeflow pipelines (standard access mode clusters are required).
   link: https://docs.databricks.com/aws/en/machine-learning/feature-store/troubleshooting-and-limitations#:~:text=A%20FeatureSpec%20can%20contain%20a%20maximum%20of%201000%20features
-  date: '2026-07-23'
+  date: '2026-08-20'
 links:
   - url: https://www.flexera.com/blog/finops/databricks-feature-store/
     kind: internet
@@ -39,4 +39,4 @@ prediction:
   - Mosaic AI Features
   - Unity Feature Store
 source: https://docs.databricks.com/aws/en/machine-learning/feature-store/
-verified: '2026-07-23'
+verified: '2026-08-20'

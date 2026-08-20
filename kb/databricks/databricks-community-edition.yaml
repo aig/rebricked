@@ -15,7 +15,7 @@ fact:
 status:
   value: retired
   link: https://docs.databricks.com/aws/en/getting-started/free-edition#:~:text=retired
-  date: '2026-07-24'
+  date: '2026-08-20'
 deprecatedAt:
   date: '2025'
   link: https://docs.databricks.com/aws/en/getting-started/free-edition#:~:text=retired
@@ -36,4 +36,4 @@ links:
     kind: community
     label: 'Databricks Community: CE retires Jan 1, 2026'
 source: https://docs.databricks.com/aws/en/getting-started/free-edition
-verified: '2026-07-24'
+verified: '2026-08-20'

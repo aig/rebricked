@@ -17,7 +17,7 @@ fact:
 status:
   value: active
   link: https://docs.databricks.com/aws/en/migration/agentic-code-converter#:~:text=Convert%20SQL%20with%20the%20agentic%20code%20converter
-  date: '2026-08-03'
+  date: '2026-08-20'
 releases:
   - type: beta
     date: 2026-07
@@ -28,7 +28,7 @@ from:
 limitations:
   note: Beta, and a workspace admin must enable it from the Previews page. A batch can contain at most 300 files and a script at most 1,000 lines; Teradata BTEQ scripts are not yet supported, and the workspace must also meet the Genie Code requirements.
   link: https://docs.databricks.com/aws/en/migration/agentic-code-converter#:~:text=A%20batch%20can%20contain%20a%20maximum%20of%20300%20files
-  date: '2026-08-03'
+  date: '2026-08-20'
 links:
   - url: https://docs.databricks.com/aws/en/release-notes/product/2026/july
     kind: official
@@ -41,4 +41,4 @@ prediction:
   - Lakebridge Autopilot
   - SQL Rebridge
 source: https://docs.databricks.com/aws/en/migration/agentic-code-converter
-verified: '2026-08-03'
+verified: '2026-08-20'

@@ -17,7 +17,7 @@ fact:
 status:
   value: active
   link: https://docs.databricks.com/aws/en/machine-learning/automl/#:~:text=automatically%20finding%20the%20best%20algorithm%20and%20hyperparameter%20configuration
-  date: '2026-08-12'
+  date: '2026-08-20'
 releases:
   - type: ga
     date: 2022-04
@@ -26,12 +26,12 @@ introducedAt:
   date: 2021-05
   link: https://docs.databricks.com/aws/en/release-notes/product/2021/may#:~:text=automatically%20generate%20ML%20models%20from%20data
 limitations:
-  note: In Databricks Runtime 18.0 ML and above AutoML is not included as a built-in library, so it must be installed from PyPI rather than assumed present on ML compute.
+  note: In Databricks Runtime 18.0 ML and above AutoML is not included as a built-in library, so it must be installed from PyPI; no libraries beyond those preinstalled in Databricks Runtime ML should be added to the cluster, network ports 1017 and 1021 must be open, and standard (formerly shared) compute access mode is unsupported.
   link: https://docs.databricks.com/aws/en/machine-learning/automl/#:~:text=AutoML%20is%20not%20included%20as%20a%20built%2Din%20library
-  date: '2026-08-12'
+  date: '2026-08-20'
 prediction:
   - Agent Bricks AutoML
   - Genie AutoML
   - Auto Modeling
 source: https://docs.databricks.com/aws/en/machine-learning/automl/
-verified: '2026-08-12'
+verified: '2026-08-20'

@@ -10,10 +10,10 @@ fact:
 status:
   value: renamed
   link: https://docs.databricks.com/aws/en/dev-tools/bundles/#:~:text=formerly%20known%20as%20Databricks%20Asset%20Bundles
-  date: '2026-07-18'
+  date: '2026-08-20'
 from:
-  date: '2023'
-  link: https://docs.databricks.com/aws/en/release-notes/product/2023/september
+  date: 2023-09
+  link: https://docs.databricks.com/aws/en/release-notes/product/2023/september#:~:text=enable%20end%2Dto%2Dend%20data%2C%20analytics%2C%20and%20ML%20projects%20to%20be%20expressed%20as%20a%20collection%20of%20source%20files
 to:
   date: 2026-03
   link: https://docs.databricks.com/aws/en/release-notes/product/2026/march#:~:text=Databricks%20Asset%20Bundles%20has%20been%20renamed%20to%20Declarative%20Automation%20Bundles.
@@ -26,4 +26,4 @@ links:
     kind: internet
     label: 'Data Eng Central: CI/CD with DABs'
 source: https://docs.databricks.com/aws/en/dev-tools/bundles/
-verified: '2026-07-18'
+verified: '2026-08-20'

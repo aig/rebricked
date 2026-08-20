@@ -17,7 +17,7 @@ fact:
 status:
   value: active
   link: https://docs.databricks.com/aws/en/designer/#:~:text=a%20visual%2C%20no%2Dcode%2C%20AI%2Dnative%20experience
-  date: '2026-07-18'
+  date: '2026-08-20'
 releases:
   - type: public-preview
     date: 2026-04
@@ -26,8 +26,8 @@ releases:
     date: 2026-06
     link: https://docs.databricks.com/aws/en/release-notes/product/2026/june#:~:text=Lakeflow%20Designer%20is%20now%20generally%20available
 introducedAt:
-  date: 2026-06
-  link: https://docs.databricks.com/aws/en/release-notes/product/2026/june#:~:text=Lakeflow%20Designer%20is%20now%20generally%20available
+  date: 2025-06
+  link: https://www.databricks.com/blog/announcing-lakeflow-designer-no-code-etl#:~:text=an%20AI%2Dpowered%2C%20no%2Dcode%20pipeline%20builder%20that%20is%20fully%20integrated
 occasion:
   date: 2026-06
   link: https://docs.databricks.com/aws/en/release-notes/product/2026/june#:~:text=Lakeflow%20Designer%20is%20now%20generally%20available
@@ -35,7 +35,7 @@ occasion:
 limitations:
   note: By default, operators process only a limited sample of data; setting Rows scanned to Max reruns all upstream operators over the complete, unbounded dataset and can take a long time.
   link: https://docs.databricks.com/aws/en/designer/what-is-lakeflow-designer#:~:text=operators%20process%20a%20limited%20sample%20of%20data
-  date: '2026-07-23'
+  date: '2026-08-20'
 links:
   - url: https://www.databricks.com/blog/announcing-lakeflow-designer-no-code-etl
     kind: community
@@ -48,4 +48,4 @@ prediction:
   - Lakeflow Canvas
   - Agentic Designer
 source: https://docs.databricks.com/aws/en/designer/
-verified: '2026-08-03'
+verified: '2026-08-20'

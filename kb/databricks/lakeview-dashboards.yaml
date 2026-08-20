@@ -12,7 +12,7 @@ fact:
 status:
   value: renamed
   link: https://www.databricks.com/blog/announcing-public-preview-lakeview-dashboards#:~:text=dubbed%20AI%2FBI%20Dashboards
-  date: '2026-07-20'
+  date: '2026-08-20'
 releases:
   - type: public-preview
     date: 2023-09
@@ -36,4 +36,4 @@ links:
     kind: internet
     label: 'element61: unlocking insights'
 source: https://www.databricks.com/blog/announcing-public-preview-lakeview-dashboards
-verified: '2026-07-23'
+verified: '2026-08-20'

@@ -11,12 +11,12 @@ what:
 fact:
   - note: Query Postgres, Snowflake, or Redshift right where they live through 'foreign catalogs' - with pushdown, so the filtering happens on the source system and the data never moves.
     link: https://docs.databricks.com/aws/en/query-federation/#:~:text=automatic%20query%20pushdown%20and%20fine%2Dgrained%20access%20controls
-  - note: The access is strictly read-only - you can query the foreign system but never write back to it.
-    link: https://docs.databricks.com/aws/en/query-federation/#:~:text=governed%2C%20read%2Donly%20access%20to%20external%20data
+  - note: The access is read-only - you can query the foreign system but never write back to it, and the lone documented exception is federating a workspace's own legacy Hive metastore.
+    link: https://docs.databricks.com/aws/en/query-federation/database-federation#:~:text=The%20only%20exception%20is%20when%20Lakehouse%20Federation%20is%20used%20to%20federate%20a%20workspace%27s%20legacy%20Hive%20metastore
 status:
   value: active
   link: https://docs.databricks.com/aws/en/query-federation/#:~:text=the%20Databricks%20query%20federation%20platform
-  date: '2026-07-18'
+  date: '2026-08-20'
 releases:
   - type: public-preview
     date: 2023-07
@@ -30,7 +30,7 @@ introducedAt:
 limitations:
   note: Federated queries are read-only (except legacy Hive metastore federation), don't use Databricks query caching (Result Cache and Disk Cache), lowercase table and schema names, ignore names invalid in Unity Catalog, and can't federate foreign tables with case-sensitive identifiers for Azure Synapse or Redshift.
   link: https://docs.databricks.com/aws/en/query-federation/database-federation#:~:text=Databricks%20query%20caching%20%28Result%20Cache%20and%20Disk%20Cache%29%20is%20not%20supported%20for%20federated%20queries.
-  date: '2026-07-23'
+  date: '2026-08-20'
 links:
   - url: https://sanjeebiitg.medium.com/databricks-part-08-databricks-lakehouse-federation-fundamentals-729ba3e10cb0
     kind: community
@@ -43,4 +43,4 @@ prediction:
   - Unity Federation
   - Genie Federation
 source: https://docs.databricks.com/aws/en/query-federation/
-verified: '2026-08-03'
+verified: '2026-08-20'

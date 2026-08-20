@@ -18,7 +18,7 @@ fact:
 status:
   value: active
   link: https://docs.databricks.com/aws/en/admin/account-settings/custom-url#:~:text=replaces%20the%20collection%20of%20per%2Dworkspace%20URLs%20that%20account%20users%20navigate%20today
-  date: '2026-08-03'
+  date: '2026-08-20'
 releases:
   - type: public-preview
     date: 2026-07
@@ -29,7 +29,7 @@ introducedAt:
 limitations:
   note: Public Preview, and the account must be enabled for unified login and must not use Chrome-managed passkeys. Workspaces behind front-end Private Link fall back to their legacy per-workspace URLs, and Private Link for account-level resources is only supported in Beta; the Publish to Power BI task does not support custom URLs. Developer tooling needs minimum versions (CLI/DABs 1.0.0, Terraform 1.114.0, Go SDK 0.130.0, Python SDK 0.103.0, Java SDK 0.105.0, VS Code extension 2.11.0).
   link: https://docs.databricks.com/aws/en/admin/account-settings/custom-url#:~:text=URLs%20for%20inbound%20Private%20Link%2Dprotected%20workspaces%20fall%20back%20to%20legacy%20per%2Dworkspace%20URLs
-  date: '2026-08-03'
+  date: '2026-08-20'
 links:
   - url: https://docs.databricks.com/aws/en/release-notes/product/2026/july
     kind: official
@@ -42,4 +42,4 @@ prediction:
   - Genie One Domains
   - Unity Catalog URL
 source: https://docs.databricks.com/aws/en/admin/account-settings/custom-url
-verified: '2026-08-03'
+verified: '2026-08-20'

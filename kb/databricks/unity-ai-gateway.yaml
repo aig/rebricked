@@ -16,14 +16,14 @@ fact:
 status:
   value: active
   link: https://docs.databricks.com/aws/en/ai-gateway/#:~:text=Unity%20AI%20Gateway
-  date: '2026-08-05'
+  date: '2026-08-20'
 releases:
-  - type: public-preview
-    date: 2024-09
-    link: https://docs.databricks.com/aws/en/release-notes/product/2024/september#:~:text=Mosaic%20AI%20Gateway%20is%20now%20Public%20Preview
+  - type: beta
+    date: 2026-02
+    link: https://docs.databricks.com/aws/en/release-notes/product/2026/february#:~:text=AI%20Gateway%20%28Beta%29%20is%20the%20enterprise%20control%20plane
   - type: ga
-    date: 2025-06
-    link: https://docs.databricks.com/aws/en/release-notes/product/2025/june#:~:text=Mosaic%20AI%20Gateway%20is%20now%20generally%20available
+    date: 2026-08
+    link: https://docs.databricks.com/aws/en/release-notes/product/2026/august#:~:text=Unity%20AI%20Gateway%20is%20now%20generally%20available
 from:
   date: 2026-06
   link: https://www.databricks.com/blog/ai-governance-data-ai-summit-2026-whats-new-unity-ai-gateway#:~:text=Unity%20AI%20Gateway
@@ -46,4 +46,4 @@ prediction:
   - Agent Control Plane
   - MCP Gateway
 source: https://docs.databricks.com/aws/en/ai-gateway/
-verified: '2026-08-05'
+verified: '2026-08-20'

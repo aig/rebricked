@@ -9,14 +9,14 @@ what:
   note: The modern Databricks command-line interface - a standalone, dependency-free binary with complete coverage of the Databricks REST API.
   link: https://docs.databricks.com/aws/en/dev-tools/cli/migrate#:~:text=standalone%20executable%20and%20does%20not%20need%20any%20runtime%20dependencies
 fact:
-  - note: Databricks Asset Bundles aren't a separate tool - they're the `bundle` command group built into the CLI, so every `databricks bundle deploy` runs through it.
+  - note: Declarative Automation Bundles aren't a separate tool - they're the `bundle` command group built into the CLI, so every `databricks bundle deploy` runs through it.
     link: https://docs.databricks.com/aws/en/dev-tools/cli/bundle-commands#:~:text=bundle%20command%20group%20within%20the%20Databricks%20CLI
   - note: It carried 0.x version numbers for years and only crossed into its 1.0.0 GA release - its first major version - on May 21, 2026.
     link: https://github.com/databricks/cli/releases/tag/v1.0.0#:~:text=v1.0.0%20as%20the%20first%20major%20release
 status:
   value: active
   link: https://docs.databricks.com/aws/en/dev-tools/cli/#:~:text=allows%20you%20to%20interact%20with%20the%20Databricks%20platform%20from%20your%20local%20terminal
-  date: '2026-07-18'
+  date: '2026-08-20'
 releases:
   - type: public-preview
     date: 2023-06
@@ -39,4 +39,4 @@ prediction:
   - Unity CLI
   - Databricks CLI One
 source: https://docs.databricks.com/aws/en/dev-tools/cli/
-verified: '2026-07-23'
+verified: '2026-08-20'

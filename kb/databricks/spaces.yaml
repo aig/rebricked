@@ -17,7 +17,7 @@ fact:
 status:
   value: active
   link: https://docs.databricks.com/aws/en/notebooks/spaces#:~:text=an%20organizational%20tool%20you%20can%20use%20to%20group%20your%20work
-  date: '2026-08-12'
+  date: '2026-08-20'
 introducedAt:
   date: 2026-08
   link: https://docs.databricks.com/aws/en/release-notes/product/2026/august#:~:text=You%20can%20now%20use%20spaces%20to%20organize%20your%20work
@@ -26,4 +26,4 @@ prediction:
   - Projects
   - Workspaces
 source: https://docs.databricks.com/aws/en/notebooks/spaces
-verified: '2026-08-12'
+verified: '2026-08-20'

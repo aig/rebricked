@@ -13,16 +13,18 @@ fact:
     link: https://learn.microsoft.com/en-us/azure/databricks/dev-tools/cli/migrate#:~:text=The%20legacy%20CLI%20remains%20in%20an%20Experimental%20state.
   - note: Databricks says it 'has not established a date or timeline for deprecating the legacy CLI' - it is simply unsupported and frozen.
     link: https://learn.microsoft.com/en-us/azure/databricks/dev-tools/cli/migrate#:~:text=Databricks%20has%20not%20established%20a%20date%20or%20timeline%20for%20deprecating%20the%20legacy%20CLI.
+  - note: 'Its final release, 0.18.0, shipped with a blunt one-line warning at the top of the notes: ''Beware: this package is being deprecated.'''
+    link: https://github.com/databricks/databricks-cli/releases/tag/0.18.0#:~:text=this%20package%20is%20being%20deprecated
 status:
   value: legacy
   link: https://learn.microsoft.com/en-us/azure/databricks/dev-tools/cli/migrate#:~:text=The%20legacy%20CLI%20is%20still%20available%20but%20is%20not%20receiving%20any%20non%2Dcritical%20updates.
-  date: '2026-07-18'
+  date: '2026-08-20'
 from:
   date: 2017-06
-  link: https://learn.microsoft.com/en-us/azure/databricks/dev-tools/cli/migrate
+  link: https://pypi.org/pypi/databricks-cli/0.1/json
 deprecatedAt:
   date: '2023'
-  link: https://learn.microsoft.com/en-us/azure/databricks/dev-tools/cli/migrate
+  link: https://github.com/databricks/databricks-cli/releases/tag/0.18.0#:~:text=this%20package%20is%20being%20deprecated
 successorId: databricks-cli
 replacement: Databricks CLI (v0.205+)
 links:
@@ -33,4 +35,4 @@ links:
     kind: internet
     label: 'PyPI: databricks-cli 0.18.0'
 source: https://learn.microsoft.com/en-us/azure/databricks/dev-tools/cli/migrate
-verified: '2026-07-18'
+verified: '2026-08-20'

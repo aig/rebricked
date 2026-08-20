@@ -18,7 +18,7 @@ fact:
 status:
   value: active
   link: https://docs.databricks.com/aws/en/transactions/#:~:text=Transactions%20allow%20you%20to%20coordinate%20operations%20across%20multiple%20SQL%20statements%20and%20tables
-  date: '2026-08-03'
+  date: '2026-08-20'
 releases:
   - type: public-preview
     date: 2026-03
@@ -30,9 +30,9 @@ introducedAt:
   date: 2026-03
   link: https://docs.databricks.com/aws/en/release-notes/product/2026/march#:~:text=Multi%2Dtable%20transactions%20are%20now%20in%20Public%20Preview
 limitations:
-  note: Writes to Unity Catalog managed Iceberg tables are still Private Preview. Every table written to must be a Unity Catalog managed table with catalog commits enabled; non-interactive transactions need a SQL warehouse, serverless, or Databricks Runtime 18.0+, interactive transactions need a SQL warehouse, and transactions over OpenSharing shared assets need Databricks Runtime 18.1+.
+  note: Writes to Unity Catalog managed Iceberg tables are still Private Preview. Every table written to must be a Unity Catalog managed table with catalog commits enabled; non-interactive transactions need a SQL warehouse, serverless, or Databricks Runtime 18.0+, interactive transactions need a SQL warehouse, and transactions over OpenSharing shared assets need Databricks Runtime 18.1+. One transaction can read from or write to up to 100 tables combined and read from up to 100 views, with up to 100 intermediate commits per table; DDL such as CREATE, ALTER, or DROP TABLE has to run outside a transaction, time travel isn't allowed inside one, interactive transactions roll back after 10 minutes of inactivity, and every transaction rolls back after 48 hours.
   link: https://docs.databricks.com/aws/en/transactions/#:~:text=Transactions%20that%20write%20to%20Unity%20Catalog%20managed%20Iceberg%20tables%20are%20in
-  date: '2026-08-03'
+  date: '2026-08-20'
 links:
   - url: https://docs.databricks.com/aws/en/release-notes/product/2026/march
     kind: official
@@ -45,4 +45,4 @@ prediction:
   - Unity Transactions
   - Lakebase Transactions
 source: https://docs.databricks.com/aws/en/transactions/
-verified: '2026-08-03'
+verified: '2026-08-20'

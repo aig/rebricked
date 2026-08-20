@@ -16,7 +16,7 @@ fact:
 status:
   value: renamed
   link: https://docs.databricks.com/aws/en/data-governance/unity-catalog/data-quality-monitoring/#:~:text=Data%20profiling%20was%20formerly%20known%20as%20Lakehouse%20Monitoring
-  date: '2026-08-03'
+  date: '2026-08-20'
 releases:
   - type: public-preview
     date: 2023-08
@@ -28,13 +28,16 @@ from:
   date: 2023-08
   link: https://docs.databricks.com/aws/en/release-notes/product/2023/august#:~:text=Lakehouse%20Monitoring%20is%20Public%20Preview
 to:
-  date: 2026-02
-  link: https://docs.databricks.com/aws/en/release-notes/product/2026/february#:~:text=Data%20Quality%20Monitoring%20Anomaly%20Detection%20is%20now%20in%20Public%20Preview
+  date: 2025-11
+  link: https://web.archive.org/web/20251108122445/https://docs.databricks.com/aws/en/data-quality-monitoring/data-profiling/
 successorId: data-profiling
 links:
   - url: https://docs.databricks.com/aws/en/release-notes/product/2024/june
     kind: official
     label: 'Databricks release notes: Lakehouse Monitoring is GA (June 2024)'
+  - url: https://web.archive.org/web/20251008165831/https://docs.databricks.com/aws/en/lakehouse-monitoring/
+    kind: internet
+    label: 'Wayback Machine: docs still titled "Introduction to Databricks Lakehouse Monitoring" (8 October 2025)'
   - url: https://www.databricks.com/blog/lakehouse-monitoring-ga-profiling-diagnosing-and-enforcing-data-quality-intelligence
     kind: community
     label: 'Databricks Blog: Lakehouse Monitoring GA'
@@ -43,4 +46,4 @@ prediction:
   - Unity Quality Monitoring
   - Lakehouse Observability
 source: https://docs.databricks.com/aws/en/release-notes/product/2023/august
-verified: '2026-08-03'
+verified: '2026-08-20'

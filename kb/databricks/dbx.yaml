@@ -15,7 +15,7 @@ fact:
 status:
   value: deprecated
   link: https://learn.microsoft.com/en-us/azure/databricks/archive/dev-tools/dbx/#:~:text=by%20Databricks%20Labs%20is%20deprecated
-  date: '2026-07-18'
+  date: '2026-08-20'
 from:
   date: 2021-02
   link: https://learn.microsoft.com/en-us/azure/databricks/archive/dev-tools/dbx/
@@ -32,4 +32,4 @@ links:
     kind: internet
     label: 'GitHub: databrickslabs/dbx'
 source: https://learn.microsoft.com/en-us/azure/databricks/archive/dev-tools/dbx/
-verified: '2026-07-23'
+verified: '2026-08-20'

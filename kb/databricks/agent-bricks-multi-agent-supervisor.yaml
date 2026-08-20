@@ -10,21 +10,28 @@ fact:
     link: https://docs.databricks.com/aws/en/generative-ai/agent-bricks/multi-agent-supervisor#:~:text=complete%20complex%20tasks%20across%20different%2C%20specialized%20domains
 status:
   value: renamed
-  link: https://docs.databricks.com/aws/en/generative-ai/agent-bricks/multi-agent-supervisor
-  date: '2026-07-18'
+  link: https://docs.databricks.com/aws/en/release-notes/product/2026/february#:~:text=has%20been%20renamed%20to%20Supervisor%20Agent
+  date: '2026-08-20'
 from:
   date: '2025'
   link: https://www.databricks.com/blog/multi-agent-supervisor-architecture-orchestrating-enterprise-ai-scale
 to:
   date: 2026-02
-  link: https://www.databricks.com/blog/agent-bricks-supervisor-agent-now-ga-orchestrate-enterprise-agents
+  link: https://docs.databricks.com/aws/en/release-notes/product/2026/february#:~:text=has%20been%20renamed%20to%20Supervisor%20Agent
 successorId: supervisor-agent
+occasion:
+  date: 2026-02
+  link: https://docs.databricks.com/aws/en/release-notes/product/2026/february#:~:text=Agent%20Bricks%3A%20Multi%2DAgent%20Supervisor%20is%20now%20Supervisor%20Agent
+  note: Renamed to Supervisor Agent, February 5, 2026
 links:
   - url: https://www.databricks.com/blog/multi-agent-supervisor-architecture-orchestrating-enterprise-ai-scale
     kind: community
     label: 'Databricks blog: MAS architecture'
+  - url: https://docs.databricks.com/aws/en/release-notes/product/2026/february
+    kind: official
+    label: 'Databricks release notes: Multi-Agent Supervisor is now Supervisor Agent (February 2026)'
   - url: https://hexaware.com/blogs/building-an-ai-powered-wealth-management-assistant-with-databricks-agent-bricks-and-multi-agent-ai/
     kind: internet
     label: 'Hexaware: Agent Bricks multi-agent'
 source: https://docs.databricks.com/aws/en/generative-ai/agent-bricks/multi-agent-supervisor
-verified: '2026-07-18'
+verified: '2026-08-20'

@@ -13,15 +13,15 @@ fact:
   - note: Even its CLI command group is now marked deprecated.
     link: https://learn.microsoft.com/en-us/azure/databricks/dev-tools/cli/reference/alerts-legacy-commands#:~:text=These%20commands%20are%20deprecated
 status:
-  value: deprecated
-  link: https://docs.databricks.com/aws/en/sql/user/alerts/legacy
-  date: '2026-07-18'
+  value: legacy
+  link: https://docs.databricks.com/aws/en/sql/user/alerts/legacy#:~:text=Legacy%20alerts%20are%20the%20first%20version%20of%20Databricks%20SQL%20alerts
+  date: '2026-08-20'
 from:
   date: 2020-11
   link: https://docs.databricks.com/aws/en/release-notes/product/2020/november#:~:text=automatic%20alerting%20for%20important%20data%20changes
 deprecatedAt:
-  date: '2025'
-  link: https://docs.databricks.com/aws/en/sql/user/alerts/legacy
+  date: 2025-05
+  link: https://docs.databricks.com/aws/en/release-notes/product/2025/may#:~:text=You%20can%20still%20use%20legacy%20alerts%20alongside%20the%20new%20version.
 successorId: databricks-sql-alerts
 replacement: Databricks SQL alerts (new)
 links:
@@ -29,4 +29,4 @@ links:
     kind: community
     label: 'Community: Legacy vs V2 SQL alerts'
 source: https://docs.databricks.com/aws/en/sql/user/alerts/legacy
-verified: '2026-07-23'
+verified: '2026-08-20'

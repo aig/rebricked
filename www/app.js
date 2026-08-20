@@ -84,10 +84,10 @@
       { label: "Learn", icon: "learn", href: "/learn/" },
       { label: "Workspace", icon: "workspace", ids: ["git-folders", "databricks-repos", "legacy-databricks-cli", "databricks-cli", "serverless-workspaces", "custom-url", "databricks-free-edition", "databricks-community-edition", "personal-access-tokens", "oauth-token-federation", "legacy-databricks-connect", "databricks-connect", "mission-critical", "agentic-code-converter", "lakebridge-agentic-converter", "spaces"] },
       { label: "Recents", icon: "recents" },
-      { label: "Catalog", icon: "catalog", ids: ["catalog-explorer", "data-explorer", "unity-catalog", "unity-catalog-volumes", "secrets-in-unity-catalog", "dbfs-mounts", "lakehouse-federation", "opensharing", "delta-sharing", "secureconnect", "delta-lake", "databricks-delta", "transactions", "variant", "liquid-clustering", "hive-metastore", "attribute-based-access-control", "role-based-access-control", "governance-hub", "data-profiling", "lakehouse-monitoring", "anomaly-detection", "unity-catalog-managed-iceberg-tables", "managed-iceberg-materialized-views", "databricks-clean-rooms", "governed-tags", "tag-policies", "tag-automations", "system-tables", "credential-passthrough", "hive-metastore-table-access-control"] },
-      { label: "Jobs & Pipelines", icon: "jobs", ids: ["lakeflow-declarative-pipelines", "delta-live-tables", "lakeflow-jobs", "workflows", "lakeflow-connect", "declarative-automation-bundles", "databricks-asset-bundles", "dbx", "lakeflow-pipelines-editor", "multi-file-editor", "standalone-pipelines"] },
-      { label: "Compute", icon: "compute", ids: ["lakebase", "lake-transactional-analytical-processing", "ai-runtime", "lakehouse-replay", "standard-and-dedicated-access-modes", "shared-single-user-access-modes", "no-isolation-shared-access-mode", "high-concurrency-clusters", "serverless-pools", "init-scripts-on-dbfs", "photon", "disk-cache", "delta-cache", "databricks-light"] },
-      { label: "Discover", icon: "discover", ids: ["discover", "pages", "databricks-marketplace"] },
+      { label: "Catalog", icon: "catalog", ids: ["catalog-explorer", "data-explorer", "unity-catalog", "unity-catalog-volumes", "secrets-in-unity-catalog", "dbfs-mounts", "lakehouse-federation", "opensharing", "delta-sharing", "secureconnect", "delta-lake", "databricks-delta", "transactions", "variant", "liquid-clustering", "hive-metastore", "attribute-based-access-control", "role-based-access-control", "governance-hub", "data-profiling", "lakehouse-monitoring", "anomaly-detection", "unity-catalog-managed-iceberg-tables", "managed-iceberg-materialized-views", "databricks-clean-rooms", "governed-tags", "tag-policies", "tag-automations", "system-tables", "credential-passthrough", "hive-metastore-table-access-control", "external-lineage", "bring-your-own-lineage", "data-classification", "identity-attributes"] },
+      { label: "Jobs & Pipelines", icon: "jobs", ids: ["lakeflow-pipelines", "lakeflow-spark-declarative-pipelines", "lakeflow-declarative-pipelines", "delta-live-tables", "lakeflow-jobs", "workflows", "lakeflow-connect", "declarative-automation-bundles", "databricks-asset-bundles", "dbx", "lakeflow-pipelines-editor", "multi-file-editor", "standalone-pipelines"] },
+      { label: "Compute", icon: "compute", ids: ["lakebase", "lakebase-autoscaling", "lakebase-provisioned", "lake-transactional-analytical-processing", "ai-runtime", "lakehouse-replay", "standard-and-dedicated-access-modes", "shared-single-user-access-modes", "no-isolation-shared-access-mode", "high-concurrency-clusters", "serverless-pools", "init-scripts-on-dbfs", "photon", "disk-cache", "delta-cache", "databricks-light"] },
+      { label: "Discover", icon: "discover", ids: ["discover", "pages", "metric-views", "databricks-marketplace"] },
       { label: "Marketplace", icon: "marketplace" },
       { label: "Apps", icon: "apps", ids: ["databricks-apps"] },
     ]},
@@ -95,10 +95,10 @@
       { label: "SQL Editor", icon: "sqlEditor", ids: ["databricks-sql", "sql-analytics", "legacy-sql-editor", "new-sql-editor"] },
       { label: "Queries", icon: "queries" },
       { label: "Dashboards", icon: "dashboards", ids: ["ai-bi-dashboards", "lakeview-dashboards", "legacy-dashboards", "databricks-sql-dashboards"] },
-      { label: "Genie Agents", icon: "genie", ids: ["genie-agents", "genie-spaces", "genie-one", "genie", "databricks-one", "genie-code", "genie-ontology", "databricks-assistant"] },
+      { label: "Genie Agents", icon: "genie", ids: ["genie-agents", "genie-spaces", "genie-one", "genie", "databricks-one", "genie-code", "genie-ontology", "databricks-assistant", "agent-mode", "research-agent"] },
       { label: "Alerts", icon: "alerts", ids: ["legacy-sql-alerts", "databricks-sql-alerts"] },
       { label: "Query History", icon: "history" },
-      { label: "SQL Warehouses", icon: "warehouse", ids: ["sql-warehouse", "sql-endpoint", "databricks-odbc-driver", "simba-spark-odbc-driver", "lakehouse-real-time"] },
+      { label: "SQL Warehouses", icon: "warehouse", ids: ["sql-warehouse", "sql-endpoint", "databricks-odbc-driver", "simba-spark-odbc-driver", "databricks-jdbc-driver", "simba-jdbc-driver", "lakehouse-real-time"] },
     ]},
     { label: "Data Engineering", items: [
       { label: "Runs", icon: "runs" },
@@ -582,7 +582,13 @@
       const origin = d.from != null ? d.from : d.introducedAt;
       const intro = dateOf(origin) ? `Available from ${dateLinkHTML(origin)} · ` : "";
       dateText = `${intro}${verb} ${dateLinkHTML(d.deprecatedAt || "?")}${occasion}`;
-      if (dateOf(d.removedAt)) urgent = `<span class="meta-urgent">⚠ Access ended ${dateLinkHTML(d.removedAt)}</span>`;
+      // A `removedAt` in the future is a scheduled sunset, not a finished one - saying
+      // "Access ended" of a date that has not arrived is simply false, and these dates are
+      // routinely announced months ahead (see lakebase-provisioned).
+      if (dateOf(d.removedAt)) {
+        const ended = !isFutureToken(dateOf(d.removedAt));
+        urgent = `<span class="meta-urgent">⚠ Access ${ended ? "ended" : "ends"} ${dateLinkHTML(d.removedAt)}</span>`;
+      }
     } else if ((statusValue(d) || "current") === "renamed") {
       spine = "is-former";
       const fromD = dateOf(d.from), toD = dateOf(d.to);
@@ -2444,6 +2450,16 @@
   // pulls the raw date token; `linkOf` pulls the confirmation URL.
   function dateOf(v) {
     return v && typeof v === "object" ? String(v.date ?? "") : String(v ?? "");
+  }
+  // Is a `YYYY` or `YYYY-MM` token still in the future? Compared at month granularity, so a
+  // token for the current month counts as reached. Used to keep a scheduled sunset from
+  // being announced in the past tense.
+  function isFutureToken(token) {
+    const t = String(token || "").trim();
+    if (!/^\d{4}(-\d{2})?$/.test(t)) return false;
+    const now = new Date();
+    const nowKey = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, "0")}`;
+    return (t.length === 4 ? `${t}-12` : t) > nowKey;
   }
   function linkOf(v) {
     return v && typeof v === "object" && v.link ? String(v.link) : "";

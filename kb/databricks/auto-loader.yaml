@@ -17,7 +17,7 @@ fact:
 status:
   value: active
   link: https://docs.databricks.com/aws/en/ingestion/cloud-object-storage/auto-loader/#:~:text=incrementally%20and%20efficiently%20processes%20new%20data%20files%20as%20they%20arrive
-  date: '2026-08-12'
+  date: '2026-08-20'
 introducedAt:
   date: 2020-02
   link: https://docs.databricks.com/aws/en/release-notes/product/2020/february#:~:text=Process%20new%20data%20files%20incrementally%20with%20Auto%20Loader
@@ -26,4 +26,4 @@ prediction:
   - Auto Ingest
   - Genie Loader
 source: https://docs.databricks.com/aws/en/ingestion/cloud-object-storage/auto-loader/
-verified: '2026-08-12'
+verified: '2026-08-20'

@@ -16,7 +16,7 @@ fact:
 status:
   value: active
   link: https://docs.databricks.com/aws/en/volumes/#:~:text=Volumes%20are%20Unity%20Catalog%20objects%20that%20enable%20governance%20over%20non%2Dtabular%20datasets.
-  date: '2026-07-18'
+  date: '2026-08-20'
 releases:
   - type: public-preview
     date: 2023-07
@@ -30,7 +30,7 @@ introducedAt:
 limitations:
   note: Volumes require Databricks Runtime 13.3 LTS or above or a SQL warehouse, don't support dbutils.fs commands distributed to executors, can't be accessed from RDDs or Unity Catalog UDFs, can't back a custom Hadoop file system, and require fully qualified /Volumes paths (no abbreviated paths).
   link: https://docs.databricks.com/aws/en/volumes/#:~:text=create%20a%20custom%20Hadoop%20file%20system%20with%20volumes
-  date: '2026-07-23'
+  date: '2026-08-20'
 links:
   - url: https://www.databricks.com/blog/announcing-general-availability-unity-catalog-volumes
     kind: community
@@ -43,4 +43,4 @@ prediction:
   - Unity Volumes One
   - Genie Volumes
 source: https://docs.databricks.com/aws/en/volumes/
-verified: '2026-07-23'
+verified: '2026-08-20'

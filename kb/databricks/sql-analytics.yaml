@@ -10,7 +10,7 @@ fact:
 status:
   value: renamed
   link: https://learn.microsoft.com/en-us/azure/databricks/sql/release-notes/2021#:~:text=SQL%20Analytics%20is%20renamed%20to%20Databricks%20SQL.
-  date: '2026-07-18'
+  date: '2026-08-20'
 from:
   date: '2020'
   link: https://www.databricks.com/blog/2020/11/12/announcing-the-launch-of-databricks-sql.html#:~:text=Announcing%20the%20Launch%20of%20Databricks%20SQL
@@ -26,4 +26,4 @@ links:
     kind: internet
     label: 'TechCrunch: SQL Analytics launch'
 source: https://learn.microsoft.com/en-us/azure/databricks/sql/release-notes/2021
-verified: '2026-07-23'
+verified: '2026-08-20'

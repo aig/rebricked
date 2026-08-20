@@ -132,11 +132,24 @@ balanced `:::` fences. **Warns** (never fails) when a guide is past its `staleAf
 | Reads | `www/databricks.features.json`, `kb/posts/` |
 | Writes | nothing. Prints a verdict per URL |
 | Needs | network access |
-| Flags | `--list-blocked` (print only blocked URLs), `--fail-on-blocked` (treat BLOCKED as failure) |
+| Flags | `--list-blocked` (print only blocked URLs), `--fail-on-blocked` (treat BLOCKED as failure), `--chrome` (retry blocked pages through headless Chrome/Edge) |
 | Args | zero or more entry ids, or `post:<slug>` for a guide. Default: everything |
 
 Verdicts are `OK`, `DEAD` (page gone, or readable but the cited quote is absent), and `BLOCKED` (the
 host refused a scripted request - says nothing about the link, and never fails the run).
+
+**Which URLs it collects:** every value under a `link`, `url`, or `source` key, at any depth - so
+`source`, `status.link`, `what.link`, each `fact[].link`, the date-field links, `releases[].link`,
+`limitations.link`, `occasion.link`, and every `links[].url`. `source` was added to that set in
+August 2026; before then the one URL the schema requires on every entry was the only one the rot
+check never fetched.
+
+`--chrome` reuses the same browser discovery as `build_badges.py` (Edge, then Chrome/Chromium; the
+function is duplicated rather than imported so this script still runs standalone) and drives it with
+`--headless=new --dump-dom`. It only ever retries pages already judged `BLOCKED`, runs serially, and
+degrades to a printed notice if no browser is installed. Hosts behind a bot wall serve these pages
+normally to a real browser, so this is what turns `BLOCKED` from a permanent blind spot into an
+answer.
 
 **Not part of the deploy gate**, by design: it needs the network and third parties rate-limit it.
 See [how-to/check-citations.md](../how-to/check-citations.md).

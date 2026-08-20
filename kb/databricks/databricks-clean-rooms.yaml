@@ -15,7 +15,7 @@ fact:
 status:
   value: active
   link: https://docs.databricks.com/aws/en/clean-rooms/#:~:text=Clean%20Rooms%2C%20a%20Databricks%20feature%20that%20uses%20OpenSharing
-  date: '2026-07-18'
+  date: '2026-08-20'
 releases:
   - type: public-preview
     date: 2024-08
@@ -24,8 +24,8 @@ releases:
     date: 2025-01
     link: https://docs.databricks.com/aws/en/release-notes/product/2025/january#:~:text=Databricks%20Clean%20Rooms%20is%20now%20generally%20available.
 introducedAt:
-  date: 2025-02
-  link: https://www.databricks.com/blog/databricks-clean-rooms-now-generally-available-aws-and-azure#:~:text=General%20Availability%20%28GA%29%20of%20Databricks%20Clean%20Rooms%20on%20AWS%20and%20Azure
+  date: 2024-08
+  link: https://www.databricks.com/blog/databricks-clean-rooms-privacy-safe-collaboration-public-preview#:~:text=Clean%20Rooms%20is%20in%20Public%20Preview%20in%20AWS%20and%20Azure
 occasion:
   date: 2025-02
   link: https://www.databricks.com/blog/databricks-clean-rooms-now-generally-available-aws-and-azure#:~:text=General%20Availability%20%28GA%29%20of%20Databricks%20Clean%20Rooms%20on%20AWS%20and%20Azure
@@ -33,7 +33,7 @@ occasion:
 limitations:
   note: Clean rooms are limited to at most ten collaborators, can't be renamed after creation, and require serverless compute plus Unity Catalog with OpenSharing enabled.
   link: https://docs.databricks.com/aws/en/clean-rooms/#:~:text=Each%20clean%20room%20is%20limited%20to%20ten%20collaborators
-  date: '2026-07-23'
+  date: '2026-08-20'
 links:
   - url: https://www.databricks.com/blog/databricks-clean-rooms-privacy-safe-collaboration-public-preview
     kind: community
@@ -46,4 +46,4 @@ prediction:
   - Unity Clean Rooms
   - Agentic Clean Rooms
 source: https://docs.databricks.com/aws/en/clean-rooms/
-verified: '2026-07-23'
+verified: '2026-08-20'

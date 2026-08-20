@@ -16,7 +16,7 @@ fact:
 status:
   value: active
   link: https://docs.databricks.com/aws/en/compute/sql-warehouse/real-time#:~:text=Lakehouse%20Real%2DTime%20%28Lakehouse%2F%2FRT%29%20is%20a%20serverless%20compute
-  date: '2026-07-18'
+  date: '2026-08-20'
 releases:
   - type: beta
     date: 2026-06
@@ -29,9 +29,9 @@ occasion:
   link: https://www.databricks.com/blog/introducing-lakehousert-real-time-performance-unified-lakehouse#:~:text=real%2Dtime%20data%20warehouse%20designed%20for%20operational%20analytics
   note: Announced June 16, 2026
 limitations:
-  note: Supports read (SELECT) queries only - no writes or ETL - and doesn't support Genie, Genie Agents, or Jobs tasks. It excludes many table types (system, Delta Sharing, UC default-storage/external, Hive metastore, foreign/federated), the ADBC/ODBC/Go drivers, GEOGRAPHY/GEOMETRY types, AI functions, Python UDFs, and the compliance security profile.
+  note: Supports read (SELECT) queries only - no writes, DDL, GRANT/REVOKE, or Delta maintenance commands - and doesn't support Genie, Genie Agents, or Jobs tasks. Only managed Delta and Iceberg tables, materialized views, streaming tables, and metric views are supported, so system, Delta Sharing, UC default-storage/external, Hive metastore, foreign/federated, temporary, and raw-file-format tables are excluded, as are the ADBC/ODBC/Go drivers, GEOGRAPHY/GEOMETRY types, AI functions, Python UDFs, ABAC, serverless network controls, and the compliance security profile.
   link: https://docs.databricks.com/aws/en/compute/sql-warehouse/real-time#:~:text=is%20for%20read%20%28SELECT%29%20queries%20only
-  date: '2026-07-23'
+  date: '2026-08-20'
 links:
   - url: https://www.databricks.com/blog/introducing-lakehousert-real-time-performance-unified-lakehouse
     kind: community
@@ -44,4 +44,4 @@ prediction:
   - Lakehouse//RT One
   - Unity Real-Time
 source: https://docs.databricks.com/aws/en/compute/sql-warehouse/real-time
-verified: '2026-07-23'
+verified: '2026-08-20'

@@ -14,7 +14,14 @@ fact:
 status:
   value: renamed
   link: https://docs.databricks.com/aws/en/ai-gateway/#:~:text=Unity%20AI%20Gateway
-  date: '2026-07-24'
+  date: '2026-08-20'
+releases:
+  - type: public-preview
+    date: 2024-09
+    link: https://docs.databricks.com/aws/en/release-notes/product/2024/september#:~:text=Mosaic%20AI%20Gateway%20is%20now%20Public%20Preview
+  - type: ga
+    date: 2025-06
+    link: https://docs.databricks.com/aws/en/release-notes/product/2025/june#:~:text=Mosaic%20AI%20Gateway%20is%20now%20generally%20available
 from:
   date: 2024-09
   link: https://docs.databricks.com/aws/en/release-notes/product/2024/september#:~:text=Mosaic%20AI%20Gateway%20is%20now%20Public%20Preview
@@ -37,4 +44,4 @@ prediction:
   - Genie AI Gateway
   - Lakeflow AI Gateway
 source: https://docs.databricks.com/aws/en/ai-gateway/
-verified: '2026-08-03'
+verified: '2026-08-20'

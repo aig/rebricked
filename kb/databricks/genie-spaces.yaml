@@ -9,14 +9,14 @@ fact:
     link: https://docs.databricks.com/aws/en/genie-agents/set-up#:~:text=the%20natural%2Dlanguage%20chat%20interface%20that%20business%20users
 status:
   value: renamed
-  link: https://docs.databricks.com/aws/en/genie-agents/set-up#:~:text=formerly%20known%20as%20Genie
-  date: '2026-07-18'
+  link: https://docs.databricks.com/aws/en/genie-agents/set-up#:~:text=Genie%20Agents%20were%20formerly%20known%20as%20Genie%20Spaces.
+  date: '2026-08-20'
 from:
-  date: '2024'
-  link: https://www.databricks.com/blog/aibi-genie-now-generally-available
+  date: 2024-06
+  link: https://www.databricks.com/company/newsroom/press-releases/introducing-databricks-aibi-intelligent-analytics-real-world-data#:~:text=Genie%20is%20in%20public%20preview%20starting%20today
 to:
   date: 2026-07
-  link: https://docs.databricks.com/aws/en/ai-bi/release-notes/2026#:~:text=Genie%20Agents%20%28formerly%20Genie%20Spaces%29
+  link: https://docs.databricks.com/aws/en/ai-bi/release-notes/2026#:~:text=are%20now%20called%20Genie%20Agents
 successorId: genie-agents
 links:
   - url: https://www.databricks.com/blog/aibi-genie-now-generally-available
@@ -26,4 +26,4 @@ links:
     kind: internet
     label: 'Atlan: AI/BI Genie explainer'
 source: https://docs.databricks.com/aws/en/genie-agents/set-up
-verified: '2026-07-18'
+verified: '2026-08-20'

@@ -14,7 +14,7 @@ fact:
 status:
   value: active
   link: https://docs.databricks.com/aws/en/agents/mcp-tools/ai-search#:~:text=This%20feature%20is%20in%20Public%20Preview
-  date: '2026-08-10'
+  date: '2026-08-20'
 releases:
   - type: beta
     date: 2025-06
@@ -28,7 +28,7 @@ introducedAt:
 limitations:
   note: Querying an index through the server requires Databricks managed embeddings.
   link: https://docs.databricks.com/aws/en/agents/mcp-tools/ai-search#:~:text=requires%20Databricks%20managed%20embeddings
-  date: '2026-08-10'
+  date: '2026-08-20'
 links:
   - url: https://www.databricks.com/blog/announcing-managed-mcp-servers-unity-catalog-and-mosaic-ai-integration
     kind: official
@@ -37,4 +37,4 @@ prediction:
   - Genie Search MCP server
   - Unity Retrieval Server
 source: https://docs.databricks.com/aws/en/agents/mcp-tools/ai-search
-verified: '2026-08-10'
+verified: '2026-08-20'

@@ -12,12 +12,12 @@ what:
 fact:
   - note: '''Shared'' became ''Standard'' and ''Single user'' became ''Dedicated'' in 2025 - then ''Dedicated'' clusters were promptly allowed to be shared with a group, making the new name ironic on arrival.'
     link: https://www.databricks.com/blog/whats-new-unity-catalog-compute#:~:text=dedicated%20clusters%20can%20now%20be%20shared%20with%20a%20group
-  - note: A new 'Auto' mode now just picks the recommended access mode for you.
-    link: https://www.databricks.com/blog/whats-new-unity-catalog-compute#:~:text=automatically%20picks%20the%20recommended%20compute%20access%20mode
+  - note: The access mode picker now defaults to 'Auto', which decides for you from the runtime - Standard, unless you pick an ML runtime, a GPU instance type or a runtime below 14.3, in which case you get Dedicated.
+    link: https://docs.databricks.com/aws/en/compute/configure#:~:text=Access%20mode%20selection%20is%20Auto%20by%20default
 status:
   value: active
   link: https://www.databricks.com/blog/whats-new-unity-catalog-compute#:~:text=Standard%20clusters%20%28formerly%20shared%29%20are%20the%20new%20default%20classic%20compute%20type
-  date: '2026-07-18'
+  date: '2026-08-20'
 releases:
   - type: ga
     date: 2025-03
@@ -32,7 +32,7 @@ occasion:
 limitations:
   note: On Standard access mode, Databricks Runtime for ML, GPU compute, R, RDD APIs, spark-submit tasks, Hive UDFs, the Scala SparkContext, and streaming socket sources aren't supported; compute runs as a low-privilege user with restricted filesystem access and can't reach the instance metadata service or other services in the Databricks VPC.
   link: https://docs.databricks.com/aws/en/compute/access-mode-limitations#:~:text=runs%20commands%20as%20a%20low%2Dprivilege%20user
-  date: '2026-07-23'
+  date: '2026-08-20'
 links:
   - url: https://community.databricks.com/t5/administration-architecture/clarification-on-databricks-access-modes-standard-vs-dedicated/td-p/122477
     kind: community
@@ -42,4 +42,4 @@ prediction:
   - Unity access modes
   - Standard and Dedicated access modes v2
 source: https://www.databricks.com/blog/whats-new-unity-catalog-compute
-verified: '2026-07-18'
+verified: '2026-08-20'

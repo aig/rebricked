@@ -17,7 +17,7 @@ fact:
 status:
   value: renamed
   link: https://docs.databricks.com/aws/en/release-notes/product/2018/july#:~:text=option%20has%20been%20replaced%20by
-  date: '2026-08-12'
+  date: '2026-08-20'
 to:
   date: 2018-07
   link: https://docs.databricks.com/aws/en/release-notes/product/2018/july#:~:text=option%20has%20been%20replaced%20by
@@ -27,4 +27,4 @@ prediction:
   - Auto pools
   - Pool mode
 source: https://docs.databricks.com/aws/en/release-notes/product/2018/july
-verified: '2026-08-12'
+verified: '2026-08-20'

@@ -10,7 +10,7 @@ fact:
 status:
   value: renamed
   link: https://docs.databricks.com/aws/en/genie-one/genie#:~:text=Genie%20One%20was%20previously%20known%20as%20Databricks%20One.
-  date: '2026-07-18'
+  date: '2026-08-20'
 from:
   date: '2025'
   link: https://www.databricks.com/blog/introducing-databricks-one#:~:text=Introducing%20Databricks%20One
@@ -26,4 +26,4 @@ links:
     kind: internet
     label: 'PR Newswire: Databricks One unveiled'
 source: https://docs.databricks.com/aws/en/genie-one/genie
-verified: '2026-07-23'
+verified: '2026-08-20'

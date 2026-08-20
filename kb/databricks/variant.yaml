@@ -18,7 +18,7 @@ fact:
 status:
   value: active
   link: https://docs.databricks.com/aws/en/semi-structured/variant#:~:text=Databricks%20recommends%20using%20VARIANT%20over%20JSON%20strings%20for%20semi%2Dstructured%20data
-  date: '2026-08-03'
+  date: '2026-08-20'
 releases:
   - type: public-preview
     date: 2024-06
@@ -32,7 +32,7 @@ introducedAt:
 limitations:
   note: A VARIANT column can't be a clustering key, partition, or Z-order key, and the type can't be used for comparisons, grouping, ordering, or set operations. Shredding adds write overhead, skips VARIANT nested inside arrays and maps, and never converts data already written (REORG TABLE ... APPLY (SHRED VARIANT) does that); reading or writing shredded tables needs Databricks Runtime 17.3 or above, with 18.1 or above recommended for variant statistics and data skipping. Migrating off JSON strings can break working queries, since paths become case-sensitive, the [*] array syntax is unsupported, and NULL is encoded differently.
   link: https://docs.databricks.com/aws/en/semi-structured/variant#:~:text=VARIANT%20columns%20cannot%20be%20used%20for%20clustering%20keys%2C%20partitions%2C%20or%20Z%2Dorder%20keys
-  date: '2026-08-03'
+  date: '2026-08-20'
 links:
   - url: https://docs.databricks.com/aws/en/semi-structured/variant-json-diff
     kind: official
@@ -51,4 +51,4 @@ prediction:
   - Genie Variant
   - Liquid Variant
 source: https://docs.databricks.com/aws/en/semi-structured/variant
-verified: '2026-08-03'
+verified: '2026-08-20'

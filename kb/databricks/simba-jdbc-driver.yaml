@@ -1,0 +1,39 @@
+id: simba-jdbc-driver
+name: Simba JDBC Driver (Legacy)
+aliases:
+  - Databricks JDBC Driver (Simba)
+  - Simba JDBC
+  - Databricks JDBC 2.x
+category: Developer experience
+what:
+  note: The original JDBC driver for connecting Java apps, tools, clients, and SDKs to Databricks, covering every version below version 3.
+  link: https://docs.databricks.com/aws/en/integrations/jdbc/#:~:text=Use%20it%20to%20connect%20apps%2C%20tools%2C%20clients%2C%20SDKs%2C%20and%20APIs%20to%20Databricks%20through%20Java%20Database%20Connectivity
+fact:
+  - note: For years the JDBC driver Databricks shipped was not written by Databricks at all - the docs say plainly that it is a Simba driver developed by insightsoftware.
+    link: https://docs.databricks.com/aws/en/integrations/jdbc/#:~:text=is%20a%20Simba%20driver%20developed%20by
+  - note: Being labelled legacy did not stop the release train - version 2.8.0 shipped in March 2026, a year after version 3 took over the recommended slot.
+    link: https://docs.databricks.com/aws/en/release-notes/product/2026/march#:~:text=version%202.8.0%20is%20now%20available%20for%20download
+  - note: Its configuration guide is welded to the installer - the docs hand you a PDF that also rides along inside the download's own docs directory.
+    link: https://docs.databricks.com/aws/en/integrations/jdbc/#:~:text=The%20PDF%20is%20also%20included%20in%20your%20driver%20download's%20docs%20directory
+status:
+  value: legacy
+  link: https://docs.databricks.com/aws/en/integrations/jdbc/#:~:text=This%20page%20applies%20to%20the%20Simba%20JDBC%20Driver%20(Legacy)%2C%20versions%20below%20version%203
+  date: '2026-08-20'
+deprecatedAt:
+  date: 2025-03
+  link: https://docs.databricks.com/aws/en/release-notes/product/2025/march#:~:text=is%20now%20generally%20available%20(GA)%20and%20will%20soon%20be%20open%20source
+successorId: databricks-jdbc-driver
+replacement: Databricks JDBC Driver
+limitations:
+  note: Cloud Fetch needs JDBC driver 2.6.19 or above and only applies to query results larger than 1 MB, and it requires an E2 workspace plus an Amazon S3 bucket without versioning enabled; with versioning on, Databricks cannot garbage collect older result-file versions after the 24-hour retention, so storage keeps growing.
+  link: https://docs.databricks.com/aws/en/integrations/jdbc/capability#:~:text=Cloud%20Fetch%20requires%20an%20E2%20workspace%20and%20an%20Amazon%20S3%20bucket%20without%20versioning%20enabled
+  date: '2026-08-20'
+links:
+  - url: https://docs.databricks.com/aws/en/integrations/jdbc/capability
+    kind: official
+    label: 'Docs: driver capability settings (Simba)'
+  - url: https://insightsoftware.com/simba/
+    kind: internet
+    label: 'insightsoftware: Simba drivers'
+source: https://docs.databricks.com/aws/en/integrations/jdbc/
+verified: '2026-08-20'

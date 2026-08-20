@@ -17,7 +17,7 @@ fact:
 status:
   value: active
   link: https://docs.databricks.com/aws/en/data-governance/unity-catalog/data-quality-monitoring/anomaly-detection/#:~:text=monitor%20data%20quality%20across%20all%20tables%20in%20a%20schema
-  date: '2026-08-03'
+  date: '2026-08-20'
 releases:
   - type: public-preview
     date: 2026-02
@@ -28,7 +28,7 @@ introducedAt:
 limitations:
   note: Public Preview. Needs a Unity Catalog enabled workspace and serverless compute, plus MANAGE on the schema or catalog to switch it on. Views and foreign tables are not supported, and the completeness check does not take into account the fraction of nulls, zero values, or NaN.
   link: https://docs.databricks.com/aws/en/data-governance/unity-catalog/data-quality-monitoring/anomaly-detection/#:~:text=does%20not%20take%20into%20account%20metrics%20such%20as%20the%20fraction%20of%20nulls
-  date: '2026-08-03'
+  date: '2026-08-20'
 links:
   - url: https://docs.databricks.com/aws/en/release-notes/product/2026/february
     kind: official
@@ -41,4 +41,4 @@ prediction:
   - Unity Anomaly Detection
   - Data Health One
 source: https://docs.databricks.com/aws/en/data-governance/unity-catalog/data-quality-monitoring/anomaly-detection/
-verified: '2026-08-03'
+verified: '2026-08-20'

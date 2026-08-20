@@ -18,7 +18,7 @@ fact:
 status:
   value: active
   link: https://learn.microsoft.com/en-us/azure/databricks/release-notes/product/2023/march#:~:text=Model%20Serving%2C%20formerly%20Serverless%20Real%2DTime%20Inference%2C%20is%20now%20generally%20available
-  date: '2026-07-18'
+  date: '2026-08-20'
 releases:
   - type: ga
     date: 2023-03
@@ -31,9 +31,9 @@ occasion:
   link: https://learn.microsoft.com/en-us/azure/databricks/release-notes/product/2023/march#:~:text=Model%20Serving%20is%20GA
   note: Model Serving GA, March 7, 2023
 limitations:
-  note: Documented limits include up to 1000 endpoints per workspace (raisable on request), a 16 MB request payload (4 MB for AI agent endpoints), a 597-second model execution duration per request, 50 create/update operations per 5-minute window, provisioned concurrency of up to 1024 per model and 4096 per workspace (raisable on request), a queries-per-second cap of 300,000 with route optimization (200 without, recommended only for small dev use), and no logging for requests or responses over 1 MB.
+  note: Documented limits include up to 1000 endpoints per workspace (raisable on request), a 16 MB request payload (4 MB for agent endpoints), a 597-second model execution duration per request, 50 create/update operations per 5-minute window, provisioned concurrency of up to 1024 per model and 4096 per workspace (raisable on request), a queries-per-second cap of 300,000 with route optimization (200 without, recommended only for small dev use), and no logging for requests or responses over 1 MB.
   link: https://docs.databricks.com/aws/en/machine-learning/model-serving/model-serving-limits#:~:text=Any%20request%2Fresponse%20over%201%20MB%20will%20not%20be%20logged
-  date: '2026-07-23'
+  date: '2026-08-20'
 links:
   - url: https://www.databricks.com/blog/announcing-general-availability-databricks-model-serving
     kind: community
@@ -46,4 +46,4 @@ prediction:
   - Mosaic AI Serving
   - Genie Serving
 source: https://learn.microsoft.com/en-us/azure/databricks/release-notes/product/2023/march
-verified: '2026-08-03'
+verified: '2026-08-20'

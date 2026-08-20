@@ -15,7 +15,7 @@ fact:
 status:
   value: renamed
   link: https://learn.microsoft.com/en-us/azure/databricks/archive/legacy/legacy-dashboards
-  date: '2026-07-23'
+  date: '2026-08-20'
 from:
   date: 2020-11
   link: https://learn.microsoft.com/en-us/azure/databricks/release-notes/product/2020/november#:~:text=Databricks%20SQL%20%28Public%20Preview%29
@@ -35,4 +35,4 @@ links:
     kind: internet
     label: 'TechCrunch: Databricks acquires Redash'
 source: https://learn.microsoft.com/en-us/azure/databricks/release-notes/product/2020/november
-verified: '2026-07-23'
+verified: '2026-08-20'

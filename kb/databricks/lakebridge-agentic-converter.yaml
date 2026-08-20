@@ -11,12 +11,12 @@ fact:
     link: https://docs.databricks.com/aws/en/migration/lakebridge-agentic-converter#:~:text=validates%20the%20result%2C%20and%20retries%20sections%20that%20fail
   - note: 'The name is gone from the page but not from the address bar: the /migration/lakebridge-agentic-converter doc URL still resolves, quietly outliving the title it was named after.'
     link: https://docs.databricks.com/aws/en/migration/lakebridge-agentic-converter#:~:text=Convert%20SQL%20with%20the%20agentic%20code%20converter
-  - note: It carried the Lakebridge brand for a matter of weeks - announced in the July 2026 release notes and retitled in the same month's docs.
+  - note: The Lakebridge brand never made it into a release note - by the time the converter reached Beta in July 2026, the announcement already called it the agentic code converter.
     link: https://docs.databricks.com/aws/en/release-notes/product/2026/july#:~:text=Agentic%20code%20converter%20is%20in%20Beta
 status:
   value: renamed
   link: https://docs.databricks.com/aws/en/migration/lakebridge-agentic-converter#:~:text=Convert%20SQL%20with%20the%20agentic%20code%20converter
-  date: '2026-08-03'
+  date: '2026-08-20'
 releases:
   - type: beta
     date: 2026-07
@@ -33,4 +33,4 @@ links:
     kind: official
     label: 'Databricks release notes: converter Beta (July 2026)'
 source: https://docs.databricks.com/aws/en/migration/lakebridge-agentic-converter
-verified: '2026-08-03'
+verified: '2026-08-20'

@@ -1,0 +1,54 @@
+id: data-classification
+name: Data Classification
+aliases:
+  - Databricks Data Classification
+  - Unity Catalog data classification
+category: Data governance
+what:
+  note: Unity Catalog governance feature that uses an agentic AI system to automatically classify and tag the sensitive data in the tables in your catalog, so you can then apply controls such as ABAC column masks over the results.
+  link: https://docs.databricks.com/aws/en/data-governance/unity-catalog/data-classification#:~:text=uses%20an%20agentic%20AI%20system%20to%20automatically%20classify%20and%20tag
+fact:
+  - note: The engine works hard at not working - it leans on intelligent scanning to decide when a table is worth looking at, and new tables and columns in a catalog are typically scanned within 24 hours of being created.
+    link: https://docs.databricks.com/aws/en/data-governance/unity-catalog/data-classification#:~:text=New%20tables%20and%20columns%20in%20a%20catalog%20are%20typically%20scanned%20within%2024%20hours%20of%20being%20created
+  - note: Its own results table is a sensitive-data hoard - system.data_classification.results contains all classification results across the entire metastore, sample values included, so the docs tell you to share it only with people allowed to see all of that.
+    link: https://docs.databricks.com/aws/en/data-governance/unity-catalog/data-classification#:~:text=contains%20all%20classification%20results%20across%20the%20entire%20metastore
+  - note: It keeps quietly switching itself on for the strictest customers - after GA it became available by default for compliance security profile workspaces, reaching the ones with C5, TISAX, or IRAP controls selected in July 2026.
+    link: https://docs.databricks.com/aws/en/release-notes/product/2026/july#:~:text=either%20C5%2C%20TISAX%2C%20or%20IRAP%20controls%20selected
+status:
+  value: active
+  link: https://docs.databricks.com/aws/en/data-governance/unity-catalog/data-classification#:~:text=uses%20an%20agentic%20AI%20system%20to%20automatically%20classify%20and%20tag
+  date: '2026-08-20'
+releases:
+  - type: public-preview
+    date: 2025-10
+    link: https://docs.databricks.com/aws/en/release-notes/product/2025/october#:~:text=is%20now%20in%20Public%20Preview%20and%20supports%20all%20catalog%20types
+  - type: ga
+    date: 2026-04
+    link: https://docs.databricks.com/aws/en/release-notes/product/2026/april#:~:text=Databricks%20Data%20Classification%20is%20now%20GA
+introducedAt:
+  date: 2025-10
+  link: https://docs.databricks.com/aws/en/release-notes/product/2025/october#:~:text=is%20now%20in%20Public%20Preview%20and%20supports%20all%20catalog%20types
+occasion:
+  date: 2026-05
+  link: https://www.databricks.com/blog/abac-row-filtering-and-column-masking-policies-governed-tags-and-data-classification-are-now#:~:text=announce%20the%20General%20Availability%20of%20three%20complementary%20capabilities
+  note: GA announcement blog, May 2026
+limitations:
+  note: Views and metric views are not supported, and for a view built on existing tables Databricks recommends classifying the underlying tables instead. Detection exclusions, and their use to improve future classification accuracy, are still in Beta.
+  link: https://docs.databricks.com/aws/en/data-governance/unity-catalog/data-classification#:~:text=Views%20and%20metric%20views%20are%20not%20supported
+  date: '2026-08-20'
+links:
+  - url: https://docs.databricks.com/aws/en/release-notes/product/2025/september#:~:text=This%20table%20captures%20detections%20of%20sensitive%20data%20at%20the%20column%20level
+    kind: official
+    label: 'Databricks release notes: data classification system table in Beta (September 30, 2025)'
+  - url: https://docs.databricks.com/aws/en/data-governance/unity-catalog/data-classification#:~:text=Detection%20exclusions%20and%20their%20use%20to%20improve%20future%20classification%20accuracy
+    kind: official
+    label: 'Databricks docs: detection exclusions are in Beta'
+  - url: https://docs.databricks.com/aws/en/agents/agent-bricks/classification
+    kind: official
+    label: 'Not this: the Agent Bricks Classification agent, which sorts documents into categories you define'
+prediction:
+  - Agentic Data Classification
+  - Unity Catalog sensitivity labels
+  - Classification Hub
+source: https://docs.databricks.com/aws/en/data-governance/unity-catalog/data-classification
+verified: '2026-08-20'

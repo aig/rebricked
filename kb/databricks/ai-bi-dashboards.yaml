@@ -14,7 +14,7 @@ fact:
 status:
   value: active
   link: https://docs.databricks.com/aws/en/dashboards/#:~:text=AI%2FBI%20dashboards%20feature%20AI%2Dassisted%20authoring
-  date: '2026-07-18'
+  date: '2026-08-20'
 releases:
   - type: ga
     date: 2024-06
@@ -29,7 +29,7 @@ occasion:
 limitations:
   note: A dashboard supports up to 15 pages, 100 datasets, and 100 widgets per page; most charts render at most 10000 rows (tables up to 100K before truncation), and email-subscription attachments are capped at 9 MB combined with 100000 rows per Excel attachment.
   link: https://docs.databricks.com/aws/en/dashboards/limits#:~:text=A%20canvas%20can%20contain%20up%20to%20fifteen%20pages.
-  date: '2026-07-23'
+  date: '2026-08-20'
 links:
   - url: https://www.databricks.com/blog/announcing-public-preview-lakeview-dashboards
     kind: community
@@ -42,4 +42,4 @@ prediction:
   - AI/BI Dashboards One
   - Lakeview One
 source: https://docs.databricks.com/aws/en/dashboards/
-verified: '2026-07-23'
+verified: '2026-08-20'

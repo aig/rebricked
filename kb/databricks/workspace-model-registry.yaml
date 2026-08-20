@@ -16,7 +16,7 @@ fact:
 status:
   value: legacy
   link: https://docs.databricks.com/aws/en/machine-learning/manage-model-lifecycle/#:~:text=Workspace%20Model%20Registry%20%28legacy%29
-  date: '2026-07-18'
+  date: '2026-08-20'
 releases:
   - type: public-preview
     date: 2020-03
@@ -40,4 +40,4 @@ links:
     kind: internet
     label: 'ZenML: MLflow registry stages'
 source: https://docs.databricks.com/aws/en/machine-learning/manage-model-lifecycle/
-verified: '2026-07-23'
+verified: '2026-08-20'

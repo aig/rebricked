@@ -15,7 +15,7 @@ fact:
 status:
   value: renamed
   link: https://docs.databricks.com/aws/en/release-notes/product/2022/september#:~:text=caching%20functionality%20previously%20referred%20to%20as%20the
-  date: '2026-08-12'
+  date: '2026-08-20'
 to:
   date: 2022-09
   link: https://docs.databricks.com/aws/en/release-notes/product/2022/september#:~:text=caching%20functionality%20previously%20referred%20to%20as%20the
@@ -25,4 +25,4 @@ prediction:
   - Predictive cache
   - Unity cache
 source: https://docs.databricks.com/aws/en/optimizations/disk-cache
-verified: '2026-08-12'
+verified: '2026-08-20'

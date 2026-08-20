@@ -9,8 +9,8 @@ fact:
     link: https://www.databricks.com/blog/2021/05/26/introducing-delta-sharing-an-open-protocol-for-secure-data-sharing.html#:~:text=the%20shared%20data%20through%20pandas%2C%20Tableau
 status:
   value: renamed
-  link: https://www.databricks.com/blog/introducing-opensharing-next-evolution-delta-sharing-agentic-era#:~:text=advances%20Delta%20Sharing%20into%20an%20independent%20open%2Dsource%20project
-  date: '2026-07-23'
+  link: https://docs.databricks.com/aws/en/release-notes/product/2026/june#:~:text=Following%20the%20release%20of%20open%2Dsource%20OpenSharing%2C%20Delta%20Sharing%20is%20now%20OpenSharing
+  date: '2026-08-20'
 releases:
   - type: private-preview
     date: 2022-01
@@ -26,7 +26,7 @@ from:
   link: https://www.databricks.com/blog/2021/05/26/introducing-delta-sharing-an-open-protocol-for-secure-data-sharing.html#:~:text=an%20open%20protocol%20for%20secure%20real%2Dtime%20exchange%20of%20large%20datasets
 to:
   date: 2026-06
-  link: https://www.databricks.com/blog/introducing-opensharing-next-evolution-delta-sharing-agentic-era#:~:text=advances%20Delta%20Sharing%20into%20an%20independent%20open%2Dsource%20project
+  link: https://docs.databricks.com/aws/en/release-notes/product/2026/june#:~:text=Following%20the%20release%20of%20open%2Dsource%20OpenSharing%2C%20Delta%20Sharing%20is%20now%20OpenSharing
 successorId: opensharing
 links:
   - url: https://www.databricks.com/blog/2021/05/26/introducing-delta-sharing-an-open-protocol-for-secure-data-sharing.html
@@ -36,4 +36,4 @@ links:
     kind: internet
     label: 'PR Newswire: Delta Sharing launch'
 source: https://docs.databricks.com/aws/en/opensharing/
-verified: '2026-07-23'
+verified: '2026-08-20'

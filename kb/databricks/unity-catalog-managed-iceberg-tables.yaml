@@ -13,10 +13,12 @@ fact:
     link: https://docs.databricks.com/aws/en/iceberg/#:~:text=delivers%20temporary%20credentials%20to%20external%20engines
   - note: The managed Iceberg tables still get Databricks perks like liquid clustering, predictive optimization, and materialized views.
     link: https://docs.databricks.com/aws/en/iceberg/#:~:text=Predictive%20optimization
+  - note: Sharing them only caught up in August 2026, and when it did it went the whole way - providers can share a managed Iceberg table not just Databricks-to-Databricks but straight out to external Iceberg clients.
+    link: https://docs.databricks.com/aws/en/release-notes/product/2026/august#:~:text=Providers%20can%20now%20also%20share%20managed%20Iceberg%20tables%20to%20external%20Iceberg%20clients
 status:
   value: active
   link: https://docs.databricks.com/aws/en/iceberg/#:~:text=you%20create%20in%20Unity%20Catalog%20are%20managed%20Iceberg%20tables
-  date: '2026-07-18'
+  date: '2026-08-20'
 releases:
   - type: public-preview
     date: 2025-06
@@ -25,8 +27,8 @@ releases:
     date: 2026-05
     link: https://docs.databricks.com/aws/en/release-notes/product/2026/may#:~:text=Apache%20Iceberg%20v3%20features%20are%20generally%20available
 introducedAt:
-  date: 2026-05
-  link: https://docs.databricks.com/aws/en/release-notes/product/2026/may#:~:text=Unity%20Catalog%20managed%20Apache%20Iceberg%20tables%2C%20foreign%20Apache%20Iceberg%20tables
+  date: 2025-06
+  link: https://www.prnewswire.com/news-releases/databricks-eliminates-table-format-lock-in-and-adds-capabilities-for-business-users-with-unity-catalog-advancements-302478796.html#:~:text=Public%20Preview%20of%20full%20Apache%20Iceberg%20support%20in%20Unity%20Catalog
 occasion:
   date: 2026-05
   link: https://docs.databricks.com/aws/en/release-notes/product/2026/may#:~:text=Apache%20Iceberg%20v3%20features%20are%20generally%20available
@@ -34,7 +36,7 @@ occasion:
 limitations:
   note: Path-based access isn't supported except in Compatibility Mode (which bypasses Unity Catalog access controls), managed Iceberg tables support only deep cloning (not shallow clone), and transactions that write to managed Iceberg tables are in Private Preview.
   link: https://docs.databricks.com/aws/en/tables/managed#:~:text=support%20only%20deep%20cloning
-  date: '2026-07-23'
+  date: '2026-08-20'
 links:
   - url: https://medium.com/databricks-unity-catalog-sme/unity-catalog-managed-iceberg-tables-bc405a811344
     kind: community
@@ -47,4 +49,4 @@ prediction:
   - Unity Managed Iceberg 2.0
   - Genie Iceberg
 source: https://docs.databricks.com/aws/en/iceberg/
-verified: '2026-07-23'
+verified: '2026-08-20'

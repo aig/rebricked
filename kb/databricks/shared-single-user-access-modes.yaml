@@ -10,7 +10,7 @@ fact:
 status:
   value: renamed
   link: https://www.databricks.com/blog/whats-new-unity-catalog-compute#:~:text=Standard%20clusters%20%28formerly%20shared%29%20are%20the%20new%20default%20classic%20compute%20type
-  date: '2026-07-18'
+  date: '2026-08-20'
 from:
   date: '2022'
   link: https://www.databricks.com/blog/whats-new-unity-catalog-compute
@@ -26,4 +26,4 @@ links:
     kind: internet
     label: 'Tredence: Databricks cluster types'
 source: https://www.databricks.com/blog/whats-new-unity-catalog-compute
-verified: '2026-07-18'
+verified: '2026-08-20'

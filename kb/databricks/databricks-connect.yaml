@@ -15,7 +15,7 @@ fact:
 status:
   value: active
   link: https://docs.databricks.com/aws/en/dev-tools/databricks-connect/#:~:text=Databricks%20Connect%20for%20Databricks%20Runtime%2013.3%20LTS%20and%20above
-  date: '2026-07-18'
+  date: '2026-08-20'
 releases:
   - type: public-preview
     date: 2023-04
@@ -29,7 +29,7 @@ introducedAt:
 limitations:
   note: Doesn't support the display() API, Databricks Utilities (credentials, library, notebook workflow, widgets), SparkContext and RDDs, distributed ML training, or CREATE TABLE AS SELECT, with version-specific restrictions such as no streaming foreachBatch and no queries over 3600 seconds on Runtime 13.3 LTS and below.
   link: https://docs.databricks.com/aws/en/dev-tools/databricks-connect/python/limitations#:~:text=Distributed%20ML%20training%20is%20not%20supported
-  date: '2026-07-23'
+  date: '2026-08-20'
 links:
   - url: https://medium.com/@santosh_joshi_data/databricks-connect-explained-from-local-code-to-remote-cluster-638274fded38
     kind: community
@@ -39,4 +39,4 @@ prediction:
   - Spark Connect One
   - Databricks Connect Prime
 source: https://docs.databricks.com/aws/en/dev-tools/databricks-connect/
-verified: '2026-07-18'
+verified: '2026-08-20'

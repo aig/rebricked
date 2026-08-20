@@ -17,7 +17,7 @@ fact:
 status:
   value: active
   link: https://docs.databricks.com/aws/en/compute/photon#:~:text=the%20Databricks%2Dnative%20vectorized%20query%20engine
-  date: '2026-08-12'
+  date: '2026-08-20'
 releases:
   - type: public-preview
     date: 2021-06
@@ -31,10 +31,10 @@ introducedAt:
 limitations:
   note: No support for UDFs, RDD APIs or Dataset APIs, and only stateless streaming - stateful streaming is unsupported. Queries that already finish in under two seconds see little benefit.
   link: https://docs.databricks.com/aws/en/compute/photon#:~:text=Photon%20supports%20stateless%20streaming%20only
-  date: '2026-08-12'
+  date: '2026-08-20'
 prediction:
   - Photon 2
   - Lakehouse Engine
   - Unity Engine
 source: https://docs.databricks.com/aws/en/compute/photon
-verified: '2026-08-12'
+verified: '2026-08-20'

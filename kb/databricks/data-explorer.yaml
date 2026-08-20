@@ -10,7 +10,7 @@ fact:
 status:
   value: renamed
   link: https://docs.databricks.com/aws/en/release-notes/product/2023/september#:~:text=Data%20Explorer%20is%20renamed%20to%20Catalog%20Explorer
-  date: '2026-07-23'
+  date: '2026-08-20'
 from:
   date: '2022'
   link: https://docs.databricks.com/aws/en/catalog-explorer/
@@ -29,4 +29,4 @@ links:
     kind: internet
     label: 'DataCamp: exploring with Data Explorer'
 source: https://docs.databricks.com/aws/en/catalog-explorer/
-verified: '2026-08-03'
+verified: '2026-08-20'

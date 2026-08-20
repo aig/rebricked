@@ -17,13 +17,10 @@ fact:
 status:
   value: legacy
   link: https://docs.databricks.com/aws/en/data-governance/unity-catalog/hive-metastore#:~:text=The%20per%2Dworkspace%20Hive%20metastore%20is%20a%20legacy%20feature
-  date: '2026-07-23'
-from:
-  date: '2015'
-  link: https://docs.databricks.com/aws/en/data-governance/unity-catalog/hive-metastore
+  date: '2026-08-20'
 deprecatedAt:
-  date: '2025'
-  link: https://docs.databricks.com/aws/en/data-governance/unity-catalog/hive-metastore
+  date: 2025-12
+  link: https://docs.databricks.com/aws/en/release-notes/product/2025/december#:~:text=created%20after%20December%2018%2C%202025%20will%20not%20have%20access%20to%20certain%20legacy%20features
 successorId: unity-catalog
 replacement: Unity Catalog
 links:
@@ -31,4 +28,4 @@ links:
     kind: community
     label: 'Medium: Migrating Hive Metastore to UC'
 source: https://docs.databricks.com/aws/en/data-governance/unity-catalog/hive-metastore
-verified: '2026-07-23'
+verified: '2026-08-20'

@@ -5,11 +5,11 @@ aliases:
   - Databricks data marketplace
 category: Data governance
 what:
-  note: An open marketplace where providers list data sets, notebooks, ML models, dashboards, and AI assets that Databricks customers discover, evaluate, and access directly from their workspace, built on open sharing so consumers get live data with no replication or platform lock-in.
-  link: https://docs.databricks.com/aws/en/marketplace/
+  note: An open exchange where providers publish datasets, AI models, notebooks, apps, and Model Context Protocol servers that Databricks customers discover, evaluate, and connect with directly from their workspace.
+  link: https://docs.databricks.com/aws/en/marketplace/#:~:text=Listings%20include%20datasets%2C%20AI%20models%2C%20notebooks%2C%20apps%2C%20and%20Model%20Context%20Protocol%20%28MCP%29%20servers
 fact:
-  - note: Because it rides on the open Delta Sharing protocol, recipients can consume a listing without being Databricks customers, on the same cloud, or on any cloud at all - no copying or ETL required.
-    link: https://www.databricks.com/blog/announcing-public-preview-databricks-marketplace#:~:text=Delta%20Sharing
+  - note: Under the storefront it is just sharing - Marketplace uses OpenSharing for secure data exchange, the same open protocol behind any other Databricks share.
+    link: https://docs.databricks.com/aws/en/marketplace/#:~:text=Marketplace%20uses%20OpenSharing%20for%20secure%20data%20exchange
   - note: Databricks unveiled it at the 2022 Data + AI Summit as 'available in the coming months' - an open marketplace for data and analytics assets with no vendor lock-in - then took the better part of a year to actually ship the preview.
     link: https://www.databricks.com/blog/2022/07/25/recap-of-databricks-lakehouse-platform-announcements-at-data-and-ai-summit-2022.html
   - note: At GA it started listing AI models, not just data, letting Databricks pitch it as the only marketplace for data, analytics, and AI in one place.
@@ -17,7 +17,7 @@ fact:
 status:
   value: active
   link: https://docs.databricks.com/aws/en/marketplace/
-  date: '2026-07-24'
+  date: '2026-08-20'
 releases:
   - type: public-preview
     date: 2023-04
@@ -44,4 +44,4 @@ prediction:
   - Databricks App Store
   - Lakehouse Marketplace
 source: https://docs.databricks.com/aws/en/marketplace/
-verified: '2026-07-24'
+verified: '2026-08-20'

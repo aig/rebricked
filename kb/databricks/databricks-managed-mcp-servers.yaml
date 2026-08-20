@@ -18,7 +18,7 @@ fact:
 status:
   value: active
   link: https://docs.databricks.com/aws/en/agents/mcp-tools/managed-mcp#:~:text=This%20feature%20is%20in%20Public%20Preview
-  date: '2026-08-10'
+  date: '2026-08-20'
 releases:
   - type: beta
     date: 2025-06
@@ -36,7 +36,7 @@ occasion:
 limitations:
   note: The set of managed servers is fixed to the ones Databricks hosts (Genie One, Genie Agent, AI Search, Databricks SQL, and Unity Catalog functions); anything else needs an external or self-hosted MCP server.
   link: https://docs.databricks.com/aws/en/agents/mcp-tools/managed-mcp#:~:text=Databricks%20has%20the%20following%20MCP%20servers%20that%20work%20out%20of%20the%20box
-  date: '2026-08-10'
+  date: '2026-08-20'
 links:
   - url: https://www.databricks.com/blog/announcing-managed-mcp-servers-unity-catalog-and-mosaic-ai-integration
     kind: official
@@ -52,4 +52,4 @@ prediction:
   - Managed MCP Gateway
   - Genie Protocol Servers
 source: https://docs.databricks.com/aws/en/agents/mcp-tools/managed-mcp
-verified: '2026-08-10'
+verified: '2026-08-20'

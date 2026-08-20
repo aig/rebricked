@@ -15,11 +15,11 @@ fact:
 status:
   value: active
   link: https://docs.databricks.com/aws/en/genie-one/genie#:~:text=Genie%20One%20is%20the%20simplified%20Databricks%20UI%20for%20business%20users
-  date: '2026-07-18'
+  date: '2026-08-20'
 releases:
   - type: public-preview
     date: 2025-09
-    link: https://docs.databricks.com/aws/en/genie-one/genie
+    link: https://www.databricks.com/blog/announcing-public-preview-databricks-one#:~:text=Databricks%20One%20enters%20Public%20Preview
   - type: ga
     date: 2026-01
     link: https://docs.databricks.com/aws/en/ai-bi/release-notes/2026#:~:text=Genie%20One%20is%20now%20generally%20available.
@@ -28,12 +28,12 @@ from:
   link: https://www.databricks.com/blog/introducing-genie-one-genie-ontology-and-genie-agents#:~:text=Genie%20One%20is%20the%20next%20step
 occasion:
   date: 2026-06
-  link: https://docs.databricks.com/aws/en/ai-bi/release-notes/2026#genie-renamed-to-genie-one#:~:text=Genie%20renamed%20to%20Genie%20One
+  link: https://docs.databricks.com/aws/en/ai-bi/release-notes/2026#:~:text=has%20been%20renamed%20to%20Genie%20One.
   note: Renamed from Genie to Genie One, June 9, 2026
 limitations:
   note: Workspaces using the compliance security profile are excluded from account-level Genie One aggregation, and account-level Genie One may process Databricks-generated metadata in the US, so it should be disabled if compliance policies prohibit US metadata transmission.
   link: https://docs.databricks.com/aws/en/genie-one/genie#:~:text=workspaces%20with%20the%20compliance%20security%20profile%20enabled
-  date: '2026-07-23'
+  date: '2026-08-20'
 links:
   - url: https://www.databricks.com/blog/introducing-genie-one-genie-ontology-and-genie-agents
     kind: community
@@ -46,4 +46,4 @@ prediction:
   - Genie One Prime
   - Databricks Two
 source: https://docs.databricks.com/aws/en/genie-one/genie
-verified: '2026-08-11'
+verified: '2026-08-20'

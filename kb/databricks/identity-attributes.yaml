@@ -1,0 +1,44 @@
+id: identity-attributes
+name: Identity attributes
+category: Data governance
+what:
+  note: A fixed set of nine attributes (title, userType, locality, region, country, costCenter, organization, division, department) that Databricks stores on account users and syncs from your identity provider, so Unity Catalog ABAC policies can reference who someone is rather than only which group they are in.
+  link: https://docs.databricks.com/aws/en/admin/users-groups/identity-attributes/#:~:text=Identity%20attributes%20are%20a%20fixed%20set%20of%20nine%20attributes%20that%20Databricks%20stores%20on%20account%20users
+fact:
+  - note: Nine attributes, and nine is the whole list - each one holds a single value, and the docs file multi-valued attributes under "future work".
+    link: https://docs.databricks.com/aws/en/admin/users-groups/identity-attributes/#:~:text=Multi%2Dvalued%20attributes%20are%20future%20work
+  - note: Two of the nine have nowhere to come from on Microsoft Entra ID, which has no native source field for costCenter or division, so they stay unmapped unless you supply a custom extension attribute or expression.
+    link: https://docs.databricks.com/aws/en/admin/users-groups/identity-attributes/#:~:text=On%20Microsoft%20Entra%20ID%20there%20is%20no%20native%20source%20field%20for
+  - note: Storing the attributes and using them are two separate launches - the ABAC policy functions that consume them (has_identity_attribute_value and has_identity_attribute_tag_match, valid in the WHEN clause of a column mask policy) ship separately from the attributes themselves.
+    link: https://docs.databricks.com/aws/en/admin/users-groups/identity-attributes/#:~:text=ABAC%20policy%20functions%20that%20consume%20identity%20attributes%20are%20delivered%20separately%20from%20this%20feature
+status:
+  value: active
+  link: https://docs.databricks.com/aws/en/admin/users-groups/identity-attributes/#:~:text=Identity%20attributes%20are%20a%20fixed%20set%20of%20nine%20attributes%20that%20Databricks%20stores%20on%20account%20users
+  date: '2026-08-20'
+releases:
+  - type: beta
+    date: 2026-08
+    link: https://docs.databricks.com/aws/en/release-notes/product/2026/august#:~:text=can%20store%20nine%20IdP%2Dsourced%20attributes%2C%20such%20as%20title%2C%20department%2C%20and%20cost%20center
+introducedAt:
+  date: 2026-08
+  link: https://docs.databricks.com/aws/en/release-notes/product/2026/august#:~:text=can%20store%20nine%20IdP%2Dsourced%20attributes%2C%20such%20as%20title%2C%20department%2C%20and%20cost%20center
+limitations:
+  note: Beta limitations - supported on users only, with service principals and groups not yet covered; each attribute holds a single value; the attribute control list can only be configured in the account console, with no API to do it programmatically; and on Microsoft Entra ID costCenter and division have no native source field.
+  link: https://docs.databricks.com/aws/en/admin/users-groups/identity-attributes/#:~:text=Identity%20attributes%20are%20supported%20on%20users%20only
+  date: '2026-08-20'
+links:
+  - url: https://docs.databricks.com/aws/en/release-notes/product/2026/august#:~:text=target%20users%20by%20attributes%20synced%20from%20your%20identity%20provider
+    kind: official
+    label: 'Databricks release notes: identity attributes in ABAC column mask policies (August 17, 2026)'
+  - url: https://docs.databricks.com/aws/en/admin/users-groups/identity-attributes/attribute-control-list
+    kind: official
+    label: 'Databricks docs: Identity Attribute Control List'
+  - url: https://docs.databricks.com/aws/en/admin/users-groups/identity-attributes/provision-with-scim
+    kind: official
+    label: 'Databricks docs: manage identity attributes with account SCIM'
+prediction:
+  - Governed identity attributes
+  - Unity Catalog identity tags
+  - Identity Attributes One
+source: https://docs.databricks.com/aws/en/admin/users-groups/identity-attributes/
+verified: '2026-08-20'

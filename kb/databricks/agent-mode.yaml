@@ -1,0 +1,42 @@
+id: agent-mode
+name: Agent mode
+aliases:
+  - Genie Agent mode
+category: AI / BI
+what:
+  note: The mode inside a Genie Agent that answers complex, exploratory questions with multi-step reasoning and hypothesis testing, as opposed to the one-question-one-answer Chat mode.
+  link: https://docs.databricks.com/aws/en/genie-agents/concepts#:~:text=Agent%20mode%20lets%20users%20get%20answers%20to%20complex%2C%20exploratory%20questions
+fact:
+  - note: 'You do not get a chat reply, you get a written report: citations, visualizations and supporting tables included.'
+    link: https://docs.databricks.com/aws/en/ai-bi/release-notes/2026#:~:text=a%20report%20that%20includes%20citations%2C%20visualizations%2C%20and%20supporting%20tables
+  - note: 'It is the mode that reads the files: attach unstructured documents sitting in a Unity Catalog volume and it will answer questions about those too, not just about tables.'
+    link: https://docs.databricks.com/aws/en/genie-agents/concepts#:~:text=answer%20questions%20about%20the%20unstructured%20files%20in%20Unity%20Catalog%20volumes
+  - note: Impatience is a documented feature - if the reasoning is dragging on, click Answer now and it stops thinking and answers from whatever context it has gathered so far.
+    link: https://docs.databricks.com/aws/en/genie-agents/talk-to-genie#:~:text=to%20stop%20the%20reasoning%20and%20get%20an%20answer%20based%20on%20the%20context%20gathered%20so%20far
+status:
+  value: active
+  link: https://docs.databricks.com/aws/en/genie-agents/concepts#:~:text=Agent%20mode%20was%20formerly%20known%20as%20Research%20Agent.
+  date: '2026-08-20'
+releases:
+  - type: beta
+    date: 2026-02
+    link: https://docs.databricks.com/aws/en/ai-bi/release-notes/2026#:~:text=Research%20Agent%20renamed%20to%20Agent%20mode
+  - type: public-preview
+    date: 2026-04
+    link: https://docs.databricks.com/aws/en/ai-bi/release-notes/2026#:~:text=Agent%20mode%20%28Public%20Preview%29%20prompt%20caching
+  - type: ga
+    date: 2026-07
+    link: https://docs.databricks.com/aws/en/ai-bi/release-notes/2026#:~:text=Agent%20mode%20in%20Genie%20Agents%20%28formerly%20Genie%20Spaces%29%20is%20now%20generally%20available
+from:
+  date: 2026-02
+  link: https://docs.databricks.com/aws/en/ai-bi/release-notes/2026#:~:text=Research%20Agent%20renamed%20to%20Agent%20mode
+limitations:
+  note: Americas, Europe, Australia, New Zealand and Japan workspaces can use it as is; every other region can only use it if cross-Geo processing is enabled.
+  link: https://docs.databricks.com/aws/en/genie-agents/concepts#:~:text=Available%20only%20if%20cross%2DGeo%20is%20enabled
+  date: '2026-08-20'
+prediction:
+  - Deep Agent mode
+  - Genie Research mode
+  - Agentic mode
+source: https://docs.databricks.com/aws/en/genie-agents/concepts
+verified: '2026-08-20'

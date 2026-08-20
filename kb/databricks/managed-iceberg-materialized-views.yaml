@@ -14,7 +14,7 @@ fact:
 status:
   value: active
   link: https://docs.databricks.com/aws/en/iceberg/#:~:text=Managed%20Iceberg%20materialized%20views%20are%20in%20Public%20Preview
-  date: '2026-07-23'
+  date: '2026-08-20'
 releases:
   - type: public-preview
     date: 2026-07
@@ -25,7 +25,7 @@ introducedAt:
 limitations:
   note: Public Preview is gated (enable via your Databricks account team). External Iceberg readers can read but not write the materialized view, and you must run REPAIR TABLE with SYNC METADATA before it's externally accessible.
   link: https://docs.databricks.com/aws/en/iceberg/#:~:text=run%20REPAIR%20TABLE%20with%20SYNC%20METADATA
-  date: '2026-07-23'
+  date: '2026-08-20'
 links:
   - url: https://docs.databricks.com/aws/en/release-notes/product/2026/july
     kind: official
@@ -35,4 +35,4 @@ prediction:
   - Managed Iceberg Views
   - Delta Iceberg MVs
 source: https://docs.databricks.com/aws/en/iceberg/
-verified: '2026-07-23'
+verified: '2026-08-20'

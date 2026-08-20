@@ -15,7 +15,7 @@ fact:
 status:
   value: active
   link: https://docs.databricks.com/aws/en/sql/user/alerts/#:~:text=alerts%20no%20longer%20support%20the
-  date: '2026-07-18'
+  date: '2026-08-20'
 releases:
   - type: beta
     date: 2025-05
@@ -32,7 +32,7 @@ introducedAt:
 limitations:
   note: An existing saved SQL query can't be reused when creating an alert (each alert owns its query definition), and alerts no longer support the legacy UNKNOWN status, resolving only to OK, TRIGGERED, or ERROR.
   link: https://docs.databricks.com/aws/en/sql/user/alerts/#:~:text=An%20existing%20saved%20SQL%20query%20cannot%20be%20reused
-  date: '2026-07-23'
+  date: '2026-08-20'
 links:
   - url: https://www.databricks.com/blog/automate-data-kpi-monitoring-sql-alerts
     kind: community
@@ -42,4 +42,4 @@ prediction:
   - Lakeflow Alerts
   - SQL Alerts One
 source: https://docs.databricks.com/aws/en/sql/user/alerts/
-verified: '2026-07-23'
+verified: '2026-08-20'

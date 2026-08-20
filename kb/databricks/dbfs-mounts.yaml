@@ -18,14 +18,11 @@ fact:
 status:
   value: deprecated
   link: https://learn.microsoft.com/en-us/azure/databricks/dbfs/unity-catalog#:~:text=DBFS%20root%20and%20DBFS%20mounts%20are%20deprecated
-  date: '2026-07-18'
-from:
-  date: '2016'
-  link: https://learn.microsoft.com/en-us/azure/databricks/dbfs/unity-catalog
+  date: '2026-08-20'
 deprecatedAt:
-  date: '2024'
-  link: https://learn.microsoft.com/en-us/azure/databricks/dbfs/unity-catalog#:~:text=DBFS%20root%20and%20DBFS%20mounts%20are%20deprecated
-successorId: init-scripts-on-dbfs
+  date: 2025-12
+  link: https://docs.databricks.com/aws/en/release-notes/product/2025/december#:~:text=created%20after%20December%2018%2C%202025%20will%20not%20have%20access%20to%20certain%20legacy%20features%20such%20as%20access%20to%20DBFS%20root%20and%20mounts
+successorId: unity-catalog-volumes
 replacement: Unity Catalog volumes & external locations
 links:
   - url: https://community.databricks.com/t5/data-governance/dbfs-mounts-no-longer-recommended/td-p/15974
@@ -35,4 +32,4 @@ links:
     kind: internet
     label: 'AzureOps: Mount/unmount Data Lake'
 source: https://learn.microsoft.com/en-us/azure/databricks/dbfs/unity-catalog
-verified: '2026-08-03'
+verified: '2026-08-20'

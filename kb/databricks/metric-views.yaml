@@ -1,0 +1,60 @@
+id: metric-views
+name: Metric views
+aliases:
+  - Unity Catalog metric views
+  - Unity Catalog Metrics
+  - Metric view
+category: Data governance
+what:
+  note: Unity Catalog securable objects that define business KPIs once as reusable SQL metrics, separating measure definitions from the fields used to group, filter, and aggregate them.
+  link: https://docs.databricks.com/aws/en/uc-semantics/metric-views/#:~:text=Metric%20views%20are%20the%20core%20implementation%20of
+fact:
+  - note: They are the core implementation of Unity Catalog semantics, which makes them the rare governance object that dashboards, notebooks, alerts, Genie Agents and external BI tools all read from the same definition.
+    link: https://docs.databricks.com/aws/en/uc-semantics/metric-views/#:~:text=Metric%20views%20are%20the%20core%20implementation%20of
+  - note: 'It is a view whose columns you cannot simply select: a measure has no pre-determined level of aggregation until query time, so SQL has to ask for it through a MEASURE function instead.'
+    link: https://docs.databricks.com/aws/en/uc-semantics/metric-views/yaml-reference#:~:text=To%20reference%20a%20measure%20in%20a%20query
+  - note: Databricks showed them off at Data + AI Summit 2025 under the name Unity Catalog Metrics and promised general availability 'later this summer'.
+    link: https://www.databricks.com/blog/whats-new-databricks-unity-catalog-data-ai-summit-2025#:~:text=Generally%20Available%20later%20this%20summer
+status:
+  value: active
+  link: https://docs.databricks.com/aws/en/uc-semantics/metric-views/#:~:text=Metric%20views%20are%20the%20core%20implementation%20of
+  date: '2026-08-20'
+releases:
+  - type: public-preview
+    date: 2025-05
+    link: https://docs.databricks.com/aws/en/release-notes/product/2025/may#:~:text=Metric%20views%20are%20in%20Public%20Preview
+  - type: ga
+    date: 2026-04
+    link: https://www.databricks.com/blog/redefining-semantics-data-layer-future-bi-and-ai#:~:text=At%20the%20heart%20of%20this%20GA%20release%20are%20Metric%20Views
+introducedAt:
+  date: 2025-05
+  link: https://docs.databricks.com/aws/en/release-notes/product/2025/may#:~:text=Unity%20Catalog%20metric%20views%20provide%20a%20centralized%20way
+limitations:
+  note: Measures have no fixed aggregation level, so a query must request them through the MEASURE function rather than selecting the column directly. Joined tables cannot include MAP type columns, a metric view that defines parameters cannot be materialized, and a one_to_many join restricts its materializations to exact match with no rollup match. Metric views need Databricks Runtime 16.4 or above, and Microsoft removed BI compatibility mode from the Power BI Databricks connector in April 2026, so Power BI reports that queried metric views through it no longer function.
+  link: https://docs.databricks.com/aws/en/uc-semantics/metric-views/yaml-reference#:~:text=Joined%20tables%20can%27t%20include
+  date: '2026-08-20'
+links:
+  - url: https://learn.microsoft.com/en-us/azure/databricks/uc-semantics/metric-views/
+    kind: official
+    label: 'Microsoft Learn: Unity Catalog metric views'
+  - url: https://docs.databricks.com/aws/en/uc-semantics/
+    kind: official
+    label: 'Databricks docs: Unity Catalog semantics, where metric views sit'
+  - url: https://docs.databricks.com/aws/en/release-notes/product/2025/may
+    kind: official
+    label: 'Databricks release notes: metric views are in Public Preview (May 29, 2025)'
+  - url: https://www.databricks.com/blog/redefining-semantics-data-layer-future-bi-and-ai
+    kind: official
+    label: 'Databricks blog: GA and open sourcing of Unity Catalog Business Semantics (April 2026)'
+  - url: https://docs.databricks.com/aws/en/uc-semantics/metric-views/feature-availability
+    kind: official
+    label: 'Databricks docs: metric view feature availability by Databricks Runtime version'
+  - url: https://docs.databricks.com/aws/en/release-notes/product/2026/april
+    kind: official
+    label: 'Databricks release notes: BI compatibility mode removed from the Power BI connector (April 17, 2026)'
+prediction:
+  - Unity Metrics
+  - Semantic Views
+  - Genie Metrics
+source: https://docs.databricks.com/aws/en/uc-semantics/metric-views/
+verified: '2026-08-20'

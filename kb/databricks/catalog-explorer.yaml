@@ -15,7 +15,7 @@ fact:
 status:
   value: active
   link: https://docs.databricks.com/aws/en/catalog-explorer/#:~:text=What%20is%20Catalog%20Explorer%3F
-  date: '2026-07-18'
+  date: '2026-08-20'
 releases:
   - type: ga
     date: 2023-09
@@ -26,7 +26,7 @@ from:
 limitations:
   note: The Catalog Explorer UI is not available in all Databricks workspaces.
   link: https://docs.databricks.com/aws/en/catalog-explorer/#:~:text=not%20live%20in%20all%20Databricks%20workspaces
-  date: '2026-07-23'
+  date: '2026-08-20'
 links:
   - url: https://www.databricks.com/blog/accelerating-discovery-unity-catalog-revamped-catalog-explorer
     kind: community
@@ -39,4 +39,4 @@ prediction:
   - Unity Explorer
   - Genie Catalog
 source: https://docs.databricks.com/aws/en/catalog-explorer/
-verified: '2026-07-23'
+verified: '2026-08-20'

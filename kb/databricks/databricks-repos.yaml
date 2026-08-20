@@ -10,7 +10,7 @@ fact:
 status:
   value: renamed
   link: https://learn.microsoft.com/en-us/azure/databricks/repos/what-happened-repos#:~:text=Repos%20are%20now%20called%20Git%20folders.
-  date: '2026-07-18'
+  date: '2026-08-20'
 releases:
   - type: ga
     date: 2021-08
@@ -30,4 +30,4 @@ links:
     kind: internet
     label: 'DriveDataScience: Repos & Git CI/CD'
 source: https://learn.microsoft.com/en-us/azure/databricks/repos/what-happened-repos
-verified: '2026-07-23'
+verified: '2026-08-20'

@@ -16,22 +16,22 @@ fact:
 status:
   value: active
   link: https://learn.microsoft.com/en-us/azure/databricks/jobs/#:~:text=Lakeflow%20Jobs%20is%20workflow%20automation%20for%20Azure%20Databricks
-  date: '2026-07-18'
+  date: '2026-08-20'
 releases:
   - type: ga
-    date: '2025'
+    date: 2025-06
     link: https://docs.databricks.com/aws/en/release-notes/product/2025/june
 from:
-  date: '2025'
+  date: 2025-06
   link: https://docs.databricks.com/aws/en/release-notes/product/2025/june#:~:text=Databricks%20Jobs%20is%20now%20Lakeflow%20Jobs
 occasion:
-  date: '2025'
+  date: 2025-06
   link: https://docs.databricks.com/aws/en/release-notes/product/2025/june
-  note: Lakeflow GA, 2025
+  note: Lakeflow GA, June 2025
 limitations:
   note: A workspace is limited to 2000 concurrent task runs, 10000 job creations per hour, 12000 saved jobs, and 1000 tasks per job; job parameters using dynamic values are capped at 10000 characters.
   link: https://docs.databricks.com/aws/en/jobs/#:~:text=A%20workspace%20is%20limited%20to%202000%20concurrent%20task%20runs
-  date: '2026-07-23'
+  date: '2026-08-20'
 links:
   - url: https://www.databricks.com/blog/whats-new-lakeflow-jobs-provides-more-efficient-data-orchestration
     kind: community
@@ -44,4 +44,4 @@ prediction:
   - Lakeflow Agentic Jobs
   - Jobs One
 source: https://learn.microsoft.com/en-us/azure/databricks/jobs/
-verified: '2026-07-23'
+verified: '2026-08-20'

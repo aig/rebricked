@@ -17,7 +17,7 @@ fact:
 status:
   value: active
   link: https://docs.databricks.com/aws/en/agents/mcp-tools/databricks-sql#:~:text=This%20feature%20is%20in%20Public%20Preview
-  date: '2026-08-10'
+  date: '2026-08-20'
 releases:
   - type: beta
     date: 2025-10
@@ -28,8 +28,12 @@ releases:
 introducedAt:
   date: 2025-10
   link: https://docs.databricks.com/aws/en/release-notes/product/2025/october#:~:text=execute%20SQL%20queries%20directly%20against%20Unity%20Catalog%20tables
+limitations:
+  note: No semantic context - it runs the SQL it is given, so an agent has to infer business terms and relationships from schemas alone. Large result sets are truncated in tool responses to protect the model context window, and queries are asynchronous, so the agent starts a query and then polls until it completes.
+  link: https://docs.databricks.com/aws/en/agents/mcp-tools/databricks-sql#:~:text=No%20semantic%20context
+  date: '2026-08-20'
 prediction:
   - Genie SQL MCP server
   - Managed Warehouse Protocol
 source: https://docs.databricks.com/aws/en/agents/mcp-tools/databricks-sql
-verified: '2026-08-10'
+verified: '2026-08-20'

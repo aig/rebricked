@@ -9,6 +9,183 @@ shows the what. Plain, simple English: short sentences, common words, no jargon 
 and product names themselves. Some older entries have no `Why:` line - the reason was never
 recorded, and a made-up reason is worse than none.
 
+## 2026-08-20
+
+### Fixed
+- **Re-verified all 132 existing cards against live docs, then had a second wave of agents try to
+  refute the corrections. Both passes found the dataset confidently wrong.**
+
+  **Why:** the site's whole claim is "real, sourced changes only", but nothing had ever checked
+  every card at once. Re-verification had always been per-card and reactive, so drift accumulated
+  in the places nobody re-reads: maturity dates, `limitations` blocks, and text fragments on pages
+  the vendor had since reworded. The errors found were the bad kind, not typos. `genie-agents`
+  claimed GA in July 2026, sourced to a quote that only matched because it was a *substring* of
+  "Agent mode in Genie Agents is now generally available" - July 2026 was the rename, and GA was
+  December 2024. `unity-ai-gateway` had inherited Mosaic AI Gateway's release stages and so
+  claimed GA a year before it existed. `new-sql-editor` recorded *default enablement* as its GA
+  date. `zerobus-ingest` had missed its own February 2026 GA and said 31 days where the docs say
+  28. `lake-transactional-analytical-processing` still said "not shipped yet" about something
+  that has shipped and has a docs page.
+
+  **What:** thirteen agents in parallel, one per subject area, with rename chains kept inside a
+  single agent so `successorId` links stayed coherent; every cited URL refetched, every
+  `#:~:text=` quote re-matched, and `verified` stamped to today on all of them. Then six more
+  agents were pointed at the results and told to assume they were wrong. That second pass earned
+  its keep: it caught a limitation this repo had *deleted* as "no longer documented" when the
+  docs had merely **moved it to another page** (`zerobus-ingest` does not auto-evolve target
+  tables - restored), and it overturned a same-day status call, moving
+  `no-isolation-shared-access-mode` back to `legacy` because no doc anywhere calls the mode
+  deprecated and a new-workspace provisioning cutoff is not a deprecation date. Also corrected:
+  `legacy-sql-alerts` from `deprecated` to `legacy` (no deprecation notice exists in its docs);
+  `classification` lost a GA stage belonging to the `ai_classify` *function*, not the Agent
+  Bricks feature; `attribute-based-access-control` lost a limitation that stopped being true when
+  the ABAC information schema shipped; `model-services` gained the GA it reached on August 4 under
+  the Unity AI Gateway umbrella; and `agent-mode` gained the Public Preview stage its timeline had
+  skipped between Beta and GA.
+
+- **A card said access to the legacy SQL editor ended last month. Nothing says it did.**
+
+  **Why:** `legacy-sql-editor` carried `removedAt: 2026-07`, which the card renders as "⚠ Access
+  ended". Four live vendor pages, all revised *after* that date, still read "The legacy SQL editor
+  **will be** retired in late July 2026", and one revised on August 5 still says individual users
+  "can still switch to the legacy editor". No release note on either cloud announces the
+  retirement as done. A scheduled date that passes is not evidence the thing happened, and the
+  card was asserting a fact about the world that no source supports.
+
+  **What:** `removedAt` removed; the status stays `deprecated`, and the scheduled retirement
+  survives in `occasion`, which frames it as scheduled rather than done. The same trap was swept
+  across every card with a past-dated sunset: `init-scripts-on-dbfs`, `legacy-dashboards`,
+  `databricks-light`, and `databricks-community-edition` all checked out as genuinely `retired`.
+  The reverse framing bug was real too and is now fixed in the renderer, below.
+
+- **Four date fields cited pages that do not state the date, and one was simply wrong.**
+
+  **Why:** a `{date, link}` pair is a promise that the link confirms the date. Several did not,
+  which means the site was presenting guesses in the costume of citations. The worst was
+  `dbfs-mounts`, whose `deprecatedAt: '2024'` was not merely uncited but false: archived snapshots
+  of the very page it cited contain no deprecation language in 2023, 2024, or October 2025, and
+  the sentence first appears in February 2026.
+
+  **What:** `dbfs-mounts` `deprecatedAt` corrected to December 2025, citing the release note about
+  accounts created after December 18, 2025 losing access to DBFS root and mounts. Three origin
+  dates that nothing could source were **removed** rather than left wearing a false citation:
+  `hive-metastore` `from: '2015'`, `dbfs-mounts` `from: '2016'`, `personal-access-tokens`
+  `from: '2017'`. `legacy-databricks-cli` `from: 2017-06` turned out to be exactly right and now
+  cites the PyPI upload timestamp of `databricks-cli` 0.1. Where a required field could not be
+  sourced to a Databricks page, the citation is an archive snapshot and the entry says so rather
+  than pretending otherwise.
+
+- **The rename of Lakehouse Monitoring to Data profiling was dated three months late.**
+
+  **Why:** both `lakehouse-monitoring.to` and `data-profiling.from` said February 2026, citing a
+  release note about anomaly detection that never mentions a rename - it was simply the first
+  place the "Data quality monitoring" umbrella appeared. Databricks never announced this rename,
+  so there was no note to cite and the date had drifted to the nearest plausible one.
+
+  **What:** both corrected to November 2025, bracketed by two archived snapshots: the old path
+  last shows "Introduction to Databricks Lakehouse Monitoring" on October 8, 2025, and the new
+  path first shows "Data profiling" on November 8, 2025. A separate, genuinely dated March 2026
+  event - the docs moving into the Data governance chapter - is what the February note was really
+  adjacent to, and is not a rename.
+
+- **`introducedAt` now means first availability everywhere, not "whenever we found a GA blog".**
+
+  **Why:** several cards had their GA announcement filed as the date the thing was introduced,
+  making each contradict its own `releases` timeline - born, apparently, after months in public
+  preview. Left alone, the front-page year timeline silently lies about when things appeared.
+
+  **What:** `serverless-workspaces`, `lakeflow-designer`, `lakebase`,
+  `attribute-based-access-control`, `databricks-clean-rooms`, and
+  `unity-catalog-managed-iceberg-tables` now date `introducedAt` to first availability, citing the
+  preview announcement. A repo-wide scan for the same skew found no remaining cases.
+
+- **`dbfs-mounts` pointed at the wrong successor.** Its `successorId` was `init-scripts-on-dbfs`
+  while its own sourced `replacement` read "Unity Catalog volumes & external locations". DBFS
+  mounts did not become DBFS init scripts; both are separate casualties of the same era, and both
+  now point at `unity-catalog-volumes`.
+
+### Added
+- **Thirteen cards for renames and deprecations the site had missed, including three on its own
+  flagship chain.**
+
+  **Why:** the dataset's best-known chain was two names behind. Delta Live Tables became Lakeflow
+  Declarative Pipelines in June 2025 and the site stopped there. In fact Databricks renamed it
+  again in November 2025, to Lakeflow Spark Declarative Pipelines - and then quietly stopped using
+  that name, retitling the docs to **Lakeflow pipelines**, which is what every current page says.
+  A site that exists to answer "what is this called now" was giving the wrong answer for its own
+  headline example, and the first attempt at fixing it got the answer wrong a second time by
+  trusting the release note over the docs.
+
+  **What:** the chain is now four links: `delta-live-tables` -> `lakeflow-declarative-pipelines`
+  -> `lakeflow-spark-declarative-pipelines` -> `lakeflow-pipelines` (active). The lesson is worth
+  recording, because it is a method error and not just a data error: **a release-note sentence
+  proves an event, never a current name.** Databricks rewrites its release notes in place, so the
+  November 2025 announcement is now the only place in the entire docs corpus where "Lakeflow
+  Spark Declarative Pipelines" survives. The final rename was never announced at all, so its date
+  is the honest `'2026'` rather than a false month. "Spark Declarative Pipelines" was also removed
+  from the aliases: it is the upstream Apache project that Lakeflow pipelines extend, not another
+  name for the Databricks product.
+
+  Also added: `bring-your-own-lineage` -> `external-lineage` (renamed at GA, June 2026);
+  `research-agent` -> `agent-mode` (renamed February 2026, GA July 2026); `lakebase-provisioned`
+  (`deprecated`, its UI goes away September 1, 2026) with `lakebase-autoscaling`;
+  `simba-jdbc-driver` (`legacy`) with `databricks-jdbc-driver`, finally giving JDBC the pair ODBC
+  already had; plus `metric-views`, `identity-attributes`, and `data-classification`.
+
+  Three candidates were investigated and deliberately **not** added, because a thin card is worse
+  than no card: `unity-catalog-semantics` (no official page states when the umbrella began, and an
+  invented `introducedAt` would be a fabrication), `domains` (built on governed tags, and even the
+  resource-limits page files its quota under Discover, so it is a facet of a card that exists), and
+  the Genie value-sampling renames (sub-feature labels, not product names). `data-classification`
+  and the existing Agent Bricks `classification` card now carry aliases pointing at each other,
+  since two unrelated Databricks features are both called classification.
+
+### Changed
+- **A scheduled sunset was rendered as one that had already happened.**
+
+  **Why:** the card renderer printed "⚠ Access ended <date>" for any `removedAt`, with no regard
+  for whether the date had arrived. `lakebase-provisioned` documents a cutoff on September 1,
+  2026, twelve days out, and the card announced it in the past tense. These dates are routinely
+  published months ahead, so the bug was guaranteed to recur, and it pushed editors toward
+  distorting the data to work around the display.
+
+  **What:** `removedAt` now renders "Access ends" while the date is in the future and "Access
+  ended" once it has passed, compared at month granularity. Documented in
+  `docs/reference/entry-schema.md` and `docs/how-to/add-a-deprecation.md`, the latter with the
+  distinction that matters: a documented future cutoff is safe to record, but a date the vendor
+  merely *planned* should be dropped if the deadline passes unconfirmed.
+
+- **The citation-rot checker never fetched `source`, the one URL every card is required to have.**
+
+  **Why:** `check_anchors.py` collected URLs from keys named `link` and `url`, at any depth. The
+  canonical `source` field is a bare string under the key `source`, so it was skipped - meaning
+  the single most important citation on every card was the only one never checked for rot. The gap
+  was invisible because the output looked thorough: it really was verifying eighty-odd URLs per
+  batch, just never that one.
+
+  **What:** `source` joined the collected keys, adding one canonical URL per entry to every run.
+  `docs/reference/scripts.md` and `docs/how-to/check-citations.md` now spell out which keys are
+  swept, so nobody has to read the walk function to find out. The full sweep after the change
+  covered 1528 URLs with zero dead links and zero dead quotes.
+
+- **`BLOCKED` links can now be settled instead of shrugged at, with `--chrome`.**
+
+  **Why:** a `BLOCKED` verdict means a host refused a scripted request, which says nothing about
+  whether the link is any good - so every sweep ended with a handful of URLs in permanent limbo,
+  and the documented workaround was to go read them by hand. Worse, the docs asserted that these
+  hosts "turn away real headless Chrome too", which is simply false: Medium's bot wall yields
+  immediately to `--headless=new --dump-dom`. A wrong claim in the docs had made a solvable
+  problem look unsolvable.
+
+  **What:** `check_anchors.py --chrome` retries only the pages already judged `BLOCKED`, through
+  headless Edge or Chrome, then quote-checks them exactly like any other page - so a recovered
+  page becomes an ordinary `OK` or an ordinary `DEAD` rather than an unknown. It reuses the same
+  browser discovery `build_badges.py` already relies on for `og.png`, runs serially, is opt-in
+  because of that, and degrades to a printed notice when no browser is installed. All fourteen
+  previously blocked URLs in the dataset now resolve. `AGENTS.md`,
+  `docs/how-to/check-citations.md`, and `docs/reference/scripts.md` were corrected, the how-to
+  keeping a note about the claim it used to make.
+
 ## 2026-08-14
 
 ### Added

@@ -1,0 +1,38 @@
+id: external-lineage
+name: External lineage
+aliases:
+  - External metadata
+  - external lineage metadata
+category: Data governance
+what:
+  note: Lets Unity Catalog record lineage for assets outside Databricks, so first-mile ETL and last-mile BI show up in one end-to-end lineage view alongside the lineage Databricks captures itself.
+  link: https://docs.databricks.com/aws/en/data-governance/unity-catalog/external-lineage#:~:text=Unity%20Catalog%20lets%20you%20add%20external%20lineage%20metadata%20to%20augment%20the%20Databricks%20data%20lineage
+fact:
+  - note: It happily catalogs things Databricks never ran a single query on - Salesforce or MySQL sources and Tableau or Power BI dashboards - so one lineage graph spans your full data flow.
+    link: https://docs.databricks.com/aws/en/release-notes/product/2026/june#:~:text=Salesforce%20or%20MySQL%20sources%20and%20Tableau%20or%20Power%20BI%20dashboards
+  - note: You can draw the graph by hand in Catalog Explorer, or let Lakeflow Connect managed ingestion pipelines record source-to-destination lineage for you and skip the drawing entirely.
+    link: https://docs.databricks.com/aws/en/release-notes/product/2026/june#:~:text=managed%20ingestion%20pipelines%20now%20automatically%20record%20source%20lineage
+status:
+  value: active
+  link: https://docs.databricks.com/aws/en/data-governance/unity-catalog/external-lineage#:~:text=Unity%20Catalog%20lets%20you%20add%20external%20lineage%20metadata
+  date: '2026-08-20'
+releases:
+  - type: public-preview
+    date: 2025-06
+    link: https://docs.databricks.com/aws/en/release-notes/product/2025/june#:~:text=This%20external%20lineage%20metadata%20feature%20is%20in%20Public%20Preview
+  - type: ga
+    date: 2026-06
+    link: https://docs.databricks.com/aws/en/release-notes/product/2026/june#:~:text=External%20lineage%20is%20now%20generally%20available
+from:
+  date: 2026-06
+  link: https://docs.databricks.com/aws/en/release-notes/product/2026/june#:~:text=External%20lineage%20%28formerly%20Bring%20Your%20Own%20Lineage%29%20in%20Unity%20Catalog%20is%20now%20generally%20available
+limitations:
+  note: External lineage is not recorded in the lineage system tables (system.access.table_lineage and system.access.column_lineage), and each metastore is capped at 10,000 external metadata objects and 100,000 external lineage relationships.
+  link: https://docs.databricks.com/aws/en/data-governance/unity-catalog/external-lineage#:~:text=External%20lineage%20is%20not%20recorded%20in%20the%20lineage%20system%20tables
+  date: '2026-08-20'
+prediction:
+  - Lineage Beyond
+  - Unity Catalog Federated Lineage
+  - Lineage One
+source: https://docs.databricks.com/aws/en/data-governance/unity-catalog/external-lineage
+verified: '2026-08-20'

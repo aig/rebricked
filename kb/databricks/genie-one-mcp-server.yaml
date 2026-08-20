@@ -12,12 +12,12 @@ fact:
     link: https://docs.databricks.com/aws/en/agents/mcp-tools/genie-mcp#:~:text=render%20an%20interactive%20View
   - note: 'Because a whole agent runs behind the question, answers are asynchronous: the client calls genie_ask, then keeps polling genie_poll_response until Genie has finished thinking.'
     link: https://docs.databricks.com/aws/en/agents/mcp-tools/genie-mcp#:~:text=The%20agent%20polls%20genie_poll_response%20until%20the%20response%20completes
-  - note: It shares a URL prefix with the per-agent Genie server and is still a different thing, which the docs have to say out loud - this one is served at /api/2.0/mcp/genie and answers across the workspace.
-    link: https://docs.databricks.com/aws/en/agents/mcp-tools/genie-mcp#:~:text=It's%20distinct%20from%20the%20per%2Dagent%20Genie%20server
+  - note: Its URL, /api/2.0/mcp/genie, is the prefix of the per-agent Genie server's own address, and it answers across the whole workspace - so the docs stop to point you at the Genie Agent MCP server when you want one curated agent instead.
+    link: https://docs.databricks.com/aws/en/agents/mcp-tools/genie-mcp#:~:text=To%20scope%20analytics%20to%20one%20curated%20Genie%20Agent%2C%20use%20the%20Genie%20Agent%20MCP%20server
 status:
   value: active
   link: https://docs.databricks.com/aws/en/agents/mcp-tools/genie-mcp#:~:text=is%20a%20Databricks%20managed%20MCP%20server
-  date: '2026-08-10'
+  date: '2026-08-20'
 releases:
   - type: beta
     date: 2026-05
@@ -30,12 +30,12 @@ occasion:
   link: https://docs.databricks.com/aws/en/ai-bi/release-notes/2026#:~:text=The%20Genie%20One%20MCP%20App%20adds%20rich%20UI%20interactions
   note: Genie One MCP App shipped in Beta, July 2026
 limitations:
-  note: Requires the Managed MCP Servers workspace preview; query results come back truncated to protect the model context window, so an agent needs genie_get_query_result for the full set, and it must wait for one poll call to finish before polling again.
+  note: Requires the Managed MCP Servers workspace preview and on-behalf-of user authentication, since service principals are not supported. Query results come back truncated to protect the model context window, so an agent needs genie_get_query_result for the full set, and it must wait for one poll call to finish before polling again.
   link: https://docs.databricks.com/aws/en/agents/mcp-tools/genie-mcp#:~:text=return%20truncated%20query%20results
-  date: '2026-08-10'
+  date: '2026-08-20'
 prediction:
   - Genie One MCP Server One
   - Genie Ontology Protocol
   - Genie Everywhere Server
 source: https://docs.databricks.com/aws/en/agents/mcp-tools/genie-mcp
-verified: '2026-08-10'
+verified: '2026-08-20'

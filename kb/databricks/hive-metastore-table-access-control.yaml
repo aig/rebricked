@@ -18,7 +18,7 @@ fact:
 status:
   value: deprecated
   link: https://docs.databricks.com/aws/en/release-notes/product/2024/may#:~:text=are%20deprecated%20on%20Databricks%20Runtime%2015.0
-  date: '2026-08-12'
+  date: '2026-08-20'
 deprecatedAt:
   date: 2024-05
   link: https://docs.databricks.com/aws/en/release-notes/product/2024/may#:~:text=are%20deprecated%20on%20Databricks%20Runtime%2015.0
@@ -27,6 +27,6 @@ replacement: Unity Catalog
 limitations:
   note: Privileges are workspace-local rather than account-wide, and a cluster configured for table ACLs only cannot reach Unity Catalog data at all.
   link: https://learn.microsoft.com/en-us/azure/databricks/archive/compute/configure#:~:text=but%20cannot%20access%20Unity%20Catalog%20data
-  date: '2026-08-12'
+  date: '2026-08-20'
 source: https://docs.databricks.com/aws/en/data-governance/unity-catalog/access-control/table-acls/table-acl
-verified: '2026-08-12'
+verified: '2026-08-20'

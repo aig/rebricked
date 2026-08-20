@@ -63,6 +63,13 @@ verified: 'YYYY-MM-DD'
 
 - `deprecatedAt` is **required** for all three deprecation statuses.
 - `removedAt` is optional and must not precede `deprecatedAt`.
+- `removedAt` may be a **scheduled** sunset that has not arrived yet. The card renders "⚠ Access
+  ends" for a future date and "⚠ Access ended" once it has passed, so a documented future cutoff
+  (as on `lakebase-provisioned`) is safe to record. What is *not* safe is recording a date the
+  docs merely *planned*: if the deadline passes and the vendor never confirms the removal
+  happened, drop the field rather than let the card assert an end that may not have occurred.
+  That is exactly what went wrong on `legacy-sql-editor`, whose docs still read "will be retired"
+  a month after its own scheduled date.
 - **Omit both `successorId` and `replacement` when nothing directly replaced it.** The card then
   renders as "retired", which is honest. Do not invent a successor.
 - Set `successorId` when the successor has its own card in the dataset; use `replacement` for a

@@ -10,7 +10,7 @@ fact:
 status:
   value: renamed
   link: https://www.databricks.com/blog/2019/04/24/open-sourcing-delta-lake.html#:~:text=the%20open%20sourcing%20of%20the%20Delta%20Lake%20project
-  date: '2026-07-18'
+  date: '2026-08-20'
 releases:
   - type: private-preview
     date: 2018-05
@@ -30,4 +30,4 @@ links:
     kind: internet
     label: 'SiliconANGLE: Databricks Delta'
 source: https://www.databricks.com/blog/2019/04/24/open-sourcing-delta-lake.html
-verified: '2026-07-23'
+verified: '2026-08-20'

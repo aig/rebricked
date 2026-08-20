@@ -15,7 +15,7 @@ fact:
 status:
   value: active
   link: https://docs.databricks.com/aws/en/agents/mcp-tools/uc-functions#:~:text=is%20a%20Databricks%20managed%20MCP%20server
-  date: '2026-08-10'
+  date: '2026-08-20'
 releases:
   - type: beta
     date: 2025-06
@@ -34,4 +34,4 @@ prediction:
   - Unity Tool Server
   - Genie Functions MCP server
 source: https://docs.databricks.com/aws/en/agents/mcp-tools/uc-functions
-verified: '2026-08-10'
+verified: '2026-08-20'

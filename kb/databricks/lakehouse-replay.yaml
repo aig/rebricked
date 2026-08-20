@@ -7,23 +7,26 @@ what:
 fact:
   - note: It quietly re-runs a sample of your read-only serverless workloads against the next Databricks Runtime before you upgrade, so a runtime regression shows up in a shadow run instead of in prod - no setup, your data never leaves the workspace, and the replay compute isn't billed.
     link: https://docs.databricks.com/aws/en/compute/serverless/lakehouse-replay#:~:text=customers%20are%20not%20billed%20for%20related%20compute%20costs
-  - note: It is in Beta, enabled by a workspace admin from the Previews page.
+  - note: It is in Public Preview, enabled by a workspace admin from the Previews page, and the workloads it replays never show up in your job run history or query history - only in the audit log.
     link: https://docs.databricks.com/aws/en/compute/serverless/lakehouse-replay#:~:text=from%20the%20workspace%20Previews%20page
 status:
   value: active
   link: https://docs.databricks.com/aws/en/compute/serverless/lakehouse-replay#:~:text=Lakehouse%20Replay%20improves%20the%20quality%20and%20stability
-  date: '2026-07-23'
+  date: '2026-08-20'
 releases:
   - type: beta
     date: 2026-06
     link: https://docs.databricks.com/aws/en/release-notes/product/2026/june#:~:text=Lakehouse%20Replay%20is%20now%20available%20in%20Beta.
+  - type: public-preview
+    date: 2026-08
+    link: https://docs.databricks.com/aws/en/compute/serverless/lakehouse-replay#:~:text=This%20feature%20is%20in%20Public%20Preview
 introducedAt:
   date: 2026-06
   link: https://docs.databricks.com/aws/en/release-notes/product/2026/june#:~:text=Lakehouse%20Replay%20is%20now%20available%20in%20Beta.
 limitations:
-  note: Replays only read-only SQL and DataFrame workloads on serverless SQL warehouses, notebooks, and jobs, reading Unity Catalog Delta tables. Writes, UDFs, AI functions like ai_query, federated queries, and ABAC/RBAC workloads are excluded; for DataFrames only the submitted Spark plan is replayed, not the preceding Python cells.
+  note: Replays only read-only SQL and DataFrame workloads that run on serverless compute (serverless SQL warehouses, notebooks, and jobs) and read Unity Catalog Delta tables, so anything that writes is out of scope; for DataFrame workloads only the Spark plan submitted to production is replayed, not the preceding Python cells. It detects execution failures, not wrong results, and coverage is documented as expanding.
   link: https://docs.databricks.com/aws/en/compute/serverless/lakehouse-replay#:~:text=Preceding%20Python%20cells%20are%20not%20executed
-  date: '2026-07-23'
+  date: '2026-08-20'
 links:
   - url: https://docs.databricks.com/aws/en/release-notes/product/2026/june
     kind: official
@@ -33,4 +36,4 @@ prediction:
   - Lakehouse Rehearsal
   - Genie Replay
 source: https://docs.databricks.com/aws/en/compute/serverless/lakehouse-replay
-verified: '2026-07-23'
+verified: '2026-08-20'

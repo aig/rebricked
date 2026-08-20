@@ -16,7 +16,7 @@ fact:
 status:
   value: active
   link: https://docs.databricks.com/aws/en/delta/clustering#:~:text=Liquid%20clustering%20is%20generally%20available%20for%20Delta%20Lake%20tables
-  date: '2026-07-18'
+  date: '2026-08-20'
 releases:
   - type: public-preview
     date: 2025-02
@@ -32,9 +32,9 @@ occasion:
   link: https://docs.databricks.com/aws/en/release-notes/product/2025/june#:~:text=Automatic%20liquid%20clustering%20is%20now%20GA
   note: GA on Databricks Runtime 15.4 LTS and above
 limitations:
-  note: Clustering-on-write doesn't support source queries with filters, joins, or aggregations (DBR 15.1 and below); you can't create a liquid-clustered table via Structured Streaming write (DBR 15.4 LTS and below); and automatic liquid clustering and row-level concurrency aren't available for managed Apache Iceberg v2 tables.
+  note: Clustering-on-write doesn't support source queries with filters, joins, or aggregations (DBR 15.1 and below); you can't create a liquid-clustered table via Structured Streaming write (DBR 15.4 LTS and below); automatic liquid clustering isn't available for managed Apache Iceberg v2 tables, and needs DBR 18.0 or above on the v3 tables where it is supported; and row-level concurrency isn't supported on managed Apache Iceberg v2 tables, which lack the deletion vectors and row tracking the v3 spec added.
   link: https://docs.databricks.com/aws/en/delta/clustering#:~:text=source%20queries%20that%20include%20filters%2C%20joins%2C%20or%20aggregations
-  date: '2026-07-23'
+  date: '2026-08-20'
 links:
   - url: https://www.databricks.com/blog/announcing-general-availability-liquid-clustering
     kind: community
@@ -47,4 +47,4 @@ prediction:
   - Liquid Clustering 2.0
   - Genie Clustering
 source: https://docs.databricks.com/aws/en/delta/clustering
-verified: '2026-07-18'
+verified: '2026-08-20'

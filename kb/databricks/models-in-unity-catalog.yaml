@@ -15,7 +15,7 @@ fact:
 status:
   value: active
   link: https://docs.databricks.com/aws/en/machine-learning/manage-model-lifecycle/#:~:text=Databricks%20recommends%20for%20governing%20and%20deploying%20models
-  date: '2026-07-18'
+  date: '2026-08-20'
 releases:
   - type: public-preview
     date: 2023-06
@@ -27,9 +27,9 @@ introducedAt:
   date: '2023'
   link: https://docs.databricks.com/aws/en/release-notes/product/2023/june#:~:text=Models%20in%20Unity%20Catalog%20%28Public%20Preview%29
 limitations:
-  note: Doesn't support stages, webhooks, email notifications, comment threads, or the activity log, and several search-API fields and operators (order_by, tag filters, and operators beyond exact equality) are unsupported.
+  note: Doesn't support stages, webhooks, email notifications, comment threads, or the activity log, and several search-API fields and operators (order_by, tag filters, operators beyond exact equality, and searching registered models by name) are unsupported; search_registered_models can also return stale results for models shared through OpenSharing.
   link: https://docs.databricks.com/aws/en/machine-learning/manage-model-lifecycle/#:~:text=Webhooks%20are%20not%20supported%20for%20models%20in%20Unity%20Catalog.
-  date: '2026-07-23'
+  date: '2026-08-20'
 links:
   - url: https://medium.com/towards-data-engineering/manage-databricks-ml-model-lifecycle-in-unity-catalog-with-mlflow-code-walkthrough-video-1e81c2fecf7b
     kind: community
@@ -39,4 +39,4 @@ prediction:
   - Mosaic AI Registry
   - Unity Models One
 source: https://docs.databricks.com/aws/en/machine-learning/manage-model-lifecycle/
-verified: '2026-07-23'
+verified: '2026-08-20'

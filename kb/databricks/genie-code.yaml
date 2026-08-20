@@ -10,14 +10,14 @@ what:
 fact:
   - note: Unlike a generic code assistant, it reads your Unity Catalog metadata - so its SQL and Python suggestions already know your real table and column names.
     link: https://docs.databricks.com/aws/en/notebooks/code-assistant#:~:text=understand%20your%20tables%2C%20columns%2C%20descriptions
-  - note: Databricks' launch blog framed it as the newest member of the Genie family rather than a straight rename.
+  - note: Databricks' launch blog did not introduce it as a new product but as the newest addition to the Databricks Genie family.
     link: https://www.databricks.com/blog/introducing-genie-code#:~:text=the%20newest%20addition%20to%20the%20Databricks%20Genie%20family
   - note: 'You can put it on a schedule: a scheduled task runs your prompt as a full session and leaves behind a continuable chat with the results, turning recurring analysis into an unattended background job.'
     link: https://docs.databricks.com/aws/en/release-notes/product/2026/july#:~:text=produces%20a%20continuable%20Genie%20chat%20with%20the%20results
 status:
   value: active
   link: https://docs.databricks.com/aws/en/notebooks/code-assistant#:~:text=Get%20coding%20help%20from%20Genie%20Code
-  date: '2026-07-18'
+  date: '2026-08-20'
 releases:
   - type: ga
     date: 2026-03
@@ -32,7 +32,7 @@ occasion:
 limitations:
   note: Databricks recommends always reviewing generated code before running it, since it can make mistakes, and warns that auto-approve is a best-effort productivity heuristic, not a security boundary.
   link: https://docs.databricks.com/aws/en/notebooks/use-databricks-assistant#:~:text=Auto%2Dapprove%20is%20a%20productivity%20feature%2C%20not%20a%20security%20boundary
-  date: '2026-07-23'
+  date: '2026-08-20'
 links:
   - url: https://www.databricks.com/blog/introducing-genie-code
     kind: community
@@ -45,4 +45,4 @@ prediction:
   - Genie Coder
   - Agentic Assistant
 source: https://docs.databricks.com/aws/en/notebooks/code-assistant
-verified: '2026-08-03'
+verified: '2026-08-20'

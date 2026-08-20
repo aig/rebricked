@@ -17,7 +17,7 @@ fact:
 status:
   value: active
   link: https://docs.databricks.com/aws/en/release-notes/product/2026/august#:~:text=Tag%20automations%20are%20now%20in
-  date: '2026-08-12'
+  date: '2026-08-20'
 releases:
   - type: beta
     date: 2026-08
@@ -28,10 +28,10 @@ introducedAt:
 limitations:
   note: One automation targets tables or volumes but not both, is scoped to a single catalog, matches at most 500 assets per run and can assign or remove at most 5 governed tags; recurring results usually land within 24 hours, and an automation's scope and action cannot be changed after it is created.
   link: https://docs.databricks.com/aws/en/admin/governed-tags/automate-tag-assignment#:~:text=500
-  date: '2026-08-12'
+  date: '2026-08-20'
 prediction:
   - Governed tag automations
   - Tag agents
   - Genie tagging
 source: https://docs.databricks.com/aws/en/admin/governed-tags/automate-tag-assignment
-verified: '2026-08-12'
+verified: '2026-08-20'

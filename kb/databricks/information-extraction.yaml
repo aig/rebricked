@@ -7,14 +7,14 @@ what:
   note: Agent Bricks capability with a no-code UI that turns unstructured documents into a structured table by extracting fields against a schema.
   link: https://docs.databricks.com/aws/en/generative-ai/agent-bricks/info-extraction#:~:text=transforms%20unstructured%20documents%20and%20text%20into%20key%2C%20structured%20insights
 fact:
-  - note: You describe what you want in plain English and click Generate Schema - it writes the extraction schema for you; under the hood it runs on the ai_extract SQL function.
-    link: https://docs.databricks.com/aws/en/generative-ai/agent-bricks/info-extraction#:~:text=Information%20Extraction%20is%20built%20on%20top%20of%20the%20AI%20function
+  - note: You describe what you want in plain English and click Generate Schema - it writes the extraction schema for you; under the hood it runs on the ai_extract SQL function, and the finished agent hands you the SQL to run it at scale.
+    link: https://docs.databricks.com/aws/en/generative-ai/agent-bricks/info-extraction#:~:text=Call%20ai_extract%20in%20SQL%20to%20extract%20fields%20at%20scale
   - note: The original launch capability now sits at a '(legacy)' docs page, replaced by a rebuild on the ai_extract v2 signature.
     link: https://docs.databricks.com/aws/en/generative-ai/agent-bricks/info-extraction#:~:text=This%20page%20covers%20the%20new%20version%20of%20Information%20Extraction
 status:
   value: active
   link: https://docs.databricks.com/aws/en/generative-ai/agent-bricks/info-extraction#:~:text=Information%20Extraction%20transforms%20unstructured%20documents%20and%20text%20into%20key%2C%20structured%20insights
-  date: '2026-07-22'
+  date: '2026-08-20'
 releases:
   - type: beta
     date: 2025-06
@@ -32,7 +32,7 @@ occasion:
 limitations:
   note: Information Extraction agents have a 128k-token maximum context length, and union schema types aren't supported.
   link: https://docs.databricks.com/aws/en/generative-ai/agent-bricks/info-extraction#:~:text=have%20a%20128k%20token%20max%20context%20length
-  date: '2026-07-23'
+  date: '2026-08-20'
 links:
   - url: https://www.databricks.com/blog/introducing-agent-bricks
     kind: community
@@ -40,9 +40,12 @@ links:
   - url: https://learn.microsoft.com/en-us/azure/databricks/release-notes/product/2026/march
     kind: official
     label: 'Azure Databricks release notes: March 2026 (Public Preview)'
+  - url: https://docs.databricks.com/aws/en/agents/agent-bricks/key-info-extraction
+    kind: official
+    label: 'Databricks docs: Use Information Extraction (legacy)'
 prediction:
   - Genie Extract
   - Doc Miner
   - Extract Bricks
 source: https://docs.databricks.com/aws/en/generative-ai/agent-bricks/info-extraction
-verified: '2026-07-23'
+verified: '2026-08-20'

@@ -10,7 +10,7 @@ fact:
 status:
   value: renamed
   link: https://docs.databricks.com/aws/en/integrations/odbc/migration#:~:text=Databricks%20renamed%20the%20ODBC%20driver
-  date: '2026-07-18'
+  date: '2026-08-20'
 from:
   date: '2014'
   link: https://www.databricks.com/blog/2014/04/30/databricks-partners-with-simba-to-deliver-shark-odbc-driver.html#:~:text=standards%2Dbased%20connectivity%20solution%20for%20Shark
@@ -26,4 +26,4 @@ links:
     kind: internet
     label: 'insightsoftware: Databricks ODBC'
 source: https://docs.databricks.com/aws/en/integrations/odbc/migration
-verified: '2026-07-23'
+verified: '2026-08-20'

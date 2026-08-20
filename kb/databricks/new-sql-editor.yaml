@@ -15,18 +15,21 @@ fact:
 status:
   value: active
   link: https://docs.databricks.com/aws/en/sql/user/sql-editor/#:~:text=the%20new%20SQL%20editor%20will%20be%20enabled%20by%20default%20for%20all%20workspaces
-  date: '2026-07-18'
+  date: '2026-08-20'
 releases:
+  - type: public-preview
+    date: 2024-10
+    link: https://docs.databricks.com/aws/en/sql/release-notes/2024#:~:text=New%20SQL%20editor%20%28Public%20Preview%29
   - type: ga
-    date: 2026-05
-    link: https://docs.databricks.com/aws/en/sql/user/sql-editor/#:~:text=Starting%20in%20late%20May%202026%2C%20the%20new%20SQL%20editor
+    date: 2025-08
+    link: https://docs.databricks.com/aws/en/sql/release-notes/2025#:~:text=The%20new%20SQL%20editor%20is%20now%20generally%20available
 introducedAt:
-  date: '2025'
-  link: https://www.databricks.com/blog/introducing-new-sql-editor#:~:text=general%20availability%20of%20the%20new%20SQL%20editor
+  date: 2024-10
+  link: https://docs.databricks.com/aws/en/sql/release-notes/2024#:~:text=New%20SQL%20editor%20%28Public%20Preview%29
 limitations:
   note: Can't be used for queries you don't own or that contain query-based dropdown lists, and shared query results are limited to 64000 rows.
   link: https://docs.databricks.com/aws/en/sql/user/sql-editor/#:~:text=limited%20to%2064%2C000%20rows
-  date: '2026-07-23'
+  date: '2026-08-20'
 links:
   - url: https://www.databricks.com/blog/introducing-new-sql-editor
     kind: community
@@ -39,4 +42,4 @@ prediction:
   - Lakeflow SQL editor
   - SQL editor One
 source: https://docs.databricks.com/aws/en/sql/user/sql-editor/
-verified: '2026-07-23'
+verified: '2026-08-20'

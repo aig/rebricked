@@ -18,7 +18,7 @@ fact:
 status:
   value: legacy
   link: https://learn.microsoft.com/en-us/azure/databricks/archive/compute/configure#:~:text=included%20only%20for%20historical%20accuracy
-  date: '2026-08-12'
+  date: '2026-08-20'
 deprecatedAt:
   date: 2022-08
   link: https://docs.databricks.com/aws/en/release-notes/product/2022/august#:~:text=Cluster%20UI%20preview%20and%20access%20mode%20replaces%20security%20mode
@@ -27,10 +27,10 @@ replacement: Shared access mode
 limitations:
   note: Not available at all in workspaces assigned to a Unity Catalog metastore, and limited to SQL, Python and R - Scala is unsupported because user code runs in separate processes.
   link: https://learn.microsoft.com/en-us/azure/databricks/archive/compute/configure#:~:text=High%20Concurrency%20clusters%20are%20not%20available
-  date: '2026-08-12'
+  date: '2026-08-20'
 links:
   - url: https://learn.microsoft.com/en-us/azure/databricks/archive/compute/cluster-ui-preview
     kind: official
     label: 'MS Learn (archived): Clusters UI changes and cluster access modes'
 source: https://learn.microsoft.com/en-us/azure/databricks/archive/compute/configure
-verified: '2026-08-12'
+verified: '2026-08-20'

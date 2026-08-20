@@ -17,18 +17,18 @@ fact:
 status:
   value: active
   link: https://docs.databricks.com/aws/en/data-governance/unity-catalog/data-quality-monitoring/#:~:text=Data%20profiling%20was%20formerly%20known%20as%20Lakehouse%20Monitoring
-  date: '2026-08-03'
+  date: '2026-08-20'
 releases:
   - type: ga
     date: 2024-06
     link: https://docs.databricks.com/aws/en/release-notes/product/2024/june#:~:text=Lakehouse%20Monitoring%20is%20GA
 from:
-  date: 2026-02
-  link: https://docs.databricks.com/aws/en/release-notes/product/2026/february#:~:text=Data%20Quality%20Monitoring%20Anomaly%20Detection%20is%20now%20in%20Public%20Preview
+  date: 2025-11
+  link: https://web.archive.org/web/20251108122445/https://docs.databricks.com/aws/en/data-quality-monitoring/data-profiling/
 limitations:
   note: Only Delta tables can be profiled and not all regions are supported. Time series and inference profiles compute metrics over the last 30 days only, profiles over materialized views do not support incremental processing, and a snapshot profile tops out at a 4TB table.
   link: https://docs.databricks.com/aws/en/data-governance/unity-catalog/data-quality-monitoring/data-profiling/#:~:text=Only%20Delta%20tables%20are%20supported%20for%20profiling
-  date: '2026-08-03'
+  date: '2026-08-20'
 links:
   - url: https://docs.databricks.com/aws/en/data-governance/unity-catalog/data-quality-monitoring/
     kind: official
@@ -41,4 +41,4 @@ prediction:
   - Unity Catalog Profiler
   - Data Profiling One
 source: https://docs.databricks.com/aws/en/data-governance/unity-catalog/data-quality-monitoring/data-profiling/
-verified: '2026-08-03'
+verified: '2026-08-20'

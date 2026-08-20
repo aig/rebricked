@@ -17,7 +17,7 @@ fact:
 status:
   value: active
   link: https://docs.databricks.com/aws/en/omnigent/#:~:text=provides%20a%20common%20layer%20over
-  date: '2026-08-12'
+  date: '2026-08-20'
 releases:
   - type: beta
     date: 2026-06
@@ -26,12 +26,12 @@ introducedAt:
   date: 2026-06
   link: https://docs.databricks.com/aws/en/release-notes/product/2026/june#:~:text=Omnigent%20is%20now%20available%20in%20Beta
 limitations:
-  note: Only built-in contextual policies are supported, not custom policy functions running arbitrary code; there is no native Windows support (WSL2 is required); Databricks Sandbox hosts cannot use custom model API keys because all model access routes through AI Gateway; and it does not work with serverless egress control.
+  note: Only built-in contextual policies are supported, not custom policy functions running arbitrary code; there is no native Windows support (WSL2 is required); a Databricks Sandbox host cannot use your own model API keys because all model access routes through AI Gateway, and it does not integrate with serverless egress control.
   link: https://docs.databricks.com/aws/en/omnigent/#:~:text=custom%20policy%20functions
-  date: '2026-08-12'
+  date: '2026-08-20'
 prediction:
   - Genie Omnigent
   - Agent Harness
   - Omnigent One
 source: https://docs.databricks.com/aws/en/omnigent/
-verified: '2026-08-12'
+verified: '2026-08-20'

@@ -17,7 +17,7 @@ fact:
 status:
   value: active
   link: https://docs.databricks.com/aws/en/ldp/multi-file-editor#:~:text=with%20the%20Lakeflow%20Pipelines%20Editor
-  date: '2026-07-18'
+  date: '2026-08-20'
 releases:
   - type: public-preview
     date: 2025-09
@@ -37,4 +37,4 @@ prediction:
   - Lakeflow IDE
   - Agentic Pipelines Editor
 source: https://docs.databricks.com/aws/en/ldp/multi-file-editor
-verified: '2026-08-03'
+verified: '2026-08-20'

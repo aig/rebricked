@@ -1,0 +1,24 @@
+id: lakeflow-spark-declarative-pipelines
+name: Lakeflow Spark Declarative Pipelines
+category: Data engineering
+what:
+  note: The declarative framework for batch and streaming ETL pipelines under the four-word name Databricks announced for it in late 2025.
+  link: https://docs.databricks.com/aws/en/release-notes/product/2025/november#:~:text=Lakeflow%20Declarative%20Pipelines%20has%20been%20renamed%20to%20Lakeflow%20Spark%20Declarative%20Pipelines
+fact:
+  - note: The entire rename was the insertion of the word 'Spark' into the middle of the old name, with every other word left exactly where it was.
+    link: https://docs.databricks.com/aws/en/release-notes/product/2025/november#:~:text=Lakeflow%20Declarative%20Pipelines%20has%20been%20renamed%20to%20Lakeflow%20Spark%20Declarative%20Pipelines
+  - note: 'The ''Spark'' it added was not branding: Databricks had open-sourced the engine to Apache Spark five months earlier, so half the name pointed at a project it no longer owned alone.'
+    link: https://www.databricks.com/company/newsroom/press-releases/databricks-donates-declarative-pipelines-apache-sparktm-open-source#:~:text=open%2Dsourcing%20the%20company%27s%20core%20declarative%20ETL%20framework%20as%20Apache%20Spark
+status:
+  value: renamed
+  link: https://docs.databricks.com/aws/en/ldp/where-is-dlt#:~:text=has%20been%20updated%20to%20Lakeflow%20pipelines
+  date: '2026-08-20'
+from:
+  date: 2025-11
+  link: https://docs.databricks.com/aws/en/release-notes/product/2025/november#:~:text=Lakeflow%20Declarative%20Pipelines%20has%20been%20renamed%20to%20Lakeflow%20Spark%20Declarative%20Pipelines
+to:
+  date: '2026'
+  link: https://docs.databricks.com/aws/en/ldp/where-is-dlt#:~:text=has%20been%20updated%20to%20Lakeflow%20pipelines
+successorId: lakeflow-pipelines
+source: https://docs.databricks.com/aws/en/release-notes/product/2025/november
+verified: '2026-08-20'

@@ -15,7 +15,7 @@ fact:
 status:
   value: active
   link: https://docs.databricks.com/aws/en/machine-learning/ai-runtime/#:~:text=AI%20Runtime%20is%20a%20compute%20offering%20at%20Databricks
-  date: '2026-07-23'
+  date: '2026-08-20'
 releases:
   - type: beta
     date: 2025-06
@@ -33,7 +33,7 @@ occasion:
 limitations:
   note: Only A10 and H100 accelerators; the maximum workload runtime is seven days; no FedRAMP High or DoD IL5 compliance. For scheduled jobs, Environments-panel dependencies and auto-recovery for incompatible packages aren't supported, and cross-region GPUs during peak demand can incur egress costs.
   link: https://docs.databricks.com/aws/en/machine-learning/ai-runtime/#:~:text=The%20maximum%20runtime%20for%20a%20workload%20is%20seven%20days.
-  date: '2026-07-23'
+  date: '2026-08-20'
 links:
   - url: https://docs.databricks.com/aws/en/release-notes/product/2025/june
     kind: official
@@ -46,4 +46,4 @@ prediction:
   - Lakeflow GPU
   - Mosaic AI Runtime
 source: https://docs.databricks.com/aws/en/machine-learning/ai-runtime/
-verified: '2026-07-23'
+verified: '2026-08-20'

@@ -18,7 +18,7 @@ fact:
 status:
   value: active
   link: https://docs.databricks.com/aws/en/compute/sql-warehouse/#:~:text=SQL%20endpoints%20were%20renamed%20as%20SQL%20warehouses
-  date: '2026-07-18'
+  date: '2026-08-20'
 releases:
   - type: ga
     date: '2023'
@@ -29,7 +29,7 @@ from:
 limitations:
   note: The maximum number of queries in a warehouse queue is 1000 for all warehouse types, and pro/classic SKUs have a fixed limit of one cluster per 10 concurrent queries.
   link: https://docs.databricks.com/aws/en/compute/sql-warehouse/warehouse-behavior#:~:text=maximum%20number%20of%20queries%20in%20a%20queue
-  date: '2026-07-23'
+  date: '2026-08-20'
 links:
   - url: https://medium.com/@santosh_joshi_data/understanding-the-new-databricks-service-names-85e11465d1c1
     kind: community
@@ -42,4 +42,4 @@ prediction:
   - Genie Warehouse
   - Lakehouse Warehouse
 source: https://docs.databricks.com/aws/en/compute/sql-warehouse/
-verified: '2026-08-03'
+verified: '2026-08-20'

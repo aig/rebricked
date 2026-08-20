@@ -1,0 +1,52 @@
+id: databricks-jdbc-driver
+name: Databricks JDBC Driver
+aliases:
+  - Databricks JDBC Driver (OSS)
+  - databricks-jdbc
+  - OSS JDBC driver
+category: Developer experience
+what:
+  note: The open source JDBC driver, version 3 and above, for connecting tools such as DataGrip, DBeaver, and SQL Workbench/J to Databricks.
+  link: https://docs.databricks.com/aws/en/integrations/jdbc-oss#:~:text=This%20page%20provides%20information%20on%20installing%20and%20using%20the%20Databricks%20JDBC%20Driver%2C%20version%203%20and%20above
+fact:
+  - note: Databricks wrote this one itself and then published the source under Apache 2.0, so you can read exactly how your query results get fetched.
+    link: https://docs.databricks.com/aws/en/integrations/jdbc-oss#:~:text=The%20Databricks%20JDBC%20Driver%20source%20code%20is%20publicly%20available%20under%20the%20Apache%202.0%20license
+  - note: It can run queries through the Statement Execution APIs instead of Thrift, which the docs credit with the 'beneficial query result retention feature'.
+    link: https://docs.databricks.com/aws/en/integrations/jdbc-oss#:~:text=which%20provides%20the%20beneficial%20query%20result%20retention%20feature
+  - note: Java 8 holdouts get their own branch, which Databricks syncs with main only periodically and then politely invites the community to keep updated.
+    link: https://docs.databricks.com/aws/en/integrations/jdbc-oss#:~:text=This%20branch%20is%20synced%20with%20the%20main%20branch%20periodically
+status:
+  value: active
+  link: https://docs.databricks.com/aws/en/integrations/jdbc-oss#:~:text=version%203%20and%20above
+  date: '2026-08-20'
+releases:
+  - type: public-preview
+    date: 2024-07
+    link: https://docs.databricks.com/aws/en/release-notes/product/2024/july#:~:text=A%20new%20open%2Dsource%20Databricks%20JDBC%20driver%20has%20been%20released%20for
+  - type: ga
+    date: 2025-03
+    link: https://docs.databricks.com/aws/en/release-notes/product/2025/march#:~:text=is%20now%20generally%20available%20(GA)%20and%20will%20soon%20be%20open%20source
+introducedAt:
+  date: 2024-07
+  link: https://docs.databricks.com/aws/en/release-notes/product/2024/july#:~:text=A%20new%20open%2Dsource%20Databricks%20JDBC%20driver%20has%20been%20released%20for
+occasion:
+  date: 2025-06
+  link: https://docs.databricks.com/aws/en/release-notes/product/2025/june#:~:text=New%20Databricks%20JDBC%20Driver%20is%20open%20source
+  note: Open sourced June 2025
+limitations:
+  note: Requires Java Runtime Environment 11.0 or above, with CI testing only on JRE 11, 17, and 21; Java 8 compatibility lives on a separate JDK 8 branch that is synced with main only periodically.
+  link: https://docs.databricks.com/aws/en/integrations/jdbc-oss#:~:text=Java%20Runtime%20Environment%20(JRE)%2011.0%20or%20above
+  date: '2026-08-20'
+links:
+  - url: https://github.com/databricks/databricks-jdbc
+    kind: official
+    label: 'GitHub: databricks/databricks-jdbc'
+  - url: https://mvnrepository.com/artifact/com.databricks/databricks-jdbc
+    kind: internet
+    label: 'Maven: com.databricks:databricks-jdbc'
+prediction:
+  - Lakehouse JDBC Driver
+  - Unity JDBC Driver
+  - Databricks JDBC Driver (Legacy)
+source: https://docs.databricks.com/aws/en/integrations/jdbc-oss
+verified: '2026-08-20'

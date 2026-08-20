@@ -18,7 +18,7 @@ fact:
 status:
   value: active
   link: https://docs.databricks.com/aws/en/oltp/#:~:text=a%20fully%20managed%20Postgres%20database
-  date: '2026-07-18'
+  date: '2026-08-20'
 releases:
   - type: public-preview
     date: 2025-06
@@ -27,16 +27,16 @@ releases:
     date: 2026-01
     link: https://docs.databricks.com/aws/en/release-notes/product/2026/january#:~:text=Lakebase%20is%20now%20generally%20available
 introducedAt:
-  date: 2026-02
-  link: https://www.databricks.com/blog/databricks-lakebase-generally-available#:~:text=Databricks%20Lakebase%2C%20the%20first%20implementation%20of%20this%20category%2C%20is%20Generally%20Available%20on%20AWS
+  date: 2025-06
+  link: https://www.databricks.com/blog/announcing-lakebase-public-preview#:~:text=the%20Public%20Preview%20of%20Databricks%20Lakebase
 occasion:
   date: 2026-02
   link: https://www.databricks.com/blog/databricks-lakebase-generally-available#:~:text=Databricks%20Lakebase%2C%20the%20first%20implementation%20of%20this%20category%2C%20is%20Generally%20Available%20on%20AWS
-  note: GA February 2026
+  note: GA announcement blog, February 2026
 limitations:
-  note: 'Lakebase Postgres Autoscaling enforces per-project limits: a default of 20 concurrently active computes (the default branch is exempt), up to 500 branches, 500 Postgres roles, and 500 databases per branch, a 16 TB storage quota per branch, and up to 1000 projects per workspace.'
-  link: https://learn.microsoft.com/en-us/azure/databricks/oltp/projects/manage-projects#limits#:~:text=20%20concurrently%20active%20computes%20per%20project
-  date: '2026-07-23'
+  note: 'Lakebase Postgres enforces per-project limits: a default of 20 concurrently active computes (the default branch is exempt, and Support can raise the limit), up to 500 branches per project, 500 Postgres roles and 500 databases per branch, 6 read replicas per branch, a 16 TB storage quota per branch that Support can also raise, up to 1000 projects per workspace, and a history retention window of at most 30 days.'
+  link: https://learn.microsoft.com/en-us/azure/databricks/oltp/projects/manage-projects#:~:text=The%20default%20limit%20is%2020%20concurrently%20active%20computes%20per%20project
+  date: '2026-08-20'
 links:
   - url: https://www.databricks.com/blog/announcing-lakebase-public-preview
     kind: community
@@ -49,4 +49,4 @@ prediction:
   - Genie Base
   - Lakehouse Postgres
 source: https://docs.databricks.com/aws/en/oltp/
-verified: '2026-08-03'
+verified: '2026-08-20'

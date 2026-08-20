@@ -17,7 +17,7 @@ fact:
 status:
   value: active
   link: https://docs.databricks.com/aws/en/admin/system-tables/#:~:text=analytical%20store%20of%20your%20account
-  date: '2026-08-12'
+  date: '2026-08-20'
 releases:
   - type: public-preview
     date: 2023-06
@@ -31,10 +31,10 @@ introducedAt:
 limitations:
   note: Read-only and unmodifiable, they must be enabled from a Unity Catalog-enabled workspace before anything appears, and free retention varies per table rather than being one number.
   link: https://docs.databricks.com/aws/en/admin/system-tables/#:~:text=read%2Donly
-  date: '2026-08-12'
+  date: '2026-08-20'
 prediction:
   - Unity system tables
   - Observability Catalog
   - system.genie
 source: https://docs.databricks.com/aws/en/admin/system-tables/
-verified: '2026-08-12'
+verified: '2026-08-20'

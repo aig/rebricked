@@ -17,7 +17,7 @@ fact:
 status:
   value: retired
   link: https://docs.databricks.com/aws/en/archive/runtime/light#:~:text=no%20longer%20supported
-  date: '2026-08-12'
+  date: '2026-08-20'
 deprecatedAt:
   date: 2021-07
   link: https://docs.databricks.com/aws/en/release-notes/product/2021/july#:~:text=Support%20for%20the%20original%20Databricks%20Light%202.4%20ends
@@ -29,4 +29,4 @@ links:
     kind: official
     label: 'Databricks release notes: Databricks Light generally available (March 2019)'
 source: https://docs.databricks.com/aws/en/archive/runtime/light
-verified: '2026-08-12'
+verified: '2026-08-20'

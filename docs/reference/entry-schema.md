@@ -71,7 +71,7 @@ reuse `source`. A bare string still validates for legacy resilience, but write t
 | `from` | `active` rename tip; optional on `renamed` | when this name started being used |
 | `to` | `renamed` | when this name stopped being current. Must not precede `from` |
 | `deprecatedAt` | any deprecation status | when it was deprecated |
-| `removedAt` | never | when it was removed. Must not precede `deprecatedAt` |
+| `removedAt` | never | when it was removed, or a documented future cutoff. Must not precede `deprecatedAt`. Renders as "Access ends" while the date is in the future, "Access ended" once past |
 
 Precision is optional. Honesty about precision is not - use `YYYY` when you only know the year.
 

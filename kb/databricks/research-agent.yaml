@@ -1,0 +1,32 @@
+id: research-agent
+name: Research Agent
+aliases:
+  - Genie Research Agent
+category: AI / BI
+what:
+  note: The deep-reasoning mode inside a Genie Agent that tackled complex business questions with multi-step reasoning and hypothesis testing instead of a single query.
+  link: https://docs.databricks.com/aws/en/ai-bi/release-notes/2025#:~:text=to%20help%20you%20uncover%20deeper%20insights%20and%20tackle%20complex%20business%20questions%20using%20multi%2Dstep%20reasoning%20and%20hypothesis%20testing
+fact:
+  - note: 'It showed its work, and the work was a lot: Databricks ended up simplifying the thinking trace and shoving the hypothesis evaluations into a sidebar so people could actually read the answer.'
+    link: https://docs.databricks.com/aws/en/ai-bi/release-notes/2025#:~:text=moving%20hypothesis%20evaluations%20into%20a%20sidebar%20for%20easier%20review
+  - note: Weeks after it reached Beta the architecture was collapsed into a single reasoning agent that writes both the hypotheses and the SQL, which is what finally got it to follow instructions and stop filing such long reports.
+    link: https://docs.databricks.com/aws/en/ai-bi/release-notes/2025#:~:text=single%20reasoning%20agent%20that%20generates%20hypotheses%20and%20SQL
+  - note: 'Its own doc address, docs.databricks.com/gcp/en/genie/research-agent, still resolves: Databricks kept the old path alive and quietly lands you on the Genie Agents concepts page instead.'
+    link: https://docs.databricks.com/gcp/en/genie/research-agent
+status:
+  value: renamed
+  link: https://docs.databricks.com/aws/en/genie-agents/concepts#:~:text=Agent%20mode%20was%20formerly%20known%20as%20Research%20Agent.
+  date: '2026-08-20'
+releases:
+  - type: beta
+    date: 2025-11
+    link: https://docs.databricks.com/aws/en/ai-bi/release-notes/2025#:~:text=Research%20Agent%20extends%20Genie
+from:
+  date: 2025-11
+  link: https://docs.databricks.com/aws/en/ai-bi/release-notes/2025#:~:text=Research%20Agent%20extends%20Genie
+to:
+  date: 2026-02
+  link: https://docs.databricks.com/aws/en/ai-bi/release-notes/2026#:~:text=Research%20Agent%20renamed%20to%20Agent%20mode
+successorId: agent-mode
+source: https://docs.databricks.com/aws/en/ai-bi/release-notes/2025
+verified: '2026-08-20'

@@ -12,7 +12,7 @@ fact:
 status:
   value: retired
   link: https://learn.microsoft.com/en-us/azure/databricks/archive/legacy/legacy-dashboards#:~:text=You%20can%20no%20longer%20create%20new%20legacy%20dashboards.
-  date: '2026-07-23'
+  date: '2026-08-20'
 from:
   date: 2020-11
   link: https://docs.databricks.com/aws/en/release-notes/product/2020/november#:~:text=rich%20visualizations%20and%20drag%2Dand%2Ddrop%20dashboards
@@ -33,4 +33,4 @@ links:
     kind: community
     label: 'Databricks docs: Clone a legacy dashboard to AI/BI'
 source: https://learn.microsoft.com/en-us/azure/databricks/archive/legacy/legacy-dashboards
-verified: '2026-07-23'
+verified: '2026-08-20'

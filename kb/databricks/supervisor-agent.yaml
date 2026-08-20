@@ -11,35 +11,43 @@ what:
 fact:
   - note: It's an agent whose entire job is bossing other agents around - routing each request to the right specialist - and its doc URL still reads /multi-agent-supervisor.
     link: https://docs.databricks.com/aws/en/generative-ai/agent-bricks/multi-agent-supervisor#:~:text=Use%20Supervisor%20Agent%20to%20create%20a%20supervisor%20system
+  - note: It can now supervise supervisors - another Supervisor Agent counts as a subagent tool - and a single system tops out at 50 agents, so the org chart has a documented headcount cap.
+    link: https://docs.databricks.com/aws/en/release-notes/product/2026/may#:~:text=nesting%20supervisor%20agents%20as%20subagent%20tools
 status:
   value: active
   link: https://docs.databricks.com/aws/en/generative-ai/agent-bricks/multi-agent-supervisor#:~:text=Use%20Supervisor%20Agent%20to%20create%20a%20supervisor%20system
-  date: '2026-07-18'
+  date: '2026-08-20'
 releases:
   - type: beta
     date: 2025-07
     link: https://docs.databricks.com/aws/en/generative-ai/agent-bricks/multi-agent-supervisor
   - type: ga
     date: 2026-02
-    link: https://www.databricks.com/blog/agent-bricks-supervisor-agent-now-ga-orchestrate-enterprise-agents#:~:text=Agent%20Bricks%20Supervisor%20Agent%20is%20Now%20GA
+    link: https://docs.databricks.com/aws/en/release-notes/product/2026/february#:~:text=Supervisor%20Agent%20is%20now%20Generally%20Available
 from:
   date: 2026-02
-  link: https://www.databricks.com/blog/agent-bricks-supervisor-agent-now-ga-orchestrate-enterprise-agents#:~:text=Agent%20Bricks%20Supervisor%20Agent%20is%20Now%20GA
+  link: https://docs.databricks.com/aws/en/release-notes/product/2026/february#:~:text=has%20been%20renamed%20to%20Supervisor%20Agent
 occasion:
   date: 2026-02
   link: https://www.databricks.com/blog/agent-bricks-supervisor-agent-now-ga-orchestrate-enterprise-agents#:~:text=Agent%20Bricks%20Supervisor%20Agent%20is%20Now%20GA
   note: Supervisor Agent GA, February 2026
 limitations:
-  note: A single supervisor system can't use more than 50 agents, AI Search index subagents support only Delta Sync indexes, and workspaces with Enhanced Security and Compliance aren't supported. Web search requires databricks-gpt-5 in the system.ai allowlist and is unavailable in HIPAA/BAA workspaces or regions lacking web-search-capable models.
+  note: A single supervisor system cannot use more than 50 agents, and AI Search index subagents support only Delta Sync indexes. It needs serverless compute, Unity Catalog, Model Serving access and a nonzero serverless usage policy budget in a supported region. Web search requires databricks-gpt-5 in the allowlist and is unavailable in workspaces with the Enhanced Security and Compliance add-on or in regions lacking web-search-capable models.
   link: https://docs.databricks.com/aws/en/generative-ai/agent-bricks/multi-agent-supervisor#:~:text=cannot%20use%20more%20than%2050%20agents
-  date: '2026-07-23'
+  date: '2026-08-20'
 links:
   - url: https://www.databricks.com/blog/agent-bricks-supervisor-agent-now-ga-orchestrate-enterprise-agents
     kind: community
     label: 'Databricks Blog: Supervisor Agent GA'
+  - url: https://docs.databricks.com/aws/en/release-notes/product/2026/february
+    kind: official
+    label: 'Databricks release notes: Supervisor Agent GA and rename (February 2026)'
+  - url: https://docs.databricks.com/aws/en/release-notes/product/2026/march
+    kind: official
+    label: 'Databricks release notes: Supervisor Agent for Enhanced Security and Compliance workspaces, long-running tasks (March 2026)'
 prediction:
   - Chief Agent Officer
   - Agent Supervisor Prime
   - Genie Supervisor
 source: https://docs.databricks.com/aws/en/generative-ai/agent-bricks/multi-agent-supervisor
-verified: '2026-07-18'
+verified: '2026-08-20'

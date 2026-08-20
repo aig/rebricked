@@ -16,7 +16,7 @@ fact:
 status:
   value: active
   link: https://docs.databricks.com/aws/en/agents/mcp-tools/genie-agent#:~:text=is%20a%20Databricks%20managed%20MCP%20server
-  date: '2026-08-10'
+  date: '2026-08-20'
 releases:
   - type: beta
     date: 2025-06
@@ -30,7 +30,7 @@ introducedAt:
 limitations:
   note: Read-only, so it queries data and never writes to your tables, and it passes no conversation history to the Genie API, so each turn starts cold unless you wrap it in a multi-agent system.
   link: https://docs.databricks.com/aws/en/agents/mcp-tools/genie-agent#:~:text=No%20conversation%20history
-  date: '2026-08-10'
+  date: '2026-08-20'
 links:
   - url: https://www.databricks.com/blog/announcing-managed-mcp-servers-unity-catalog-and-mosaic-ai-integration
     kind: official
@@ -39,4 +39,4 @@ prediction:
   - Genie Agent Protocol Server
   - Managed Genie Tool Server
 source: https://docs.databricks.com/aws/en/agents/mcp-tools/genie-agent
-verified: '2026-08-10'
+verified: '2026-08-20'

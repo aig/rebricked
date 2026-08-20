@@ -14,7 +14,7 @@ fact:
 status:
   value: active
   link: https://docs.databricks.com/aws/en/getting-started/free-edition#:~:text=no%2Dcost%20version%20of%20Databricks
-  date: '2026-07-24'
+  date: '2026-08-20'
 introducedAt:
   date: 2025-06
   link: https://community.databricks.com/t5/community-articles/databricks-free-edition-the-announcement-from-data-ai-summit/td-p/129013
@@ -25,7 +25,7 @@ occasion:
 limitations:
   note: 'Serverless-only and heavily capped: one 2X-Small SQL warehouse, at most 5 concurrent job tasks, up to 3 apps (auto-stopped after 24 hours), no GPUs or provisioned throughput by default, no R or Scala, no SSO/SCIM, a single workspace/metastore per account, and non-commercial use only; exceeding a quota shuts the workspace for the rest of the day.'
   link: https://docs.databricks.com/aws/en/getting-started/free-edition-limitations#:~:text=Free%20Edition%20users%20only%20have%20access%20to%20serverless%20compute%20resources
-  date: '2026-07-24'
+  date: '2026-08-20'
 links:
   - url: https://docs.databricks.com/aws/en/getting-started/free-edition-limitations
     kind: official
@@ -38,4 +38,4 @@ prediction:
   - Free Edition Pro
   - Databricks Playground
 source: https://docs.databricks.com/aws/en/getting-started/free-edition
-verified: '2026-08-03'
+verified: '2026-08-20'
