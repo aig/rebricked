@@ -1,0 +1,58 @@
+id: unity-catalog-skills
+name: Unity Catalog Skills
+aliases:
+  - Skills
+  - UC Skills
+  - agent skills
+  - Databricks skill registry
+category: Data governance
+what:
+  note: Unity Catalog securable that holds an agent skill, so a team publishes the skill once and governs who can discover, use, and update it with the same grants, tags, and audit that protect its tables.
+  link: https://docs.databricks.com/aws/en/agents/uc-skills/#:~:text=a%20skill%20is%20a%20first%2Dclass%20Unity%20Catalog%20securable
+fact:
+  - note: 'The first-class, three-level-namespace, fully governed securable is, on disk, a folder with a Markdown file in it: "A skill is just a folder."'
+    link: https://docs.databricks.com/aws/en/agents/uc-skills/create-share-uc-skills#:~:text=A%20skill%20is%20just%20a%20folder%3A%20a%20SKILL.md%20file%20with%20instructions%2C%20plus%20any%20supporting%20files%20the%20agent%20should%20read
+  - note: Skills got a securable type of their own but no privileges of their own - you share one by granting READ VOLUME, because a skill keeps its contents in managed storage much like a volume does.
+    link: https://docs.databricks.com/aws/en/ai-gateway/govern-skills#:~:text=you%20govern%20them%20with%20the%20volume%20privileges
+  - note: The notebook Databricks ships for syncing a Git repo of skills into a schema creates and updates but never deletes, so a skill you delete from the repo carries on existing in the catalog until someone drops it by hand.
+    link: https://docs.databricks.com/aws/en/agents/uc-skills/create-share-uc-skills#:~:text=it%20never%20deletes%2C%20so%20a%20skill%20removed%20from%20the%20repo%20stays%20in%20the%20schema%20until%20you%20drop%20it
+status:
+  value: active
+  link: https://docs.databricks.com/aws/en/agents/uc-skills/#:~:text=Unity%20Catalog%20Skills%20give%20you%20a%20central%20location%20to%20discover%2C%20publish%2C%20and%20govern%20agent%20skills%20across%20your%20organization
+  date: '2026-09-01'
+releases:
+  - type: beta
+    date: 2026-08
+    link: https://docs.databricks.com/aws/en/release-notes/product/2026/august#:~:text=Unity%20Catalog%20Skills%20%28Beta%29
+introducedAt:
+  date: 2026-08
+  link: https://docs.databricks.com/aws/en/release-notes/product/2026/august#:~:text=You%20can%20now%20publish%2C%20govern%2C%20and%20share%20agent%20skills%20with%20Unity%20Catalog
+limitations:
+  note: Beta, and an account admin has to enable the Unity AI preview from the account console before anyone can create or use a skill. The schema must resolve to a managed storage location or skill creation fails, skills are reachable only from workspaces assigned to the metastore that holds them, and workspaces enforcing the Compliance Security Profile can read existing skills but cannot create, update, or delete them. Loading a schema live is all-or-nothing, since live loading works on a whole schema at a time.
+  link: https://docs.databricks.com/aws/en/ai-gateway/govern-skills#:~:text=creating%2C%20updating%2C%20and%20deleting%20skills%20is%20blocked
+  date: '2026-09-01'
+links:
+  - url: https://docs.databricks.com/aws/en/release-notes/product/2026/august
+    kind: official
+    label: 'Databricks release notes: Unity Catalog Skills Beta (August 2026)'
+  - url: https://docs.databricks.com/aws/en/agents/uc-skills/create-share-uc-skills
+    kind: official
+    label: 'Databricks docs: Create and share Unity Catalog Skills'
+  - url: https://docs.databricks.com/aws/en/agents/uc-skills/use-uc-skills
+    kind: official
+    label: 'Databricks docs: Discover and use Unity Catalog Skills'
+  - url: https://docs.databricks.com/aws/en/ai-gateway/govern-skills
+    kind: official
+    label: 'Databricks docs: Govern skills'
+  - url: https://learn.microsoft.com/en-us/azure/databricks/agents/uc-skills/
+    kind: official
+    label: 'Microsoft Learn: What are Unity Catalog Skills'
+  - url: https://agentskills.io/home
+    kind: internet
+    label: 'The SKILL.md specification Unity Catalog Skills follow'
+prediction:
+  - Unity Catalog Agent Skills
+  - Genie Skills
+  - Agent Bricks Skills
+source: https://docs.databricks.com/aws/en/agents/uc-skills/
+verified: '2026-09-01'

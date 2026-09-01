@@ -1,0 +1,48 @@
+id: private-network-gateway
+name: Private network gateway
+aliases:
+  - private network gateway
+  - serverless private network gateway
+  - NCC gateway
+category: Compute / BI
+what:
+  note: Managed gateway that connects Databricks serverless compute to resources in your own VPC, and to whatever that VPC routes to, through one subnet, a cross-account IAM role, and your existing network connectivity configuration.
+  link: https://docs.databricks.com/aws/en/security/network/serverless-network-security/private-network-gateway#:~:text=A%20private%20network%20gateway%20connects%20Databricks%20serverless%20compute%20to%20one%20or%20more%20resources%20in%20your%20VPC%20through%20a%20single%20managed%20gateway
+fact:
+  - note: One of its three selling points is purely bureaucratic - serverless egress leaves from a stable set of IP addresses you own, so someone else's allowlist can finally be satisfied.
+    link: https://docs.databricks.com/aws/en/security/network/serverless-network-security/private-network-gateway#:~:text=Send%20serverless%20egress%20from%20your%20own%20set%20of%20IP%20addresses%2C%20so%20downstream%20systems%20can%20identify%20the%20traffic%20at%20the%20network%20layer
+  - note: A networking feature with no network UI - during Private Preview the account REST API is the only way to configure one, with no console screen and no Terraform.
+    link: https://docs.databricks.com/aws/en/security/network/serverless-network-security/private-network-gateway#:~:text=You%20configure%20the%20gateway%20only%20through%20the%20account%20REST%20API
+  - note: The docs announce that it is free and that this is temporary in the same sentence.
+    link: https://docs.databricks.com/aws/en/security/network/serverless-network-security/private-network-gateway#:~:text=It%20is%20not%20billed%20during%20Private%20Preview%2C%20but%20Databricks%20will%20charge%20for%20it%20in%20the%20future
+status:
+  value: active
+  link: https://docs.databricks.com/aws/en/security/network/serverless-network-security/private-network-gateway#:~:text=A%20private%20network%20gateway%20connects%20Databricks%20serverless%20compute%20to%20one%20or%20more%20resources%20in%20your%20VPC%20through%20a%20single%20managed%20gateway
+  date: '2026-09-01'
+releases:
+  - type: private-preview
+    date: 2026-08
+    link: https://docs.databricks.com/aws/en/release-notes/product/2026/august#:~:text=Private%20network%20gateway%20is%20in%20Private%20Preview
+introducedAt:
+  date: 2026-08
+  link: https://docs.databricks.com/aws/en/release-notes/product/2026/august#:~:text=Private%20network%20gateway%20is%20in%20Private%20Preview
+limitations:
+  note: Private Preview, by request through your Databricks account team. It supports exactly one subnet in one Availability Zone, which must be in the same region as the network connectivity configuration; you configure it only through the account REST API, with no UI and no Terraform support; it reaches resources in your VPC and transitively connected networks but not cloud-managed services behind gateway or interface endpoints such as Amazon S3; it serves serverless Databricks Runtime products; and one NCC holds at most two gateways, each with at most two DNS resolvers and 100 destinations.
+  link: https://docs.databricks.com/aws/en/security/network/serverless-network-security/private-network-gateway#:~:text=Private%20Preview%20supports%20exactly%20one%20subnet%20in%20one%20Availability%20Zone
+  date: '2026-09-01'
+links:
+  - url: https://docs.databricks.com/aws/en/release-notes/product/2026/august
+    kind: official
+    label: 'Databricks release notes: Private network gateway Private Preview (August 2026)'
+  - url: https://docs.databricks.com/aws/en/security/network/serverless-network-security/private-network-gateway/configure-private-network-gateway
+    kind: official
+    label: 'Databricks docs: Configure a private network gateway'
+  - url: https://learn.microsoft.com/en-us/azure/databricks/security/network/serverless-network-security/private-network-gateway
+    kind: official
+    label: 'Microsoft Learn: Private network gateway'
+prediction:
+  - Serverless Private Gateway
+  - Unity Network Gateway
+  - Lakehouse Egress Gateway
+source: https://docs.databricks.com/aws/en/security/network/serverless-network-security/private-network-gateway
+verified: '2026-09-01'

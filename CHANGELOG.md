@@ -9,6 +9,48 @@ shows the what. Plain, simple English: short sentences, common words, no jargon 
 and product names themselves. Some older entries have no `Why:` line - the reason was never
 recorded, and a made-up reason is worse than none.
 
+## 2026-09-01
+
+### Added
+- **Refreshed the release-notes mirror and added the two names August shipped that the site had
+  no card for: Unity Catalog Skills and Private network gateway.**
+
+  **Why:** the mirror was last fetched on August 11 and every card was verified on August 20, so
+  the last eleven days of Databricks news had never been read by anyone here. Refetching all 212
+  pages surfaced fifty-odd August items, and a sweep of them found no new rename and no new deprecation
+  anywhere in the month, but two genuinely new named things. Unity Catalog Skills is the bigger
+  one: a new first-class Unity Catalog securable, which is not a thing Databricks adds often, and
+  someone hitting "skills" in a Databricks doc has nowhere else to find out what it is. Private
+  network gateway is smaller but is a real product name in the docs with its own limitations page.
+
+  **What:** two new entries. `unity-catalog-skills` (Beta, August 2026), filed under Catalog:
+  a skill is a `catalog.schema.skill` securable holding a SKILL.md folder, shared by granting
+  READ VOLUME because its contents live in managed storage like a volume's do, and gated behind
+  an account-level Unity AI preview toggle. `private-network-gateway` (Private Preview, August
+  2026), filed under Compute: one managed gateway that connects serverless compute to your VPC,
+  configurable only through the account REST API. Both wired into the `app.js` `NAV`.
+
+### Fixed
+- **The news made one card wrong and a docs rewrite quietly broke two of its citations:
+  `zerobus-ingest` said it writes only to managed Delta tables, a month after streaming tables
+  went GA.**
+
+  **Why:** on August 26 Databricks made ingesting into streaming tables generally available, and
+  the connector's own page now says it "can write to both managed Delta tables and streaming
+  tables". The card still carried the old exclusive claim in its `limitations`, which is the exact
+  failure this site exists to avoid: a limitation that reads as a hard rule about what you cannot
+  do, describing something that has been supported for a month. Worse, the Zerobus overview page
+  was rewritten in the same window, so two of the card's three facts pointed at quotes that no
+  longer exist on the page - and a text fragment that misses fails silently, leaving the card
+  looking sourced while linking to nothing in particular.
+
+  **What:** the `limitations` note now says managed Delta tables *and* streaming tables. The
+  "no bus" fact re-quotes the rewritten overview ("there are no brokers, partitions, or pipelines
+  to manage"), and the ordering fact was repointed at the new `zerobus-concepts` page, which is
+  where the ordering guarantees moved. Added the August release notes and the concepts page to
+  `links`, and bumped `status.date`, `limitations.date`, and `verified` to today.
+  `check_anchors.py` confirms all 44 URLs across the three touched cards.
+
 ## 2026-08-20
 
 ### Fixed
