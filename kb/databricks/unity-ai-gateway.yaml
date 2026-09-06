@@ -14,19 +14,23 @@ fact:
   - note: It was declared generally available on August 4, 2026 with parts of itself openly still in Beta - the same announcement notes that service policies and agent services have not caught up.
     link: https://docs.databricks.com/aws/en/release-notes/product/2026/august#:~:text=Some%20capabilities%2C%20including%20service%20policies%20and%20agent%20services%2C%20remain%20in%20Beta
 status:
-  value: active
-  link: https://docs.databricks.com/aws/en/ai-gateway/#:~:text=Unity%20AI%20Gateway
-  date: '2026-08-20'
+  value: renamed
+  link: https://docs.databricks.com/aws/en/ai-gateway/#:~:text=AI%20governance%20with%20Unity%20Gateway
+  date: '2026-09-06'
 releases:
   - type: beta
     date: 2026-02
     link: https://docs.databricks.com/aws/en/release-notes/product/2026/february#:~:text=AI%20Gateway%20%28Beta%29%20is%20the%20enterprise%20control%20plane
   - type: ga
     date: 2026-08
-    link: https://docs.databricks.com/aws/en/release-notes/product/2026/august#:~:text=Unity%20AI%20Gateway%20is%20now%20generally%20available
+    link: https://docs.databricks.com/aws/en/release-notes/product/2026/august#:~:text=Unity%20Gateway%20is%20now%20generally%20available
 from:
   date: 2026-06
   link: https://www.databricks.com/blog/ai-governance-data-ai-summit-2026-whats-new-unity-ai-gateway#:~:text=Unity%20AI%20Gateway
+to:
+  date: 2026-09
+  link: https://docs.databricks.com/aws/en/ai-gateway/#:~:text=Unity%20Gateway%20is%20the%20Databricks%20governance%20solution%20for%20enterprise%20AI
+successorId: unity-gateway
 occasion:
   date: 2026-06
   link: https://www.databricks.com/blog/ai-governance-data-ai-summit-2026-whats-new-unity-ai-gateway
@@ -40,10 +44,13 @@ links:
     label: 'Databricks release notes: AI Gateway GA (June 2025)'
   - url: https://docs.databricks.com/aws/en/release-notes/product/2026/august
     kind: official
-    label: 'Databricks release notes: Unity AI Gateway GA (August 2026)'
+    label: 'Databricks release notes: the August 4, 2026 GA announcement, since reworded to Unity Gateway'
+  - url: https://www.databricks.com/blog/unity-ai-gateway-generally-available
+    kind: official
+    label: 'Databricks Blog: Unity AI Gateway is Generally Available (August 4, 2026)'
 prediction:
   - Genie AI Gateway
   - Agent Control Plane
   - MCP Gateway
 source: https://docs.databricks.com/aws/en/ai-gateway/
-verified: '2026-08-20'
+verified: '2026-09-06'

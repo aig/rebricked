@@ -19,37 +19,37 @@ fact:
 status:
   value: active
   link: https://docs.databricks.com/aws/en/release-notes/product/2026/june#:~:text=a%20Unity%20Catalog%20securable%20that%20represents%20a%20governed%20LLM%20endpoint
-  date: '2026-08-20'
+  date: '2026-09-06'
 releases:
   - type: beta
     date: 2026-06
     link: https://docs.databricks.com/aws/en/release-notes/product/2026/june#:~:text=using%20model%20services%2C%20currently%20in%20Beta
   - type: ga
     date: 2026-08
-    link: https://docs.databricks.com/aws/en/release-notes/product/2026/august#:~:text=Unity%20AI%20Gateway%20is%20now%20generally%20available
+    link: https://docs.databricks.com/aws/en/release-notes/product/2026/august#:~:text=Unity%20Gateway%20is%20now%20generally%20available
 introducedAt:
   date: 2026-06
   link: https://docs.databricks.com/aws/en/release-notes/product/2026/june#:~:text=using%20model%20services%2C%20currently%20in%20Beta
 limitations:
-  note: Provisioned throughput models are not supported as destinations, model services cannot be created or managed with SQL, they cannot be discovered with only the BROWSE privilege, and global search does not cover them.
-  link: https://docs.databricks.com/aws/en/ai-gateway/model-services#:~:text=Provisioned%20throughput%20models%20as%20destinations
-  date: '2026-08-20'
+  note: Model services cannot be created or managed with SQL, cannot be discovered with only the BROWSE privilege, and are not covered by global search.
+  link: https://docs.databricks.com/aws/en/ai-gateway/model-services#:~:text=Creating%20and%20managing%20model%20services%20with%20SQL
+  date: '2026-09-06'
 links:
   - url: https://docs.databricks.com/aws/en/ai-gateway/model-services
     kind: official
     label: 'Databricks docs: Govern model APIs (model services)'
   - url: https://docs.databricks.com/aws/en/release-notes/product/2026/august
     kind: official
-    label: 'Databricks release notes: Unity AI Gateway is now generally available (August 4, 2026)'
+    label: 'Databricks release notes: Unity Gateway (then Unity AI Gateway) is now generally available (August 4, 2026)'
   - url: https://docs.databricks.com/aws/en/release-notes/whats-coming
     kind: official
-    label: 'Databricks docs: model services named among the capabilities made generally available by the Unity AI Gateway GA'
+    label: 'Databricks docs: model services named among the capabilities made generally available by the Unity Gateway GA'
   - url: https://docs.databricks.com/aws/en/ai-gateway/govern-model-services
     kind: official
-    label: 'Databricks docs: Unity AI Gateway is generally available, with service policies the beta capability enabled separately'
+    label: 'Databricks docs: Unity Gateway is generally available, with service policies the beta capability enabled separately'
 prediction:
   - Unity model services
   - Governed endpoints
   - Model securables
 source: https://docs.databricks.com/aws/en/release-notes/product/2026/june
-verified: '2026-08-20'
+verified: '2026-09-06'

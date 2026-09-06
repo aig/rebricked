@@ -30,10 +30,13 @@ occasion:
   link: https://www.databricks.com/blog/introducing-genie-code#:~:text=Introducing%20Genie%20Code
   note: Introducing Genie Code, March 2026
 limitations:
-  note: Databricks recommends always reviewing generated code before running it, since it can make mistakes, and warns that auto-approve is a best-effort productivity heuristic, not a security boundary.
-  link: https://docs.databricks.com/aws/en/notebooks/use-databricks-assistant#:~:text=Auto%2Dapprove%20is%20a%20productivity%20feature%2C%20not%20a%20security%20boundary
-  date: '2026-08-20'
+  note: Databricks warns that auto-approve is a productivity feature, not a security boundary, and says to keep it off for production data, sensitive workspaces, or shared resources; it also recommends always reviewing generated code before running it, since Genie Code can make mistakes.
+  link: https://docs.databricks.com/aws/en/genie-code/agent-mode#:~:text=Auto%2Dapprove%20is%20a%20productivity%20feature%2C%20not%20a%20security%20boundary
+  date: '2026-09-06'
 links:
+  - url: https://docs.databricks.com/aws/en/genie-code/features-capabilities
+    kind: official
+    label: 'Databricks docs: Genie Code features and capabilities (review generated code before running it)'
   - url: https://www.databricks.com/blog/introducing-genie-code
     kind: community
     label: 'Databricks Blog: Introducing Genie Code'
@@ -45,4 +48,4 @@ prediction:
   - Genie Coder
   - Agentic Assistant
 source: https://docs.databricks.com/aws/en/notebooks/code-assistant
-verified: '2026-08-20'
+verified: '2026-09-06'

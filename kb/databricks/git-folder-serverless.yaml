@@ -1,0 +1,42 @@
+id: git-folder-serverless
+name: Git Folder Serverless
+aliases:
+  - Git folder serverless
+  - shared serverless compute for Git folders
+  - pyproject.toml environment
+category: Developer experience
+what:
+  note: One serverless compute resource shared by every notebook and file in a Git folder, with the Python environment for the whole folder managed by a pyproject.toml at its root instead of per notebook.
+  link: https://docs.databricks.com/aws/en/compute/serverless/notebooks/git-folder-serverless#:~:text=provides%20a%20single%20serverless%20compute%20resource%20shared%20across%20assets%20in%20a%20Git%20folder
+fact:
+  - note: Shared compute, unshared memory - notebooks on the same Git Folder Serverless share the environment and even a web terminal, but a Python variable defined in one notebook is not available in another.
+    link: https://docs.databricks.com/aws/en/compute/serverless/notebooks/git-folder-serverless#:~:text=Python%20variables%20defined%20in%20one%20notebook%20are%20not%20available%20in%20another%20notebook
+  - note: It is strictly single-occupancy - only the user who starts the compute can run on it, so the documented way to collaborate is for everyone to clone their own copy of the repository.
+    link: https://docs.databricks.com/aws/en/compute/serverless/notebooks/git-folder-serverless#:~:text=Only%20the%20user%20who%20starts%20a%20Git%20Folder%20Serverless%20compute%20resource%20can%20run%20workloads%20on%20it
+  - note: Its dependency workflow is the %uv add and %uv sync notebook magics, which had reached serverless notebooks only about two weeks earlier.
+    link: https://docs.databricks.com/aws/en/release-notes/product/2026/august#:~:text=create%20a%20Python%20project%2C%20add%20dependencies%2C%20and%20sync%20its%20environment
+status:
+  value: active
+  link: https://docs.databricks.com/aws/en/compute/serverless/notebooks/git-folder-serverless#:~:text=This%20feature%20is%20in%20Beta
+  date: '2026-09-06'
+releases:
+  - type: beta
+    date: 2026-09
+    link: https://docs.databricks.com/aws/en/release-notes/product/2026/september#:~:text=Git%20Folder%20Serverless%20is%20in%20Beta
+introducedAt:
+  date: 2026-09
+  link: https://docs.databricks.com/aws/en/release-notes/product/2026/september#:~:text=Git%20Folder%20Serverless%20is%20in%20Beta
+limitations:
+  note: Beta. Compute sharing is scoped to a serverless usage policy, so notebooks and files in the same Git folder under different usage policies get separate compute resources; a root pyproject.toml must set environment_version to 5 or later; only the user who started the compute can run workloads on it; Python variables are not shared between notebooks; and it is used from the Git folder editor.
+  link: https://docs.databricks.com/aws/en/compute/serverless/notebooks/git-folder-serverless#:~:text=Compute%20sharing%20is%20scoped%20to%20a%20serverless%20usage%20policy
+  date: '2026-09-06'
+links:
+  - url: https://docs.databricks.com/aws/en/release-notes/product/2026/september
+    kind: official
+    label: 'Databricks release notes: Git Folder Serverless is in Beta (September 2, 2026)'
+prediction:
+  - Lakeflow Project Serverless
+  - Git Folder Compute
+  - Serverless Projects
+source: https://docs.databricks.com/aws/en/compute/serverless/notebooks/git-folder-serverless
+verified: '2026-09-06'

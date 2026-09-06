@@ -9,6 +9,70 @@ shows the what. Plain, simple English: short sentences, common words, no jargon 
 and product names themselves. Some older entries have no `Why:` line - the reason was never
 recorded, and a made-up reason is worse than none.
 
+## 2026-09-06
+
+### Added
+- **Unity AI Gateway lasted three months as a name: the docs now call it Unity Gateway, and the
+  site has a card for the new name plus one for Git Folder Serverless, the one new named thing
+  September has shipped so far.**
+
+  **Why:** the mirror was last fetched on September 1, and refetching it showed every mention of
+  "Unity AI Gateway" in the release notes rewritten to "Unity Gateway", all the way back to the
+  2025 archive - the overview page, its own new release-notes page, and every September item use
+  the new name, while the GA blog post from August 4 still says Unity AI Gateway forty times. That
+  is a rename by any measure, and the third name for this product in two years (Mosaic AI Gateway
+  -> Unity AI Gateway -> Unity Gateway). Nothing announced it; the only evidence is the docs
+  changing between our September 1 fetch and September 3, which is exactly the kind of quiet
+  rename this site exists to record. The retroactive rewrite also killed two cited quotes: the
+  "Unity AI Gateway is now generally available" sentence both gateway cards and the model
+  services card pointed at no longer exists on the page. Separately, the September 2 notes named
+  Git Folder Serverless (Beta): one serverless compute shared by every notebook and file in a Git
+  folder, with the environment managed by a root `pyproject.toml`. It is a real product name with
+  its own docs page and limitations, and nothing on the site covered it.
+
+  **What:** new `unity-gateway` card (`active`, `from` September 2026, Beta February 2026 and GA
+  August 2026 carried over as the same product's maturity), with facts on the URL still saying
+  `/ai-gateway/`, the archive rewrite, and its standalone release-notes page, and `links` to the
+  product page (new name, 47 times) and the Developer portal (still the old name - the rename has
+  not reached every surface). `unity-ai-gateway`
+  flipped to `renamed` with `to` September 2026 and `successorId: unity-gateway`, its GA quote
+  repointed at the reworded sentence, and the August 4 GA blog added to `links` as the last record
+  of the old name; `ai-gateway`'s `status.link` now points at the sentence naming the current name,
+  so the chain reads Mosaic AI Gateway -> Unity AI Gateway -> Unity Gateway. New
+  `git-folder-serverless` card (`active`, Beta September 2026) under Developer experience, with
+  sourced `limitations`. The `NAV` rail section is relabelled "Unity Gateway" and lists the new id
+  first; Git Folder Serverless sits next to Git folders under Workspace. `scripts/sources.json`
+  gained the Azure September 2026 release-notes URL (the Azure list is explicit, so a new month
+  has to be added by hand).
+
+### Fixed
+- **Four cards were quietly wrong after this week's docs changes: model services still listed a
+  limitation lifted on August 24, private network gateway cited a billing sentence that had been
+  reworded and did not know Azure had moved it to Beta, and Genie Code's auto-approve warning had
+  moved to a page the card did not link.**
+
+  **Why:** none of these changed a name, so nothing on the site looked wrong - `check_anchors.py`
+  found them, reporting five dead quotes across the cards this week's notes touch. Two were the
+  gateway rename above. The other three were real staleness: Unity Gateway added Provisioned
+  Throughput support on August 24, so "provisioned throughput models are not supported as
+  destinations" had been false for two weeks on `model-services`; the private network gateway page
+  now says "not billed while it is in preview" because on Azure it is no longer a Private Preview -
+  the September 3 Azure notes moved it to Beta, enabled from the account console Previews page,
+  while AWS is still Private Preview by request; and the Genie Code docs were reorganised
+  (`use-genie-code` split into `navigate-genie-code`, `features-capabilities`, and `agent-mode`),
+  moving the "not a security boundary" sentence to the agent-mode page.
+
+  **What:** `model-services` drops the provisioned-throughput clause from `limitations` and cites
+  the surviving SQL limitation; its GA quote and three link labels now read Unity Gateway.
+  `private-network-gateway` re-quotes the billing sentence, says "during the preview" instead of
+  "during Private Preview", states the AWS/Azure split in `limitations`, and links the Azure
+  September notes; its `releases` stays at `private-preview` because the card's canonical AWS doc
+  still says so. `genie-code`'s `limitations` link moves to the agent-mode page and its note now
+  quotes the "keep it off for production data" guidance, with the features page added to `links`
+  for the review-your-code recommendation. All four cards, plus `ai-gateway` and
+  `unity-ai-gateway`, are re-verified today. `check_anchors.py` confirms every URL and quote on the
+  seven touched cards.
+
 ## 2026-09-01
 
 ### Added
