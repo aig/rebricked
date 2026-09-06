@@ -121,7 +121,10 @@ reachable from a `NAV` section in `app.js` (both directions). Warnings do not fa
 
 Enforces front-matter completeness and the closed field set, slug/folder agreement, resolvable entry
 ids, real source URLs, sane dates, alt text on every image, existing image files, no em dashes, and
-balanced `:::` fences. **Warns** (never fails) when a guide is past its `staleAfter` date.
+balanced `:::` fences. For a `scorecard`: paired with exactly one `{{scorecard}}` in the body, every
+item a mapping with `section` / `claim` / `accurate` / `misleading`, `misleading` in the closed set,
+`docLink` a real URL that comes with a `doc`, and every `anchor` a real `##` heading id. **Warns**
+(never fails) when a guide is past its `staleAfter` date.
 
 ## check_anchors.py
 

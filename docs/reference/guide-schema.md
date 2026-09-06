@@ -45,6 +45,7 @@ Front matter is a **closed set** - an unknown field is an error.
 | `tags` | array of strings | |
 | `entries` | array of entry ids | Every id must resolve against the built data |
 | `authorLink` | URL | The byline becomes a link to it, and it becomes the JSON-LD Person's `url` |
+| `scorecard` | array of claim items | The verdict ledger's data, rendered where `{{scorecard}}` stands in the body. Non-empty; one item per claim. Front matter with a `scorecard` and no `{{scorecard}}` in the body is an error, and so is the reverse. See [The scorecard ledger](#the-scorecard-ledger) |
 | `readingMinutes` | number | **Computed by the builder. Never author it** |
 
 ## Body syntax
@@ -63,6 +64,33 @@ a dependency, so anything not listed here is unsupported.
 | Callouts | `:::note`, `:::warning`, `:::judgement`, closed with `:::`. Fences must balance |
 | Inline | `**bold**`, `*italic*`, `` `code` ``, `[text](url)` |
 | Entry links | `{{entry:<id>}}` |
+| Scorecard ledger | `{{scorecard}}` alone on a line, at most once. Renders the front matter's `scorecard` |
+
+### The scorecard ledger
+
+A fact-check guide has two verdicts per claim, and a 26-row table of them is a wall. `{{scorecard}}`
+renders the same data as a ledger instead: four count tiles (one per verdict), filter chips, and the
+claims grouped by `section` in front-matter order, each row a native `<details>` that opens to the
+claim as written, the backing sentence with its link, and the one-line why. Expanding works with JS
+off; filtering is a small inline script and is tracked as `scorecard-filter` / `scorecard-expand`.
+
+Each `scorecard` item:
+
+| Field | Required | Rules |
+|---|---|---|
+| `section` | yes | Group label. Groups keep first-seen order, so list items in the article's order |
+| `claim` | yes | The claim in the guide's words, one line. Inline syntax and `{{entry:id}}` allowed |
+| `accurate` | yes | The accuracy verdict, short: `Yes`, `No, as worded`, `Partly, outdated by two weeks` |
+| `misleading` | yes | Closed set: `yes` / `partly` / `no` / `unsupported`. Drives the tile, chip, pill and mark colour, which reuse the lifecycle tokens (amber / orange / green / slate) |
+| `why` | no | One or two sentences. Rendered after a lead-in the builder picks from the verdict ("Why misleading.") |
+| `quote` | no | The claim as the source wrote it, verbatim. Rendered in quotation marks under "The claim, as written" |
+| `doc` | no | The backing sentence, verbatim, the same sentence the citation's text fragment selects |
+| `docLink` | no | The URL for `doc`, with a `#:~:text=` fragment like any citation. Requires `doc`. Swept by `check_anchors.py` under `post:<slug>` like every other guide link |
+| `docLabel` | no | Replaces the default "The docs say" lead when the evidence is not a doc page (a repository measurement, for example) |
+| `anchor` | no | The `id` of a `##` heading in the body, so the row can link to its section. Must match a real heading, checked at validation |
+
+Anything else on an item is an error. `misleading` outside the closed set fails both the build and the
+validator.
 
 ### `{{entry:<id>}}`
 

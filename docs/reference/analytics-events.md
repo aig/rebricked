@@ -68,6 +68,8 @@ the generators already emit**, which means new links are tracked without touchin
 | `guide-toc` | a table-of-contents link in a guide |
 | `guide-prevnext` | previous/next guide navigation |
 | `guide-open` | opening a guide from an index or reverse link |
+| `scorecard-filter` | a verdict chip on a guide's scorecard ledger (`verdict`: `all` / `yes` / `partly` / `no` / `unsupported`) |
+| `scorecard-expand` | opening a ledger row to its evidence (`claim`: the row's 1-based position) |
 | `source-click` | a citation or Sources link |
 | `related-click` | a related-entry link |
 | `hub-entry-open` | an entry link on the vendor hub |

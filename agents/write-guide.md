@@ -65,6 +65,13 @@ tables, fenced code, `![alt](images/x.jpg "caption")` figures (alt text enforced
   entry's current name plus a link; an unknown id fails the build.
 - **Judgement is labelled.** Every recommendation, ranking, or ordering claim goes in a
   `:::judgement` callout. `:::warning` marks undocumented or unsupported territory.
+- **A fact check gets a scorecard ledger, not a table.** When the guide checks a list of claims,
+  put the claims in front matter as `scorecard` items (`section`, `claim`, `accurate`,
+  `misleading` in `yes` / `partly` / `no` / `unsupported`, plus `why`, the source's `quote`, the
+  backing `doc` sentence with its `docLink`, and the section `anchor`) and place `{{scorecard}}`
+  once in the body where the table would go. The builder renders count tiles, verdict filters and
+  expandable rows from it, and `check_anchors.py` sweeps every `docLink`. Field rules:
+  [`docs/reference/guide-schema.md`](../docs/reference/guide-schema.md#the-scorecard-ledger).
 
 **Citations sit on the claim - not only at the bottom.** Every factual sentence carries its
 link inline: the phrase that states the claim is the anchor text, and the URL's text fragment

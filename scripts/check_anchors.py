@@ -256,7 +256,8 @@ def post_anchors():
     """Every ('post:<slug>', field, url) triple across kb/posts/*/index.md.
 
     Reads the *source* Markdown, not the built page: front-matter `url:` lines (house
-    style is one URL per line) plus every inline `[text](http...)` link in the body.
+    style is one URL per line), the scorecard ledger's `docLink:` lines, plus every inline
+    `[text](http...)` link in the body.
     """
     found = []
     for md in sorted(POSTS.glob("*/index.md")):
@@ -264,6 +265,8 @@ def post_anchors():
         text = md.read_text(encoding="utf-8")
         for url in re.findall(r"^\s*(?:-\s*)?url:\s*(\S+)\s*$", text, flags=re.M):
             found.append((pid, "sources", url))
+        for url in re.findall(r"^\s*(?:-\s*)?docLink:\s*(\S+)\s*$", text, flags=re.M):
+            found.append((pid, "scorecard", url))
         for url in re.findall(r"\]\((https?://[^)\s]+)\)", text):
             found.append((pid, "body", url))
     return found

@@ -12,6 +12,58 @@ recorded, and a made-up reason is worse than none.
 ## 2026-09-06
 
 ### Added
+- **Snowflake published a fifteen-minute case against Databricks on September 3, and the site now
+  has a guide that takes every checkable Databricks claim in it to the Databricks docs, sentence
+  by sentence.**
+
+  **Why:** the article is unusual for a vendor comparison: it quotes Databricks documentation
+  with links, which makes it checkable, and it lands on exactly the ground this site covers -
+  names, dates, and what the docs actually say. Checking it also turned up the kind of thing
+  rebricked exists to record. The article says "Delta Sharing" throughout, a name Databricks
+  dropped for OpenSharing on June 10, three months before publication. Its central ABAC claim,
+  that you cannot evaluate user attributes in a Databricks policy, was true until August 17, when
+  identity attributes in ABAC column masks shipped in Beta, two weeks before the article went out.
+  Its "Unity Catalog rejects outbound connections to Snowflake and Glue" sentence overstates: the
+  Databricks Iceberg page lists Snowflake Horizon Catalog and AWS Glue as foreign catalogs it
+  connects to, read-only, which is the article's own point once "outbound" is read as writes. And the egress "recipient penalty" has the direction backwards: the
+  Databricks egress page is titled "for providers". At the same time, several claims hold
+  exactly - the managed DR gaps, the UniForm asynchronous metadata behaviour, the "a role is
+  implemented as a group" quote and the 2026 RBAC dates - and a fact check that only found
+  errors would be as one-sided as the article. Readers handed this article by leadership needed
+  a page that separates what the docs say from what Snowflake concludes from it. Two claims
+  could not be checked against docs at all because they are about open-source repositories, so
+  the docs-only first draft marked them unverifiable; the repos are public, so they were checked
+  in the repos.
+
+  **What:** new guide `kb/posts/snowflake-vs-databricks-fact-check/` (kind `explainer`,
+  category Data governance, `staleAfter` March 2027). It opens with a twenty-six-row scorecard with two verdicts per claim - "Accurate?" (a fact
+  check against the docs) and "Misleading?" (whether a reader who believes the claim ends up with
+  a false picture of Databricks, with the criteria stated in a judgement callout: omission,
+  staleness, framing) -
+  then walks the article's six dimensions - compute, openness (UniForm, Delta, liquid clustering,
+  the Iceberg "walled garden", OSS Unity Catalog), RBAC, ABAC, differential privacy, sharing,
+  disaster recovery, and pricing - giving each claim a verdict of holds, partly holds, does not
+  hold as worded, or not checkable, with the backing Databricks sentence linked inline via a text
+  fragment. Sixteen entries are referenced through `{{entry:<id>}}` so the guide follows future
+  renames, and the Delta protocol link is pinned to a commit. Claims about Snowflake's own
+  product are explicitly out of scope, unverifiable claims (OSS commit percentages, a native
+  differential privacy feature) are flagged rather than asserted, re-sharing is traced to the one
+  documented rule (views over shared tables cannot be shared on) with the rest marked as unwritten, and every
+  recommendation sits in a labelled judgement callout. Where the article's claim is about an
+  open-source project rather than a product, the guide goes to the repository instead of the
+  docs: the Unity Catalog OSS and Apache Polaris repos were cloned and every default-branch
+  commit counted by author email domain, the method the article's own footnote describes. That
+  measurement (in a table, with the method's limits stated) finds a Databricks address on a third
+  of Unity Catalog commits, not a majority, and finds Dremio and Snowflake addresses on 2.1 and
+  3.5 percent of human Polaris commits, so the footnote's 38 and 7.6 percent do not reproduce by
+  its own stated method; a dependency bot authored almost a third of Polaris commits. The
+  open-source Delta repo is cited for the clustering implementation, and the OpenSharing spec
+  repo for the absence of any re-sharing rule, and the OSS Unity Catalog OpenAPI spec against the
+  Databricks REST API reference to test "a name and nothing else" (they share the
+  `/api/2.1/unity-catalog` paths). Every GitHub link is pinned to a commit.
+  `check_anchors.py post:snowflake-vs-databricks-fact-check` reports 0 dead quotes. No docs
+  change: adding a guide is the documented workflow working.
+
 - **Unity AI Gateway lasted three months as a name: the docs now call it Unity Gateway, and the
   site has a card for the new name plus one for Git Folder Serverless, the one new named thing
   September has shipped so far.**
@@ -44,6 +96,38 @@ recorded, and a made-up reason is worse than none.
   first; Git Folder Serverless sits next to Git folders under Workspace. `scripts/sources.json`
   gained the Azure September 2026 release-notes URL (the Azure list is explicit, so a new month
   has to be added by hand).
+
+### Changed
+- **Guides can now carry a scorecard ledger: a fact-check's claims live in front matter and render
+  as count tiles, verdict filters, and rows that open to the claim, the doc sentence, and why.**
+
+  **Why:** the Snowflake fact check produced 26 claims with two verdicts each, and as a pipe table
+  that is a wall of serif text the reader has to scan twice. Four page-design directions were
+  mocked up against the site's own tokens (prose, ledger, exhibit pairs, sticky rail) and the
+  ledger was chosen: a reader handed the article by leadership wants the verdict count in one
+  glance, a way to see only the misleading rows, and the two source sentences side by side before
+  reading the argument. A table cannot do the second or third. Putting the claims in front matter
+  also makes them data: the builder computes the tallies, the validator checks the verdict set and
+  that every row's anchor is a real heading, and the citation checker sweeps every row's doc link,
+  none of which a Markdown table gets. Separately, the guide's byline moved to Claude, since the
+  research was done by the model against live docs and repos with a human running the tooling;
+  a fact check of one vendor by another vendor's fan would be worth less, and the note under the
+  intro says who did what.
+
+  **What:** `build_posts.py` gained `scorecard_html()`, the `{{scorecard}}` shortcode (once, on
+  its own line), `SCORECARD_VERDICTS` (`yes` / `partly` / `no` / `unsupported`, coloured with the
+  lifecycle tokens amber / orange / green / slate), the ledger CSS in `POST_STYLE` with a 720px
+  mobile layout, and a guarded inline script for the filter chips that emits `scorecard-filter` and
+  `scorecard-expand`; rows are native `<details>`, so expanding needs no JS. The build fails when
+  the shortcode and the front matter do not come as a pair or a verdict is outside the set.
+  `validate_posts.py` accepts `scorecard` as an optional field and checks each item's required
+  keys, closed field set, verdict, `docLink` URL (which needs a `doc`), and `anchor` against the
+  body's `##` heading ids, via a mirror of the builder's `slugify`. `check_anchors.py` sweeps
+  `docLink:` lines under `post:<slug>`. The fact-check guide's 26 rows moved from a table into
+  `scorecard` items, each with the article's quote, the backing sentence, its fragment link, the
+  why, and the section anchor; `author` is now Claude with a "Who wrote this" note. Docs:
+  `reference/guide-schema.md` (field, body construct, ledger section), `reference/scripts.md`,
+  `reference/analytics-events.md`, `how-to/write-a-guide.md`, and `agents/write-guide.md`.
 
 ### Fixed
 - **Four cards were quietly wrong after this week's docs changes: model services still listed a

@@ -38,9 +38,15 @@ KB_POSTS = ROOT / "kb" / "posts"
 DATA = ROOT / "www" / "databricks.features.json"
 
 REQUIRED = ("slug", "title", "description", "kind", "category", "author", "published", "verified", "sources")
-OPTIONAL = ("updated", "staleAfter", "tags", "entries", "sources", "readingMinutes", "authorLink")
+OPTIONAL = ("updated", "staleAfter", "tags", "entries", "sources", "readingMinutes", "authorLink", "scorecard")
 KINDS = {"guide", "explainer", "opinion"}
 LINK_KINDS = {"official", "community", "internet"}
+# The verdict ledger (`scorecard` front matter, placed by `{{scorecard}}` in the body). One item
+# per claim; the closed `misleading` set is what the ledger's tiles, chips and pills are built from.
+SC_REQUIRED = ("section", "claim", "accurate", "misleading")
+SC_OPTIONAL = ("why", "quote", "doc", "docLink", "docLabel", "anchor")
+SC_VERDICTS = {"yes", "partly", "no", "unsupported"}
+SC_SHORTCODE = "{{scorecard}}"
 DATE_RE = re.compile(r"^\d{4}-\d{2}-\d{2}$")
 URL_RE = re.compile(r"^https?://[^\s\"'<>]+$")
 
@@ -54,6 +60,13 @@ def err(slug, msg):
 
 def warn(slug, msg):
     warnings.append(f"{slug}: {msg}")
+
+
+def slugify(text):
+    """Mirror of build_posts.slugify, so an `anchor` is checked against the id the page will carry."""
+    s = re.sub(r"<[^>]+>", "", text).lower()
+    s = re.sub(r"[^a-z0-9]+", "-", s).strip("-")
+    return s or "section"
 
 
 def check_date(slug, field, value, today):
@@ -168,6 +181,41 @@ def main():
                         err(slug, f"sources[{j}].kind must be one of {sorted(LINK_KINDS)}")
                     if not s.get("label"):
                         err(slug, f"sources[{j}].label is required")
+
+        # scorecard: the ledger's data, paired with its shortcode, every anchor a real heading
+        sc = fm.get("scorecard")
+        has_sc = SC_SHORTCODE in body
+        if sc is not None and not has_sc:
+            err(slug, f"front matter has a scorecard but the body never places {SC_SHORTCODE}")
+        if has_sc and sc is None:
+            err(slug, f"body places {SC_SHORTCODE} but front matter has no scorecard")
+        if body.count(SC_SHORTCODE) > 1:
+            err(slug, f"{SC_SHORTCODE} may appear once")
+        if sc is not None:
+            heading_ids = {
+                slugify(m.group(1)) for m in re.finditer(r"^#{2,4}\s+(.*)$", body, flags=re.M)
+            }
+            if not isinstance(sc, list) or not sc:
+                err(slug, "scorecard must be a non-empty array")
+            else:
+                for j, it in enumerate(sc):
+                    if not isinstance(it, dict):
+                        err(slug, f"scorecard[{j}] must be a mapping")
+                        continue
+                    for k in SC_REQUIRED:
+                        if not it.get(k):
+                            err(slug, f"scorecard[{j}].{k} is required")
+                    unknown = [k for k in it if k not in set(SC_REQUIRED) | set(SC_OPTIONAL)]
+                    if unknown:
+                        err(slug, f"scorecard[{j}] has unknown field(s): {', '.join(sorted(unknown))}")
+                    if it.get("misleading") not in SC_VERDICTS:
+                        err(slug, f"scorecard[{j}].misleading must be one of {sorted(SC_VERDICTS)}, got {it.get('misleading')!r}")
+                    if it.get("docLink") and not URL_RE.match(str(it["docLink"])):
+                        err(slug, f"scorecard[{j}].docLink is not a valid http(s) URL: {it['docLink']!r}")
+                    if it.get("docLink") and not it.get("doc"):
+                        err(slug, f"scorecard[{j}].docLink needs a doc sentence to hang on")
+                    if it.get("anchor") and it["anchor"] not in heading_ids:
+                        err(slug, f"scorecard[{j}].anchor {it['anchor']!r} matches no ## heading in the body")
 
         # entry links, declared and inline
         for eid in fm.get("entries") or []:

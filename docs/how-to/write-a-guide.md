@@ -56,6 +56,10 @@ sources:
 - `staleAfter` is a promise to re-verify, about six months out. Pricing, defaults, and cost
   advice rot in a way entry facts do not.
 - `readingMinutes` is computed by the builder. Never author it.
+- Checking a list of claims? Put them in a `scorecard` array (one item per claim, with a
+  `misleading` verdict from a closed set, the source's quote, the backing doc sentence and link)
+  and place `{{scorecard}}` once in the body. It renders as a filterable ledger instead of a
+  table. Item fields: [reference/guide-schema.md](../reference/guide-schema.md#the-scorecard-ledger).
 - Full field list: [reference/guide-schema.md](../reference/guide-schema.md).
 
 ## 3. Cite on the claim, not at the bottom

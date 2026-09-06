@@ -77,6 +77,18 @@ CALLOUTS = {
     "judgement": ("is-judgement", "&#9878;", "Judgement, not doc."),
 }
 
+# The scorecard ledger's verdict axis. Keys are what the front matter's `scorecard[].misleading`
+# holds; each maps to the pill label, the CSS modifier, and the lead-in of the "why" line. The
+# colours come from the site's lifecycle tokens (amber / orange / green / slate) via the modifier,
+# so a fact-check verdict reads with the same palette as a deprecation badge.
+SCORECARD_VERDICTS = {
+    "yes": ("Misleading", "v-yes", "Why misleading."),
+    "partly": ("Partly misleading", "v-partly", "Why partly."),
+    "no": ("Not misleading", "v-no", "Why not misleading."),
+    "unsupported": ("Unsupported", "v-uns", "Why unsupported."),
+}
+SCORECARD_SHORTCODE = "{{scorecard}}"
+
 
 # --------------------------------------------------------------------------- loading
 
@@ -101,6 +113,7 @@ def reading_minutes(body):
     text = re.sub(r"```.*?```", " ", body, flags=re.S)
     text = re.sub(r"!\[[^\]]*\]\([^)]*\)", " ", text)
     text = re.sub(r"\{\{entry:[^}]+\}\}", " x ", text)
+    text = text.replace(SCORECARD_SHORTCODE, " ")
     text = re.sub(r"[#>|`*_\[\]()-]", " ", text)
     words = len(text.split())
     return max(1, round(words / WORDS_PER_MINUTE))
@@ -198,8 +211,107 @@ def inline(text, entry_name, entry_href, used):
     return out
 
 
-def md_to_html(body, entry_name, entry_href, used, headings):
-    """Render the Markdown subset a guide uses. Appends (id, text) pairs to `headings`."""
+def scorecard_html(items, inl):
+    """The verdict ledger: `{{scorecard}}` in a guide body renders the front matter's `scorecard`
+    array as count tiles, verdict filter chips, and claims grouped by section, each row a
+    `<details>` that opens to the claim as written, the backing sentence with its link, and the
+    one-line why. Filtering is a small inline script; expanding is native, so it works with JS off.
+    Copy goes through the inline pass, so a row can carry `{{entry:id}}` and citations."""
+    counts = {k: 0 for k in SCORECARD_VERDICTS}
+    for it in items:
+        counts[it["misleading"]] += 1
+    total = len(items)
+
+    tiles = "".join(
+        f'<div class="sc-tile {cls}"><span class="sc-tile-k">{esc(label)}</span>'
+        f'<span class="sc-tile-n">{counts[k]}</span></div>'
+        for k, (label, cls, _) in SCORECARD_VERDICTS.items()
+    )
+    chips = (
+        f'<button type="button" class="sc-chip is-on" data-v="all" aria-pressed="true">All {total} claims</button>'
+        + "".join(
+            f'<button type="button" class="sc-chip" data-v="{k}" aria-pressed="false">'
+            f'<i class="sc-dot {cls}" aria-hidden="true"></i>{esc(label)} {counts[k]}</button>'
+            for k, (label, cls, _) in SCORECARD_VERDICTS.items()
+        )
+    )
+
+    # Groups keep first-seen order, so the ledger follows the article's own structure.
+    groups = {}
+    for idx, it in enumerate(items):
+        groups.setdefault(it["section"], []).append((idx, it))
+
+    chevron = (
+        '<svg class="sc-chev" viewBox="0 0 24 24" width="16" height="16" aria-hidden="true">'
+        '<path d="m6 9 6 6 6-6" /></svg>'
+    )
+    out = []
+    for section, rows in groups.items():
+        body = []
+        for idx, it in rows:
+            label, cls, why_lead = SCORECARD_VERDICTS[it["misleading"]]
+            cols = []
+            if it.get("quote"):
+                cols.append(
+                    '<div class="sc-col"><div class="sc-k is-claim">The claim, as written</div>'
+                    f'<p class="sc-q is-claim">&ldquo;{inl(str(it["quote"]))}&rdquo;</p></div>'
+                )
+            if it.get("doc"):
+                doc = inl(str(it["doc"]))
+                if it.get("docLink"):
+                    doc = f'<a href="{attr(it["docLink"])}" target="_blank" rel="noopener">{doc}</a>'
+                host = re.sub(r"^https?://", "", str(it.get("docLink", ""))).split("#")[0]
+                src = f'<span class="sc-src">{esc(host)}</span>' if host else ""
+                cols.append(
+                    f'<div class="sc-col"><div class="sc-k is-doc">{esc(it.get("docLabel") or "The docs say")}</div>'
+                    f'<p class="sc-q is-doc">{doc}</p>{src}</div>'
+                )
+            why = f"<b>{esc(why_lead)}</b> {inl(str(it['why']))}" if it.get("why") else ""
+            jump = (
+                f'<a class="sc-jump" href="#{attr(it["anchor"])}">Read the section &darr;</a>'
+                if it.get("anchor")
+                else ""
+            )
+            tail = f'<div class="sc-why">{why} {jump}</div>' if (why or jump) else ""
+            body.append(
+                f'<details class="sc-row {cls}" data-v="{it["misleading"]}" data-i="{idx + 1}">'
+                f'<summary><i class="sc-mark" aria-hidden="true"></i>'
+                f'<span class="sc-claim">{inl(str(it["claim"]))}</span>'
+                f'<span class="sc-acc"><span class="sc-acc-k">Accurate?</span> {inl(str(it["accurate"]))}</span>'
+                f'<span class="sc-pill">{esc(label)}</span>{chevron}</summary>'
+                f'<div class="sc-body">{"".join(cols)}{tail}</div></details>'
+            )
+        out.append(
+            f'<div class="sc-group"><h3 class="sc-group-h">{esc(section)} '
+            f'<span>{len(rows)} claim{"s" if len(rows) != 1 else ""}</span></h3>'
+            f'<div class="sc-rows">{"".join(body)}</div></div>'
+        )
+
+    # Filter chips and the expand event. Same guarded track() shape as INLINE_JS: analytics can
+    # never throw into the reader's path. Non-bubbling `toggle` is caught in the capture phase.
+    script = """<script>(function(){var sc=document.getElementById('scorecard');if(!sc)return;
+function track(n,d){try{if(window.umami)window.umami.track(n,d);}catch(e){}}
+var slug=location.pathname.split('/').filter(Boolean).pop()||'';
+sc.addEventListener('click',function(e){var b=e.target.closest('.sc-chip');if(!b)return;
+var v=b.getAttribute('data-v');sc.setAttribute('data-filter',v);
+sc.querySelectorAll('.sc-chip').forEach(function(c){var on=c===b;c.classList.toggle('is-on',on);c.setAttribute('aria-pressed',on?'true':'false');});
+sc.querySelectorAll('.sc-group').forEach(function(g){g.hidden=!(v==='all'||g.querySelector('.sc-row[data-v="'+v+'"]'));});
+track('scorecard-filter',{slug:slug,verdict:v});});
+sc.addEventListener('toggle',function(e){var d=e.target;if(d&&d.classList&&d.classList.contains('sc-row')&&d.open)track('scorecard-expand',{slug:slug,claim:d.getAttribute('data-i')});},true);
+})();</script>"""
+
+    return (
+        '<section class="scorecard" id="scorecard" data-filter="all" aria-label="Scorecard">'
+        f'<div class="sc-tiles">{tiles}</div>'
+        f'<div class="sc-chips" role="group" aria-label="Filter claims by verdict">{chips}'
+        '<span class="sc-hint">Open a row for the claim, the doc sentence, and why</span></div>'
+        f'{"".join(out)}</section>{script}'
+    )
+
+
+def md_to_html(body, entry_name, entry_href, used, headings, scorecard=None):
+    """Render the Markdown subset a guide uses. Appends (id, text) pairs to `headings`.
+    `scorecard` is the front matter's ledger array, rendered where `{{scorecard}}` stands alone."""
     lines = body.split("\n")
     out = []
     i = 0
@@ -213,6 +325,12 @@ def md_to_html(body, entry_name, entry_href, used, headings):
         stripped = line.strip()
 
         if not stripped:
+            i += 1
+            continue
+
+        # {{scorecard}} on its own line -> the verdict ledger from front matter
+        if stripped == SCORECARD_SHORTCODE:
+            out.append(scorecard_html(scorecard or [], inl))
             i += 1
             continue
 
@@ -428,6 +546,70 @@ POST_STYLE = """  <style>
     .post-table td { font-family: var(--read); font-size: 15px; padding: 9px 13px; border-bottom: 1px solid var(--line); color: var(--muted); vertical-align: top; }
     .post-table tr:last-child td { border-bottom: 0; }
     .post-table td:first-child { color: var(--ink); }
+    /* ===== The scorecard ledger (`{{scorecard}}`) =====
+       Data first: verdict count tiles, filter chips, claims grouped by section, each row a native
+       <details> that opens to the claim as written, the backing sentence, and the why. The verdict
+       axis reuses the lifecycle tokens so a fact-check reads in the palette the reader already
+       knows from the cards: amber = misleading, orange = partly, green = not, slate = unsupported. */
+    .scorecard { margin: 0 0 26px; font-family: var(--sans); }
+    .scorecard .v-yes { --v: var(--c-deprecated); --v-ink: var(--c-deprecated-ink); }
+    .scorecard .v-partly { --v: var(--c-renamed); --v-ink: var(--c-renamed-ink); }
+    .scorecard .v-no { --v: var(--c-active); --v-ink: var(--c-active-ink); }
+    .scorecard .v-uns { --v: var(--c-legacy); --v-ink: var(--c-legacy-ink); }
+    .sc-tiles { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px; margin: 0 0 14px; }
+    .sc-tile { display: flex; flex-direction: column; gap: 3px; padding: 11px 13px; border: 1px solid var(--line); border-top: 3px solid var(--v); border-radius: 10px; background: var(--panel); }
+    .sc-tile-k { font-family: var(--mono); font-size: 9.5px; letter-spacing: .11em; text-transform: uppercase; color: var(--faint); }
+    .sc-tile-n { font-size: 26px; font-weight: 700; letter-spacing: -.02em; color: var(--v-ink); font-variant-numeric: tabular-nums; line-height: 1.1; }
+    .sc-chips { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; margin: 0 0 4px; }
+    .sc-chip { display: inline-flex; align-items: center; gap: 7px; height: 30px; padding: 0 12px; border-radius: 999px; border: 1px solid var(--line); background: var(--panel); color: var(--muted); font-family: inherit; font-size: 12.5px; font-weight: 500; cursor: pointer; transition: border-color .15s, color .15s, background .15s; }
+    .sc-chip:hover { border-color: var(--muted); color: var(--ink); }
+    .sc-chip.is-on { border-color: var(--ink); background: var(--ink); color: var(--panel); font-weight: 600; }
+    .sc-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--v); flex: 0 0 7px; }
+    .sc-hint { margin-left: auto; font-size: 12.5px; color: var(--faint); }
+    .sc-group-h { display: flex; align-items: baseline; gap: 10px; margin: 20px 0 8px; font-size: 13px; font-weight: 700; letter-spacing: .04em; text-transform: uppercase; color: var(--muted); }
+    .sc-group-h span { font-family: var(--mono); font-size: 10.5px; font-weight: 400; letter-spacing: 0; text-transform: none; color: var(--faint); }
+    .sc-rows { border: 1px solid var(--line); border-radius: 10px; overflow: hidden; background: var(--panel); }
+    .sc-row + .sc-row { border-top: 1px solid var(--line); }
+    .sc-row summary { display: grid; grid-template-columns: 14px minmax(0, 1fr) 190px 150px 20px; gap: 14px; align-items: center; padding: 11px 14px; cursor: pointer; list-style: none; font-size: 14px; line-height: 1.4; }
+    .sc-row summary::-webkit-details-marker { display: none; }
+    .sc-row summary:hover { background: var(--card, rgba(127,127,127,.05)); }
+    .sc-mark { width: 10px; height: 10px; border-radius: 2px; background: var(--v); }
+    .sc-claim { color: var(--ink); }
+    .sc-acc { font-size: 12.5px; color: var(--muted); }
+    .sc-acc-k { display: none; font-family: var(--mono); font-size: 9.5px; letter-spacing: .11em; text-transform: uppercase; color: var(--faint); margin-right: 6px; }
+    .sc-pill { display: inline-flex; align-items: center; gap: 6px; justify-self: start; font-family: var(--mono); font-size: 9.5px; letter-spacing: .08em; text-transform: uppercase; color: var(--v-ink); border: 1px solid color-mix(in srgb, var(--v) 40%, transparent); background: color-mix(in srgb, var(--v) 9%, transparent); border-radius: 999px; padding: 3px 9px; white-space: nowrap; }
+    .sc-chev { color: var(--faint); fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; transition: transform .15s; }
+    .sc-row[open] .sc-chev { transform: rotate(180deg); }
+    .sc-body { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; padding: 12px 14px 16px 42px; border-top: 1px solid var(--line); background: var(--bg); }
+    .sc-col { display: flex; flex-direction: column; gap: 6px; min-width: 0; }
+    .sc-k { font-family: var(--mono); font-size: 9.5px; letter-spacing: .11em; text-transform: uppercase; }
+    .sc-k.is-claim { color: var(--c-legacy-ink); }
+    .sc-k.is-doc { color: var(--c-active-ink); }
+    .sc-q { margin: 0; font-family: var(--read); font-size: 14.5px; line-height: 1.55; padding-left: 12px; border-left: 3px solid var(--line); color: var(--muted); }
+    .sc-q.is-doc { border-left-color: var(--c-active); color: var(--ink); }
+    .sc-q.is-doc a { color: inherit; text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 3px; text-decoration-color: color-mix(in srgb, var(--accent) 42%, transparent); }
+    .sc-q.is-doc a:hover { color: var(--accent-ink); text-decoration-color: var(--accent); }
+    .sc-src { font-family: var(--mono); font-size: 10.5px; color: var(--faint); overflow-wrap: anywhere; }
+    .sc-why { grid-column: 1 / -1; font-size: 13.5px; line-height: 1.5; color: var(--muted); }
+    .sc-why b { color: var(--ink); font-weight: 650; }
+    .sc-jump { margin-left: 8px; color: var(--accent-ink); text-decoration: none; font-weight: 550; white-space: nowrap; }
+    .sc-jump:hover { text-decoration: underline; }
+    .scorecard[data-filter="yes"] .sc-row:not([data-v="yes"]),
+    .scorecard[data-filter="partly"] .sc-row:not([data-v="partly"]),
+    .scorecard[data-filter="no"] .sc-row:not([data-v="no"]),
+    .scorecard[data-filter="unsupported"] .sc-row:not([data-v="unsupported"]) { display: none; }
+    @media (max-width: 720px) {
+      .sc-tiles { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .sc-hint { display: none; }
+      .sc-row summary { grid-template-columns: 14px minmax(0, 1fr) 20px; grid-template-areas: "m c ch" ". a ." ". p ."; row-gap: 6px; }
+      .sc-mark { grid-area: m; align-self: start; margin-top: 5px; }
+      .sc-claim { grid-area: c; }
+      .sc-acc { grid-area: a; }
+      .sc-acc-k { display: inline; }
+      .sc-pill { grid-area: p; }
+      .sc-chev { grid-area: ch; align-self: start; }
+      .sc-body { grid-template-columns: 1fr; padding-left: 14px; }
+    }
     .post-prevnext { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin: 28px 0 22px; }
     .post-pn { border: 1px solid var(--line); border-radius: 10px; padding: 11px 14px; background: var(--panel); display: flex; flex-direction: column; gap: 3px; text-decoration: none; }
     .post-pn:hover { border-color: color-mix(in srgb, var(--accent) 45%, var(--line)); }
@@ -685,6 +867,7 @@ def render_post(post, idx, posts, by_id, entry_count, today):
         lambda i: f"/databricks/{i}/",
         used,
         headings,
+        scorecard=post.get("scorecard"),
     )
     post["_used"] = used
 
@@ -854,6 +1037,18 @@ def main():
             if m.group(1) not in by_id:
                 errors.append(
                     f"kb/posts/{p['slug']}/index.md: {{{{entry:{m.group(1)}}}}} is not an entry id"
+                )
+        # The ledger shortcode and the front matter that feeds it come as a pair: one without
+        # the other is a guide that promises a scorecard it cannot render, or data nobody sees.
+        has_sc = SCORECARD_SHORTCODE in p["body"]
+        if has_sc and not p.get("scorecard"):
+            errors.append(f"kb/posts/{p['slug']}/index.md: body uses {SCORECARD_SHORTCODE} but front matter has no scorecard")
+        if p.get("scorecard") and not has_sc:
+            errors.append(f"kb/posts/{p['slug']}/index.md: front matter has a scorecard but the body never places {SCORECARD_SHORTCODE}")
+        for j, it in enumerate(p.get("scorecard") or []):
+            if not isinstance(it, dict) or it.get("misleading") not in SCORECARD_VERDICTS:
+                errors.append(
+                    f"kb/posts/{p['slug']}/index.md: scorecard[{j}].misleading must be one of {sorted(SCORECARD_VERDICTS)}"
                 )
 
     for e in errors:
