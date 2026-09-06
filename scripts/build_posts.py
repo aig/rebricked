@@ -483,6 +483,9 @@ POST_STYLE = """  <style>
     .post-cat { font-family: var(--mono); font-size: 9.5px; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); border: 1px solid var(--line); border-radius: 999px; padding: 3px 9px; }
     .post-doc h1 { font-family: var(--read); font-size: 34px; font-weight: 600; line-height: 1.13; letter-spacing: -.018em; text-wrap: balance; margin: 0 0 12px; }
     .post-meta { font-family: var(--mono); font-size: 10.5px; letter-spacing: .05em; text-transform: uppercase; color: var(--faint); font-variant-numeric: tabular-nums; margin: 0 0 16px; }
+    /* The byline's author link: brand ink, never browser blue, and quiet until hovered. */
+    .post-meta a { color: var(--accent-ink); text-decoration: none; border-bottom: 1px solid color-mix(in srgb, var(--accent) 38%, transparent); }
+    .post-meta a:hover { border-bottom-color: var(--accent); }
     .post-lead { font-family: var(--read); font-size: 19px; line-height: 1.55; color: var(--muted); margin: 0 0 22px; }
     .post-hr, .post-sep { height: 1px; background: var(--line); border: 0; margin: 26px 0; }
     /* Prose. 66ch measure, 17.5/1.68 - the whole point of a separate canvas. */

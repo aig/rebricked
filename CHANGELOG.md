@@ -130,6 +130,15 @@ recorded, and a made-up reason is worse than none.
   `reference/analytics-events.md`, `how-to/write-a-guide.md`, and `agents/write-guide.md`.
 
 ### Fixed
+- **The guide byline's author link rendered browser-default blue.**
+
+  **Why:** `.post-meta` styled the line but never its link, so the `authorLink` anchor fell back
+  to the browser's blue, which reads as a stray on the dark theme and clashes with the mono
+  uppercase meta line on both. Every other content link on a guide already uses the brand ink.
+
+  **What:** `POST_STYLE` gained `.post-meta a` (accent ink, no underline, a tinted bottom rule that
+  turns brand red on hover), matching how citations and entry references already behave.
+
 - **Four cards were quietly wrong after this week's docs changes: model services still listed a
   limitation lifted on August 24, private network gateway cited a billing sentence that had been
   reworded and did not know Azure had moved it to Beta, and Genie Code's auto-approve warning had
