@@ -12,12 +12,12 @@ fact:
     link: https://docs.databricks.com/aws/en/notebooks/code-assistant#:~:text=understand%20your%20tables%2C%20columns%2C%20descriptions
   - note: Databricks' launch blog did not introduce it as a new product but as the newest addition to the Databricks Genie family.
     link: https://www.databricks.com/blog/introducing-genie-code#:~:text=the%20newest%20addition%20to%20the%20Databricks%20Genie%20family
-  - note: 'You can put it on a schedule: a scheduled task runs your prompt as a full session and leaves behind a continuable chat with the results, turning recurring analysis into an unattended background job.'
-    link: https://docs.databricks.com/aws/en/release-notes/product/2026/july#:~:text=produces%20a%20continuable%20Genie%20chat%20with%20the%20results
+  - note: 'You can put it on a schedule: a scheduled task runs your prompt as a full session and leaves behind a continuable chat with the results, and since the feature went GA on September 1, 2026 auto-approve is always on for those runs, because nobody is there to click yes.'
+    link: https://docs.databricks.com/aws/en/genie-code/scheduled-tasks#:~:text=Auto%2Dapprove%20is%20always%20on%20for%20scheduled%20runs
 status:
   value: active
   link: https://docs.databricks.com/aws/en/notebooks/code-assistant#:~:text=Get%20coding%20help%20from%20Genie%20Code
-  date: '2026-08-20'
+  date: '2026-09-10'
 releases:
   - type: ga
     date: 2026-03
@@ -37,6 +37,9 @@ links:
   - url: https://docs.databricks.com/aws/en/genie-code/features-capabilities
     kind: official
     label: 'Databricks docs: Genie Code features and capabilities (review generated code before running it)'
+  - url: https://docs.databricks.com/aws/en/release-notes/product/2026/september
+    kind: official
+    label: 'Databricks release notes: Genie Code scheduled tasks are now generally available (September 1, 2026)'
   - url: https://www.databricks.com/blog/introducing-genie-code
     kind: community
     label: 'Databricks Blog: Introducing Genie Code'
@@ -48,4 +51,4 @@ prediction:
   - Genie Coder
   - Agentic Assistant
 source: https://docs.databricks.com/aws/en/notebooks/code-assistant
-verified: '2026-09-06'
+verified: '2026-09-10'

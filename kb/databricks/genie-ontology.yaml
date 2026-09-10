@@ -5,8 +5,8 @@ aliases:
   - Genie context layer
 category: AI / BI
 what:
-  note: Unified context layer that gives Genie a business-aware map of an organization, combining governed Unity Catalog semantics with context Genie infers from existing assets and usage.
-  link: https://docs.databricks.com/aws/en/genie-one/chat#:~:text=unified%20context%20layer%20that%20gives%20Genie%20One%20a%20business%2Daware%20map%20of%20your%20organization
+  note: Unified context layer that gives the Genie family of AI experiences a business-aware map of an organization, combining governed Unity Catalog semantics with context Genie infers from existing assets and usage, searched by Genie One and Genie Code alike.
+  link: https://docs.databricks.com/aws/en/genie/genie-ontology#:~:text=the%20unified%20context%20layer%20that%20gives%20the%20Genie%20family%20of%20AI%20experiences%20a%20business%2Daware%20map%20of%20your%20organization
 fact:
   - note: To settle which definition of a metric wins, it borrows from PageRank - weighing where a definition came from, its author's relative authority, how often people rely on it, and how fresh it is.
     link: https://www.databricks.com/blog/introducing-genie-one-genie-ontology-and-genie-agents#:~:text=Using%20an%20approach%20similar%20to%20PageRank
@@ -16,8 +16,8 @@ fact:
     link: https://docs.databricks.com/aws/en/ai-bi/release-notes/2026#:~:text=Customers%20no%20longer%20need%20to%20request%20access
 status:
   value: active
-  link: https://docs.databricks.com/aws/en/genie-one/chat#:~:text=The%20Genie%20Ontology%20is%20the%20unified%20context%20layer
-  date: '2026-08-20'
+  link: https://docs.databricks.com/aws/en/genie/genie-ontology#:~:text=Genie%20Ontology%20is%20the%20unified%20context%20layer
+  date: '2026-09-10'
 releases:
   - type: public-preview
     date: 2026-06
@@ -30,13 +30,16 @@ occasion:
   link: https://www.databricks.com/blog/introducing-genie-one-genie-ontology-and-genie-agents
   note: Announced alongside Genie One and Genie Agents, June 2026
 limitations:
-  note: Still Public Preview, though it is now on by default and no longer needs an access request. Snippets are gated by Unity Catalog permissions, so Genie One answers using only the sources the asking user is permitted to see.
-  link: https://docs.databricks.com/aws/en/genie-one/chat#:~:text=Snippets%20are%20also%20gated%20using%20Unity%20Catalog%20permissions
-  date: '2026-08-20'
+  note: Still Public Preview, though it is now on by default and no longer needs an access request. Snippets are gated by Unity Catalog permissions, so Genie answers using only the sources the asking user is permitted to see, and curating snippets is free for now with Databricks reserving the right to start charging.
+  link: https://docs.databricks.com/aws/en/genie/genie-ontology#:~:text=Snippets%20are%20also%20gated%20by%20Unity%20Catalog%20permissions
+  date: '2026-09-10'
 links:
   - url: https://www.databricks.com/blog/introducing-genie-one-genie-ontology-and-genie-agents
     kind: community
     label: 'Databricks blog: Introducing Genie Ontology'
+  - url: https://docs.databricks.com/aws/en/genie-one/chat
+    kind: official
+    label: 'Databricks docs: Chat in Genie One (the page that documented the ontology before it got its own)'
   - url: https://learn.microsoft.com/en-us/azure/databricks/genie-one/chat
     kind: official
     label: 'Microsoft Learn: Chat in Genie One'
@@ -44,5 +47,5 @@ prediction:
   - Genie Ontology One
   - Unity Ontology
   - Genie Knowledge Graph
-source: https://docs.databricks.com/aws/en/genie-one/chat
-verified: '2026-08-20'
+source: https://docs.databricks.com/aws/en/genie/genie-ontology
+verified: '2026-09-10'

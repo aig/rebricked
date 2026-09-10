@@ -12,10 +12,12 @@ fact:
     link: https://docs.databricks.com/aws/en/ai-bi/release-notes/2026#:~:text=has%20been%20renamed%20to%20Genie%20One
   - note: 'On top of the original no-notebooks experience it went mobile: Databricks launched native iOS and Android apps that, in its words, ''put Genie in your pocket.'''
     link: https://www.databricks.com/blog/introducing-genie-one-genie-ontology-and-genie-agents#:~:text=apps%20that%20put%20Genie%20in%20your%20pocket
+  - note: Since September 2026 it can search the public web (in Beta), and the first example the docs give of a question that needs it is 'recent release notes' - which is roughly this site's whole job.
+    link: https://docs.databricks.com/aws/en/genie-one/chat#:~:text=such%20as%20recent%20release%20notes%2C%20third%2Dparty%20documentation%2C%20or%20news
 status:
   value: active
   link: https://docs.databricks.com/aws/en/genie-one/genie#:~:text=Genie%20One%20is%20the%20simplified%20Databricks%20UI%20for%20business%20users
-  date: '2026-08-20'
+  date: '2026-09-10'
 releases:
   - type: public-preview
     date: 2025-09
@@ -46,4 +48,4 @@ prediction:
   - Genie One Prime
   - Databricks Two
 source: https://docs.databricks.com/aws/en/genie-one/genie
-verified: '2026-08-20'
+verified: '2026-09-10'

@@ -9,26 +9,29 @@ what:
   note: A fully managed, serverless Postgres (OLTP) database integrated into the Databricks platform, for building real-time transactional apps alongside lakehouse data.
   link: https://docs.databricks.com/aws/en/oltp/#:~:text=a%20fully%20managed%20Postgres%20database%20integrated%20into%20the%20Databricks%20platform
 fact:
-  - note: It's a managed serverless Postgres for transactional apps - with instant database branching, so you can fork a whole database's worth of state in seconds.
-    link: https://docs.databricks.com/aws/en/oltp/#:~:text=Create%20a%20new%20branch%20from%20any%20point%20in%20time
+  - note: 'The name has been handed down once already: it debuted in June 2025 on a Postgres you sized by hand, and by August 2026 the docs describe the autoscaling platform that replaced it as ''now known simply as Lakebase''.'
+    link: https://docs.databricks.com/aws/en/oltp/instances/#:~:text=now%20known%20simply%20as%20Lakebase
   - note: In August 2025 the Compute section's 'OLTP Database' tab was quietly renamed 'Lakebase Postgres.'
     link: https://docs.databricks.com/aws/en/release-notes/product/2025/august#:~:text=renamed%20to%20Lakebase%20Postgres
   - note: You can debug it by talking to it - database issues and early warnings surface as Insights and you investigate them conversationally with Genie, all fed by database telemetry captured into Unity Catalog.
-    link: https://docs.databricks.com/aws/en/release-notes/product/2026/july#:~:text=Both%20draw%20on%20database%20telemetry%20captured%20to%20Unity%20Catalog
+    link: https://docs.databricks.com/aws/en/release-notes/lakebase/#:~:text=Both%20draw%20on%20database%20telemetry%20captured%20to%20Unity%20Catalog
 status:
   value: active
   link: https://docs.databricks.com/aws/en/oltp/#:~:text=a%20fully%20managed%20Postgres%20database
-  date: '2026-08-20'
+  date: '2026-09-10'
 releases:
+  - type: beta
+    date: 2025-10
+    link: https://docs.databricks.com/aws/en/release-notes/lakebase/#:~:text=Lakebase%20%28Beta%29%20is%20now%20available%20on%20AWS%20as%20a%20new%20app%20in%20the%20app%20switcher
   - type: public-preview
-    date: 2025-06
-    link: https://www.databricks.com/blog/announcing-lakebase-public-preview#:~:text=the%20Public%20Preview%20of%20Databricks%20Lakebase
+    date: 2025-12
+    link: https://docs.databricks.com/aws/en/release-notes/lakebase/#:~:text=Lakebase%20is%20now%20in%20Public%20Preview%20on%20AWS
   - type: ga
     date: 2026-01
-    link: https://docs.databricks.com/aws/en/release-notes/product/2026/january#:~:text=Lakebase%20is%20now%20generally%20available
-introducedAt:
-  date: 2025-06
-  link: https://www.databricks.com/blog/announcing-lakebase-public-preview#:~:text=the%20Public%20Preview%20of%20Databricks%20Lakebase
+    link: https://docs.databricks.com/aws/en/release-notes/lakebase/#:~:text=Lakebase%20is%20now%20generally%20available
+from:
+  date: 2026-08
+  link: https://docs.databricks.com/aws/en/oltp/instances/#:~:text=now%20known%20simply%20as%20Lakebase
 occasion:
   date: 2026-02
   link: https://www.databricks.com/blog/databricks-lakebase-generally-available#:~:text=Databricks%20Lakebase%2C%20the%20first%20implementation%20of%20this%20category%2C%20is%20Generally%20Available%20on%20AWS
@@ -38,9 +41,12 @@ limitations:
   link: https://learn.microsoft.com/en-us/azure/databricks/oltp/projects/manage-projects#:~:text=The%20default%20limit%20is%2020%20concurrently%20active%20computes%20per%20project
   date: '2026-08-20'
 links:
+  - url: https://docs.databricks.com/aws/en/release-notes/lakebase/
+    kind: official
+    label: 'Databricks docs: Lakebase release notes (its own page, separate from the platform notes)'
   - url: https://www.databricks.com/blog/announcing-lakebase-public-preview
     kind: community
-    label: 'Databricks Blog: Lakebase Public Preview'
+    label: 'Databricks Blog: Lakebase Public Preview (June 2025)'
   - url: https://www.infoq.com/news/2026/02/databricks-lakebase-postgresql/
     kind: internet
     label: 'InfoQ: Databricks Lakebase Postgres'
@@ -49,4 +55,4 @@ prediction:
   - Genie Base
   - Lakehouse Postgres
 source: https://docs.databricks.com/aws/en/oltp/
-verified: '2026-08-20'
+verified: '2026-09-10'

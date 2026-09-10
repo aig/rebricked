@@ -55,6 +55,8 @@ Current source ids:
 |---|---|
 | `databricks-release-notes` | Databricks product release notes |
 | `databricks-ai-bi-release-notes` | AI/BI and Genie One release notes, one page per year |
+| `databricks-lakebase-release-notes` | The Lakebase release notes page (Lakebase entries no longer appear in the platform notes) |
+| `databricks-unity-gateway-release-notes` | The Unity Gateway release notes page |
 | `databricks-resource-limits` | The Databricks resource limits page |
 | `azure-databricks-release-notes` | Azure Databricks release notes on Microsoft Learn |
 
@@ -64,6 +66,14 @@ there. "Genie renamed to Genie One" and "Genie Spaces renamed to Genie Agents" w
 in that archive, not in the platform notes. A sweep of `databricks-release-notes` alone therefore
 misses the Genie half of the dataset silently, which is exactly how a card ends up citing a preview
 gate that was lifted a week earlier.
+
+**The Lakebase notes are separate for a harsher reason.** In August 2026 Databricks moved every
+Lakebase entry out of the platform notes onto Lakebase's own page and reworded them without the
+"Autoscaling" name - so quotes that three cards cited in the October 2025, January 2026 and March
+2026 platform notes vanished from those pages overnight. `check_anchors.py` caught it as a cluster
+of `DEAD` citations on one product, which is the signature of a product-line page being split out.
+Unity Gateway has its own page too; it is mirrored for the same reason, before the same thing
+happens to it.
 
 Add an entry to `sources.json`, run `--list` to confirm it is picked up, then fetch it by id.
 

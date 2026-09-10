@@ -19,6 +19,22 @@
       ]
     },
     {
+      "id": "databricks-lakebase-release-notes",
+      "name": "Databricks Lakebase Release Notes (AWS)",
+      "note": "Lakebase keeps its own release notes and, as of August 2026, the platform notes no longer carry its entries at all - the October 2025 Autoscaling Beta, the January 2026 GA and the March 2026 default switch were all moved here and reworded without the Autoscaling name. A sweep of the platform notes alone therefore misses Lakebase entirely.",
+      "urls": [
+        "https://docs.databricks.com/aws/en/release-notes/lakebase/"
+      ]
+    },
+    {
+      "id": "databricks-unity-gateway-release-notes",
+      "name": "Databricks Unity Gateway Release Notes (AWS)",
+      "note": "Unity Gateway has its own release-notes page. Model additions and gateway-only changes (unified trace table, external provider spend caps, Provisioned Throughput support) land here; most also appear in the platform notes, but the page is the one place the gateway's history is read under its current name.",
+      "urls": [
+        "https://docs.databricks.com/aws/en/release-notes/unity-gateway/"
+      ]
+    },
+    {
       "id": "databricks-resource-limits",
       "name": "Databricks Resource Limits (AWS)",
       "urls": ["https://docs.databricks.com/aws/en/resources/limits"]

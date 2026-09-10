@@ -17,7 +17,7 @@ fact:
 status:
   value: active
   link: https://docs.databricks.com/aws/en/admin/system-tables/#:~:text=analytical%20store%20of%20your%20account
-  date: '2026-08-20'
+  date: '2026-09-10'
 releases:
   - type: public-preview
     date: 2023-06
@@ -29,12 +29,19 @@ introducedAt:
   date: 2023-06
   link: https://docs.databricks.com/aws/en/release-notes/product/2023/june#:~:text=Account%20admins%20can%20now%20enable%20access%20to%20system%20tables
 limitations:
-  note: Read-only and unmodifiable, they must be enabled from a Unity Catalog-enabled workspace before anything appears, and free retention varies per table rather than being one number.
-  link: https://docs.databricks.com/aws/en/admin/system-tables/#:~:text=read%2Donly
-  date: '2026-08-20'
+  note: Read-only and unmodifiable, they must be enabled from a Unity Catalog-enabled workspace before anything appears, and free retention varies per table rather than being one number. Since August 26, 2026 the SQL text in system.query.history reads <REDACTED> by default - only account admins and members of the databricks_pii_access group see the full statement.
+  link: https://docs.databricks.com/aws/en/admin/system-tables/query-history#:~:text=The%20statement_text%20field%20returns%20%3CREDACTED%3E%20by%20default
+  date: '2026-09-10'
+links:
+  - url: https://docs.databricks.com/aws/en/release-notes/product/2026/august
+    kind: official
+    label: 'Databricks release notes: query text masked by default in system tables and APIs (August 26, 2026)'
+  - url: https://docs.databricks.com/aws/en/admin/system-tables/pipeline-events
+    kind: official
+    label: 'Databricks docs: pipeline events system table (Beta since August 31, 2026)'
 prediction:
   - Unity system tables
   - Observability Catalog
   - system.genie
 source: https://docs.databricks.com/aws/en/admin/system-tables/
-verified: '2026-08-20'
+verified: '2026-09-10'

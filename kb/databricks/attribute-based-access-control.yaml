@@ -12,12 +12,12 @@ fact:
     link: https://docs.databricks.com/aws/en/data-governance/unity-catalog/abac/#:~:text=attached%20at%20a%20level%20in%20the%20Unity%20Catalog%20hierarchy
   - note: The same tag-driven policies do both row filtering and column masking, on tables, materialized views, and streaming tables alike.
     link: https://docs.databricks.com/aws/en/data-governance/unity-catalog/abac/#:~:text=supports%20row%20and%20column%2Dlevel%20security%20through
-  - note: Its GRANT policies hand out privileges to whatever matches a tag condition instead of object by object, and in August 2026 that grew from models alone to model services, MCP services, and agent services.
-    link: https://docs.databricks.com/aws/en/release-notes/product/2026/august#:~:text=previously%20only%20available%20for%20models
+  - note: Its GRANT policies hand out privileges to whatever matches a tag condition instead of object by object - generally available for models, model services, MCP services, and agent services since August 31, 2026 - and a week later got a DENY twin in Beta that beats any grant, including the object owner's.
+    link: https://docs.databricks.com/aws/en/release-notes/product/2026/september#:~:text=They%20always%20take%20precedence%20over%20any%20grant
 status:
   value: active
   link: https://docs.databricks.com/aws/en/data-governance/unity-catalog/abac/#:~:text=Attribute%2Dbased%20access%20control%20%28ABAC%29
-  date: '2026-08-20'
+  date: '2026-09-10'
 releases:
   - type: beta
     date: 2025-06
@@ -45,10 +45,16 @@ links:
     label: 'Databricks Blog: ABAC GA in Unity Catalog'
   - url: https://docs.databricks.com/aws/en/data-governance/unity-catalog/abac/grant-policies
     kind: official
-    label: 'Databricks docs: ABAC GRANT policies (Beta)'
+    label: 'Databricks docs: ABAC GRANT policies'
+  - url: https://docs.databricks.com/aws/en/data-governance/unity-catalog/abac/deny-policies
+    kind: official
+    label: 'Databricks docs: ABAC DENY policies (Beta since September 8, 2026)'
+  - url: https://docs.databricks.com/aws/en/release-notes/product/2026/august
+    kind: official
+    label: 'Databricks release notes: ABAC GRANT policies generally available for models and services (August 31, 2026)'
 prediction:
   - Agent-based access control (ABAC)
   - Adaptive access control
   - Unity ABAC
 source: https://docs.databricks.com/aws/en/data-governance/unity-catalog/abac/
-verified: '2026-08-20'
+verified: '2026-09-10'

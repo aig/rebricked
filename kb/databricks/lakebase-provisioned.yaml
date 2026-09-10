@@ -3,10 +3,11 @@ name: Lakebase Provisioned
 aliases:
   - Lakebase database instances
   - Database instances
+  - Lakebase Public Preview
 category: Data engineering
 what:
-  note: The original Lakebase offering - a managed Postgres OLTP database instance running on compute you provisioned and scaled by hand, with one primary node for writes and optional secondaries across zones.
-  link: https://docs.databricks.com/aws/en/oltp/instances/#:~:text=Lakebase%20Provisioned%20is%20the%20original%20Lakebase%20offering%20that%20uses%20provisioned%20compute%20you%20scale%20manually
+  note: The original Lakebase offering - a managed Postgres OLTP database instance running on fixed-size compute you provisioned and scaled by hand, with one primary node for writes and optional secondaries across zones.
+  link: https://docs.databricks.com/aws/en/oltp/instances/#:~:text=It%20used%20fixed%2Dsize%20provisioned%20compute%20that%20you%20scaled%20manually
 fact:
   - note: One capacity unit meant a flat 16 GB of RAM, so 'scaling the database' was a number a human typed.
     link: https://docs.databricks.com/aws/en/oltp/upgrade-to-autoscaling#:~:text=In%20Lakebase%20Provisioned%2C%20one%20capacity%20unit%20has%2016%20GB%20RAM
@@ -15,12 +16,16 @@ fact:
   - note: Its restore window could be set as high as 35 days, so an instance could remember more than a month of its own past.
     link: https://docs.databricks.com/aws/en/oltp/upgrade-to-autoscaling#:~:text=the%20restore%20window%20can%20be%20set%20up%20to%2035%20days
 status:
-  value: deprecated
-  link: https://docs.databricks.com/aws/en/oltp/upgrade-to-autoscaling#:~:text=The%20Provisioned%20UI%20remains%20available%20until%20September%201%2C%202026
-  date: '2026-08-20'
+  value: retired
+  link: https://docs.databricks.com/aws/en/oltp/instances/#:~:text=All%20Lakebase%20Provisioned%20instances%20have%20been%20upgraded%20to%20the%20Lakebase%20Autoscaling%20platform
+  date: '2026-09-10'
+releases:
+  - type: public-preview
+    date: 2025-06
+    link: https://www.databricks.com/blog/announcing-lakebase-public-preview#:~:text=the%20Public%20Preview%20of%20Databricks%20Lakebase
 deprecatedAt:
   date: 2026-03
-  link: https://docs.databricks.com/aws/en/release-notes/product/2026/march#:~:text=New%20Lakebase%20instances%20are%20now%20created%20as%20Lakebase%20Autoscaling%20projects%20by%20default
+  link: https://docs.databricks.com/aws/en/release-notes/lakebase/#:~:text=New%20Lakebase%20instances%20are%20now%20created%20with%20autoscaling%20compute%2C%20scale%2Dto%2Dzero%2C%20branching%2C%20and%20instant%20restore%20by%20default
 removedAt:
   date: 2026-09
   link: https://docs.databricks.com/aws/en/oltp/upgrade-to-autoscaling#:~:text=The%20Provisioned%20UI%20remains%20available%20until%20September%201%2C%202026
@@ -30,13 +35,15 @@ occasion:
   date: 2026-07
   link: https://docs.databricks.com/aws/en/oltp/upgrade-to-autoscaling#:~:text=The%20upgrade%20of%20Lakebase%20Provisioned%20instances%20to%20Autoscaling%20completed%20in%20July%202026
   note: Fleet-wide platform upgrade completed, July 2026
-limitations:
-  note: 'Provisioned enforced workspace and instance ceilings: at most ten database instances per workspace, up to 1000 concurrent connections per instance, a 2 TB logical size limit across all databases in an instance, and no cross-workspace access, since an instance is scoped to a single workspace.'
-  link: https://docs.databricks.com/aws/en/oltp/instances/#:~:text=A%20workspace%20allows%20a%20maximum%20of%20ten%20instances
-  date: '2026-08-20'
 links:
   - url: https://docs.databricks.com/aws/en/oltp/upgrade-to-autoscaling
     kind: official
     label: 'Databricks docs: Upgrade to Autoscaling'
+  - url: https://www.databricks.com/blog/announcing-lakebase-public-preview
+    kind: community
+    label: 'Databricks Blog: Lakebase Public Preview (June 2025), the launch of the provisioned product'
+  - url: https://learn.microsoft.com/en-us/azure/databricks/oltp/instances/
+    kind: official
+    label: 'Microsoft Learn: Lakebase Provisioned'
 source: https://docs.databricks.com/aws/en/oltp/instances/
-verified: '2026-08-20'
+verified: '2026-09-10'

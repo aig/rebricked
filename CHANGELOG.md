@@ -9,6 +9,83 @@ shows the what. Plain, simple English: short sentences, common words, no jargon 
 and product names themselves. Some older entries have no `Why:` line - the reason was never
 recorded, and a made-up reason is worse than none.
 
+## 2026-09-10
+
+### Changed
+- **Lakebase Autoscaling is now a former name: Databricks says the platform is "now known simply as
+  Lakebase", Provisioned is past its September 1 retirement, and every Lakebase entry has vanished
+  from the platform release notes.**
+
+  **Why:** the citation-rot check flagged nine dead quotes across the three Lakebase cards at once,
+  which is the signature of a docs restructure rather than a reworded sentence. Databricks moved all
+  Lakebase entries out of the monthly platform notes onto a dedicated Lakebase release-notes page
+  and rewrote them without the word "Autoscaling" - the October 2025 launch now reads "Lakebase
+  (Beta)", "separate from the existing Lakebase Public Preview". The Lakebase Provisioned page now
+  says all instances were upgraded "to the Lakebase Autoscaling platform, now known simply as
+  Lakebase", and the Provisioned UI's September 1, 2026 shut-off date has passed. Three cards were
+  describing a product split that Databricks has quietly collapsed back into one name.
+
+  **What:** `lakebase-autoscaling` becomes `renamed` (from October 2025 to August 2026,
+  `successorId: lakebase`), with its Beta, Public Preview (December 2025) and GA dates re-sourced
+  to the Lakebase release-notes page and a new fact about the retro-edited launch entry. `lakebase`
+  becomes the rename tip (`from` August 2026 instead of `introducedAt`), inheriting that maturity
+  timeline and a fact on the name being handed down. `lakebase-provisioned` moves from `deprecated`
+  to `retired`, gains its June 2025 Public Preview stage, and drops its `limitations` (the instance
+  quotas are no longer documented anywhere). `scripts/sources.json` gains
+  `databricks-lakebase-release-notes` and `databricks-unity-gateway-release-notes` so the mirror
+  follows the two product lines that publish outside the platform notes, and
+  `docs/how-to/refresh-the-reference-mirror.md` records why.
+
+- **Both Unity Gateway blog posts have been retitled: the "AI" is gone from the June Summit post and
+  from the August GA post, and only their URLs still say unity-ai-gateway.**
+
+  **Why:** the `unity-gateway` card said the GA blog was "still titled Unity AI Gateway is
+  Generally Available", which was true on September 6 and false by September 10 - the post now
+  announces the "General Availability of Unity Gateway". The June Summit post lost the phrase too,
+  which killed the `from` citation on the `unity-ai-gateway` card: the live web no longer contains a
+  dated official page carrying the name the card is about.
+
+  **What:** `unity-gateway` fact rewritten to say the rename reached both blog posts and survives
+  only in their URLs, now cited to the GA post itself. `unity-ai-gateway` dates its `from` to the
+  Wayback Machine capture of June 18, 2026, where "Unity AI Gateway" appears 28 times, and its link
+  labels no longer claim the blogs carry the old title.
+
+- **Sixteen more cards caught up with three weeks of release notes, and eleven dead citations were
+  repointed.**
+
+  **Why:** the last full sweep was August 20. Since then Databricks shipped GA promotions, Betas and
+  behaviour changes that touch cards already on the site, and the vendor reworded several pages the
+  cards quoted: Genie Ontology moved to its own docs page, `ai_classify`'s context ceiling rose from
+  128,000 to 1 million tokens, data profiling added Unity Catalog-managed Iceberg tables, and the
+  Lakeflow Connect landing page was rewritten as a connector-concepts page.
+
+  **What:** `genie-ontology` re-sourced to `/genie/genie-ontology` (it now serves Genie Code too);
+  `classification`, `data-profiling` and `lakeflow-connect` limitations and descriptions re-quoted;
+  `system-tables` records that `statement_text` in `system.query.history` is `<REDACTED>` by default
+  since August 26; `attribute-based-access-control` notes GRANT policies GA for models and services
+  (August 31) and the new DENY policies Beta (September 8); `genie-code` fact updated for scheduled
+  tasks GA (September 1, with auto-approve always on); `genie-one` gains a fact on web search (Beta);
+  `opensharing` lists metric views among Databricks-to-Databricks-only assets; `zerobus-ingest`,
+  `ai-bi-dashboards` and `system-tables` link the September notes (Arrow GA, default storage Public
+  Preview, local metric views GA, pipeline events table). A dead SunnyData link was dropped.
+
+### Added
+- **Change data feed has been split in two: the 2021 per-table feature is now "legacy change data
+  feed", and "Automatic change data feed" went GA on September 1, 2026.**
+
+  **Why:** this is the site's core case, a retronym. The change data feed docs now describe two
+  approaches and call the original one legacy, with "Databricks recommends that you migrate to
+  automatic change data feed". Nothing was tracked under either name, so a reader searching for
+  what happened to CDF found nothing.
+
+  **What:** three cards, wired into the Catalog rail next to Delta Lake. `change-data-feed`
+  (`renamed`, April 2021 to September 2026) records the original name, dated to the archived
+  Databricks Runtime 8.2 (Public Preview, April 2021) and 8.4 (GA, July 2021) release notes, since
+  the live runtime notes below 10.4 have been removed. `legacy-change-data-feed` (`legacy`, September
+  2026, `successorId: automatic-change-data-feed`) carries the retronym and the migration advice.
+  `automatic-change-data-feed` (`active`, GA September 2026) computes changes at read time from row
+  tracking, needs Databricks Runtime 19, and is Databricks-readers-only even on Iceberg v3.
+
 ## 2026-09-06
 
 ### Added

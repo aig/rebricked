@@ -17,7 +17,7 @@ fact:
 status:
   value: active
   link: https://docs.databricks.com/aws/en/ingestion/zerobus-overview#:~:text=push%2Dbased%20streaming%20API%20that%20writes%20data%20straight%20into%20Unity%20Catalog%20Delta%20tables
-  date: '2026-09-01'
+  date: '2026-09-10'
 releases:
   - type: public-preview
     date: 2025-10
@@ -54,9 +54,12 @@ links:
   - url: https://docs.databricks.com/aws/en/release-notes/product/2026/august
     kind: official
     label: 'Databricks release notes: Zerobus Ingest into streaming tables GA (August 2026)'
+  - url: https://docs.databricks.com/aws/en/release-notes/product/2026/september
+    kind: official
+    label: 'Databricks release notes: Apache Arrow support GA (September 1) and ingest into default storage Public Preview (September 7, 2026)'
 prediction:
   - Zerobus One
   - Genie Bus
   - Lakeflow Zerobus
 source: https://docs.databricks.com/aws/en/ingestion/zerobus-overview
-verified: '2026-09-01'
+verified: '2026-09-10'

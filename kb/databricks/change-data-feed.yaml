@@ -1,0 +1,49 @@
+id: change-data-feed
+name: Change data feed
+abbr: CDF
+aliases:
+  - CDF
+  - Delta change data feed
+  - delta.enableChangeDataFeed
+category: Data engineering
+what:
+  note: Delta Lake table feature that, once turned on for a table, records every row-level insert, update, and delete on each write so downstream jobs can read only what changed between two versions.
+  link: http://web.archive.org/web/20210623174923/https://docs.databricks.com/release-notes/runtime/8.2.html#:~:text=the%20runtime%20records%20additional%20information%20regarding%20row%2Dlevel%20changes%20for%20every%20write%20operation%20on%20the%20table
+fact:
+  - note: It shipped in Public Preview with Databricks Runtime 8.2 in April 2021 and was generally available three months later in Runtime 8.4, back when a Delta feature could make it from preview to GA inside one summer.
+    link: http://web.archive.org/web/20210824102849/https://docs.databricks.com/release-notes/runtime/8.4.html#:~:text=The%20Delta%20table%20change%20data%20feed%20is%20now%20generally%20available
+  - note: It only ever looked forward - the 2021 launch blog warned that it is only forward-looking once enabled, so nothing that happened to a table before the switch was flipped could be replayed from it.
+    link: https://www.databricks.com/blog/2021/06/09/how-to-simplify-cdc-with-delta-lakes-change-data-feed.html#:~:text=forward%2Dlooking%20once%20enabled
+status:
+  value: renamed
+  link: https://docs.databricks.com/aws/en/tables/features/change-data-feed#:~:text=Legacy%20change%20data%20feed%20requires%20manual%20configuration%20for%20individual%20Delta%20Lake%20tables
+  date: '2026-09-10'
+releases:
+  - type: public-preview
+    date: 2021-04
+    link: http://web.archive.org/web/20210623174923/https://docs.databricks.com/release-notes/runtime/8.2.html#:~:text=using%20a%20change%20data%20feed%20%28Public%20Preview%29
+  - type: ga
+    date: 2021-07
+    link: http://web.archive.org/web/20210824102849/https://docs.databricks.com/release-notes/runtime/8.4.html#:~:text=The%20Delta%20table%20change%20data%20feed%20is%20now%20generally%20available
+from:
+  date: 2021-04
+  link: http://web.archive.org/web/20210623174923/https://docs.databricks.com/release-notes/runtime/8.2.html#:~:text=Databricks%20released%20this%20image%20in%20April%202021
+to:
+  date: 2026-09
+  link: https://docs.databricks.com/aws/en/release-notes/product/2026/september#:~:text=Automatic%20change%20data%20feed%20is%20now%20generally%20available
+successorId: legacy-change-data-feed
+links:
+  - url: https://www.databricks.com/blog/2021/06/09/how-to-simplify-cdc-with-delta-lakes-change-data-feed.html
+    kind: community
+    label: 'Databricks Blog: How to Simplify CDC With Delta Lake Change Data Feed (June 2021)'
+  - url: http://web.archive.org/web/20210623174923/https://docs.databricks.com/release-notes/runtime/8.2.html
+    kind: official
+    label: 'Databricks Runtime 8.2 release notes (archived): change data feed Public Preview, April 2021'
+  - url: http://web.archive.org/web/20210824102849/https://docs.databricks.com/release-notes/runtime/8.4.html
+    kind: official
+    label: 'Databricks Runtime 8.4 release notes (archived): change data feed GA, July 2021'
+prediction:
+  - Classic change data feed
+  - Manual CDF
+source: https://docs.databricks.com/aws/en/tables/features/change-data-feed
+verified: '2026-09-10'

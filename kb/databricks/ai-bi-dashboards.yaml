@@ -14,7 +14,7 @@ fact:
 status:
   value: active
   link: https://docs.databricks.com/aws/en/dashboards/#:~:text=AI%2FBI%20dashboards%20feature%20AI%2Dassisted%20authoring
-  date: '2026-08-20'
+  date: '2026-09-10'
 releases:
   - type: ga
     date: 2024-06
@@ -34,12 +34,12 @@ links:
   - url: https://www.databricks.com/blog/announcing-public-preview-lakeview-dashboards
     kind: community
     label: 'Databricks Blog: AI/BI Dashboards Preview'
-  - url: https://www.sunnydata.ai/blog/databricks-ai-bi-dashboards-genie
-    kind: internet
-    label: 'SunnyData: AI/BI Dashboards'
+  - url: https://docs.databricks.com/aws/en/ai-bi/release-notes/2026
+    kind: official
+    label: 'Databricks AI/BI release notes: local metric views and Power BI / Tableau import GA (August 20, 2026)'
 prediction:
   - Genie Dashboards
   - AI/BI Dashboards One
   - Lakeview One
 source: https://docs.databricks.com/aws/en/dashboards/
-verified: '2026-08-20'
+verified: '2026-09-10'

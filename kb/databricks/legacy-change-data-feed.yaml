@@ -1,0 +1,46 @@
+id: legacy-change-data-feed
+name: Legacy change data feed
+aliases:
+  - legacy CDF
+  - Change data feed
+  - delta.enableChangeDataFeed
+category: Data engineering
+what:
+  note: The per-table change data feed for Delta Lake, which materializes change events at write time once delta.enableChangeDataFeed is set on the table, and which the docs now file as legacy with a recommendation to migrate.
+  link: https://docs.databricks.com/aws/en/tables/features/change-data-feed#:~:text=Legacy%20change%20data%20feed%20requires%20manual%20configuration%20for%20individual%20Delta%20Lake%20tables
+fact:
+  - note: It did the work at write time, so every MERGE and UPDATE paid a tax to record what changed - the September 2026 release note prices dropping that tax at about 15% on those operations.
+    link: https://docs.databricks.com/aws/en/release-notes/product/2026/september#:~:text=about%2015%25%20faster%20on%20tables%20that%20you%20query%20for%20changes
+  - note: Switch it off for an afternoon and it cannot give that afternoon back - the docs warn that any interval it was turned off is simply not queryable through it.
+    link: https://docs.databricks.com/aws/en/tables/features/change-data-feed#:~:text=the%20interval%20will%20not%20be%20queryable
+  - note: It never made it to Iceberg. Change data feed is not part of the Apache Iceberg spec, so this version stayed Delta-only to the end.
+    link: https://docs.databricks.com/aws/en/tables/features/change-data-feed#:~:text=Apache%20Iceberg%20tables%20aren%27t%20supported
+status:
+  value: legacy
+  link: https://docs.databricks.com/aws/en/tables/features/change-data-feed#:~:text=Databricks%20recommends%20that%20you%20migrate%20to%20automatic%20change%20data%20feed
+  date: '2026-09-10'
+releases:
+  - type: public-preview
+    date: 2021-04
+    link: http://web.archive.org/web/20210623174923/https://docs.databricks.com/release-notes/runtime/8.2.html#:~:text=using%20a%20change%20data%20feed%20%28Public%20Preview%29
+  - type: ga
+    date: 2021-07
+    link: http://web.archive.org/web/20210824102849/https://docs.databricks.com/release-notes/runtime/8.4.html#:~:text=The%20Delta%20table%20change%20data%20feed%20is%20now%20generally%20available
+deprecatedAt:
+  date: 2026-09
+  link: https://docs.databricks.com/aws/en/tables/features/change-data-feed#:~:text=Databricks%20recommends%20that%20you%20migrate%20to%20automatic%20change%20data%20feed
+successorId: automatic-change-data-feed
+replacement: Automatic change data feed
+limitations:
+  note: Delta Lake only, turned on table by table with delta.enableChangeDataFeed. A read cannot span an interval when the feed was off, nor a non-additive schema change such as a column rename, drop, or type change, and a table cannot use it together with automatic change data feed.
+  link: https://docs.databricks.com/aws/en/tables/features/change-data-feed#:~:text=You%20can%27t%20use%20both%20legacy%20and%20automatic%20change%20data%20feeds%20together
+  date: '2026-09-10'
+links:
+  - url: https://docs.databricks.com/aws/en/release-notes/product/2026/september
+    kind: official
+    label: 'Databricks release notes: Automatic change data feed GA, the note that made this one legacy (September 2026)'
+  - url: https://learn.microsoft.com/en-us/azure/databricks/tables/features/change-data-feed
+    kind: official
+    label: 'Microsoft Learn: Use change data feed on Azure Databricks'
+source: https://docs.databricks.com/aws/en/tables/features/change-data-feed
+verified: '2026-09-10'

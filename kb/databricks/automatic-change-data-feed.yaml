@@ -1,0 +1,45 @@
+id: automatic-change-data-feed
+name: Automatic change data feed
+aliases:
+  - Auto CDF
+  - automatic CDF
+  - row tracking CDF
+category: Data engineering
+what:
+  note: Change data feed computed at read time from row tracking on Delta Lake tables and row lineage on Apache Iceberg v3 tables, so any qualifying Unity Catalog table serves row-level changes without being configured for it.
+  link: https://docs.databricks.com/aws/en/tables/features/change-data-feed#:~:text=computes%20row%2Dlevel%20changes%20at%20query%20time%20rather%20than%20at%20write%20time
+fact:
+  - note: 'It works by not doing the work: instead of recording change events on every write it derives them when someone asks, which is how the docs get to promise better write performance and lower storage costs in the same sentence.'
+    link: https://docs.databricks.com/aws/en/tables/features/change-data-feed#:~:text=improves%20write%20performance%20and%20reduces%20storage%20costs
+  - note: The reading side did not move an inch - the same table_changes() function and the same batch, Structured Streaming, and Delta Lake Sharing paths, only the answer now comes from row tracking instead of stored change files.
+    link: https://docs.databricks.com/aws/en/tables/features/change-data-feed#:~:text=works%20with%20batch%20queries%2C%20Structured%20Streaming%2C%20and%20Databricks%2Dto%2DDatabricks%20Delta%20Lake%20Sharing
+  - note: It reaches Iceberg v3 tables, which the Iceberg spec itself never provided for - so only Databricks readers can see those changes and an external Iceberg client gets nothing.
+    link: https://docs.databricks.com/aws/en/tables/features/change-data-feed#:~:text=but%20external%20Iceberg%20readers%20cannot
+status:
+  value: active
+  link: https://docs.databricks.com/aws/en/tables/features/change-data-feed#:~:text=Automatic%20change%20data%20feed%20computes%20row%2Dlevel%20changes%20at%20query%20time
+  date: '2026-09-10'
+releases:
+  - type: ga
+    date: 2026-09
+    link: https://docs.databricks.com/aws/en/release-notes/product/2026/september#:~:text=Automatic%20change%20data%20feed%20is%20now%20generally%20available
+introducedAt:
+  date: 2026-09
+  link: https://docs.databricks.com/aws/en/release-notes/product/2026/september#:~:text=Automatic%20change%20data%20feed%20is%20now%20generally%20available
+limitations:
+  note: Needs Databricks Runtime 19 or above and a Unity Catalog table that is either Delta Lake with row tracking enabled or Iceberg v3. Only Databricks readers can query it, for Delta and Iceberg alike; it is unsupported on tables with row filters or column masks and for multi-statement transactions that modified the source table; and a query cannot span a non-additive schema change such as a column rename, drop, or type change.
+  link: https://docs.databricks.com/aws/en/tables/features/change-data-feed#:~:text=Automatic%20change%20data%20feed%20isn%27t%20supported%20on%20tables%20with%20row%20filters%20or%20column%20masks
+  date: '2026-09-10'
+links:
+  - url: https://docs.databricks.com/aws/en/release-notes/product/2026/september
+    kind: official
+    label: 'Databricks release notes: Automatic change data feed is now generally available (September 1, 2026)'
+  - url: https://learn.microsoft.com/en-us/azure/databricks/tables/features/change-data-feed
+    kind: official
+    label: 'Microsoft Learn: Use change data feed on Azure Databricks'
+prediction:
+  - Genie Change Feed
+  - Lakeflow Change Data Feed
+  - Unity Catalog Change Feed
+source: https://docs.databricks.com/aws/en/tables/features/change-data-feed
+verified: '2026-09-10'

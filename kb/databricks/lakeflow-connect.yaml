@@ -6,7 +6,7 @@ aliases:
 category: Data engineering
 what:
   note: 'The managed data-ingestion component of Lakeflow: point-and-click connectors that pull data from SaaS apps and databases (Salesforce, Workday, ServiceNow, SQL Server, PostgreSQL and more) into Unity Catalog on serverless compute, with incremental reads via change data capture.'
-  link: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/#:~:text=ingesting%20data%20from%20SaaS%20applications%20and%20databases
+  link: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/#:~:text=Lakeflow%20Connect%20organizes%20connectors%20by%20source%20type%2C%20including%20database%2C%20SaaS%2C%20file%2C%20and%20streaming%20connectors
 fact:
   - note: Its database connectors do change data capture - reading only the rows that changed - so a full table isn't re-copied on every sync.
     link: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/#:~:text=change%20data%20capture
@@ -17,7 +17,7 @@ fact:
 status:
   value: active
   link: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/#:~:text=Lakeflow%20Connect
-  date: '2026-08-20'
+  date: '2026-09-10'
 releases:
   - type: public-preview
     date: '2024'
@@ -48,4 +48,4 @@ prediction:
   - Genie Connect
   - Zerobus Connect
 source: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/
-verified: '2026-08-20'
+verified: '2026-09-10'
