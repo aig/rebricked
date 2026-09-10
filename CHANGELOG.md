@@ -22,8 +22,12 @@ recorded, and a made-up reason is worse than none.
   and rewrote them without the word "Autoscaling" - the October 2025 launch now reads "Lakebase
   (Beta)", "separate from the existing Lakebase Public Preview". The Lakebase Provisioned page now
   says all instances were upgraded "to the Lakebase Autoscaling platform, now known simply as
-  Lakebase", and the Provisioned UI's September 1, 2026 shut-off date has passed. Three cards were
-  describing a product split that Databricks has quietly collapsed back into one name.
+  Lakebase", and the Provisioned UI's September 1, 2026 shut-off date has passed. The Wayback
+  Machine dates the switch: the August 19 capture of that page still says "Lakebase Autoscaling is
+  the new version of Lakebase", the live page updated August 28 says "now known simply as Lakebase",
+  and every current-name page (landing, projects, release notes, product page, Microsoft Learn) uses
+  only "Lakebase" or "Lakebase Postgres". Three cards were describing a product split that
+  Databricks has quietly collapsed back into one name.
 
   **What:** `lakebase-autoscaling` becomes `renamed` (from October 2025 to August 2026,
   `successorId: lakebase`), with its Beta, Public Preview (December 2025) and GA dates re-sourced

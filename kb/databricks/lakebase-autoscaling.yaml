@@ -50,7 +50,13 @@ links:
     label: 'Databricks docs: Lakebase release notes (the Beta, Public Preview, and GA entries, all now written without the Autoscaling name)'
   - url: https://docs.databricks.com/aws/en/oltp/instances/
     kind: official
-    label: 'Databricks docs: Lakebase Provisioned, where the Autoscaling platform is described as now known simply as Lakebase'
+    label: 'Databricks docs: Lakebase Provisioned, where the Autoscaling platform is described as now known simply as Lakebase (page updated August 28, 2026)'
+  - url: http://web.archive.org/web/20260819062420/https://docs.databricks.com/aws/en/oltp/instances/#:~:text=Lakebase%20Autoscaling%20is%20the%20new%20version%20of%20Lakebase
+    kind: internet
+    label: 'Wayback Machine, August 19, 2026: the same page still calling Lakebase Autoscaling the new version of Lakebase, so the rename landed between August 19 and 28'
+  - url: http://web.archive.org/web/20260705113823/https://docs.databricks.com/aws/en/release-notes/product/2026/january#:~:text=Lakebase%20Autoscaling%20and%20Lakebase%20Provisioned%20are%20now%20unified%20in%20a%20single%20UI
+    kind: internet
+    label: 'Wayback Machine, July 5, 2026: the January 2026 platform release notes before every Lakebase entry was moved off the page'
 prediction:
   - Lakebase Elastic
   - Lakebase Serverless Postgres
