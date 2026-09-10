@@ -700,8 +700,8 @@ HUB_BODY = """
           <nav class="entry-crumbs" aria-label="Breadcrumb">
             <a href="{root}">REbricked</a> <span aria-hidden="true">/</span> {vendor}
           </nav>
-          <h1>{vendor} product name changes</h1>
-          <p class="hub-lead">Every {vendor} product and feature that's been renamed, deprecated, or newly shipped - sourced, dated, and linked. {count} entries.</p>
+          <h1>{vendor} feature history: renamed, deprecated, and new</h1>
+          <p class="hub-lead">Every {vendor} product and feature, tracked from launch through rename, preview, GA, and retirement - sourced, dated, and linked. {count} entries.</p>
           {sections}
         </div>
         <footer class="footer" style="max-width:780px;margin:0;">
@@ -782,10 +782,10 @@ def render_hub(v, entries):
     url = f"{BASE_URL}/{v}/"
     root = "../"  # /{vendor}/ is one level deep
     vlabel = vendor_name(v)
-    title = f"{vlabel} renamed, deprecated & new product names | REbricked"
+    title = f"{vlabel} feature history: renamed, deprecated & new | REbricked"
     desc = (
-        f"Every {vlabel} product and feature that's been renamed, deprecated, or newly shipped "
-        f"- the full list, sourced and dated. {len(entries)} entries."
+        f"Every {vlabel} product and feature, tracked from launch through rename, preview, GA, "
+        f"and retirement - sourced, dated, and linked. {len(entries)} entries."
     )
     # Group by category, preserving first-seen order.
     cats = {}

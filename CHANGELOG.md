@@ -73,6 +73,22 @@ recorded, and a made-up reason is worse than none.
   `ai-bi-dashboards` and `system-tables` link the September notes (Arrow GA, default storage Public
   Preview, local metric views GA, pipeline events table). A dead SunnyData link was dropped.
 
+- **The vendor hub at `/databricks/` is now titled "Databricks feature history: renamed, deprecated,
+  and new" instead of "Databricks product name changes".**
+
+  **Why:** the page's visible heading described a narrower site than the one it sits on. The
+  dataset has tracked new features and release maturity for months, and the home page already says
+  "renamed, deprecated, or shipped", but the hub's H1 still promised only name changes, and it
+  disagreed with its own `<title>`. Search engines read the H1 and title together, and "feature
+  history" is the shape of the queries that reach the site ("what happened to Databricks X",
+  "Databricks X renamed"), while "name changes" is not.
+
+  **What:** in `scripts/build_entries.py`, `render_hub` sets the title to "Databricks feature
+  history: renamed, deprecated & new | REbricked" (the `og:title` and JSON-LD `name` derive from it)
+  and the description to "Every Databricks product and feature, tracked from launch through rename,
+  preview, GA, and retirement"; `HUB_BODY` uses the same wording for the H1 and lead paragraph. Copy
+  only, no schema or path change, so no docs update.
+
 ### Added
 - **Change data feed has been split in two: the 2021 per-table feature is now "legacy change data
   feed", and "Automatic change data feed" went GA on September 1, 2026.**
