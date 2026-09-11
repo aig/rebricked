@@ -94,6 +94,14 @@ searches, shares) help show what people use. LinkedIn share links carry
 [UTM tags](https://docs.umami.is/docs/utm) so shared traffic is attributed. Everything is
 guarded: if the analytics script is blocked or absent, the app behaves identically.
 
+## Authors
+
+- **Ilya Aniskovets** ([LinkedIn](https://www.linkedin.com/in/aniskovets/)) - initial idea and
+  author.
+- **Maksim Pachkouski** ([LinkedIn](https://www.linkedin.com/in/protmaks/)) - co-author.
+
+The ideas the site is built on came from both of them; the project itself started with Ilya.
+
 ## Contributing
 
 Spotted an error, an out-of-date name, or a change we're missing? Contributions welcome:

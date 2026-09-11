@@ -12,6 +12,18 @@ recorded, and a made-up reason is worse than none.
 ## 2026-09-11
 
 ### Added
+- **An Authors section in `README.md`, crediting Ilya Aniskovets with the original idea and
+  Maksim Pachkouski as co-author.**
+
+  **Why:** the repo said what the site is and how to contribute to it, but never said who made
+  it. Anyone landing on the README, or reusing the project under the MPL, had no way to tell
+  whose idea it was or who to credit, and the only authorship signal anywhere was the `author`
+  field on one guide.
+
+  **What:** `README.md` gains an `## Authors` section between "Analytics & privacy" and
+  "Contributing": Ilya Aniskovets (original idea and author, linked to the same LinkedIn profile
+  the guide byline uses) and Maksim Pachkouski (co-author), each with a LinkedIn link, plus a line
+  saying the ideas behind the site came from both of them and the project started with Ilya.
 - **Nineteen cards from the coverage gap report, this time chasing the renames and deprecations
   the report had buried under feature rows: Koalas, Ganglia, Hyperopt, HorovodRunner, MLeap, the
   first MLflow Model Serving, Online Tables, Feature & Function Serving, the Genomics runtime,
