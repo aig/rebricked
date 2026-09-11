@@ -1,0 +1,39 @@
+id: pandas-api-on-spark
+name: Pandas API on Spark
+aliases:
+  - pandas API on Spark
+  - pyspark.pandas
+  - pandas-on-Spark
+category: Data engineering
+what:
+  note: The pandas-equivalent DataFrame API built into Apache Spark itself (pyspark.pandas), letting pandas users work on Spark-scale data and PySpark users do pandas-only tricks such as plotting straight from a DataFrame.
+  link: https://docs.databricks.com/aws/en/pandas/pandas-on-spark#:~:text=providing%20pandas%20equivalent%20APIs%20that%20work%20on%20Apache%20Spark
+fact:
+  - note: It is not a Databricks library at all - it lives inside Apache Spark since 3.2, so on Databricks Runtime 10.0 and above it is one import away as pyspark.pandas, no install required.
+    link: https://docs.databricks.com/aws/en/pandas/pandas-on-spark#:~:text=Pandas%20API%20on%20Spark%20is%20available%20beginning%20in%20Apache%20Spark%203.2
+  - note: Its headline party trick for PySpark users is plotting data directly from a PySpark DataFrame, a task the docs politely describe as difficult to do with PySpark alone.
+    link: https://docs.databricks.com/aws/en/pandas/pandas-on-spark#:~:text=plotting%20data%20directly%20from%20a%20PySpark%20DataFrame
+  - note: Databricks Runtime 10.0, the release that carried it onto the platform, went GA on October 20, 2021 in the same breath as the Photon public preview.
+    link: https://docs.databricks.com/aws/en/release-notes/product/2021/october#:~:text=Databricks%20Runtime%2010.0%20and%2010.0%20ML%20are%20now%20generally%20available
+status:
+  value: active
+  link: https://docs.databricks.com/aws/en/pandas/pandas-on-spark#:~:text=This%20feature%20is%20available%20on%20clusters%20that%20run%20Databricks%20Runtime%2010.0%20and%20above
+  date: '2026-09-11'
+introducedAt:
+  date: 2021-10
+  link: https://docs.databricks.com/aws/en/release-notes/product/2021/october#:~:text=Databricks%20Runtime%2010.0%20and%2010.0%20ML%20are%20now%20generally%20available
+prediction:
+  - Lakeflow pandas
+  - pandas on Photon
+links:
+  - url: https://docs.databricks.com/aws/en/release-notes/product/2021/october
+    kind: official
+    label: 'Databricks release notes: Databricks Runtime 10.0 GA (October 2021)'
+  - url: https://spark.apache.org/docs/latest/api/python/tutorial/pandas_on_spark/index.html
+    kind: internet
+    label: 'Apache Spark docs: Pandas API on Spark'
+  - url: https://spark.apache.org/docs/latest/api/python/migration_guide/koalas_to_pyspark.html
+    kind: internet
+    label: 'Apache Spark docs: Migrating from Koalas to pandas API on Spark'
+source: https://docs.databricks.com/aws/en/pandas/pandas-on-spark
+verified: '2026-09-11'

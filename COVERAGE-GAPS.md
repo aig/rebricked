@@ -1,6 +1,6 @@
 # rebricked — Coverage Gap Report
 
-**What was compared:** the project's data file (`databricks.features.json`, 94 curated entries — renames, deprecations, and notable features, plus 157 aliases) against the full Databricks product release notes in `reference/` (103 monthly files, Apr 2018 - Jul 2026). The original diff was run against a 71-entry snapshot; see the update log below for gaps closed since.
+**What was compared:** the project's data file (`databricks.features.json`, 171 curated entries as of 2026-09-11 - renames, deprecations, and notable features; the original diff used a 94-entry snapshot) against the full Databricks product release notes in `reference/` (103 monthly files, Apr 2018 - Jul 2026). The original diff was run against a 71-entry snapshot; see the update log below for gaps closed since.
 
 **Method:** five agents extracted every distinct named product/service/feature from the release notes (~600 raw mentions), deduped to distinct concepts (earliest mention kept), then diffed against every name and alias the project already covers. Nothing was dropped for being minor — per your instruction, this is the whole list.
 
@@ -12,6 +12,23 @@
 
 ## Update log
 
+- **2026-09-11** - Reconciled against the current 171-entry dataset: every row below that an existing card
+  now covers is marked **✓ now covered** with its id (47 rows had been closed since the last log entry
+  without being marked). Nineteen new cards added, chosen for hiding a real lifecycle change rather than
+  being a plain feature. Deprecations: **Koalas** (§8) -> `pandas-api-on-spark`; **Ganglia** (§1, "Cluster
+  metrics UI (replaces Ganglia)") -> `compute-metrics`; **Hyperopt** and **HorovodRunner** (§11), both gone
+  from Databricks Runtime ML; **MLeap export** (§11, retired in 14.0 ML); **MLflow Model Serving** (§11, the
+  2020 cluster-backed original, retired September 2025) -> `model-serving`; **Databricks Online Tables**
+  (§6, retired January 2026) -> `databricks-online-feature-stores`; **Databricks Runtime for Genomics**
+  (§18, retired September 2022); **Billable usage log delivery** (§18, legacy) -> `system-tables`. One
+  rename chain: **Feature & Function Serving** -> **Feature Serving** (§12). Active features:
+  **Partner Connect** (§15), **Jobs API 2.2** (§9), **Auto Optimize** (§4, still a live docs term, never
+  renamed), and the three security controls **Enhanced security monitoring**, **compliance security
+  profile**, and the **Enhanced Security and Compliance** add-on (§16, distinct features, none renamed).
+  Investigated and **not** added for lack of a live source: the **Partner Integrations gallery / Data
+  Ingestion Network** (§2, §15: documented until November 2020, then vanishes with no rename or retirement
+  note), **Jobs API 2.0 / 2.1** (§9: docs say both are still accessible, never legacy), and **Audit log
+  delivery** (§18: live page recommends `system.access.audit` but carries no legacy status).
 - **2026-08-12** - Nineteen items promoted from this gap list into the project. Four of them turned out to be
   **rename chains**, not standalone features: **Serverless pools** (§1) -> **High Concurrency clusters** (§1) ->
   the already-covered access modes; **Delta cache** -> **Disk cache** (§4, "Disk cache (formerly Delta cache)" -
@@ -43,7 +60,7 @@ For reference, the project already covers these ~50 concepts (with their rename/
 
 | First seen | Product / Feature |
 |---|---|
-| 2018-02 | Serverless pools / High Concurrency clusters (cluster mode) |
+| 2018-02 | Serverless pools / High Concurrency clusters (cluster mode) - ✓ now covered (`serverless-pools` -> `high-concurrency-clusters`) |
 | 2018-05 | GPU-enabled clusters (P3, later G4/G5 instances) |
 | 2018-05 | Cluster pinning |
 | 2018-05 | Cluster autostart |
@@ -66,13 +83,13 @@ For reference, the project already covers these ~50 concepts (with their rename/
 | 2022-10 | Personal Compute cluster policy |
 | 2023-05 | Automatic cluster update |
 | 2023-05 | AWS Fleet instance types |
-| 2023-04 | Cluster metrics UI (replaces Ganglia) |
+| 2023-04 | Cluster metrics UI (replaces Ganglia) - ✓ now covered (`ganglia-metrics` (deprecated) -> `compute-metrics`) |
 | 2024-02 | Automatic cluster update (host OS/security image) |
-| 2025-06 | Serverless GPU compute / AI Runtime |
+| 2025-06 | Serverless GPU compute / AI Runtime - ✓ now covered (`ai-runtime`) |
 | 2025-08 | Base environments (serverless custom cached env specs) |
 | 2025-10 | AWS Capacity Blocks |
 | 2025-12 | Flexible node types (instance-type fallback) |
-| 2026-03 | AI Runtime (GPU serverless, Public Preview) |
+| 2026-03 | AI Runtime (GPU serverless, Public Preview) - ✓ now covered (`ai-runtime`) |
 | 2026-05 | Databricks Container Services for standard compute |
 | 2026-06 | AI Runtime CLI (`air`) |
 
@@ -80,13 +97,13 @@ For reference, the project already covers these ~50 concepts (with their rename/
 
 | First seen | Product / Feature |
 |---|---|
-| 2020-02 | Auto Loader |
+| 2020-02 | Auto Loader - ✓ now covered (`auto-loader`) |
 | 2020-02 | COPY INTO |
 | 2020-02 | Data Ingestion Network / Partner Integrations gallery |
 | 2024-02 | File arrival triggers |
 | 2024-07 | Lakeflow Connect (managed ingestion connectors framework) — ✓ now covered |
 | 2025-05 | File events for external locations |
-| 2025-10 | Zerobus Ingest connector (gRPC record-by-record) |
+| 2025-10 | Zerobus Ingest connector (gRPC record-by-record) - ✓ now covered (`zerobus-ingest`) |
 | 2026-04 | Query-based connectors (cursor-column, no CDC/gateway) |
 | 2026-05 | Community connectors (open-source Lakeflow Connect) |
 | 2026-07 | MySQL integrated CDC pipeline (gateway-free) |
@@ -105,7 +122,7 @@ For reference, the project already covers these ~50 concepts (with their rename/
 | 2025-02 | DLT sinks (Kafka / Event Hubs) **[adjacent]** |
 | 2025-07 | Real-time mode in Structured Streaming |
 | 2025-12 | ForEachBatch for Spark Declarative Pipelines **[adjacent]** |
-| 2026-05 | Standalone pipelines (serverless general compute, ex "DBSQL pipelines") |
+| 2026-05 | Standalone pipelines (serverless general compute, ex "DBSQL pipelines") - ✓ now covered (`standalone-pipelines`) |
 | 2020-02 | Structured Streaming state store reader |
 | 2024-12 | Streaming workload / backlog metrics |
 | 2023-02 | Ray on Databricks (Ray on Spark) |
@@ -116,20 +133,20 @@ For reference, the project already covers these ~50 concepts (with their rename/
 | First seen | Product / Feature |
 |---|---|
 | 2019-04 | Delta Lake time travel |
-| 2019-06 | Delta Lake Auto Optimize |
+| 2019-06 | Delta Lake Auto Optimize - ✓ now covered (`auto-optimize` (active; docs never document a rename)) |
 | 2019-10 | Dynamic File Pruning (DFP) |
 | 2019-10 | Python APIs for Delta tables |
 | 2020-05 | CONVERT TO DELTA |
 | 2020-05 | Automatic schema evolution for MERGE |
 | 2020-08 | Delta table CLONE (shallow/deep) |
-| 2022-09 | Disk cache (formerly Delta cache) |
+| 2022-09 | Disk cache (formerly Delta cache) - ✓ now covered (`delta-cache` -> `disk-cache`) |
 | 2023-06 | Delta Lake column mapping (rename/drop columns) |
 | 2023-10 | Deletion vectors (merge-on-read deletes) |
 | 2023-10 | Predictive I/O for updates |
 | 2023-10 | UNDROP TABLE |
 | 2023-09/10 | Predictive optimization (auto OPTIMIZE/clustering for UC managed tables) |
 | 2026-03 | Type widening |
-| 2026-03 | Multi-table transactions (BEGIN ATOMIC...END) |
+| 2026-03 | Multi-table transactions (BEGIN ATOMIC...END) - ✓ now covered (`transactions`) |
 | 2026-06 | Parquet v2 encodings for Delta |
 | 2026-06 | Auto time-to-live (auto-TTL) for managed tables |
 | 2025-06 | Convert external to managed table (ALTER TABLE SET MANAGED) |
@@ -143,7 +160,7 @@ For reference, the project already covers these ~50 concepts (with their rename/
 | 2025-12 | Delta Sharing to external Iceberg clients (Snowflake/Trino/Flink) |
 | 2026-05 | Apache Iceberg v3 features (deletion vectors, VARIANT, row lineage) |
 | 2026-05 | Catalog commits (UC as system of coordination for managed tables) |
-| 2026-07 | Managed Iceberg materialized views |
+| 2026-07 | Managed Iceberg materialized views - ✓ now covered (`managed-iceberg-materialized-views`) |
 | 2024-02 | Cloudflare R2 storage support (UC) |
 
 ## 6. Unity Catalog — governance & metadata
@@ -159,7 +176,7 @@ For reference, the project already covers these ~50 concepts (with their rename/
 | 2023-09 | Row filters and column masks |
 | 2023-10 | Semantic search over UC |
 | 2023-10 | AI-generated table/column comments |
-| 2023-12 | Databricks Online Tables |
+| 2023-12 | Databricks Online Tables - ✓ now covered (`databricks-online-tables` (retired) -> `databricks-online-feature-stores`) |
 | 2024-03 | BROWSE privilege |
 | 2024-06 | AI-generated comments (GA path) |
 | 2024-06 | Databricks Geos (data residency) |
@@ -167,20 +184,20 @@ For reference, the project already covers these ~50 concepts (with their rename/
 | 2024-11 | Service credentials (UC-governed IAM auth) |
 | 2024-12 | MANAGE privilege |
 | 2024-12 | Hive metastore federation (UC over HMS/Glue) |
-| 2025-05 | Unity Catalog metric views |
-| 2025-06 | External lineage (Bring Your Own Lineage) |
-| 2025-06 | Tag policies / governed tags |
+| 2025-05 | Unity Catalog metric views - ✓ now covered (`metric-views`) |
+| 2025-06 | External lineage (Bring Your Own Lineage) - ✓ now covered (`bring-your-own-lineage` -> `external-lineage`) |
+| 2025-06 | Tag policies / governed tags - ✓ now covered (`tag-policies` -> `governed-tags`) |
 | 2025-08 | Access requests (self-service) |
 | 2025-08 | Path credential vending |
 | 2025-09 | Data classification system table |
-| 2025-10 | Data Classification (auto-classify/tag sensitive data) |
+| 2025-10 | Data Classification (auto-classify/tag sensitive data) - ✓ now covered (`data-classification`) |
 | 2025-10 | Certification status system tag |
-| 2026-02 | Discover page and business domains |
+| 2026-02 | Discover page and business domains - ✓ now covered (`discover`) |
 | 2026-03 | Customer-managed keys for Unity Catalog |
 | 2026-03 | BI compatibility mode for metric views |
-| 2026-06 | Model services (UC securable for governed LLM endpoints) |
+| 2026-06 | Model services (UC securable for governed LLM endpoints) - ✓ now covered (`model-services`) |
 | 2026-07 | Scala/Java UDFs in Unity Catalog |
-| 2026-07 | Secrets in Unity Catalog |
+| 2026-07 | Secrets in Unity Catalog - ✓ now covered (`secrets-in-unity-catalog`) |
 | 2023-12 | Entity Relationship Diagram (ERD) in Catalog Explorer |
 | 2023-03 | Table Insights tab (Catalog Explorer) |
 
@@ -189,7 +206,7 @@ For reference, the project already covers these ~50 concepts (with their rename/
 | First seen | Product / Feature |
 |---|---|
 | 2021-06 | Cloud Fetch (parallel BI data fetch) |
-| 2022-01 | Databricks Photon (vectorized query engine) |
+| 2022-01 | Databricks Photon (vectorized query engine) - ✓ now covered (`photon`) |
 | 2022-06 | Serverless SQL warehouses |
 | 2020-09 | Databricks Power BI connector |
 | 2021-12 | Databricks Tableau connector (3-level namespace) |
@@ -214,7 +231,7 @@ For reference, the project already covers these ~50 concepts (with their rename/
 | 2019-06 | Databricks Advisor |
 | 2020-05 | Notebook-scoped Python libraries |
 | 2020-07 | `%pip` / `%conda` magic commands |
-| 2020-07 | Koalas (pandas-on-Spark) |
+| 2020-07 | Koalas (pandas-on-Spark) - ✓ now covered (`koalas` (deprecated) -> `pandas-api-on-spark`) |
 | 2020-10 | Jupyter (.ipynb) import/export |
 | 2021-03 | Dark mode for notebooks |
 | 2022-03 | Files in Repos / workspace files |
@@ -249,11 +266,11 @@ For reference, the project already covers these ~50 concepts (with their rename/
 | 2023-06 | Databricks SDK for Go |
 | 2023-11 | Databricks SQL Connector for Python 3.0.0 |
 | 2024-05 | Databricks JDBC driver |
-| 2024-07 | New open-source Databricks JDBC Driver |
-| 2025-06 | (OSS JDBC driver Apache-2.0) |
-| 2024-12 | Jobs API 2.2 |
+| 2024-07 | New open-source Databricks JDBC Driver - ✓ now covered (`databricks-jdbc-driver`) |
+| 2025-06 | (OSS JDBC driver Apache-2.0) - ✓ now covered (`databricks-jdbc-driver`) |
+| 2024-12 | Jobs API 2.2 - ✓ now covered (`jobs-api-2-2`) |
 | 2021-10 | Jobs API 2.1 |
-| 2022-01 | Databricks JDBC driver (SQL) |
+| 2022-01 | Databricks JDBC driver (SQL) - ✓ now covered (`simba-jdbc-driver` (legacy)) |
 | 2024-08 | For-each task (jobs) |
 | 2023-07 | Run Job task |
 | 2023-10 | If/else condition task |
@@ -268,7 +285,7 @@ For reference, the project already covers these ~50 concepts (with their rename/
 | First seen | Product / Feature |
 |---|---|
 | 2023-02 | Databricks extension for Visual Studio Code |
-| 2024-08 | Databricks Apps |
+| 2024-08 | Databricks Apps - ✓ now covered (`databricks-apps`) |
 | 2025-03 | Databricks Connector for Google Sheets |
 | 2025-09 | Databricks connector in Microsoft Power Platform |
 | 2026-03 | Databricks Excel Add-in |
@@ -279,16 +296,16 @@ For reference, the project already covers these ~50 concepts (with their rename/
 
 | First seen | Product / Feature |
 |---|---|
-| 2018-03 | Databricks ML Model Export / MLeap export |
+| 2018-03 | Databricks ML Model Export / MLeap export - ✓ now covered (`mleap-ml-model-export` (retired)) |
 | 2018-05 | Databricks Runtime for Machine Learning |
-| 2018-11 | HorovodRunner |
+| 2018-11 | HorovodRunner - ✓ now covered (`horovodrunner` (deprecated)) |
 | 2019-02 | Managed MLflow on Databricks |
-| 2019-06 | Hyperopt (SparkTrials) |
+| 2019-06 | Hyperopt (SparkTrials) - ✓ now covered (`hyperopt` (deprecated)) |
 | 2020-03 | MLflow Model Registry |
-| 2020-09 | MLflow Model Serving |
-| 2021-05 | AutoML |
+| 2020-09 | MLflow Model Serving - ✓ now covered (`legacy-mlflow-model-serving` (retired) -> `model-serving`) |
+| 2021-05 | AutoML - ✓ now covered (`automl`) |
 | 2022-01 | MLflow Model Registry Webhooks |
-| 2023-03 | Models in Unity Catalog (govern MLflow models) |
+| 2023-03 | Models in Unity Catalog (govern MLflow models) - ✓ now covered (`models-in-unity-catalog`) |
 | 2024-06 | MLflow Tracing |
 | 2025-06 | MLflow 3.0 |
 | 2025-06 | Deployment jobs (MLflow 3) |
@@ -301,16 +318,16 @@ For reference, the project already covers these ~50 concepts (with their rename/
 | 2022-02 | Feature Store online store / automatic feature lookup |
 | 2022-04 | Feature Store publish to DynamoDB |
 | 2023-09 | On-demand feature computation |
-| 2023-12 | Feature & Function Serving |
-| 2024-03 | Feature Serving |
-| 2025-09 | Databricks Online Feature Stores (Lakebase-powered) |
-| 2026-03 | Declarative Feature Engineering APIs / Feature Views |
+| 2023-12 | Feature & Function Serving - ✓ now covered (`feature-function-serving` (renamed) -> `feature-serving`) |
+| 2024-03 | Feature Serving - ✓ now covered (`feature-serving`) |
+| 2025-09 | Databricks Online Feature Stores (Lakebase-powered) - ✓ now covered (`databricks-online-feature-stores`) |
+| 2026-03 | Declarative Feature Engineering APIs / Feature Views - ✓ now covered (`declarative-feature-engineering`) |
 
 ## 13. Generative AI, Mosaic AI, agents & Agent Bricks
 
 | First seen | Product / Feature |
 |---|---|
-| 2023-12 | Foundation Model APIs |
+| 2023-12 | Foundation Model APIs - ✓ now covered (`foundation-model-apis`) |
 | 2024-02 | AI Functions (SQL) |
 | 2024-03 | DBRX (Base & Instruct) |
 | 2024-05 | Foundation Model Training / Fine-tuning |
@@ -330,31 +347,31 @@ For reference, the project already covers these ~50 concepts (with their rename/
 | 2024-12 | `databricks-agents` SDK |
 | 2024-12 | Synthetic evaluation sets |
 | 2025-01 | AI agent tools / external service connections (MCP services) |
-| 2025-03 | Information Extraction (Agent Bricks) |
+| 2025-03 | Information Extraction (Agent Bricks) - ✓ now covered (`information-extraction`) |
 | 2025-03 | Genie Conversation API **[adjacent]** |
 | 2025-03 | Multi-agent systems (Genie in agents) |
-| 2025-04 | Custom LLM (Agent Bricks) |
-| 2025-05 | Knowledge Assistant (Agent Bricks) |
+| 2025-04 | Custom LLM (Agent Bricks) - ✓ now covered (`custom-llm` (legacy)) |
+| 2025-05 | Knowledge Assistant (Agent Bricks) - ✓ now covered (`knowledge-assistant`) |
 | 2025-06 | `ai_parse_document` |
-| 2025-06 | Model Context Protocol (MCP) support |
+| 2025-06 | Model Context Protocol (MCP) support - ✓ now covered (`databricks-managed-mcp-servers`) |
 | 2025-08 | External MCP servers |
 | 2025-08 | Mosaic AI Vector Search reranker **[adjacent]** |
-| 2025-09 | Data Science Agent (Assistant Agent mode) |
-| 2025-10 | SQL MCP server |
-| 2026-01 | Managed MCP servers |
-| 2026-01 | Agent Skills (Assistant skills) |
-| 2026-03 | Agent Bricks (umbrella brand) |
-| 2026-03 | Classification (Agent Bricks) |
+| 2025-09 | Data Science Agent (Assistant Agent mode) - ✓ now covered (`agent-mode`) |
+| 2025-10 | SQL MCP server - ✓ now covered (`databricks-sql-mcp-server`) |
+| 2026-01 | Managed MCP servers - ✓ now covered (`databricks-managed-mcp-servers`) |
+| 2026-01 | Agent Skills (Assistant skills) - ✓ now covered (`unity-catalog-skills`) |
+| 2026-03 | Agent Bricks (umbrella brand) - ✓ now covered (`agent-bricks`) |
+| 2026-03 | Classification (Agent Bricks) - ✓ now covered (`classification`) |
 | 2026-03 | `ai_classify` / `ai_extract` (v2) |
 | 2026-04 | Supervisor API **[adjacent]** |
 | 2026-04 | `ai_prep_search` |
 | 2026-04 | AI Gateway MCP governance **[adjacent]** |
 | 2026-04 | Vector Search retrieval-quality evaluation **[adjacent]** |
 | 2026-06 | Managed agent memory |
-| 2026-06 | Omnigent (coding agent meta-harness) |
+| 2026-06 | Omnigent (coding agent meta-harness) - ✓ now covered (`omnigent`) |
 | 2026-06 | `ai_query` (GA general-purpose) |
 | 2026-02 | AI Gateway (Beta / new UI, coding-agent control plane) **[adjacent]** |
-| 2026-07 | Lakebridge Agentic Converter |
+| 2026-07 | Lakebridge Agentic Converter - ✓ now covered (`agentic-code-converter` -> `lakebridge-agentic-converter`) |
 | 2026-04 | Sample Data Explorer (Genie Code) **[adjacent]** |
 
 ## 14. Databricks-hosted foundation models (Model Serving additions)
@@ -374,7 +391,7 @@ Numerous and named individually in the release notes — not distinct products, 
 | First seen | Product / Feature |
 |---|---|
 | 2020-02 | Partner Integrations gallery / Data Ingestion Network |
-| 2021-11 | Databricks Partner Connect |
+| 2021-11 | Databricks Partner Connect - ✓ now covered (`partner-connect`) |
 | 2023-04 | Databricks Marketplace — ✓ now covered |
 | 2023-06 | Marketplace private exchanges |
 | 2023-11 | Solution Accelerators in Marketplace |
@@ -386,16 +403,16 @@ Numerous and named individually in the release notes — not distinct products, 
 | 2024-12 | Delta Sharing history sharing |
 | 2025-06 | Salesforce Data Cloud File Sharing (zero-copy) |
 | 2025-09 | SAP Business Data Cloud (BDC) Connector |
-| 2026-06 | SecureConnect (share behind firewall) |
+| 2026-06 | SecureConnect (share behind firewall) - ✓ now covered (`secureconnect`) |
 | 2025-11 | MCP Servers tab / Marketplace MCP listings |
 
 ## 16. Security, identity & networking
 
 | First seen | Product / Feature |
 |---|---|
-| 2018-01 | Table Access Control (table ACLs) |
+| 2018-01 | Table Access Control (table ACLs) - ✓ now covered (`hive-metastore-table-access-control` (deprecated)) |
 | 2018-09 | SCIM provisioning / SCIM API |
-| 2020-04 | IAM credential passthrough / instance profiles |
+| 2020-04 | IAM credential passthrough / instance profiles - ✓ now covered (`credential-passthrough` (deprecated)) |
 | 2020-06 | Customer-managed VPC |
 | 2020-06 | Secure cluster connectivity |
 | 2020-06 | IP access lists |
@@ -409,13 +426,13 @@ Numerous and named individually in the release notes — not distinct products, 
 | 2021-05 | Service principals |
 | 2021-08 | Microsoft Entra ID SSO |
 | 2022-08 | Identity federation |
-| 2022-06 | Compliance security profile / Enhanced Security Monitoring |
+| 2022-06 | Compliance security profile / Enhanced Security Monitoring - ✓ now covered (`compliance-security-profile`, `enhanced-security-monitoring`) |
 | 2023-01 | Account SCIM |
 | 2023-02 | SAML SSO in account console |
 | 2023-05 | OAuth M2M for service principals |
 | 2022-10 | AWS PrivateLink support |
 | 2024-02 | Network Connectivity Configurations (NCC) / serverless firewall |
-| 2024-02 | Enhanced Security and Compliance add-on |
+| 2024-02 | Enhanced Security and Compliance add-on - ✓ now covered (`enhanced-security-and-compliance`) |
 | 2024-05 | Unified login |
 | 2024-05 | Customer Managed Keys (incl. Vector Search) |
 | 2024-11 | Service credentials |
@@ -427,7 +444,7 @@ Numerous and named individually in the release notes — not distinct products, 
 | 2026-02 | Scoped personal access tokens **[adjacent]** |
 | 2026-05 | Automatic identity management (Entra/Okta sync, no SCIM) |
 | 2026-05 | Account access denylist |
-| 2026-07 | Custom URLs for Databricks account |
+| 2026-07 | Custom URLs for Databricks account - ✓ now covered (`custom-url`) |
 | 2026-07 | Private Link for account-level resources |
 
 ## 17. Compliance certifications
@@ -439,29 +456,29 @@ FedRAMP Moderate (2022-08), FedRAMP High / GovCloud (2024-04), PCI-DSS (2022-06)
 | First seen | Product / Feature |
 |---|---|
 | 2018-05 | GDPR data-control features (retention/purge) |
-| 2019-03 | Databricks Light |
-| 2019-10 | Databricks Runtime for Genomics / Glow |
-| 2020-06 | Billable usage log delivery |
+| 2019-03 | Databricks Light - ✓ now covered (`databricks-light` (retired)) |
+| 2019-10 | Databricks Runtime for Genomics / Glow - ✓ now covered (`databricks-runtime-for-genomics` (retired)) |
+| 2020-06 | Billable usage log delivery - ✓ now covered (`billable-usage-log-delivery` (legacy) -> `system-tables`) |
 | 2020-06 | Multi-workspace API / Account API |
 | 2020-10 | Audit log delivery |
 | 2016-02 | Databricks Community Edition (free tier; retired 2026-01) / Databricks Free Edition (2025-06 replacement) — ✓ now covered |
 | 2020-12 | New account console |
-| 2023-06 | System tables |
+| 2023-06 | System tables - ✓ now covered (`system-tables`) |
 | 2024-06 | Budgets |
 | 2024-06 | Cost management / usage dashboard |
 | 2024-10 | Serverless budget policies |
 | 2025-07 | Databricks release notes RSS feed |
 | 2026-03 | Databricks usage dashboard (GA) |
 | 2026-06 | Managed disaster recovery |
-| 2026-06 | Mission Critical add-on |
-| 2026-06 | Lakehouse Replay (runtime regression testing) |
+| 2026-06 | Mission Critical add-on - ✓ now covered (`mission-critical`) |
+| 2026-06 | Lakehouse Replay (runtime regression testing) - ✓ now covered (`lakehouse-replay`) |
 
 ## 19. Lakebase sub-features (beyond covered Lakebase entry)
 
 | First seen | Product / Feature |
 |---|---|
 | 2025-07 | Synced tables (Lakebase) **[adjacent]** |
-| 2025-10 | Lakebase Autoscaling (scale-to-zero, branching, instant restore) **[adjacent]** |
+| 2025-10 | Lakebase Autoscaling (scale-to-zero, branching, instant restore) **[adjacent]** - ✓ now covered (`lakebase-autoscaling` -> `lakebase`) |
 | 2026-03 | Lakehouse Sync / Lakebase CDF **[adjacent]** |
 
 ## 20. Genie / Assistant sub-features (beyond covered entries)
@@ -479,6 +496,6 @@ FedRAMP Moderate (2022-08), FedRAMP High / GovCloud (2024-04), PCI-DSS (2022-06)
 
 ## How to use this
 
-- **Genuinely absent marquee products** most worth adding to `rebricked`: Photon, Auto Loader, COPY INTO, Unity Catalog data lineage, Partner Connect, MLflow / Managed MLflow, MLflow Model Registry, AutoML, Foundation Model APIs, Mosaic AI Agent Framework, Cluster policies, Instance pools, System tables, Databricks SQL Serverless / Photon, Terraform provider, VS Code extension, Databricks SDKs. *(Databricks Marketplace, AI Gateway, and Lakeflow Connect were on this list and have since been added — see the update log.)*
+- **Genuinely absent marquee products** most worth adding to `rebricked` (as of 2026-09-11): COPY INTO, Unity Catalog data lineage, Managed MLflow / MLflow Model Registry / MLflow Tracing, Mosaic AI Agent Framework, Cluster policies, Instance pools, Serverless SQL warehouses, Terraform provider, VS Code extension, the Python and Go SDKs, Deletion vectors, Predictive optimization, AI Functions / `ai_query`, AI Playground, Databricks Runtime for ML, Customer-managed VPC, PrivateLink, Network Connectivity Configurations, Budgets. *(Photon, Auto Loader, AutoML, Foundation Model APIs, System tables, Databricks Marketplace, AI Gateway, Lakeflow Connect, Partner Connect, and Databricks Apps were on earlier versions of this list and have since been added - see the update log.)*
 - **[adjacent]** items extend something already covered — add only if you want sub-feature granularity.
 - The **hosted foundation models** and **Lakeflow Connect connectors** are the two highest-volume buckets; they are legitimately many, not minor, and are listed in full above.

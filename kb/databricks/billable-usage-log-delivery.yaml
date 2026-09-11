@@ -1,0 +1,47 @@
+id: billable-usage-log-delivery
+name: Billable usage log delivery
+aliases:
+  - Billable usage logs
+  - Billable usage logs (legacy)
+  - BILLABLE_USAGE log delivery
+  - Usage logs to S3
+category: Data governance
+what:
+  note: Account-level delivery of billable usage logs as CSV files to your own S3 bucket - one file per workspace, refreshed daily through an Account API log delivery configuration - so DBU usage could be analysed outside the account console.
+  link: https://docs.databricks.com/aws/en/archive/admin-guide/billable-usage-delivery#:~:text=configure%20daily%20delivery%20of%20billable%20usage%20logs%20in%20CSV%20file%20format
+fact:
+  - note: 'A log delivery configuration is immortal: the docs say you cannot delete one, only disable it, and re-enabling it fails if it would now break the two-per-level limit.'
+    link: https://docs.databricks.com/aws/en/archive/admin-guide/billable-usage-delivery#:~:text=You%20cannot%20delete%20a%20log%20delivery%20configuration%2C%20but%20you%20can%20disable%20it
+  - note: '"Daily delivery" meant rewriting the same file: every day Databricks overwrote the current month''s CSV for each workspace instead of appending a fresh one.'
+    link: https://docs.databricks.com/aws/en/archive/admin-guide/billable-usage-delivery#:~:text=Files%20are%20delivered%20daily%20by%20overwriting%20the%20month%27s%20CSV%20file
+  - note: Its memory has a hard floor - the API will not start delivery for any month before March 2019, because billable usage logs are simply not available before then.
+    link: https://docs.databricks.com/api/account/logdelivery/create#:~:text=not%20available%20for%20usage%20before%20March%202019
+status:
+  value: legacy
+  link: https://docs.databricks.com/aws/en/archive/admin-guide/billable-usage-delivery#:~:text=Deliver%20and%20access%20billable%20usage%20logs%20%28legacy%29
+  date: '2026-09-11'
+releases:
+  - type: public-preview
+    date: 2020-06
+    link: https://docs.databricks.com/aws/en/release-notes/product/2020/june#:~:text=Billable%20usage%20logs%20delivered%20to%20your%20own%20S3%20bucket%20%28Public%20Preview%29
+deprecatedAt:
+  date: '2025'
+  link: https://docs.databricks.com/aws/en/archive/admin-guide/billable-usage-delivery#:~:text=Deliver%20and%20access%20billable%20usage%20logs%20%28legacy%29
+successorId: system-tables
+replacement: System tables (system.billing.usage)
+limitations:
+  note: Still in Public Preview and does not record usage for all products - Databricks points to system tables for complete usage logs. An account gets at most two enabled account-level configurations and two per specific workspace, and a configuration can be disabled but never deleted.
+  link: https://docs.databricks.com/aws/en/archive/admin-guide/billable-usage-delivery#:~:text=Billable%20usage%20logs%20do%20not%20record%20usage%20for%20all%20products
+  date: '2026-09-11'
+links:
+  - url: https://docs.databricks.com/aws/en/release-notes/product/2020/june
+    kind: official
+    label: 'Databricks release notes: billable usage logs delivered to your own S3 bucket (Public Preview, June 30, 2020)'
+  - url: https://docs.databricks.com/aws/en/release-notes/product/2020/september
+    kind: official
+    label: 'Databricks release notes: Account API GA, billable usage delivery remains in Public Preview (September 2020)'
+  - url: https://docs.databricks.com/api/account/logdelivery/create
+    kind: official
+    label: 'Databricks REST API reference: create a log delivery configuration (log_type BILLABLE_USAGE)'
+source: https://docs.databricks.com/aws/en/archive/admin-guide/billable-usage-delivery
+verified: '2026-09-11'

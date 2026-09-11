@@ -1,0 +1,49 @@
+id: databricks-online-tables
+name: Databricks Online Tables
+aliases:
+  - Online tables
+  - online tables (legacy)
+  - Unity Catalog online tables
+category: AI / ML
+what:
+  note: A read-only, row-oriented copy of a Unity Catalog Delta table, kept in sync by a serverless pipeline, that gave Model Serving, Feature Serving, and RAG applications low-latency lookups without a third-party online store.
+  link: https://docs.databricks.com/aws/en/archive/machine-learning/feature-store/online-tables#:~:text=An%20online%20table%20is%20a%20read%2Donly%20copy%20of%20a%20Delta%20Table
+fact:
+  - note: 'It was a Delta table turned sideways: a read-only copy of the columnar source stored row by row, because looking up one customer is faster when you do not have to open every column.'
+    link: https://docs.databricks.com/aws/en/archive/machine-learning/feature-store/online-tables#:~:text=stored%20in%20row%2Doriented%20format%20optimized%20for%20online%20access
+  - note: Turning columns into rows was not free - the docs warn the row-expanded copy can be as much as 100x larger than the compressed Delta table shown in Catalog Explorer, which is how a modest table could eat into the 2TB per-metastore preview cap.
+    link: https://docs.databricks.com/aws/en/archive/machine-learning/feature-store/online-tables#:~:text=The%20difference%20can%20be%20as%20large%20as%20100x
+  - note: 'It retired without ever growing up: the same legacy page that declares it deprecated still says online tables are in Public Preview, so this is a feature that went straight from preview to gone.'
+    link: https://docs.databricks.com/aws/en/archive/machine-learning/feature-store/online-tables#:~:text=Online%20tables%20are%20in%20Public%20Preview%20in%20the%20following%20regions
+status:
+  value: retired
+  link: https://docs.databricks.com/aws/en/archive/machine-learning/feature-store/online-tables#:~:text=are%20deprecated%20and%20will%20not%20be%20accessible%20after%20January%2015%2C%202026
+  date: '2026-09-11'
+releases:
+  - type: public-preview
+    date: 2023-12
+    link: https://docs.databricks.com/aws/en/release-notes/product/2023/december#:~:text=Databricks%20Online%20Tables%20is%20Public%20Preview
+deprecatedAt:
+  date: 2026-01
+  link: https://docs.databricks.com/aws/en/archive/machine-learning/feature-store/online-tables#:~:text=are%20deprecated%20and%20will%20not%20be%20accessible%20after%20January%2015%2C%202026
+removedAt:
+  date: 2026-01
+  link: https://docs.databricks.com/aws/en/archive/machine-learning/feature-store/online-tables#:~:text=will%20not%20be%20accessible%20after%20January%2015%2C%202026
+successorId: databricks-online-feature-stores
+replacement: Databricks Online Feature Stores
+limitations:
+  note: One online table per source table, at most 1000 columns, no ARRAY, MAP, or STRUCT primary keys, string columns capped at 64KB and rows at 2MB, a metastore-wide cap of 2TB of uncompressed data during the preview, and roughly 750 MB/sec of read throughput per metastore.
+  link: https://docs.databricks.com/aws/en/archive/machine-learning/feature-store/online-tables#:~:text=Only%20one%20online%20table%20is%20supported%20per%20source%20table
+  date: '2026-09-11'
+links:
+  - url: https://docs.databricks.com/aws/en/release-notes/product/2023/december#:~:text=Databricks%20Online%20Tables%20is%20Public%20Preview
+    kind: official
+    label: 'Databricks release notes: Databricks Online Tables is Public Preview (December 8, 2023)'
+  - url: https://docs.databricks.com/aws/en/release-notes/feature-store/databricks-feature-lookup#:~:text=Remove%20legacy%20Online%20Tables%20support
+    kind: official
+    label: 'Databricks Feature Lookup Client release notes: 1.15.0 removes legacy Online Tables support'
+  - url: https://community.databricks.com/t5/data-engineering/badrequest-cannot-create-online-table-is-being-deprecated/td-p/138010
+    kind: community
+    label: 'Databricks Community: creating new online tables already failed with an "is being deprecated" error in November 2025'
+source: https://docs.databricks.com/aws/en/archive/machine-learning/feature-store/online-tables
+verified: '2026-09-11'

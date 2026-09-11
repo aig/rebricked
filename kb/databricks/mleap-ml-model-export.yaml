@@ -1,0 +1,40 @@
+id: mleap-ml-model-export
+name: MLeap ML Model Export
+aliases:
+  - MLeap
+  - Model Export
+  - Databricks ML Model Export
+category: AI / ML
+what:
+  note: Databricks' way of exporting a trained Apache Spark, scikit-learn or TensorFlow pipeline as an MLeap bundle - a serialization format plus execution engine - so the model could be loaded outside Spark to serve individual low-latency predictions.
+  link: https://docs.databricks.com/aws/en/archive/model-export/mleap-model-export#:~:text=common%20serialization%20format%20and%20execution%20engine
+fact:
+  - note: The portable format was never that portable on Databricks - open source MLeap was unsupported on Databricks Runtime, and only a custom build preinstalled in Databricks Runtime ML would do.
+    link: https://docs.databricks.com/aws/en/archive/model-export/mleap-model-export#:~:text=does%20not%20support%20open%20source%20MLeap
+  - note: It entered the docs twice in 2018, first as Databricks ML Model Export in March and then as the MLeap notebooks in May, and the March announcement now quietly sends readers to the MLeap archive page.
+    link: https://docs.databricks.com/aws/en/release-notes/product/2018/march#:~:text=Databricks%20ML%20Model%20Export
+  - note: It left the runtime in the same breath as miniconda - the Databricks Runtime 14.0 ML notes list the two side by side as packages removed from the image.
+    link: https://docs.databricks.com/aws/en/release-notes/runtime/14.0ml#:~:text=have%20been%20removed%20in%20Databricks%20Runtime%2014.0%20ML
+status:
+  value: retired
+  link: https://docs.databricks.com/aws/en/archive/model-export/mleap-model-export#:~:text=has%20been%20retired
+  date: '2026-09-11'
+deprecatedAt:
+  date: 2023-09
+  link: https://docs.databricks.com/aws/en/release-notes/runtime/14.0ml#:~:text=have%20been%20removed%20in%20Databricks%20Runtime%2014.0%20ML
+replacement: ONNX model format
+links:
+  - url: https://docs.databricks.com/aws/en/release-notes/runtime/15.0ml#:~:text=MLeap%20is%20no%20longer%20available%20in%20Databricks%20Runtime%2015.0%20ML%20and%20above
+    kind: official
+    label: 'Databricks Runtime 15.0 ML release notes: MLeap no longer available, ONNX recommended for JVM deployment'
+  - url: https://docs.databricks.com/aws/en/release-notes/product/2023/september#:~:text=Databricks%20Runtime%2014.0%20is%20GA
+    kind: official
+    label: 'Databricks release notes: Databricks Runtime 14.0 and 14.0 ML GA (September 14, 2023)'
+  - url: https://docs.databricks.com/aws/en/release-notes/product/2018/may#:~:text=Added%20documentation%20and%20notebooks%20on%20using%20MLeap
+    kind: official
+    label: 'Databricks release notes: MLeap ML Model Export documentation added (May 2018)'
+  - url: https://docs.databricks.com/aws/en/archive/model-export/mleap-model-deployment-on-sagemaker
+    kind: official
+    label: 'Archived: MLeap model deployment on SageMaker'
+source: https://docs.databricks.com/aws/en/archive/model-export/mleap-model-export
+verified: '2026-09-11'

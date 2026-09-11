@@ -1,0 +1,47 @@
+id: partner-connect
+name: Partner Connect
+aliases:
+  - Databricks Partner Connect
+  - Partner Connect integrations
+category: Data engineering
+what:
+  note: A workspace UI that lets you create trial accounts with selected Databricks technology partners and connect the workspace to their ingestion, transformation, BI, and ML tools in a few clicks, provisioning the SQL warehouse, service principal, and token the partner needs on your behalf.
+  link: https://docs.databricks.com/aws/en/partner-connect/#:~:text=lets%20you%20create%20trial%20accounts%20with%20select%20Databricks%20technology%20partners
+fact:
+  - note: Every partner you connect gets its own robot employee - Partner Connect mints a service principal named after the partner in shouty snake case, so Fivetran shows up in your workspace as FIVETRAN_USER.
+    link: https://docs.databricks.com/aws/en/partner-connect/admin#:~:text=the%20service%20principal's%20display%20name%20is%20FIVETRAN_USER
+  - note: Desktop tools such as Power BI Desktop and Tableau Desktop never earn the green check mark on their tile, even after you connect them, because Partner Connect has no way of knowing what happened on your laptop.
+    link: https://docs.databricks.com/aws/en/partner-connect/#:~:text=do%20not%20display%20a%20check%20mark%20icon%20in%20their%20tile
+  - note: 'Despite the name, there is no Partner Connect item in the sidebar: the docs send you to Marketplace and a Partner Connect integrations section with a View all link.'
+    link: https://docs.databricks.com/aws/en/partner-connect/#:~:text=In%20Partner%20Connect%20integrations
+status:
+  value: active
+  link: https://docs.databricks.com/aws/en/partner-connect/#:~:text=Partner%20Connect%20lets%20you%20create%20trial%20accounts
+  date: '2026-09-11'
+releases:
+  - type: ga
+    date: 2021-11
+    link: https://docs.databricks.com/aws/en/release-notes/product/2021/november#:~:text=Databricks%20Partner%20Connect%20is%20now%20generally%20available
+introducedAt:
+  date: 2021-11
+  link: https://docs.databricks.com/aws/en/release-notes/product/2021/november#:~:text=Databricks%20Partner%20Connect%20is%20now%20generally%20available
+limitations:
+  note: Requires the Premium plan or above and a workspace admin to create connections; it is not available in AWS GovCloud regions (nor Azure China, Azure Government, or FedRAMP workspaces); not every Databricks partner solution is featured, and the flow is optimized for new partner accounts, so Databricks recommends connecting an existing partner account manually instead.
+  link: https://docs.databricks.com/aws/en/partner-connect/#:~:text=available%20in%20AWS%20GovCloud%20regions
+  date: '2026-09-11'
+links:
+  - url: https://www.databricks.com/blog/2021/11/18/now-generally-available-introducing-databricks-partner-connect-to-discover-and-connect-popular-data-and-ai-tools-to-the-lakehouse
+    kind: official
+    label: 'Databricks blog: Partner Connect generally available (November 2021)'
+  - url: https://learn.microsoft.com/en-us/azure/databricks/partner-connect/
+    kind: official
+    label: 'Microsoft Learn: What is Databricks Partner Connect? (Azure Databricks)'
+  - url: https://docs.databricks.com/aws/en/integrations/
+    kind: official
+    label: 'Databricks docs: Technology partners (partners featured in Partner Connect)'
+prediction:
+  - Lakehouse Connect
+  - Partner One
+  - Marketplace Connect
+source: https://docs.databricks.com/aws/en/partner-connect/
+verified: '2026-09-11'

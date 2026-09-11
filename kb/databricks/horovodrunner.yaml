@@ -1,0 +1,51 @@
+id: horovodrunner
+name: HorovodRunner
+aliases:
+  - Horovod
+  - horovod.spark
+  - sparkdl.HorovodRunner
+  - Horovod on Databricks
+category: AI / ML
+what:
+  note: Databricks API for running distributed deep learning with the Horovod framework on Databricks Runtime ML, embedding a Horovod MPI job inside a Spark job via barrier execution mode so TensorFlow, Keras, and PyTorch training could span a cluster.
+  link: https://docs.databricks.com/aws/en/archive/machine-learning/train-model/horovod-runner#:~:text=HorovodRunner%20is%20a%20general%20API%20to%20run%20distributed%20deep%20learning%20workloads
+fact:
+  - note: 'Under the hood it was MPI in a Spark costume: the training function was pickled on the driver, the first executor gathered every worker''s IP address over BarrierTaskContext, and then it simply called mpirun.'
+    link: https://docs.databricks.com/aws/en/archive/machine-learning/train-model/horovod-runner#:~:text=triggers%20a%20Horovod%20job%20using%20mpirun
+  - note: A negative process count was a feature, not a bug - HorovodRunner(np=-n) meant run n subprocesses on the driver only, the documented way to test on a single multi-GPU node before going wide.
+    link: https://docs.databricks.com/aws/en/archive/machine-learning/train-model/horovod-runner#:~:text=To%20run%20HorovodRunner%20on%20the%20driver%20only
+  - note: 'Its built-in profiler shipped with a health warning: enabling Horovod Timeline could cut Inception3 throughput by roughly 40 percent, so the docs told you to leave it off if you wanted the job to finish.'
+    link: https://docs.databricks.com/aws/en/archive/machine-learning/train-model/horovod-runner#:~:text=throughput%20can%20decrease%20by
+status:
+  value: deprecated
+  link: https://docs.databricks.com/aws/en/archive/machine-learning/train-model/horovod-runner#:~:text=Horovod%20and%20HorovodRunner%20are%20now%20deprecated
+  date: '2026-09-11'
+deprecatedAt:
+  date: 2024-03
+  link: https://docs.databricks.com/aws/en/release-notes/runtime/15.0ml#:~:text=Horovod%20and%20HorovodRunner%20are%20now%20deprecated
+removedAt:
+  date: 2024-11
+  link: https://docs.databricks.com/aws/en/release-notes/runtime/16.0ml#:~:text=not%20included%20in%20Databricks%20Runtime%2016.0%20ML
+replacement: TorchDistributor (PyTorch) or tf.distribute.Strategy (TensorFlow)
+limitations:
+  note: With workspace files, HorovodRunner does not work when np is greater than 1 and the notebook imports from other relative files (the docs point to horovod.spark instead), and Open MPI TCP connection warnings mean pinning training to the primary network interface.
+  link: https://docs.databricks.com/aws/en/archive/machine-learning/train-model/horovod-runner#:~:text=HorovodRunner%20will%20not%20work%20if
+  date: '2026-09-11'
+links:
+  - url: https://docs.databricks.com/aws/en/release-notes/runtime/15.0ml
+    kind: official
+    label: 'Databricks Runtime 15.0 ML release notes: deprecation of Horovod and HorovodRunner announced'
+  - url: https://docs.databricks.com/aws/en/release-notes/runtime/16.0ml
+    kind: official
+    label: 'Databricks Runtime 16.0 ML release notes: Horovod, HorovodRunner, Petastorm, spark-tensorflow-distributor removed'
+  - url: https://docs.databricks.com/aws/en/release-notes/product/2024/march
+    kind: official
+    label: 'Databricks release notes: Databricks Runtime 15.0 and 15.0 ML GA (March 22, 2024)'
+  - url: https://docs.databricks.com/aws/en/release-notes/product/2024/november
+    kind: official
+    label: 'Databricks release notes: Databricks Runtime 16.0 and 16.0 ML GA (November 11, 2024)'
+  - url: https://learn.microsoft.com/en-us/azure/databricks/archive/machine-learning/train-model/horovod-runner
+    kind: official
+    label: 'Microsoft Learn (archived): HorovodRunner on Azure Databricks'
+source: https://docs.databricks.com/aws/en/archive/machine-learning/train-model/horovod-runner
+verified: '2026-09-11'

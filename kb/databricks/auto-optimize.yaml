@@ -1,0 +1,51 @@
+id: auto-optimize
+name: Auto Optimize
+aliases:
+  - Auto optimize
+  - autoOptimize
+  - delta.autoOptimize.autoCompact
+  - delta.autoOptimize.optimizeWrite
+  - Optimized writes
+  - Auto compaction
+category: Data engineering
+what:
+  note: Delta Lake's umbrella name for two table settings, autoOptimize.optimizeWrite and autoOptimize.autoCompact, that shape data files as they are written (shuffling before the write for fewer, larger files) and compact small files right after a write succeeds.
+  link: https://docs.databricks.com/aws/en/tables/tune-file-size#:~:text=describes%20the%20settings
+fact:
+  - note: The 2019 headline Delta Lake feature has shrunk to a one-sentence glossary entry - the current docs say only that Auto optimize describes the settings autoOptimize.autoCompact and autoOptimize.optimizeWrite, then send you to its two halves.
+    link: https://docs.databricks.com/aws/en/tables/tune-file-size#:~:text=describes%20the%20settings
+  - note: The autoCompact setting accepts a value literally spelled legacy, which the docs define as an alias for true - so legacy mode is just the original fixed 128 MB target with no dynamic sizing.
+    link: https://docs.databricks.com/aws/en/tables/tune-file-size#:~:text=Alias%20for
+  - note: Auto compaction leaves a fingerprint - in the table history it appears as an OPTIMIZE operation with operationParameters.auto set to true, which is how you tell it apart from an OPTIMIZE a human ran.
+    link: https://docs.databricks.com/aws/en/tables/tune-file-size#:~:text=operationParameters.auto
+status:
+  value: active
+  link: https://docs.databricks.com/aws/en/tables/tune-file-size#:~:text=describes%20the%20settings
+  date: '2026-09-11'
+releases:
+  - type: public-preview
+    date: 2019-06
+    link: https://docs.databricks.com/aws/en/release-notes/product/2019/june#:~:text=adds%20Auto%20Optimize
+  - type: ga
+    date: 2019-07
+    link: https://docs.databricks.com/aws/en/release-notes/product/2019/july#:~:text=Auto%20Optimize%20GA
+introducedAt:
+  date: 2019-06
+  link: https://docs.databricks.com/aws/en/release-notes/product/2019/june#:~:text=adds%20Auto%20Optimize
+limitations:
+  note: Auto compaction and optimized writes are always enabled for MERGE, UPDATE and DELETE operations and cannot be turned off there; the manual settings do not apply to Unity Catalog managed tables, which tune file size automatically, and the docs treat the autoOptimize.autoCompact table property as a legacy setting to unset when moving such tables to background auto compaction.
+  link: https://docs.databricks.com/aws/en/tables/tune-file-size#:~:text=always%20enabled%20for
+  date: '2026-09-11'
+links:
+  - url: https://docs.databricks.com/aws/en/release-notes/product/2019/july#:~:text=Auto%20Optimize%20GA
+    kind: official
+    label: 'Databricks release notes: Delta Lake on Databricks Auto Optimize GA in Databricks Runtime 5.5 (July 2019)'
+  - url: https://docs.databricks.com/aws/en/delta/table-properties#:~:text=automatically%20optimize%20the%20layout%20of%20the%20files%20for%20this%20table%20during%20writes
+    kind: official
+    label: 'Delta table properties reference: delta.autoOptimize.autoCompact and delta.autoOptimize.optimizeWrite'
+prediction:
+  - Predictive Optimize
+  - Auto Optimize Classic
+  - Lakeflow File Shaping
+source: https://docs.databricks.com/aws/en/tables/tune-file-size
+verified: '2026-09-11'

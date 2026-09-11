@@ -1,0 +1,51 @@
+id: compliance-security-profile
+name: Compliance security profile
+aliases:
+  - CSP
+  - security profile
+  - compliance profile
+category: Data governance
+what:
+  note: A workspace-level hardening profile that turns on extra monitoring, a hardened compute image, enforced encryption-capable instance types, automatic cluster updates, and TLS 1.2+ egress - and is the mandatory baseline for processing data under HIPAA, PCI-DSS, FedRAMP, and a dozen other regimes.
+  link: https://docs.databricks.com/aws/en/security/privacy/security-profile#:~:text=enables%20additional%20monitoring%2C%20enforced%20instance%20types%20for%20inter%2Dnode%20encryption%2C%20a%20hardened%20compute%20image
+fact:
+  - note: 'It is a one-way door: once a workspace has processed regulated data the profile cannot be disabled at all, and the documented way to stop using it is to delete the workspace and create a new one.'
+    link: https://docs.databricks.com/aws/en/security/privacy/enhanced-security-compliance#:~:text=you%20must%20delete%20the%20workspace%20and%20create%20a%20new%20one%20without%20the%20compliance%20security%20profile
+  - note: Workspaces running it get a shield logo next to the workspace name in the top-right of the UI, and if the shield is missing the docs tell you to contact your account team.
+    link: https://docs.databricks.com/aws/en/security/privacy/enhanced-security-compliance#:~:text=The%20workspace%20also%20has%20a%20shield%20logo%20displayed%20in%20the%20workspace%20UI
+  - note: Turning it on is also a way of turning most previews off - only the Public Preview, Private Preview, and Beta features on an explicit allow-list work in a profile-enabled workspace, and nothing else pre-GA does.
+    link: https://docs.databricks.com/aws/en/security/privacy/security-profile#:~:text=The%20compliance%20security%20profile%20does%20not%20support%20any%20other%20Public%20Preview%2C%20Private%20Preview%2C%20or%20Beta%20features
+status:
+  value: active
+  link: https://docs.databricks.com/aws/en/security/privacy/security-profile#:~:text=The%20compliance%20security%20profile%20enables%20additional%20monitoring
+  date: '2026-09-11'
+releases:
+  - type: public-preview
+    date: 2022-06
+    link: https://docs.databricks.com/aws/en/release-notes/product/2022/june#:~:text=Enable%20enhanced%20security%20controls%20with%20a%20security%20profile%20%28Public%20Preview%29
+  - type: ga
+    date: 2022-08
+    link: https://docs.databricks.com/aws/en/release-notes/product/2022/august#:~:text=Add%20security%20controls%20with%20the%20compliance%20security%20profile%20%28GA%29
+introducedAt:
+  date: 2022-06
+  link: https://docs.databricks.com/aws/en/release-notes/product/2022/june#:~:text=Enable%20enhanced%20security%20controls%20with%20a%20security%20profile%20%28Public%20Preview%29
+limitations:
+  note: Requires the Enterprise pricing tier and the Enhanced Security and Compliance add-on, SSO on the workspace, a workspace storage bucket with no period in its name, outbound port 2443 for FIPS endpoints, and only approved AWS Nitro instance types (Graviton fleet types excluded); enabling it is intended to be permanent, partner-powered AI features are off by default, and only allow-listed preview features are supported.
+  link: https://docs.databricks.com/aws/en/security/privacy/enhanced-security-compliance#:~:text=Single%20sign%2Don%20%28SSO%29%20authentication%20is%20configured%20for%20the%20workspace
+  date: '2026-09-11'
+links:
+  - url: https://docs.databricks.com/aws/en/release-notes/product/2022/august
+    kind: official
+    label: 'Databricks release notes: compliance security profile GA (August 2022)'
+  - url: https://docs.databricks.com/aws/en/security/privacy/enhanced-security-compliance
+    kind: official
+    label: 'Configure enhanced security and compliance settings (how to enable the profile)'
+  - url: https://learn.microsoft.com/en-us/azure/databricks/security/privacy/security-profile
+    kind: official
+    label: 'Azure Databricks: Compliance security profile'
+prediction:
+  - Regulated Workspace Mode
+  - Unity Compliance Profile
+  - Lakehouse Lockdown
+source: https://docs.databricks.com/aws/en/security/privacy/security-profile
+verified: '2026-09-11'

@@ -82,11 +82,11 @@
       // The one rail item that leaves the app: guides are static pages under /learn/, not
       // entries, so this navigates instead of filtering. `href` items render as anchors.
       { label: "Learn", icon: "learn", href: "/learn/" },
-      { label: "Workspace", icon: "workspace", ids: ["git-folders", "git-folder-serverless", "databricks-repos", "legacy-databricks-cli", "databricks-cli", "serverless-workspaces", "custom-url", "databricks-free-edition", "databricks-community-edition", "personal-access-tokens", "oauth-token-federation", "legacy-databricks-connect", "databricks-connect", "mission-critical", "agentic-code-converter", "lakebridge-agentic-converter", "spaces"] },
+      { label: "Workspace", icon: "workspace", ids: ["git-folders", "git-folder-serverless", "databricks-repos", "legacy-databricks-cli", "databricks-cli", "serverless-workspaces", "custom-url", "databricks-free-edition", "databricks-community-edition", "personal-access-tokens", "oauth-token-federation", "legacy-databricks-connect", "databricks-connect", "mission-critical", "agentic-code-converter", "lakebridge-agentic-converter", "spaces", "enhanced-security-monitoring", "compliance-security-profile", "enhanced-security-and-compliance"] },
       { label: "Recents", icon: "recents" },
-      { label: "Catalog", icon: "catalog", ids: ["catalog-explorer", "data-explorer", "unity-catalog", "unity-catalog-volumes", "secrets-in-unity-catalog", "dbfs-mounts", "lakehouse-federation", "opensharing", "delta-sharing", "secureconnect", "delta-lake", "databricks-delta", "transactions", "variant", "liquid-clustering", "change-data-feed", "legacy-change-data-feed", "automatic-change-data-feed", "hive-metastore", "attribute-based-access-control", "role-based-access-control", "governance-hub", "data-profiling", "lakehouse-monitoring", "anomaly-detection", "unity-catalog-managed-iceberg-tables", "managed-iceberg-materialized-views", "databricks-clean-rooms", "governed-tags", "tag-policies", "tag-automations", "system-tables", "credential-passthrough", "hive-metastore-table-access-control", "external-lineage", "bring-your-own-lineage", "data-classification", "identity-attributes", "unity-catalog-skills"] },
-      { label: "Jobs & Pipelines", icon: "jobs", ids: ["lakeflow-pipelines", "lakeflow-spark-declarative-pipelines", "lakeflow-declarative-pipelines", "delta-live-tables", "lakeflow-jobs", "workflows", "lakeflow-connect", "declarative-automation-bundles", "databricks-asset-bundles", "dbx", "lakeflow-pipelines-editor", "multi-file-editor", "standalone-pipelines"] },
-      { label: "Compute", icon: "compute", ids: ["lakebase", "lakebase-autoscaling", "lakebase-provisioned", "lake-transactional-analytical-processing", "ai-runtime", "lakehouse-replay", "standard-and-dedicated-access-modes", "shared-single-user-access-modes", "no-isolation-shared-access-mode", "high-concurrency-clusters", "serverless-pools", "init-scripts-on-dbfs", "photon", "disk-cache", "delta-cache", "databricks-light", "private-network-gateway"] },
+      { label: "Catalog", icon: "catalog", ids: ["catalog-explorer", "data-explorer", "unity-catalog", "unity-catalog-volumes", "secrets-in-unity-catalog", "dbfs-mounts", "lakehouse-federation", "opensharing", "delta-sharing", "secureconnect", "delta-lake", "databricks-delta", "transactions", "variant", "liquid-clustering", "change-data-feed", "legacy-change-data-feed", "automatic-change-data-feed", "hive-metastore", "attribute-based-access-control", "role-based-access-control", "governance-hub", "data-profiling", "lakehouse-monitoring", "anomaly-detection", "unity-catalog-managed-iceberg-tables", "managed-iceberg-materialized-views", "databricks-clean-rooms", "governed-tags", "tag-policies", "tag-automations", "system-tables", "credential-passthrough", "hive-metastore-table-access-control", "external-lineage", "bring-your-own-lineage", "data-classification", "identity-attributes", "unity-catalog-skills", "auto-optimize", "billable-usage-log-delivery"] },
+      { label: "Jobs & Pipelines", icon: "jobs", ids: ["lakeflow-pipelines", "lakeflow-spark-declarative-pipelines", "lakeflow-declarative-pipelines", "delta-live-tables", "lakeflow-jobs", "workflows", "lakeflow-connect", "declarative-automation-bundles", "databricks-asset-bundles", "dbx", "lakeflow-pipelines-editor", "multi-file-editor", "standalone-pipelines", "jobs-api-2-2"] },
+      { label: "Compute", icon: "compute", ids: ["lakebase", "lakebase-autoscaling", "lakebase-provisioned", "lake-transactional-analytical-processing", "ai-runtime", "lakehouse-replay", "standard-and-dedicated-access-modes", "shared-single-user-access-modes", "no-isolation-shared-access-mode", "high-concurrency-clusters", "serverless-pools", "init-scripts-on-dbfs", "photon", "disk-cache", "delta-cache", "databricks-light", "private-network-gateway", "koalas", "pandas-api-on-spark", "ganglia-metrics", "compute-metrics", "databricks-runtime-for-genomics"] },
       { label: "Discover", icon: "discover", ids: ["discover", "pages", "metric-views", "databricks-marketplace"] },
       { label: "Marketplace", icon: "marketplace" },
       { label: "Apps", icon: "apps", ids: ["databricks-apps"] },
@@ -102,7 +102,7 @@
     ]},
     { label: "Data Engineering", items: [
       { label: "Runs", icon: "runs" },
-      { label: "Data Ingestion", icon: "ingestion", ids: ["zerobus-ingest", "auto-loader"] },
+      { label: "Data Ingestion", icon: "ingestion", ids: ["zerobus-ingest", "auto-loader", "partner-connect"] },
       { label: "Visual Data Prep", icon: "dataprep", ids: ["lakeflow-designer"] },
     ]},
     { label: "AI/ML", items: [
@@ -110,9 +110,9 @@
       { label: "Agents", icon: "agents", ids: ["databricks-ai-search", "databricks-vector-search", "mosaic-ai-vector-search", "agent-bricks", "information-extraction", "knowledge-assistant", "classification", "custom-llm", "supervisor-agent", "agent-bricks-multi-agent-supervisor", "databricks-managed-mcp-servers", "genie-one-mcp-server", "genie-agent-mcp-server", "ai-search-mcp-server", "databricks-sql-mcp-server", "unity-catalog-functions-mcp-server", "omnigent"] },
       { label: "Unity Gateway", icon: "gateway", ids: ["unity-gateway", "unity-ai-gateway", "ai-gateway", "model-services"] },
       { label: "Experiments", icon: "experiments" },
-      { label: "Features", icon: "features", ids: ["workspace-feature-store", "feature-engineering-in-unity-catalog", "declarative-feature-engineering", "databricks-online-feature-stores"] },
-      { label: "Models", icon: "models", ids: ["workspace-model-registry", "models-in-unity-catalog", "automl"] },
-      { label: "Serving", icon: "serving", ids: ["model-serving", "serverless-real-time-inference", "foundation-model-apis"] },
+      { label: "Features", icon: "features", ids: ["workspace-feature-store", "feature-engineering-in-unity-catalog", "declarative-feature-engineering", "databricks-online-feature-stores", "databricks-online-tables"] },
+      { label: "Models", icon: "models", ids: ["workspace-model-registry", "models-in-unity-catalog", "automl", "hyperopt", "horovodrunner", "mleap-ml-model-export"] },
+      { label: "Serving", icon: "serving", ids: ["model-serving", "serverless-real-time-inference", "foundation-model-apis", "legacy-mlflow-model-serving", "feature-function-serving", "feature-serving"] },
     ]},
   ];
 

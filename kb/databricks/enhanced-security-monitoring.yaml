@@ -1,0 +1,47 @@
+id: enhanced-security-monitoring
+name: Enhanced security monitoring
+aliases:
+  - ESM
+  - Enhanced Security Monitoring
+category: Data governance
+what:
+  note: A workspace setting that swaps classic compute onto a CIS-hardened Ubuntu Advantage disk image and adds antivirus, file integrity, and vulnerability monitoring agents whose findings land in the audit logs.
+  link: https://docs.databricks.com/aws/en/security/privacy/enhanced-security-monitoring#:~:text=provides%20an%20enhanced%20hardened%20disk%20image%20and%20additional%20security%20monitoring%20agents
+fact:
+  - note: The antivirus agent scans the whole host OS filesystem and the Databricks Runtime container filesystem for viruses once a day, and you cannot switch the pre-installed agents off - they are baked into the disk image.
+    link: https://docs.databricks.com/aws/en/security/privacy/enhanced-security-monitoring#:~:text=Scans%20the%20filesystem%20for%20viruses%20daily
+  - note: 'The audit log schema quietly names the tools doing the work: file integrity events arrive from a service called capsule8-alerts-dataplane and antivirus events from clamAVScanService-dataplane.'
+    link: https://docs.databricks.com/aws/en/admin/account-settings/audit-logs#:~:text=capsule8%2Dalerts%2Ddataplane
+  - note: Vulnerability scan reports are emailed to every workspace admin each time Databricks ships a new AMI - on Azure that only became automatic in July 2024, before which admins had to ask for them.
+    link: https://learn.microsoft.com/en-us/azure/databricks/release-notes/product/2024/july#:~:text=Previously%2C%20workspace%20admins%20had%20to%20request%20them
+status:
+  value: active
+  link: https://docs.databricks.com/aws/en/security/privacy/enhanced-security-monitoring#:~:text=Databricks%20enhanced%20security%20monitoring%20provides%20an%20enhanced%20hardened%20disk%20image
+  date: '2026-09-11'
+releases:
+  - type: public-preview
+    date: 2022-06
+    link: https://docs.databricks.com/aws/en/release-notes/product/2022/june#:~:text=Enhanced%20security%20monitoring%20on%20the%20E2%20version%20of%20the%20Databricks%20platform%20provides
+  - type: ga
+    date: 2022-08
+    link: https://docs.databricks.com/aws/en/release-notes/product/2022/august#:~:text=Add%20image%20hardening%20and%20monitoring%20agents%20with%20enhanced%20security%20monitoring%20%28GA%29
+introducedAt:
+  date: 2022-06
+  link: https://docs.databricks.com/aws/en/release-notes/product/2022/june#:~:text=Enhanced%20security%20monitoring%20on%20the%20E2%20version%20of%20the%20Databricks%20platform%20provides
+limitations:
+  note: Applies only to classic compute (clusters and non-serverless SQL warehouses) - serverless resources get no extra monitoring; the workspace must be on the Enterprise pricing tier; the pre-installed agents cannot be disabled; and turning it on bills the Enhanced Security and Compliance add-on.
+  link: https://docs.databricks.com/aws/en/security/privacy/enhanced-security-monitoring#:~:text=do%20not%20have%20extra%20monitoring%20when%20enhanced%20security%20monitoring%20is%20enabled
+  date: '2026-09-11'
+links:
+  - url: https://docs.databricks.com/aws/en/release-notes/product/2022/august
+    kind: official
+    label: 'Databricks release notes: enhanced security monitoring GA (August 2022)'
+  - url: https://learn.microsoft.com/en-us/azure/databricks/security/privacy/enhanced-security-monitoring
+    kind: official
+    label: 'Azure Databricks: Enhanced security monitoring'
+prediction:
+  - Lakehouse Sentinel
+  - Unity Monitoring
+  - Hardened Compute Mode
+source: https://docs.databricks.com/aws/en/security/privacy/enhanced-security-monitoring
+verified: '2026-09-11'

@@ -1,0 +1,41 @@
+id: ganglia-metrics
+name: Ganglia metrics
+aliases:
+  - Ganglia
+  - Ganglia UI
+category: Compute / BI
+what:
+  note: The Ganglia distributed-monitoring system bundled on classic clusters, surfaced as a Ganglia UI link and a list of historical snapshots on the cluster's Metrics tab for watching hardware performance and health.
+  link: https://learn.microsoft.com/en-us/azure/databricks/release-notes/product/2019/july#:~:text=Ganglia%20is%20a%20scalable%20distributed%20monitoring%20system
+fact:
+  - note: It arrived on Azure Databricks in the July 2019 platform release (version 2.101), advertised as a way to monitor cluster performance and health straight from the cluster details page.
+    link: https://learn.microsoft.com/en-us/azure/databricks/release-notes/product/2019/july#:~:text=now%20available%20on%20Azure%20Databricks%20clusters
+  - note: Its historical view was a list of snapshots taken every 15 minutes, so a job that finished in 14 could leave behind exactly zero metrics files.
+    link: https://kb.databricks.com/clusters/ganglia-metrics-not-appearing-in-historical-metrics-snapshots-list#:~:text=Ganglia%20snapshots%20are%20taken%20every%2015%20minutes
+  - note: It only ever measured Spark container consumption, so whatever else a node was busy doing simply never appeared on its graphs.
+    link: https://kb.databricks.com/clusters/ganglia-metrics-not-appearing-in-historical-metrics-snapshots-list#:~:text=the%20Ganglia%20UI%20only%20measures%20Spark%20container%20consumption
+status:
+  value: deprecated
+  link: https://docs.databricks.com/aws/en/release-notes/runtime/13.0#:~:text=Ganglia%20metrics%20are%20replaced%20with%20Databricks%20cluster%20metrics
+  date: '2026-09-11'
+deprecatedAt:
+  date: 2023-04
+  link: https://docs.databricks.com/aws/en/release-notes/product/2023/april#:~:text=This%20feature%20replaces%20Ganglia%20as%20the%20cluster%20metrics%20monitoring%20tool
+successorId: compute-metrics
+replacement: Compute metrics
+limitations:
+  note: Only available on Databricks Runtime 12.2 LTS and below on AWS and Azure and never on Google Cloud; snapshots are taken every 15 minutes by default, adjustable through the DATABRICKS_GANGLIA_SNAPSHOT_PERIOD_MINUTES cluster environment variable.
+  link: https://kb.databricks.com/clusters/ganglia-metrics-not-appearing-in-historical-metrics-snapshots-list#:~:text=are%20only%20available%20for%20Databricks%20Runtime%2012.2%20LTS%20and%20below
+  date: '2026-09-11'
+links:
+  - url: https://docs.databricks.com/aws/en/release-notes/product/2023/april
+    kind: official
+    label: 'Databricks release notes: new cluster metrics UI replaces Ganglia (April 2023)'
+  - url: https://learn.microsoft.com/en-us/azure/databricks/release-notes/product/2019/july
+    kind: official
+    label: 'Azure Databricks release notes: Ganglia metrics arrive (July 2019)'
+  - url: https://kb.databricks.com/clusters/ganglia-metrics-not-appearing-in-historical-metrics-snapshots-list
+    kind: official
+    label: 'Databricks Knowledge Base: Ganglia metrics not appearing in historical snapshots'
+source: https://docs.databricks.com/aws/en/release-notes/runtime/13.0
+verified: '2026-09-11'

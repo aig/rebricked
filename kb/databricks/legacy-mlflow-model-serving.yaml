@@ -1,0 +1,52 @@
+id: legacy-mlflow-model-serving
+name: Legacy MLflow Model Serving
+aliases:
+  - MLflow Model Serving
+  - Legacy model serving
+  - Model Serving (legacy)
+category: AI / ML
+what:
+  note: The original 2020 Databricks model serving, which hosted MLflow models from the Workspace Model Registry as REST endpoints on a single-node cluster in your own account, redeploying automatically as model versions and stages changed.
+  link: https://docs.databricks.com/aws/en/archive/legacy-model-serving/model-serving#:~:text=Legacy%20MLflow%20Model%20Serving%20allows%20you%20to%20host%20machine%20learning%20models%20from%20Model%20Registry%20as%20REST%20endpoints
+fact:
+  - note: It was serverless in exactly no sense - every served model got its own single-node cluster in your account, billed as an all-purpose cluster, and it kept running as long as serving was enabled even with no active model version to serve.
+    link: https://docs.databricks.com/aws/en/archive/legacy-model-serving/model-serving#:~:text=subject%20to%20all-purpose%20workload%20pricing
+  - note: It never left Public Preview, and its docs set a target of 200 queries per second and 99.5% availability 'although no guarantee is made as to either'.
+    link: https://docs.databricks.com/aws/en/archive/legacy-model-serving/model-serving#:~:text=although%20no%20guarantee%20is%20made%20as%20to%20either
+  - note: Endpoints were addressed by Model Registry stage as well as by version, so a URL ending in /Production/invocations repointed itself automatically whenever someone promoted a new version.
+    link: https://docs.databricks.com/aws/en/archive/legacy-model-serving/model-serving#:~:text=You%20can%20also%20call%20a%20model%20version%20by%20its%20stage
+status:
+  value: retired
+  link: https://docs.databricks.com/aws/en/machine-learning/model-serving/migrate-model-serving#:~:text=On%20September%2015%2C%202025%2C%20the%20legacy%20experience%20reached%20end%20of%20life
+  date: '2026-09-11'
+releases:
+  - type: public-preview
+    date: 2020-09
+    link: https://docs.databricks.com/aws/en/release-notes/product/2020/september#:~:text=MLflow%20Model%20Serving%20is%20now%20available%20in%20Public%20Preview
+from:
+  date: 2020-09
+  link: https://docs.databricks.com/aws/en/release-notes/product/2020/september#:~:text=MLflow%20Model%20Serving%20is%20now%20available%20in%20Public%20Preview
+deprecatedAt:
+  date: 2025-08
+  link: https://docs.databricks.com/aws/en/machine-learning/model-serving/migrate-model-serving#:~:text=As%20of%20August%2022%2C%202025%2C%20customers%20can%20no%20longer%20create%20new%20serving%20endpoints
+removedAt:
+  date: 2025-09
+  link: https://docs.databricks.com/aws/en/machine-learning/model-serving/migrate-model-serving#:~:text=On%20September%2015%2C%202025%2C%20the%20legacy%20experience%20reached%20end%20of%20life
+successorId: model-serving
+replacement: Model Serving
+limitations:
+  note: Python MLflow models only, with every dependency declared in the model's conda environment; a 16 MB payload limit per request; targets of 200 qps and 99.5% availability with no guarantee on either; global init scripts did not run on the serving cluster.
+  link: https://docs.databricks.com/aws/en/archive/legacy-model-serving/model-serving#:~:text=payload%20size%20limit%20of%2016%20MB%20per%20request
+  date: '2026-09-11'
+links:
+  - url: https://docs.databricks.com/aws/en/machine-learning/model-serving/migrate-model-serving
+    kind: official
+    label: 'Databricks docs: Migrate to Model Serving (end-of-life dates)'
+  - url: https://docs.databricks.com/aws/en/release-notes/product/2020/september
+    kind: official
+    label: 'Databricks release notes: MLflow Model Serving Public Preview (September 2020)'
+  - url: https://www.databricks.com/blog/2020/06/25/announcing-mlflow-model-serving-on-databricks.html
+    kind: community
+    label: 'Databricks Blog: Announcing MLflow Model Serving on Databricks (June 2020)'
+source: https://docs.databricks.com/aws/en/archive/legacy-model-serving/model-serving
+verified: '2026-09-11'

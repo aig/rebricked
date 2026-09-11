@@ -1,0 +1,40 @@
+id: compute-metrics
+name: Compute metrics
+aliases:
+  - Cluster metrics
+  - Cluster metrics UI
+  - Metrics tab
+category: Compute / BI
+what:
+  note: The native metrics tool in the Databricks UI - the Metrics tab on all-purpose and jobs compute - showing near-real-time hardware and Spark metrics for the whole cluster or per node, collected every minute and kept for 30 days.
+  link: https://docs.databricks.com/aws/en/compute/cluster-metrics#:~:text=native%20compute%20metrics%20tool%20in%20the%20Databricks%20UI
+fact:
+  - note: It arrived on April 14, 2023 alongside Databricks Runtime 13.0, promising a live view of cluster performance plus custom minute-by-minute history instead of periodic snapshots.
+    link: https://docs.databricks.com/aws/en/release-notes/product/2023/april#:~:text=live%20view%20of%20cluster%20performance%20and%20custom%20minute-by-minute%20historical%20views
+  - note: The metrics live in Databricks-managed storage rather than yours, so there is nothing to mount, nothing to export by hand, and nothing to delete by accident.
+    link: https://docs.databricks.com/aws/en/compute/cluster-metrics#:~:text=Metrics%20are%20stored%20in
+  - note: Serverless compute does not get it at all - notebooks and jobs on serverless are sent to query insights instead.
+    link: https://docs.databricks.com/aws/en/compute/cluster-metrics#:~:text=Serverless%20compute%20for%20notebooks%20and%20jobs%20uses%20query%20insights%20instead
+status:
+  value: active
+  link: https://docs.databricks.com/aws/en/compute/cluster-metrics#:~:text=The%20metrics%20UI%20is%20available%20for%20all-purpose%20and%20jobs%20compute
+  date: '2026-09-11'
+introducedAt:
+  date: 2023-04
+  link: https://docs.databricks.com/aws/en/release-notes/product/2023/april#:~:text=Clusters%20that%20use%20Databricks%20Runtime%2013.0%20and%20above%20have%20access%20to%20the%20new%20cluster%20metrics%20UI
+limitations:
+  note: History covers only the last 30 days at one-minute granularity; GPU metrics need Databricks Runtime ML 13.3 and above and are shown only at the individual-node level; the By node view cannot be downloaded; serverless compute for notebooks and jobs uses query insights instead of the metrics UI.
+  link: https://docs.databricks.com/aws/en/compute/cluster-metrics#:~:text=GPU%20metrics%20are%20only%20available%20on%20Databricks%20Runtime%20ML%2013.3%20and%20above
+  date: '2026-09-11'
+prediction:
+  - Lakeflow Observability
+  - Compute Insights
+links:
+  - url: https://docs.databricks.com/aws/en/release-notes/product/2023/april
+    kind: official
+    label: 'Databricks release notes: new cluster metrics UI (April 2023)'
+  - url: https://docs.databricks.com/aws/en/release-notes/runtime/13.0
+    kind: official
+    label: 'Databricks Runtime 13.0 release notes: Ganglia replaced with cluster metrics'
+source: https://docs.databricks.com/aws/en/compute/cluster-metrics
+verified: '2026-09-11'

@@ -11,6 +11,48 @@ recorded, and a made-up reason is worse than none.
 
 ## 2026-09-11
 
+### Added
+- **Nineteen cards from the coverage gap report, this time chasing the renames and deprecations
+  the report had buried under feature rows: Koalas, Ganglia, Hyperopt, HorovodRunner, MLeap, the
+  first MLflow Model Serving, Online Tables, Feature & Function Serving, the Genomics runtime,
+  billable usage log delivery, Partner Connect, and the compliance add-on.**
+
+  **Why:** the gap report listed 300 or so uncovered names, but almost all of them are plain
+  features, and this site exists to answer "what happened to X", not to catalogue Databricks. So
+  the pass went after the rows that hide a real lifecycle change. Most of them turned out to be
+  deprecations where a different tool took over rather than renames: Koalas was folded into Apache
+  Spark 3.2 as `pyspark.pandas` and declared deprecated in the Databricks Runtime 10.5 notes;
+  Ganglia was replaced by the native compute metrics UI in Databricks Runtime 13.0; Hyperopt and
+  HorovodRunner both quietly left the ML runtime (17.0 ML and 16.0 ML); MLeap export was dropped in
+  14.0 ML; the original cluster-backed MLflow Model Serving reached end of life on September 15,
+  2025; Online Tables went from Public Preview straight to inaccessible on January 15, 2026 without
+  ever reaching GA; Databricks Runtime for Genomics was removed in September 2022 and its per-version
+  docs have since been deleted. Only one was a true rename: Feature & Function Serving became
+  Feature Serving at GA in March 2024, the docs URL still ending in `feature-function-serving`.
+  Two candidates that looked like renames were not, and the data now says so honestly: the live docs
+  still define "Auto optimize" as the umbrella for its two settings, and Enhanced Security
+  Monitoring, the compliance security profile, and the Enhanced Security and Compliance add-on are
+  three distinct things related by composition, none of them ever renamed.
+
+  **What:** 19 new entries, all verified against live docs today, every URL and text-fragment quote
+  confirmed by `check_anchors.py`. Deprecations, each pointing at its successor card where one
+  exists: `koalas` -> `pandas-api-on-spark`, `ganglia-metrics` -> `compute-metrics`,
+  `databricks-online-tables` (`retired`) -> `databricks-online-feature-stores`,
+  `legacy-mlflow-model-serving` (`retired`) -> `model-serving`, `billable-usage-log-delivery`
+  (`legacy`, the archived page now titled "(legacy)" and pointing at system tables) ->
+  `system-tables`; and with a `replacement` only: `hyperopt` (Optuna), `horovodrunner`
+  (TorchDistributor), `mleap-ml-model-export` (`retired`, ONNX), `databricks-runtime-for-genomics`
+  (`retired`, open source Glow). One rename chain: `feature-function-serving` ->
+  `feature-serving`. Active features: `partner-connect` (GA November 2021), `jobs-api-2-2`
+  (December 2024), `auto-optimize` (2019), `enhanced-security-monitoring`,
+  `compliance-security-profile` (both June 2022), and `enhanced-security-and-compliance` (2023).
+  Investigated and deliberately not added, because no live official doc supports a status: the
+  Partner Integrations gallery of the 2020 "data ingestion network" (documented until November 2020,
+  then simply vanishes, never deprecated or renamed), Jobs API 2.0 and 2.1 (the docs say you "can
+  still access" both and never call either legacy), and audit log delivery (its live page recommends
+  the `system.access.audit` table but carries no legacy status). Every new id is wired into the rail,
+  and `COVERAGE-GAPS.md` is refreshed to the 171-entry dataset with these closures logged.
+
 ### Fixed
 - **Clicking Learn no longer flips the site to light mode, and the Learn row now lines up with the
   rest of the rail.**

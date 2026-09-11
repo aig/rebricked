@@ -1,0 +1,37 @@
+id: feature-function-serving
+name: Feature & Function Serving
+aliases:
+  - Feature and Function Serving
+  - Feature & Function Serving endpoints
+category: AI / ML
+what:
+  note: The launch name for the serverless endpoints that made feature data and function results in the Databricks platform available over a REST API to models and applications deployed outside of Databricks.
+  link: https://docs.databricks.com/aws/en/release-notes/product/2023/december#:~:text=With%20Databricks%20Feature%20%26%20Function%20Serving%2C%20data%20in%20the%20Databricks%20platform
+fact:
+  - note: 'The ampersand was doing real work: a FeatureSpec is a user-defined set of features and functions, so one endpoint served precomputed feature values and the results of Unity Catalog Python functions computed on demand.'
+    link: https://docs.databricks.com/aws/en/machine-learning/feature-store/feature-function-serving#:~:text=A%20FeatureSpec%20is%20a%20user%2Ddefined%20set%20of%20features%20and%20functions
+  - note: Its own December 2023 launch note could not quite commit to the name - the heading says Feature & Function Serving, while the docs page it sends readers to is titled Feature Serving endpoints.
+    link: https://docs.databricks.com/aws/en/release-notes/product/2023/december#:~:text=Feature%20%26%20Function%20Serving%20is%20Public%20Preview
+  - note: The name lives on in the client library changelog, where databricks-feature-store 0.16.2 is the release that let you create Feature & Function Serving endpoints.
+    link: https://docs.databricks.com/aws/en/release-notes/feature-store/databricks-feature-store#:~:text=You%20can%20now%20create%20Feature%20%26%20Function%20Serving%20endpoints
+status:
+  value: renamed
+  link: https://docs.databricks.com/aws/en/release-notes/product/2024/march#:~:text=Feature%20Serving%20is%20GA
+  date: '2026-09-11'
+releases:
+  - type: public-preview
+    date: 2023-12
+    link: https://docs.databricks.com/aws/en/release-notes/product/2023/december#:~:text=Feature%20%26%20Function%20Serving%20is%20Public%20Preview
+from:
+  date: 2023-12
+  link: https://docs.databricks.com/aws/en/release-notes/product/2023/december#:~:text=Feature%20%26%20Function%20Serving%20is%20Public%20Preview
+to:
+  date: 2024-03
+  link: https://docs.databricks.com/aws/en/release-notes/product/2024/march#:~:text=Feature%20Serving%20is%20GA
+successorId: feature-serving
+prediction:
+  - Function Serving
+  - Feature, Function & Agent Serving
+  - Genie Feature Serving
+source: https://docs.databricks.com/aws/en/release-notes/product/2023/december
+verified: '2026-09-11'

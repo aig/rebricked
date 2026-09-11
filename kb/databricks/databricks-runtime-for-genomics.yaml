@@ -1,0 +1,51 @@
+id: databricks-runtime-for-genomics
+name: Databricks Runtime for Genomics
+aliases:
+  - Genomics runtime
+  - Databricks Genomics runtime
+  - Databricks Runtime Genomics
+  - DBR for Genomics
+category: Data engineering
+what:
+  note: A variant of Databricks Runtime optimized for working with genomic and biomedical data, built on top of each matching standard runtime release and bundling genomics libraries and pipelines such as Glow, Hail and the DNASeq pipeline so bioinformatics workloads ran on Spark without assembling the stack yourself.
+  link: https://docs.databricks.com/aws/en/release-notes/product/2019/october#:~:text=optimized%20for%20working%20with%20genomic%20and%20biomedical%20data
+fact:
+  - note: 'It arrived already grown up: the first release-notes mention, in October 2019, declares release 6.0 generally available, and 6.1 for Genomics followed six days later.'
+    link: https://docs.databricks.com/aws/en/release-notes/product/2019/october#:~:text=Beginning%20with%20release%206.0%2C%20Databricks%20Runtime%20for%20Genomics%20is%20generally%20available
+  - note: Its deprecation came with nineteen months of notice - announced February 1, 2021, with support removal scheduled for September 24, 2022 to land on the exact day 7.3 LTS for Genomics support ended.
+    link: https://docs.databricks.com/aws/en/release-notes/product/2021/february#:~:text=will%20remove%20support%20for%20Databricks%20Runtime%20for%20Genomics%20on%20September%2024%2C%202022
+  - note: The workspace admin toggle for it outlived the runtime by eleven months - admins could still flip the Genomics setting until August 2023, almost a year after there was nothing left to enable.
+    link: https://docs.databricks.com/aws/en/release-notes/product/2023/august#:~:text=Workspace%20admins%20can%20no%20longer%20enable%20or%20disable%20Databricks%20Runtime%20for%20Genomics
+status:
+  value: retired
+  link: https://docs.databricks.com/aws/en/release-notes/product/2023/august#:~:text=support%20for%20Databricks%20Runtime%20for%20Genomics%20was%20removed%20on%20September%2024%2C%202022
+  date: '2026-09-11'
+releases:
+  - type: ga
+    date: 2019-10
+    link: https://docs.databricks.com/aws/en/release-notes/product/2019/october#:~:text=Beginning%20with%20release%206.0%2C%20Databricks%20Runtime%20for%20Genomics%20is%20generally%20available
+deprecatedAt:
+  date: 2021-02
+  link: https://docs.databricks.com/aws/en/release-notes/product/2021/february#:~:text=Databricks%20is%20no%20longer%20building%20new%20Databricks%20Runtime%20for%20Genomics%20releases
+removedAt:
+  date: 2022-09
+  link: https://docs.databricks.com/aws/en/release-notes/product/2023/august#:~:text=support%20for%20Databricks%20Runtime%20for%20Genomics%20was%20removed%20on%20September%2024%2C%202022
+replacement: Open source Glow and genomics-pipelines
+links:
+  - url: https://docs.databricks.com/aws/en/release-notes/product/2021/february
+    kind: official
+    label: 'Databricks release notes: Databricks Runtime for Genomics now deprecated (February 1, 2021)'
+  - url: https://docs.databricks.com/aws/en/release-notes/product/2023/august
+    kind: official
+    label: 'Databricks release notes: Genomics runtime setting removed from the admin settings page, open source equivalents Glow and genomics-pipelines (August 25, 2023)'
+  - url: https://docs.databricks.com/aws/en/release-notes/product/2020/february
+    kind: official
+    label: 'Databricks release notes: Databricks Runtime 6.4 for Genomics GA, Glow Python and Scala APIs and DNASeq pipeline stages (February 26, 2020)'
+  - url: https://github.com/projectglow/glow
+    kind: internet
+    label: 'GitHub: projectglow/glow, the open source genomics toolkit for Spark'
+  - url: https://github.com/databricks/genomics-pipelines
+    kind: internet
+    label: 'GitHub: databricks/genomics-pipelines, open source equivalents of the runtime pipelines'
+source: https://docs.databricks.com/aws/en/release-notes/product/2023/august
+verified: '2026-09-11'

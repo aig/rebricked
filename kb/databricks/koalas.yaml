@@ -1,0 +1,40 @@
+id: koalas
+name: Koalas
+aliases:
+  - databricks.koalas
+  - Koalas DataFrame
+category: Data engineering
+what:
+  note: Databricks' open-source Python library that put a pandas-compatible DataFrame API on top of Apache Spark, so pandas code could run distributed with little more than an import swap.
+  link: https://docs.databricks.com/aws/en/archive/legacy/koalas#:~:text=Koalas%20provides%20a%20drop-in%20replacement%20for%20pandas
+fact:
+  - note: It was announced on stage at Spark + AI Summit in April 2019 as a new open-source project that made PySpark's DataFrame API speak pandas - and yes, the name is an animal pun on pandas.
+    link: https://www.databricks.com/blog/2019/04/24/koalas-easy-transition-from-pandas-to-apache-spark.html#:~:text=we%20announced%20Koalas
+  - note: It shipped preinstalled on Databricks Runtime 7.3 through 9.1, and from Databricks Runtime 10.0 onward every import is greeted by an informational message suggesting you use something else.
+    link: https://docs.databricks.com/aws/en/archive/legacy/koalas#:~:text=an%20informational%20message%20displays
+  - note: Its formal deprecation is a bullet in the Databricks Runtime 10.5 release notes from May 2022, which also gave notice that it would stop being preinstalled from the very next runtime version.
+    link: https://learn.microsoft.com/en-us/azure/databricks/release-notes/runtime/10.5#:~:text=Koalas%20will%20no%20longer%20be%20preinstalled
+status:
+  value: deprecated
+  link: https://docs.databricks.com/aws/en/archive/legacy/koalas#:~:text=Koalas%20is%20deprecated
+  date: '2026-09-11'
+deprecatedAt:
+  date: 2022-05
+  link: https://learn.microsoft.com/en-us/azure/databricks/release-notes/runtime/10.5#:~:text=Koalas%20is%20now%20deprecated
+successorId: pandas-api-on-spark
+replacement: Pandas API on Spark
+links:
+  - url: https://www.databricks.com/blog/2019/04/24/koalas-easy-transition-from-pandas-to-apache-spark.html
+    kind: official
+    label: 'Databricks blog: Koalas announced at Spark + AI Summit (April 2019)'
+  - url: https://learn.microsoft.com/en-us/azure/databricks/release-notes/runtime/10.5
+    kind: official
+    label: 'Databricks Runtime 10.5 release notes: Deprecation of Koalas (May 2022)'
+  - url: https://github.com/databricks/koalas
+    kind: internet
+    label: 'GitHub: databricks/koalas'
+  - url: https://spark.apache.org/docs/latest/api/python/migration_guide/koalas_to_pyspark.html
+    kind: internet
+    label: 'Apache Spark docs: Migrating from Koalas to pandas API on Spark'
+source: https://docs.databricks.com/aws/en/archive/legacy/koalas
+verified: '2026-09-11'

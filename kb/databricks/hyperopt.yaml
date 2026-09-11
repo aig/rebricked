@@ -1,0 +1,47 @@
+id: hyperopt
+name: Hyperopt
+aliases:
+  - SparkTrials
+  - Distributed Hyperopt
+  - hyperopt fmin
+category: AI / ML
+what:
+  note: Python library for distributed hyperparameter tuning and model selection that Databricks bundled as its own fork in Databricks Runtime ML, with the SparkTrials class fanning trials out across a cluster and logging each one to MLflow.
+  link: https://docs.databricks.com/aws/en/machine-learning/automl-hyperparam-tuning/#:~:text=Hyperopt%20is%20a%20Python%20library%20used%20for%20distributed%20hyperparameter%20tuning%20and%20model%20selection
+fact:
+  - note: 'The distributed part was a Databricks invention: SparkTrials is an API Databricks developed so an existing Hyperopt run could spread across a cluster without changing the rest of the code.'
+    link: https://docs.databricks.com/aws/en/machine-learning/automl-hyperparam-tuning/hyperopt-concepts#:~:text=SparkTrials%20is%20an%20API%20developed%20by%20Databricks
+  - note: Databricks never shipped stock Hyperopt - Databricks Runtime ML carried the Databricks fork of hyperopt, which is why pip-installing the open-source libraries locally does not reproduce the same package.
+    link: https://docs.databricks.com/aws/en/release-notes/runtime/16.4lts-ml#:~:text=the%20Databricks%20fork%20of%20hyperopt
+  - note: 'Its exit was partly upstream''s doing: the first thing the docs now say about it is that the open-source version of Hyperopt is no longer being maintained.'
+    link: https://docs.databricks.com/aws/en/machine-learning/automl-hyperparam-tuning/hyperopt-concepts#:~:text=The%20open-source%20version%20of%20Hyperopt%20is%20no%20longer%20being%20maintained
+status:
+  value: deprecated
+  link: https://docs.databricks.com/aws/en/machine-learning/automl-hyperparam-tuning/hyperopt-concepts#:~:text=deprecated%20Hyperopt%20distributed%20hyperparameter%20tuning%20functionality
+  date: '2026-09-11'
+deprecatedAt:
+  date: '2025'
+  link: https://docs.databricks.com/aws/en/machine-learning/automl-hyperparam-tuning/hyperopt-concepts#:~:text=Hyperopt%20is%20not%20included%20in%20Databricks%20Runtime%20for%20Machine%20Learning%20after%2016.4%20LTS%20ML
+removedAt:
+  date: 2025-06
+  link: https://docs.databricks.com/aws/en/release-notes/product/2025/june#:~:text=Databricks%20Runtime%2017.0%20and%20Databricks%20Runtime%2017.0%20ML%20are%20now%20generally%20available
+replacement: Optuna
+limitations:
+  note: SparkTrials only parallelizes single-machine models such as scikit-learn - with distributed algorithms like MLlib you fall back to the default Trials class on the driver - and on GPU clusters maximum parallelism is reduced because each node runs only one executor thread.
+  link: https://docs.databricks.com/aws/en/machine-learning/automl-hyperparam-tuning/hyperopt-best-practices#:~:text=maximum%20parallelism%20is%20reduced%20on%20GPU%20clusters
+  date: '2026-09-11'
+links:
+  - url: https://docs.databricks.com/aws/en/machine-learning/automl-hyperparam-tuning/optuna
+    kind: official
+    label: 'Databricks docs: hyperparameter tuning with Optuna (the recommended replacement)'
+  - url: https://docs.databricks.com/aws/en/machine-learning/automl-hyperparam-tuning/
+    kind: official
+    label: 'Databricks docs: hyperparameter tuning overview (Optuna, Ray Tune, Hyperopt)'
+  - url: https://docs.databricks.com/aws/en/release-notes/runtime/16.4lts-ml
+    kind: official
+    label: 'Databricks Runtime 16.4 LTS ML release notes: the last ML runtime shipping hyperopt (0.2.8+db1)'
+  - url: https://learn.microsoft.com/en-us/azure/databricks/machine-learning/automl-hyperparam-tuning/hyperopt-concepts
+    kind: official
+    label: 'Microsoft Learn: Hyperopt concepts (same deprecation notice for Azure Databricks)'
+source: https://docs.databricks.com/aws/en/machine-learning/automl-hyperparam-tuning/hyperopt-concepts
+verified: '2026-09-11'

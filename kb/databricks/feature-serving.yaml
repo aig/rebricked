@@ -1,0 +1,41 @@
+id: feature-serving
+name: Feature Serving
+aliases:
+  - Feature Serving endpoints
+  - feature serving endpoint
+  - FeatureSpec
+category: AI / ML
+what:
+  note: Serverless REST endpoints that make feature data in the Databricks platform available to models and applications deployed outside of Databricks, serving both pre-materialized features and on-demand features computed by Unity Catalog functions.
+  link: https://docs.databricks.com/aws/en/machine-learning/feature-store/feature-function-serving#:~:text=Databricks%20Feature%20Serving%20makes%20data%20in%20the%20Databricks%20platform%20available
+fact:
+  - note: The docs URL never got the memo - the page is titled Feature Serving endpoints but still lives at a path ending in feature-function-serving.
+    link: https://docs.databricks.com/aws/en/machine-learning/feature-store/feature-function-serving
+  - note: 'It can serve features that do not exist yet: a FeatureSpec mixes pre-materialized and on-demand features, and the on-demand ones are computed at request time by Unity Catalog Python functions.'
+    link: https://docs.databricks.com/aws/en/machine-learning/feature-store/feature-function-serving#:~:text=pre%2Dmaterialized%20and%20on%2Ddemand%20features
+  - note: A FeatureSpec is a Unity Catalog object in its own right - stored in and managed by Unity Catalog, and it shows up in Catalog Explorer next to your tables.
+    link: https://docs.databricks.com/aws/en/machine-learning/feature-store/feature-function-serving#:~:text=stored%20in%20and%20managed%20by%20Unity%20Catalog%20and%20appear%20in%20Catalog%20Explorer
+status:
+  value: active
+  link: https://docs.databricks.com/aws/en/machine-learning/feature-store/feature-function-serving#:~:text=Databricks%20Feature%20Serving%20makes%20data%20in%20the%20Databricks%20platform%20available
+  date: '2026-09-11'
+releases:
+  - type: public-preview
+    date: 2023-12
+    link: https://docs.databricks.com/aws/en/release-notes/product/2023/december#:~:text=Feature%20%26%20Function%20Serving%20is%20Public%20Preview
+  - type: ga
+    date: 2024-03
+    link: https://docs.databricks.com/aws/en/release-notes/product/2024/march#:~:text=Feature%20Serving%20is%20GA
+from:
+  date: 2024-03
+  link: https://docs.databricks.com/aws/en/release-notes/product/2024/march#:~:text=Feature%20Serving%20is%20GA
+links:
+  - url: https://www.databricks.com/blog/announcing-general-availability-databricks-feature-serving
+    kind: official
+    label: 'Databricks blog: Announcing the General Availability of Databricks Feature Serving (March 11, 2024)'
+prediction:
+  - Lakebase Feature Serving
+  - Genie Feature Serving
+  - Feature Serving One
+source: https://docs.databricks.com/aws/en/machine-learning/feature-store/feature-function-serving
+verified: '2026-09-11'

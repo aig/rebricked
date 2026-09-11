@@ -1,0 +1,44 @@
+id: jobs-api-2-2
+name: Jobs API 2.2
+aliases:
+  - Jobs API
+  - Lakeflow Jobs API
+  - /api/2.2/jobs
+category: Developer experience
+what:
+  note: The current version of the REST API for creating, running, and managing Lakeflow Jobs, released in December 2024 with job queueing on by default and token-based paging for jobs whose task lists run past 100 elements.
+  link: https://docs.databricks.com/aws/en/reference/jobs-api-2-2-updates#:~:text=This%20article%20details%20updates%20and%20enhancements%20to%20the%20functionality%20in%20version%202.2%20of%20the%20Jobs%20API
+fact:
+  - note: The version number changes the job, not just the wire format - a job created through 2.2 gets queueing switched on by default, while the very same job created through 2.0 or 2.1 has it off.
+    link: https://docs.databricks.com/aws/en/reference/jobs-api-2-2-updates#:~:text=For%20jobs%20created%20with%20the%20Jobs%20API%202.2%2C%20queueing%20is%20enabled%20by%20default
+  - note: It did not kill its ancestors - the release note that shipped 2.2 says in the same breath that you can still access versions 2.1 and 2.0.
+    link: https://docs.databricks.com/aws/en/release-notes/product/2024/december#:~:text=you%20can%20still%20access%20versions%202.1%20and%202.0
+  - note: Ask it for a job with more than 100 tasks and it hands you 100 plus a next_page_token - lists of tasks, parameters, job_clusters, and environments all page the same way.
+    link: https://docs.databricks.com/aws/en/reference/jobs-api-2-2-updates#:~:text=are%20limited%20to%20100%20elements%20per%20response
+status:
+  value: active
+  link: https://docs.databricks.com/aws/en/release-notes/product/2024/december#:~:text=The%20Jobs%20API%20version%20is%20updated%20from%202.1%20to%202.2
+  date: '2026-09-11'
+introducedAt:
+  date: 2024-12
+  link: https://docs.databricks.com/aws/en/release-notes/product/2024/december#:~:text=The%20Jobs%20API%20version%20is%20updated%20from%202.1%20to%202.2
+limitations:
+  note: Array fields such as tasks and job_clusters are capped at 100 elements per response page, and the List jobs request cannot return more than the first 100 tasks or clusters of a job - page through Get a single job or Get a single run for the rest.
+  link: https://docs.databricks.com/aws/en/reference/jobs-api-2-2-updates#:~:text=You%20cannot%20retrieve%20additional%20tasks%20or%20clusters%20after%20the%20first%20100
+  date: '2026-09-11'
+links:
+  - url: https://docs.databricks.com/api/workspace/jobs
+    kind: official
+    label: 'Databricks REST API reference: Jobs (2.2)'
+  - url: https://docs.databricks.com/aws/en/reference/jobs-api-2-1-updates
+    kind: official
+    label: 'Databricks docs: Updating from Jobs API 2.0 to 2.1'
+  - url: https://docs.databricks.com/aws/en/reference/jobs-2.0-api
+    kind: official
+    label: 'Databricks docs: Jobs API 2.0 reference'
+prediction:
+  - Jobs API 2.3
+  - Lakeflow Orchestration API
+  - Jobs API 3.0
+source: https://docs.databricks.com/aws/en/release-notes/product/2024/december
+verified: '2026-09-11'
