@@ -96,7 +96,7 @@ guarded: if the analytics script is blocked or absent, the app behaves identical
 
 ## Authors
 
-- **Ilya Aniskovets** ([LinkedIn](https://www.linkedin.com/in/aniskovets/)) - initial idea and
+- **Ilya Aniskovets** ([LinkedIn](https://www.linkedin.com/in/aniskovets/)) - original idea and
   author.
 - **Maksim Pachkouski** ([LinkedIn](https://www.linkedin.com/in/protmaks/)) - co-author.
 
