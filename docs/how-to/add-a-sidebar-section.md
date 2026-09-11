@@ -58,20 +58,24 @@ const ICONS = {
 
 Keep it to simple strokes that read at 16 pixels in both light and dark themes.
 
-## Keep the badge pages in sync
+## The generated pages follow automatically
 
-[`scripts/build_badges.py`](../../scripts/build_badges.py) carries its **own static copy** of
-`NAV` and `ICONS`, because the badge and entry pages render the same rail without loading
-`app.js`. A new section will not appear on those pages until you mirror it there and regenerate:
+The badge, entry, hub and guide pages render the same rail without loading `app.js`.
+[`scripts/build_badges.py`](../../scripts/build_badges.py) used to carry its own static copy of
+`NAV` and `ICONS` for them, and that copy drifted every time `app.js` changed alone. It now
+**parses `NAV` and `ICONS` out of `www/app.js`** at build time (`load_rail()`), so a new section,
+a renamed one, or one that gains its first entry shows up on the generated pages the next time they
+are built - nothing to mirror by hand:
 
 ```bash
 python scripts/build_badges.py     # needs Edge or Chrome for the og.png images
 python scripts/build_entries.py
 ```
 
-This duplication is deliberate (the generated pages have no JS runtime dependency on the app) and
-it is a known drift risk. If the rails ever look different between `/` and `/databricks/<id>/`,
-this is why.
+The parser relies on the one-item-per-line formatting `NAV` and `ICONS` already use (`{ label:
+"...", icon: "...", ids: [...] }` per line; `key: '<svg inner markup>',` per icon). Keep that shape.
+If a `NAV` item names an icon that `ICONS` lacks, or the blocks cannot be found, the build fails
+loudly instead of shipping a partial rail.
 
 ## After any NAV change
 

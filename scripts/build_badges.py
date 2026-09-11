@@ -22,6 +22,7 @@ Rewrites www/badges/ from scratch. Regenerating og.png needs a Chromium-based br
 """
 import html
 import os
+import re
 import shutil
 import subprocess
 import tempfile
@@ -156,58 +157,56 @@ def badge_card_html(n, level, title_e, blurb_e):
     )
 
 
-# --- static mirror of the app rail (app.js NAV/ICONS) ---
-ICONS = {
-    "home": '<path d="M3 11.5 12 4l9 7.5"/><path d="M5 10v10h14V10"/>',
-    "learn": '<path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H20v15H6.5A2.5 2.5 0 0 0 4 20.5z"/><path d="M4 20.5A2.5 2.5 0 0 1 6.5 18H20"/>',
-    "workspace": '<rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 9h18M9 9v11"/>',
-    "recents": '<circle cx="12" cy="12" r="8"/><path d="M12 8v4l3 2"/>',
-    "catalog": '<ellipse cx="12" cy="6" rx="7" ry="3"/><path d="M5 6v6c0 1.7 3.1 3 7 3s7-1.3 7-3V6"/><path d="M5 12v6c0 1.7 3.1 3 7 3s7-1.3 7-3v-6"/>',
-    "jobs": '<circle cx="6" cy="6" r="2.3"/><circle cx="18" cy="6" r="2.3"/><circle cx="12" cy="18" r="2.3"/><path d="M6 8.3v1.7a3 3 0 0 0 3 3h.5M18 8.3v1.7a3 3 0 0 1-3 3h-.5M12 13v2.7"/>',
-    "compute": '<rect x="6" y="6" width="12" height="12" rx="2"/><path d="M9 2v3M15 2v3M9 19v3M15 19v3M2 9h3M2 15h3M19 9h3M19 15h3"/>',
-    "discover": '<circle cx="12" cy="12" r="8.5"/><path d="m15.5 8.5-2.2 4.8-4.8 2.2 2.2-4.8z"/>',
-    "marketplace": '<path d="M4 9h16l-1-4H5z"/><path d="M4.5 9v10h15V9"/><path d="M9 19v-5h6v5"/>',
-    "sqlEditor": '<path d="m8 8-4 4 4 4M16 8l4 4-4 4M13.5 6l-3 12"/>',
-    "queries": '<path d="M8 6h12M8 12h12M8 18h12M4 6h.01M4 12h.01M4 18h.01"/>',
-    "dashboards": '<rect x="3" y="3" width="7" height="9" rx="1.4"/><rect x="14" y="3" width="7" height="5" rx="1.4"/><rect x="14" y="12" width="7" height="9" rx="1.4"/><rect x="3" y="16" width="7" height="5" rx="1.4"/>',
-    "genie": '<path d="M12 3l1.9 5.1L19 10l-5.1 1.9L12 17l-1.9-5.1L5 10l5.1-1.9z"/><path d="M18.5 14.5l.7 1.8 1.8.7-1.8.7-.7 1.8-.7-1.8-1.8-.7 1.8-.7z"/>',
-    "alerts": '<path d="M18 9a6 6 0 0 0-12 0c0 6-2.5 7-2.5 7h17S18 15 18 9"/><path d="M10.3 20a2 2 0 0 0 3.4 0"/>',
-    "history": '<path d="M3.5 12a8.5 8.5 0 1 0 2.8-6.3L3 8"/><path d="M3 4v4h4"/><path d="M12 8v4l3 2"/>',
-    "warehouse": '<rect x="3" y="4.5" width="18" height="6.5" rx="1.4"/><rect x="3" y="13" width="18" height="6.5" rx="1.4"/><path d="M6.5 7.7h.01M6.5 16.2h.01"/>',
-    "runs": '<path d="M6 4l13 8-13 8z"/>',
-    "ingestion": '<path d="M12 3v10m0 0 4-4m-4 4-4-4"/><path d="M4 16v3a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-3"/>',
-    "dataprep": '<path d="m12 3 9 5-9 5-9-5z"/><path d="m3 13 9 5 9-5"/>',
-    "playground": '<path d="M9 3l1.6 4.4L15 9l-4.4 1.6L9 15l-1.6-4.4L3 9l4.4-1.6z"/><path d="M17.5 13l.8 2 2 .8-2 .8-.8 2-.8-2-2-.8 2-.8z"/>',
-    "agents": '<rect x="5" y="8" width="14" height="10" rx="2.5"/><path d="M12 8V4.5M9 13h.01M15 13h.01"/><circle cx="12" cy="3.2" r="1.1"/>',
-    "gateway": '<path d="M12 3 5 6v5c0 4.4 3 8 7 9 4-1 7-4.6 7-9V6z"/>',
-    "experiments": '<path d="M9.5 3h5M10.5 3v5.5l-5.2 8.7A2 2 0 0 0 7 20h10a2 2 0 0 0 1.7-2.8L13.5 8.5V3"/><path d="M8 15h8"/>',
-    "features": '<circle cx="7" cy="7" r="2.1"/><circle cx="17" cy="7" r="2.1"/><circle cx="7" cy="17" r="2.1"/><circle cx="17" cy="17" r="2.1"/>',
-    "models": '<path d="M12 3 21 8v8l-9 5-9-5V8z"/><path d="m3 8 9 5 9-5M12 13v8"/>',
-    "serving": '<circle cx="12" cy="12" r="2.2"/><path d="M7.5 7.5a6.5 6.5 0 0 0 0 9M16.5 7.5a6.5 6.5 0 0 1 0 9M4.8 4.8a10 10 0 0 0 0 14.4M19.2 4.8a10 10 0 0 1 0 14.4"/>',
-}
+# --- the app rail, read from app.js so the generated pages can never drift from it ---
+# The badge, entry, hub and guide pages render the rail without loading app.js, so they used to
+# carry a hand-maintained copy of NAV and ICONS. It drifted (a new section, a renamed one, a
+# section that gained entries) every time app.js changed on its own. Parsing the source is
+# cheap and the formatting of NAV/ICONS in app.js is a one-item-per-line convention, so the
+# builder reads them instead. Anything unparseable fails the build rather than shipping an
+# empty or partial rail.
+APP_JS = WWW / "app.js"
 
-# Rail items that leave the app for a static section of their own, keyed by label. Mirrors the
-# `href` items in app.js's NAV, and is why Learn is not just an inert link home.
-NAV_LINKS = {"Learn": "../../learn/"}
 
-# (group label, [(item label, icon, has_changes)]) - has_changes gets the dot + a
-# ?s= link into the app; the rest just link home.
-NAV = [
-    ("", [("Home", "home", None), ("Learn", "learn", False), ("Workspace", "workspace", True),
-          ("Recents", "recents", False), ("Catalog", "catalog", True),
-          ("Jobs & Pipelines", "jobs", True), ("Compute", "compute", True),
-          ("Discover", "discover", False), ("Marketplace", "marketplace", False)]),
-    ("SQL", [("SQL Editor", "sqlEditor", True), ("Queries", "queries", False),
-             ("Dashboards", "dashboards", True), ("Genie Agents", "genie", True),
-             ("Alerts", "alerts", True), ("Query History", "history", False),
-             ("SQL Warehouses", "warehouse", True)]),
-    ("Data Engineering", [("Runs", "runs", False), ("Data Ingestion", "ingestion", False),
-                          ("Visual Data Prep", "dataprep", True)]),
-    ("AI/ML", [("Playground", "playground", False), ("Agents", "agents", True),
-               ("AI Gateway", "gateway", False), ("Experiments", "experiments", False),
-               ("Features", "features", True), ("Models", "models", True),
-               ("Serving", "serving", True)]),
-]
+def _app_js_block(src, start, end):
+    i = src.index(start)
+    return src[i:src.index(end, i)]
+
+
+def load_rail(path=APP_JS):
+    """Return (ICONS, NAV_LINKS, NAV) parsed from app.js.
+
+    ICONS: icon key -> inner SVG markup. NAV_LINKS: item label -> href (relative to a page two
+    levels deep, e.g. "../../learn/") for items that leave the app. NAV: [(group label,
+    [(item label, icon, has_changes)])], where has_changes is None for Home, True for a section
+    with entry ids (dot + ?s= deep link) and False for an inert section or a link item."""
+    src = path.read_text(encoding="utf-8")
+    icons_src = _app_js_block(src, "const ICONS = {", "\n  };")
+    icons = dict(re.findall(r"^\s*(\w+): '([^']*)',?$", icons_src, re.M))
+    nav, links = [], {}
+    nav_src = _app_js_block(src, "const NAV = [", "\n  ];")
+    for g in re.finditer(r'\{ label: "([^"]*)", items: \[(.*?)\n    \]\}', nav_src, re.S):
+        items = []
+        for m in re.finditer(r'^\s*\{ label: "([^"]*)", icon: "(\w+)"(.*?)\},?$', g.group(2), re.M):
+            label, icon, rest = m.groups()
+            if icon not in icons:
+                raise SystemExit(f"build_badges: NAV item {label!r} uses icon {icon!r} missing from app.js ICONS")
+            href = re.search(r'href: "([^"]+)"', rest)
+            if "home: true" in rest:
+                changed = None
+            elif href:
+                links[label] = "../.." + href.group(1)
+                changed = False
+            else:
+                ids = re.search(r"ids: \[(.*?)\]", rest)
+                changed = bool(ids and ids.group(1).strip())
+            items.append((label, icon, changed))
+        nav.append((g.group(1), items))
+    if not icons or not nav or not any(items for _, items in nav):
+        raise SystemExit(f"build_badges: could not parse NAV/ICONS out of {path} - was its formatting changed?")
+    return icons, links, nav
+
+
+ICONS, NAV_LINKS, NAV = load_rail()
 
 
 def render_rail(active=None):

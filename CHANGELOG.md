@@ -31,6 +31,22 @@ recorded, and a made-up reason is worse than none.
   toggle assumes dark when unset. `.nav-item` pins `line-height: 1.25` so button and anchor rows
   match. `docs/reference/frontend.md` and `scripts.md` describe the new constant and the default.
 
+- **The rail on every generated page is now read from `app.js` instead of a hand-kept copy that
+  had drifted.**
+
+  **Why:** the guides, entry pages, hub and badges render the rail without loading `app.js`, so
+  `build_badges.py` carried its own `NAV` and `ICONS`. Nobody re-synced it: the generated rail had
+  no Apps item, no dot on Discover or Data Ingestion, and still said "AI Gateway" after the app had
+  moved to "Unity Gateway". Clicking Learn made a section vanish from the menu. A copy that has to
+  be kept in sync by hand is a copy that will not be.
+
+  **What:** `build_badges.py` gains `load_rail()`, which parses `NAV`, `ICONS` and the `href` items
+  out of `www/app.js` at import time and fails the build if the blocks cannot be found or an item
+  names a missing icon. The static tables are gone. It leans on the one-item-per-line formatting
+  both blocks already use, which the how-to now asks contributors to keep. `docs/how-to/add-a-sidebar-section.md`,
+  `reference/frontend.md`, `reference/scripts.md` and `explanation/the-seo-layer.md` no longer tell
+  anyone to mirror the rail by hand.
+
 ## 2026-09-10
 
 ### Changed

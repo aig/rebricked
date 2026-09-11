@@ -86,8 +86,9 @@ Runs automatically in CI before deploy.
 
 Rewrites `www/badges/` from scratch. Exports `ANALYTICS`, `BASE_URL`, `FAVICON`, `INLINE_JS`, `THEME_BOOT` (the pre-paint theme script, dark by default, saved choice wins - every generated head carries it so leaving the app never flips the theme),
 `TOPBAR`, `render_rail`, `NAV`, and `ICONS`, which `build_entries.py` and (via it) `build_posts.py`
-import - so one edit here changes four page types. Carries its **own static copy** of the rail
-config, which must be kept roughly in sync with `app.js`.
+import - so one edit here changes four page types. `NAV`, `ICONS` and `NAV_LINKS` are not
+hand-maintained: `load_rail()` parses them out of `www/app.js` at import time, and fails the build
+if the blocks cannot be found or an item's icon is missing.
 
 `OG_PAGE`, the template the headless browser loads, deliberately omits `ANALYTICS` so the build is
 not counted as traffic.

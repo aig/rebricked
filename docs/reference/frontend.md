@@ -26,8 +26,9 @@ CSS.
 an entry is in no section, or if `NAV` names an id that is not in the data. See
 [how-to/add-a-sidebar-section.md](../how-to/add-a-sidebar-section.md).
 
-`build_badges.py` keeps a **separate static copy** of `NAV` and `ICONS` for the generated pages,
-which have no JS runtime. Keep them roughly in sync.
+`build_badges.py` renders the same rail for the generated pages, which have no JS runtime, by
+**parsing `NAV` and `ICONS` out of `app.js`** at build time (`load_rail()`), so the two can no
+longer drift. It depends on the one-item-per-line formatting of both blocks - keep that shape.
 
 ## What is derived, never stored
 

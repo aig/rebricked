@@ -79,6 +79,7 @@ prose current.
 Hundreds of generated files per deploy, and two page families rendering the same content through different
 code paths - `app.js` at runtime, `build_entries.py` at build time. That duplication is the real cost, and
 it shows up as visual drift when the shared chrome changes on one side only (which is exactly why
-`build_badges.py` keeps its own static copy of the rail, and why that copy has to be kept in sync).
+`build_badges.py` stopped keeping its own copy of the rail and now parses it out of `app.js` - the
+hand-kept copy had silently lost a section and a rename).
 
 The alternative was being invisible to search, which for this site means having no readers.
