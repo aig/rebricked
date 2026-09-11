@@ -241,6 +241,9 @@ body {
   font-family: inherit;
   font-size: 14px;
   font-weight: 600;
+  /* <button> in the app, <a> on the generated pages - pin the line-height so both are the
+     same height and the rail below them starts on the same pixel row. */
+  line-height: 18px;
   cursor: pointer;
   transition: background .15s, border-color .15s;
 }
@@ -282,9 +285,10 @@ body {
   /* Most rail items are <button>, but an item with an href (Learn -> /learn/) renders as a
      real anchor so middle-click works - it must not pick up the default underline, and it
      must not inherit the body line-height either: a button gets the browser's `normal`, an
-     anchor would get 1.55 and sit 3px taller than its neighbours. Pin one value for both. */
+     anchor would get 1.55 and sit 3px taller than its neighbours. Pin one value for both, in
+     whole pixels (a fraction of 13.5px rounds differently row by row and the rails drift). */
   text-decoration: none;
-  line-height: 1.25;
+  line-height: 18px;
   transition: background .12s, color .12s;
 }
 

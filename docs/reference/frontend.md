@@ -114,8 +114,10 @@ green); an announced-but-unreached stage renders "<Stage> soon" with a dashed bo
 **dark by default** - a saved choice in `localStorage` (`rebricked-theme`) wins. The app sets it
 in a head script before first paint, and every generated page (entry, hub, guide, badge) does the
 same through `THEME_BOOT` from `build_badges.py`, so following the Learn item or an entry link
-never flips the theme. Rail items share one `line-height` whether they render as `<button>` or,
-for Learn, as `<a>`. The sidebar rail is always dark. Status colours are three dedicated tokens, each with a dark
+never flips the theme. The rail is pixel-identical on both: the New button and every rail item pin
+a whole-pixel `line-height` (18px), because they are `<button>`s in the app and `<a>`s on the
+generated pages, and a button's default `normal` line-height differs from an anchor's inherited
+1.55. Keep new rail chrome on the same rule. The sidebar rail is always dark. Status colours are three dedicated tokens, each with a dark
 value: `--c-active` (green), `--c-renamed` (slate), `--c-deprecated` (amber). The brand red
 (`--accent`) is chrome only, never a status.
 

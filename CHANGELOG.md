@@ -47,6 +47,19 @@ recorded, and a made-up reason is worse than none.
   `reference/frontend.md`, `reference/scripts.md` and `explanation/the-seo-layer.md` no longer tell
   anyone to mirror the rail by hand.
 
+- **The rail on the generated pages now sits on exactly the same pixel rows as in the app.**
+
+  **Why:** after the first line-height fix the two rails still drifted by one to three pixels down
+  the page. The New button is a `<button>` in the app and an `<a>` on the generated pages, so it
+  was 2px taller there, pushing everything below it down. And the rail items' `line-height: 1.25`
+  on a 13.5px font gave a fractional row height that rounded differently row by row, so the
+  offset wandered. A rail that is off by a pixel reads as a different site.
+
+  **What:** `.side-new` and `.nav-item` in `styles.css` pin `line-height: 18px` - a whole number,
+  the icon's own height - so a button and an anchor with the same text are the same height and
+  every row lands on an integer. Verified by pixel-diffing headless screenshots of `/` and
+  `/learn/`: the rail region is now identical.
+
 ## 2026-09-10
 
 ### Changed
