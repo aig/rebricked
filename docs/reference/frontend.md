@@ -109,8 +109,12 @@ green); an announced-but-unreached stage renders "<Stage> soon" with a dashed bo
 
 ## Styling
 
-[`www/styles.css`](../../www/styles.css) - CSS variables, light by default, `data-theme="dark"`
-toggle. The sidebar rail is always dark. Status colours are three dedicated tokens, each with a dark
+[`www/styles.css`](../../www/styles.css) - CSS variables under `data-theme="light"` / `data-theme="dark"`,
+**dark by default** - a saved choice in `localStorage` (`rebricked-theme`) wins. The app sets it
+in a head script before first paint, and every generated page (entry, hub, guide, badge) does the
+same through `THEME_BOOT` from `build_badges.py`, so following the Learn item or an entry link
+never flips the theme. Rail items share one `line-height` whether they render as `<button>` or,
+for Learn, as `<a>`. The sidebar rail is always dark. Status colours are three dedicated tokens, each with a dark
 value: `--c-active` (green), `--c-renamed` (slate), `--c-deprecated` (amber). The brand red
 (`--accent`) is chrome only, never a status.
 

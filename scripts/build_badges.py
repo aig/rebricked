@@ -79,6 +79,22 @@ ANALYTICS = (
     'data-domains="rebricked.org"></script>'
 )
 
+# Theme before first paint - the same rule index.html applies to the app: dark by default, a
+# saved choice wins. Every generated page head carries it (this module's PAGE, and HEAD in
+# build_entries.py which build_posts.py reuses), so following the Learn item or an entry link
+# from a dark app never lands on a white page. INLINE_JS repeats the rule at the end of the
+# body as a fallback; this copy is the one that prevents the flash.
+THEME_BOOT = (
+    '  <script>\n'
+    '    (function () {\n'
+    '      try {\n'
+    '        var t = localStorage.getItem("rebricked-theme");\n'
+    '        document.documentElement.dataset.theme = t || "dark";\n'
+    '      } catch (e) { document.documentElement.dataset.theme = "dark"; }\n'
+    '    })();\n'
+    '  </script>'
+)
+
 
 def badge_emblem(tier):
     """A stylized certification crest - a dark hexagon medallion with a ribbon,
@@ -298,10 +314,13 @@ INLINE_JS = """<script>
     : document.querySelector('.badge-card') ? 'badge' : 'other';
   // The page's own identity: the slug of /learn/<slug>/ or /databricks/<id>/, '' at an index.
   var slug = (location.pathname.replace(/\\/+$/, '').split('/').pop() || '');
-  try { var t = localStorage.getItem('rebricked-theme'); if (t) document.documentElement.dataset.theme = t; } catch (e) {}
+  // Dark by default, a saved choice wins - the same rule as the app, so clicking Learn or an
+  // entry never flips the theme. THEME_BOOT already did this before first paint; this is the
+  // fallback for a template that forgot to include it.
+  try { var t = localStorage.getItem('rebricked-theme'); document.documentElement.dataset.theme = t || 'dark'; } catch (e) { document.documentElement.dataset.theme = 'dark'; }
   var tt = document.getElementById('theme-toggle');
   if (tt) tt.addEventListener('click', function () {
-    var r = document.documentElement, c = r.dataset.theme || 'light', n = c === 'dark' ? 'light' : 'dark';
+    var r = document.documentElement, c = r.dataset.theme || 'dark', n = c === 'dark' ? 'light' : 'dark';
     r.dataset.theme = n; try { localStorage.setItem('rebricked-theme', n); } catch (e) {}
     track('theme-toggle', { theme: n, surface: surface });
   });
@@ -430,6 +449,7 @@ PAGE = """<!DOCTYPE html>
   <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png" />
   <link rel="manifest" href="/site.webmanifest" />
 {analytics}
+{theme_boot}
 </head>
 
 <body>
@@ -563,7 +583,7 @@ def main():
                 n=n, total=TOTAL, level=level, pct=round(n / TOTAL * 100),
                 card=card, title=title_e, blurb=blurb_e,
                 favicon=FAVICON, rail=rail, topbar=TOPBAR, js=INLINE_JS,
-                analytics=ANALYTICS,
+                analytics=ANALYTICS, theme_boot=THEME_BOOT,
                 page_url=page_url, image_meta=image_meta,
             ), encoding="utf-8")
 

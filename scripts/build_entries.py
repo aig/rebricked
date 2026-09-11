@@ -36,6 +36,7 @@ from build_badges import (
     BASE_URL,
     FAVICON,
     INLINE_JS,
+    THEME_BOOT,
     TOPBAR,
     render_rail,
 )
@@ -640,7 +641,7 @@ HEAD = """<!DOCTYPE html>
   <link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon-16.png" />
   <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png" />
   <link rel="manifest" href="/site.webmanifest" />
-""" + ANALYTICS + """
+""" + ANALYTICS + "\n" + THEME_BOOT.replace("{", "{{").replace("}", "}}") + """
 {style}
 </head>
 """

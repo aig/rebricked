@@ -280,8 +280,11 @@ body {
   cursor: pointer;
   position: relative;
   /* Most rail items are <button>, but an item with an href (Learn -> /learn/) renders as a
-     real anchor so middle-click works - it must not pick up the default underline. */
+     real anchor so middle-click works - it must not pick up the default underline, and it
+     must not inherit the body line-height either: a button gets the browser's `normal`, an
+     anchor would get 1.55 and sit 3px taller than its neighbours. Pin one value for both. */
   text-decoration: none;
+  line-height: 1.25;
   transition: background .12s, color .12s;
 }
 

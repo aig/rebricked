@@ -29,6 +29,14 @@
   <link rel="manifest" href="/site.webmanifest" />
   <!-- Umami: privacy-first, cookieless analytics (no consent banner required) -->
   <script defer src="https://cloud.umami.is/script.js" data-website-id="9d8f35c0-f2e1-4d45-a24d-a97559fa8361" data-domains="rebricked.org"></script>
+  <script>
+    (function () {
+      try {
+        var t = localStorage.getItem("rebricked-theme");
+        document.documentElement.dataset.theme = t || "dark";
+      } catch (e) { document.documentElement.dataset.theme = "dark"; }
+    })();
+  </script>
 </head>
 
 <body>
@@ -67,10 +75,13 @@
     : document.querySelector('.badge-card') ? 'badge' : 'other';
   // The page's own identity: the slug of /learn/<slug>/ or /databricks/<id>/, '' at an index.
   var slug = (location.pathname.replace(/\/+$/, '').split('/').pop() || '');
-  try { var t = localStorage.getItem('rebricked-theme'); if (t) document.documentElement.dataset.theme = t; } catch (e) {}
+  // Dark by default, a saved choice wins - the same rule as the app, so clicking Learn or an
+  // entry never flips the theme. THEME_BOOT already did this before first paint; this is the
+  // fallback for a template that forgot to include it.
+  try { var t = localStorage.getItem('rebricked-theme'); document.documentElement.dataset.theme = t || 'dark'; } catch (e) { document.documentElement.dataset.theme = 'dark'; }
   var tt = document.getElementById('theme-toggle');
   if (tt) tt.addEventListener('click', function () {
-    var r = document.documentElement, c = r.dataset.theme || 'light', n = c === 'dark' ? 'light' : 'dark';
+    var r = document.documentElement, c = r.dataset.theme || 'dark', n = c === 'dark' ? 'light' : 'dark';
     r.dataset.theme = n; try { localStorage.setItem('rebricked-theme', n); } catch (e) {}
     track('theme-toggle', { theme: n, surface: surface });
   });

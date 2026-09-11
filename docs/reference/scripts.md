@@ -84,7 +84,7 @@ Runs automatically in CI before deploy.
 | Needs | a Chromium-based browser (Edge or Chrome) to render `og.png`. The HTML needs nothing |
 | Flags | none |
 
-Rewrites `www/badges/` from scratch. Exports `ANALYTICS`, `BASE_URL`, `FAVICON`, `INLINE_JS`,
+Rewrites `www/badges/` from scratch. Exports `ANALYTICS`, `BASE_URL`, `FAVICON`, `INLINE_JS`, `THEME_BOOT` (the pre-paint theme script, dark by default, saved choice wins - every generated head carries it so leaving the app never flips the theme),
 `TOPBAR`, `render_rail`, `NAV`, and `ICONS`, which `build_entries.py` and (via it) `build_posts.py`
 import - so one edit here changes four page types. Carries its **own static copy** of the rail
 config, which must be kept roughly in sync with `app.js`.

@@ -9,6 +9,28 @@ shows the what. Plain, simple English: short sentences, common words, no jargon 
 and product names themselves. Some older entries have no `Why:` line - the reason was never
 recorded, and a made-up reason is worse than none.
 
+## 2026-09-11
+
+### Fixed
+- **Clicking Learn no longer flips the site to light mode, and the Learn row now lines up with the
+  rest of the rail.**
+
+  **Why:** the app bootstraps to dark unless a visitor has saved a choice, but every generated page
+  (the guides index, each guide, each entry page, the vendor hub, the badges) only applied a *saved*
+  theme and otherwise stayed light - and did so from a script at the end of the body, after first
+  paint. A first-time visitor saw a dark app, clicked Learn, and landed on a white page. Separately,
+  Learn is the one rail item rendered as an anchor (so middle-click works) while its siblings are
+  buttons; buttons get the browser's `line-height: normal`, the anchor inherited the body's 1.55, so
+  its row sat about 3px taller and the rail on every generated page was spaced wider than in the
+  app. Both made the Learn item look like it belonged to a different site.
+
+  **What:** `build_badges.py` gains `THEME_BOOT`, a head script with the same rule as `index.html`
+  (dark by default, `rebricked-theme` in `localStorage` wins), injected into the badge template and
+  into the shared `HEAD` in `build_entries.py` that the guides reuse, so every generated page picks
+  its theme before first paint; `INLINE_JS` now applies the same default as its fallback, and its
+  toggle assumes dark when unset. `.nav-item` pins `line-height: 1.25` so button and anchor rows
+  match. `docs/reference/frontend.md` and `scripts.md` describe the new constant and the default.
+
 ## 2026-09-10
 
 ### Changed
