@@ -43,7 +43,7 @@ Base: `https://rebricked.org`
 | `/#<entry-id>` | Deep link opening a single entry in the app | `app.js` routing |
 | `/?q=<term>` | Deep link reflecting the search box | `app.js` routing |
 | `/?quiz=<score>` | The "beat this score" challenge banner | `app.js` routing |
-| `/<vendor>/` | Vendor hub: every entry grouped by category. `/databricks/`, `/snowflake/` | `build_entries.py` |
+| `/<vendor>/` | Vendor hub, in that vendor's own console idiom: `/databricks/` groups every entry by category, `/snowflake/` is Snowsight's home screen (search, quick actions, one filterable table) | `build_entries.py` |
 | `/<vendor>/<id>/` | One crawlable page per entry, with unique title, description, canonical, OG, and JSON-LD | `build_entries.py` |
 | `/learn/` | Guides index | `build_posts.py` |
 | `/learn/<slug>/` | One guide | `build_posts.py` |
@@ -56,6 +56,14 @@ Base: `https://rebricked.org`
 `www/<vendor>.features.json`, stamps each entry with the vendor it was built from (or its own
 `vendor` field), and renders one namespace per vendor. Adding a vendor is a new `kb/` folder, a
 `VENDOR_LABEL` entry and a `VALID_CATEGORIES` key - not a change to the rendering code.
+
+**Every page also wears its vendor's console.** `<html>` carries `data-vendor="<vendor>"`, and
+[`styles.css`](../../www/styles.css) scopes a whole palette to it: `/snowflake/` gets Snowsight's
+light rail and Snowflake blue instead of the dark Databricks rail and brand red. The rail itself
+comes from [`chrome.py`](../../scripts/chrome.py)'s `VENDOR_RAILS`. A vendor with no entry there
+renders in the site's own chrome, and the canonical source link is labelled per vendor too
+(`SOURCE_LABEL`) - telling a reader a Snowflake claim was checked against Databricks docs is the
+one thing the sourcing rule forbids.
 
 One thing is **not** namespaced: entry ids. They share a single map across every vendor, so
 `validate.py` rejects an id used twice even across two vendors. See

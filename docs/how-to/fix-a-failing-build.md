@@ -38,10 +38,11 @@ That is the same problem, stated plainly. Run `build_features.py`.
 | `id must be the name slug '<x>' (from name '<y>')` | The `id` is the kebab-case slug of the card's own `name`, parentheticals dropped. If the *name* changed, that is a [rename](add-a-rename.md) - a new card, not an edited id |
 | `successorId '<x>' does not match any entry id` | Dangling chain. Either the successor card is missing, or the id is a typo |
 | `successorId points at itself` | A loop. Usually a copy-paste of the wrong card |
-| `entry appears in no NAV section in app.js` | Add the id to a section's `ids` array in [`www/app.js`](../../www/app.js). See [add-a-sidebar-section.md](add-a-sidebar-section.md). Only checked for the vendor the app renders (`NAV_VENDOR`, currently `databricks`) - other vendors reach readers through their generated hub |
+| `entry appears in no <vendor> rail section` | Add the id to a section: `NAV` in [`www/app.js`](../../www/app.js) for Databricks, `SNOWFLAKE_NAV` in [`scripts/chrome.py`](../../scripts/chrome.py) for Snowflake. See [add-a-sidebar-section.md](add-a-sidebar-section.md). Checked for every vendor that has a rail; one with no rail reaches readers through its generated hub |
 | `vendor '<x>' has no category allow-list in validate.py` | A new `kb/<vendor>/` folder needs a `VALID_CATEGORIES` key. See [add-a-category.md](add-a-category.md) |
 | `successorId '<x>' belongs to vendor '<y>'` | A rename chain cannot cross vendors. Check the id you pointed at |
-| `NAV in app.js references an id that is not in ...` | The reverse: `NAV` lists an id you deleted or misspelled |
+| `the <vendor> rail references an id that is not in ...` | The reverse: a rail section lists an id you deleted or misspelled |
+| `could not load the vendor rails from scripts/chrome.py` | `chrome.py` failed to import - usually the `NAV`/`ICONS` formatting in `app.js` changed and the parser no longer matches. The check fails rather than skipping silently |
 | `category must be one of (...)` | Closed allow-list. See [add-a-category.md](add-a-category.md) |
 | `status.date ... is in the future` / `verified date ... is in the future` | These are "when a human confirmed this", so a future date is meaningless |
 | `only the last release stage may be is_announced` | An announced-but-unreached stage cannot precede a reached one |

@@ -55,9 +55,18 @@ per-vendor:
   Snowflake entries cite `docs.snowflake.com` or the Snowflake blog. Never cross them.
 - **`VALID_CATEGORIES`** in [`validate.py`](scripts/validate.py) is a dict keyed by vendor, because
   the categories mirror each vendor's own console vocabulary.
-- **The rail.** `app.js`'s `NAV` is the Databricks console rail, so the "every entry is reachable
-  from a section" check runs for `NAV_VENDOR` (`databricks`) only. Other vendors are reachable
-  through their generated hub at `/{vendor}/`.
+- **The console chrome.** Each vendor's generated pages wear that vendor's own console - the
+  homage only works if it names the right one. [`scripts/chrome.py`](scripts/chrome.py) owns
+  every rail: Databricks' is parsed out of `app.js`'s `NAV` (so the static pages can never drift
+  from the SPA), Snowflake's is Snowsight's, declared there. `<html data-vendor="...">` then
+  swaps the palette in [`styles.css`](www/styles.css). A vendor with no rail there renders in
+  the site's own chrome.
+- **The rail-coverage check.** "Every entry is reachable from a section" now runs for *every*
+  vendor that has a rail in `chrome.py`, in both directions. A vendor with no rail is skipped and
+  reaches readers through its generated hub at `/{vendor}/`.
+- **The hub layout.** `/databricks/` is a document, because the Databricks console content area
+  is; `/snowflake/` is Snowsight's home screen - search box, quick actions, one filterable table.
+  Every entry link is in the markup either way, so both are equally crawlable.
 - **The URL namespace.** `/{vendor}/{id}/`, from `build_entries.py`.
 
 Two things are **not** per-vendor and will fail the gate if you assume otherwise: **entry ids are
@@ -100,11 +109,12 @@ entries sharing one blame.
 | [`scripts/build_features.py`](scripts/build_features.py) | **The data build.** Assembles `kb/<vendor>/*.yaml` into `www/<vendor>.features.json` (canonical key order, deterministic). Needs PyYAML (`pip install pyyaml`) - the one dev dependency; the site itself stays dependency-free. `--check` fails if the built JSON on disk is stale. Run it before `validate.py` and before previewing. |
 | [`www/index.html`](www/index.html) | The app shell: Databricks-style sidebar rail + content area. |
 | [`www/app.js`](www/app.js) | Vanilla JS (IIFE, no deps). Fetches `databricks.features.json`, renders sidebar + result cards, wires search/chips/roulette/theme. |
-| [`www/styles.css`](www/styles.css) | All styling. CSS variables; light default, `data-theme="dark"` toggle. Sidebar rail is always dark. Status colors are three dedicated tokens - `--c-active` (green), `--c-renamed` (slate), `--c-deprecated` (amber), each with a dark value; the brand red (`--accent`) is chrome only. |
+| [`www/styles.css`](www/styles.css) | All styling. CSS variables; light default, `data-theme="dark"` toggle. The app's sidebar rail is always dark; a generated page scoped by `data-vendor` can redefine the rail and accent tokens wholesale (see the "Snowflake edition" block, which gives Snowsight its light rail and Snowflake blue). Status colors are three dedicated tokens - `--c-active` (green), `--c-renamed` (slate), `--c-deprecated` (amber), each with a dark value; the brand red (`--accent`) is chrome only. |
 | [`scripts/build_posts.py`](scripts/build_posts.py) | **The guides build.** Renders `kb/posts/<slug>/index.md` into `www/learn/` (index) and `www/learn/<slug>/` (one page per guide, figures copied along), and writes `www/posts.json`. Resolves `{{entry:<id>}}` shortcodes against the built data - an unknown id **fails the build**, so prose can never link to a name the dataset lacks. Carries its own small Markdown-subset renderer rather than adding a dependency. Run after `build_features.py`, before `build_entries.py`. |
 | [`scripts/validate.py`](scripts/validate.py) | Schema/format gate. Branches on `status` (the sole discriminator). Reads the *built* `databricks.features.json`, so run `build_features.py` first or you are validating a stale file. |
 | [`scripts/validate_posts.py`](scripts/validate_posts.py) | Schema/format gate for `kb/posts/` - the prose sibling of `validate.py`. Front matter completeness, slug/folder agreement, entry ids that resolve, real source URLs, sane dates, alt text on every image, no em dashes, balanced `:::` fences. **Warns** (never fails) when a guide is past its `staleAfter` date. |
 | [`scripts/check_anchors.py`](scripts/check_anchors.py) | **Citation rot check.** `validate.py` only checks a link's *shape* and never fetches; this fetches every URL and confirms each `#:~:text=` quote is still on its page. Covers the guides too: each post's front-matter sources and body links are swept under the id `post:<slug>`. Text fragments fail silently (the browser just doesn't highlight), so a reworded doc leaves a card looking sourced when it isn't. Reports `DEAD` (page gone, or readable but the quote is absent - fix the quote, or re-check the claim, since a dead quote on a live vendor doc is often the first sign of a rename) separately from `BLOCKED` (host refuses scripted requests - says nothing about the link, and never fails the run). Clear the `BLOCKED` ones with `--chrome`, which retries just those pages through headless Edge/Chrome and then quote-checks them like any other page; these bot walls yield to a real browser. Without a browser installed, `--list-blocked` prints them for your agent's own web-fetch tool. Needs the network, so it's a local/scheduled audit, **not** part of the deploy gate. |
+| [`scripts/chrome.py`](scripts/chrome.py) | **The per-vendor console chrome.** One place that answers "which rail does this page wear": `VENDOR_RAILS` maps a vendor to its nav (Databricks parsed out of `app.js`, Snowflake declared as Snowsight's), `chrome_for(vendor, root)` renders rail + topbar + inline JS at any directory depth, and `rail_ids(vendor)` is what `validate.py` checks coverage against. Add a vendor's rail here, not in a template. |
 | [`scripts/build_badges.py`](scripts/build_badges.py) | Regenerates `www/badges/<n>-of-5/` - one shareable quiz-result page per score, plus its `og.png`. Run after editing badge copy. Rendering `og.png` needs Edge/Chrome installed; the pages themselves are plain static files. |
 | [`scripts/build_entries.py`](scripts/build_entries.py) | **SEO content layer.** Regenerates the crawlable static pages from `databricks.features.json`: a per-vendor hub at `/{vendor}/` and one page per entry at `/{vendor}/{id}/` (unique `<title>`/description/canonical/OG/JSON-LD + internal links), and rewrites `sitemap.xml` and `feed.xml` (an RSS 2.0 feed of every entry, newest tracked change first). No browser needed. Runs automatically in CI before deploy; run locally after editing entries to preview. Vendor comes from an optional `vendor` field (default `databricks`). |
 | [`scripts/fetch_reference.py`](scripts/fetch_reference.py) | Incrementally mirrors external reference docs (Databricks/MS Learn release notes, resource limits) into `reference/` so entries can be fact-checked and new renames spotted as release notes ship. Sources are declared in [`scripts/sources.json`](scripts/sources.json) - add one there to track another site, no code change. |
@@ -115,7 +125,7 @@ entries sharing one blame.
 | [`CONTRIBUTING.md`](CONTRIBUTING.md) | The entry schema and field rules. |
 | [`COVERAGE-GAPS.md`](COVERAGE-GAPS.md) | A point-in-time gap report: entries the curated data covers vs. distinct products named in the mirrored release notes. Curation reference, not a checklist. |
 | [`docs/`](docs/) | **The documentation set, organised with [Diataxis](https://diataxis.fr/):** [`tutorials/`](docs/tutorials/) (learn the repo end to end), [`how-to/`](docs/how-to/) (one task, one recipe), [`reference/`](docs/reference/) (entry + guide schemas, every script and flag, every generated file, the frontend contracts), [`explanation/`](docs/explanation/) (why `status` is the sole discriminator, why one file per entry, why no framework, why citation rot has its own checker). Never deployed. **Any change that alters behaviour updates it in the same commit** - [`docs/README.md`](docs/README.md) has the change-to-page map. |
-| [`agents/`](agents/) | Task-scoped skills. [`add-databricks-entry.md`](agents/add-databricks-entry.md): the skill to follow when adding **or editing** any entry - investigate a Databricks thing's history + status, then add/correct the correctly-shaped, sourced entry and validate. [`add-snowflake-entry.md`](agents/add-snowflake-entry.md): the Snowflake sibling - defers to the Databricks skill for the shared workflow and records only what differs (where the file goes, which docs to cite, the Snowflake category list, no rail step). [`write-guide.md`](agents/write-guide.md): the same for guides - verify every fact against live docs, write `kb/posts/<slug>/`, cite inline with text fragments, label judgement, validate. Tool-agnostic; siblings of this file. |
+| [`agents/`](agents/) | Task-scoped skills. [`add-databricks-entry.md`](agents/add-databricks-entry.md): the skill to follow when adding **or editing** any entry - investigate a Databricks thing's history + status, then add/correct the correctly-shaped, sourced entry and validate. [`add-snowflake-entry.md`](agents/add-snowflake-entry.md): the Snowflake sibling - defers to the Databricks skill for the shared workflow and records only what differs (where the file goes, which docs to cite, the Snowflake category list, and a rail step that edits `chrome.py` rather than `app.js`). [`write-guide.md`](agents/write-guide.md): the same for guides - verify every fact against live docs, write `kb/posts/<slug>/`, cite inline with text fragments, label judgement, validate. Tool-agnostic; siblings of this file. |
 | [`.github/workflows/`](.github/workflows/) | GitHub Pages CI: build the JSON from `kb/`, validate, then deploy. |
 
 ## Data shape (`kb/<vendor>/<id>.yaml`)
@@ -334,14 +344,15 @@ fragments, label judgement, run the full build/validate chain), the guide siblin
    gitignored build output. A diff should show only the entry YAML or post Markdown you actually
    touched (plus any figures under `kb/posts/<slug>/images/`, which *are* tracked - they are
    source, and the builder copies them).
-4. If you changed the sidebar, keep [`app.js`](www/app.js)'s `NAV` config in sync: each rail
-   item maps to the entries it covers via an `ids` array (entry `id`s from `kb/databricks/`,
-   renames or deprecations), and those items get the dot. Clicking a section filters to its
-   entries; sections with no `ids` show an honest empty state. Every `id` you list must exist
-   in the data, and every entry should be reachable from at least one section (Home shows all).
-   The rail is the Databricks console rail, so this coverage check applies to the Databricks
-   entries only (`NAV_VENDOR` in [`validate.py`](scripts/validate.py)); other vendors are reachable
-   through their generated hub at `/{vendor}/` until the app learns to render more than one.
+4. If you changed the sidebar, keep the rail config in sync - [`app.js`](www/app.js)'s `NAV` for
+   Databricks, `SNOWFLAKE_NAV` in [`scripts/chrome.py`](scripts/chrome.py) for Snowflake. Each rail
+   item maps to the entries it covers via an `ids` array (entry `id`s from that vendor's `kb/`
+   folder), and those items get the dot. Clicking a section filters to its entries (into the app
+   for Databricks, into the hub's own table for Snowflake); sections with no `ids` show an honest
+   empty state. Every `id` you list must exist in the data, and every entry must be reachable from
+   at least one of its vendor's sections - [`validate.py`](scripts/validate.py) checks both
+   directions for every vendor that has a rail, and skips a vendor that has none (it reaches
+   readers through its generated hub at `/{vendor}/`).
 5. **If the change alters behaviour, update [`docs/`](docs/) in the same commit.** A field rule,
    a script flag, a generated path, a `NAV` shape, a tracked event, the build order, a workflow
    step, or a design decision - each maps to a page, and

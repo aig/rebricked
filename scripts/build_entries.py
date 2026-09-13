@@ -36,11 +36,12 @@ from build_badges import (
     ANALYTICS,
     BASE_URL,
     FAVICON,
-    INLINE_JS,
     THEME_BOOT,
-    TOPBAR,
-    render_rail,
 )
+
+# Each vendor's own console rail. Databricks' is parsed out of app.js; anything else declares
+# its own - see scripts/chrome.py.
+from chrome import VENDOR_RAILS, chrome_for
 
 ROOT = Path(__file__).resolve().parent.parent
 WWW = ROOT / "www"  # the deployed site root - everything GitHub Pages publishes lives here
@@ -168,14 +169,12 @@ def kind_of(d):
     return "feature" if d.get("introducedAt") else "rename"
 
 
-def chrome(root):
-    """The shared rail/topbar/js, with `../../` (their root-relative prefix) rewritten to
-    `root` so the same chrome works at any directory depth."""
-    return (
-        render_rail().replace("../../", root),
-        TOPBAR.replace("../../", root),
-        INLINE_JS.replace("../../", root),
-    )
+def chrome(root, vendor=DEFAULT_VENDOR):
+    """The vendor's rail/topbar/js, with `../../` (their root-relative prefix) rewritten to
+    `root` so the same chrome works at any directory depth. A Snowflake page wears Snowsight's
+    rail, a Databricks page the app's own - the homage only works if it names the right
+    console."""
+    return chrome_for(vendor, root)
 
 
 def successors_of(d, by_id):
@@ -391,14 +390,24 @@ def facts_html(d):
     return f"<dl class='entry-facts'>{body}</dl>"
 
 
+# Where a vendor's official docs actually live, for the canonical source's label. Getting this
+# wrong is not cosmetic: it tells the reader a Snowflake claim was checked against Databricks
+# docs, which is the one thing the sourcing rule forbids.
+SOURCE_LABEL = {
+    "databricks": "Official Databricks / Microsoft docs",
+    "snowflake": "Official Snowflake docs",
+}
+
+
 def sources_html(d):
     links = []
     if d.get("source"):
+        v = vendor_of(d)
         links.append(
             {
                 "url": d["source"],
                 "kind": "official",
-                "label": "Official Databricks / Microsoft docs",
+                "label": SOURCE_LABEL.get(v, f"Official {vendor_name(v)} docs"),
             }
         )
     links += [l for l in (d.get("links") or []) if l.get("url")]
@@ -620,7 +629,7 @@ ENTRY_STYLE = """  <style>
   </style>"""
 
 HEAD = """<!DOCTYPE html>
-<html lang="en">
+<html lang="en"{htmlattr}>
 
 <head>
   <meta charset="UTF-8" />
@@ -628,7 +637,7 @@ HEAD = """<!DOCTYPE html>
   <title>{title}</title>
   <meta name="description" content="{desc}" />
   <link rel="canonical" href="{url}" />
-  <link rel="alternate" type="application/rss+xml" title="REbricked - Databricks renames, deprecations &amp; new features" href="/feed.xml" />
+  <link rel="alternate" type="application/rss+xml" title="REbricked - Databricks &amp; Snowflake renames, deprecations &amp; new features" href="/feed.xml" />
   <meta name="robots" content="index, follow, max-image-preview:large" />
   <meta property="og:type" content="{og_type}" />
   <meta property="og:site_name" content="REbricked" />
@@ -753,8 +762,9 @@ def render_entry(d, by_id, data, posts=()):
         cta_href, cta_label = f"{root}?id={attr(d['id'])}", "Open in REbricked"
     else:
         cta_href, cta_label = hub_rel, f"Browse all {esc(vendor_name(v))} entries"
-    rail, topbar, js = chrome(root)
+    rail, topbar, js = chrome(root, v)
     head = HEAD.format(
+        htmlattr=f' data-vendor="{attr(v)}"',
         title=attr(title),
         desc=attr(desc),
         url=url,
@@ -795,6 +805,253 @@ def render_entry(d, by_id, data, posts=()):
         guides=guides_html(d, posts),
     )
     return head + body
+
+
+# --- the Snowsight-shaped hub ----------------------------------------------------------
+# Databricks' hub is a document, because the Databricks console content area is a document.
+# Snowsight's home is not: it is a search box, a row of quick actions, and a table of things
+# you touched recently. The hub for a vendor should look like that vendor's front door, so
+# /snowflake/ renders this instead. Every entry link is in the markup either way - the tabs
+# and the filter only hide rows - so the page is exactly as crawlable as the list it replaces.
+SF_HUB_BODY = """
+<body>
+  <div class="app">
+    {rail}
+    <div class="main">
+      {topbar}
+      <div class="content">
+        <div class="hub-doc sf-home">
+          <nav class="entry-crumbs" aria-label="Breadcrumb">
+            <a href="{root}">REbricked</a> <span aria-hidden="true">/</span> {vendor}
+          </nav>
+          <h1>{vendor} feature history: renamed, deprecated, and new</h1>
+          <p class="hub-lead">Every {vendor} product and feature, tracked from launch through rename, preview, GA, and retirement - sourced, dated, and linked. {count} entries.</p>
+          <div class="sf-searchwrap" id="search">
+            <svg viewBox="0 0 24 24" width="18" height="18" class="ic" aria-hidden="true"><circle cx="11" cy="11" r="7" /><path d="m21 21-4.3-4.3" /></svg>
+            <input type="search" id="hub-filter" class="sf-searchbox" placeholder="Search a {vendor} name, current or retired" aria-label="Filter {vendor} entries" autocomplete="off" spellcheck="false" />
+          </div>
+          <h2 class="sf-h2">Quick actions</h2>
+          <div class="sf-actions">{actions}</div>
+          <h2 class="sf-h2">Every tracked name</h2>
+          <div class="sf-tabs" role="tablist" aria-label="Filter by lifecycle">{tabs}</div>
+          <div class="sf-tablewrap">
+            <table class="sf-table">
+              <thead>
+                <tr><th scope="col">Name</th><th scope="col">Category</th><th scope="col">Status</th><th scope="col" class="sf-th-date">Last tracked change</th></tr>
+              </thead>
+              <tbody>{rows}</tbody>
+            </table>
+          </div>
+          <p class="sf-empty" id="sf-empty" hidden>No {vendor} name matches that filter yet.</p>
+        </div>
+        <footer class="footer" style="max-width:980px;margin:0;">
+          <p class="disclaimer">Not affiliated with {vendor}. Console chrome is an homage; every entry is sourced and dated.</p>
+        </footer>
+      </div>
+    </div>
+  </div>
+  <div class="scrim" id="scrim" hidden></div>
+  {js}
+  {hubjs}
+</body>
+
+</html>
+"""
+
+# The hub's own behaviour: one filter applied from three inputs (the rail's #s=<section>, the
+# lifecycle tabs, the search box). Kept out of INLINE_JS because only this page has a table to
+# filter; kept guarded because analytics must never throw into a reader's path.
+SF_HUB_JS = """<script>
+(function () {
+  function track(name, data) { try { if (window.umami) window.umami.track(name, data); } catch (e) {} }
+  var rows = [].slice.call(document.querySelectorAll('.sf-row'));
+  var empty = document.getElementById('sf-empty');
+  var box = document.getElementById('hub-filter');
+  var tabs = [].slice.call(document.querySelectorAll('.sf-tab'));
+  var state = { bucket: 'all', section: '', q: '' };
+
+  function apply() {
+    var shown = 0;
+    rows.forEach(function (r) {
+      var ok = (state.bucket === 'all' || r.dataset.bucket === state.bucket)
+        && (!state.section || r.dataset.sections.indexOf('|' + state.section + '|') > -1)
+        && (!state.q || r.dataset.search.indexOf(state.q) > -1);
+      r.hidden = !ok;
+      if (ok) shown++;
+    });
+    if (empty) empty.hidden = shown > 0;
+    tabs.forEach(function (t) {
+      var on = t.dataset.bucket === state.bucket;
+      t.classList.toggle('is-on', on);
+      t.setAttribute('aria-selected', String(on));
+    });
+  }
+
+  // The rail deep-links a section as #s=<label>; #search just focuses the box.
+  function readHash() {
+    var h = decodeURIComponent((location.hash || '').replace(/^#/, ''));
+    if (h === 'search') { if (box) box.focus(); return; }
+    state.section = h.indexOf('s=') === 0 ? h.slice(2) : '';
+    apply();
+  }
+
+  tabs.forEach(function (t) {
+    t.addEventListener('click', function () {
+      state.bucket = t.dataset.bucket;
+      state.section = '';
+      if (location.hash) history.replaceState(null, '', location.pathname);
+      apply();
+      track('hub-filter', { bucket: state.bucket, source: 'tab' });
+    });
+  });
+
+  [].slice.call(document.querySelectorAll('.sf-action[data-bucket]')).forEach(function (a) {
+    a.addEventListener('click', function (e) {
+      e.preventDefault();
+      state.bucket = a.dataset.bucket;
+      state.section = '';
+      apply();
+      track('hub-filter', { bucket: state.bucket, source: 'quick-action' });
+      var t = document.querySelector('.sf-tabs');
+      if (t) t.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
+  });
+
+  // Roulette, the static-page version: the href is a real entry so it works without JS,
+  // and the click just re-rolls it.
+  var rnd = document.querySelector('.sf-action[data-random]');
+  if (rnd) rnd.addEventListener('click', function (e) {
+    var links = rows.map(function (r) { return r.querySelector('a.hub-link'); }).filter(Boolean);
+    if (!links.length) return;
+    e.preventDefault();
+    var pick = links[Math.floor(Math.random() * links.length)];
+    track('hub-filter', { bucket: 'random', source: 'quick-action' });
+    location.href = pick.getAttribute('href');
+  });
+
+  if (box) {
+    box.addEventListener('input', function () {
+      state.q = box.value.trim().toLowerCase();
+      apply();
+    });
+    box.addEventListener('keydown', function (e) {
+      if (e.key === 'Enter' && box.value.trim()) track('search', { term: box.value.trim(), surface: 'hub' });
+    });
+  }
+
+  window.addEventListener('hashchange', readHash);
+  readHash();
+})();
+</script>"""
+
+
+# Snowsight's four home tiles, pointed at the three lifecycle buckets plus a re-roll. Each
+# carries a real count, so the row says something true about the data rather than decorating.
+SF_ACTIONS = (
+    ("renamed", "Renamed", "Superseded names still in runbooks",
+     '<path d="M4 8h13l-3-3M20 16H7l3 3"/>'),
+    ("deprecated", "Deprecated", "Gone, going, or officially legacy",
+     '<path d="M5 7h14M9 7V5h6v2M7 7l1 13h8l1-13"/>'),
+    ("active", "Current names", "What to call these things today",
+     '<path d="M20 7 10 17l-5-5"/>'),
+)
+
+
+def sf_bucket(d):
+    """The three buckets the hub's tabs and the app's status filter agree on."""
+    s = status_value(d) or "active"
+    if s == "active":
+        return "active"
+    if s == "renamed":
+        return "renamed"
+    return "deprecated"
+
+
+def render_sf_hub(v, entries, vlabel, head, rail, topbar, js, root):
+    """Snowsight's home page, rendered from the same entries the doc hub would list."""
+    # Newest tracked change first - the same ordering feed.xml publishes, so the table and the
+    # feed tell the reader the same story about what moved recently.
+    ordered = sorted(
+        entries,
+        key=lambda d: (feed_date(d) or datetime.min.replace(tzinfo=timezone.utc), d["id"]),
+        reverse=True,
+    )
+    sections_by_id = {}
+    for group, items in VENDOR_RAILS.get(v, ()):
+        for label, _icon, ids in items:
+            for i in ids or ():
+                sections_by_id.setdefault(i, []).append(label)
+
+    counts = {"active": 0, "renamed": 0, "deprecated": 0}
+    rows = []
+    for d in ordered:
+        bucket = sf_bucket(d)
+        counts[bucket] += 1
+        status = badge_label(d)
+        when = fmt_date(date_of(d.get("verified"))) or ""
+        fd = feed_date(d)
+        if fd:
+            when = f"{MONTHS[fd.month - 1]} {fd.year}"
+        # Aliases ride along in the search haystack so an old name someone half-remembers
+        # still finds the row it belongs to.
+        haystack = " ".join(
+            [d["name"], d.get("abbr") or "", *(d.get("aliases") or []), d.get("category", "")]
+        ).lower()
+        rows.append(
+            f'<tr class="sf-row" data-bucket="{attr(bucket)}" '
+            # Pipe-delimited, not space: every rail label after the first has a space in it
+            # ("Data sharing", "Governance & security"), so a space delimiter would let one
+            # label's words match another's.
+            f'data-sections="|{attr("|".join(sections_by_id.get(d["id"], [])))}|" '
+            f'data-search="{attr(haystack)}">'
+            f'<td class="sf-td-name"><a class="hub-link" href="{attr(d["id"])}/">'
+            '<svg viewBox="0 0 24 24" width="15" height="15" class="ic sf-rowic" aria-hidden="true">'
+            '<path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5"/></svg>'
+            f'<span>{esc(d["name"])}</span></a></td>'
+            f'<td class="sf-td-cat">{esc(d.get("category", ""))}</td>'
+            f'<td><span class="hub-badge s-{attr(status)}">{esc(status)}</span></td>'
+            f'<td class="sf-td-date">{esc(when)}</td></tr>'
+        )
+
+    actions = []
+    for bucket, title, sub, icon in SF_ACTIONS:
+        n = counts.get(bucket, 0)
+        actions.append(
+            f'<a class="sf-action" href="#" data-bucket="{attr(bucket)}">'
+            f'<svg viewBox="0 0 24 24" width="19" height="19" class="ic" aria-hidden="true">{icon}</svg>'
+            f'<span class="sf-action-title">{title}</span>'
+            f'<span class="sf-action-sub">{n} of {len(entries)} - {sub}</span></a>'
+        )
+    first = ordered[0]["id"] if ordered else ""
+    actions.append(
+        f'<a class="sf-action" href="{attr(first)}/" data-random="1">'
+        '<svg viewBox="0 0 24 24" width="19" height="19" class="ic" aria-hidden="true">'
+        '<rect x="3" y="3" width="18" height="18" rx="3"/><path d="M8.5 8.5h.01M15.5 15.5h.01M12 12h.01"/></svg>'
+        '<span class="sf-action-title">Random name</span>'
+        f'<span class="sf-action-sub">Roulette, {vlabel} edition</span></a>'
+    )
+
+    tabs = [
+        f'<button type="button" class="sf-tab is-on" role="tab" aria-selected="true" data-bucket="all">All entries <span class="sf-tab-n">{len(entries)}</span></button>'
+    ]
+    for bucket, label in (("active", "Active"), ("renamed", "Renamed"), ("deprecated", "Deprecated")):
+        tabs.append(
+            f'<button type="button" class="sf-tab" role="tab" aria-selected="false" data-bucket="{attr(bucket)}">'
+            f'{label} <span class="sf-tab-n">{counts[bucket]}</span></button>'
+        )
+
+    return head + SF_HUB_BODY.format(
+        rail=rail,
+        topbar=topbar,
+        js=js,
+        hubjs=SF_HUB_JS,
+        root=root,
+        vendor=esc(vlabel),
+        count=len(entries),
+        actions="".join(actions),
+        tabs="".join(tabs),
+        rows="".join(rows),
+    )
 
 
 def render_hub(v, entries):
@@ -875,8 +1132,9 @@ def render_hub(v, entries):
         indent=2,
     )
 
-    rail, topbar, js = chrome(root)
+    rail, topbar, js = chrome(root, v)
     head = HEAD.format(
+        htmlattr=f' data-vendor="{attr(v)}"',
         title=attr(title),
         desc=attr(desc),
         url=url,
@@ -888,6 +1146,10 @@ def render_hub(v, entries):
         favicon=FAVICON,
         style=ENTRY_STYLE,
     )
+    # A vendor with its own console gets its own front door; the doc layout stays the
+    # default, because it is the Databricks console content area this site started as.
+    if v == "snowflake":
+        return render_sf_hub(v, entries, vlabel, head, rail, topbar, js, root)
     body = HUB_BODY.format(
         rail=rail,
         topbar=topbar,
@@ -937,9 +1199,12 @@ def write_sitemap(data, posts=()):
     return vendors
 
 
-FEED_TITLE = "REbricked - Databricks renames, deprecations & new features"
+# feed.xml carries every vendor's entries (and the guides), so its title has to name them -
+# it announced itself as Databricks-only for as long as it was, and stopped being true the
+# day kb/snowflake/ shipped. Adding a vendor means adding it here.
+FEED_TITLE = "REbricked - Databricks & Snowflake renames, deprecations & new features"
 FEED_DESC = (
-    "Databricks product and feature renames, deprecations, new features, and "
+    "Databricks and Snowflake product and feature renames, deprecations, new features, and "
     "release milestones (Private Preview through GA) - sourced and dated, newest first."
 )
 _WDAYS = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"]

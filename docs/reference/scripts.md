@@ -62,14 +62,21 @@ never copied.
 |---|---|
 | Reads | `www/*.features.json` (one per vendor), `www/posts.json` |
 | Writes | `www/{vendor}/index.html` (hub), `www/{vendor}/{id}/index.html`, `www/sitemap.xml`, `www/feed.xml` - all gitignored |
-| Needs | nothing beyond the standard library; imports `build_badges.py` for the shared chrome. No browser |
+| Needs | nothing beyond the standard library; imports `chrome.py` (and through it `build_badges.py`) for the per-vendor chrome. No browser |
 | Flags | none |
 
 Each entry page gets a unique `<title>`, description, canonical URL, Open Graph and Twitter tags,
-JSON-LD, the full content, and internal links to related entries. The hub groups every entry by
-category and guarantees no entry page is orphaned. `feed.xml` is RSS 2.0, newest tracked change
-first, with one `[Guide]` item per post. Vendor comes from the optional `vendor` field, default
-`databricks`.
+JSON-LD, the full content, and internal links to related entries. `feed.xml` is RSS 2.0, newest
+tracked change first, with one `[Guide]` item per post. Vendor comes from the optional `vendor`
+field, default `databricks`, and is stamped on `<html data-vendor="...">` so the stylesheet can
+swap a whole console palette from one attribute.
+
+**The hub layout is per-vendor**, because a console's front door is. `/databricks/` is the document
+layout: every entry grouped by category. `/snowflake/` is Snowsight's home screen: a search box, a
+row of quick actions, and one table of every entry ordered newest-tracked-change first, filterable
+by lifecycle tab, by the rail's `#s=<section>` deep link, and by the search box. Both put every
+entry link in the markup - the filters only set `hidden` - so neither is more crawlable than the
+other, and no entry page is orphaned either way.
 
 Runs automatically in CI before deploy.
 
@@ -85,13 +92,36 @@ Runs automatically in CI before deploy.
 | Flags | none |
 
 Rewrites `www/badges/` from scratch. Exports `ANALYTICS`, `BASE_URL`, `FAVICON`, `INLINE_JS`, `THEME_BOOT` (the pre-paint theme script, dark by default, saved choice wins - every generated head carries it so leaving the app never flips the theme),
-`TOPBAR`, `render_rail`, `NAV`, and `ICONS`, which `build_entries.py` and (via it) `build_posts.py`
-import - so one edit here changes four page types. `NAV`, `ICONS` and `NAV_LINKS` are not
+`TOPBAR`, `render_rail`, `NAV`, and `ICONS`, which `chrome.py` wraps and `build_entries.py` and
+(via it) `build_posts.py` import - so one edit here changes four page types. `NAV`, `ICONS` and `NAV_LINKS` are not
 hand-maintained: `load_rail()` parses them out of `www/app.js` at import time, and fails the build
 if the blocks cannot be found or an item's icon is missing.
 
 `OG_PAGE`, the template the headless browser loads, deliberately omits `ANALYTICS` so the build is
 not counted as traffic.
+
+## chrome.py
+
+**The per-vendor console chrome.** Not a build step - a library the builders import, and the one
+place that answers "which rail does this page wear".
+
+| | |
+|---|---|
+| Reads | `www/app.js` (for the Databricks `NAV`), via `build_badges.py` |
+| Writes | nothing |
+| Needs | nothing beyond the standard library |
+| Flags | none |
+
+| Export | What it is |
+|---|---|
+| `VENDOR_RAILS` | vendor -> `[(group label, [(item label, icon key, ids)])]`. Databricks' is parsed out of `app.js`; Snowflake's is `SNOWFLAKE_NAV`, declared in the file because there is no SPA to parse |
+| `rail_ids(vendor)` | every entry id that vendor's rail reaches - what `validate.py` checks coverage against |
+| `chrome_for(vendor, root, active=None)` | `(rail, topbar, js)` with the `../../` link prefix rewritten to `root`, so one chrome works at any directory depth |
+| `SNOWFLAKE_ICONS` / `snowflake_rail()` | Snowsight's rail: a light panel, the home/new/search trio, and sections that deep-link the hub's filter as `#s=<label>` |
+
+A vendor absent from `VENDOR_RAILS` renders in the Databricks chrome, which is also the site's own
+shell - the honest default for a vendor nobody has styled, not a claim about that vendor. Adding a
+vendor's rail here is also what turns its coverage check on.
 
 ## validate.py
 
@@ -99,16 +129,18 @@ not counted as traffic.
 
 | | |
 |---|---|
-| Reads | `www/*.features.json` (one per vendor), `www/app.js` |
+| Reads | `www/*.features.json` (one per vendor); `scripts/chrome.py` for the vendor rails (which itself reads `www/app.js`) |
 | Writes | nothing. Prints `OK: <n> entries valid (databricks: <n>, snowflake: <n>).` or a list of errors |
 | Needs | nothing beyond the standard library |
 | Flags | none |
 | Exit | 0 on success, 1 if any error |
 
 Also enforces the cross-cutting invariants: every `successorId` resolves and stays inside its own
-vendor, every entry id is unique across *all* vendors, and every entry of the vendor the app renders
-(`NAV_VENDOR`) is reachable from a `NAV` section in `app.js` (both directions). `VALID_CATEGORIES`
-is checked per vendor. Warnings do not fail the run. See
+vendor, every entry id is unique across *all* vendors, and - for every vendor that has a rail in
+[`chrome.py`](../../scripts/chrome.py)'s `VENDOR_RAILS` - every entry is reachable from one of that
+rail's sections and every id the rail names exists (both directions). A vendor with no rail is
+skipped, not failed. A rail that cannot be imported is an error, not a silent skip.
+`VALID_CATEGORIES` is checked per vendor. Warnings do not fail the run. See
 [how-to/fix-a-failing-build.md](../how-to/fix-a-failing-build.md) for the message-by-message table.
 
 ## validate_posts.py

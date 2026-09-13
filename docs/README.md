@@ -65,7 +65,7 @@ to catch drift. The map from change to page:
 | `NAV`, filters, routing, or a tracked event | [reference/frontend.md](reference/frontend.md), [reference/analytics-events.md](reference/analytics-events.md) |
 | the build order, the CI workflow, or a dependency | [explanation/architecture.md](explanation/architecture.md), [reference/scripts.md](reference/scripts.md) |
 | a workflow step in `agents/` | the matching page in [how-to/](how-to/) |
-| anything per-vendor: a `VALID_CATEGORIES` key, `NAV_VENDOR`, `SPA_VENDORS`, a new `kb/<vendor>/` | the Vendors section of [`AGENTS.md`](../AGENTS.md), [reference/entry-schema.md](reference/entry-schema.md), [reference/generated-output.md](reference/generated-output.md) |
+| anything per-vendor: a `VALID_CATEGORIES` key, a `VENDOR_RAILS` rail, `SPA_VENDORS`, a new `kb/<vendor>/` | the Vendors section of [`AGENTS.md`](../AGENTS.md), [reference/entry-schema.md](reference/entry-schema.md), [reference/generated-output.md](reference/generated-output.md) |
 | a design decision, or the reasoning behind one | the matching page in [explanation/](explanation/) |
 
 Adding data (a new entry, a new guide) does **not** require a docs change - that is the

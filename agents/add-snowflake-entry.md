@@ -58,10 +58,13 @@ does not go in - say what you could not confirm.
 `legacy-dashboards`, so grep both folders before settling on an id, not just `kb/snowflake/`.
 A rename chain may not cross vendors either: `successorId` must name a Snowflake entry.
 
-**There is no rail step.** Step 5 of the Databricks skill (wire the id into `app.js`'s `NAV`) does
-**not** apply - the app renders the Databricks rail only, and the validator scopes its coverage
-check to that vendor. Snowflake entries are reachable through the generated hub at `/snowflake/`,
-which lists every one of them by construction.
+**The rail step applies, but not to `app.js`.** Step 5 of the Databricks skill says to wire the id
+into `app.js`'s `NAV`; the app renders the Databricks rail only, so a Snowflake id goes into
+**`SNOWFLAKE_NAV` in [`scripts/chrome.py`](../scripts/chrome.py)** instead - the Snowsight rail the
+generated pages wear. Append the id to the tuple of the section it belongs under (Projects,
+Ingestion, Transformation, AI & ML, Catalog, Data sharing, Governance & security, Compute, Admin).
+`validate.py` fails if an entry is in no section, exactly as it does for Databricks, so this is not
+optional. The section also drives the hub's own filter at `/snowflake/#s=<label>`.
 
 ## Build, validate, check
 

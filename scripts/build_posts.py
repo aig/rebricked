@@ -893,6 +893,7 @@ def render_post(post, idx, posts, by_id, entry_count, today):
 
     rail, topbar, js = chrome(root)
     head = HEAD.format(
+        htmlattr="",
         title=attr(title),
         desc=attr(desc),
         url=url,
@@ -1014,6 +1015,7 @@ def render_index(posts, by_id):
 
     rail, topbar, js = chrome(root)
     head = HEAD.format(
+        htmlattr="",
         title=attr(title),
         desc=attr(desc),
         url=url,

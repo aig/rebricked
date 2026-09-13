@@ -3239,6 +3239,325 @@ body.modal-open {
   --tier: #6E8BF5;
 }
 
+/* ================= Snowflake edition =================
+   The generated pages under /snowflake/ wear Snowsight, not the Databricks console: the rail
+   is a light panel, the accent is Snowflake blue, and the hub is a home screen rather than a
+   document. `build_entries.py` stamps data-vendor on <html>, so a whole console palette swaps
+   from one attribute and every shared component (rail, badges, links) follows without a
+   second copy of its rules. A vendor with no block here renders in the site's own chrome.
+
+   Both themes are defined: THEME_BOOT defaults a generated page to dark, so the dark rail is
+   what most readers meet first and it cannot be an afterthought. */
+:root[data-vendor="snowflake"] {
+  --accent: #29B5E8;
+  /* Snowflake blue */
+  --accent-ink: #10658F;
+  /* deep enough to clear WCAG AA as link ink on --panel */
+  --rail: #FFFFFF;
+  --rail-2: #F4F7FA;
+  --rail-ink: #2B3849;
+  --rail-muted: #6A7686;
+  --rail-hover: rgba(41, 181, 232, .12);
+  --rail-active-bg: rgba(41, 181, 232, .18);
+  --rail-line: #E3E8EF;
+}
+
+:root[data-vendor="snowflake"][data-theme="dark"] {
+  --accent: #4FC3F7;
+  --accent-ink: #7BD3F7;
+  --rail: #0F1620;
+  --rail-2: #16202C;
+  --rail-ink: #C7D3E0;
+  --rail-muted: #74839A;
+  --rail-hover: rgba(79, 195, 247, .12);
+  --rail-active-bg: rgba(79, 195, 247, .18);
+  --rail-line: #202A36;
+}
+
+/* The rail rules that hardcode a console-dark colour instead of reading a token - they would
+   leave white text on a white panel in Snowsight's light rail. */
+.sf-rail .brand-re {
+  background: var(--accent);
+  color: #fff;
+}
+
+.sf-rail .brand-word {
+  color: var(--rail-ink);
+}
+
+.sf-rail .nav-item:hover,
+.sf-rail .nav-item.active,
+.sf-rail .nav-item:hover .ic,
+.sf-rail .nav-item.active .ic {
+  color: var(--accent-ink);
+}
+
+.sf-rail::-webkit-scrollbar-thumb {
+  background: color-mix(in srgb, var(--rail-ink) 22%, transparent);
+}
+
+:root[data-vendor="snowflake"] .renamed-dot {
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 20%, transparent);
+}
+
+/* Snowsight's three round tool buttons sit under the logo where the app's "New" pill is. */
+.sf-tools {
+  display: flex;
+  gap: 6px;
+  margin: 2px 0 10px;
+  padding: 0 6px;
+}
+
+.sf-tool {
+  flex: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 34px;
+  border-radius: 8px;
+  border: 1px solid var(--rail-line);
+  background: var(--rail-2);
+  color: var(--rail-muted);
+  text-decoration: none;
+  transition: background .12s, color .12s, border-color .12s;
+}
+
+.sf-tool:hover,
+.sf-tool.is-on {
+  color: var(--accent-ink);
+  background: var(--rail-hover);
+  border-color: color-mix(in srgb, var(--accent) 45%, transparent);
+}
+
+.sf-tool.is-on {
+  background: var(--rail-active-bg);
+}
+
+/* ---- the hub as Snowsight's home screen ---- */
+/* These three carry .hub-doc as well as .sf-home on purpose: build_entries.py inlines its own
+   <style> block, which sits after this stylesheet's <link> and would otherwise win every tie
+   on equal specificity. Doubling the class outranks it without an !important. */
+/* The doc hub is 780px because it is prose; this one is a table and a card row, so it takes
+   the full content column. */
+.hub-doc.sf-home {
+  max-width: 100%;
+}
+
+/* Snowsight's home leads with a small title, not a headline - the page is a console, not an
+   article. The text stays the crawlable one; only its weight on the page changes. */
+.hub-doc.sf-home h1 {
+  font-size: 23px;
+  margin: 4px 0 8px;
+}
+
+.hub-doc.sf-home .hub-lead {
+  font-size: 14.5px;
+  margin: 0 0 22px;
+  max-width: 760px;
+}
+
+.sf-searchwrap {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 0 0 30px;
+  padding: 0 14px;
+  height: 44px;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: var(--panel);
+  color: var(--muted);
+  transition: border-color .15s, box-shadow .15s;
+}
+
+.sf-searchwrap:focus-within {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 18%, transparent);
+}
+
+.sf-searchbox {
+  flex: 1;
+  min-width: 0;
+  border: 0;
+  background: none;
+  color: var(--ink);
+  font: inherit;
+  font-size: 14px;
+  outline: none;
+}
+
+.sf-h2 {
+  font-size: 15px;
+  font-weight: 650;
+  color: var(--ink);
+  margin: 0 0 12px;
+}
+
+.sf-actions {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 14px;
+  margin: 0 0 34px;
+}
+
+.sf-action {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 15px 16px 17px;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: var(--panel);
+  color: var(--ink);
+  text-decoration: none;
+  transition: border-color .15s, box-shadow .15s, transform .15s;
+}
+
+.sf-action:hover {
+  border-color: color-mix(in srgb, var(--accent) 55%, var(--line));
+  box-shadow: 0 4px 14px color-mix(in srgb, var(--accent) 14%, transparent);
+}
+
+.sf-action .ic {
+  color: var(--accent-ink);
+}
+
+.sf-action-title {
+  font-size: 14.5px;
+  font-weight: 650;
+}
+
+.sf-action-sub {
+  font-size: 12.5px;
+  color: var(--muted);
+  line-height: 1.4;
+}
+
+.sf-tabs {
+  display: flex;
+  gap: 4px;
+  flex-wrap: wrap;
+  margin: 0 0 2px;
+  border-bottom: 1px solid var(--line);
+}
+
+.sf-tab {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 9px 13px;
+  border: 0;
+  border-bottom: 2px solid transparent;
+  background: none;
+  color: var(--muted);
+  font: inherit;
+  font-size: 13.5px;
+  cursor: pointer;
+  transition: color .12s, border-color .12s;
+}
+
+.sf-tab:hover {
+  color: var(--ink);
+}
+
+.sf-tab.is-on {
+  color: var(--accent-ink);
+  border-bottom-color: var(--accent);
+  font-weight: 600;
+}
+
+.sf-tab-n {
+  font-family: var(--mono);
+  font-size: 10.5px;
+  padding: 1px 6px;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--muted) 14%, transparent);
+}
+
+/* A table is the one thing allowed to out-scroll the page, in its own container. */
+.sf-tablewrap {
+  overflow-x: auto;
+}
+
+.sf-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13.5px;
+}
+
+.sf-table th {
+  text-align: left;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: .07em;
+  font-weight: 600;
+  color: var(--faint);
+  padding: 12px 10px 10px;
+  border-bottom: 1px solid var(--line);
+  white-space: nowrap;
+}
+
+.sf-table td {
+  padding: 10px;
+  border-bottom: 1px solid var(--line);
+  vertical-align: middle;
+}
+
+.sf-row:hover td {
+  background: color-mix(in srgb, var(--accent) 6%, transparent);
+}
+
+.sf-td-name a {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  color: var(--ink);
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.sf-td-name a:hover {
+  color: var(--accent-ink);
+  text-decoration: underline;
+}
+
+.sf-rowic {
+  flex: none;
+  color: var(--faint);
+}
+
+.sf-td-cat,
+.sf-td-date {
+  color: var(--muted);
+  white-space: nowrap;
+}
+
+.sf-empty {
+  padding: 22px 10px;
+  font-size: 14px;
+  color: var(--muted);
+}
+
+@media (max-width: 900px) {
+  .sf-actions {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 560px) {
+  .sf-actions {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  /* Name and status carry the row on a phone; category and date are the first to go. */
+  .sf-td-cat,
+  .sf-table th:nth-child(2),
+  .sf-td-date,
+  .sf-th-date {
+    display: none;
+  }
+}
+
 /* ---- card header on narrow screens ----
    The status pill + action icons are narrow now that the "guess the sequel" gag lives
    in the footer, so the right group stays pinned beside the title without the

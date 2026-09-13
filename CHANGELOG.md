@@ -11,6 +11,46 @@ recorded, and a made-up reason is worse than none.
 
 ## 2026-09-13
 
+### Changed
+- **`/snowflake/` now wears Snowsight instead of the Databricks console.**
+
+  **Why:** the site is a joke told in chrome - it answers "what happened to the thing they used to
+  call X?" while dressed as the vendor's own console. Dressed as the *wrong* console it stops being
+  a joke and starts being a mistake: every Snowflake page was framed in the dark Databricks rail,
+  under Databricks red, with Databricks' own section names down the side, and the Sources block
+  literally labelled a `docs.snowflake.com` citation "Official Databricks / Microsoft docs". That
+  last one is not cosmetic. The one rule this repo has is that a claim is checked against its own
+  vendor's docs, and the page was telling readers otherwise.
+
+  **What:** new [`scripts/chrome.py`](scripts/chrome.py) owns every vendor's rail in one shape -
+  Databricks' still parsed out of `app.js` (so the static pages can never drift from the SPA),
+  Snowflake's declared as Snowsight's own sections. `build_entries.py` stamps
+  `<html data-vendor="...">`, and a "Snowflake edition" block in `styles.css` redefines the rail
+  and accent tokens under it, so the same markup renders as Snowsight's light rail and Snowflake
+  blue in both themes without a second copy of any component. `/snowflake/` is now Snowsight's home
+  screen rather than a document: a search box, four quick actions, and one table of every entry
+  ordered newest-tracked-change first, filterable by lifecycle tab, by the rail's `#s=<section>`
+  deep link, and by the search box. Every entry link stays in the markup - the filters only set
+  `hidden` - so the page is exactly as crawlable as the category list it replaced. The canonical
+  source label is per vendor now, and `feed.xml` stopped calling itself Databricks-only, which it
+  had not been since `kb/snowflake/` shipped.
+
+- **Rail coverage is checked for every vendor that has a rail, not just Databricks.**
+
+  **Why:** `validate.py` guaranteed no Databricks entry was unreachable from the console rail, and
+  said of everything else that it "reaches readers through its generated hub". That was true only
+  because Snowflake had no rail. Now it has one, and an unguarded rail is a rail that quietly
+  loses an entry the first time someone adds one.
+
+  **What:** `NAV_VENDOR` is gone. The check iterates `chrome.py`'s `VENDOR_RAILS`, failing in both
+  directions (entry in no section; section naming an id that does not exist) for each vendor that
+  has a rail and skipping one that does not. A rail that cannot be imported is now an error rather
+  than a silent skip. Adding a Snowflake entry therefore has a rail step too - it edits
+  `SNOWFLAKE_NAV` in `chrome.py`, not `app.js`; `agents/add-snowflake-entry.md` used to say there
+  was no rail step at all.
+
+## 2026-09-13
+
 ### Added
 - **Two Beta ways to get a shell on Databricks compute: `ssh-tunnel` and `databricks-sandbox`.**
 

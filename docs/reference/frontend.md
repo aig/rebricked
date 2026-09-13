@@ -30,6 +30,11 @@ an entry is in no section, or if `NAV` names an id that is not in the data. See
 **parsing `NAV` and `ICONS` out of `app.js`** at build time (`load_rail()`), so the two can no
 longer drift. It depends on the one-item-per-line formatting of both blocks - keep that shape.
 
+**`NAV` is the *Databricks* rail.** A generated page wears its own vendor's console, and
+[`scripts/chrome.py`](../../scripts/chrome.py) owns them all: `VENDOR_RAILS` maps a vendor to its
+nav, and a vendor with no SPA to parse (Snowflake) declares one there instead. The validated
+contract above runs for every vendor that has a rail, not just this one.
+
 ## What is derived, never stored
 
 The data stores the minimum; the UI calculates the rest. Changing any of these means changing the
@@ -117,7 +122,16 @@ same through `THEME_BOOT` from `build_badges.py`, so following the Learn item or
 never flips the theme. The rail is pixel-identical on both: the New button and every rail item pin
 a whole-pixel `line-height` (18px), because they are `<button>`s in the app and `<a>`s on the
 generated pages, and a button's default `normal` line-height differs from an anchor's inherited
-1.55. Keep new rail chrome on the same rule. The sidebar rail is always dark. Status colours are three dedicated tokens, each with a dark
+1.55. Keep new rail chrome on the same rule.
+
+The app's sidebar rail is always dark. A **generated** page additionally carries
+`<html data-vendor="<vendor>">`, and a vendor may redefine the rail and accent tokens wholesale
+under `:root[data-vendor="..."]` - `/snowflake/` swaps in Snowsight's light rail and Snowflake
+blue, in both themes. Note that `build_entries.py` inlines its own `<style>` block *after* the
+`styles.css` link, so a vendor rule that has to beat one of those selectors needs more than equal
+specificity (`.hub-doc.sf-home h1`, not `.sf-home h1`) - not an `!important`.
+
+Status colours are three dedicated tokens, each with a dark
 value: `--c-active` (green), `--c-renamed` (slate), `--c-deprecated` (amber). The brand red
 (`--accent`) is chrome only, never a status.
 

@@ -1,8 +1,18 @@
 # How to add or change a sidebar section
 
-The rail is a static mirror of the Databricks console, configured by the `NAV` array near the top
-of [`www/app.js`](../../www/app.js). It is also the reachability contract: **the validator fails
-if any entry appears in no section.**
+The rail is a static mirror of the vendor's console, and it is the reachability contract: **the
+validator fails if any entry appears in no section.**
+
+**Which file you edit depends on the vendor:**
+
+| Vendor | Rail lives in | Why |
+|---|---|---|
+| Databricks | the `NAV` array near the top of [`www/app.js`](../../www/app.js) | the SPA renders this rail, so the app is its source of truth and the generated pages parse it |
+| Snowflake | `SNOWFLAKE_NAV` in [`scripts/chrome.py`](../../scripts/chrome.py) | there is no SPA for Snowflake to parse, so the rail is declared |
+
+The rest of this page is the Databricks flow. A Snowflake section is the same idea in Python -
+append the id to the right item's tuple, or add `(label, icon key, (ids...))` to a group, adding
+the icon to `SNOWFLAKE_ICONS` if it is new - and the same validator check applies.
 
 ## Add an entry to an existing section
 
@@ -76,6 +86,13 @@ The parser relies on the one-item-per-line formatting `NAV` and `ICONS` already 
 "...", icon: "...", ids: [...] }` per line; `key: '<svg inner markup>',` per icon). Keep that shape.
 If a `NAV` item names an icon that `ICONS` lacks, or the blocks cannot be found, the build fails
 loudly instead of shipping a partial rail.
+
+## Snowflake sections also filter the hub
+
+A Snowflake rail item with ids links to `/snowflake/#s=<label>`, and the hub's own script filters
+its table to that section. Nothing else to wire: the section label in `SNOWFLAKE_NAV` *is* the
+key, matched against each row's pipe-delimited `data-sections`. A section with an empty tuple
+renders without a dot and just links to the hub.
 
 ## After any NAV change
 

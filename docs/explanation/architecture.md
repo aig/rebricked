@@ -69,9 +69,33 @@ And the consequence people trip over: **both validators read built output, not `
 does not fail loudly; it silently validates a stale file, which is worse. That is why every documented
 command chains the builds in front of the gates.
 
-`validate.py` reading `www/app.js` is the odd one out - it greps the `NAV` config to check reachability.
-It is the only place the data gate depends on the frontend, and it is there because an entry no rail
-section reaches is an entry nobody finds.
+`validate.py` reaching into the frontend is the odd one out - through
+[`chrome.py`](../../scripts/chrome.py) it checks that every entry is reachable from one of its
+vendor's rail sections. It is the only place the data gate depends on the frontend, and it is
+there because an entry no rail section reaches is an entry nobody finds.
+
+## Why each vendor wears its own console
+
+The site is a joke told in chrome: it answers "what happened to the thing X used to call this?"
+while dressed as X's own console. That only lands if it is dressed as the *right* console - a
+Snowflake entry framed in a Databricks rail reads as a copy-paste error, and worse, it undercuts
+the sourcing rule the whole project rests on (a reader who sees Databricks chrome around a
+Snowflake claim has every reason to doubt which docs it was checked against).
+
+So the chrome is per-vendor, and it costs less than it sounds:
+
+- **One attribute drives the palette.** `build_entries.py` stamps `<html data-vendor="...">`, and
+  `styles.css` redefines the rail and accent tokens under `:root[data-vendor="snowflake"]`. Every
+  shared component (rail, badges, links, buttons) already reads those tokens, so nothing is
+  duplicated - the same markup renders as Snowsight.
+- **One module owns every rail.** Databricks' stays parsed out of `app.js`, because the SPA is its
+  source of truth and a second copy would drift. A vendor with no SPA has nothing to parse, so
+  `chrome.py` declares its rail instead. Both come back in one shape, which is what lets the
+  coverage check run for either without knowing which is which.
+- **The hub layout follows.** A console's front door is part of the homage: Databricks' content
+  area is a document, Snowsight's home is a search box over a table. The constraint that keeps
+  this honest is that every entry link stays in the markup - the filters only set `hidden` - so no
+  layout is a worse deal for a crawler than the one it replaced.
 
 ## Why some things are not in CI
 

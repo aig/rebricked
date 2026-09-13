@@ -9,9 +9,10 @@ so build it first:
 
     python scripts/build_features.py && python scripts/validate.py
 
-Every vendor is held to the same field rules. The two things that are per-vendor are the
-category allow-list (VALID_CATEGORIES) and the rail-coverage check, which only applies to
-the vendor the single-page app actually renders - see NAV_VENDOR.
+Every vendor is held to the same field rules. The one thing that is per-vendor is the
+category allow-list (VALID_CATEGORIES). Rail coverage is checked for every vendor that has a
+rail, which scripts/chrome.py owns - a vendor with no rail there is reachable through its
+generated hub at /{vendor}/ instead, and is skipped.
 """
 import datetime
 import json
@@ -22,12 +23,6 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parent.parent
 WWW = ROOT / "www"
 DATA_GLOB = "*.features.json"  # one built file per vendor, named for its kb/ folder
-APP_JS = WWW / "app.js"
-# The rail in app.js is the Databricks console rail, so NAV coverage is checked for that
-# vendor only. A vendor with no rail of its own reaches readers through its generated hub
-# at /{vendor}/ instead, which lists every one of its entries by construction.
-NAV_VENDOR = "databricks"
-
 DATE_RE = re.compile(r"^\d{4}(-(0[1-9]|1[0-2]))?$")  # YYYY or YYYY-MM (real months only)
 VERIFIED_RE = re.compile(r"^\d{4}-\d{2}-\d{2}$")     # YYYY-MM-DD
 URL_RE = re.compile(r"^https?://", re.IGNORECASE)
@@ -500,22 +495,26 @@ def main():
                     f"successorId {sid!r} belongs to vendor {vendor_of_id[sid]!r}, not {here!r}",
                 )
 
-    # NAV coverage: every entry must be reachable from a rail section, and every id
-    # the rail references must exist. app.js is the source of the NAV config. Only the
-    # vendor the app actually renders has a rail; the rest reach readers via their hub.
-    nav_scope = {i for i, v in vendor_of_id.items() if v == NAV_VENDOR}
+    # Rail coverage, per vendor that has a rail: every entry must be reachable from one of
+    # its sections, and every id a rail references must exist. scripts/chrome.py owns both
+    # rails - it parses NAV out of app.js for Databricks and declares Snowsight's for
+    # Snowflake - so one check covers a vendor whether or not the SPA renders it. A vendor
+    # with no rail is still reachable through its generated hub at /{vendor}/.
     try:
-        app_js = APP_JS.read_text(encoding="utf-8")
-    except OSError:
-        warn("nav", f"could not read {APP_JS}; skipping NAV coverage check")
+        sys.path.insert(0, str(Path(__file__).resolve().parent))
+        from chrome import VENDOR_RAILS, rail_ids
+    except Exception as e:  # a broken rail must fail loudly, not silently skip the check
+        err("nav", f"could not load the vendor rails from scripts/chrome.py: {e}")
     else:
-        nav_ids = set()
-        for group in re.findall(r"ids:\s*\[([^\]]*)\]", app_js):
-            nav_ids.update(re.findall(r"\"([a-z0-9-]+)\"", group))
-        for missing in sorted(nav_ids - all_ids):
-            err(missing, f"NAV in app.js references an id that is not in {NAV_VENDOR}.features.json")
-        for unreachable in sorted(nav_scope - nav_ids):
-            err(unreachable, "entry appears in no NAV section in app.js - unreachable from the rail")
+        for vendor in sorted(VENDOR_RAILS):
+            scope = {i for i, v in vendor_of_id.items() if v == vendor}
+            if not scope:
+                continue  # a rail for a vendor with no entries yet is not an error
+            ids = rail_ids(vendor)
+            for missing in sorted(ids - all_ids):
+                err(missing, f"the {vendor} rail references an id that is not in {vendor}.features.json")
+            for unreachable in sorted(scope - ids):
+                err(unreachable, f"entry appears in no {vendor} rail section - unreachable from the rail")
 
     # report
     for w in warnings:

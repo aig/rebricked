@@ -73,6 +73,7 @@ the generators already emit**, which means new links are tracked without touchin
 | `source-click` | a citation or Sources link |
 | `related-click` | a related-entry link |
 | `hub-entry-open` | an entry link on the vendor hub |
+| `hub-filter` | narrowing a console-style hub (`bucket`: `all` / `active` / `renamed` / `deprecated` / `random`; `source`: `tab` / `quick-action`) |
 | `cta-click` | a call to action |
 | `quiz-open` | the quiz entry point (shared name with the app) |
 | `github-click` | the repo link |
