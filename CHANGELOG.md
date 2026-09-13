@@ -9,6 +9,32 @@ shows the what. Plain, simple English: short sentences, common words, no jargon 
 and product names themselves. Some older entries have no `Why:` line - the reason was never
 recorded, and a made-up reason is worse than none.
 
+## 2026-09-13
+
+### Added
+- **Two Beta ways to get a shell on Databricks compute: `ssh-tunnel` and `databricks-sandbox`.**
+
+  **Why:** Databricks shipped two separate SSH-shaped features in 2026 and the naming around them
+  is already muddled. The IDE one has been through a doc-title round trip - it lived at
+  `/dev-tools/ssh-tunnel` in January 2026, moved to `/dev-tools/remote-development` by June, and
+  is back at `ssh-tunnel` now, with `remote-development` redirecting to it on AWS, GCP, and
+  Microsoft Learn alike. Anyone who read the docs mid-year learned the name "Databricks Remote
+  Development" for a page that no longer uses those words anywhere. The other, Databricks Sandbox,
+  is also reached over SSH but is a different thing entirely, and the docs have to tell readers so
+  in a note on both pages. Two new cards beat one confused one.
+
+  **What:** `kb/databricks/ssh-tunnel.yaml` - `active`, Beta, category Developer experience, rail
+  section Workspace. It records the current name as **SSH tunnel** (the docs' own breadcrumb) and
+  keeps "Databricks Remote Development" as an alias rather than a `renamed` card, because no live
+  official doc carries that title any more and a rename chain needs a source, not an inference.
+  `introducedAt` is year-level `2026` for the same reason: the doc page predates the August 2026
+  launch blog, which is recorded as the `occasion` instead. `kb/databricks/databricks-sandbox.yaml`
+  - `active`, Beta, category Compute / BI, rail section Compute; `introducedAt` is `2026`, since
+  Databricks published neither a release note nor an announcement post for it. Both carry sourced
+  `limitations` (10 SSH connections per cluster and a 1 hour idle drop for the tunnel; 4 cores,
+  16 GB RAM, 40 sandboxes per user and Beta data deletion for the sandbox) and three sourced facts
+  each. All 22 cited URLs confirmed by `check_anchors.py`.
+
 ## 2026-09-12
 
 ### Added

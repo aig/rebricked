@@ -1,0 +1,49 @@
+id: ssh-tunnel
+name: SSH tunnel
+aliases:
+  - Databricks Remote Development
+  - Remote Development
+  - databricks ssh connect
+category: Developer experience
+what:
+  note: A Databricks-provided SSH tunnel that attaches VS Code, Cursor, or a plain terminal to serverless, AI Runtime, or dedicated compute, so the whole development environment runs on Databricks instead of your laptop.
+  link: https://docs.databricks.com/aws/en/dev-tools/ssh-tunnel#:~:text=allows%20you%20to%20access%20your%20workspace%20and%20interactively%20run%20workloads%20on%20Databricks%20compute%20from%20IDEs
+fact:
+  - note: The SSH tunnel does not use port 22 - it smuggles every byte over the same HTTPS endpoint the rest of the Databricks CLI already talks to, so the thing that has to survive your corporate firewall is a WebSocket upgrade, not an open SSH port.
+    link: https://docs.databricks.com/aws/en/dev-tools/ssh-tunnel#:~:text=The%20SSH%20tunnel%20does%20not%20use%20port%2022
+  - note: IntelliJ users are told to pass --auto-start-cluster=false, because JetBrains IDEs helpfully start every configured cluster the moment you launch the IDE.
+    link: https://docs.databricks.com/aws/en/dev-tools/ssh-tunnel#:~:text=JetBrains%20IDEs%20start%20all%20configured%20clusters%20on%20launch
+  - note: Databricks ships an official IDE extension and an official SSH tunnel, and the docs warn that the two are not yet compatible and should not be used together.
+    link: https://docs.databricks.com/aws/en/dev-tools/ssh-tunnel#:~:text=The%20Databricks%20IDE%20extension%20and%20the%20SSH%20tunnel%20are%20not%20yet%20compatible
+status:
+  value: active
+  link: https://docs.databricks.com/aws/en/dev-tools/ssh-tunnel#:~:text=This%20feature%20is%20in%20Beta
+  date: '2026-09-13'
+releases:
+  - type: beta
+    date: '2026'
+    link: https://docs.databricks.com/aws/en/dev-tools/ssh-tunnel#:~:text=This%20feature%20is%20in%20Beta
+introducedAt:
+  date: '2026'
+  link: https://www.databricks.com/blog/run-debug-and-scale-databricks-workloads-your-local-ide#:~:text=you%20can%20now%20connect%20VS%20Code%2C%20Cursor%2C%20or%20your%20terminal%20directly%20to%20Databricks%20compute
+occasion:
+  date: 2026-08
+  link: https://www.databricks.com/blog/run-debug-and-scale-databricks-workloads-your-local-ide#:~:text=you%20can%20now%20connect%20VS%20Code%2C%20Cursor%2C%20or%20your%20terminal%20directly%20to%20Databricks%20compute
+  note: 'Databricks blog: Run, debug, and scale Databricks workloads from your local IDE'
+limitations:
+  note: Shared clusters aren't supported and the Databricks IDE extension can't be used alongside it; files edited outside /Workspace, /Volumes, and /dbfs are lost on cluster restart; at most 10 SSH connections per cluster; inactive sessions might drop after 1 hour; and three or more open Jupyter notebooks can cause performance or connection issues.
+  link: https://docs.databricks.com/aws/en/dev-tools/ssh-tunnel#:~:text=A%20maximum%20of%2010%20SSH%20connections%20are%20allowed%20per%20cluster
+  date: '2026-09-13'
+links:
+  - url: https://www.databricks.com/blog/run-debug-and-scale-databricks-workloads-your-local-ide
+    kind: official
+    label: 'Databricks blog: Run, debug, and scale Databricks workloads from your local IDE (August 2026)'
+  - url: https://learn.microsoft.com/en-us/azure/databricks/dev-tools/ssh-tunnel
+    kind: official
+    label: 'Microsoft Learn: Connect to Databricks using an SSH tunnel'
+prediction:
+  - Lakeflow Remote Development
+  - Genie Shell
+  - Databricks Tunnel One
+source: https://docs.databricks.com/aws/en/dev-tools/ssh-tunnel
+verified: '2026-09-13'

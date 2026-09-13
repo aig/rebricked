@@ -1,0 +1,41 @@
+id: databricks-sandbox
+name: Databricks Sandbox
+aliases:
+  - sandbox
+  - databricks sandbox
+category: Compute / BI
+what:
+  note: A serverless compute environment for humans and agents, reachable over SSH, where a coding agent can run and throw away environments inside the workspace governance boundary.
+  link: https://docs.databricks.com/aws/en/compute/serverless/sandbox#:~:text=Databricks%20Sandbox%20is%20a%20compute%20environment%20for%20humans%20and%20agents%2C%20accessible%20over%20SSH
+fact:
+  - note: The home directory is /home/sandbox-agent, which is a fairly direct statement about who the docs think the primary user is.
+    link: https://docs.databricks.com/aws/en/compute/serverless/sandbox#:~:text=Data%20in%20your%20home%20directory%20%28%2Fhome%2Fsandbox-agent%29%20persists%20for%20the%20lifetime%20of%20your%20Databricks%20Sandbox
+  - note: The first time you SSH in, Databricks quietly rewires coding harnesses such as Claude and Codex to send their inference through AI Gateway, so the agent is governed before it types anything.
+    link: https://docs.databricks.com/aws/en/compute/serverless/sandbox#:~:text=automatically%20configures%20common%20coding%20harnesses%20such%20as%20Claude%20and%20Codex%20to%20use%20AI%20Gateway
+  - note: Many concurrent SSH sessions can share one sandbox and one filesystem, so an agent can be editing files in one session while you tail its logs from another.
+    link: https://docs.databricks.com/aws/en/compute/serverless/sandbox#:~:text=You%20can%20start%20many%20concurrent%20SSH%20sessions%20to%20one%20Databricks%20Sandbox
+status:
+  value: active
+  link: https://docs.databricks.com/aws/en/compute/serverless/sandbox#:~:text=This%20feature%20is%20in%20Beta
+  date: '2026-09-13'
+releases:
+  - type: beta
+    date: '2026'
+    link: https://docs.databricks.com/aws/en/compute/serverless/sandbox#:~:text=This%20feature%20is%20in%20Beta
+introducedAt:
+  date: '2026'
+  link: https://docs.databricks.com/aws/en/compute/serverless/sandbox#:~:text=This%20feature%20is%20in%20Beta
+limitations:
+  note: Fixed at 4 cores, 16 GB RAM and up to 100 GB of storage, with a maximum of 40 sandboxes per user and 100 per workspace; it doesn't yet integrate with serverless egress control, so it shouldn't be used in an SEG-enabled workspace; public IP addresses can change at any time; and home-directory data will be deleted when the Beta period ends.
+  link: https://docs.databricks.com/aws/en/compute/serverless/sandbox#:~:text=Tech%20specs%3A%204%20cores%2C%2016%20GB%20RAM%2C%20up%20to%20100%20GB%20storage
+  date: '2026-09-13'
+links:
+  - url: https://learn.microsoft.com/en-us/azure/databricks/compute/serverless/sandbox
+    kind: official
+    label: 'Microsoft Learn: Databricks Sandbox'
+prediction:
+  - Genie Sandbox
+  - Lakebox
+  - Agent Bricks Sandbox
+source: https://docs.databricks.com/aws/en/compute/serverless/sandbox
+verified: '2026-09-13'
