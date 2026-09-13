@@ -1,0 +1,30 @@
+id: snowflake-openflow
+name: Snowflake Openflow
+vendor: snowflake
+aliases:
+  - Openflow
+category: Data engineering
+what:
+  note: Snowflake's integration service, connecting any source to any destination with hundreds of processors covering structured data, text, images, audio, video and sensor data.
+  link: https://docs.snowflake.com/en/user-guide/data-integration/openflow/about#:~:text=is%20an%20integration%20service%20that%20connects%20any%20data%20source
+fact:
+  - note: It is Apache NiFi underneath, which is how a 2025 Snowflake product arrived with a processor library that had already been in production elsewhere for a decade.
+    link: https://docs.snowflake.com/en/user-guide/data-integration/openflow/about#:~:text=Built%20on%20Apache%20NiFi
+  - note: You can run it as a managed service inside your own cloud rather than Snowflake's, which is unusual for a Snowflake-branded service.
+    link: https://docs.snowflake.com/en/user-guide/data-integration/openflow/about#:~:text=fully%20managed%20service%20in%20your%20own%20cloud
+status:
+  value: active
+  link: https://docs.snowflake.com/en/user-guide/data-integration/openflow/about#:~:text=is%20an%20integration%20service%20that%20connects%20any%20data%20source
+  date: '2026-09-12'
+releases:
+  - type: public-preview
+    date: 2025-05
+    link: https://docs.snowflake.com/en/release-notes/new-features-2025#:~:text=Snowflake%20Openflow
+  - type: ga
+    date: 2025-05
+    link: https://docs.snowflake.com/en/release-notes/new-features-2025#:~:text=Snowflake%20Openflow
+introducedAt:
+  date: 2025-05
+  link: https://docs.snowflake.com/en/release-notes/new-features-2025#:~:text=Snowflake%20Openflow
+source: https://docs.snowflake.com/en/user-guide/data-integration/openflow/about
+verified: '2026-09-12'

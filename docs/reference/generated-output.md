@@ -8,7 +8,7 @@ the next build and never reaches the site.
 
 | Path | Kind | Owner |
 |---|---|---|
-| `kb/databricks/<id>.yaml` | **source**, tracked | you |
+| `kb/<vendor>/<id>.yaml` | **source**, tracked - one folder per vendor (`databricks`, `snowflake`) | you |
 | `kb/posts/<slug>/index.md` | **source**, tracked | you |
 | `kb/posts/<slug>/images/` | **source**, tracked | you (the builder copies it) |
 | `kb/posts/<slug>/materials/` | **source**, tracked, never deployed | you |
@@ -17,9 +17,9 @@ the next build and never reaches the site.
 | `www/assets/`, `www/robots.txt`, `www/CNAME`, `www/site.webmanifest` | **source**, tracked | you |
 | `www/disclaimer/`, `www/subscribe/` | **source**, tracked - static pages no generator owns | you |
 | `www/badges/` | **output, but tracked** | `build_badges.py` |
-| `www/databricks.features.json` | output, gitignored | `build_features.py` |
+| `www/<vendor>.features.json` | output, gitignored - one per `kb/<vendor>/` folder | `build_features.py` |
 | `www/learn/`, `www/posts.json` | output, gitignored | `build_posts.py` |
-| `www/databricks/` | output, gitignored | `build_entries.py` |
+| `www/<vendor>/` | output, gitignored - one namespace per vendor | `build_entries.py` |
 | `www/sitemap.xml`, `www/feed.xml` | output, gitignored | `build_entries.py` |
 | `reference/` | output, gitignored | `fetch_reference.py` |
 
@@ -43,8 +43,8 @@ Base: `https://rebricked.org`
 | `/#<entry-id>` | Deep link opening a single entry in the app | `app.js` routing |
 | `/?q=<term>` | Deep link reflecting the search box | `app.js` routing |
 | `/?quiz=<score>` | The "beat this score" challenge banner | `app.js` routing |
-| `/databricks/` | Vendor hub: every entry grouped by category | `build_entries.py` |
-| `/databricks/<id>/` | One crawlable page per entry, with unique title, description, canonical, OG, and JSON-LD | `build_entries.py` |
+| `/<vendor>/` | Vendor hub: every entry grouped by category. `/databricks/`, `/snowflake/` | `build_entries.py` |
+| `/<vendor>/<id>/` | One crawlable page per entry, with unique title, description, canonical, OG, and JSON-LD | `build_entries.py` |
 | `/learn/` | Guides index | `build_posts.py` |
 | `/learn/<slug>/` | One guide | `build_posts.py` |
 | `/badges/<n>-of-5/` | Quiz-result share page, with an absolute `og:image` | `build_badges.py` |
@@ -52,9 +52,19 @@ Base: `https://rebricked.org`
 | `/feed.xml` | RSS 2.0, newest tracked change first, one `[Guide]` item per post | `build_entries.py` |
 | `/disclaimer/`, `/subscribe/` | Static pages | hand-written |
 
-**The `/{vendor}/` segment is deliberate future-proofing.** Today everything is `databricks`, but an
-entry may carry a `vendor` field and a new vendor slots in as a new top-level namespace
-(`/snowflake/...`) with no structural change.
+**The `/{vendor}/` segment is what keeps vendors apart.** `build_entries.py` reads every
+`www/<vendor>.features.json`, stamps each entry with the vendor it was built from (or its own
+`vendor` field), and renders one namespace per vendor. Adding a vendor is a new `kb/` folder, a
+`VENDOR_LABEL` entry and a `VALID_CATEGORIES` key - not a change to the rendering code.
+
+One thing is **not** namespaced: entry ids. They share a single map across every vendor, so
+`validate.py` rejects an id used twice even across two vendors. See
+[reference/entry-schema.md](entry-schema.md).
+
+The app itself still loads only `databricks.features.json`, so a `?id=` deep link into the SPA only
+works for that vendor. `build_entries.py` knows this (`SPA_VENDORS`) and points every other vendor's
+entry pages at their hub instead of shipping a link that would open an app which has never heard of
+the entry.
 
 The two page families answer different needs: the app is the interactive experience, and
 `/{vendor}/{id}/` exists because a client-rendered SPA is an empty shell to a crawler and its `#id`

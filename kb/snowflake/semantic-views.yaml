@@ -1,0 +1,28 @@
+id: semantic-views
+name: Semantic views
+vendor: snowflake
+aliases:
+  - CREATE SEMANTIC VIEW
+  - semantic model
+category: Data governance
+what:
+  note: A schema-level object that stores business concepts - logical tables, facts, metrics and dimensions - in the database itself, so one definition serves both SQL and AI.
+  link: https://docs.snowflake.com/en/user-guide/views-semantic/overview#:~:text=which%20is%20a%20schema%2Dlevel%20object
+fact:
+  - note: The semantic layer stopped being a BI tool's private file and became a database object you can grant privileges on and query with SELECT.
+    link: https://docs.snowflake.com/en/user-guide/views-semantic/overview#:~:text=query%20these%20views%20in%20a%20SELECT%20statement
+  - note: The same object is what Cortex Analyst and Cortex Agents point at, so the metric a human queries is the metric the agent answers from.
+    link: https://docs.snowflake.com/en/user-guide/views-semantic/overview#:~:text=specify%20the%20view%20in%20the%20REST%20API%20request
+status:
+  value: active
+  link: https://docs.snowflake.com/en/user-guide/views-semantic/overview#:~:text=which%20is%20a%20schema%2Dlevel%20object
+  date: '2026-09-12'
+releases:
+  - type: ga
+    date: 2025-08
+    link: https://docs.snowflake.com/en/release-notes/new-features-2025#:~:text=Querying%20semantic%20views
+introducedAt:
+  date: '2025'
+  link: https://docs.snowflake.com/en/release-notes/new-features-2025#:~:text=Defining%20semantic%20views
+source: https://docs.snowflake.com/en/user-guide/views-semantic/overview
+verified: '2026-09-12'

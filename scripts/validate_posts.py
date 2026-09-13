@@ -35,7 +35,9 @@ except ModuleNotFoundError:  # pragma: no cover
 
 ROOT = Path(__file__).resolve().parents[1]
 KB_POSTS = ROOT / "kb" / "posts"
-DATA = ROOT / "www" / "databricks.features.json"
+WWW = ROOT / "www"
+# A guide may cite any vendor the repo tracks, so ids resolve against all of them.
+DATA_GLOB = "*.features.json"
 
 REQUIRED = ("slug", "title", "description", "kind", "category", "author", "published", "verified", "sources")
 OPTIONAL = ("updated", "staleAfter", "tags", "entries", "sources", "readingMinutes", "authorLink", "scorecard")
@@ -85,11 +87,14 @@ def check_date(slug, field, value, today):
 
 
 def main():
-    if not DATA.exists():
+    paths = sorted(WWW.glob(DATA_GLOB))
+    if not paths:
         sys.exit(
-            "FATAL: www/databricks.features.json is missing - run scripts/build_features.py first."
+            f"FATAL: no www/{DATA_GLOB} - run scripts/build_features.py first."
         )
-    by_id = {d["id"] for d in json.loads(DATA.read_text(encoding="utf-8"))}
+    by_id = {
+        d["id"] for path in paths for d in json.loads(path.read_text(encoding="utf-8"))
+    }
     today = datetime.date.today()
 
     if not KB_POSTS.is_dir():

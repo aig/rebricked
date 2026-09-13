@@ -1,0 +1,32 @@
+id: cortex-code
+name: Cortex Code
+abbr: CoCo
+vendor: snowflake
+aliases:
+  - CoCo
+  - CoCo Desktop
+category: Developer experience
+what:
+  note: Snowflake's agentic coding assistant, available in Snowsight, in a CLI and in the VS Code extension, for SQL and Python development against your account.
+  link: https://docs.snowflake.com/en/release-notes/2026/other/2026-03-09-cortex-code-snowsight-ga#:~:text=bringing%20an%20agentic%20assistant%20directly%20into%20Snowflake
+fact:
+  - note: Snowflake's own release notes use the product name and the nickname interchangeably, so the same feature ships as Cortex Code and lands in the changelog as CoCo.
+    link: https://docs.snowflake.com/en/release-notes/2026/other/2026-03-09-cortex-code-snowsight-ga#:~:text=CoCo
+  - note: It went from preview to general availability in Snowsight in about five weeks.
+    link: https://docs.snowflake.com/en/release-notes/2026/other/2026-03-09-cortex-code-snowsight-ga#:~:text=generally%20available%20in%20Snowsight
+status:
+  value: active
+  link: https://docs.snowflake.com/en/release-notes/2026/other/2026-03-09-cortex-code-snowsight-ga#:~:text=generally%20available%20in%20Snowsight
+  date: '2026-09-12'
+releases:
+  - type: public-preview
+    date: 2026-02
+    link: https://docs.snowflake.com/en/release-notes/new-features-2026#:~:text=Cortex%20Code
+  - type: ga
+    date: 2026-03
+    link: https://docs.snowflake.com/en/release-notes/2026/other/2026-03-09-cortex-code-snowsight-ga#:~:text=generally%20available%20in%20Snowsight
+introducedAt:
+  date: 2026-02
+  link: https://docs.snowflake.com/en/release-notes/new-features-2026#:~:text=Cortex%20Code
+source: https://docs.snowflake.com/en/release-notes/2026/other/2026-03-09-cortex-code-snowsight-ga
+verified: '2026-09-12'

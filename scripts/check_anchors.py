@@ -77,7 +77,10 @@ from urllib.parse import unquote, urlsplit
 from urllib.request import Request, urlopen
 
 ROOT = Path(__file__).resolve().parent.parent
-DATA = ROOT / "www" / "databricks.features.json"
+WWW = ROOT / "www"
+# Every vendor's built entries. Citation rot is vendor-agnostic: a Snowflake doc
+# reworded out from under a quote fails exactly like a Databricks one.
+DATA_GLOB = "*.features.json"
 POSTS = ROOT / "kb" / "posts"
 
 FRAGMENT = "#:~:text="
@@ -291,12 +294,12 @@ def main(argv=None):
                          "hosts serve normally. Slower and serial; needs a browser installed")
     args = ap.parse_args(argv)
 
-    try:
-        data = json.loads(DATA.read_text(encoding="utf-8"))
-    except FileNotFoundError:
-        print(f"FATAL: {DATA.name} not found - it is built from kb/. Run first:")
+    paths = sorted(WWW.glob(DATA_GLOB))
+    if not paths:
+        print(f"FATAL: no www/{DATA_GLOB} found - they are built from kb/. Run first:")
         print("       python scripts/build_features.py")
         return 1
+    data = [e for path in paths for e in json.loads(path.read_text(encoding="utf-8"))]
     posts = post_anchors()
     wanted = set(args.ids)
     if wanted:

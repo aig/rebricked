@@ -1,0 +1,26 @@
+id: materialized-tables
+name: Materialized Tables
+vendor: snowflake
+category: Data engineering
+what:
+  note: The name Snowflake first gave its declarative table type that materializes a query result and keeps it fresh, announced at Summit 2022 a year before the feature shipped.
+  link: https://www.snowflake.com/en/blog/dynamic-tables-delivering-declarative-streaming-data-pipelines/#:~:text=during%20Summit%20%2722%20under%20the%20name
+fact:
+  - note: Snowflake announced this capability at one Summit and shipped it at the next under a different name, which is why the 2022 keynote slides describe a table type nobody can create today.
+    link: https://www.snowflake.com/en/blog/dynamic-tables-delivering-declarative-streaming-data-pipelines/#:~:text=during%20Summit%20%2722%20under%20the%20name
+status:
+  value: renamed
+  link: https://www.snowflake.com/en/blog/dynamic-tables-delivering-declarative-streaming-data-pipelines/#:~:text=during%20Summit%20%2722%20under%20the%20name
+  date: '2026-09-12'
+from:
+  date: 2022-06
+  link: https://www.snowflake.com/en/blog/dynamic-tables-delivering-declarative-streaming-data-pipelines/#:~:text=during%20Summit%20%2722%20under%20the%20name
+to:
+  date: 2023-06
+  link: https://docs.snowflake.com/en/release-notes/2023/june-summit#:~:text=Dynamic%20tables%20are%20the%20building%20blocks
+successorId: dynamic-tables
+prediction:
+  - Declarative Tables
+  - Auto-Refreshing Tables
+source: https://www.snowflake.com/en/blog/dynamic-tables-delivering-declarative-streaming-data-pipelines/
+verified: '2026-09-12'

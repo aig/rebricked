@@ -1,4 +1,4 @@
-# Build databricks.features.json from kb/, validate it, then deploy the static site to Pages
+# Build every vendor's features JSON from kb/, validate it, then deploy the static site to Pages
 name: Validate and deploy to Pages
 
 on:
@@ -36,7 +36,7 @@ jobs:
         uses: actions/checkout@v4
       - name: Install PyYAML
         run: python3 -m pip install --disable-pip-version-check pyyaml
-      - name: Build databricks.features.json from kb/
+      - name: Build the feature JSON from kb/
         # kb/<vendor>/<id>.yaml is the source of truth; the JSON the app fetches is
         # build output and is not tracked, so every job that reads it builds it first.
         run: python3 scripts/build_features.py
@@ -44,7 +44,7 @@ jobs:
         # Resolves {{entry:id}} against the built data, so a guide can never link to a name
         # the dataset does not have. Fails the build if one does.
         run: python3 scripts/build_posts.py
-      - name: Validate databricks.features.json
+      - name: Validate the feature JSON
         run: python3 scripts/validate.py
       - name: Validate kb/posts/
         run: python3 scripts/validate_posts.py
@@ -62,7 +62,7 @@ jobs:
         uses: actions/checkout@v4
       - name: Install PyYAML
         run: python3 -m pip install --disable-pip-version-check pyyaml
-      - name: Build databricks.features.json from kb/
+      - name: Build the feature JSON from kb/
         # The data the app fetches at runtime, assembled from the per-entry YAML in kb/.
         # Not tracked, so this must run before build_entries.py and before the upload.
         run: python3 scripts/build_features.py
@@ -71,8 +71,8 @@ jobs:
         # to render the "Guides that mention this" links and to list guides in sitemap/feed.
         run: python3 scripts/build_posts.py
       - name: Build entry pages + sitemap
-        # Regenerate the crawlable /{vendor}/... pages and sitemap.xml straight from
-        # databricks.features.json so they can never drift from the data. No browser needed.
+        # Regenerate the crawlable /{vendor}/... pages and sitemap.xml straight from the
+        # built feature JSON so they can never drift from the data. No browser needed.
         run: python3 scripts/build_entries.py
       - name: Setup Pages
         uses: actions/configure-pages@v5

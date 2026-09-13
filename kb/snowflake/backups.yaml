@@ -1,0 +1,25 @@
+id: backups
+name: Backups
+vendor: snowflake
+aliases:
+  - CREATE BACKUP SET
+  - BACKUP POLICY
+  - WORM backups
+category: Data governance
+what:
+  note: Discrete, immutable point-in-time copies of Snowflake objects, used for disaster recovery and for compliance retention that must survive deletion.
+  link: https://docs.snowflake.com/en/user-guide/snapshots#:~:text=Backups%20represent%20discrete%20snapshots%20of%20Snowflake%20objects
+fact:
+  - note: Its own documentation still describes a backup as a snapshot, because the concept kept the old word even after the commands stopped using it.
+    link: https://docs.snowflake.com/en/user-guide/snapshots#:~:text=Backups%20represent%20discrete%20snapshots%20of%20Snowflake%20objects
+  - note: The rename reached the billing system before it reached most of the SQL - the metering service type flipped to BACKUP while the old commands were still the documented ones.
+    link: https://docs.snowflake.com/en/release-notes/2025/9_37#:~:text=renaming%20Snapshots%20feature%20to%20Backups
+status:
+  value: active
+  link: https://docs.snowflake.com/en/user-guide/snapshots#:~:text=now%20called%20backups%20instead%20of%20snapshots
+  date: '2026-09-12'
+from:
+  date: 2025-11
+  link: https://docs.snowflake.com/en/release-notes/2025/9_37#:~:text=renaming%20Snapshots%20feature%20to%20Backups
+source: https://docs.snowflake.com/en/user-guide/snapshots
+verified: '2026-09-12'

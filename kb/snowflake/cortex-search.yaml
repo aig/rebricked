@@ -1,0 +1,28 @@
+id: cortex-search
+name: Cortex Search
+vendor: snowflake
+category: AI / ML
+what:
+  note: Managed retrieval service for low-latency, high-quality fuzzy search over Snowflake data, typically as the retrieval half of a RAG application.
+  link: https://docs.snowflake.com/en/user-guide/snowflake-cortex/cortex-search/cortex-search-overview#:~:text=low%2Dlatency%2C%20high%2Dquality
+fact:
+  - note: It is not a pure vector index - quality comes from combining vector search, keyword search and semantic reranking behind one API.
+    link: https://docs.snowflake.com/en/user-guide/snowflake-cortex/cortex-search/cortex-search-overview#:~:text=semantic%20reranking
+  - note: Its default embedding model is one Snowflake trained itself, snowflake-arctic-embed-m-v1.5.
+    link: https://docs.snowflake.com/en/user-guide/snowflake-cortex/cortex-search/cortex-search-overview#:~:text=snowflake%2Darctic%2Dembed%2Dm%2Dv1.5
+status:
+  value: active
+  link: https://docs.snowflake.com/en/user-guide/snowflake-cortex/cortex-search/cortex-search-overview#:~:text=low%2Dlatency%2C%20high%2Dquality
+  date: '2026-09-12'
+releases:
+  - type: public-preview
+    date: 2024-07
+    link: https://docs.snowflake.com/en/release-notes/new-features-2024#:~:text=Cortex%20Search
+  - type: ga
+    date: 2024-10
+    link: https://docs.snowflake.com/en/release-notes/new-features-2024#:~:text=Cortex%20Search
+introducedAt:
+  date: 2024-07
+  link: https://docs.snowflake.com/en/release-notes/new-features-2024#:~:text=Cortex%20Search
+source: https://docs.snowflake.com/en/user-guide/snowflake-cortex/cortex-search/cortex-search-overview
+verified: '2026-09-12'

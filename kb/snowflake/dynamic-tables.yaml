@@ -1,0 +1,35 @@
+id: dynamic-tables
+name: Dynamic Tables
+vendor: snowflake
+aliases:
+  - dynamic table
+  - CREATE DYNAMIC TABLE
+category: Data engineering
+what:
+  note: A table type that materializes the result of a SELECT query and keeps it up to date automatically, refreshing against a target lag instead of a schedule you maintain.
+  link: https://docs.snowflake.com/en/user-guide/dynamic-tables-about#:~:text=A%20dynamic%20table%20materializes%20the%20results%20of%20a%20SELECT%20query
+fact:
+  - note: You never write the refresh logic - you state a target lag, and Snowflake works out the dependency graph and the refresh order on your behalf.
+    link: https://docs.snowflake.com/en/user-guide/dynamic-tables-about#:~:text=You%20specify%20a%20SELECT%20query%20and%20a%20target%20lag
+  - note: Its general availability note still introduced it as "a new table type", by which point it had been in public preview for ten months.
+    link: https://docs.snowflake.com/en/release-notes/2024/other/2024-04-29-dynamic-tables#:~:text=a%20new%20table%20type%20for%20continuous%20processing%20pipelines
+status:
+  value: active
+  link: https://docs.snowflake.com/en/user-guide/dynamic-tables-about#:~:text=A%20dynamic%20table%20materializes%20the%20results%20of%20a%20SELECT%20query
+  date: '2026-09-12'
+releases:
+  - type: public-preview
+    date: 2023-06
+    link: https://docs.snowflake.com/en/release-notes/2023/june-summit#:~:text=Dynamic%20tables%20are%20the%20building%20blocks
+  - type: ga
+    date: 2024-04
+    link: https://docs.snowflake.com/en/release-notes/2024/other/2024-04-29-dynamic-tables#:~:text=a%20new%20table%20type%20for%20continuous%20processing%20pipelines
+from:
+  date: 2023-06
+  link: https://docs.snowflake.com/en/release-notes/2023/june-summit#:~:text=Dynamic%20tables%20are%20the%20building%20blocks
+occasion:
+  date: 2023-06
+  link: https://docs.snowflake.com/en/release-notes/2023/june-summit#:~:text=Dynamic%20tables%20are%20the%20building%20blocks
+  note: Snowflake Summit 2023
+source: https://docs.snowflake.com/en/user-guide/dynamic-tables-about
+verified: '2026-09-12'

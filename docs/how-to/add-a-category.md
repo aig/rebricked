@@ -4,14 +4,19 @@
 list is what the UI's filter chips are built from, so a typo would silently create a chip
 containing exactly one entry.
 
-## The current list
+The list is **per vendor**: `VALID_CATEGORIES` is a dict keyed by vendor, and an entry is
+checked against its own vendor's tuple.
+
+## The current lists
 
 ```
-Data engineering
-Compute / BI
-Developer experience
-Data governance
-BI / Dashboards
+databricks              snowflake
+----------              ---------
+Data engineering        Data engineering
+Compute / BI            Compute / BI
+Developer experience    Developer experience
+Data governance         Data governance
+BI / Dashboards         AI / ML
 AI / BI
 AI / ML
 ```
@@ -23,15 +28,23 @@ row rather than a wall, and a category with one member is worse than a slightly 
 
 ## If a new one is genuinely warranted
 
-1. Add it to `VALID_CATEGORIES` in [`scripts/validate.py`](../../scripts/validate.py):
+1. Add it to the right vendor's tuple in `VALID_CATEGORIES`
+   ([`scripts/validate.py`](../../scripts/validate.py)) - not to every vendor, only the one that
+   needs it:
 
    ```python
-   VALID_CATEGORIES = (
-       "Data engineering",
-       ...
-       "Your New Category",
-   )
+   VALID_CATEGORIES = {
+       "databricks": (...),
+       "snowflake": (
+           "Data engineering",
+           ...
+           "Your New Category",
+       ),
+   }
    ```
+
+   Adding a whole new *vendor* means adding a key here too; a vendor with no allow-list fails the
+   gate rather than silently accepting anything.
 
 2. Use it in the entry YAML in the **same commit**. A category added without a user is dead code
    in a tuple.

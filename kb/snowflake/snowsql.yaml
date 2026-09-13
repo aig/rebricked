@@ -1,0 +1,26 @@
+id: snowsql
+name: SnowSQL
+vendor: snowflake
+aliases:
+  - snowsql CLI
+  - the Snowflake command line client
+category: Developer experience
+what:
+  note: Snowflake's command-line SQL client, used to run queries and every DDL and DML operation including loading data into and unloading it out of tables.
+  link: https://docs.snowflake.com/en/user-guide/snowsql#:~:text=SnowSQL%20is%20a%20legacy%20command%2Dline%20client
+fact:
+  - note: Its documentation calls it legacy in the opening sentence, then spends the next paragraph recommending you leave.
+    link: https://docs.snowflake.com/en/user-guide/snowsql#:~:text=Snowflake%20recommends%20that%20you%20begin%20transitioning%20from%20SnowSQL
+  - note: It still ships releases, just nothing new in them - Snowflake says features and enhancements now go only to its replacement.
+    link: https://docs.snowflake.com/en/user-guide/snowsql#:~:text=only%20add%20new%20features%20and%20enhancements%20to%20Snowflake%20CLI
+status:
+  value: legacy
+  link: https://docs.snowflake.com/en/user-guide/snowsql#:~:text=SnowSQL%20is%20a%20legacy%20command%2Dline%20client
+  date: '2026-09-12'
+deprecatedAt:
+  date: '2026'
+  link: https://docs.snowflake.com/en/user-guide/snowsql#:~:text=SnowSQL%20is%20a%20legacy%20command%2Dline%20client
+successorId: snowflake-cli
+replacement: Snowflake CLI
+source: https://docs.snowflake.com/en/user-guide/snowsql
+verified: '2026-09-12'

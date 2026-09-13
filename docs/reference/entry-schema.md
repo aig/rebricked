@@ -49,15 +49,36 @@ Two things are **calculated, not stored**:
 | `source` | URL | The canonical official link. No source, no entry |
 | `verified` | `YYYY-MM-DD` | The day a human last confirmed the entry. Never future |
 
-`category` must be one of:
+`category` is per vendor, because each list mirrors that vendor's own console vocabulary.
+`VALID_CATEGORIES` in `validate.py` is a dict keyed by vendor:
 
 ```
-Data engineering    Compute / BI    Developer experience    Data governance
-BI / Dashboards     AI / BI         AI / ML
+databricks   Data engineering    Compute / BI    Developer experience    Data governance
+             BI / Dashboards     AI / BI         AI / ML
+
+snowflake    Data engineering    Compute / BI    Developer experience    Data governance
+             AI / ML
 ```
 
-Adding one means editing `VALID_CATEGORIES` in `validate.py` deliberately, in the same commit that
-uses it. See [how-to/add-a-category.md](../how-to/add-a-category.md).
+An entry is checked against its own vendor's list, so a Databricks-only category on a Snowflake
+entry fails the gate. Adding one means editing `VALID_CATEGORIES` deliberately, in the same commit
+that uses it. See [how-to/add-a-category.md](../how-to/add-a-category.md).
+
+## `vendor`
+
+| Field | Type | Rules |
+|---|---|---|
+| `vendor` | string | Optional. The vendor namespace this entry belongs to. Defaults to `databricks`, which is why the 171 entries written before the field existed do not carry it. It decides the category allow-list, the page URL (`/{vendor}/{id}/`), and which entries a rename chain may link to |
+
+In practice you never write it by hand for a new vendor either: `build_features.py` builds
+`www/<vendor>.features.json` from `kb/<vendor>/`, and every reader stamps entries with the file
+they came from. Writing it explicitly in the YAML is the clearer habit and what the Snowflake
+entries do.
+
+**Ids are unique across every vendor, not just within one.** The generated pages index entries by
+`id` in a single map, so a Databricks id and a Snowflake id that collided would cross their lineage
+links. If a name is already taken by another vendor, use the name the vendor's own docs use, and if
+that still collides, the two entries need distinguishing names - not a namespaced id.
 
 ## Date-bearing fields
 

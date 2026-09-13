@@ -1,0 +1,28 @@
+id: snowsight
+name: Snowsight
+vendor: snowflake
+aliases:
+  - Snowflake web interface
+  - Snowflake UI
+category: Developer experience
+what:
+  note: Snowflake's web interface, giving one place to query, explore, build dashboards and administer the account in SQL or Python.
+  link: https://docs.snowflake.com/en/user-guide/ui-snowsight#:~:text=Snowsight%20provides%20a%20unified%20experience%20for%20working%20with%20your%20Snowflake%20data
+fact:
+  - note: Snowflake spent a full year coaxing people into it - at the end of 2021 its own blog was still pitching the new UI as a New Year's resolution.
+    link: https://www.snowflake.com/en/blog/new-year-new-ui-get-started-in-snowsight/#:~:text=make%20it%20your%20New%20Year%27s%20resolution
+  - note: It is now the only interface Snowflake offers, Private Link and VPS accounts included, so there is no longer anything to switch back to.
+    link: https://docs.snowflake.com/en/release-notes/bcr-bundles/2025_06/bcr-2080#:~:text=Snowsight%20becomes%20the%20only%20available%20interface
+status:
+  value: active
+  link: https://docs.snowflake.com/en/user-guide/ui-snowsight#:~:text=Snowsight%20provides%20a%20unified%20experience%20for%20working%20with%20your%20Snowflake%20data
+  date: '2026-09-12'
+releases:
+  - type: public-preview
+    date: 2021-12
+    link: https://www.snowflake.com/en/blog/new-year-new-ui-get-started-in-snowsight/#:~:text=that%20are%20in%20public%20preview
+introducedAt:
+  date: '2021'
+  link: https://www.snowflake.com/en/blog/new-year-new-ui-get-started-in-snowsight/#:~:text=that%20are%20in%20public%20preview
+source: https://docs.snowflake.com/en/user-guide/ui-snowsight
+verified: '2026-09-12'

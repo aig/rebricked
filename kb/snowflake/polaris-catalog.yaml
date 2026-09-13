@@ -1,0 +1,30 @@
+id: polaris-catalog
+name: Polaris Catalog
+vendor: snowflake
+category: Data governance
+what:
+  note: Snowflake's open source catalog implementation for Apache Iceberg tables, announced to give any engine a vendor-neutral place to register and read Iceberg tables.
+  link: https://www.snowflake.com/en/blog/introducing-polaris-catalog/#:~:text=choice%2C%20flexibility%20and%20control%20over%20their%20data
+fact:
+  - note: Snowflake promised to open source it within 90 days of announcing it, before the hosted version had even reached public preview.
+    link: https://www.snowflake.com/en/blog/introducing-polaris-catalog/#:~:text=open%20sourced%20in%20the%20next%2090%20days
+status:
+  value: renamed
+  link: https://docs.snowflake.com/en/release-notes/2024/other/2024-10-18-snowflake-open-catalog-ga#:~:text=which%20was%20previously%20named%20Polaris%20Catalog
+  date: '2026-09-12'
+from:
+  date: 2024-06
+  link: https://www.snowflake.com/en/blog/introducing-polaris-catalog/#:~:text=choice%2C%20flexibility%20and%20control%20over%20their%20data
+to:
+  date: 2024-10
+  link: https://docs.snowflake.com/en/release-notes/2024/other/2024-10-18-snowflake-open-catalog-ga#:~:text=which%20was%20previously%20named%20Polaris%20Catalog
+successorId: snowflake-open-catalog
+occasion:
+  date: 2024-06
+  link: https://www.snowflake.com/en/blog/introducing-polaris-catalog/#:~:text=choice%2C%20flexibility%20and%20control%20over%20their%20data
+  note: Snowflake Summit 2024
+prediction:
+  - Polaris Open Catalog
+  - Iceberg Catalog
+source: https://www.snowflake.com/en/blog/introducing-polaris-catalog/
+verified: '2026-09-12'
