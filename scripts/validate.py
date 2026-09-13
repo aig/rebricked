@@ -1,13 +1,17 @@
 #!/usr/bin/env python3
-"""Validate databricks.features.json against the rebricked field rules.
+"""Validate every www/<vendor>.features.json against the rebricked field rules.
 
 The one unforgivable bug is being confidently wrong. This gate keeps a
 malformed or unsourced entry from ever reaching GitHub Pages.
 
-Entries are authored as kb/databricks/<id>.yaml; the JSON this reads is build output,
+Entries are authored as kb/<vendor>/<id>.yaml; the JSON this reads is build output,
 so build it first:
 
     python scripts/build_features.py && python scripts/validate.py
+
+Every vendor is held to the same field rules. The two things that are per-vendor are the
+category allow-list (VALID_CATEGORIES) and the rail-coverage check, which only applies to
+the vendor the single-page app actually renders - see NAV_VENDOR.
 """
 import datetime
 import json
@@ -17,8 +21,12 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
 WWW = ROOT / "www"
-DATA = WWW / "databricks.features.json"
+DATA_GLOB = "*.features.json"  # one built file per vendor, named for its kb/ folder
 APP_JS = WWW / "app.js"
+# The rail in app.js is the Databricks console rail, so NAV coverage is checked for that
+# vendor only. A vendor with no rail of its own reaches readers through its generated hub
+# at /{vendor}/ instead, which lists every one of its entries by construction.
+NAV_VENDOR = "databricks"
 
 DATE_RE = re.compile(r"^\d{4}(-(0[1-9]|1[0-2]))?$")  # YYYY or YYYY-MM (real months only)
 VERIFIED_RE = re.compile(r"^\d{4}-\d{2}-\d{2}$")     # YYYY-MM-DD
@@ -53,17 +61,31 @@ VALID_RELEASES = ("private-preview", "beta", "public-preview", "ga")
 # Classified reference links: official docs, community (blogs/forums), or wider internet.
 VALID_LINK_KINDS = ("official", "community", "internet")
 
-# The category set the UI's chips are built from. A new category is allowed -
-# add it here deliberately rather than by typo.
-VALID_CATEGORIES = (
-    "Data engineering",
-    "Compute / BI",
-    "Developer experience",
-    "Data governance",
-    "BI / Dashboards",
-    "AI / BI",
-    "AI / ML",
-)
+# The category set the UI's chips are built from, per vendor. A new category is allowed -
+# add it here deliberately rather than by typo. Vendors keep separate lists because the
+# categories mirror each vendor's own console vocabulary: Databricks has "Lakehouse"-shaped
+# sections, Snowflake has sharing and app sections Databricks has no equivalent of.
+VALID_CATEGORIES = {
+    "databricks": (
+        "Data engineering",
+        "Compute / BI",
+        "Developer experience",
+        "Data governance",
+        "BI / Dashboards",
+        "AI / BI",
+        "AI / ML",
+    ),
+    "snowflake": (
+        "Data engineering",
+        "Compute / BI",
+        "Developer experience",
+        "Data governance",
+        "AI / ML",
+        "Apps / Native Apps",
+        "Sharing / Collaboration",
+    ),
+}
+DEFAULT_VENDOR = "databricks"  # entries written before the `vendor` field existed
 
 
 def name_slug(name):
@@ -135,22 +157,36 @@ def check_date_obj(eid, field, v):
     return v
 
 
+def load_all():
+    """Read every built vendor file. Returns (entries, fatal_message). Each entry is stamped
+    with the vendor whose file it came from, so the per-vendor checks below have something to
+    branch on without every entry having to repeat a `vendor` field."""
+    paths = sorted(WWW.glob(DATA_GLOB))
+    if not paths:
+        return None, (
+            f"FATAL: no www/{DATA_GLOB} found - they are build output.\n"
+            "       Build them from the kb/ entries: python scripts/build_features.py"
+        )
+    data = []
+    for path in paths:
+        vendor = path.name[: -len(".features.json")]
+        try:
+            parsed = json.loads(path.read_text(encoding="utf-8"))
+        except json.JSONDecodeError as e:
+            return None, f"FATAL: {path.name} is not valid JSON: {e}"
+        if not isinstance(parsed, list):
+            return None, f"FATAL: {path.name} must be a JSON array"
+        for entry in parsed:
+            if isinstance(entry, dict):
+                entry.setdefault("vendor", vendor)
+            data.append(entry)
+    return data, None
+
+
 def main():
-    try:
-        raw = DATA.read_text(encoding="utf-8")
-    except FileNotFoundError:
-        print(f"FATAL: {DATA} not found - it is build output.")
-        print("       Build it from the kb/ entries: python scripts/build_features.py")
-        return 1
-
-    try:
-        data = json.loads(raw)
-    except json.JSONDecodeError as e:
-        print(f"FATAL: databricks.features.json is not valid JSON: {e}")
-        return 1
-
-    if not isinstance(data, list):
-        print("FATAL: databricks.features.json must be a JSON array")
+    data, fatal = load_all()
+    if fatal:
+        print(fatal)
         return 1
 
     seen_ids = set()
@@ -236,10 +272,15 @@ def main():
         if src and not URL_RE.match(str(src)):
             err(eid, f"source is not an http(s) URL: {src!r}")
 
-        # category must come from the deliberate allow-list
-        cat = entry.get("category")
-        if cat and cat not in VALID_CATEGORIES:
-            err(eid, f"category must be one of {VALID_CATEGORIES}, got {cat!r}")
+        # category must come from the deliberate allow-list for this entry's vendor
+        vendor = entry.get("vendor") or DEFAULT_VENDOR
+        allowed = VALID_CATEGORIES.get(vendor)
+        if allowed is None:
+            err(eid, f"vendor {vendor!r} has no category allow-list in validate.py")
+        else:
+            cat = entry.get("category")
+            if cat and cat not in allowed:
+                err(eid, f"category must be one of {allowed} for vendor {vendor!r}, got {cat!r}")
 
         # release maturity (optional, any entry) - the axis orthogonal to lifecycle status.
         # `releases` is the stage timeline: each {type, date} is when the thing entered that
@@ -432,8 +473,15 @@ def main():
             if grp == "deprecation":
                 warn(eid, "deprecation has 'prediction'; retired things don't get renamed - it will be ignored")
 
-    # cross-entry checks
+    # cross-entry checks. Ids share one namespace across every vendor: the generated pages
+    # index entries by id in a single map, so a databricks id and a snowflake id that collide
+    # would cross their lineage links. Keep them globally unique.
     all_ids = {e.get("id") for e in data if isinstance(e, dict) and e.get("id")}
+    vendor_of_id = {
+        e["id"]: (e.get("vendor") or DEFAULT_VENDOR)
+        for e in data
+        if isinstance(e, dict) and e.get("id")
+    }
     for entry in data:
         if not isinstance(entry, dict):
             continue
@@ -442,9 +490,20 @@ def main():
             err(entry.get("id", "?"), f"successorId {sid!r} does not match any entry id")
         if sid == entry.get("id"):
             err(entry.get("id", "?"), "successorId points at itself")
+        # A rename chain belongs to one vendor; a cross-vendor successor is a typo, not a
+        # product history (nobody renamed a Databricks feature into a Snowflake one).
+        if sid and sid in vendor_of_id:
+            here = entry.get("vendor") or DEFAULT_VENDOR
+            if vendor_of_id[sid] != here:
+                err(
+                    entry.get("id", "?"),
+                    f"successorId {sid!r} belongs to vendor {vendor_of_id[sid]!r}, not {here!r}",
+                )
 
     # NAV coverage: every entry must be reachable from a rail section, and every id
-    # the rail references must exist. app.js is the source of the NAV config.
+    # the rail references must exist. app.js is the source of the NAV config. Only the
+    # vendor the app actually renders has a rail; the rest reach readers via their hub.
+    nav_scope = {i for i, v in vendor_of_id.items() if v == NAV_VENDOR}
     try:
         app_js = APP_JS.read_text(encoding="utf-8")
     except OSError:
@@ -454,8 +513,8 @@ def main():
         for group in re.findall(r"ids:\s*\[([^\]]*)\]", app_js):
             nav_ids.update(re.findall(r"\"([a-z0-9-]+)\"", group))
         for missing in sorted(nav_ids - all_ids):
-            err(missing, "NAV in app.js references an id that is not in databricks.features.json")
-        for unreachable in sorted(all_ids - nav_ids):
+            err(missing, f"NAV in app.js references an id that is not in {NAV_VENDOR}.features.json")
+        for unreachable in sorted(nav_scope - nav_ids):
             err(unreachable, "entry appears in no NAV section in app.js - unreachable from the rail")
 
     # report
@@ -468,7 +527,12 @@ def main():
         print(f"\n{len(errors)} error(s) in {len(data)} entr{'y' if len(data)==1 else 'ies'}. Not publishing.")
         return 1
 
-    print(f"OK: {len(data)} entr{'y' if len(data)==1 else 'ies'} valid.")
+    counts = {}
+    for e in data:
+        if isinstance(e, dict):
+            counts[e.get("vendor") or DEFAULT_VENDOR] = counts.get(e.get("vendor") or DEFAULT_VENDOR, 0) + 1
+    breakdown = ", ".join(f"{v}: {n}" for v, n in sorted(counts.items()))
+    print(f"OK: {len(data)} entr{'y' if len(data)==1 else 'ies'} valid ({breakdown}).")
     return 0
 
 

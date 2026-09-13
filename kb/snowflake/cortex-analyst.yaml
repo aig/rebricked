@@ -1,0 +1,19 @@
+id: cortex-analyst
+name: Cortex Analyst
+vendor: snowflake
+category: AI / ML
+what:
+  note: Managed, LLM-powered Cortex feature for building applications that answer business questions over structured Snowflake data by generating SQL against a semantic model.
+  link: https://docs.snowflake.com/en/user-guide/snowflake-cortex/cortex-analyst#:~:text=a%20fully%20managed%2C%20LLM%2Dpowered%20Snowflake%20Cortex%20feature
+fact:
+  - note: Snowflake now recommends moving off it to Cortex Agents, which it says covers every Cortex Analyst capability with higher answer quality - a recommendation, notably, and not a deprecation.
+    link: https://docs.snowflake.com/en/user-guide/snowflake-cortex/cortex-analyst#:~:text=Snowflake%20recommends%20transitioning%20to%20Cortex%20Agents
+status:
+  value: active
+  link: https://docs.snowflake.com/en/user-guide/snowflake-cortex/cortex-analyst#:~:text=a%20fully%20managed%2C%20LLM%2Dpowered%20Snowflake%20Cortex%20feature
+  date: '2026-09-12'
+introducedAt:
+  date: 2024-08
+  link: https://docs.snowflake.com/en/release-notes/new-features-2024#:~:text=Cortex%20Analyst
+source: https://docs.snowflake.com/en/user-guide/snowflake-cortex/cortex-analyst
+verified: '2026-09-12'

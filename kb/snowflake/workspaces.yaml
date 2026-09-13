@@ -1,0 +1,23 @@
+id: workspaces
+name: Workspaces
+vendor: snowflake
+aliases:
+  - Snowsight Workspaces
+category: Developer experience
+what:
+  note: Snowsight's file-based editor for SQL, Python and notebooks, with nested folders, sharing and Git version control instead of loose worksheet tabs.
+  link: https://docs.snowflake.com/en/user-guide/ui-snowsight/workspaces#:~:text=Workspaces%20provides%20a%20unified%20editor
+fact:
+  - note: The switch from tabs to files is what made version control possible at all - workspace content is files, so Git can see it.
+    link: https://docs.snowflake.com/en/user-guide/ui-snowsight/workspaces#:~:text=integrate%20with%20Git%20for%20version%20control
+  - note: It went from preview to the default editor in every Snowflake account in under a year.
+    link: https://docs.snowflake.com/en/release-notes/bcr-bundles/un-bundled/bcr-2260#:~:text=the%20default%20editor%20for%20all%20accounts
+status:
+  value: active
+  link: https://docs.snowflake.com/en/user-guide/ui-snowsight/workspaces#:~:text=Workspaces%20provides%20a%20unified%20editor
+  date: '2026-09-12'
+introducedAt:
+  date: 2025-06
+  link: https://docs.snowflake.com/en/release-notes/new-features-2025#:~:text=Workspaces%20in%20Snowsight
+source: https://docs.snowflake.com/en/user-guide/ui-snowsight/workspaces
+verified: '2026-09-12'

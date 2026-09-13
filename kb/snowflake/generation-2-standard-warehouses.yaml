@@ -1,0 +1,29 @@
+id: generation-2-standard-warehouses
+name: Generation 2 standard warehouses
+abbr: Gen2
+vendor: snowflake
+aliases:
+  - Gen2 warehouses
+  - Gen2
+category: Compute / BI
+what:
+  note: An updated standard virtual warehouse on faster hardware with software optimizations for delete, update, merge and table scans, aimed at analytics and data engineering workloads.
+  link: https://docs.snowflake.com/en/user-guide/warehouses-gen2#:~:text=is%20an%20updated%20version
+fact:
+  - note: Snowflake declines to publish a speedup number and tells you to benchmark it yourself, promising only that most queries finish faster.
+    link: https://docs.snowflake.com/en/user-guide/warehouses-gen2#:~:text=you%20can%20expect%20the%20majority%20of%20queries%20to%20finish%20faster
+  - note: Calling it "generation 2" retroactively made every warehouse anyone had ever run a generation 1 warehouse.
+    link: https://docs.snowflake.com/en/user-guide/warehouses-gen2#:~:text=the%20current%20standard%20virtual%20warehouse
+status:
+  value: active
+  link: https://docs.snowflake.com/en/user-guide/warehouses-gen2#:~:text=is%20an%20updated%20version
+  date: '2026-09-12'
+releases:
+  - type: ga
+    date: 2025-05
+    link: https://docs.snowflake.com/en/release-notes/new-features-2025#:~:text=Generation%202%20standard%20warehouses
+introducedAt:
+  date: 2025-05
+  link: https://docs.snowflake.com/en/release-notes/new-features-2025#:~:text=Generation%202%20standard%20warehouses
+source: https://docs.snowflake.com/en/user-guide/warehouses-gen2
+verified: '2026-09-12'

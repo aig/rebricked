@@ -1,0 +1,29 @@
+id: legacy-worksheets
+name: Legacy Worksheets
+vendor: snowflake
+aliases:
+  - Worksheets
+  - Snowsight worksheets
+category: Developer experience
+what:
+  note: Snowsight's original SQL editor, where each worksheet was a standalone tab of SQL rather than a file you could organise, share or version.
+  link: https://docs.snowflake.com/en/release-notes/bcr-bundles/un-bundled/bcr-2260#:~:text=Legacy%20Worksheets
+fact:
+  - note: Snowflake shipped a bulk migration tool rather than ask anyone to move their worksheets across by hand.
+    link: https://docs.snowflake.com/en/release-notes/bcr-bundles/un-bundled/bcr-2260#:~:text=Legacy%20Worksheets
+  - note: Reader accounts got three months of grace and then had whatever was left migrated for them automatically.
+    link: https://docs.snowflake.com/en/release-notes/bcr-bundles/un-bundled/bcr-2260#:~:text=Legacy%20Worksheets
+status:
+  value: retired
+  link: https://docs.snowflake.com/en/user-guide/ui-snowsight/workspaces#:~:text=Legacy%20Worksheets%20will%20be%20removed%20from%20Snowsight
+  date: '2026-09-12'
+deprecatedAt:
+  date: 2026-04
+  link: https://docs.snowflake.com/en/release-notes/bcr-bundles/un-bundled/bcr-2260#:~:text=the%20default%20editor%20for%20all%20accounts
+removedAt:
+  date: 2026-06
+  link: https://docs.snowflake.com/en/user-guide/ui-snowsight/workspaces#:~:text=Legacy%20Worksheets%20will%20be%20removed%20from%20Snowsight
+successorId: workspaces
+replacement: Workspaces
+source: https://docs.snowflake.com/en/release-notes/bcr-bundles/un-bundled/bcr-2260
+verified: '2026-09-12'

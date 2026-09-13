@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Static, crawlable pages per vendor and entry - the content SEO layer.
 
-The app renders everything client-side from databricks.features.json, so to a crawler index.html is
+The app renders everything client-side from the built feature JSON, so to a crawler index.html is
 an empty shell and the ?id= deep links are not distinct documents. This script emits real
 HTML the crawlers can index:
 
@@ -12,10 +12,11 @@ HTML the crawlers can index:
                           URL, Open Graph/Twitter tags, JSON-LD, the full content, and
                           internal links to related entries.
 
-The vendor segment future-proofs the URL scheme: today everything is `databricks`, but an
-entry may carry a `vendor` field and new vendors slot in as new top-level namespaces
-(/snowflake/..., /aws/...) with no structural change. It also (re)writes sitemap.xml and
-feed.xml (an RSS 2.0 feed of every entry, newest tracked change first).
+The vendor segment is what keeps the namespaces apart: every www/<vendor>.features.json is
+read, each entry is stamped with the vendor it was built from (or its own `vendor` field), and
+each vendor gets its own top-level namespace (/databricks/..., /snowflake/...). Adding a vendor
+is a new kb/ folder and a VENDOR_LABEL entry, not a code change. It also (re)writes sitemap.xml
+and feed.xml (an RSS 2.0 feed of every entry, newest tracked change first).
 
 The visible chrome (sidebar rail + topbar) is reused verbatim from build_badges.py, with its
 root-relative `../../` rewritten to match each page's depth.
@@ -43,7 +44,10 @@ from build_badges import (
 
 ROOT = Path(__file__).resolve().parent.parent
 WWW = ROOT / "www"  # the deployed site root - everything GitHub Pages publishes lives here
-DATA = WWW / "databricks.features.json"
+# One built file per vendor (www/<vendor>.features.json, from kb/<vendor>/). This script reads
+# every one of them and renders each vendor into its own top-level namespace, so adding a
+# vendor is a new kb/ folder plus a label below - no change to the rendering code.
+DATA_GLOB = "*.features.json"
 # Guides, built by build_posts.py. Optional: this script still works with no guides at all, so
 # the two builds stay independently runnable.
 POSTS = WWW / "posts.json"
@@ -51,8 +55,15 @@ SITEMAP = WWW / "sitemap.xml"
 FEED = WWW / "feed.xml"
 TOTAL_BADGES = 5
 
+# The vendor an entry belongs to when it carries no `vendor` field. Only the databricks
+# entries predate the field, so they are the ones that rely on this.
 DEFAULT_VENDOR = "databricks"
-VENDOR_LABEL = {"databricks": "Databricks"}
+VENDOR_LABEL = {"databricks": "Databricks", "snowflake": "Snowflake"}
+# Vendors the single-page app can render. app.js fetches databricks.features.json only, so a
+# deep link into the SPA works for Databricks entries and would 404 the content for anyone
+# else - those pages link to their vendor hub instead. Widen this when the app learns to
+# load more than one vendor.
+SPA_VENDORS = {"databricks"}
 
 MONTHS = [
     "January",
@@ -668,7 +679,7 @@ ENTRY_BODY = """
           <p class="entry-what">{what}</p>
           {fact}
           {limitations}
-          <a class="entry-cta" href="{root}?id={id}">Open in REbricked &rarr;</a>
+          <a class="entry-cta" href="{cta_href}">{cta_label} &rarr;</a>
           {facts}
           {sources}
           {related}
@@ -736,6 +747,12 @@ def render_entry(d, by_id, data, posts=()):
         else ""
     )
     og_title = title.replace(" | REbricked", "")
+    # The app can only deep-link a vendor it actually loads; for anything else the ?id= link
+    # would open an app that has never heard of this entry, so send the reader to the hub.
+    if v in SPA_VENDORS:
+        cta_href, cta_label = f"{root}?id={attr(d['id'])}", "Open in REbricked"
+    else:
+        cta_href, cta_label = hub_rel, f"Browse all {esc(vendor_name(v))} entries"
     rail, topbar, js = chrome(root)
     head = HEAD.format(
         title=attr(title),
@@ -770,7 +787,8 @@ def render_entry(d, by_id, data, posts=()):
         what=esc(what_note(d)),
         fact=fact_html(d),
         limitations=limitations_html(d),
-        id=attr(d["id"]),
+        cta_href=cta_href,
+        cta_label=cta_label,
         facts=facts_html(d),
         sources=sources_html(d),
         related=related_html(d, data),
@@ -1068,8 +1086,26 @@ def write_feed(data, by_id, posts=()):
     return len(items)
 
 
+def load_data():
+    """Every vendor's built entries, concatenated. www/<vendor>.features.json is build output
+    from kb/<vendor>/, so the filename is the vendor: an entry that omits `vendor` is stamped
+    with the folder it came from, which is what lets the rest of this script stay generic."""
+    data = []
+    for path in sorted(WWW.glob(DATA_GLOB)):
+        vendor = path.name[: -len(".features.json")]
+        for d in json.loads(path.read_text(encoding="utf-8")):
+            d.setdefault("vendor", vendor)
+            data.append(d)
+    if not data:
+        raise SystemExit(
+            f"FATAL: no www/{DATA_GLOB} found - they are build output.\n"
+            "       Build it from the kb/ entries: python scripts/build_features.py"
+        )
+    return data
+
+
 def main():
-    data = json.loads(DATA.read_text(encoding="utf-8"))
+    data = load_data()
     by_id = {d["id"]: d for d in data}
     posts = load_posts()
 

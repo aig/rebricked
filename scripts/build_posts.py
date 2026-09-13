@@ -50,12 +50,29 @@ except ModuleNotFoundError:  # pragma: no cover - same single dev dependency as 
 # The chrome and page head come from the existing generators, so a guide can never drift
 # from the console shell the rest of the site renders.
 from build_badges import BASE_URL, FAVICON, INLINE_JS, TOPBAR, render_rail
-from build_entries import ENTRY_STYLE, HEAD, attr, esc, fmt_date
+from build_entries import (
+    DEFAULT_VENDOR,
+    ENTRY_STYLE,
+    HEAD,
+    attr,
+    esc,
+    fmt_date,
+    load_data,
+    vendor_of,
+)
+
+
+def entry_url(d):
+    """Site-root path of an entry page, which build_entries.py renders per vendor."""
+    return f"/{vendor_of(d)}/{d['id']}/"
 
 ROOT = Path(__file__).resolve().parents[1]
 KB_POSTS = ROOT / "kb" / "posts"
 WWW = ROOT / "www"
-DATA = WWW / "databricks.features.json"
+# Entries come from every built vendor file, so a guide can cite any vendor the repo
+# tracks. build_entries.load_data() stamps each entry with its vendor, which is what
+# entry_url() below turns into the /{vendor}/{id}/ link.
+DATA_GLOB = "*.features.json"
 LEARN = WWW / "learn"
 POSTS_JSON = WWW / "posts.json"
 
@@ -773,7 +790,7 @@ def entries_html(post, by_id, used):
         return ""
     # Same markup as build_entries.py's related_html, so ENTRY_STYLE's chip styling applies.
     items = "".join(
-        f'<li><a href="/databricks/{attr(i)}/">{esc(by_id[i]["name"])}</a></li>' for i in ids
+        f'<li><a href="{attr(entry_url(by_id[i]))}">{esc(by_id[i]["name"])}</a></li>' for i in ids
     )
     return (
         '<section class="entry-related"><h2>Referenced entries</h2>'
@@ -867,7 +884,7 @@ def render_post(post, idx, posts, by_id, entry_count, today):
     body = md_to_html(
         post["body"],
         lambda i: by_id[i]["name"] if i in by_id else i,
-        lambda i: f"/databricks/{i}/",
+        lambda i: entry_url(by_id[i]) if i in by_id else f"/{DEFAULT_VENDOR}/{i}/",
         used,
         headings,
         scorecard=post.get("scorecard"),
@@ -1017,12 +1034,12 @@ def render_index(posts, by_id):
 
 
 def main():
-    if not DATA.exists():
+    if not list(WWW.glob(DATA_GLOB)):
         sys.exit(
-            f"FATAL: {DATA.relative_to(ROOT)} is missing - run scripts/build_features.py first "
+            f"FATAL: no www/{DATA_GLOB} - run scripts/build_features.py first "
             "(guides resolve {{entry:id}} against the built data)."
         )
-    data = json.loads(DATA.read_text(encoding="utf-8"))
+    data = load_data()
     by_id = {d["id"]: d for d in data}
     today = __import__("datetime").date.today().isoformat()
 

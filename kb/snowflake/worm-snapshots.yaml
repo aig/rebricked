@@ -1,0 +1,36 @@
+id: worm-snapshots
+name: WORM snapshots
+vendor: snowflake
+aliases:
+  - Write Once, Read Many snapshots
+  - CREATE SNAPSHOT SET
+  - SNAPSHOT POLICY
+category: Data governance
+what:
+  note: Immutable backups of specific Snowflake tables, schemas or databases, taken under a snapshot policy and unchangeable once written.
+  link: https://docs.snowflake.com/en/release-notes/2025/other/2025-08-18-worm-snapshots#:~:text=WORM%20snapshots%20represent%20backups%20of%20specific%20Snowflake%20tables
+fact:
+  - note: 'The immutability is the entire product: once a snapshot exists it cannot be changed, which is what the Write Once, Read Many in the name is promising.'
+    link: https://docs.snowflake.com/en/release-notes/2025/other/2025-08-18-worm-snapshots#:~:text=they%20can%27t%20be%20changed%20after%20being%20created
+  - note: 'It kept the name for about three months: the preview shipped in August 2025 and the rename was already in the release notes by November.'
+    link: https://docs.snowflake.com/en/release-notes/2025/9_37#:~:text=renaming%20Snapshots%20feature%20to%20Backups
+status:
+  value: renamed
+  link: https://docs.snowflake.com/en/user-guide/snapshots#:~:text=now%20called%20backups%20instead%20of%20snapshots
+  date: '2026-09-12'
+releases:
+  - type: public-preview
+    date: 2025-08
+    link: https://docs.snowflake.com/en/release-notes/2025/other/2025-08-18-worm-snapshots#:~:text=WORM%20snapshots%20represent%20backups%20of%20specific%20Snowflake%20tables
+from:
+  date: 2025-08
+  link: https://docs.snowflake.com/en/release-notes/2025/other/2025-08-18-worm-snapshots#:~:text=WORM%20snapshots%20represent%20backups%20of%20specific%20Snowflake%20tables
+to:
+  date: 2025-11
+  link: https://docs.snowflake.com/en/release-notes/2025/9_37#:~:text=renaming%20Snapshots%20feature%20to%20Backups
+successorId: backups
+prediction:
+  - Immutable Backups
+  - Vault Snapshots
+source: https://docs.snowflake.com/en/user-guide/snapshots
+verified: '2026-09-12'

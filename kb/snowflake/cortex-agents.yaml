@@ -1,0 +1,23 @@
+id: cortex-agents
+name: Cortex Agents
+vendor: snowflake
+category: AI / ML
+what:
+  note: Managed agentic platform for building and running AI agents inside Snowflake's governed environment, where the agent plans work, calls tools and runs code on your behalf.
+  link: https://docs.snowflake.com/en/user-guide/snowflake-cortex/cortex-agents#:~:text=a%20fully%20managed%20agentic%20platform%20for%20building%20and%20running%20AI%20agents
+fact:
+  - note: The pitch is that you do not build the orchestration - planning, tool calls and code execution are the managed part, not your application code.
+    link: https://docs.snowflake.com/en/user-guide/snowflake-cortex/cortex-agents#:~:text=a%20fully%20managed%20agentic%20platform%20for%20building%20and%20running%20AI%20agents
+status:
+  value: active
+  link: https://docs.snowflake.com/en/user-guide/snowflake-cortex/cortex-agents#:~:text=a%20fully%20managed%20agentic%20platform%20for%20building%20and%20running%20AI%20agents
+  date: '2026-09-12'
+releases:
+  - type: ga
+    date: 2025-11
+    link: https://docs.snowflake.com/en/release-notes/new-features-2025#:~:text=Cortex%20Agents
+introducedAt:
+  date: '2025'
+  link: https://docs.snowflake.com/en/release-notes/new-features-2025#:~:text=Cortex%20Agents
+source: https://docs.snowflake.com/en/user-guide/snowflake-cortex/cortex-agents
+verified: '2026-09-12'

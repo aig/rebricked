@@ -1,0 +1,27 @@
+id: snowflake-open-catalog
+name: Snowflake Open Catalog
+vendor: snowflake
+aliases:
+  - Open Catalog
+category: Data governance
+what:
+  note: Snowflake's managed catalog service for Apache Iceberg tables, built on the open source Apache Iceberg REST protocol so any engine can read the same tables.
+  link: https://docs.snowflake.com/en/user-guide/opencatalog/overview#:~:text=Snowflake%20Open%20Catalog%20is%20a%20catalog%20implementation%20for%20Apache%20Iceberg
+fact:
+  - note: It is a managed service for Apache Polaris, the open source catalog project Snowflake wrote and then handed to the Apache Software Foundation.
+    link: https://docs.snowflake.com/en/user-guide/opencatalog/overview#:~:text=managed%20service%20for%20Apache%20Polaris
+  - note: The release note announcing its general availability had to explain what it used to be called, in the very same sentence.
+    link: https://docs.snowflake.com/en/release-notes/2024/other/2024-10-18-snowflake-open-catalog-ga#:~:text=which%20was%20previously%20named
+status:
+  value: active
+  link: https://docs.snowflake.com/en/user-guide/opencatalog/overview#:~:text=Snowflake%20Open%20Catalog%20is%20a%20catalog%20implementation%20for%20Apache%20Iceberg
+  date: '2026-09-12'
+releases:
+  - type: ga
+    date: 2024-10
+    link: https://docs.snowflake.com/en/release-notes/2024/other/2024-10-18-snowflake-open-catalog-ga#:~:text=general%20availability%20of%20support%20for%20integrating%20Apache%20Iceberg
+from:
+  date: 2024-10
+  link: https://docs.snowflake.com/en/release-notes/2024/other/2024-10-18-snowflake-open-catalog-ga#:~:text=which%20was%20previously%20named%20Polaris%20Catalog
+source: https://docs.snowflake.com/en/user-guide/opencatalog/overview
+verified: '2026-09-12'

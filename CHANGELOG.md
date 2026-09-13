@@ -9,6 +9,70 @@ shows the what. Plain, simple English: short sentences, common words, no jargon 
 and product names themselves. Some older entries have no `Why:` line - the reason was never
 recorded, and a made-up reason is worse than none.
 
+## 2026-09-12
+
+### Added
+- **Snowflake as a second vendor: `kb/snowflake/` with 20 sourced entries, published at
+  `rebricked.org/snowflake/`.**
+
+  **Why:** the question the site answers - "what happened to the thing they used to call X?" - is
+  not a Databricks question. Snowflake renames and retires things at the same rate and leaves the
+  same trail of stale names in runbooks, and nothing about the data model was specific to one
+  vendor. The scaffolding was already there (`kb/<vendor>/`, `/{vendor}/{id}/` URLs, a `vendor`
+  field nobody used); every script that consumed it had been hard-wired to `databricks` anyway.
+
+  **What:** `kb/snowflake/` with 20 entries, every claim traced to a live `docs.snowflake.com`
+  page, a dated release note, a behavior change bundle, or the Snowflake blog, and every one of the
+  140 cited URLs confirmed by `check_anchors.py`. Three rename chains: Materialized Tables (Summit
+  2022) to Dynamic Tables, Polaris Catalog to Snowflake Open Catalog, and WORM snapshots to
+  Backups, which Snowflake renamed three months after shipping the preview. Three retirements:
+  Classic Console (two years and three behavior-change bundles to switch off), Legacy Worksheets
+  (removed June 2026, replaced by Workspaces), and SnowSQL, which its own docs open by calling
+  legacy. The rest are current names: Snowsight, Snowflake CLI, Workspaces, Cortex Analyst, Cortex
+  Agents, Cortex Code, Cortex Search, semantic views, Snowflake Notebooks, Snowflake Openflow, and
+  Generation 2 standard warehouses. One thing deliberately *not* recorded: Cortex Analyst is filed
+  as `active`, because Snowflake recommends moving off it to Cortex Agents but has never deprecated
+  it, and the difference is the whole point of the site.
+
+### Changed
+- **Every script that read `databricks.features.json` now reads every vendor's built file.**
+
+  **Why:** the repo already claimed to be vendor-neutral - `kb/<vendor>/`, `/{vendor}/{id}/`, an
+  optional `vendor` field - but `build_features.py` was the only script that meant it. The other
+  five each opened `www/databricks.features.json` by name, so a second `kb/` folder would have
+  built a JSON file that nothing validated, nothing rendered, and nothing checked for citation rot.
+  The extension point existed on paper and did not work.
+
+  **What:** `validate.py`, `build_entries.py`, `build_posts.py`, `validate_posts.py` and
+  `check_anchors.py` now glob `www/*.features.json` and stamp each entry with the vendor it was
+  built from. Four checks became per-vendor: `VALID_CATEGORIES` is a dict keyed by vendor (a vendor
+  with no key fails, rather than silently accepting any category); the "every entry is reachable
+  from a rail section" check is scoped to `NAV_VENDOR`, since `app.js`'s `NAV` is the Databricks
+  console rail and other vendors reach readers through their generated hub; `successorId` may not
+  cross vendors; and entry ids stay globally unique, because the generated pages index every entry
+  by id in one map. `build_entries.py` also stops emitting a `?id=` deep link on entry pages for
+  vendors the app cannot load (`SPA_VENDORS`), pointing at the vendor hub instead, so
+  `/snowflake/` does not ship links into an app that has never heard of the entry. `.gitignore`
+  covers `www/*.features.json` and `www/snowflake/`; CI needed no new steps, only truthful ones.
+
+- **`docs/` and `AGENTS.md` describe a multi-vendor repo, and `agents/add-snowflake-entry.md`
+  records what differs when the vendor is Snowflake.**
+
+  **Why:** the docs said "today everything is `databricks`" in four places and gave the category
+  allow-list as a single flat tuple. Left alone, the first person to add a Snowflake entry would
+  have followed a page that no longer matched the validator - which is exactly how these docs start
+  lying.
+
+  **What:** a Vendors section in `AGENTS.md` covering what is per-vendor (sources, categories, the
+  rail, the URL namespace) and what is not (globally unique ids, no cross-vendor rename chains);
+  `reference/entry-schema.md` documents the `vendor` field and the per-vendor category dict;
+  `reference/generated-output.md`, `reference/scripts.md` and `explanation/architecture.md` use
+  `<vendor>` instead of `databricks`; `how-to/add-a-category.md` shows both lists and how to add a
+  vendor key; `how-to/fix-a-failing-build.md` gains the three new validator errors. The new
+  `agents/add-snowflake-entry.md` defers to `add-databricks-entry` for the whole shared workflow
+  and only records the differences: where the file goes, which docs count as official, that
+  Snowflake keeps just three years of release notes, and that there is no rail step.
+
 ## 2026-09-11
 
 ### Added

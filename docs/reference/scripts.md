@@ -44,7 +44,7 @@ appended sorted rather than dropped; `validate.py` is what rejects unknown field
 
 | | |
 |---|---|
-| Reads | `kb/posts/<slug>/index.md` + `images/`, and `www/databricks.features.json` |
+| Reads | `kb/posts/<slug>/index.md` + `images/`, and `www/*.features.json` (one per vendor) |
 | Writes | `www/learn/index.html`, `www/learn/<slug>/index.html`, `www/learn/<slug>/images/`, `www/posts.json` - all gitignored |
 | Needs | PyYAML; `build_features.py` must have run |
 | Flags | none |
@@ -60,7 +60,7 @@ never copied.
 
 | | |
 |---|---|
-| Reads | `www/databricks.features.json`, `www/posts.json` |
+| Reads | `www/*.features.json` (one per vendor), `www/posts.json` |
 | Writes | `www/{vendor}/index.html` (hub), `www/{vendor}/{id}/index.html`, `www/sitemap.xml`, `www/feed.xml` - all gitignored |
 | Needs | nothing beyond the standard library; imports `build_badges.py` for the shared chrome. No browser |
 | Flags | none |
@@ -99,14 +99,16 @@ not counted as traffic.
 
 | | |
 |---|---|
-| Reads | `www/databricks.features.json`, `www/app.js` |
-| Writes | nothing. Prints `OK: <n> entries valid.` or a list of errors |
+| Reads | `www/*.features.json` (one per vendor), `www/app.js` |
+| Writes | nothing. Prints `OK: <n> entries valid (databricks: <n>, snowflake: <n>).` or a list of errors |
 | Needs | nothing beyond the standard library |
 | Flags | none |
 | Exit | 0 on success, 1 if any error |
 
-Also enforces the two cross-cutting invariants: every `successorId` resolves, and every entry is
-reachable from a `NAV` section in `app.js` (both directions). Warnings do not fail the run. See
+Also enforces the cross-cutting invariants: every `successorId` resolves and stays inside its own
+vendor, every entry id is unique across *all* vendors, and every entry of the vendor the app renders
+(`NAV_VENDOR`) is reachable from a `NAV` section in `app.js` (both directions). `VALID_CATEGORIES`
+is checked per vendor. Warnings do not fail the run. See
 [how-to/fix-a-failing-build.md](../how-to/fix-a-failing-build.md) for the message-by-message table.
 
 ## validate_posts.py
@@ -115,7 +117,7 @@ reachable from a `NAV` section in `app.js` (both directions). Warnings do not fa
 
 | | |
 |---|---|
-| Reads | `kb/posts/<slug>/index.md`, `www/databricks.features.json` |
+| Reads | `kb/posts/<slug>/index.md`, `www/*.features.json` (one per vendor) |
 | Writes | nothing. Prints `OK` or errors |
 | Needs | PyYAML; both builds must have run |
 | Flags | none |
@@ -133,7 +135,7 @@ item a mapping with `section` / `claim` / `accurate` / `misleading`, `misleading
 
 | | |
 |---|---|
-| Reads | `www/databricks.features.json`, `kb/posts/` |
+| Reads | `www/*.features.json` (one per vendor), `kb/posts/` |
 | Writes | nothing. Prints a verdict per URL |
 | Needs | network access |
 | Flags | `--list-blocked` (print only blocked URLs), `--fail-on-blocked` (treat BLOCKED as failure), `--chrome` (retry blocked pages through headless Chrome/Edge) |

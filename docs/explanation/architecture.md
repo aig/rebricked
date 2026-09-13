@@ -7,9 +7,9 @@ assembles data. This page is about why that line sits exactly where it does.
 ## The shape
 
 ```
-kb/databricks/*.yaml ──build_features.py──> www/databricks.features.json ──fetch()──> www/app.js
+kb/<vendor>/*.yaml   ──build_features.py──> www/<vendor>.features.json ──fetch()──> www/app.js
 kb/posts/<slug>/     ──build_posts.py─────> www/learn/, www/posts.json
-        (both)       ──build_entries.py───> www/databricks/, sitemap.xml, feed.xml
+        (both)       ──build_entries.py───> www/<vendor>/, sitemap.xml, feed.xml
      (templates)     ──build_badges.py────> www/badges/          [committed, needs a browser]
 ```
 
@@ -45,7 +45,7 @@ be absurd. So the build concatenates. See [one-file-per-entry.md](one-file-per-e
 source is split in the first place.
 
 **2. Crawlers cannot see client-rendered content.** To a bot, `index.html` is an empty shell and `#id`
-deep links are not distinct documents. The generated `/databricks/<id>/` pages exist so there is real
+deep links are not distinct documents. The generated `/<vendor>/<id>/` pages exist so there is real
 HTML to index. See [the-seo-layer.md](the-seo-layer.md).
 
 Note what the build does *not* do. It does not transform the page, minify anything, transpile anything,

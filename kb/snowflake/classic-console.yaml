@@ -1,0 +1,30 @@
+id: classic-console
+name: Classic Console
+vendor: snowflake
+aliases:
+  - Classic UI
+  - Classic Web Interface
+  - the old Snowflake UI
+category: Developer experience
+what:
+  note: Snowflake's original web interface, the worksheet-and-history layout every account used before Snowsight, reachable for years afterwards as a fallback link inside Snowsight.
+  link: https://docs.snowflake.com/en/release-notes/bcr-bundles/2025_06/bcr-2080#:~:text=Snowsight%20becomes%20the%20only%20available%20interface
+fact:
+  - note: 'Retiring it took behavior-change bundles two years apart: first it stopped being the default, then it could no longer be chosen, and only at the end could it no longer be reached.'
+    link: https://docs.snowflake.com/en/release-notes/bcr-bundles/2023_04/bcr-969#:~:text=all%20users%20in%20an%20account%20see%20Snowsight%20after%20logging%20in
+  - note: Private Link and VPS accounts outlived everyone else on it - they were deliberately excluded from the first cutover and only lost it in the final bundle.
+    link: https://docs.snowflake.com/en/release-notes/bcr-bundles/2025_06/bcr-2080#:~:text=including%20Private%20Link%20and%20VPS%20account%20customers
+status:
+  value: retired
+  link: https://docs.snowflake.com/en/release-notes/bcr-bundles/2025_06/bcr-2080#:~:text=Snowsight%20becomes%20the%20only%20available%20interface
+  date: '2026-09-12'
+deprecatedAt:
+  date: 2023-04
+  link: https://docs.snowflake.com/en/release-notes/bcr-bundles/2023_04/bcr-969#:~:text=all%20users%20in%20an%20account%20see%20Snowsight%20after%20logging%20in
+removedAt:
+  date: 2025-06
+  link: https://docs.snowflake.com/en/release-notes/bcr-bundles/2025_06/bcr-2080#:~:text=Snowsight%20becomes%20the%20only%20available%20interface
+successorId: snowsight
+replacement: Snowsight
+source: https://docs.snowflake.com/en/release-notes/bcr-bundles/2025_06/bcr-2080
+verified: '2026-09-12'

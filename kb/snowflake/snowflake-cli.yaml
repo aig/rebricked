@@ -1,0 +1,24 @@
+id: snowflake-cli
+name: Snowflake CLI
+vendor: snowflake
+aliases:
+  - snow
+  - snowcli
+category: Developer experience
+what:
+  note: Open source command-line tool for developer-centric Snowflake work, covering Snowpark, Snowpark Container Services, Native Apps and Streamlit alongside plain SQL.
+  link: https://docs.snowflake.com/en/developer-guide/snowflake-cli/index#:~:text=Snowflake%20CLI%20is%20an%20open%2Dsource%20command%2Dline%20tool
+fact:
+  - note: Its first public release was numbered 2.1.1, so the tool arrived already two majors deep with no 1.0 anywhere in its history.
+    link: https://docs.snowflake.com/en/release-notes/clients-drivers/snowflake-cli-2024#:~:text=Initial%20public%20release
+  - note: It is not just a SQL prompt - the same binary drives Streamlit apps, container services and the Native App Framework.
+    link: https://docs.snowflake.com/en/user-guide/snowsql#:~:text=lets%20you%20execute%20commands%20for%20other%20Snowflake%20products
+status:
+  value: active
+  link: https://docs.snowflake.com/en/developer-guide/snowflake-cli/index#:~:text=Snowflake%20CLI%20is%20an%20open%2Dsource%20command%2Dline%20tool
+  date: '2026-09-12'
+introducedAt:
+  date: 2024-03
+  link: https://docs.snowflake.com/en/release-notes/clients-drivers/snowflake-cli-2024#:~:text=Initial%20public%20release
+source: https://docs.snowflake.com/en/developer-guide/snowflake-cli/index
+verified: '2026-09-12'

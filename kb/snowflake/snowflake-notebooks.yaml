@@ -1,0 +1,32 @@
+id: snowflake-notebooks
+name: Snowflake Notebooks
+vendor: snowflake
+category: Developer experience
+what:
+  note: A cell-based development interface inside Snowsight mixing Python, SQL and Markdown in one document, running on either a warehouse or a container compute pool.
+  link: https://docs.snowflake.com/en/user-guide/ui-snowsight/notebooks#:~:text=a%20unified%20development%20interface%20in%20Snowsight
+fact:
+  - note: Which runtime you pick changes the Python under you - the warehouse runtime runs one version, the container runtime another, in the same notebook UI.
+    link: https://docs.snowflake.com/en/user-guide/ui-snowsight/notebooks#:~:text=a%20unified%20development%20interface%20in%20Snowsight
+  - note: 'SQL cells are not emulated in Python: they run on the warehouse as real queries, alongside the Python cells in the same session.'
+    link: https://docs.snowflake.com/en/user-guide/ui-snowsight/notebooks#:~:text=Python%2C%20SQL%2C%20and%20Markdown
+status:
+  value: active
+  link: https://docs.snowflake.com/en/user-guide/ui-snowsight/notebooks#:~:text=a%20unified%20development%20interface%20in%20Snowsight
+  date: '2026-09-12'
+releases:
+  - type: public-preview
+    date: 2024-06
+    link: https://docs.snowflake.com/en/release-notes/new-features-2024#:~:text=Snowflake%20Notebooks
+  - type: ga
+    date: 2024-11
+    link: https://docs.snowflake.com/en/release-notes/new-features-2024#:~:text=Snowflake%20Notebooks%20Warehouse%20Runtime
+introducedAt:
+  date: 2024-06
+  link: https://docs.snowflake.com/en/release-notes/new-features-2024#:~:text=Snowflake%20Notebooks
+occasion:
+  date: 2024-06
+  link: https://docs.snowflake.com/en/release-notes/new-features-2024#:~:text=Snowflake%20Notebooks
+  note: Snowflake Summit 2024
+source: https://docs.snowflake.com/en/user-guide/ui-snowsight/notebooks
+verified: '2026-09-12'
