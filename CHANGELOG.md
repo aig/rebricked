@@ -9,6 +9,51 @@ shows the what. Plain, simple English: short sentences, common words, no jargon 
 and product names themselves. Some older entries have no `Why:` line - the reason was never
 recorded, and a made-up reason is worse than none.
 
+## 2026-09-15
+
+### Added
+- **Refreshed the release-notes mirror and added the two names the past week shipped that the
+  site had no card for: External secrets in Unity Catalog and the Databricks Excel Add-in.**
+
+  **Why:** the mirror was last fetched on September 10 and the last full sweep read the notes
+  through September 8, so everything Databricks shipped in the following week had never been read
+  here. Refetching all 216 pages surfaced about fifteen new items across the platform, AI/BI,
+  Lakebase and Unity Gateway notes. There was no rename and no deprecation anywhere in that week,
+  but two real product names with their own docs pages and no card. External secrets is the bigger
+  one: the site already tracks Secrets in Unity Catalog, and someone reading about secrets now
+  meets a second, differently-behaved kind with the same name in it. The Excel Add-in is the one
+  most likely to be searched for by a non-engineer, and it went generally available on September
+  10 after six months of Public Preview.
+
+  **What:** two new entries. `external-secrets-in-unity-catalog` (Beta, September 2026), filed
+  under Catalog: a schema backed by AWS Secrets Manager or Azure Key Vault, where Databricks never
+  stores the value, every read goes back out to the cloud secret manager, and the secrets are
+  read-only securables that Unity Catalog governs but cannot create or delete.
+  `databricks-excel-add-in` (Public Preview March 2026, GA September 2026), filed under SQL
+  Warehouses: SSO from a workbook into a workspace, with governed Unity Catalog tables, SQL, pivot
+  tables, Genie One since August 2026, and table-level write-back since June 2026. Both wired into
+  the `app.js` `NAV`.
+
+### Fixed
+- **Genie Agents were still advertising limits Databricks raised five days earlier: 30 data
+  sources and 10,000 conversations, against the real 50 and 200,000.**
+
+  **Why:** on September 10 the AI/BI notes raised the per-agent data source limit from 30 to 50
+  and the conversation limit from 10,000 to 200,000. The card carried both old numbers in its
+  `limitations`, which is the exact failure this site exists to avoid: a limit that reads as a
+  hard ceiling, quoted twenty-fold below the real one. The setup page was also reworded on
+  September 14, which killed the card's `what` citation - a text fragment that misses fails
+  silently, so the card looked sourced while linking to nothing in particular.
+
+  **What:** `genie-agents` limitations now read 50 tables, views or metric views and 200,000
+  conversations, re-quoted against the live technical-requirements section, and the `what`
+  fragment follows the page's new wording ("natural-language chat interface where business users
+  ask questions of their data in Databricks"). Added the 2026 AI/BI release notes to `links`.
+  `opensharing` picks up the September 11 GA of foreign Iceberg tables and foreign schemas and
+  tables: shareable views may now be defined on foreign tables as well as Delta tables and other
+  shareable views, and the September link label says what actually landed. Both cards, plus the
+  two new ones, re-verified today; `check_anchors.py` confirms every URL and quote on all four.
+
 ## 2026-09-13
 
 ### Changed

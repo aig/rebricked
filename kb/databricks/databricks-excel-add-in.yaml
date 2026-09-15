@@ -1,0 +1,51 @@
+id: databricks-excel-add-in
+name: Databricks Excel Add-in
+aliases:
+  - Excel Add-in
+  - Excel Connector
+  - Databricks for Excel
+category: Developer experience
+what:
+  note: A Microsoft Excel add-in that signs in to a Databricks workspace over SSO so you can browse and import governed Unity Catalog tables, run SQL, build pivot tables, and write data back, without leaving the spreadsheet.
+  link: https://docs.databricks.com/aws/en/integrations/excel#:~:text=The%20Databricks%20Excel%20Add%2Din%20connects%20your%20Databricks%20workspace%20to%20Microsoft%20Excel
+fact:
+  - note: The data goes both ways - since June 2026 the add-in can create a new Unity Catalog table or overwrite an existing one straight from the sheet.
+    link: https://docs.databricks.com/aws/en/release-notes/product/2026/june#:~:text=Create%20a%20new%20table%20or%20overwrite%20an%20existing%20table%20in%20Databricks%20without%20leaving%20Excel
+  - note: Genie One moved into the spreadsheet in August 2026, so you can ask for data in plain English inside Excel and get it back as native rows and columns.
+    link: https://docs.databricks.com/aws/en/release-notes/product/2026/august#:~:text=import%20the%20results%20into%20Microsoft%20Excel%20as%20native%20rows%20and%20columns
+  - note: 'The August 2026 filter update gave with one hand and took with the other: cascading filters and case-insensitive matching arrived, and LIKE, NOT LIKE, IN, NOT IN and ILIKE quietly left.'
+    link: https://docs.databricks.com/aws/en/release-notes/product/2026/august#:~:text=are%20no%20longer%20available%20in%20the%20filters%20list
+status:
+  value: active
+  link: https://docs.databricks.com/aws/en/integrations/excel#:~:text=The%20Databricks%20Excel%20Add%2Din%20connects%20your%20Databricks%20workspace%20to%20Microsoft%20Excel
+  date: '2026-09-15'
+releases:
+  - type: public-preview
+    date: 2026-03
+    link: https://docs.databricks.com/aws/en/release-notes/product/2026/march#:~:text=The%20new%20Databricks%20Excel%20Add%2Din%20is%20in%20Public%20Preview
+  - type: ga
+    date: 2026-09
+    link: https://docs.databricks.com/aws/en/release-notes/product/2026/september#:~:text=The%20Databricks%20Excel%20Add%2Din%20is%20now%20generally%20available
+introducedAt:
+  date: 2026-03
+  link: https://docs.databricks.com/aws/en/release-notes/product/2026/march#:~:text=The%20new%20Databricks%20Excel%20Add%2Din%20is%20in%20Public%20Preview
+limitations:
+  note: Needs a Unity Catalog-enabled workspace, Databricks SQL access with at least CAN USE on a SQL warehouse (all-purpose compute is not supported), and a workspace admin to turn on the Excel Connector preview. Write-back is table-level only - no row-level updates, appends or merges, and no views or materialized views. Custom function results are capped at 25 MiB, Excel Desktop at 1,048,576 rows per sheet and Excel for the web at about 25 MB per workbook; with Live query on, every pivot edit re-runs the query against the warehouse.
+  link: https://docs.databricks.com/aws/en/integrations/excel-query#:~:text=query%20results%20are%20limited%20to%2025%20MiB
+  date: '2026-09-15'
+links:
+  - url: https://docs.databricks.com/aws/en/integrations/excel-setup
+    kind: official
+    label: 'Databricks docs: Set up the Databricks Excel Add-in (prerequisites)'
+  - url: https://docs.databricks.com/aws/en/integrations/excel-write-back
+    kind: official
+    label: 'Databricks docs: Write data back to Databricks (write-back limitations)'
+  - url: https://docs.databricks.com/aws/en/release-notes/product/2026/september
+    kind: official
+    label: 'Databricks release notes: the Databricks Excel Add-in is generally available (September 10, 2026)'
+prediction:
+  - Databricks Sheets Add-in
+  - Lakehouse for Excel
+  - Genie One for Excel
+source: https://docs.databricks.com/aws/en/integrations/excel
+verified: '2026-09-15'

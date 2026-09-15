@@ -6,7 +6,7 @@ aliases:
 category: AI / BI
 what:
   note: Governed, curated conversational agents that give business users a natural-language chat interface to ask questions of their data in Databricks.
-  link: https://docs.databricks.com/aws/en/genie-agents/set-up#:~:text=natural%2Dlanguage%20chat%20interface%20that%20business%20users%20use%20to%20ask%20questions
+  link: https://docs.databricks.com/aws/en/genie-agents/set-up#:~:text=natural%2Dlanguage%20chat%20interface%20where%20business%20users%20ask%20questions%20of%20their%20data%20in%20Databricks
 fact:
   - note: 'There''s real compute behind the chat box: every Genie Agent runs on a pro or serverless SQL warehouse and can only reach data you''ve registered in Unity Catalog.'
     link: https://docs.databricks.com/aws/en/genie-agents/set-up#:~:text=Genie%20Agents%20require%20a%20pro%20or%20serverless%20SQL%20warehouse
@@ -15,7 +15,7 @@ fact:
 status:
   value: active
   link: https://docs.databricks.com/aws/en/genie-agents/set-up#:~:text=Genie%20Agents%20were%20formerly%20known%20as%20Genie%20Spaces.
-  date: '2026-08-20'
+  date: '2026-09-15'
 releases:
   - type: public-preview
     date: 2024-06
@@ -27,9 +27,9 @@ from:
   date: 2026-07
   link: https://docs.databricks.com/aws/en/ai-bi/release-notes/2026#:~:text=are%20now%20called%20Genie%20Agents
 limitations:
-  note: Up to 30 tables or views per Genie Agent; up to 10,000 conversations, each with up to 10,000 messages; requires a pro or serverless SQL warehouse, with data registered in Unity Catalog.
-  link: https://docs.databricks.com/aws/en/genie-agents/set-up#:~:text=add%20up%20to%2030%20tables%20or%20views%20to%20a%20Genie%20Agent
-  date: '2026-08-20'
+  note: Up to 50 tables, views or metric views per Genie Agent; up to 200,000 conversations, each with up to 10,000 messages; requires a pro or serverless SQL warehouse, with data registered in Unity Catalog.
+  link: https://docs.databricks.com/aws/en/genie-agents/set-up#:~:text=up%20to%2050%20tables%2C%20views%2C%20or%20metric%20views%20to%20a%20Genie%20Agent
+  date: '2026-09-15'
 links:
   - url: https://www.databricks.com/blog/data-dialogue-best-practices-guide-building-high-performing-genie-spaces
     kind: community
@@ -37,9 +37,12 @@ links:
   - url: https://nimbleapproach.com/blog/exploring-databricks-genie-enhancing-insight-through-conversational-analytics/
     kind: internet
     label: 'Nimble Approach: Exploring Databricks Genie'
+  - url: https://docs.databricks.com/aws/en/ai-bi/release-notes/2026
+    kind: official
+    label: 'AI/BI release notes: Genie Agent data source and conversation limits raised (September 10, 2026)'
 prediction:
   - Genie Agent Teams
   - Genie Agents One
   - Agentic Genie Spaces
 source: https://docs.databricks.com/aws/en/genie-agents/set-up
-verified: '2026-08-20'
+verified: '2026-09-15'
