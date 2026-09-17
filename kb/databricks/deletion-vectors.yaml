@@ -1,0 +1,30 @@
+id: deletion-vectors
+name: Deletion vectors
+aliases:
+  - deletion vector
+  - merge-on-read deletes
+  - delta.enableDeletionVectors
+category: Data engineering
+what:
+  note: A merge-on-read trick for Delta Lake and Iceberg tables - a delete marks rows in metadata rather than rewriting whole data files, and reads subtract the marked rows at query time.
+  link: https://docs.databricks.com/aws/en/tables/features/deletion-vectors#:~:text=Deletion%20vectors%20accelerate
+fact:
+  - note: The speed comes from not doing the work. A delete that would have rewritten a gigabyte file instead writes down which rows to skip, and the file is left exactly where it was.
+    link: https://docs.databricks.com/aws/en/tables/features/deletion-vectors#:~:text=mark%20rows%20as%20modified%20in%20metadata%20instead
+  - note: Enabling them on a materialized view or streaming table is a one-way door - you can switch the feature back off, but the table protocol can never be downgraded again.
+    link: https://docs.databricks.com/aws/en/tables/features/deletion-vectors#:~:text=You%20cannot%20downgrade%20the%20table%20protocol%20after%20enabling%20deletion%20vectors
+  - note: On Delta they are something you turn on, but every Apache Iceberg v3 table gets them whether you asked or not.
+    link: https://docs.databricks.com/aws/en/tables/features/deletion-vectors#:~:text=Apache%20Iceberg%20v3%20tables%20include%20deletion%20vectors%20by%20default
+status:
+  value: active
+  link: https://docs.databricks.com/aws/en/tables/features/deletion-vectors#:~:text=Deletion%20vectors%20accelerate
+  date: '2026-09-17'
+releases:
+  - type: ga
+    date: 2023-10
+    link: https://docs.databricks.com/aws/en/release-notes/product/2023/october#:~:text=Deletion%20vectors%20are%20GA
+introducedAt:
+  date: 2023-10
+  link: https://docs.databricks.com/aws/en/release-notes/product/2023/october#:~:text=Deletion%20vectors%20are%20GA
+source: https://docs.databricks.com/aws/en/tables/features/deletion-vectors
+verified: '2026-09-17'

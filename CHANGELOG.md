@@ -12,6 +12,54 @@ recorded, and a made-up reason is worse than none.
 ## 2026-09-17
 
 ### Added
+- **Added the editor extension rename, and three active features that existing cards already
+  referred to but which had no cards of their own.**
+
+  **Why:** two separate gaps. The editor extension was renamed from "Databricks extension for
+  Visual Studio Code" to "Databricks IDE extension" and nobody was told. There is no release note
+  for it. What Databricks did instead was go back and rewrite the body text of old release notes,
+  which is why the September 2024 entry now has a heading and a body that disagree about what the
+  product is called. The rename was also the honest thing to do, because the extension had stopped
+  being a Visual Studio Code extension and now drives Cursor too. Separately, three features were
+  being name-checked inside other cards' prose with nothing to link to: predictive optimization,
+  deletion vectors, and the account setting that disables legacy features.
+
+  **What:** five cards. `databricks-extension-for-visual-studio-code` is `renamed` and runs
+  February 2023 to 2026, closing out against an archived snapshot from 20 May 2026 that still uses
+  the old name throughout. `databricks-ide-extension` is the `active` tip, carrying the Public
+  Preview and general availability stages. The rename is dated `'2026'` and no finer. No release
+  note mentions it, and a second verification pass bisected archived copies of the page and its
+  sub-pages: every snapshot through 17 June 2026 still uses the old name, and Microsoft's Azure
+  China mirror carries the new title with an internal date of 24 August 2026, the same day the SSH
+  tunnel docs shipped. That puts the rename between mid-June and late August 2026. The only single
+  page that would back an August date is a metadata tag on a China mirror, which is too thin to
+  cite, so the year stands and the window is recorded here instead. The same pass also found that
+  Cursor support had been documented under the old name since at least December 2025, so the card
+  does not claim Cursor as the reason for the rename. `disable-legacy-features`, `predictive-optimization` and `deletion-vectors`
+  are plain `active` cards. The first is the most on-topic thing in this batch, being a single
+  switch that turns off four separate deprecations this site already tracks.
+
+- **Added the Mosaic AI Agent Framework to Custom Agents rename, after a first pass wrongly left
+  it out.**
+
+  **Why:** the first pass found the old name solid and dated, Public Preview June 2024 and
+  generally available March 2025, and found it gone from the current docs, but could not find any
+  live page stating what it became. The docs tree had moved under `/agents/custom-agents/`, the
+  target page called itself "Use agents on Databricks", and "Custom Agents" looked like a
+  navigation label. So the chain was dropped as unsourced. A deeper pass found the statement where
+  the docs never put it: Databricks' own blog of 18 February 2026 opens with "Agent Bricks Custom
+  Agents, formerly Agent Framework, is now available on Databricks." The docs corroborate it
+  everywhere but never say it - the old URLs redirect to the new ones, the 2024 launch blog was
+  retitled in place while its body still says Agent Framework thirteen times, and the Python SDK
+  still calls itself the Agent Framework.
+
+  **What:** two cards. `mosaic-ai-agent-framework` is `renamed`, June 2024 to February 2026, with
+  Public Preview and general availability stages from the platform release notes and the `to` date
+  from the blog. `custom-agents` is the `active` tip from February 2026, with no `releases` because
+  neither the blog nor the docs give it a maturity label. The blog is cited as the vendor's own
+  statement, the same way existing cards cite databricks.com for launch dates. Lesson recorded
+  here so it is not relearned: when a rename is missing from the docs, check the vendor blog before
+  concluding it was never stated.
 - **Added the fine-tuning chain: Foundation Model Training became Mosaic AI Model Training,
   became Foundation Model Fine-tuning, and then died.**
 

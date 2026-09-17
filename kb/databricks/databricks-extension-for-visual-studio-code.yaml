@@ -1,0 +1,31 @@
+id: databricks-extension-for-visual-studio-code
+name: Databricks extension for Visual Studio Code
+aliases:
+  - Databricks VS Code extension
+  - VSCode extension
+category: Developer experience
+what:
+  note: The official VS Code extension for Databricks - connect to a remote workspace, sync local code to it, run files and notebooks on remote compute, and deploy bundles without leaving the editor.
+  link: https://docs.databricks.com/aws/en/release-notes/product/2023/february#:~:text=lets%20developers%20leverage%20the%20powerful%20authoring%20capabilities%20of%20IDEs
+fact:
+  - note: Its own general availability note now argues with itself. The heading still carries this name while the body underneath has been quietly rewritten to use a later one.
+    link: https://docs.databricks.com/aws/en/release-notes/product/2024/september#:~:text=is%20now%20generally%20available
+  - note: It spent about nineteen months in Public Preview, from February 2023 to September 2024, which is a long time for a text editor plugin.
+    link: https://docs.databricks.com/aws/en/release-notes/product/2023/february#:~:text=Databricks%20extension%20for%20Visual%20Studio%20Code%20(Public%20Preview)
+status:
+  value: renamed
+  link: https://docs.databricks.com/aws/en/dev-tools/vscode-ext/#:~:text=The%20Databricks%20IDE%20extension%20enables%20you%20to%20connect
+  date: '2026-09-17'
+from:
+  date: 2023-02
+  link: https://docs.databricks.com/aws/en/release-notes/product/2023/february#:~:text=lets%20developers%20leverage%20the%20powerful%20authoring%20capabilities%20of%20IDEs
+to:
+  date: '2026'
+  link: https://web.archive.org/web/20260520152606/https://docs.databricks.com/aws/en/dev-tools/vscode-ext/
+successorId: databricks-ide-extension
+links:
+  - url: https://web.archive.org/web/20260520152606/https://docs.databricks.com/aws/en/dev-tools/vscode-ext/
+    kind: internet
+    label: Archived docs page, 20 May 2026, still using this name throughout
+source: https://docs.databricks.com/aws/en/release-notes/product/2023/february
+verified: '2026-09-17'

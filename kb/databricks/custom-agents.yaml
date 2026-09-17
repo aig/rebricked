@@ -1,0 +1,34 @@
+id: custom-agents
+name: Custom Agents
+aliases:
+  - Agent Bricks Custom Agents
+  - Custom Agents on Apps
+  - custom code agents
+category: AI / ML
+what:
+  note: The code-first brick in Agent Bricks - author an agent in Python with whatever library you like, wrap it in an MLflow ResponsesAgent, and deploy it as a Databricks App or to Model Serving.
+  link: https://docs.databricks.com/aws/en/agents/#:~:text=Build%20and%20deploy%20agents%2C%20including%20RAG%20applications%20and%20multi%2Dagent%20systems%2C%20with%20Python
+fact:
+  - note: The rename was announced in a blog post and nowhere else. No release note on any cloud says the words, and the docs were simply find-and-replaced under it.
+    link: https://www.databricks.com/blog/custom-agents-now-available-databricks#:~:text=formerly%20Agent%20Framework
+  - note: Your agent only shows up in the workspace Agents list if you named the app with an agent- prefix, so the product is opt-in at the level of a string.
+    link: https://docs.databricks.com/aws/en/agents/custom-agents/author-agent#:~:text=its%20name%20must%20start%20with%20the
+  - note: It inherited a whole Model Serving deployment path, and every page of that path now opens by recommending you use Databricks Apps instead.
+    link: https://docs.databricks.com/aws/en/agents/custom-agents/model-serving/deploy-agent#:~:text=Databricks%20recommends%20deploying%20agents%20on%20Databricks%20Apps
+status:
+  value: active
+  link: https://docs.databricks.com/aws/en/agents/custom-agents/author-agent#:~:text=its%20name%20must%20start%20with%20the
+  date: '2026-09-17'
+from:
+  date: 2026-02
+  link: https://www.databricks.com/blog/custom-agents-now-available-databricks#:~:text=formerly%20Agent%20Framework
+links:
+  - url: https://www.databricks.com/blog/custom-agents-now-available-databricks
+    kind: official
+    label: 'Databricks blog: Custom Agents now available on Databricks (February 2026)'
+prediction:
+  - Agent Bricks Code
+  - Genie Custom Agents
+  - Bring Your Own Agent
+source: https://docs.databricks.com/aws/en/agents/custom-agents/author-agent
+verified: '2026-09-17'

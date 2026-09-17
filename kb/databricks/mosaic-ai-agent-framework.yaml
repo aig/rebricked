@@ -1,0 +1,45 @@
+id: mosaic-ai-agent-framework
+name: Mosaic AI Agent Framework
+aliases:
+  - Agent Framework
+  - Databricks Agent Framework
+  - databricks-agents
+category: AI / ML
+what:
+  note: A set of Python tools for building, deploying and evaluating production-quality RAG and agentic applications on Databricks, with MLflow integration and the databricks.agents SDK.
+  link: https://docs.databricks.com/aws/en/release-notes/product/2024/june#:~:text=Mosaic%20AI%20Agent%20Framework%20is%20a%20set%20of%20tools%20on%20Databricks
+fact:
+  - note: Its own launch blog has been retitled in place to a name that did not exist in 2024, while the body underneath still says Agent Framework thirteen times.
+    link: https://www.databricks.com/blog/announcing-mosaic-ai-agent-framework-and-agent-evaluation
+  - note: The SDK never got the memo. The Python package that implements it still documents itself as the Databricks Agent Framework long after the docs stopped using the words.
+    link: https://api-docs.databricks.com/python/databricks-agents/latest/index.html
+  - note: It reached general availability in March 2025 with a release note whose link now points at a URL containing a different product name.
+    link: https://docs.databricks.com/aws/en/release-notes/product/2025/march#:~:text=is%20now%20generally%20available.%20Use%20Agent%20Framework%20to%20build
+status:
+  value: renamed
+  link: https://www.databricks.com/blog/custom-agents-now-available-databricks#:~:text=formerly%20Agent%20Framework
+  date: '2026-09-17'
+releases:
+  - type: public-preview
+    date: 2024-06
+    link: https://docs.databricks.com/aws/en/release-notes/product/2024/june#:~:text=Mosaic%20AI%20Agent%20Framework%20(Public%20Preview)
+  - type: ga
+    date: 2025-03
+    link: https://docs.databricks.com/aws/en/release-notes/product/2025/march#:~:text=Mosaic%20AI%20Agent%20Framework%20is%20generally%20available
+from:
+  date: 2024-06
+  link: https://docs.databricks.com/aws/en/release-notes/product/2024/june#:~:text=Mosaic%20AI%20Agent%20Framework%20(Public%20Preview)
+to:
+  date: 2026-02
+  link: https://www.databricks.com/blog/custom-agents-now-available-databricks#:~:text=formerly%20Agent%20Framework
+successorId: custom-agents
+occasion:
+  date: 2024-06
+  link: https://docs.databricks.com/aws/en/release-notes/product/2024/june#:~:text=Mosaic%20AI%20Agent%20Framework%20(Public%20Preview)
+  note: Public Preview, Data + AI Summit 2024
+links:
+  - url: https://www.databricks.com/blog/custom-agents-now-available-databricks
+    kind: official
+    label: 'Databricks blog: Custom Agents now available, "formerly Agent Framework" (February 2026)'
+source: https://docs.databricks.com/aws/en/release-notes/product/2024/june
+verified: '2026-09-17'

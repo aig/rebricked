@@ -1,0 +1,30 @@
+id: disable-legacy-features
+name: Disable legacy features
+aliases:
+  - disable legacy features setting
+  - legacy features account setting
+category: Data governance
+what:
+  note: An account setting that provisions new workspaces without access to the old way of doing things - no DBFS root or mounts, no Hive metastore, no no-isolation shared clusters, and no runtime older than 13.3 LTS.
+  link: https://docs.databricks.com/aws/en/admin/account-settings/legacy-features#:~:text=so%20new%20workspaces%20in%20your%20account%20are%20provisioned%20without%20access%20to%20legacy%20features
+fact:
+  - note: It is a single switch that turns off four separate things, three of which this site already tracks as legacy or deprecated, which makes it the closest Databricks has come to shipping a rebricked button.
+    link: https://docs.databricks.com/aws/en/admin/account-settings/legacy-features#:~:text=Databricks%20Runtime%20versions%20prior%20to%2013.3%20LTS
+  - note: The setting has already outlived its own usefulness for new customers. Accounts created from mid-December 2025 onward cannot see it, because they never get the legacy features in the first place.
+    link: https://docs.databricks.com/aws/en/admin/account-settings/legacy-features#:~:text=Accounts%20created%20after%20this%20date%20won%27t%20have%20access%20to%20legacy%20features%20by%20default
+status:
+  value: active
+  link: https://docs.databricks.com/aws/en/admin/account-settings/legacy-features#:~:text=so%20new%20workspaces%20in%20your%20account%20are%20provisioned%20without%20access%20to%20legacy%20features
+  date: '2026-09-17'
+releases:
+  - type: public-preview
+    date: 2025-08
+    link: https://docs.databricks.com/aws/en/release-notes/product/2025/august#:~:text=Disable%20legacy%20features%20for%20new%20workspaces%20(Public%20Preview)
+  - type: ga
+    date: 2025-12
+    link: https://docs.databricks.com/aws/en/release-notes/product/2025/december#:~:text=Disable%20legacy%20features%20settings%20are%20now%20GA
+introducedAt:
+  date: 2025-08
+  link: https://docs.databricks.com/aws/en/release-notes/product/2025/august#:~:text=Disable%20legacy%20features%20for%20new%20workspaces
+source: https://docs.databricks.com/aws/en/admin/account-settings/legacy-features
+verified: '2026-09-17'

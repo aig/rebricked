@@ -1,0 +1,34 @@
+id: predictive-optimization
+name: Predictive optimization
+aliases:
+  - predictive optimization for managed tables
+  - automatic table maintenance
+category: Data engineering
+what:
+  note: Automatic table maintenance for Unity Catalog managed tables, Delta and Iceberg alike - Databricks decides when to run OPTIMIZE, VACUUM and ANALYZE for you, instead of you scheduling them and guessing at the cadence.
+  link: https://docs.databricks.com/aws/en/optimizations/predictive-optimization#:~:text=Predictive%20optimization%20automatically%20runs
+fact:
+  - note: Turning it on for everyone has taken longer than building it. New accounts got it by default from November 2024, and the rollout to existing accounts was still expected to be finishing in August 2026.
+    link: https://docs.databricks.com/aws/en/optimizations/predictive-optimization#:~:text=This%20rollout%20is%20expected%20to%20complete%20by%20August%202026
+  - note: There is one job it will not do for you. Its OPTIMIZE never runs ZORDER, and on Z-ordered tables it simply ignores those files and leaves them to you.
+    link: https://docs.databricks.com/aws/en/optimizations/predictive-optimization#:~:text=does%20not%20run%20ZORDER%20when%20executed%20by%20predictive%20optimization
+status:
+  value: active
+  link: https://docs.databricks.com/aws/en/optimizations/predictive-optimization#:~:text=Predictive%20optimization%20automatically%20runs
+  date: '2026-09-17'
+releases:
+  - type: public-preview
+    date: 2023-10
+    link: https://docs.databricks.com/aws/en/release-notes/product/2023/october#:~:text=Predictive%20optimization
+  - type: ga
+    date: 2024-06
+    link: https://docs.databricks.com/aws/en/release-notes/product/2024/june#:~:text=Predictive%20optimization
+introducedAt:
+  date: 2023-10
+  link: https://docs.databricks.com/aws/en/release-notes/product/2023/october#:~:text=Predictive%20optimization
+limitations:
+  note: Unity Catalog managed tables only - it does not run on external tables or on tables loaded as OpenSharing recipients, and its OPTIMIZE never performs ZORDER.
+  link: https://docs.databricks.com/aws/en/optimizations/predictive-optimization#:~:text=does%20not%20run%20on%20the%20following%20table%20types
+  date: '2026-09-17'
+source: https://docs.databricks.com/aws/en/optimizations/predictive-optimization
+verified: '2026-09-17'

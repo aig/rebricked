@@ -1,0 +1,37 @@
+id: databricks-ide-extension
+name: Databricks IDE extension
+aliases:
+  - Databricks extension for Visual Studio Code and Cursor
+  - Databricks VS Code extension
+  - databricks.databricks
+category: Developer experience
+what:
+  note: The official Databricks editor extension - connect to a remote workspace from Visual Studio Code or Cursor, sync local code, run files and notebooks on remote compute, and deploy bundles from the IDE.
+  link: https://docs.databricks.com/aws/en/dev-tools/vscode-ext/#:~:text=enables%20you%20to%20connect%20to%20your%20remote%20Databricks%20workspaces
+fact:
+  - note: Nobody announced this name. Instead Databricks went back through old release notes and rewrote the body text to use it, leaving headings from 2024 that still say something else.
+    link: https://docs.databricks.com/aws/en/release-notes/product/2024/september#:~:text=is%20now%20generally%20available
+  - note: The name caught up with the product late. It had quietly supported Cursor under the old Visual Studio Code name since at least late 2025, months before the docs stopped calling it that.
+    link: https://docs.databricks.com/aws/en/dev-tools/vscode-ext/#:~:text=Visual%20Studio%20Code%20or%20Cursor
+  - note: The old name survives in the places nobody reads. The page's own search-engine description and its sidebar label still spell out Visual Studio Code, while the heading above them does not.
+    link: https://docs.databricks.com/aws/en/dev-tools/vscode-ext/
+status:
+  value: active
+  link: https://docs.databricks.com/aws/en/dev-tools/vscode-ext/#:~:text=enables%20you%20to%20connect%20to%20your%20remote%20Databricks%20workspaces
+  date: '2026-09-17'
+releases:
+  - type: public-preview
+    date: 2023-02
+    link: https://docs.databricks.com/aws/en/release-notes/product/2023/february#:~:text=Databricks%20extension%20for%20Visual%20Studio%20Code%20(Public%20Preview)
+  - type: ga
+    date: 2024-09
+    link: https://docs.databricks.com/aws/en/release-notes/product/2024/september#:~:text=is%20now%20generally%20available
+from:
+  date: '2026'
+  link: https://docs.databricks.com/aws/en/dev-tools/vscode-ext/#:~:text=enables%20you%20to%20connect%20to%20your%20remote%20Databricks%20workspaces
+prediction:
+  - Databricks editor extension
+  - Genie IDE extension
+  - Databricks Code
+source: https://docs.databricks.com/aws/en/dev-tools/vscode-ext/
+verified: '2026-09-17'
