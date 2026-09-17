@@ -1,0 +1,28 @@
+id: serverless-budget-policies
+name: Serverless budget policies
+category: Data governance
+what:
+  note: Admin-defined tag sets applied automatically to a user's serverless compute usage, so serverless spend in notebooks, jobs and pipelines could be attributed to a team or project.
+  link: https://docs.databricks.com/aws/en/release-notes/product/2025/march#:~:text=have%20been%20renamed%20from%20budget%20policies
+fact:
+  - note: This name is the only one in the feature's history that Databricks bothered to announce, in a release note whose entire content is the sentence saying the thing had been renamed.
+    link: https://docs.databricks.com/aws/en/release-notes/product/2025/march#:~:text=have%20been%20renamed%20from%20budget%20policies
+  - note: It was in Public Preview on the day it was named and still in Public Preview on the day it stopped being called this, having never once shipped as generally available.
+    link: https://docs.databricks.com/aws/en/release-notes/product/2025/march#:~:text=Serverless%20budget%20policies%20(Public%20Preview)
+status:
+  value: renamed
+  link: https://web.archive.org/web/20260315075800/https://docs.databricks.com/aws/en/admin/usage/budget-policies
+  date: '2026-09-17'
+from:
+  date: 2025-03
+  link: https://docs.databricks.com/aws/en/release-notes/product/2025/march#:~:text=have%20been%20renamed%20from%20budget%20policies
+to:
+  date: '2026'
+  link: https://web.archive.org/web/20260315075800/https://docs.databricks.com/aws/en/admin/usage/budget-policies
+successorId: serverless-usage-policies
+links:
+  - url: https://web.archive.org/web/20260315075800/https://docs.databricks.com/aws/en/admin/usage/budget-policies
+    kind: internet
+    label: Archived docs page, 15 March 2026, still using this name throughout
+source: https://docs.databricks.com/aws/en/release-notes/product/2025/march
+verified: '2026-09-17'

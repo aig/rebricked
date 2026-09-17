@@ -1,0 +1,31 @@
+id: bamboolib
+name: bamboolib
+aliases:
+  - bamboo lib
+  - low-code data analysis
+category: Developer experience
+what:
+  note: A point-and-click data wrangling panel inside Databricks notebooks that let you filter, join and reshape a dataframe without writing code, and wrote the matching Python back into the cell.
+  link: https://docs.databricks.com/aws/en/archive/notebooks/bamboolib#:~:text=bamboolib%20is%20a%20user%20interface%20component
+fact:
+  - note: It was a no-code tool that refused to leave you with no code. Every click was transcribed into real Python in the background, so the session ended with a script you could keep.
+    link: https://docs.databricks.com/aws/en/archive/notebooks/bamboolib#:~:text=automatically%20generates%20Python%20code%20in%20the%20background
+  - note: The deprecation notice was unusually relaxed about it. The tool kept working and users kept access, Databricks simply stopped developing and supporting it.
+    link: https://docs.databricks.com/aws/en/release-notes/product/2024/december#:~:text=no%20longer%20actively%20developing%20nor%20supporting%20this%20tool
+  - note: Its own documentation now opens by announcing that the documentation has been retired, which is a rare thing for a page still online.
+    link: https://docs.databricks.com/aws/en/archive/notebooks/bamboolib#:~:text=This%20documentation%20has%20been%20retired
+status:
+  value: deprecated
+  link: https://docs.databricks.com/aws/en/archive/notebooks/bamboolib#:~:text=bamboolib%20is%20deprecated
+  date: '2026-09-17'
+deprecatedAt:
+  date: 2024-12
+  link: https://docs.databricks.com/aws/en/release-notes/product/2024/december#:~:text=no%20longer%20actively%20developing%20nor%20supporting%20this%20tool
+successorId: genie-code
+replacement: Databricks Assistant
+links:
+  - url: https://docs.databricks.com/aws/en/release-notes/product/2024/december
+    kind: official
+    label: 'Databricks release notes: bamboolib is now deprecated (December 2024)'
+source: https://docs.databricks.com/aws/en/archive/notebooks/bamboolib
+verified: '2026-09-17'

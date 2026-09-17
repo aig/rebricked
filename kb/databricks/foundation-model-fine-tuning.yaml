@@ -1,0 +1,43 @@
+id: foundation-model-fine-tuning
+name: Foundation Model Fine-tuning
+aliases:
+  - FMFT
+  - databricks_genai
+  - Databricks Model Training
+category: AI / ML
+what:
+  note: Databricks' managed foundation-model fine-tuning service, driven by the databricks_genai SDK, which customized a base model on your own data and registered the result to Unity Catalog.
+  link: https://docs.databricks.com/aws/en/large-language-models/foundation-model-training/#:~:text=has%20reached%20end%20of%20life
+fact:
+  - note: It reached end of life while still officially in Public Preview - the Azure copy of its own docs carries a Public Preview region list directly beneath the end-of-life warning.
+    link: https://learn.microsoft.com/en-us/azure/databricks/large-language-models/foundation-model-training/
+  - note: The whole service was a Python import away, and the thing that no longer works is precisely that import - the databricks_genai package and its UI both went dark together.
+    link: https://docs.databricks.com/aws/en/large-language-models/foundation-model-training/#:~:text=are%20no%20longer%20available
+  - note: It outlived several of the models it existed to tune, retiring DBRX, Mistral and Mixtral from its own supported list in April 2025.
+    link: https://docs.databricks.com/aws/en/machine-learning/retired-models-policy
+status:
+  value: retired
+  link: https://docs.databricks.com/aws/en/large-language-models/foundation-model-training/#:~:text=has%20reached%20end%20of%20life
+  date: '2026-09-17'
+releases:
+  - type: public-preview
+    date: 2024-05
+    link: https://docs.databricks.com/aws/en/release-notes/product/2024/may#:~:text=Databricks%20now%20supports%20Foundation%20Model%20Training
+deprecatedAt:
+  date: '2026'
+  link: https://docs.databricks.com/aws/en/large-language-models/foundation-model-training/#:~:text=has%20reached%20end%20of%20life
+successorId: ai-runtime
+replacement: AI Runtime
+limitations:
+  note: While it ran, datasets beyond roughly 10B tokens were unsupported, continued pre-training expected 60-256MB files with anything over 1GB slowing sharply, and older base models could be dropped from the API without notice.
+  link: https://learn.microsoft.com/en-us/azure/databricks/large-language-models/foundation-model-training/
+  date: '2026-09-17'
+links:
+  - url: https://docs.databricks.com/aws/en/release-notes/product/2024/november
+    kind: official
+    label: 'Databricks release notes: Mosaic AI Model Training rebrand (November 2024)'
+  - url: https://web.archive.org/web/20260509204401/https://docs.databricks.com/aws/en/large-language-models/foundation-model-training/
+    kind: internet
+    label: Archived docs page, 9 May 2026, still carrying no end-of-life notice
+source: https://docs.databricks.com/aws/en/large-language-models/foundation-model-training/
+verified: '2026-09-17'

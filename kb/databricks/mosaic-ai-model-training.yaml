@@ -1,0 +1,31 @@
+id: mosaic-ai-model-training
+name: Mosaic AI Model Training
+aliases:
+  - Mosaic AI Training
+  - databricks_genai
+category: AI / ML
+what:
+  note: The Mosaic AI era name for Databricks' managed foundation-model fine-tuning service, driven from the databricks_genai SDK or a training UI.
+  link: https://web.archive.org/web/20240713025631/https://docs.databricks.com/en/large-language-models/foundation-model-training/index.html
+fact:
+  - note: The name arrived with no announcement at all - the docs page simply turned up in July 2024 titled 'Introduction to Mosaic AI Model Training', with no release note marking the change.
+    link: https://web.archive.org/web/20240713025631/https://docs.databricks.com/en/large-language-models/foundation-model-training/index.html
+  - note: The only platform release note this name ever earned was headed 'Mosaic AI Model Training rebrand', which is a rare thing - a release note whose entire subject is what something is called.
+    link: https://docs.databricks.com/aws/en/release-notes/product/2024/november#:~:text=previously%20known%20as%20Mosaic%20AI%20Model%20Training
+status:
+  value: renamed
+  link: https://docs.databricks.com/aws/en/release-notes/product/2024/november#:~:text=previously%20known%20as%20Mosaic%20AI%20Model%20Training
+  date: '2026-09-17'
+from:
+  date: 2024-07
+  link: https://web.archive.org/web/20240713025631/https://docs.databricks.com/en/large-language-models/foundation-model-training/index.html
+to:
+  date: 2024-11
+  link: https://docs.databricks.com/aws/en/release-notes/product/2024/november#:~:text=previously%20known%20as%20Mosaic%20AI%20Model%20Training
+successorId: foundation-model-fine-tuning
+links:
+  - url: https://web.archive.org/web/20240713025631/https://docs.databricks.com/en/large-language-models/foundation-model-training/index.html
+    kind: internet
+    label: Archived docs page, 13 July 2024, titled 'Introduction to Mosaic AI Model Training'
+source: https://docs.databricks.com/aws/en/release-notes/product/2024/november
+verified: '2026-09-17'

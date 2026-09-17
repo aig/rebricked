@@ -1,0 +1,28 @@
+id: all-purpose-compute
+name: All-purpose compute
+aliases:
+  - All-Purpose Clusters
+  - all-purpose cluster
+  - interactive cluster
+category: Compute / BI
+what:
+  note: Shared, long-lived compute you attach notebooks and queries to and keep running across a working day, billed at the all-purpose rate rather than the cheaper job rate.
+  link: https://docs.databricks.com/aws/en/compute/configure#:~:text=all%2Dpurpose%20or%20job%20compute%20resource
+fact:
+  - note: The name was chosen to say the quiet part out loud - these things are for any type of workload, which is also why they are the expensive ones.
+    link: https://docs.databricks.com/aws/en/release-notes/product/2020/february#:~:text=to%20reflect%20that%20you%20can%20use%20such%20clusters%20for%20any%20type%20of%20workload
+  - note: Half the name changed again later and nobody announced it. The adjective survived the 2020 rename intact, but the docs quietly swapped the noun from clusters to compute with no release note anywhere.
+    link: https://docs.databricks.com/aws/en/compute/configure#:~:text=all%2Dpurpose%20or%20job%20compute
+status:
+  value: active
+  link: https://docs.databricks.com/aws/en/compute/configure#:~:text=all%2Dpurpose%20or%20job%20compute%20resource
+  date: '2026-09-17'
+from:
+  date: 2020-02
+  link: https://docs.databricks.com/aws/en/release-notes/product/2020/february#:~:text=Interactive%20Clusters%2A%2A%20has%20been%20renamed
+prediction:
+  - Everything compute
+  - Unity compute
+  - Lakeflow all-purpose
+source: https://docs.databricks.com/aws/en/compute/configure
+verified: '2026-09-17'

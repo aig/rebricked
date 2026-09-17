@@ -1,0 +1,27 @@
+id: automated-clusters
+name: Automated Clusters
+aliases:
+  - Automated Cluster
+  - New Automated Cluster
+category: Compute / BI
+what:
+  note: A short-lived cluster created to run a single job and torn down afterwards, named for the cheaper automated billing rate it was charged at.
+  link: https://docs.databricks.com/aws/en/release-notes/product/2019/august#:~:text=has%20been%20renamed%20to%20%2A%2AAutomated%20Clusters%2A%2A
+fact:
+  - note: This name lasted about six months and sat between two stretches in which the very same list was called Job Clusters, making it the rare Databricks rename that was undone rather than built on.
+    link: https://docs.databricks.com/aws/en/release-notes/product/2020/february#:~:text=Automated%20Clusters%2A%2A%20has%20been%20renamed
+  - note: It was named after a price rather than a purpose, on the reasoning that a cluster created for a job is charged at the automated rate.
+    link: https://docs.databricks.com/aws/en/release-notes/product/2019/august#:~:text=is%20charged%20at%20the%20automated%20rate
+status:
+  value: renamed
+  link: https://docs.databricks.com/aws/en/release-notes/product/2020/february#:~:text=Automated%20Clusters%2A%2A%20has%20been%20renamed
+  date: '2026-09-17'
+from:
+  date: 2019-08
+  link: https://docs.databricks.com/aws/en/release-notes/product/2019/august#:~:text=has%20been%20renamed%20to%20%2A%2AAutomated%20Clusters%2A%2A
+to:
+  date: 2020-02
+  link: https://docs.databricks.com/aws/en/release-notes/product/2020/february#:~:text=Automated%20Clusters%2A%2A%20has%20been%20renamed
+successorId: job-compute
+source: https://docs.databricks.com/aws/en/release-notes/product/2019/august
+verified: '2026-09-17'

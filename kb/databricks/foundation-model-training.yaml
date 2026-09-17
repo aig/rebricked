@@ -1,0 +1,28 @@
+id: foundation-model-training
+name: Foundation Model Training
+category: AI / ML
+what:
+  note: Databricks' first managed fine-tuning service - train or continue pre-training a foundation model on your own data, with checkpoints saved to MLflow and the result registered to Unity Catalog.
+  link: https://docs.databricks.com/aws/en/release-notes/product/2024/may#:~:text=Databricks%20now%20supports%20Foundation%20Model%20Training
+fact:
+  - note: The docs path it launched at, /large-language-models/foundation-model-training/, still spells this name out in full years later, long after the page itself stopped using it.
+    link: https://docs.databricks.com/aws/en/large-language-models/foundation-model-training/
+  - note: It shipped straight into Public Preview in May 2024 with continued pre-training included, so you could pour raw text at a base model and have the result land in Unity Catalog without touching a cluster.
+    link: https://docs.databricks.com/aws/en/release-notes/product/2024/may#:~:text=Databricks%20now%20supports%20Foundation%20Model%20Training
+status:
+  value: renamed
+  link: https://docs.databricks.com/aws/en/release-notes/product/2024/may#:~:text=Databricks%20now%20supports%20Foundation%20Model%20Training
+  date: '2026-09-17'
+from:
+  date: 2024-05
+  link: https://docs.databricks.com/aws/en/release-notes/product/2024/may#:~:text=Databricks%20now%20supports%20Foundation%20Model%20Training
+to:
+  date: 2024-07
+  link: https://web.archive.org/web/20240713025631/https://docs.databricks.com/en/large-language-models/foundation-model-training/index.html
+successorId: mosaic-ai-model-training
+links:
+  - url: https://web.archive.org/web/20240713025631/https://docs.databricks.com/en/large-language-models/foundation-model-training/index.html
+    kind: internet
+    label: Archived docs page, 13 July 2024, already carrying the next name
+source: https://docs.databricks.com/aws/en/release-notes/product/2024/may
+verified: '2026-09-17'

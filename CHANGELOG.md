@@ -9,6 +9,104 @@ shows the what. Plain, simple English: short sentences, common words, no jargon 
 and product names themselves. Some older entries have no `Why:` line - the reason was never
 recorded, and a made-up reason is worse than none.
 
+## 2026-09-17
+
+### Added
+- **Added the fine-tuning chain: Foundation Model Training became Mosaic AI Model Training,
+  became Foundation Model Fine-tuning, and then died.**
+
+  **Why:** this is the exact question the site exists to answer, and the site could not answer it.
+  Databricks shipped a managed fine-tuning service in May 2024, renamed it twice inside six months,
+  and then let it reach end of life some time in 2026 - and the current docs page admits none of
+  that history. It says only that the thing has reached end of life, under a name the service did
+  not launch with. Anyone who still has `databricks_genai` in a notebook, or who remembers the
+  Mosaic AI branding, had nothing here to search for. The rename is also invisible in the release
+  notes in one direction: the July 2024 change to Mosaic AI Model Training was never announced at
+  all, and only an archived copy of the docs page shows it happened.
+
+  **What:** three cards, chained. `foundation-model-training` is `renamed` and runs May 2024 to
+  July 2024, dated from the Public Preview release note and closed out by the archived docs page
+  that already carries the next name. `mosaic-ai-model-training` is `renamed` and runs July 2024 to
+  November 2024, closed out by the release note headed "Mosaic AI Model Training rebrand".
+  `foundation-model-fine-tuning` is `retired`, with `successorId` pointing at the existing
+  `ai-runtime` card, which is what the live docs now tell people to use instead. Its `releases`
+  timeline carries a single Public Preview stage, because the service never reached general
+  availability before it was switched off, and the Azure copy of its docs still prints a Public
+  Preview region list directly under the end-of-life warning.
+
+- **Added the serverless usage policy chain: budget policies became serverless budget policies,
+  and then became serverless usage policies without anyone saying so.**
+
+  **Why:** the site had no card for the feature that decides whose team gets billed for serverless
+  compute, and the feature has now been called three different things. Only the middle rename was
+  ever announced. Worse, Databricks went back and rewrote the original launch note, so the October
+  2024 entry now reads as though the feature shipped under a name it did not have at the time.
+  Someone searching for the name they remember finds a release note that appears to contradict
+  them.
+
+  **What:** three cards. `budget-policies` is `renamed`, October 2024 to March 2025, with its
+  `from` date sourced to an archived copy of the launch note that still carries the original
+  wording. `serverless-budget-policies` is `renamed`, March 2025 to 2026, closed out by the
+  release note that announced it. `serverless-usage-policies` is the `active` tip, carrying a
+  single Public Preview stage that has now run continuously since October 2024 across all three
+  names. The second rename is dated `'2026'` and no finer: no release note mentions it, and
+  archived snapshots show the page using the old name in March 2026 and the new one by June 2026.
+
+- **Added Legacy Git integration, the notebook-level Git support that Databricks Repos replaced.**
+
+  **Why:** the Repos to Git folders chain started in 2021, as though nothing came before it.
+  Something did. Until January 2024 you could link an individual notebook to a GitHub repository,
+  branch and file path, and version control was a per-notebook setting rather than a property of
+  the workspace. That mechanism was removed outright, not renamed, and the chain had no card for
+  where it began.
+
+  **What:** one `retired` card prepended to the existing chain, with `successorId` pointing at
+  `databricks-repos`. Deprecated November 2023, when the in-product warning first appeared, and
+  removed on 31 January 2024. Both dates come from live official pages.
+
+- **Added three deprecations that had no cards: hosted RStudio, Databricks-managed passwords,
+  and bamboolib.**
+
+  **Why:** each is a real named thing that stopped working, and all three are the kind of question
+  the site exists to answer. Hosted RStudio is the sharpest of them, because its status depends on
+  which runtime you are on: end of life from Databricks Runtime 16.0, yet still supported on 15.4
+  until August 2027. Databricks-managed passwords is the one that broke other people's automation
+  on a fixed date. bamboolib is the acquired low-code tool that was quietly stopped rather than
+  switched off.
+
+  **What:** `databricks-hosted-rstudio-server` is `deprecated` with a `removedAt` of 2027-08, and
+  names Posit Workbench as its replacement, which is not a Databricks product.
+  `databricks-managed-passwords` is `retired` as of July 2024, with OAuth as the replacement and a
+  fact recording that passwords survive for emergency access. `bamboolib` is `deprecated` as of
+  December 2024, chained to `genie-code`, which is what the docs now point users at. The password
+  card cites the July 2024 release note rather than the dedicated deprecation page, because the
+  anchor checker reads only a page shell from that URL and could not confirm quotes there.
+
+- **Added the all-purpose and job compute vocabulary, including the only rename Databricks has
+  undone.**
+
+  **Why:** every Databricks bill separates all-purpose from job compute, and nobody knows where
+  those words came from. They came from a 2020 renaming of Interactive Clusters and Automated
+  Clusters. The job side is stranger still: the list was called Job Clusters, renamed to Automated
+  Clusters in August 2019 to match a billing rate, then renamed back six months later. That is the
+  only reversal in the dataset.
+
+  **What:** four cards, two chains. `interactive-clusters` to `all-purpose-compute`, and
+  `automated-clusters` to `job-compute`. The active cards are named for what the docs say today,
+  all-purpose compute and job compute, with the Clusters spellings as aliases, because that is
+  what a reader will be looking at. The `from` dates sit at the 2020 rename, which is what the
+  sources actually date. The later shift from clusters to compute was never announced anywhere, so
+  it is recorded as a fact on both active cards rather than invented as a third rename. One more
+  fact worth having: the release note that performed the 2020 rename is itself misdated, sitting
+  on the February 2020 page under a heading that reads 2019.
+
+  The end-of-life date is recorded as `'2026'` and no finer. No release note on either cloud
+  announced it, and the live page states no date. An archived snapshot from 9 May 2026 shows the
+  page with no notice at all, and one from early September shows the warning in place, which fixes
+  the year but not the month. A specific removal date appears in stale search-engine text and
+  nowhere on a live page, so it was left out rather than asserted. A new Training section in the
+  `app.js` rail holds the three ids.
+
 ## 2026-09-15
 
 ### Added

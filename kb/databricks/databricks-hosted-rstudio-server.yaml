@@ -1,0 +1,34 @@
+id: databricks-hosted-rstudio-server
+name: Databricks-hosted RStudio Server
+aliases:
+  - Hosted RStudio
+  - RStudio Server on Databricks
+  - RStudio integration
+category: Developer experience
+what:
+  note: RStudio Server running on the Databricks driver node, launched straight from the workspace so R users got a full IDE against cluster data without leaving the platform.
+  link: https://docs.databricks.com/aws/en/sparkr/hosted-rstudio-server#:~:text=Databricks%2Dhosted%20RStudio%20Server%20is%20deprecated
+fact:
+  - note: It was killed by a version number rather than an announcement. The feature simply does not exist on Databricks Runtime 16.0 and above, so upgrading a cluster was how most people found out.
+    link: https://docs.databricks.com/aws/en/release-notes/product/2024/november#:~:text=Databricks%2Dhosted%20RStudio%20Server%20is%20end%2Dof%2Dlife
+  - note: Declared end-of-life in 2024, it is still running somewhere - the 15.4 long-term-support runtime keeps it alive until 19 August 2027, nearly three years after the obituary.
+    link: https://docs.databricks.com/aws/en/sparkr/hosted-rstudio-server#:~:text=15.4%20LTS
+  - note: Its replacement is not a Databricks product at all but Posit Workbench, built by the company that makes RStudio in the first place.
+    link: https://docs.databricks.com/aws/en/sparkr/hosted-rstudio-server#:~:text=Posit%20Workbench
+status:
+  value: deprecated
+  link: https://docs.databricks.com/aws/en/sparkr/hosted-rstudio-server#:~:text=Databricks%2Dhosted%20RStudio%20Server%20is%20deprecated
+  date: '2026-09-17'
+deprecatedAt:
+  date: 2024-11
+  link: https://docs.databricks.com/aws/en/release-notes/product/2024/november#:~:text=Databricks%2Dhosted%20RStudio%20Server%20is%20end%2Dof%2Dlife
+removedAt:
+  date: 2027-08
+  link: https://docs.databricks.com/aws/en/sparkr/hosted-rstudio-server#:~:text=15.4%20LTS
+replacement: Posit Workbench
+links:
+  - url: https://docs.databricks.com/aws/en/release-notes/product/2018/july
+    kind: official
+    label: 'Databricks release notes: RStudio integration arrives (July 2018)'
+source: https://docs.databricks.com/aws/en/sparkr/hosted-rstudio-server
+verified: '2026-09-17'

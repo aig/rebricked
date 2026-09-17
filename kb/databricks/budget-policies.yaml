@@ -1,0 +1,28 @@
+id: budget-policies
+name: Budget policies
+category: Data governance
+what:
+  note: Admin-defined tag sets applied automatically to a user's serverless compute usage, so serverless spend could be attributed to a team or project rather than landing in one undifferentiated bill.
+  link: https://docs.databricks.com/aws/en/release-notes/product/2024/october#:~:text=workspace%20admins%20can%20now%20create%20and%20assign
+fact:
+  - note: Its own launch note has since been rewritten. The October 2024 entry now reads as though the feature shipped under a later name, and only an archived copy still carries the words it was actually announced with.
+    link: https://web.archive.org/web/20250214052533/https://docs.databricks.com/en/release-notes/product/2024/october.html
+  - note: The docs page for this feature has never moved off the URL it was given here, so the original name survives in the address bar long after it left the page.
+    link: https://docs.databricks.com/aws/en/admin/usage/budget-policies
+status:
+  value: renamed
+  link: https://docs.databricks.com/aws/en/release-notes/product/2025/march#:~:text=have%20been%20renamed%20from%20budget%20policies
+  date: '2026-09-17'
+from:
+  date: 2024-10
+  link: https://web.archive.org/web/20250214052533/https://docs.databricks.com/en/release-notes/product/2024/october.html
+to:
+  date: 2025-03
+  link: https://docs.databricks.com/aws/en/release-notes/product/2025/march#:~:text=have%20been%20renamed%20from%20budget%20policies
+successorId: serverless-budget-policies
+links:
+  - url: https://web.archive.org/web/20250214052533/https://docs.databricks.com/en/release-notes/product/2024/october.html
+    kind: internet
+    label: Archived October 2024 release notes, still headed 'Attribute serverless usage with budget policies'
+source: https://docs.databricks.com/aws/en/release-notes/product/2025/march
+verified: '2026-09-17'

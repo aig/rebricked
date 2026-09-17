@@ -1,0 +1,24 @@
+id: interactive-clusters
+name: Interactive Clusters
+aliases:
+  - Interactive Cluster
+  - Existing Interactive Cluster
+category: Compute / BI
+what:
+  note: The original name for a long-lived cluster you attach notebooks to and share with a team, as opposed to one spun up to run a job and thrown away.
+  link: https://docs.databricks.com/aws/en/release-notes/product/2020/february#:~:text=Interactive%20Clusters%2A%2A%20has%20been%20renamed
+fact:
+  - note: The rename was justified on the grounds that people were not only being interactive with them, which is a polite way of saying the name had been wrong for years.
+    link: https://docs.databricks.com/aws/en/release-notes/product/2020/february#:~:text=to%20reflect%20that%20you%20can%20use%20such%20clusters%20for%20any%20type%20of%20workload
+  - note: The release note that retired this name is itself misdated. It sits on the February 2020 page under a heading that reads 2019, which would have put it a year before the version that preceded it.
+    link: https://docs.databricks.com/aws/en/release-notes/product/2020/february#:~:text=Version%203.14
+status:
+  value: renamed
+  link: https://docs.databricks.com/aws/en/release-notes/product/2020/february#:~:text=Interactive%20Clusters%2A%2A%20has%20been%20renamed
+  date: '2026-09-17'
+to:
+  date: 2020-02
+  link: https://docs.databricks.com/aws/en/release-notes/product/2020/february#:~:text=Interactive%20Clusters%2A%2A%20has%20been%20renamed
+successorId: all-purpose-compute
+source: https://docs.databricks.com/aws/en/release-notes/product/2020/february
+verified: '2026-09-17'

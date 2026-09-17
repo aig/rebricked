@@ -1,0 +1,35 @@
+id: legacy-git-integration
+name: Legacy Git integration
+aliases:
+  - Git version control for notebooks
+  - legacy notebook Git integration
+  - notebook Git integration
+category: Developer experience
+what:
+  note: The original notebook-level Git support - each notebook was linked individually to a GitHub repository, branch and file path, and you committed from the notebook's own history panel.
+  link: https://docs.databricks.com/aws/en/archive/repos/git-version-control-legacy#:~:text=Legacy%20notebook%20Git%20integration%20support%20was%20removed
+fact:
+  - note: Version control was a per-notebook setting rather than a property of the workspace, so a project spread across ten notebooks meant ten separate links to the same repository.
+    link: https://docs.databricks.com/aws/en/archive/repos/git-version-control-legacy
+  - note: It sat in legacy status for over two years before removal, and the warning only appeared inside the product in November 2023, roughly two months before the feature vanished.
+    link: https://docs.databricks.com/aws/en/release-notes/product/2024/january#:~:text=a%20deprecation%20notice%20has%20been%20displayed%20in%20the%20product%20UI%20since%20November%202023
+  - note: The official instructions for getting off it were not a docs page but a PDF, linked once from the removal notice.
+    link: https://docs.databricks.com/aws/en/release-notes/product/2024/january#:~:text=After%20January%2031st%2C%202024
+status:
+  value: retired
+  link: https://docs.databricks.com/aws/en/archive/repos/git-version-control-legacy#:~:text=Legacy%20notebook%20Git%20integration%20support%20was%20removed
+  date: '2026-09-17'
+deprecatedAt:
+  date: 2023-11
+  link: https://docs.databricks.com/aws/en/release-notes/product/2024/january#:~:text=a%20deprecation%20notice%20has%20been%20displayed%20in%20the%20product%20UI%20since%20November%202023
+removedAt:
+  date: 2024-01
+  link: https://docs.databricks.com/aws/en/archive/repos/git-version-control-legacy#:~:text=Legacy%20notebook%20Git%20integration%20support%20was%20removed
+successorId: databricks-repos
+replacement: Databricks Repos
+links:
+  - url: https://docs.databricks.com/aws/en/release-notes/product/2024/january
+    kind: official
+    label: 'Databricks release notes: feature removal notice for legacy Git integration (January 2024)'
+source: https://docs.databricks.com/aws/en/archive/repos/git-version-control-legacy
+verified: '2026-09-17'

@@ -1,0 +1,29 @@
+id: job-compute
+name: Job compute
+aliases:
+  - Job Clusters
+  - job cluster
+  - New Job Cluster
+  - Jobs Compute
+category: Compute / BI
+what:
+  note: Compute created to run a single job and shut down when it finishes, billed at the cheaper job rate rather than the all-purpose one.
+  link: https://docs.databricks.com/aws/en/compute/configure#:~:text=all%2Dpurpose%20or%20job%20compute%20resource
+fact:
+  - note: Databricks arrived at this name twice. It was the original wording, was replaced in 2019 by a name describing the billing rate, and came back six months later.
+    link: https://docs.databricks.com/aws/en/release-notes/product/2020/february#:~:text=Automated%20Clusters%2A%2A%20has%20been%20renamed
+  - note: The noun changed without ceremony. The 2020 rename produced Job Clusters, and the docs now say job compute throughout, with no release note ever marking the switch.
+    link: https://docs.databricks.com/aws/en/compute/configure#:~:text=both%20all%2Dpurpose%20and%20job%20compute
+status:
+  value: active
+  link: https://docs.databricks.com/aws/en/compute/configure#:~:text=all%2Dpurpose%20or%20job%20compute%20resource
+  date: '2026-09-17'
+from:
+  date: 2020-02
+  link: https://docs.databricks.com/aws/en/release-notes/product/2020/february#:~:text=Automated%20Clusters%2A%2A%20has%20been%20renamed
+prediction:
+  - Lakeflow compute
+  - Task compute
+  - Ephemeral compute
+source: https://docs.databricks.com/aws/en/compute/configure
+verified: '2026-09-17'

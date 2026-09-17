@@ -1,0 +1,38 @@
+id: serverless-usage-policies
+name: Serverless usage policies
+aliases:
+  - serverless budget policies
+  - budget policies
+  - databricks_budget_policy
+category: Data governance
+what:
+  note: Admin-defined tag sets applied automatically to a user's serverless compute usage, so serverless spend in notebooks, jobs and pipelines is attributed to a team or project instead of one undifferentiated bill.
+  link: https://docs.databricks.com/aws/en/admin/usage/budget-policies#:~:text=Serverless%20usage%20policies%20consist%20of%20tags
+fact:
+  - note: Nothing announced this name. No release note on any cloud mentions it, and the docs simply switched over at some point between March and June 2026.
+    link: https://web.archive.org/web/20260615202245/https://docs.databricks.com/aws/en/admin/usage/budget-policies
+  - note: The page still lives at an address ending in /budget-policies, a phrase that now appears nowhere in its own title.
+    link: https://docs.databricks.com/aws/en/admin/usage/budget-policies
+  - note: It has carried a Public Preview banner continuously since October 2024, outlasting two of its own names without ever reaching general availability.
+    link: https://docs.databricks.com/aws/en/admin/usage/budget-policies#:~:text=This%20feature%20is%20in%20Public%20Preview
+status:
+  value: active
+  link: https://docs.databricks.com/aws/en/admin/usage/budget-policies#:~:text=Serverless%20usage%20policies%20consist%20of%20tags
+  date: '2026-09-17'
+releases:
+  - type: public-preview
+    date: 2024-10
+    link: https://docs.databricks.com/aws/en/release-notes/product/2024/october#:~:text=workspace%20admins%20can%20now%20create%20and%20assign
+from:
+  date: '2026'
+  link: https://web.archive.org/web/20260615202245/https://docs.databricks.com/aws/en/admin/usage/budget-policies
+links:
+  - url: https://web.archive.org/web/20260615202245/https://docs.databricks.com/aws/en/admin/usage/budget-policies
+    kind: internet
+    label: Archived docs page, 15 June 2026, first snapshot using this name
+prediction:
+  - Unity usage policies
+  - Serverless spend policies
+  - Lakeflow budget policies
+source: https://docs.databricks.com/aws/en/admin/usage/budget-policies
+verified: '2026-09-17'
