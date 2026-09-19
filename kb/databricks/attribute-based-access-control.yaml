@@ -17,7 +17,7 @@ fact:
 status:
   value: active
   link: https://docs.databricks.com/aws/en/data-governance/unity-catalog/abac/#:~:text=Attribute%2Dbased%20access%20control%20%28ABAC%29
-  date: '2026-09-10'
+  date: '2026-09-19'
 releases:
   - type: beta
     date: 2025-06
@@ -36,9 +36,9 @@ occasion:
   link: https://www.databricks.com/blog/abac-row-filtering-and-column-masking-policies-governed-tags-and-data-classification-are-now#:~:text=announce%20the%20General%20Availability%20of%20three%20complementary%20capabilities
   note: GA announcement blog, May 2026
 limitations:
-  note: Needs serverless compute or Databricks Runtime 16.4 and above, and only governed tags count; policies can't be applied directly to views, though they are still enforced when a view reads a protected table; quotas apply (10,000 policies per metastore, 100 per catalog or schema, 50 per table, 20 principals per policy); time travel queries and deep or shallow clones fail on policy-protected tables unless the principal is exempted; and AI Search indexes don't enforce row filters or column masks.
+  note: Needs serverless compute or Databricks Runtime 16.4 and above, and only governed tags count; policies can't be applied directly to views, though they are still enforced when a view reads a protected table; quotas apply (10,000 policies per metastore, 100 per catalog or schema, 50 per table, 20 principals per policy); time travel queries and deep or shallow clones fail on policy-protected tables unless the principal is exempted; and AI Search indexes don't enforce row filters or column masks. Metastore-level policies (Beta, September 2026) need Databricks Runtime 19 or above and the metastore admin role, and their GRANT and DENY forms can't target non-catalog objects such as external locations, storage credentials, shares, recipients, providers, and connections.
   link: https://docs.databricks.com/aws/en/data-governance/unity-catalog/abac/requirements#:~:text=You%20can%27t%20apply%20ABAC%20policies%20directly%20to%20views
-  date: '2026-08-20'
+  date: '2026-09-19'
 links:
   - url: https://www.databricks.com/blog/abac-row-filtering-and-column-masking-policies-governed-tags-and-data-classification-are-now
     kind: community
@@ -49,6 +49,9 @@ links:
   - url: https://docs.databricks.com/aws/en/data-governance/unity-catalog/abac/deny-policies
     kind: official
     label: 'Databricks docs: ABAC DENY policies (Beta since September 8, 2026)'
+  - url: https://docs.databricks.com/aws/en/data-governance/unity-catalog/abac/metastore-policies
+    kind: official
+    label: 'Databricks docs: metastore-level ABAC policies (Beta since September 17, 2026) - one policy across every catalog, including ones created later'
   - url: https://docs.databricks.com/aws/en/release-notes/product/2026/august
     kind: official
     label: 'Databricks release notes: ABAC GRANT policies generally available for models and services (August 31, 2026)'
@@ -57,4 +60,4 @@ prediction:
   - Adaptive access control
   - Unity ABAC
 source: https://docs.databricks.com/aws/en/data-governance/unity-catalog/abac/
-verified: '2026-09-10'
+verified: '2026-09-19'

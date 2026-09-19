@@ -1,0 +1,40 @@
+id: partner-powered-ai-features
+name: Partner-powered AI features
+aliases:
+  - partner-powered AI features setting
+  - Enable partner-powered AI features
+  - partner-powered AI assistive features
+category: AI / ML
+what:
+  note: The account- and workspace-level toggle that decides whether Genie Code, Genie Agents, Genie One and the other AI assistive features may run on models hosted by a partner provider (Azure OpenAI, OpenAI on Databricks, Anthropic on Databricks) rather than only on Databricks-hosted models.
+  link: https://docs.databricks.com/aws/en/databricks-ai/partner-powered#:~:text=controls%20whether%20some%20features%20are%20powered%20by%20models%20hosted%20by%20a%20partner%20provider
+fact:
+  - note: It became a one-way switch before it became no switch at all - since September 8, 2026 a workspace that has it on can no longer turn it off in the settings page, while one that has it off can still turn it on.
+    link: https://docs.databricks.com/aws/en/databricks-ai/partner-powered#:~:text=the%20toggle%20is%20disabled%20and%20you%20can%20no%20longer%20turn%20off%20the%20setting
+  - note: Removing the toggle changes nothing about what it controlled - on November 1, 2026 every workspace simply keeps whatever value it had, and from then on flipping it means asking your Databricks account team.
+    link: https://docs.databricks.com/aws/en/databricks-ai/partner-powered#:~:text=Each%20workspace%20keeps%20its%20current%20setting%20value
+  - note: Even with partners switched on, Genie Code Autocomplete never left home - it keeps running on a Databricks-hosted model either way.
+    link: https://docs.databricks.com/aws/en/databricks-ai/partner-powered#:~:text=some%20features%20continue%20to%20use%20a%20Databricks%2Dhosted%20model%2C%20such%20as%20Genie%20Code%20Autocomplete
+status:
+  value: deprecated
+  link: https://docs.databricks.com/aws/en/databricks-ai/partner-powered#:~:text=The%20partner%2Dpowered%20AI%20features%20setting%20is%20being%20removed
+  date: '2026-09-19'
+deprecatedAt:
+  date: 2026-09
+  link: https://docs.databricks.com/aws/en/release-notes/product/2026/september#:~:text=You%20can%20no%20longer%20disable%20the%20partner%2Dpowered%20AI%20features%20setting
+limitations:
+  note: Until November 1, 2026 the UI toggle only moves in one direction (off to on) and the Settings API is the only way to disable it; after that date the setting leaves the UI and the API entirely and any change goes through the Databricks account team. Off by default in compliance security profile workspaces, and with the setting off Genie Code loses its agentic capabilities, Genie Agents chat and agent modes and AI-assisted dashboard visualizations are unavailable, and chat in Genie One is unavailable.
+  link: https://docs.databricks.com/aws/en/databricks-ai/partner-powered#:~:text=You%20can%20still%20use%20the%20Settings%20API%20to%20enable%20or%20disable%20the%20setting
+  date: '2026-09-19'
+links:
+  - url: https://docs.databricks.com/aws/en/release-notes/product/2026/september
+    kind: official
+    label: 'Databricks release notes: partner-powered AI features can no longer be disabled in the settings UI (September 8, 2026)'
+  - url: https://docs.databricks.com/aws/en/admin/workspace-settings/settings-api-manage
+    kind: official
+    label: 'Databricks docs: manage settings with the Settings API - the only remaining way to disable it before November 1, 2026'
+  - url: https://docs.databricks.com/aws/en/databricks-ai/
+    kind: official
+    label: 'Databricks docs: Databricks AI assistive features - the feature family this setting gates'
+source: https://docs.databricks.com/aws/en/databricks-ai/partner-powered
+verified: '2026-09-19'

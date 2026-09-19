@@ -9,6 +9,57 @@ shows the what. Plain, simple English: short sentences, common words, no jargon 
 and product names themselves. Some older entries have no `Why:` line - the reason was never
 recorded, and a made-up reason is worse than none.
 
+## 2026-09-19
+
+### Added
+- **Refreshed the release-notes mirror and added the one deprecation September shipped: the
+  partner-powered AI features setting is being removed.**
+
+  **Why:** the mirror was last fetched on September 6 and the newest card was verified on
+  September 17, so the platform notes for September 14 to 18 and two weeks of AI/BI notes had never
+  been read here. Refetching all 216 pages surfaced 34 September platform items. None is a rename.
+  One is a deprecation of the kind this site exists for: on September 8 Databricks made the
+  partner-powered AI features toggle one-way (a workspace with it on can no longer turn it off in
+  the UI), and on November 1, 2026 the setting leaves the UI and the API entirely, after which any
+  change goes through the account team. Someone hunting for the switch they used last quarter will
+  find it greyed out with no explanation on the settings page itself. The Moonshot AI Kimi K2.7
+  retirement was read and left out on purpose: model retirements are a rolling list the platform
+  publishes itself and are not product names.
+
+  **What:** one new entry, `partner-powered-ai-features`, `deprecated` from September 2026, filed
+  under AI / ML and wired into the Genie Agents rail section next to the Assistant it gates. The
+  card records what the setting controls, the one-way phase, the November 1 removal, and the
+  Settings API as the only remaining way to disable it until then. No `removedAt`, because the
+  removal has not happened yet; the changelog and a fact carry the announced date instead.
+
+### Changed
+- **Four cards picked up the September facts that changed what they say: system-tables retention
+  is now configurable, ABAC policies can sit on the metastore, and Unity Gateway and Databricks
+  Apps each went GA on a piece the cards linked nowhere.**
+
+  **Why:** the `system-tables` card told readers that free retention "varies per table rather than
+  being one number", which stopped being the whole story on September 9 when configurable retention
+  entered Beta - opting in sets a flat 395 days everywhere and lets admins choose 30 to 3,650 days.
+  That is a limitation quietly turning into a knob, which is exactly what a limitations line is
+  meant to catch. The ABAC card's quotas and scope predated metastore-level policies (Beta,
+  September 17), which have their own compute, role and target restrictions the card did not
+  mention. The Unity Gateway and Databricks Apps cards had nothing to point at for the API going
+  GA on September 16 and telemetry going GA on September 18.
+
+  **What:** `system-tables` rewrites the retention clause of `limitations`, repoints the
+  limitations link at the retention section, and adds the September notes and the query-history
+  page to `links`. `attribute-based-access-control` appends the metastore-level restrictions to
+  `limitations` and links the new metastore-policies page. `unity-gateway` links the Unity Gateway
+  API reference (GA September 16, path still `aigateway`) and relabels its September notes link.
+  `databricks-apps` links the telemetry page and the September notes. `status.date`,
+  `limitations.date` where touched, and `verified` are bumped to today on all four.
+  `check_anchors.py` confirms all 71 URLs and quotes across the five touched cards; one dead
+  trust-and-safety URL was caught by it and replaced before commit. Checked and left unchanged:
+  `opensharing` (the live doc still says tabular data must be Delta or managed Iceberg, so its
+  limitation stands), `databricks-excel-add-in` and `external-secrets-in-unity-catalog` (their
+  September maturity was already recorded), and `compliance-security-profile` (partner-powered
+  AI features still off by default there).
+
 ## 2026-09-17
 
 ### Added

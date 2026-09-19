@@ -17,7 +17,7 @@ fact:
 status:
   value: active
   link: https://docs.databricks.com/aws/en/ai-gateway/#:~:text=Unity%20Gateway%20is%20the%20Databricks%20governance%20solution%20for%20enterprise%20AI
-  date: '2026-09-10'
+  date: '2026-09-19'
 releases:
   - type: beta
     date: 2026-02
@@ -34,13 +34,16 @@ links:
     label: 'Databricks docs: Unity Gateway release notes'
   - url: https://docs.databricks.com/aws/en/release-notes/product/2026/september
     kind: official
-    label: 'Databricks release notes: the first month written under the Unity Gateway name (September 2026)'
+    label: 'Databricks release notes: the first month written under the Unity Gateway name - API and developer tools GA (September 16) and compliance security profile support (September 17, 2026)'
   - url: https://www.databricks.com/blog/unity-ai-gateway-generally-available
     kind: official
     label: 'Databricks Blog: the August 4, 2026 GA post, retitled to Unity Gateway by September 10, 2026 while its URL keeps the previous name'
   - url: https://www.databricks.com/product/artificial-intelligence/unity-gateway
     kind: official
     label: 'Databricks product page: Unity Gateway - Multi-AI governance and cost control'
+  - url: https://docs.databricks.com/api/workspace/aigateway
+    kind: official
+    label: 'Databricks API reference: Unity Gateway API, generally available since September 16, 2026 - the path still says aigateway'
   - url: https://developers.databricks.com/docs/agents/ai-gateway
     kind: official
     label: 'Databricks Developer portal: still titled Unity AI Gateway after the docs rename (as of September 6, 2026)'
@@ -49,4 +52,4 @@ prediction:
   - Genie Gateway
   - Gateway
 source: https://docs.databricks.com/aws/en/ai-gateway/
-verified: '2026-09-10'
+verified: '2026-09-19'
