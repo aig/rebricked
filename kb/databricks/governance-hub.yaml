@@ -24,6 +24,10 @@ releases:
 introducedAt:
   date: 2026-07
   link: https://docs.databricks.com/aws/en/release-notes/product/2026/july#:~:text=Governance%20Hub%20is%20a%20centralized%2C%20account%2Dlevel%20UI%20in%20the%20account%20console%20for%20monitoring%20governance
+occasion:
+  date: 2026-06
+  link: https://www.databricks.com/blog/whats-new-unity-catalog-data-ai-summit-2026#:~:text=Governance%20Hub%2C%20now%20in%20Private%20Preview%2C%20provides%20a%20centralized%20command%20center%20for%20data%20stewards%20and%20admins
+  note: Data + AI Summit 2026 (private preview)
 limitations:
   note: Beta, and an account admin must enable it from the account console Previews page; data might take up to a day to load afterwards. It adds no permissions of its own, each page is scoped to your admin role, and Data page visualizations only ever show what your existing Unity Catalog privileges already allow.
   link: https://docs.databricks.com/aws/en/admin/governance-hub/#:~:text=Data%20might%20take%20up%20to%20a%20day%20to%20load%20after%20you%20enable%20the%20preview
@@ -40,4 +44,4 @@ prediction:
   - Unity Governance Hub
   - Governance One
 source: https://docs.databricks.com/aws/en/admin/governance-hub/
-verified: '2026-08-20'
+verified: '2026-09-20'

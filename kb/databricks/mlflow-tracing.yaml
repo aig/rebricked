@@ -1,0 +1,64 @@
+id: mlflow-tracing
+name: MLflow Tracing
+aliases:
+  - Tracing
+  - MLflow traces
+  - trace explorer
+  - unified trace table
+category: AI / ML
+what:
+  note: 'The observability layer for GenAI apps and agents on Databricks: it records the inputs, outputs, latency, token usage, and cost of every intermediate step of a run - LLM calls, retrievers, tools, sub-agents - and shows them in the MLflow trace explorer, with traces kept in an MLflow experiment or, since 2026, as OpenTelemetry rows in Unity Catalog tables.'
+  link: https://docs.databricks.com/aws/en/mlflow3/genai/tracing/#:~:text=MLflow%20Tracing%20is%20the%20observability%20foundation%20for%20GenAI%20development%20on%20Databricks
+fact:
+  - note: 'The docs page for watching what your agent does opens with a "Coding agent quickstart" - "Using a coding agent? Paste this prompt" - so the first recommended reader of the tracing documentation is the agent you are about to trace.'
+    link: https://docs.databricks.com/aws/en/mlflow3/genai/tracing/#:~:text=Using%20a%20coding%20agent%3F%20Paste%20this%20prompt
+  - note: Keep traces in an MLflow experiment and the backend caps you at 100,000 traces per experiment; point the experiment at a Unity Catalog table instead and the same row of the comparison table just says Unlimited.
+    link: https://docs.databricks.com/aws/en/mlflow3/genai/tracing/trace-unity-catalog#:~:text=100%2C000%20traces%20per%20experiment
+  - note: Since August 2026 the trace explorer can be redecorated by Genie - you describe the layout you want in plain language and it generates a reusable view with no coding required, which is an AI building the dashboard you use to check on your AI.
+    link: https://docs.databricks.com/aws/en/mlflow3/genai/tracing/observe-with-traces/custom-trace-view#:~:text=You%20describe%20the%20layout%20you%20want%20in%20plain%20language%20and%20Genie%20generates%20it%2C%20with%20no%20coding%20required
+status:
+  value: active
+  link: https://docs.databricks.com/aws/en/mlflow3/genai/tracing/#:~:text=MLflow%20Tracing%20is%20the%20observability%20foundation%20for%20GenAI%20development%20on%20Databricks
+  date: '2026-09-20'
+releases:
+  - type: ga
+    date: 2025-02
+    link: https://docs.databricks.com/aws/en/release-notes/product/2025/february#:~:text=MLflow%20Tracing%20is%20now%20generally%20available
+introducedAt:
+  date: 2024-06
+  link: https://docs.databricks.com/aws/en/release-notes/product/2024/june#:~:text=MLflow%20Tracing%20to%20analyze%20and%20compare%20traces%20across%20code%20execution
+limitations:
+  note: 'For traces stored in Unity Catalog: ingestion is initially limited to 200 traces per second per workspace and 100 MB per second per table (a raisable default - ask your account team for more); an experiment can be bound to a Unity Catalog trace location only when it is created; Unity Catalog traces are not supported with Knowledge Assistant or Supervisor Agent; individual traces cannot be deleted (delete rows from the underlying tables with SQL instead); and traces cannot yet be written to a default storage catalog or to storage protected by Private Link. Traces stored in an experiment instead are hard-capped at 100,000 per experiment.'
+  link: https://docs.databricks.com/aws/en/mlflow3/genai/tracing/trace-unity-catalog#:~:text=Trace%20ingestion%20is%20initially%20limited%20to%20200%20traces%20per%20second%20per%20workspace
+  date: '2026-09-20'
+links:
+  - url: https://docs.databricks.com/aws/en/release-notes/product/2024/june#:~:text=MLflow%20Tracing%20to%20analyze%20and%20compare%20traces%20across%20code%20execution
+    kind: official
+    label: 'Databricks release notes: first mention, June 12, 2024 - listed as a capability of the Mosaic AI Agent Framework (Public Preview)'
+  - url: https://docs.databricks.com/aws/en/release-notes/product/2025/february#:~:text=MLflow%20Tracing%20is%20now%20generally%20available
+    kind: official
+    label: 'Databricks release notes: MLflow Tracing is GA (February 25, 2025)'
+  - url: https://docs.databricks.com/aws/en/release-notes/product/2026/january#:~:text=You%20can%20now%20store%20MLflow%20traces%20in%20Unity%20Catalog%20tables%20using%20OpenTelemetry%20format
+    kind: official
+    label: 'Databricks release notes: Store and query MLflow traces in Unity Catalog (Beta), January 26, 2026'
+  - url: https://docs.databricks.com/aws/en/release-notes/product/2026/april#:~:text=MLflow%20trace%20storage%20in%20Unity%20Catalog%20tables%2C%20previously%20in%20Beta%2C%20is%20now%20in%20Public%20Preview
+    kind: official
+    label: 'Databricks release notes: MLflow trace storage in Unity Catalog is now in Public Preview (April 30, 2026)'
+  - url: https://docs.databricks.com/aws/en/release-notes/product/2026/july#:~:text=MLflow%20trace%20storage%20in%20Unity%20Catalog%20tables%20is%20now%20generally%20available
+    kind: official
+    label: 'Databricks release notes: MLflow trace storage in Unity Catalog is now generally available (July 16, 2026)'
+  - url: https://docs.databricks.com/aws/en/release-notes/product/2026/august#:~:text=You%20can%20now%20build%20custom%20trace%20views%20in%20the%20Databricks%20MLflow%20trace%20explorer
+    kind: official
+    label: 'Databricks release notes: Custom trace views in the MLflow trace explorer are in Beta (August 12, 2026)'
+  - url: https://docs.databricks.com/aws/en/ai-gateway/unified-trace-table#:~:text=The%20unified%20trace%20table%20is%20in%20Beta
+    kind: official
+    label: 'Databricks docs: the Unity Gateway unified trace table (Beta, August 21, 2026) - every gateway request and response in one Unity Catalog table, in an MLflow-compatible OTel schema'
+  - url: https://docs.databricks.com/aws/en/mlflow3/genai/tracing/trace-unity-catalog
+    kind: official
+    label: 'Databricks docs: Store OpenTelemetry traces in Unity Catalog - the recommended store for new and production workloads'
+prediction:
+  - Unity Tracing
+  - Lakeflow Traces
+  - Genie Trace Explorer
+source: https://docs.databricks.com/aws/en/mlflow3/genai/tracing/
+verified: '2026-09-20'

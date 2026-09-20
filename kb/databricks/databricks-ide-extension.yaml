@@ -29,9 +29,13 @@ releases:
 from:
   date: '2026'
   link: https://docs.databricks.com/aws/en/dev-tools/vscode-ext/#:~:text=enables%20you%20to%20connect%20to%20your%20remote%20Databricks%20workspaces
+limitations:
+  note: Supports running R, Scala and SQL notebooks as automated jobs but provides no deeper support for those languages inside Visual Studio Code, and in multi-bundle projects run actions are only available for files in the active bundle.
+  link: https://docs.databricks.com/aws/en/dev-tools/vscode-ext/#:~:text=does%20not%20provide%20any%20deeper%20support%20for%20these%20languages
+  date: '2026-09-20'
 prediction:
   - Databricks editor extension
   - Genie IDE extension
   - Databricks Code
 source: https://docs.databricks.com/aws/en/dev-tools/vscode-ext/
-verified: '2026-09-17'
+verified: '2026-09-20'

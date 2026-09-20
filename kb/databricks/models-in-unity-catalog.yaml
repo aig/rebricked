@@ -26,6 +26,10 @@ releases:
 introducedAt:
   date: '2023'
   link: https://docs.databricks.com/aws/en/release-notes/product/2023/june#:~:text=Models%20in%20Unity%20Catalog%20%28Public%20Preview%29
+occasion:
+  date: 2023-06
+  link: https://www.databricks.com/blog/whats-new-unity-catalog-data-and-ai-summit-2023#:~:text=public%20preview%20of%20Model%20Registry%20in%20Unity%20Catalog
+  note: Announced at Data + AI Summit 2023 (as Model Registry in Unity Catalog)
 limitations:
   note: Doesn't support stages, webhooks, email notifications, comment threads, or the activity log, and several search-API fields and operators (order_by, tag filters, operators beyond exact equality, and searching registered models by name) are unsupported; search_registered_models can also return stale results for models shared through OpenSharing.
   link: https://docs.databricks.com/aws/en/machine-learning/manage-model-lifecycle/#:~:text=Webhooks%20are%20not%20supported%20for%20models%20in%20Unity%20Catalog.
@@ -39,4 +43,4 @@ prediction:
   - Mosaic AI Registry
   - Unity Models One
 source: https://docs.databricks.com/aws/en/machine-learning/manage-model-lifecycle/
-verified: '2026-08-20'
+verified: '2026-09-20'

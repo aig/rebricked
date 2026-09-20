@@ -22,9 +22,10 @@ status:
 introducedAt:
   date: 2021-10
   link: https://docs.databricks.com/aws/en/release-notes/product/2021/october#:~:text=Databricks%20Runtime%2010.0%20and%2010.0%20ML%20are%20now%20generally%20available
-prediction:
-  - Lakeflow pandas
-  - pandas on Photon
+occasion:
+  date: 2021-10
+  link: https://www.databricks.com/blog/2021/10/04/pandas-api-on-upcoming-apache-spark-3-2.html#:~:text=the%20pandas%20API%20will%20be%20part%20of%20the%20upcoming%20Apache%20Spark
+  note: Launch blog post, October 2021 (Apache Spark 3.2)
 links:
   - url: https://docs.databricks.com/aws/en/release-notes/product/2021/october
     kind: official
@@ -35,5 +36,8 @@ links:
   - url: https://spark.apache.org/docs/latest/api/python/migration_guide/koalas_to_pyspark.html
     kind: internet
     label: 'Apache Spark docs: Migrating from Koalas to pandas API on Spark'
+prediction:
+  - Lakeflow pandas
+  - pandas on Photon
 source: https://docs.databricks.com/aws/en/pandas/pandas-on-spark
-verified: '2026-09-11'
+verified: '2026-09-20'

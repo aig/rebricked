@@ -18,12 +18,27 @@ status:
   value: active
   link: https://docs.databricks.com/aws/en/ingestion/cloud-object-storage/auto-loader/#:~:text=incrementally%20and%20efficiently%20processes%20new%20data%20files%20as%20they%20arrive
   date: '2026-08-20'
+releases:
+  - type: public-preview
+    date: 2020-02
+    link: https://docs.databricks.com/aws/en/release-notes/product/2020/february#:~:text=Process%20new%20data%20files%20incrementally%20with%20Auto%20Loader%20%28Public%20Preview%29
+  - type: ga
+    date: 2020-08
+    link: https://docs.databricks.com/aws/en/release-notes/product/2020/august#:~:text=It%20is%20now%20GA%20and%20adds%20the%20following%20features
 introducedAt:
   date: 2020-02
   link: https://docs.databricks.com/aws/en/release-notes/product/2020/february#:~:text=Process%20new%20data%20files%20incrementally%20with%20Auto%20Loader
+occasion:
+  date: 2020-02
+  link: https://www.databricks.com/blog/2020/02/24/introducing-databricks-ingest-easy-data-ingestion-into-delta-lake.html#:~:text=a%20set%20of%20partner%20integrations%2C%20in%20a%20public%20preview%2C%20that%20allows%20Databricks%20users%20to%20incrementally%20ingest%20data%20into%20Delta%20Lake
+  note: Launch blog post (Databricks Ingest, public preview)
+limitations:
+  note: Auto Loader does not guarantee the order in which files are discovered or processed, so pipelines must handle out-of-order arrivals. With file events, the cache can expire if the stream runs infrequently (invoke it at least once every seven days or it falls back to directory listing), and useIncremental, useNotifications, cloudFiles.fetchParallelism, cloudFiles.backfillInterval and cloudFiles.pathRewrites are unsupported. Classic file notification mode does not support changing the source path.
+  link: https://docs.databricks.com/aws/en/ingestion/cloud-object-storage/auto-loader/file-notification-mode#:~:text=invoke%20Auto%20Loader%20at%20least%20once%20every%20seven%20days
+  date: '2026-09-20'
 prediction:
   - Lakeflow Auto Loader
   - Auto Ingest
   - Genie Loader
 source: https://docs.databricks.com/aws/en/ingestion/cloud-object-storage/auto-loader/
-verified: '2026-08-20'
+verified: '2026-09-20'

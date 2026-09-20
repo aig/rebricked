@@ -25,6 +25,10 @@ releases:
 introducedAt:
   date: 2021-11
   link: https://docs.databricks.com/aws/en/release-notes/product/2021/november#:~:text=Databricks%20Partner%20Connect%20is%20now%20generally%20available
+occasion:
+  date: 2021-11
+  link: https://www.databricks.com/blog/2021/11/18/now-generally-available-introducing-databricks-partner-connect-to-discover-and-connect-popular-data-and-ai-tools-to-the-lakehouse#:~:text=Databricks%20is%20thrilled%20to%20announce%20Partner%20Connect
+  note: Launch blog post, November 2021
 limitations:
   note: Requires the Premium plan or above and a workspace admin to create connections; it is not available in AWS GovCloud regions (nor Azure China, Azure Government, or FedRAMP workspaces); not every Databricks partner solution is featured, and the flow is optimized for new partner accounts, so Databricks recommends connecting an existing partner account manually instead.
   link: https://docs.databricks.com/aws/en/partner-connect/#:~:text=available%20in%20AWS%20GovCloud%20regions
@@ -44,4 +48,4 @@ prediction:
   - Partner One
   - Marketplace Connect
 source: https://docs.databricks.com/aws/en/partner-connect/
-verified: '2026-09-11'
+verified: '2026-09-20'

@@ -1,0 +1,68 @@
+id: serverless-environments
+name: Serverless environments
+aliases:
+  - environment version
+  - base environments
+  - serverless environment
+category: Compute / BI
+what:
+  note: 'The versioned Python runtime a serverless notebook or job runs on: an environment version (1 through 6 so far) pins a Python release and a set of packages behind a stable Spark Connect client API so Databricks can upgrade the server underneath without touching your code, and a base environment layers a shareable YAML of extra dependencies on top - picked from the notebook''s Environment side panel, and since September 2026 usable on classic compute too (Beta).'
+  link: https://docs.databricks.com/aws/en/release-notes/serverless/environment-version/#:~:text=Environment%20versions%20provide%20a%20stable%20client%20API%20based%20on%20Spark%20Connect%20to%20ensure%20application%20compatibility
+fact:
+  - note: Every environment version ships with a three-year expiry date printed next to it - Databricks supports a three-year lifecycle for all environment versions, so version 1 (released March 12, 2024) has an end-of-support date of March 12, 2027 already on the books.
+    link: https://docs.databricks.com/aws/en/release-notes/serverless/environment-version/#:~:text=Databricks%20supports%20a%20three-year%20lifecycle%20for%20all%20environment%20versions
+  - note: 'Version 1 ran Python 3.10.12 and version 2 Python 3.11.10, then versions 3, 4, 5, and 6 all list Python 3.12.3 - four consecutive "new" environments on the exact same interpreter.'
+    link: https://docs.databricks.com/aws/en/release-notes/serverless/environment-version/#:~:text=Python%3A%203.12.3
+  - note: 'Since August 2026 a serverless notebook on environment version 5 or above can run %uv init, %uv add, and %uv sync to create a Python project, add dependencies, and sync its environment - a notebook that grows its own pyproject.'
+    link: https://docs.databricks.com/aws/en/release-notes/product/2026/august#:~:text=in%20serverless%20notebooks%20running%20environment%20version%205%20or%20above%20to%20create%20a%20Python%20project%2C%20add%20dependencies%2C%20and%20sync%20its%20environment
+status:
+  value: active
+  link: https://docs.databricks.com/aws/en/release-notes/serverless/#:~:text=Serverless%20compute%20for%20notebooks%20and%20jobs%20uses%20environment%20versions%2C%20which%20provide%20a%20stable%20client%20API%20based%20on%20Spark%20Connect%20to%20ensure%20application%20compatibility
+  date: '2026-09-20'
+introducedAt:
+  date: 2024-03
+  link: https://docs.databricks.com/aws/en/release-notes/serverless/environment-version/#:~:text=March%2012%2C%202024
+limitations:
+  note: 'Base environments: in jobs they work only for notebook, Python script, and Python wheel tasks (workspace base environments in jobs are Beta); Lakeflow pipelines do not support them; only the Python dependencies in the dependencies list are installed at runtime; environment version 1 is not supported (use 2 or higher); every base environment is visible to all workspace users; and a workspace is limited to 10 base environments. On classic compute the Environments dependency mode (Beta) does not support Spark JAR tasks or %scala and disables Docker, Spark environment variables, init scripts, and cluster libraries. Do not install PySpark, or anything that pulls it in, on a serverless notebook.'
+  link: https://docs.databricks.com/aws/en/admin/workspace-settings/base-environment#:~:text=Base%20environments%20have%20the%20following%20limitations
+  date: '2026-09-20'
+links:
+  - url: https://docs.databricks.com/aws/en/release-notes/serverless/
+    kind: official
+    label: 'Databricks docs: Serverless compute release notes - the environment version list and every server-side version'
+  - url: https://docs.databricks.com/aws/en/release-notes/serverless/environment-version/
+    kind: official
+    label: 'Databricks docs: Environment version release notes - release and end-of-support dates for versions 1 to 6'
+  - url: https://docs.databricks.com/aws/en/release-notes/serverless/environment-version/six#:~:text=The%20Py4J%20gateway%20is%20turned%20off%20in%20environment%20version%206
+    kind: official
+    label: 'Databricks docs: Environment version 6 - the one that turned off the Py4J gateway for dbutils and dropped /databricks/runtime/info.json'
+  - url: https://docs.databricks.com/aws/en/compute/serverless/dependencies#:~:text=A%20base%20environment%20determines%20the%20pre-installed%20libraries%20and%20environment%20version%20available%20for%20your%20serverless%20notebook
+    kind: official
+    label: 'Databricks docs: Configure the serverless environment - the Environment side panel, base environments, and job-task configuration'
+  - url: https://docs.databricks.com/aws/en/admin/workspace-settings/base-environment#:~:text=a%20base%20environment%20is%20a%20shareable%20YAML%20specification%20that%20defines%20a%20serverless%20environment%20version%20and%20a%20set%20of%20additional%20Python%20dependencies
+    kind: official
+    label: 'Databricks docs: Manage workspace base environments'
+  - url: https://docs.databricks.com/aws/en/compute/environments-mode#:~:text=This%20feature%20is%20in%20Beta
+    kind: official
+    label: 'Databricks docs: Manage dependencies using environments - the Environments dependency mode that brings base environments to classic compute (Beta)'
+  - url: https://docs.databricks.com/aws/en/release-notes/product/2024/june#:~:text=You%20can%20now%20install%20Python%20dependencies%20for%20serverless%20notebooks%20using%20the%20Environment%20side%20panel
+    kind: official
+    label: 'Databricks release notes: Serverless notebooks environment manager - the Environment side panel arrives (June 2024)'
+  - url: https://docs.databricks.com/aws/en/release-notes/product/2025/august#:~:text=Base%20environments%20are%20custom%20environment%20specifications%20for%20serverless%20notebooks%20that%20define%20a%20serverless%20environment%20version%20and%20a%20set%20of%20dependencies
+    kind: official
+    label: 'Databricks release notes: Admins can now manage a workspace''s serverless base environments (Public Preview, August 2025)'
+  - url: https://docs.databricks.com/aws/en/release-notes/product/2026/april#:~:text=Workspace%20base%20environments%20are%20now%20generally%20available
+    kind: official
+    label: 'Databricks release notes: Workspace base environments are now generally available (April 2026)'
+  - url: https://docs.databricks.com/aws/en/release-notes/product/2026/september#:~:text=You%20can%20now%20select%20environment%20version%206%20as%20your%20base%20environment%20for%20serverless%20and%20standard%20classic%20compute
+    kind: official
+    label: 'Databricks release notes: Environment version 6 is now available (September 3, 2026)'
+  - url: https://docs.databricks.com/aws/en/release-notes/product/2026/september#:~:text=You%20can%20now%20use%20base%20environments%20to%20manage%20Python%20dependencies%20on%20classic%20compute
+    kind: official
+    label: 'Databricks release notes: Base environments are now supported on classic compute (Beta, September 17, 2026)'
+prediction:
+  - Lakeflow Environments
+  - Unity Environments
+  - Databricks Runtime for Serverless
+source: https://docs.databricks.com/aws/en/compute/serverless/dependencies
+verified: '2026-09-20'

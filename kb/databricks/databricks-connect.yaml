@@ -26,6 +26,10 @@ releases:
 introducedAt:
   date: '2023'
   link: https://docs.databricks.com/aws/en/release-notes/product/2023/april#:~:text=Beginning%20with%20Databricks%20Runtime%2013.0
+occasion:
+  date: 2023-04
+  link: https://www.databricks.com/blog/2023/04/18/use-databricks-anywhere-databricks-connect-v2.html#:~:text=announce%20the%20public%20preview%20of%20Databricks%20Connect
+  note: Launch blog post (Public Preview)
 limitations:
   note: Doesn't support the display() API, Databricks Utilities (credentials, library, notebook workflow, widgets), SparkContext and RDDs, distributed ML training, or CREATE TABLE AS SELECT, with version-specific restrictions such as no streaming foreachBatch and no queries over 3600 seconds on Runtime 13.3 LTS and below.
   link: https://docs.databricks.com/aws/en/dev-tools/databricks-connect/python/limitations#:~:text=Distributed%20ML%20training%20is%20not%20supported
@@ -39,4 +43,4 @@ prediction:
   - Spark Connect One
   - Databricks Connect Prime
 source: https://docs.databricks.com/aws/en/dev-tools/databricks-connect/
-verified: '2026-08-20'
+verified: '2026-09-20'

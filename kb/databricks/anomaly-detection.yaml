@@ -25,6 +25,10 @@ releases:
 introducedAt:
   date: 2026-02
   link: https://docs.databricks.com/aws/en/release-notes/product/2026/february#:~:text=Data%20Quality%20Monitoring%20Anomaly%20Detection%20is%20now%20in%20Public%20Preview
+occasion:
+  date: 2026-02
+  link: https://www.databricks.com/blog/data-quality-monitoring-scale-agentic-ai#:~:text=Enabled%20at%20the%20schema%20level%2C%20anomaly%20detection%20monitors%20all%20critical%20tables%20without%20manual%20configuration
+  note: Launch blog post (Data Quality Monitoring Public Preview)
 limitations:
   note: Public Preview. Needs a Unity Catalog enabled workspace and serverless compute, plus MANAGE on the schema or catalog to switch it on. Views and foreign tables are not supported, and the completeness check does not take into account the fraction of nulls, zero values, or NaN.
   link: https://docs.databricks.com/aws/en/data-governance/unity-catalog/data-quality-monitoring/anomaly-detection/#:~:text=does%20not%20take%20into%20account%20metrics%20such%20as%20the%20fraction%20of%20nulls
@@ -41,4 +45,4 @@ prediction:
   - Unity Anomaly Detection
   - Data Health One
 source: https://docs.databricks.com/aws/en/data-governance/unity-catalog/data-quality-monitoring/anomaly-detection/
-verified: '2026-08-20'
+verified: '2026-09-20'

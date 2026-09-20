@@ -29,6 +29,10 @@ releases:
 from:
   date: 2024-03
   link: https://docs.databricks.com/aws/en/release-notes/product/2024/march#:~:text=Feature%20Serving%20is%20GA
+occasion:
+  date: 2024-03
+  link: https://www.databricks.com/blog/announcing-general-availability-databricks-feature-serving#:~:text=Today%2C%20we%20are%20excited%20to%20announce%20the%20general%20availability%20of%20Feature%20Serving.
+  note: GA announcement blog post, March 11, 2024
 links:
   - url: https://www.databricks.com/blog/announcing-general-availability-databricks-feature-serving
     kind: official
@@ -38,4 +42,4 @@ prediction:
   - Genie Feature Serving
   - Feature Serving One
 source: https://docs.databricks.com/aws/en/machine-learning/feature-store/feature-function-serving
-verified: '2026-09-11'
+verified: '2026-09-20'

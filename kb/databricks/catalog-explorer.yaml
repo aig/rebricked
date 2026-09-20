@@ -22,7 +22,7 @@ releases:
     link: https://www.databricks.com/blog/accelerating-discovery-unity-catalog-revamped-catalog-explorer
 from:
   date: 2023-09
-  link: https://www.databricks.com/blog/accelerating-discovery-unity-catalog-revamped-catalog-explorer
+  link: https://docs.databricks.com/aws/en/release-notes/product/2023/september#:~:text=Data%20Explorer%20is%20renamed%20to%20Catalog%20Explorer%20to%20recognize%20the%20fact%20that%20you%20can%20use%20it%20to%20work%20with%20all%20securable%20objects%20in%20Unity%20Catalog
 limitations:
   note: The Catalog Explorer UI is not available in all Databricks workspaces.
   link: https://docs.databricks.com/aws/en/catalog-explorer/#:~:text=not%20live%20in%20all%20Databricks%20workspaces
@@ -39,4 +39,4 @@ prediction:
   - Unity Explorer
   - Genie Catalog
 source: https://docs.databricks.com/aws/en/catalog-explorer/
-verified: '2026-08-20'
+verified: '2026-09-20'

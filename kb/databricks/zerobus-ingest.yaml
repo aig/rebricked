@@ -28,6 +28,10 @@ releases:
 introducedAt:
   date: 2025-10
   link: https://docs.databricks.com/aws/en/release-notes/product/2025/october#:~:text=Zerobus%20Ingest%20connector%20in%20Lakeflow%20Connect%20is%20in%20Public%20Preview
+occasion:
+  date: 2025-06
+  link: https://www.databricks.com/blog/announcing-general-availability-databricks-lakeflow#:~:text=we%20are%20announcing%20Zerobus%2C%20a%20Lakeflow%20Connect%20API
+  note: Announced at Data + AI Summit 2025 (with Lakeflow GA)
 limitations:
   note: Available only in select regions, with the workspace and target table both in a supported region. Delivery is at-least-once, it writes only to managed Delta tables and streaming tables, it does not auto-evolve your target table (evolve the table first, then send records against the new schema), it does not support recreating a target table, and partitioned tables allow at most 100 partitions in any 5-second interval. Records cap at 10,485,760 bytes. The default quotas (100 MB/s and 100,000 records/s per stream, 10 GB/s per target table, 10,000 REST requests/s) are adjustable through your Databricks account representative.
   link: https://docs.databricks.com/aws/en/ingestion/zerobus-limits#:~:text=does%20not%20support%20recreating%20a%20target%20table
@@ -62,4 +66,4 @@ prediction:
   - Genie Bus
   - Lakeflow Zerobus
 source: https://docs.databricks.com/aws/en/ingestion/zerobus-overview
-verified: '2026-09-10'
+verified: '2026-09-20'

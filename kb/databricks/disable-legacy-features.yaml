@@ -26,5 +26,9 @@ releases:
 introducedAt:
   date: 2025-08
   link: https://docs.databricks.com/aws/en/release-notes/product/2025/august#:~:text=Disable%20legacy%20features%20for%20new%20workspaces
+limitations:
+  note: Not available for accounts created after December 19, 2025 (those have no legacy access by default). It only affects new workspaces, a workspace admin can still enable or disable each legacy feature at the workspace level even when the account setting is Disabled, it can break workspace-creation automation that relies on DBFS root, mounts or the Hive metastore, and it can take up to five minutes to take effect.
+  link: https://docs.databricks.com/aws/en/admin/account-settings/legacy-features#:~:text=This%20setting%20is%20not%20available%20for%20accounts%20created%20after%20December%2019%2C%202025
+  date: '2026-09-20'
 source: https://docs.databricks.com/aws/en/admin/account-settings/legacy-features
-verified: '2026-09-17'
+verified: '2026-09-20'

@@ -26,9 +26,13 @@ releases:
 introducedAt:
   date: 2023-10
   link: https://docs.databricks.com/aws/en/release-notes/product/2023/october#:~:text=Predictive%20optimization
+occasion:
+  date: 2023-10
+  link: https://www.databricks.com/blog/introducing-predictive-optimization-faster-queries-cheaper-storage#:~:text=announce%20the%20Public%20Preview%20of%20Databricks%20Predictive%20Optimization
+  note: Public Preview launch blog post, October 2023
 limitations:
   note: Unity Catalog managed tables only - it does not run on external tables or on tables loaded as OpenSharing recipients, and its OPTIMIZE never performs ZORDER.
   link: https://docs.databricks.com/aws/en/optimizations/predictive-optimization#:~:text=does%20not%20run%20on%20the%20following%20table%20types
   date: '2026-09-17'
 source: https://docs.databricks.com/aws/en/optimizations/predictive-optimization
-verified: '2026-09-17'
+verified: '2026-09-20'

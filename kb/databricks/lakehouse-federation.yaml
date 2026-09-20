@@ -27,6 +27,10 @@ releases:
 introducedAt:
   date: '2023'
   link: https://docs.databricks.com/aws/en/release-notes/product/2023/july#:~:text=Lakehouse%20Federation%20lets%20you%20run%20queries%20against%20external%20database%20providers%20%28Public%20Preview%29
+occasion:
+  date: 2023-06
+  link: https://www.databricks.com/blog/introducing-lakehouse-federation-capabilities-unity-catalog#:~:text=today%20at%20Data%2BAI%20Summit%2C%20we%20are%20thrilled%20to%20announce%20Lakehouse%20Federation%20capabilities%20in%20Unity%20Catalog
+  note: Data + AI Summit 2023 (public preview)
 limitations:
   note: Federated queries are read-only (except legacy Hive metastore federation), don't use Databricks query caching (Result Cache and Disk Cache), lowercase table and schema names, ignore names invalid in Unity Catalog, and can't federate foreign tables with case-sensitive identifiers for Azure Synapse or Redshift.
   link: https://docs.databricks.com/aws/en/query-federation/database-federation#:~:text=Databricks%20query%20caching%20%28Result%20Cache%20and%20Disk%20Cache%29%20is%20not%20supported%20for%20federated%20queries.
@@ -43,4 +47,4 @@ prediction:
   - Unity Federation
   - Genie Federation
 source: https://docs.databricks.com/aws/en/query-federation/
-verified: '2026-08-20'
+verified: '2026-09-20'

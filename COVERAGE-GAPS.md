@@ -1,6 +1,6 @@
 # rebricked — Coverage Gap Report
 
-**What was compared:** the project's data file (`databricks.features.json`, 171 curated entries as of 2026-09-11 - renames, deprecations, and notable features; the original diff used a 94-entry snapshot) against the full Databricks product release notes in `reference/` (103 monthly files, Apr 2018 - Jul 2026). The original diff was run against a 71-entry snapshot; see the update log below for gaps closed since.
+**What was compared:** the project's data file (`databricks.features.json`, 201 curated entries as of 2026-09-20 - renames, deprecations, and notable features; the original diff used a 94-entry snapshot) against the full Databricks product release notes in `reference/` (105 monthly files, Apr 2018 - Sep 2026). The original diff was run against a 71-entry snapshot; see the update log below for gaps closed since.
 
 **Method:** five agents extracted every distinct named product/service/feature from the release notes (~600 raw mentions), deduped to distinct concepts (earliest mention kept), then diffed against every name and alias the project already covers. Nothing was dropped for being minor — per your instruction, this is the whole list.
 
@@ -11,6 +11,22 @@
 ---
 
 ## Update log
+
+- **2026-09-20** - Reconciled against the current 201-entry dataset and extended the comparison through the
+  August and September 2026 release notes (the report previously stopped at July). Eleven open rows that a card
+  already covered are now marked **✓ now covered** (Deletion vectors, Predictive optimization, RStudio, Databricks
+  Connect v1, the VS Code extension, the Excel Add-in, MLflow Model Registry, Foundation Model Training, Mosaic AI
+  Agent Framework, Mosaic AI Model Training, Serverless budget policies) and four sub-feature rows are re-marked
+  **[adjacent]** to the card they extend. Four new cards, all `active` features, chosen because August/September
+  shipped a lifecycle event for each with no card to hang it on: **AI Functions** (§13; Public Preview April 2023,
+  `ai_query` GA June 2026, REST API GA August 2026, `ai_search`/`ai_transcribe` Beta; `ai_generate_text` is the
+  family's own deprecation, recorded as a fact, not a card), **MLflow Tracing** (§11; GA February 2025, traces in
+  Unity Catalog GA July 2026, unified trace table Beta August 2026), **Serverless compute access control** (§1 /
+  §21; GA August 3, 2026, no preview stage ever published), and **Serverless environments** (§21; environment
+  version 1 March 2024 through version 6 September 2026, base environments on classic compute Beta). Investigated
+  and **not** added: the **Moonshot AI Kimi K2.7 retirement** (a hosted-model retirement, see §14 policy), the
+  fifteen new **Lakeflow Connect connectors** (§2 list extended instead), and the Unity Gateway sub-features
+  **Smart Routing** and **sensitive-data redaction** (folded into the `unity-gateway` card's limitations).
 
 - **2026-09-11** - Reconciled against the current 171-entry dataset: every row below that an existing card
   now covers is marked **✓ now covered** with its id (47 rows had been closed since the last log entry
@@ -91,7 +107,7 @@ For reference, the project already covers these ~50 concepts (with their rename/
 | 2025-12 | Flexible node types (instance-type fallback) |
 | 2026-03 | AI Runtime (GPU serverless, Public Preview) - ✓ now covered (`ai-runtime`) |
 | 2026-05 | Databricks Container Services for standard compute |
-| 2026-06 | AI Runtime CLI (`air`) |
+| 2026-06 | AI Runtime CLI (`air`) **[adjacent]** (extends `ai-runtime`) |
 
 ## 2. Data ingestion — Auto Loader, Lakeflow Connect & connectors
 
@@ -108,7 +124,7 @@ For reference, the project already covers these ~50 concepts (with their rename/
 | 2026-05 | Community connectors (open-source Lakeflow Connect) |
 | 2026-07 | MySQL integrated CDC pipeline (gateway-free) |
 
-**Lakeflow Connect / ingestion source connectors** (each separately named): Salesforce (2024-07), SQL Server (2024-07), Workday RaaS (2024-07), Amazon RDS (2024-07), ServiceNow (2025-03), Google Analytics raw (2025-04), Workday Reports (2025-04), Microsoft SharePoint (2025-06), Salesforce Data Cloud File Sharing (2025-06), Microsoft SQL Server (2025-08), SFTP (2025-11), MySQL (2025-12), Meta Ads (2025-12), Confluence (2025-12), PostgreSQL (2025-12), NetSuite (2025-12), Jira (2025-12), Microsoft Dynamics 365 (2025-12), Google Drive (2026-01), TikTok Ads (2026-02), HubSpot (2026-02), Google Ads (2026-02), Outlook (2026-05), GitHub (2026-05), Smartsheet (2026-05), Anthropic Compliance API (2026-07), Veeva Vault (2026-07), Strac (2026-07), Zip (2026-06), Monday.com (2026-06), Zoho Books (2026-06), Aha! (2026-06), Square (2026-06), Wiz Audit Logs (2026-06), Netskope Logs (2026-06), Salesforce Marketing Cloud (2026-06), RabbitMQ (2026-06), Zoom Logs (2026-06), Pendo (2026-06), Slack Access/Integration Logs (2026-06).
+**Lakeflow Connect / ingestion source connectors** (each separately named): Salesforce (2024-07), SQL Server (2024-07), Workday RaaS (2024-07), Amazon RDS (2024-07), ServiceNow (2025-03), Google Analytics raw (2025-04), Workday Reports (2025-04), Microsoft SharePoint (2025-06), Salesforce Data Cloud File Sharing (2025-06), Microsoft SQL Server (2025-08), SFTP (2025-11), MySQL (2025-12), Meta Ads (2025-12), Confluence (2025-12), PostgreSQL (2025-12), NetSuite (2025-12), Jira (2025-12), Microsoft Dynamics 365 (2025-12), Google Drive (2026-01), TikTok Ads (2026-02), HubSpot (2026-02), Google Ads (2026-02), Outlook (2026-05), GitHub (2026-05), Smartsheet (2026-05), Anthropic Compliance API (2026-07), Veeva Vault (2026-07), Strac (2026-07), Zip (2026-06), Monday.com (2026-06), Zoho Books (2026-06), Aha! (2026-06), Square (2026-06), Wiz Audit Logs (2026-06), Netskope Logs (2026-06), Salesforce Marketing Cloud (2026-06), RabbitMQ (2026-06), Zoom Logs (2026-06), Pendo (2026-06), Slack Access/Integration Logs (2026-06), Atlassian Audit Logs (2026-08), Anysphere Audit Logs (2026-08), Verkada (2026-08), Workiva (2026-08), SendGrid (2026-08), Gmail (2026-08), Glean (2026-08), Google Search Console (2026-08), Amplitude (2026-08), Notion (2026-08), PagerDuty (2026-08), Celigo (2026-09), Anysphere Organization (2026-09), Anaplan (2026-09); SharePoint, NetSuite and Google Drive reached GA in 2026-08.
 
 ## 3. Data engineering — pipelines & streaming (DLT-adjacent)
 
@@ -141,10 +157,10 @@ For reference, the project already covers these ~50 concepts (with their rename/
 | 2020-08 | Delta table CLONE (shallow/deep) |
 | 2022-09 | Disk cache (formerly Delta cache) - ✓ now covered (`delta-cache` -> `disk-cache`) |
 | 2023-06 | Delta Lake column mapping (rename/drop columns) |
-| 2023-10 | Deletion vectors (merge-on-read deletes) |
+| 2023-10 | Deletion vectors (merge-on-read deletes) - ✓ now covered (`deletion-vectors`) |
 | 2023-10 | Predictive I/O for updates |
 | 2023-10 | UNDROP TABLE |
-| 2023-09/10 | Predictive optimization (auto OPTIMIZE/clustering for UC managed tables) |
+| 2023-09/10 | Predictive optimization (auto OPTIMIZE/clustering for UC managed tables) - ✓ now covered (`predictive-optimization`) |
 | 2026-03 | Type widening |
 | 2026-03 | Multi-table transactions (BEGIN ATOMIC...END) - ✓ now covered (`transactions`) |
 | 2026-06 | Parquet v2 encodings for Delta |
@@ -189,7 +205,7 @@ For reference, the project already covers these ~50 concepts (with their rename/
 | 2025-06 | Tag policies / governed tags - ✓ now covered (`tag-policies` -> `governed-tags`) |
 | 2025-08 | Access requests (self-service) |
 | 2025-08 | Path credential vending |
-| 2025-09 | Data classification system table |
+| 2025-09 | Data classification system table **[adjacent]** (extends `data-classification`) |
 | 2025-10 | Data Classification (auto-classify/tag sensitive data) - ✓ now covered (`data-classification`) |
 | 2025-10 | Certification status system tag |
 | 2026-02 | Discover page and business domains - ✓ now covered (`discover`) |
@@ -252,14 +268,14 @@ For reference, the project already covers these ~50 concepts (with their rename/
 | 2026-02 | Python unit testing in the workspace (pytest) |
 | 2026-05 | `%uv pip` (uv-based installs in serverless notebooks) |
 | 2018-02 | SQL autocomplete |
-| 2018-07 | RStudio integration / R Markdown support |
+| 2018-07 | RStudio integration / R Markdown support - ✓ now covered (`databricks-hosted-rstudio-server`) |
 | 2020-03 | Shiny on Databricks |
 
 ## 9. SDKs, CLIs, drivers, IaC
 
 | First seen | Product / Feature |
 |---|---|
-| 2019-06 | Databricks Connect (v1) |
+| 2019-06 | Databricks Connect (v1) - ✓ now covered (`legacy-databricks-connect` -> `databricks-connect`) |
 | 2020-09 | Arrow-based ODBC/JDBC drivers |
 | 2022-06 | Databricks Terraform provider |
 | 2023-06 | Databricks SDK for Python |
@@ -284,13 +300,13 @@ For reference, the project already covers these ~50 concepts (with their rename/
 
 | First seen | Product / Feature |
 |---|---|
-| 2023-02 | Databricks extension for Visual Studio Code |
+| 2023-02 | Databricks extension for Visual Studio Code - ✓ now covered (`databricks-extension-for-visual-studio-code` -> `databricks-ide-extension`) |
 | 2024-08 | Databricks Apps - ✓ now covered (`databricks-apps`) |
 | 2025-03 | Databricks Connector for Google Sheets |
 | 2025-09 | Databricks connector in Microsoft Power Platform |
-| 2026-03 | Databricks Excel Add-in |
+| 2026-03 | Databricks Excel Add-in - ✓ now covered (`databricks-excel-add-in`) |
 | 2026-04 | Connect Lovable apps to Databricks |
-| 2026-03 | Databricks Apps telemetry (OpenTelemetry) |
+| 2026-03 | Databricks Apps telemetry (OpenTelemetry) **[adjacent]** (extends `databricks-apps`) |
 
 ## 11. MLflow & classic ML
 
@@ -301,21 +317,21 @@ For reference, the project already covers these ~50 concepts (with their rename/
 | 2018-11 | HorovodRunner - ✓ now covered (`horovodrunner` (deprecated)) |
 | 2019-02 | Managed MLflow on Databricks |
 | 2019-06 | Hyperopt (SparkTrials) - ✓ now covered (`hyperopt` (deprecated)) |
-| 2020-03 | MLflow Model Registry |
+| 2020-03 | MLflow Model Registry - ✓ now covered (`workspace-model-registry`) |
 | 2020-09 | MLflow Model Serving - ✓ now covered (`legacy-mlflow-model-serving` (retired) -> `model-serving`) |
 | 2021-05 | AutoML - ✓ now covered (`automl`) |
 | 2022-01 | MLflow Model Registry Webhooks |
 | 2023-03 | Models in Unity Catalog (govern MLflow models) - ✓ now covered (`models-in-unity-catalog`) |
-| 2024-06 | MLflow Tracing |
+| 2024-06 | MLflow Tracing - ✓ now covered (`mlflow-tracing`) |
 | 2025-06 | MLflow 3.0 |
 | 2025-06 | Deployment jobs (MLflow 3) |
-| 2026-01 | MLflow traces in Unity Catalog (OpenTelemetry) |
+| 2026-01 | MLflow traces in Unity Catalog (OpenTelemetry) **[adjacent]** (extends `mlflow-tracing`) |
 
 ## 12. Feature Store / feature engineering (beyond covered UC entry)
 
 | First seen | Product / Feature |
 |---|---|
-| 2022-02 | Feature Store online store / automatic feature lookup |
+| 2022-02 | Feature Store online store / automatic feature lookup **[adjacent]** (extends `databricks-online-feature-stores`) |
 | 2022-04 | Feature Store publish to DynamoDB |
 | 2023-09 | On-demand feature computation |
 | 2023-12 | Feature & Function Serving - ✓ now covered (`feature-function-serving` (renamed) -> `feature-serving`) |
@@ -328,21 +344,21 @@ For reference, the project already covers these ~50 concepts (with their rename/
 | First seen | Product / Feature |
 |---|---|
 | 2023-12 | Foundation Model APIs - ✓ now covered (`foundation-model-apis`) |
-| 2024-02 | AI Functions (SQL) |
+| 2024-02 | AI Functions (SQL) - ✓ now covered (`ai-functions`; first shipped as a Public Preview in April 2023) |
 | 2024-03 | DBRX (Base & Instruct) |
-| 2024-05 | Foundation Model Training / Fine-tuning |
+| 2024-05 | Foundation Model Training / Fine-tuning - ✓ now covered (`foundation-model-fine-tuning` -> `foundation-model-training`) |
 | 2024-05 | Pre-trained models in Unity Catalog |
-| 2024-06 | Mosaic AI Agent Framework |
+| 2024-06 | Mosaic AI Agent Framework - ✓ now covered (`mosaic-ai-agent-framework`) |
 | 2024-06 | Agent Evaluation |
 | 2024-06 | Function calling on FM APIs |
 | 2024-06 | `vector_search()` SQL function |
-| 2024-07 | Mosaic AI Model Training (umbrella) |
+| 2024-07 | Mosaic AI Model Training (umbrella) - ✓ now covered (`mosaic-ai-model-training`) |
 | 2024-07 | `ai_forecast()` |
 | 2024-09 | AI Playground |
 | 2024-09 | Mosaic AI Gateway (AI Gateway) — ✓ now covered (as `ai-gateway` → `unity-ai-gateway`) |
 | 2024-09 | AI Guardrails |
 | 2024-10 | Structured outputs (Model Serving) |
-| 2024-10 | Batch LLM inference (`ai_query`) |
+| 2024-10 | Batch LLM inference (`ai_query`) **[adjacent]** (extends `ai-functions`) |
 | 2024-12 | Python code executor for AI agents |
 | 2024-12 | `databricks-agents` SDK |
 | 2024-12 | Synthetic evaluation sets |
@@ -369,7 +385,7 @@ For reference, the project already covers these ~50 concepts (with their rename/
 | 2026-04 | Vector Search retrieval-quality evaluation **[adjacent]** |
 | 2026-06 | Managed agent memory |
 | 2026-06 | Omnigent (coding agent meta-harness) - ✓ now covered (`omnigent`) |
-| 2026-06 | `ai_query` (GA general-purpose) |
+| 2026-06 | `ai_query` (GA general-purpose) **[adjacent]** (extends `ai-functions`) |
 | 2026-02 | AI Gateway (Beta / new UI, coding-agent control plane) **[adjacent]** |
 | 2026-07 | Lakebridge Agentic Converter - ✓ now covered (`agentic-code-converter` -> `lakebridge-agentic-converter`) |
 | 2026-04 | Sample Data Explorer (Genie Code) **[adjacent]** |
@@ -466,7 +482,7 @@ FedRAMP Moderate (2022-08), FedRAMP High / GovCloud (2024-04), PCI-DSS (2022-06)
 | 2023-06 | System tables - ✓ now covered (`system-tables`) |
 | 2024-06 | Budgets |
 | 2024-06 | Cost management / usage dashboard |
-| 2024-10 | Serverless budget policies |
+| 2024-10 | Serverless budget policies - ✓ now covered (`serverless-budget-policies` -> `serverless-usage-policies`) |
 | 2025-07 | Databricks release notes RSS feed |
 | 2026-03 | Databricks usage dashboard (GA) |
 | 2026-06 | Managed disaster recovery |
@@ -494,8 +510,38 @@ FedRAMP Moderate (2022-08), FedRAMP High / GovCloud (2024-04), PCI-DSS (2022-06)
 
 ---
 
+## 21. August - September 2026 release notes (added after the original diff)
+
+Product-level items from the two months the original comparison did not cover. Hosted-model additions and
+retirements are excluded per §14; the connectors are appended to the §2 list.
+
+| First seen | Product / Feature |
+|---|---|
+| 2026-08 | AI Functions REST API (GA) - ✓ now covered (`ai-functions`) |
+| 2026-08 | `ai_search`, `ai_transcribe`, `ai_prep_search` functions (Beta) **[adjacent]** (extend `ai-functions`) |
+| 2026-08 | Serverless compute access control (GA) - ✓ now covered (`serverless-compute-access-control`) |
+| 2026-08 | Cross-workspace access for serverless (Beta) **[adjacent]** (linked from `serverless-compute-access-control`) |
+| 2026-08 | Unified trace table (Beta) - ✓ now covered (`mlflow-tracing`) |
+| 2026-08 | Custom trace views in the MLflow trace explorer (Beta) **[adjacent]** (extends `mlflow-tracing`) |
+| 2026-08 | Smart Routing on Unity Gateway **[adjacent]** (extends `unity-gateway`) |
+| 2026-08 | Block or redact sensitive data in Unity Gateway requests **[adjacent]** (extends `unity-gateway`) |
+| 2026-08 | `%uv` project environment commands **[adjacent]** (extends `serverless-environments`) |
+| 2026-08 | Pipeline events system table (Beta) **[adjacent]** (extends `system-tables`) |
+| 2026-08 | REPLACE USING flows for pipelines and standalone streaming tables (Beta) **[adjacent]** (extends `lakeflow-pipelines`) |
+| 2026-08 | JAR tasks on serverless compute (GA) **[adjacent]** (extends `lakeflow-jobs`) |
+| 2026-08 | Search and replace text across files (notebook editor) |
+| 2026-08 | Rich-text widget titles in AI/BI dashboards **[adjacent]** (extends `ai-bi-dashboards`) |
+| 2026-09 | Environment version 6 - ✓ now covered (`serverless-environments`) |
+| 2026-09 | Base environments on classic compute (Beta) **[adjacent]** (extends `serverless-environments`) |
+| 2026-09 | Maintenance windows for continuous pipelines **[adjacent]** (extends `lakeflow-pipelines`) |
+| 2026-09 | Unused OAuth client secrets auto-deleted after 90 days **[adjacent]** (extends `oauth-token-federation`) |
+| 2026-09 | `counter_diff` and `time_bucket` SQL functions |
+| 2026-09 | Moonshot AI Kimi K2.7 scheduled for retirement (hosted model - excluded by §14 policy) |
+
+---
+
 ## How to use this
 
-- **Genuinely absent marquee products** most worth adding to `rebricked` (as of 2026-09-11): COPY INTO, Unity Catalog data lineage, Managed MLflow / MLflow Model Registry / MLflow Tracing, Mosaic AI Agent Framework, Cluster policies, Instance pools, Serverless SQL warehouses, Terraform provider, VS Code extension, the Python and Go SDKs, Deletion vectors, Predictive optimization, AI Functions / `ai_query`, AI Playground, Databricks Runtime for ML, Customer-managed VPC, PrivateLink, Network Connectivity Configurations, Budgets. *(Photon, Auto Loader, AutoML, Foundation Model APIs, System tables, Databricks Marketplace, AI Gateway, Lakeflow Connect, Partner Connect, and Databricks Apps were on earlier versions of this list and have since been added - see the update log.)*
+- **Genuinely absent marquee products** most worth adding to `rebricked` (as of 2026-09-20): COPY INTO, Unity Catalog data lineage, Managed MLflow, Cluster policies, Instance pools, Serverless SQL warehouses, Terraform provider, the Python and Go SDKs, AI Playground, Databricks Runtime for ML, Customer-managed VPC, PrivateLink, Network Connectivity Configurations, Budgets. *(Photon, Auto Loader, AutoML, Foundation Model APIs, System tables, Databricks Marketplace, AI Gateway, Lakeflow Connect, Partner Connect, Databricks Apps, MLflow Model Registry, MLflow Tracing, Mosaic AI Agent Framework, the VS Code extension, Deletion vectors, Predictive optimization, and AI Functions were on earlier versions of this list and have since been added - see the update log.)*
 - **[adjacent]** items extend something already covered — add only if you want sub-feature granularity.
 - The **hosted foundation models** and **Lakeflow Connect connectors** are the two highest-volume buckets; they are legitimately many, not minor, and are listed in full above.

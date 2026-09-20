@@ -26,6 +26,10 @@ releases:
 from:
   date: '2026'
   link: https://web.archive.org/web/20260615202245/https://docs.databricks.com/aws/en/admin/usage/budget-policies
+limitations:
+  note: Existing notebooks, jobs and pipelines are not automatically assigned a policy when their owner is granted access to one, a scheduled notebook job created from the notebook page defaults back to the first policy alphabetically, deleted policy IDs remain on assets but apply no tags, Git repo integration has no repo-configurable policy, policies do not tag classic compute, inherited tags do not show in the Jobs list UI, tag updates are not reflected in pipelines in Development mode, and pipelines triggered by jobs do not inherit the job's policy.
+  link: https://docs.databricks.com/aws/en/admin/usage/budget-policies#:~:text=Serverless%20usage%20policies%20do%20not%20apply%20tags%20to%20classic%20compute%20resources
+  date: '2026-09-20'
 links:
   - url: https://web.archive.org/web/20260615202245/https://docs.databricks.com/aws/en/admin/usage/budget-policies
     kind: internet
@@ -35,4 +39,4 @@ prediction:
   - Serverless spend policies
   - Lakeflow budget policies
 source: https://docs.databricks.com/aws/en/admin/usage/budget-policies
-verified: '2026-09-17'
+verified: '2026-09-20'

@@ -21,11 +21,15 @@ status:
   date: '2026-08-20'
 releases:
   - type: public-preview
-    date: 2026-07
-    link: https://docs.databricks.com/aws/en/release-notes/product/2026/july#:~:text=claim%20and%20enable%20a%20Custom%20URL%20that%20gives%20your%20Databricks%20account%20a%20single%2C%20branded%20entry%20point
+    date: 2026-06
+    link: https://www.databricks.com/blog/announcing-public-preview-custom-urls#:~:text=Announcing%20the%20Public%20Preview%20of%20Custom%20URLs
 introducedAt:
-  date: 2026-07
-  link: https://docs.databricks.com/aws/en/release-notes/product/2026/july#:~:text=claim%20and%20enable%20a%20Custom%20URL%20that%20gives%20your%20Databricks%20account%20a%20single%2C%20branded%20entry%20point
+  date: 2026-06
+  link: https://www.databricks.com/blog/announcing-public-preview-custom-urls#:~:text=Announcing%20the%20Public%20Preview%20of%20Custom%20URLs
+occasion:
+  date: 2026-06
+  link: https://www.databricks.com/blog/announcing-public-preview-custom-urls#:~:text=Announcing%20the%20Public%20Preview%20of%20Custom%20URLs
+  note: Launch blog post (Public Preview)
 limitations:
   note: Public Preview, and the account must be enabled for unified login and must not use Chrome-managed passkeys. Workspaces behind front-end Private Link fall back to their legacy per-workspace URLs, and Private Link for account-level resources is only supported in Beta; the Publish to Power BI task does not support custom URLs. Developer tooling needs minimum versions (CLI/DABs 1.0.0, Terraform 1.114.0, Go SDK 0.130.0, Python SDK 0.103.0, Java SDK 0.105.0, VS Code extension 2.11.0).
   link: https://docs.databricks.com/aws/en/admin/account-settings/custom-url#:~:text=URLs%20for%20inbound%20Private%20Link%2Dprotected%20workspaces%20fall%20back%20to%20legacy%20per%2Dworkspace%20URLs
@@ -42,4 +46,4 @@ prediction:
   - Genie One Domains
   - Unity Catalog URL
 source: https://docs.databricks.com/aws/en/admin/account-settings/custom-url
-verified: '2026-08-20'
+verified: '2026-09-20'

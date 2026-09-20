@@ -25,6 +25,10 @@ releases:
 introducedAt:
   date: 2025-06
   link: https://www.databricks.com/blog/announcing-managed-mcp-servers-unity-catalog-and-mosaic-ai-integration#:~:text=managed%20servers%20for%20UC%20Functions%2C%20Genie%20spaces%2C%20and%20AI%20Search%20Indexes
+occasion:
+  date: 2025-06
+  link: https://www.databricks.com/blog/mosaic-ai-announcements-data-ai-summit-2025#:~:text=launch%20of%20Databricks%2Dhosted%20MCP%20servers%20for%20UC%20functions%2C%20Genie%2C%20and%20AI%20Search
+  note: Data + AI Summit 2025
 limitations:
   note: Querying an index through the server requires Databricks managed embeddings.
   link: https://docs.databricks.com/aws/en/agents/mcp-tools/ai-search#:~:text=requires%20Databricks%20managed%20embeddings
@@ -37,4 +41,4 @@ prediction:
   - Genie Search MCP server
   - Unity Retrieval Server
 source: https://docs.databricks.com/aws/en/agents/mcp-tools/ai-search
-verified: '2026-08-20'
+verified: '2026-09-20'

@@ -20,9 +20,13 @@ status:
 from:
   date: 2020-02
   link: https://docs.databricks.com/aws/en/release-notes/product/2020/february#:~:text=Interactive%20Clusters%2A%2A%20has%20been%20renamed
+limitations:
+  note: A terminated compute is permanently deleted 30 days after termination unless it is pinned or restarted, and pinning is capped at 100 compute resources.
+  link: https://docs.databricks.com/aws/en/compute/clusters-manage#:~:text=Up%20to%20100%20compute%20resources%20can%20be%20pinned
+  date: '2026-09-20'
 prediction:
   - Everything compute
   - Unity compute
   - Lakeflow all-purpose
 source: https://docs.databricks.com/aws/en/compute/configure
-verified: '2026-09-17'
+verified: '2026-09-20'

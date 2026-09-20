@@ -29,6 +29,10 @@ releases:
 introducedAt:
   date: 2025-05
   link: https://docs.databricks.com/aws/en/release-notes/product/2025/may#:~:text=Unity%20Catalog%20metric%20views%20provide%20a%20centralized%20way
+occasion:
+  date: 2025-06
+  link: https://www.databricks.com/blog/whats-new-databricks-unity-catalog-data-ai-summit-2025#:~:text=Unity%20Catalog%20Metrics%2C%20now%20in%20Public%20Preview%20on%20AWS%2C%20Azure%2C%20and%20GCP
+  note: Data + AI Summit 2025 (public preview)
 limitations:
   note: Measures have no fixed aggregation level, so a query must request them through the MEASURE function rather than selecting the column directly. Joined tables cannot include MAP type columns, a metric view that defines parameters cannot be materialized, and a one_to_many join restricts its materializations to exact match with no rollup match. Metric views need Databricks Runtime 16.4 or above, and Microsoft removed BI compatibility mode from the Power BI Databricks connector in April 2026, so Power BI reports that queried metric views through it no longer function.
   link: https://docs.databricks.com/aws/en/uc-semantics/metric-views/yaml-reference#:~:text=Joined%20tables%20can%27t%20include
@@ -57,4 +61,4 @@ prediction:
   - Semantic Views
   - Genie Metrics
 source: https://docs.databricks.com/aws/en/uc-semantics/metric-views/
-verified: '2026-08-20'
+verified: '2026-09-20'

@@ -30,6 +30,10 @@ releases:
 from:
   date: 2026-02
   link: https://docs.databricks.com/aws/en/ai-bi/release-notes/2026#:~:text=Research%20Agent%20renamed%20to%20Agent%20mode
+occasion:
+  date: 2026-04
+  link: https://www.databricks.com/blog/introducing-genie-agent-mode#:~:text=We%20are%20excited%20to%20introduce%20Agent%20mode%20in%20Genie%20spaces
+  note: Launch blog post (Introducing Genie Agent Mode)
 limitations:
   note: Americas, Europe, Australia, New Zealand and Japan workspaces can use it as is; every other region can only use it if cross-Geo processing is enabled.
   link: https://docs.databricks.com/aws/en/genie-agents/concepts#:~:text=Available%20only%20if%20cross%2DGeo%20is%20enabled
@@ -39,4 +43,4 @@ prediction:
   - Genie Research mode
   - Agentic mode
 source: https://docs.databricks.com/aws/en/genie-agents/concepts
-verified: '2026-08-20'
+verified: '2026-09-20'

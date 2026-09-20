@@ -28,6 +28,10 @@ releases:
 from:
   date: 2025-09
   link: https://docs.databricks.com/aws/en/release-notes/product/2025/september#:~:text=The%20Lakeflow%20Pipelines%20Editor%20%28previously%20called%20the%20multi%2Dfile%20editor%29
+limitations:
+  note: Running the code for a single table is available only for streaming tables and materialized views - sinks and views are not supported. Running a single file skips errors in other files, uses each other table's most recent materialization, can fail on tables not yet materialized and may draw an incorrect or disjointed pipeline graph, and non-source code files cannot be external files outside the pipeline root folder.
+  link: https://docs.databricks.com/aws/en/ldp/multi-file-editor#:~:text=Sinks%20and%20views%20are%20not%20supported
+  date: '2026-09-20'
 links:
   - url: https://qubika.com/blog/lakeflow-pipeline-editor-declarative-data-engineering/
     kind: internet
@@ -37,4 +41,4 @@ prediction:
   - Lakeflow IDE
   - Agentic Pipelines Editor
 source: https://docs.databricks.com/aws/en/ldp/multi-file-editor
-verified: '2026-08-20'
+verified: '2026-09-20'

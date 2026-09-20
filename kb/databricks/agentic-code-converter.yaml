@@ -25,6 +25,10 @@ releases:
 from:
   date: 2026-07
   link: https://docs.databricks.com/aws/en/release-notes/product/2026/july#:~:text=Agentic%20code%20converter%20is%20in%20Beta
+occasion:
+  date: 2026-07
+  link: https://www.databricks.com/blog/convert-proprietary-code-open-ansi-sql-genie-code#:~:text=Now%20in%20Beta%2C%20the%20agentic%20code%20converter%20uses%20Genie%20Code
+  note: Launch blog post (Beta)
 limitations:
   note: Beta, and a workspace admin must enable it from the Previews page. A batch can contain at most 300 files and a script at most 1,000 lines; Teradata BTEQ scripts are not yet supported, and the workspace must also meet the Genie Code requirements.
   link: https://docs.databricks.com/aws/en/migration/agentic-code-converter#:~:text=A%20batch%20can%20contain%20a%20maximum%20of%20300%20files
@@ -41,4 +45,4 @@ prediction:
   - Lakebridge Autopilot
   - SQL Rebridge
 source: https://docs.databricks.com/aws/en/migration/agentic-code-converter
-verified: '2026-08-20'
+verified: '2026-09-20'

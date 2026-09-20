@@ -9,6 +9,69 @@ shows the what. Plain, simple English: short sentences, common words, no jargon 
 and product names themselves. Some older entries have no `Why:` line - the reason was never
 recorded, and a made-up reason is worse than none.
 
+## 2026-09-20
+
+### Added
+- **Four new cards for things the August and September 2026 release notes changed but the dataset had
+  never tracked: AI Functions, MLflow Tracing, Serverless compute access control, and Serverless
+  environments.**
+
+  **Why:** an audit of active-feature gaps matched every August and September 2026 release-note heading
+  against the cards' names and aliases. Most hits were sub-features of cards that already exist. Four
+  were whole products with a lifecycle event and no card to hang it on. AI Functions had gone from a
+  2023 Public Preview through the `ai_query` GA in June 2026 to a REST API GA and two new Beta functions
+  in August, and its original function `ai_generate_text` is deprecated, all invisible here. MLflow
+  Tracing went GA in February 2025 and grew Unity Catalog storage and a unified trace table with no card.
+  Serverless compute access control went GA on August 3, 2026 with no preview stage ever published.
+  Environment version 6 shipped in September with no card that even names environment versions.
+
+  **What:** `ai-functions`, `mlflow-tracing` (AI / ML, in the Agents rail section),
+  `serverless-compute-access-control` and `serverless-environments` (Compute / BI, in the Compute rail
+  section). All four are `active` features with sourced `introducedAt`, `releases` where a stage was
+  ever published, `limitations` from the official pages, and links to the release notes that motivated
+  them. The `ai_generate_text` deprecation is a fact on the AI Functions card, not a separate card,
+  because no live doc dates it. The Moonshot AI Kimi K2.7 retirement and fifteen new Lakeflow Connect
+  connectors were read and left out: hosted models and connectors are rolling lists, not product names.
+
+### Changed
+- **Forty-eight active cards picked up sourced `releases`, `limitations`, or `occasion` fields they
+  had been missing, and three cards had a stale or misattributed source corrected.**
+
+  **Why:** the same audit counted the optional fields. Fourteen active cards had no maturity timeline,
+  twenty had no limitations, and eighty-one had no launch occasion. Some of those gaps are correct: a
+  rename with no preview stage has no timeline, and a quiet release-note feature has no summit moment.
+  But a card that lacks a field the docs can fill is a card telling the reader less than the docs do.
+  Each gap was checked against live official pages, and only the ones the docs actually fill were
+  filled. Along the way two sourcing errors surfaced: the Catalog Explorer rename date was backed by a
+  June 2024 revamp blog rather than the September 6, 2023 rename note, and Custom URL's Public Preview
+  was announced in a June 10, 2026 blog post, a month before the release note the card cited. The
+  SecureConnect docs had also dropped their "GCP is Private Preview" note, so a fact quoting it was
+  dead.
+
+  **What:** `releases` on 3 cards (Auto Loader, Custom Agents via its Agent Framework history, Lakeflow
+  pipelines via its Delta Live Tables history); `limitations` on 13 cards, each citing the page's own
+  Limitations section, with numeric caps cross-checked against the resource-limits mirror;
+  `occasion` on 37 cards, each a summit announcement or official launch blog post whose quote was
+  verified on the live page. The other 11 timelines, 7 limitations, and 44 occasions were left empty on
+  purpose because the docs have nothing to cite. `catalog-explorer` now sources its `from` date to the
+  September 2023 release note; `custom-url` moves `introducedAt` and its preview stage to 2026-06 with
+  the launch blog; `secureconnect` loses the stale GCP fact and its limitations are rewritten from the
+  current page (SAP HANA recipients are now the documented exclusion). `check_anchors.py` passes on
+  every touched card.
+
+- **Reconciled `COVERAGE-GAPS.md` against the 201-entry dataset and extended it through September
+  2026.**
+
+  **Why:** the report was last reconciled on September 11 against 171 entries and stopped at the July
+  release notes. Eleven rows it still listed as gaps had cards, and two months of release notes had
+  never been compared at all, so the report both understated coverage and overstated completeness.
+
+  **What:** eleven rows re-marked ✓ now covered with their card ids, six sub-feature rows re-marked
+  [adjacent] to the card they extend, the new cards marked in §11 and §13, a new §21 for the August and
+  September 2026 product-level items with each one's coverage, the connector list extended by the
+  fifteen new connectors, the header counts updated, and the "most worth adding" list trimmed of the
+  seven products that now have cards.
+
 ## 2026-09-19
 
 ### Added

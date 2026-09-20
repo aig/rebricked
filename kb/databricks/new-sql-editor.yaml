@@ -26,6 +26,10 @@ releases:
 introducedAt:
   date: 2024-10
   link: https://docs.databricks.com/aws/en/sql/release-notes/2024#:~:text=New%20SQL%20editor%20%28Public%20Preview%29
+occasion:
+  date: 2024-10
+  link: https://www.databricks.com/blog/introducing-new-sql-editor#:~:text=general%20availability%20of%20the%20new%20SQL%20editor
+  note: Launch blog post, October 2024 (updated for GA, August 2025)
 limitations:
   note: Can't be used for queries you don't own or that contain query-based dropdown lists, and shared query results are limited to 64000 rows.
   link: https://docs.databricks.com/aws/en/sql/user/sql-editor/#:~:text=limited%20to%2064%2C000%20rows
@@ -42,4 +46,4 @@ prediction:
   - Lakeflow SQL editor
   - SQL editor One
 source: https://docs.databricks.com/aws/en/sql/user/sql-editor/
-verified: '2026-08-20'
+verified: '2026-09-20'

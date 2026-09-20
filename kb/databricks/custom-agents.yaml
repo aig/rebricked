@@ -19,9 +19,24 @@ status:
   value: active
   link: https://docs.databricks.com/aws/en/agents/custom-agents/author-agent#:~:text=its%20name%20must%20start%20with%20the
   date: '2026-09-17'
+releases:
+  - type: public-preview
+    date: 2024-06
+    link: https://docs.databricks.com/aws/en/release-notes/product/2024/june#:~:text=Mosaic%20AI%20Agent%20Framework%20%28Public%20Preview%29
+  - type: ga
+    date: 2025-03
+    link: https://docs.databricks.com/aws/en/release-notes/product/2025/march#:~:text=Mosaic%20AI%20Agent%20Framework%20is%20generally%20available
 from:
   date: 2026-02
   link: https://www.databricks.com/blog/custom-agents-now-available-databricks#:~:text=formerly%20Agent%20Framework
+occasion:
+  date: 2026-02
+  link: https://www.databricks.com/blog/custom-agents-now-available-databricks#:~:text=Agent%20Bricks%20Custom%20Agents%2C%20formerly%20Agent%20Framework%2C%20is%20now%20available%20on%20Databricks
+  note: Launch blog post
+limitations:
+  note: Deploying on Databricks Apps supports only medium and large compute sizes, and the MLflow Review App Chat UI does not currently support agents deployed on Databricks Apps (use labeling sessions to evaluate existing traces instead).
+  link: https://docs.databricks.com/aws/en/agents/custom-agents/author-agent#:~:text=Only%20medium%20and%20large%20compute%20sizes%20are%20supported
+  date: '2026-09-20'
 links:
   - url: https://www.databricks.com/blog/custom-agents-now-available-databricks
     kind: official
@@ -31,4 +46,4 @@ prediction:
   - Genie Custom Agents
   - Bring Your Own Agent
 source: https://docs.databricks.com/aws/en/agents/custom-agents/author-agent
-verified: '2026-09-17'
+verified: '2026-09-20'

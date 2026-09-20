@@ -28,6 +28,10 @@ releases:
 from:
   date: 2025-08
   link: https://docs.databricks.com/aws/en/release-notes/product/2025/august#:~:text=You%20can%20now%20create%20governed%20tags%20to%20enforce%20consistent%20tagging
+occasion:
+  date: 2025-09
+  link: https://www.databricks.com/blog/enforce-consistent-secure-tagging-across-data-and-ai-assets-governed-tags-unity-catalog-public#:~:text=Today%2C%20we%20are%20excited%20to%20announce%20Governed%20Tags%20in%20Public%20Preview%20across%20all%20regions%20on%20AWS%2C%20Azure%2C%20and%20Google%20Cloud%21
+  note: Public preview launch blog post, September 23, 2025
 limitations:
   note: Hard caps of 1,000 governed tags per account and 500 allowed values per tag, with keys and values limited to 256 characters; control characters and the characters * . / < > % & ? \ = are disallowed.
   link: https://docs.databricks.com/aws/en/admin/governed-tags/#:~:text=1%2C000
@@ -41,4 +45,4 @@ prediction:
   - Genie tags
   - Governed metadata
 source: https://docs.databricks.com/aws/en/admin/governed-tags/
-verified: '2026-08-20'
+verified: '2026-09-20'

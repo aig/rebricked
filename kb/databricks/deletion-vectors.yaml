@@ -26,5 +26,9 @@ releases:
 introducedAt:
   date: 2023-10
   link: https://docs.databricks.com/aws/en/release-notes/product/2023/october#:~:text=Deletion%20vectors%20are%20GA
+limitations:
+  note: Reading requires Databricks Runtime 12.2 LTS or above. Iceberg v2 reads don't support deletion vectors (Iceberg v3 does), you cannot run GENERATE to build a manifest for a table with deletion-vector files (REORG TABLE ... APPLY (PURGE) first) or generate manifests incrementally, and on a materialized view or streaming table existing deletion vectors remain after you turn the feature off and the table protocol cannot be downgraded.
+  link: https://docs.databricks.com/aws/en/tables/features/deletion-vectors#:~:text=You%20cannot%20downgrade%20the%20table%20protocol%20after%20enabling%20deletion%20vectors
+  date: '2026-09-20'
 source: https://docs.databricks.com/aws/en/tables/features/deletion-vectors
-verified: '2026-09-17'
+verified: '2026-09-20'

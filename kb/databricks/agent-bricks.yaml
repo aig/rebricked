@@ -24,6 +24,10 @@ occasion:
   date: 2025-06
   link: https://www.databricks.com/company/newsroom/press-releases/databricks-launches-agent-bricks-new-approach-building-ai-agents#:~:text=Agent%20Bricks%20and%20AI%20Runtime%20are%20available%20starting%20today%20in%20Beta
   note: Data + AI Summit, June 2025 (beta).
+limitations:
+  note: The umbrella's Knowledge Assistant and Supervisor Agent are listed among the agent features with limited regional availability, so check the supported-regions table before assuming your workspace can use them.
+  link: https://docs.databricks.com/aws/en/resources/feature-region-support#:~:text=Knowledge%20Assistant%20and%20Supervisor%20Agent
+  date: '2026-09-20'
 links:
   - url: https://www.databricks.com/company/newsroom/press-releases/databricks-launches-agent-bricks-new-approach-building-ai-agents
     kind: official
@@ -39,4 +43,4 @@ prediction:
   - Mosaic Agent Studio
   - Genie Bricks
 source: https://docs.databricks.com/aws/en/generative-ai/agent-bricks/
-verified: '2026-08-20'
+verified: '2026-09-20'

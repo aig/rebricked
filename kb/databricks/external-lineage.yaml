@@ -26,6 +26,10 @@ releases:
 from:
   date: 2026-06
   link: https://docs.databricks.com/aws/en/release-notes/product/2026/june#:~:text=External%20lineage%20%28formerly%20Bring%20Your%20Own%20Lineage%29%20in%20Unity%20Catalog%20is%20now%20generally%20available
+occasion:
+  date: 2026-06
+  link: https://www.databricks.com/blog/whats-new-unity-catalog-data-ai-summit-2026#:~:text=External%20lineage%2C%20now%20generally%20available%2C%20extends%20Lineage%20in%20Unity%20Catalog%20to%20assets%20beyond%20Databricks
+  note: Data + AI Summit 2026 (GA)
 limitations:
   note: External lineage is not recorded in the lineage system tables (system.access.table_lineage and system.access.column_lineage), and each metastore is capped at 10,000 external metadata objects and 100,000 external lineage relationships.
   link: https://docs.databricks.com/aws/en/data-governance/unity-catalog/external-lineage#:~:text=External%20lineage%20is%20not%20recorded%20in%20the%20lineage%20system%20tables
@@ -35,4 +39,4 @@ prediction:
   - Unity Catalog Federated Lineage
   - Lineage One
 source: https://docs.databricks.com/aws/en/data-governance/unity-catalog/external-lineage
-verified: '2026-08-20'
+verified: '2026-09-20'

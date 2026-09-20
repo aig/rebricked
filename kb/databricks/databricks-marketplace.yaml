@@ -32,6 +32,10 @@ occasion:
   date: 2023-06
   link: https://www.databricks.com/company/newsroom/press-releases/databricks-announces-lakehouse-apps-and-expands-databricks
   note: GA at Data + AI Summit 2023
+limitations:
+  note: Consumers need at least the USE MARKETPLACE ASSETS privilege on the workspace's Unity Catalog metastore, and if a provider rejects an access request you cannot request the same data product again (contact the provider or your Databricks account team).
+  link: https://docs.databricks.com/aws/en/marketplace/get-started-consumer#:~:text=you%20cannot%20request%20the%20same%20data%20product%20again
+  date: '2026-09-20'
 links:
   - url: https://www.databricks.com/blog/announcing-public-preview-databricks-marketplace
     kind: official
@@ -44,4 +48,4 @@ prediction:
   - Databricks App Store
   - Lakehouse Marketplace
 source: https://docs.databricks.com/aws/en/marketplace/
-verified: '2026-08-20'
+verified: '2026-09-20'

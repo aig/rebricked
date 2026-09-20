@@ -28,6 +28,10 @@ releases:
 from:
   date: 2026-09
   link: https://docs.databricks.com/aws/en/ai-gateway/#:~:text=Unity%20Gateway%20is%20the%20Databricks%20governance%20solution%20for%20enterprise%20AI
+limitations:
+  note: Not supported on AWS GovCloud. Model services cannot be created or managed with SQL, discovered with only the BROWSE privilege, or found through global search, and a service accepts at most 20 rate limits, of which up to 5 can be group-specific (token-based limits do not apply to MCP services).
+  link: https://docs.databricks.com/aws/en/ai-gateway/model-services#:~:text=Unity%20Gateway%20is%20not%20supported%20on%20AWS%20GovCloud
+  date: '2026-09-20'
 links:
   - url: https://docs.databricks.com/aws/en/release-notes/unity-gateway/
     kind: official
@@ -52,4 +56,4 @@ prediction:
   - Genie Gateway
   - Gateway
 source: https://docs.databricks.com/aws/en/ai-gateway/
-verified: '2026-09-19'
+verified: '2026-09-20'

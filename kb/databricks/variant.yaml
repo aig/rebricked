@@ -29,6 +29,10 @@ releases:
 introducedAt:
   date: 2024-06
   link: https://docs.databricks.com/aws/en/release-notes/runtime/15.3#:~:text=Databricks%20released%20this%20version%20in%20June%202024
+occasion:
+  date: 2024-06
+  link: https://www.databricks.com/blog/introducing-open-variant-data-type-delta-lake-and-apache-spark#:~:text=We%20are%20excited%20to%20announce%20a%20new%20data%20type%20called%20variant%20for%20semi%2Dstructured%20data
+  note: Launch blog post, June 2024
 limitations:
   note: A VARIANT column can't be a clustering key, partition, or Z-order key, and the type can't be used for comparisons, grouping, ordering, or set operations. Shredding adds write overhead, skips VARIANT nested inside arrays and maps, and never converts data already written (REORG TABLE ... APPLY (SHRED VARIANT) does that); reading or writing shredded tables needs Databricks Runtime 17.3 or above, with 18.1 or above recommended for variant statistics and data skipping. Migrating off JSON strings can break working queries, since paths become case-sensitive, the [*] array syntax is unsupported, and NULL is encoded differently.
   link: https://docs.databricks.com/aws/en/semi-structured/variant#:~:text=VARIANT%20columns%20cannot%20be%20used%20for%20clustering%20keys%2C%20partitions%2C%20or%20Z%2Dorder%20keys
@@ -51,4 +55,4 @@ prediction:
   - Genie Variant
   - Liquid Variant
 source: https://docs.databricks.com/aws/en/semi-structured/variant
-verified: '2026-08-20'
+verified: '2026-09-20'

@@ -1,0 +1,65 @@
+id: ai-functions
+name: AI Functions
+aliases:
+  - ai_query
+  - ai_extract
+  - ai_search
+  - ai_transcribe
+  - ai_classify
+  - ai_parse_document
+  - ai_generate_text
+  - AI Functions REST API
+category: AI / ML
+what:
+  note: Built-in Databricks SQL functions that apply LLMs or state-of-the-art research techniques to data stored on Databricks for transformation and analysis, callable from Databricks SQL, notebooks, Lakeflow pipelines, and Workflows - the general-purpose ai_query plus a growing family of task-specific functions like ai_extract, ai_classify, ai_parse_document, ai_search, and ai_transcribe.
+  link: https://docs.databricks.com/aws/en/large-language-models/ai-functions#:~:text=AI%20Functions%20are%20built-in%20functions%20that%20you%20can%20use%20to%20apply%20LLMs%20or%20state-of-the-art%20research%20techniques
+fact:
+  - note: The function the 2023 preview shipped with, ai_generate_text, is now marked deprecated in favour of ai_query - yet its doc page still wears a Public Preview badge, so it managed to be deprecated without ever leaving preview.
+    link: https://docs.databricks.com/aws/en/sql/language-manual/functions/ai_generate_text#:~:text=The%20AI%20function%2C%20ai_generate_text%28%29%20is%20deprecated
+  - note: 'Maturity is a spectrum, not a badge: ai_query reached GA in June 2026 after three years in preview, while sibling ai_analyze_sentiment still tells you it is in Public Preview and HIPAA compliant in the same breath.'
+    link: https://docs.databricks.com/aws/en/sql/language-manual/functions/ai_analyze_sentiment#:~:text=This%20functionality%20is%20in%20Public%20Preview%20and%20HIPAA%20compliant
+  - note: 'The newest members are SQL functions with no SQL in sight: the AI Functions REST API went GA in August 2026 so applications can call ai_parse_document, ai_extract, and ai_classify without a warehouse, and ai_transcribe (Beta) will eat an hour of audio per call but politely refuses video.'
+    link: https://docs.databricks.com/aws/en/release-notes/product/2026/august#:~:text=You%20can%20now%20call%20ai_parse_document%2C%20ai_extract%2C%20and%20ai_classify%20through%20the%20AI%20Functions%20REST%20API
+status:
+  value: active
+  link: https://docs.databricks.com/aws/en/large-language-models/ai-functions#:~:text=AI%20Functions%20are%20built-in%20functions%20that%20you%20can%20use%20to%20apply%20LLMs%20or%20state-of-the-art%20research%20techniques
+  date: '2026-09-20'
+releases:
+  - type: public-preview
+    date: 2023-04
+    link: https://www.databricks.com/blog/2023/04/18/introducing-ai-functions-integrating-large-language-models-databricks-sql.html#:~:text=announce%20the%20public%20preview%20of%20AI%20Functions
+  - type: ga
+    date: 2026-06
+    link: https://docs.databricks.com/aws/en/release-notes/product/2026/june#:~:text=The%20ai_query%20function%20is%20now%20generally%20available
+introducedAt:
+  date: 2023-04
+  link: https://www.databricks.com/blog/2023/04/18/introducing-ai-functions-integrating-large-language-models-databricks-sql.html#:~:text=announce%20the%20public%20preview%20of%20AI%20Functions
+limitations:
+  note: Not available on Classic SQL warehouses; Databricks Runtime 15.4 LTS or above is required (18.2 or above recommended). Beta members carry their own hard caps - ai_transcribe accepts at most 1 hour of audio and a 512 MB file per call and does not transcribe video; ai_search takes up to 10 knowledge sources per call and a 4,000-character instructions argument.
+  link: https://docs.databricks.com/aws/en/large-language-models/ai-functions#:~:text=AI%20Functions%20are%20not%20available%20on%20Classic%20SQL%20warehouses
+  date: '2026-09-20'
+links:
+  - url: https://www.databricks.com/blog/2023/04/18/introducing-ai-functions-integrating-large-language-models-databricks-sql.html
+    kind: official
+    label: 'Databricks Blog: Introducing AI Functions - the April 18, 2023 public preview announcement, built on ai_generate_text'
+  - url: https://docs.databricks.com/aws/en/release-notes/product/2024/february#:~:text=You%20can%20now%20use%20AI%20Functions%20to%20invoke%20a%20state-of-the-art%20AI%20model%20from%20Databricks%20Foundation%20Model%20APIs
+    kind: official
+    label: 'Databricks release notes: AI Functions gain task-specific functions on Foundation Model APIs (February 22, 2024)'
+  - url: https://docs.databricks.com/aws/en/release-notes/product/2026/july#:~:text=Restrict%20access%20to%20AI%20Functions%20with%20Unity%20Catalog%20permissions
+    kind: official
+    label: 'Databricks release notes: Unity Catalog permissions on task-specific AI Functions (Public Preview, July 8, 2026)'
+  - url: https://docs.databricks.com/aws/en/release-notes/product/2026/august#:~:text=ai_search%20function%20%28Beta%29
+    kind: official
+    label: 'Databricks release notes: ai_search function (Beta, August 7, 2026) and ai_transcribe function (Beta, August 29, 2026)'
+  - url: https://docs.databricks.com/aws/en/sql/language-manual/functions/ai_query
+    kind: official
+    label: 'Databricks SQL reference: ai_query function - the general-purpose member, GA since June 15, 2026'
+  - url: https://docs.databricks.com/aws/en/sql/language-manual/functions/ai_generate_text
+    kind: official
+    label: 'Databricks SQL reference: ai_generate_text - the original 2023 function, deprecated in favour of ai_query with external models'
+prediction:
+  - Genie Functions
+  - Lakeflow AI Functions
+  - Agent Bricks Functions
+source: https://docs.databricks.com/aws/en/large-language-models/ai-functions
+verified: '2026-09-20'

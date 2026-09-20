@@ -30,6 +30,10 @@ releases:
 introducedAt:
   date: 2026-07
   link: https://docs.databricks.com/aws/en/release-notes/product/2026/july#:~:text=Role%2Dbased%20access%20control%20%28RBAC%29%20is%20now%20in%20Public%20Preview
+occasion:
+  date: 2026-06
+  link: https://www.databricks.com/blog/whats-new-unity-catalog-data-ai-summit-2026#:~:text=Role%2Dbased%20access%20control%20%28Public%20Preview%20coming%20soon%29
+  note: Announced at Data + AI Summit 2026
 limitations:
   note: A user can act as only one role at a time. When acting as a role, creating Agent Bricks agents, managing alerts, and Lakeflow pipelines are unsupported, and creating Vector Search indexes fails (create as a user, then reassign ownership to the role); the workspace SCIM API cannot create or manage groups, workspace asset sharing controls reach 100 groups by default, and roles still inherit whatever the workspace users group can see.
   link: https://docs.databricks.com/aws/en/security/auth/rbac/limitations#:~:text=Lakeflow%20pipelines%20are%20not%20supported%20for%20roles
@@ -52,4 +56,4 @@ prediction:
   - Genie Roles
   - Adaptive access control
 source: https://docs.databricks.com/aws/en/security/auth/rbac/
-verified: '2026-08-20'
+verified: '2026-09-20'

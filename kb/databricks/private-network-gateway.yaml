@@ -26,6 +26,10 @@ releases:
 introducedAt:
   date: 2026-08
   link: https://docs.databricks.com/aws/en/release-notes/product/2026/august#:~:text=Private%20network%20gateway%20is%20in%20Private%20Preview
+occasion:
+  date: 2026-06
+  link: https://www.databricks.com/blog/whats-new-databricks-platform-security-and-compliance-data-ai-summit-2026#:~:text=Private%20Network%20Gateway%2C%20a%20new%20networking%20capability
+  note: Announced at Data + AI Summit 2026
 limitations:
   note: On AWS, Private Preview by request through your Databricks account team; on Azure, Beta since September 3, 2026, enabled from the account console Previews page. It supports exactly one subnet in one Availability Zone, which must be in the same region as the network connectivity configuration; you configure it only through the account REST API, with no UI and no Terraform support; it reaches resources in your VPC and transitively connected networks but not cloud-managed services behind gateway or interface endpoints such as Amazon S3; it serves serverless Databricks Runtime products; and one NCC holds at most two gateways, each with at most two DNS resolvers and 100 destinations.
   link: https://docs.databricks.com/aws/en/security/network/serverless-network-security/private-network-gateway#:~:text=Private%20Preview%20supports%20exactly%20one%20subnet%20in%20one%20Availability%20Zone
@@ -48,4 +52,4 @@ prediction:
   - Unity Network Gateway
   - Lakehouse Egress Gateway
 source: https://docs.databricks.com/aws/en/security/network/serverless-network-security/private-network-gateway
-verified: '2026-09-06'
+verified: '2026-09-20'

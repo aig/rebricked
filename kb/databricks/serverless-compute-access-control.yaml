@@ -1,0 +1,49 @@
+id: serverless-compute-access-control
+name: Serverless compute access control
+aliases:
+  - serverless compute permissions
+  - Default Interactive Compute
+  - Default Automated Compute
+  - serverless compute objects
+category: Compute / BI
+what:
+  note: 'Workspace-admin governance over who may run serverless workloads, expressed as Can Use / Can Manage permissions on two built-in serverless compute objects: Default Interactive Compute (notebooks and Databricks Connect) and Default Automated Compute (jobs and Spark Declarative Pipelines on Lakeflow).'
+  link: https://docs.databricks.com/aws/en/compute/serverless/manage-serverless-compute#:~:text=Workspace%20admins%20govern%20serverless%20compute%20using%20built-in%20serverless%20compute%20objects
+fact:
+  - note: 'It went GA by changing nothing: every workspace user already has Can Use on both objects by default, so the feature ships fully permissive and only bites once an admin removes someone.'
+    link: https://docs.databricks.com/aws/en/compute/serverless/manage-serverless-compute#:~:text=By%20default%2C%20all%20workspace%20users%20have%20Can%20Use%20on%20both%20objects
+  - note: You get exactly two compute objects and they are permanent tenants - Default Interactive Compute and Default Automated Compute cannot be renamed or deleted.
+    link: https://docs.databricks.com/aws/en/compute/serverless/manage-serverless-compute#:~:text=These%20default%20compute%20objects%20cannot%20be%20renamed%20or%20deleted
+  - note: The docs warn that during a service disruption the access checks might fail open, which is why they tell you not to use it as an absolute spend cap - a rare access control whose documented failure mode is letting people in.
+    link: https://docs.databricks.com/aws/en/compute/serverless/manage-serverless-compute#:~:text=access%20checks%20might%20fail%20open
+status:
+  value: active
+  link: https://docs.databricks.com/aws/en/release-notes/product/2026/august#:~:text=Serverless%20compute%20access%20control%20is%20now%20generally%20available
+  date: '2026-09-20'
+releases:
+  - type: ga
+    date: 2026-08
+    link: https://docs.databricks.com/aws/en/release-notes/product/2026/august#:~:text=Serverless%20compute%20access%20control%20is%20now%20generally%20available
+introducedAt:
+  date: 2026-08
+  link: https://docs.databricks.com/aws/en/release-notes/product/2026/august#:~:text=Serverless%20compute%20access%20control%20is%20now%20generally%20available
+limitations:
+  note: In a service disruption access checks might fail open, so denied users could still start serverless workloads - Databricks says not to rely on it as an absolute spend cap. Background compute (system-initiated jobs) is exempt from the controls. The companion rate limits on serverless compute are still in Private Preview.
+  link: https://docs.databricks.com/aws/en/compute/serverless/manage-serverless-compute#:~:text=access%20checks%20might%20fail%20open
+  date: '2026-09-20'
+links:
+  - url: https://docs.databricks.com/aws/en/release-notes/product/2026/august#:~:text=Cross-workspace%20access%20for%20serverless%20%28Beta%29
+    kind: official
+    label: 'Databricks release notes: the related Cross-workspace access for serverless (Beta, August 13, 2026) - network-level control over which workspaces serverless traffic may reach'
+  - url: https://docs.databricks.com/aws/en/security/network/front-end/cross-workspace-access
+    kind: official
+    label: 'Databricks docs: Cross-workspace access (Beta) - ingress and egress rules for serverless traffic between workspaces'
+  - url: https://docs.databricks.com/aws/en/release-notes/serverless/
+    kind: official
+    label: 'Databricks docs: Serverless compute release notes'
+prediction:
+  - Unity Compute Policies
+  - Serverless Entitlements
+  - Lakeflow Compute Access Control
+source: https://docs.databricks.com/aws/en/compute/serverless/manage-serverless-compute
+verified: '2026-09-20'

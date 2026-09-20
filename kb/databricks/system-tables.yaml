@@ -28,6 +28,10 @@ releases:
 introducedAt:
   date: 2023-06
   link: https://docs.databricks.com/aws/en/release-notes/product/2023/june#:~:text=Account%20admins%20can%20now%20enable%20access%20to%20system%20tables
+occasion:
+  date: 2023-06
+  link: https://www.databricks.com/blog/whats-new-unity-catalog-data-and-ai-summit-2023#:~:text=public%20preview%20of%20System%20Tables%20for%20auditing%2C%20lineage%20and%20billing%20in%20Unity%20Catalog
+  note: Announced at Data + AI Summit 2023
 limitations:
   note: Read-only and unmodifiable, they must be enabled from a Unity Catalog-enabled workspace before anything appears, and free retention varies per table unless an account admin opts into the configurable-retention Beta (September 2026), which sets a flat 395 days for every supported table and lets admins choose 30 to 3,650 days, though data kept past 395 days will be billed once the feature goes GA and the system.data_classification and system.data_quality_monitoring schemas are excluded. Since August 26, 2026 the SQL text in system.query.history reads <REDACTED> by default - only account admins and members of the databricks_pii_access group see the full statement.
   link: https://docs.databricks.com/aws/en/admin/system-tables/#:~:text=set%20a%20custom%20retention%20period%20from%2030%20to%203%2C650%20days
@@ -50,4 +54,4 @@ prediction:
   - Observability Catalog
   - system.genie
 source: https://docs.databricks.com/aws/en/admin/system-tables/
-verified: '2026-09-19'
+verified: '2026-09-20'

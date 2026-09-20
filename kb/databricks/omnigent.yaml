@@ -25,6 +25,10 @@ releases:
 introducedAt:
   date: 2026-06
   link: https://docs.databricks.com/aws/en/release-notes/product/2026/june#:~:text=Omnigent%20is%20now%20available%20in%20Beta
+occasion:
+  date: 2026-06
+  link: https://www.databricks.com/blog/introducing-omnigent-meta-harness-combine-control-and-share-your-agents#:~:text=So%20we%20built%20Omnigent
+  note: Launch and open-source blog post, June 2026
 limitations:
   note: Only built-in contextual policies are supported, not custom policy functions running arbitrary code; there is no native Windows support (WSL2 is required); a Databricks Sandbox host cannot use your own model API keys because all model access routes through AI Gateway, and it does not integrate with serverless egress control.
   link: https://docs.databricks.com/aws/en/omnigent/#:~:text=custom%20policy%20functions
@@ -34,4 +38,4 @@ prediction:
   - Agent Harness
   - Omnigent One
 source: https://docs.databricks.com/aws/en/omnigent/
-verified: '2026-08-20'
+verified: '2026-09-20'

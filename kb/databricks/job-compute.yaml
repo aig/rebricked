@@ -21,9 +21,13 @@ status:
 from:
   date: 2020-02
   link: https://docs.databricks.com/aws/en/release-notes/product/2020/february#:~:text=Automated%20Clusters%2A%2A%20has%20been%20renamed
+limitations:
+  note: When a job runs on new job compute, the compute terminates when the job completes and is unavailable for restarting.
+  link: https://docs.databricks.com/aws/en/compute/clusters-manage#:~:text=unavailable%20for%20restarting%20when%20the%20job%20is%20complete
+  date: '2026-09-20'
 prediction:
   - Lakeflow compute
   - Task compute
   - Ephemeral compute
 source: https://docs.databricks.com/aws/en/compute/configure
-verified: '2026-09-17'
+verified: '2026-09-20'

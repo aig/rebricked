@@ -29,6 +29,10 @@ releases:
 introducedAt:
   date: 2026-03
   link: https://docs.databricks.com/aws/en/release-notes/product/2026/march#:~:text=The%20new%20Databricks%20Excel%20Add%2Din%20is%20in%20Public%20Preview
+occasion:
+  date: 2026-04
+  link: https://www.databricks.com/blog/introducing-databricks-excel-add-business-users#:~:text=Now%20in%20public%20preview%2C%20the%20add%2Din%20lets%20business%20users%20import%20and%20analyze%20Databricks%20data%20directly%20from%20Excel
+  note: Launch blog post (Public Preview)
 limitations:
   note: Needs a Unity Catalog-enabled workspace, Databricks SQL access with at least CAN USE on a SQL warehouse (all-purpose compute is not supported), and a workspace admin to turn on the Excel Connector preview. Write-back is table-level only - no row-level updates, appends or merges, and no views or materialized views. Custom function results are capped at 25 MiB, Excel Desktop at 1,048,576 rows per sheet and Excel for the web at about 25 MB per workbook; with Live query on, every pivot edit re-runs the query against the warehouse.
   link: https://docs.databricks.com/aws/en/integrations/excel-query#:~:text=query%20results%20are%20limited%20to%2025%20MiB
@@ -48,4 +52,4 @@ prediction:
   - Lakehouse for Excel
   - Genie One for Excel
 source: https://docs.databricks.com/aws/en/integrations/excel
-verified: '2026-09-15'
+verified: '2026-09-20'

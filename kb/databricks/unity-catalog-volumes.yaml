@@ -27,6 +27,10 @@ releases:
 introducedAt:
   date: '2023'
   link: https://docs.databricks.com/aws/en/release-notes/product/2023/july#:~:text=Unity%20Catalog%20volumes%20are%20in%20Public%20Preview
+occasion:
+  date: 2023-06
+  link: https://www.databricks.com/blog/announcing-public-preview-volumes-databricks-unity-catalog#:~:text=At%20the%20Data%20and%20AI%20Summit%202023%2C%20we%20introduced%20Volumes%20in%20Databricks%20Unity%20Catalog
+  note: Introduced at Data + AI Summit 2023
 limitations:
   note: Volumes require Databricks Runtime 13.3 LTS or above or a SQL warehouse, don't support dbutils.fs commands distributed to executors, can't be accessed from RDDs or Unity Catalog UDFs, can't back a custom Hadoop file system, and require fully qualified /Volumes paths (no abbreviated paths).
   link: https://docs.databricks.com/aws/en/volumes/#:~:text=create%20a%20custom%20Hadoop%20file%20system%20with%20volumes
@@ -43,4 +47,4 @@ prediction:
   - Unity Volumes One
   - Genie Volumes
 source: https://docs.databricks.com/aws/en/volumes/
-verified: '2026-08-20'
+verified: '2026-09-20'

@@ -25,6 +25,10 @@ releases:
 introducedAt:
   date: 2021-05
   link: https://docs.databricks.com/aws/en/release-notes/product/2021/may#:~:text=automatically%20generate%20ML%20models%20from%20data
+occasion:
+  date: 2021-05
+  link: https://www.databricks.com/blog/2021/05/27/introducing-databricks-automl-a-glass-box-approach-to-automating-machine-learning-development.html#:~:text=Today%2C%20we%20announced%20Databricks%20AutoML
+  note: Data + AI Summit 2021
 limitations:
   note: In Databricks Runtime 18.0 ML and above AutoML is not included as a built-in library, so it must be installed from PyPI; no libraries beyond those preinstalled in Databricks Runtime ML should be added to the cluster, network ports 1017 and 1021 must be open, and standard (formerly shared) compute access mode is unsupported.
   link: https://docs.databricks.com/aws/en/machine-learning/automl/#:~:text=AutoML%20is%20not%20included%20as%20a%20built%2Din%20library
@@ -34,4 +38,4 @@ prediction:
   - Genie AutoML
   - Auto Modeling
 source: https://docs.databricks.com/aws/en/machine-learning/automl/
-verified: '2026-08-20'
+verified: '2026-09-20'

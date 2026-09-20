@@ -29,6 +29,10 @@ releases:
 introducedAt:
   date: '2025'
   link: https://docs.databricks.com/aws/en/release-notes/product/2025/may#:~:text=A%20new%20version%20of%20Databricks%20SQL%20alerts%20is%20now%20in%20Beta.
+occasion:
+  date: 2026-05
+  link: https://www.databricks.com/blog/automate-data-kpi-monitoring-sql-alerts#:~:text=Databricks%20SQL%20Alerts%20is%20Generally%20Available%20%28GA%29
+  note: GA announcement blog post
 limitations:
   note: An existing saved SQL query can't be reused when creating an alert (each alert owns its query definition), and alerts no longer support the legacy UNKNOWN status, resolving only to OK, TRIGGERED, or ERROR.
   link: https://docs.databricks.com/aws/en/sql/user/alerts/#:~:text=An%20existing%20saved%20SQL%20query%20cannot%20be%20reused
@@ -42,4 +46,4 @@ prediction:
   - Lakeflow Alerts
   - SQL Alerts One
 source: https://docs.databricks.com/aws/en/sql/user/alerts/
-verified: '2026-08-20'
+verified: '2026-09-20'

@@ -11,8 +11,6 @@ fact:
     link: https://docs.databricks.com/aws/en/clean-rooms/manage-clean-room#:~:text=storage%20behind%20a%20firewall%20or%20private%20endpoint
   - note: It debuted as 'OpenSharing SecureConnect' in June 2026.
     link: https://docs.databricks.com/aws/en/release-notes/product/2026/june#:~:text=use%20OpenSharing%20SecureConnect%20to%20share%20data
-  - note: It is generally available and still Private Preview at the same time - which one you get depends on the cloud you share from, because provider support on GCP has not caught up.
-    link: https://docs.databricks.com/aws/en/opensharing/secureconnect-provider#:~:text=Support%20for%20providers%20on%20GCP%20is%20in
 status:
   value: active
   link: https://docs.databricks.com/aws/en/opensharing/secureconnect-provider#:~:text=SecureConnect%20simplifies%20networking%20for%20data%20sharing
@@ -27,10 +25,14 @@ releases:
 introducedAt:
   date: 2026-06
   link: https://docs.databricks.com/aws/en/release-notes/product/2026/june#:~:text=Share%20data%20behind%20a%20firewall%20with%20SecureConnect%20%28Public%20Preview%29
+occasion:
+  date: 2026-06
+  link: https://www.databricks.com/blog/introducing-opensharing-secureconnect#:~:text=Open%20Sharing%20SecureConnect%20is%20available%20in%20Public%20Preview
+  note: Launch blog post, June 2026
 limitations:
-  note: Assets can't be backed by Cloudflare R2; volumes, notebooks, AI models, and Iceberg tables are unsupported across all sharing protocols; it isn't available on AWS GovCloud; and AWS PrivateLink to S3 isn't compatible with the FIPS endpoints Databricks uses by default in US regions. mTLS is supported only for Databricks recipients on serverless compute, and provider support on GCP is still Private Preview.
+  note: Assets can't be backed by Cloudflare R2 storage; it can't be used with recipients that read shared data through SAP HANA, which does not support the pre-signed URLs SecureConnect delivers data with; it is not available on AWS GovCloud; AWS PrivateLink to S3 is not compatible with the FIPS endpoints Databricks uses by default in all US regions; and mTLS is supported only for Databricks recipients on serverless compute.
   link: https://docs.databricks.com/aws/en/opensharing/secureconnect-provider#:~:text=can%27t%20be%20backed%20by%20Cloudflare%20R2%20storage
-  date: '2026-08-20'
+  date: '2026-09-20'
 links:
   - url: https://docs.databricks.com/aws/en/release-notes/product/2026/june
     kind: official
@@ -43,4 +45,4 @@ prediction:
   - Delta SecureShare
   - Firewall Sharing
 source: https://docs.databricks.com/aws/en/opensharing/secureconnect-provider
-verified: '2026-08-20'
+verified: '2026-09-20'

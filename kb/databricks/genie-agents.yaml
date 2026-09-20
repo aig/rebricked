@@ -26,6 +26,10 @@ releases:
 from:
   date: 2026-07
   link: https://docs.databricks.com/aws/en/ai-bi/release-notes/2026#:~:text=are%20now%20called%20Genie%20Agents
+occasion:
+  date: 2026-06
+  link: https://www.databricks.com/blog/introducing-genie-one-genie-ontology-and-genie-agents#:~:text=Genie%20Spaces%20is%20evolving%20into%20Genie%20Agents
+  note: Data + AI Summit 2026 launch blog
 limitations:
   note: Up to 50 tables, views or metric views per Genie Agent; up to 200,000 conversations, each with up to 10,000 messages; requires a pro or serverless SQL warehouse, with data registered in Unity Catalog.
   link: https://docs.databricks.com/aws/en/genie-agents/set-up#:~:text=up%20to%2050%20tables%2C%20views%2C%20or%20metric%20views%20to%20a%20Genie%20Agent
@@ -45,4 +49,4 @@ prediction:
   - Genie Agents One
   - Agentic Genie Spaces
 source: https://docs.databricks.com/aws/en/genie-agents/set-up
-verified: '2026-09-15'
+verified: '2026-09-20'
