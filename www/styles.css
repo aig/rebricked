@@ -3577,3 +3577,56 @@ body.modal-open {
   }
 
 }
+
+/* ===== Easter egg: "Federal Re-Bricking Mode" =====
+   Entered by searching a trigger (see EGG_TRIGGERS in app.js); <html data-egg="federal">
+   scopes everything here. The banner mimics a workspace alert. */
+.egg-banner {
+  display: flex;
+  gap: 10px;
+  align-items: baseline;
+  margin: 0 0 14px;
+  padding: 10px 14px;
+  font-size: 13px;
+  color: var(--ink);
+  background: color-mix(in srgb, var(--c-deprecated) 10%, var(--panel));
+  border: 1px solid color-mix(in srgb, var(--c-deprecated) 45%, var(--line));
+  border-left: 4px solid var(--c-deprecated);
+  border-radius: 6px;
+}
+
+.egg-banner-icon {
+  flex: none;
+  color: var(--c-deprecated);
+}
+
+.egg-revoke {
+  font: inherit;
+  font-weight: 600;
+  color: var(--c-deprecated-ink);
+  background: none;
+  border: 0;
+  padding: 0;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.egg-banner kbd {
+  font-family: var(--mono);
+  font-size: 11px;
+  padding: 1px 5px;
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  background: var(--bg);
+}
+
+/* Egg cards have no real deep link to copy or share, and the quiz is about Databricks. */
+[data-egg="federal"] .fam-actions,
+[data-egg="federal"] #quiz-banner {
+  display: none;
+}
+
+[data-egg="federal"] .page-title::after {
+  content: " (by Executive Order)";
+  color: var(--c-deprecated);
+}

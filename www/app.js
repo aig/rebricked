@@ -147,6 +147,249 @@
     serving: '<circle cx="12" cy="12" r="2.2"/><path d="M7.5 7.5a6.5 6.5 0 0 0 0 9M16.5 7.5a6.5 6.5 0 0 1 0 9M4.8 4.8a10 10 0 0 0 0 14.4M19.2 4.8a10 10 0 0 1 0 14.4"/>',
   };
 
+  // ---- easter egg: "Federal Re-Bricking Mode" ----
+  // Searching one of EGG_TRIGGERS (whole query, not a prefix - "war" alone would fire
+  // halfway through typing "warehouse") swaps DATA for EGG_DATA: US government renames in
+  // the exact entry shape, so every card, chain, badge and filter renders unmodified. The
+  // one-rule still holds: every fact carries an official link; only `prediction` is made up.
+  // Clearing the search, ESC, or the banner's button restores the real catalogue.
+  const EGG_TRIGGERS = new Set([
+    "45", "47", "eo 14172", "14172", "eo 14347", "14347", "executive order",
+    "gulf of america", "fort bragg", "fort liberty", "department of war", "mount mckinley",
+    "super intelligence", "superintelligence",
+  ]);
+  const EO_14172 = "https://www.whitehouse.gov/presidential-actions/2025/01/restoring-names-that-honor-american-greatness/";
+  const DOI_2025 = "https://www.doi.gov/pressreleases/interior-department-advances-restoration-historic-names-honoring-american-greatness";
+  const DOI_2015 = "https://www.doi.gov/pressreleases/secretary-jewell-announces-nation%E2%80%99s-highest-peak-will-now-bear-native";
+  const EO_14347 = "https://www.whitehouse.gov/presidential-actions/2025/09/restoring-the-united-states-department-of-war/";
+  const ARMY_2023 = "https://www.army.mil/article/267236/fort_bragg_redesignates_to_fort_liberty_in_historic_ceremony";
+  const ARMY_2025 = "https://www.army.mil/article/282972/secretary_of_defense_pete_hegseth_renames_fort_liberty_to_fort_roland_l_bragg";
+  const USTR_USMCA = "https://ustr.gov/trade-agreements/free-trade-agreements/united-states-mexico-canada-agreement";
+  const USMCA_CH34 = "https://ustr.gov/sites/default/files/files/agreements/FTA/USMCA/Text/34_Final_Provisions.pdf";
+  const WH_UNGA_2026 = "https://www.whitehouse.gov/releases/2026/09/president-trump-at-the-united-nations-while-others-have-talked-i-have-acted/";
+  const DARTMOUTH_AI = "https://home.dartmouth.edu/about/artificial-intelligence-ai-coined-dartmouth";
+  const EGG_ST = (value, link) => ({ value, link, date: "2026-09-23" });
+  const EGG_DATA = [
+    // Artificial Intelligence -> Super Intelligence (announced at the UN, 2026-09-22)
+    { id: "artificial-intelligence", name: "Artificial Intelligence", abbr: "AI", category: "Technology", status: EGG_ST("renamed", WH_UNGA_2026),
+      from: { date: "1956", link: DARTMOUTH_AI }, to: { date: "2026-09", link: WH_UNGA_2026 }, successorId: "super-intelligence",
+      what: { note: "The field of making machines do things that look intelligent, under the name a 1956 Dartmouth summer workshop gave it.", link: DARTMOUTH_AI },
+      fact: [{ note: "Seventy years in production under one name - longer than any Databricks product has kept one by roughly six decades.", link: DARTMOUTH_AI }] },
+    { id: "super-intelligence", name: "Super Intelligence", category: "Technology", status: EGG_ST("active", WH_UNGA_2026),
+      from: { date: "2026-09", link: WH_UNGA_2026 }, occasion: { date: "2026-09", link: WH_UNGA_2026, note: "UN General Assembly" },
+      what: { note: "Artificial intelligence, under the name the President announced for it from the UN General Assembly podium on September 22, 2026.", link: WH_UNGA_2026 },
+      fact: [
+        { note: "Announced mid-sentence: \"the Artificial Intelligence being spoken of so much now - hereinafter officially called 'Super Intelligence.'\" A rename shipped inline, like a column alias.", link: WH_UNGA_2026 },
+        { note: "It renames the term, not anyone's product - so AI/BI, Mosaic AI, and AI Functions keep their names. For now. Databricks has never needed a government to rename something.", link: WH_UNGA_2026 },
+      ],
+      limitations: { note: "Announced in a speech; the White House release quotes the remark, not an executive order, so for now the migration path is the transcript.", link: WH_UNGA_2026, date: "2026-09-23" },
+      prediction: ["SI/BI Dashboards", "Mosaic SI", "Artificial Super Intelligence (Serverless)"] },
+
+    // Gulf of Mexico -> Gulf of America
+    { id: "gulf-of-mexico", name: "Gulf of Mexico", category: "Geography", status: EGG_ST("renamed", EO_14172),
+      to: { date: "2025-01", link: DOI_2025 }, successorId: "gulf-of-america",
+      what: { note: "The ocean basin south of the continental United States, under its legacy name - still the one Mexico, Cuba, and most of the planet resolve to.", link: EO_14172 },
+      fact: [{ note: "Deprecated only in the US federal namespace; other nations never received the migration notice and were not required to apply it.", link: DOI_2025 }] },
+    { id: "gulf-of-america", name: "Gulf of America", category: "Geography", status: EGG_ST("active", EO_14172),
+      from: { date: "2025-01", link: DOI_2025 }, occasion: { date: "2025-01", link: EO_14172, note: "Executive Order 14172" },
+      what: { note: "The US Continental Shelf portion of the same basin, bounded by Texas, Louisiana, Mississippi, Alabama and Florida, out to the seaward boundary with Mexico and Cuba.", link: EO_14172 },
+      fact: [
+        { note: "Rolled out as a hot patch: the Interior Department declared it effective immediately for federal use four days after the order, while the Board on Geographic Names was still rebuilding the GNIS index.", link: DOI_2025 },
+        { note: "Agencies then shipped the rename as regulations, find-and-replacing \"Gulf of Mexico\" across their chapters of the Code of Federal Regulations.", link: "https://www.federalregister.gov/documents/2025/06/06/2025-10068/restoring-names-that-honor-american-greatness-gulf-of-america" },
+      ],
+      limitations: { note: "Scope is the US Continental Shelf only - the order stops at the seaward boundary with Mexico and Cuba, so the rest of the basin still serves the legacy name. Fish and hurricanes were not consulted.", link: EO_14172, date: "2026-09-23" },
+      prediction: ["Gulf of America Premium", "Gulf of America (Serverless)", "Lakeflow Gulf"] },
+
+    // Denali <-> Mount McKinley, twice
+    { id: "denali-original", name: "Denali", category: "Geography", status: EGG_ST("renamed", DOI_2015),
+      to: { date: "1896", link: DOI_2015 }, successorId: "mount-mckinley-1896",
+      what: { note: "The Koyukon Athabascan name for North America's highest peak, known by that name for centuries before any federal naming board existed.", link: DOI_2015 },
+      fact: [{ note: "The original release. Every later version is, technically, a fork.", link: DOI_2015 }] },
+    { id: "mount-mckinley-1896", name: "Mount McKinley", category: "Geography", status: EGG_ST("renamed", DOI_2015),
+      from: { date: "1896", link: DOI_2015 }, to: { date: "2015-08", link: DOI_2015 }, successorId: "denali-2015",
+      what: { note: "The same peak, named in 1896 by a prospector for William McKinley, then a presidential candidate.", link: DOI_2015 },
+      fact: [{ note: "McKinley never set foot in Alaska. The mountain shipped as a remote deployment.", link: DOI_2015 }, { note: "Named for a president who, by the 2025 order's own account, championed tariffs - a feature that also later came back.", link: EO_14172 }] },
+    { id: "denali-2015", name: "Denali", category: "Geography", status: EGG_ST("renamed", DOI_2015),
+      from: { date: "2015-08", link: DOI_2015 }, to: { date: "2025-01", link: DOI_2025 }, successorId: "mount-mckinley",
+      what: { note: "The peak's original name, restored by Secretary of the Interior Sally Jewell in 2015.", link: DOI_2015 },
+      fact: [{ note: "A rollback to v1 that lasted just under a decade - an LTS window, by federal standards.", link: DOI_2015 }] },
+    { id: "mount-mckinley", name: "Mount McKinley", category: "Geography", status: EGG_ST("active", EO_14172),
+      from: { date: "2025-01", link: DOI_2025 }, occasion: { date: "2025-01", link: EO_14172, note: "Executive Order 14172" },
+      what: { note: "North America's highest peak, reverted to the name of the 25th President, assassinated in office.", link: DOI_2025 },
+      fact: [{ note: "Classic namespace clash: the order renames the mountain but explicitly keeps the park around it as Denali National Park and Preserve - a McKinley object inside a Denali catalog.", link: EO_14172 }],
+      limitations: { note: "The surrounding national park keeps the name Denali National Park and Preserve, by the order's own text.", link: EO_14172, date: "2026-09-23" },
+      prediction: ["Denali (again)", "Mount McKinley One", "Peak Formerly Known as Denali"] },
+
+    // Department of War -> NME -> Department of Defense -> Department of War
+    { id: "department-of-war-1789", name: "Department of War", category: "Federal departments", status: EGG_ST("renamed", EO_14347),
+      from: { date: "1789", link: EO_14347 }, to: { date: "1947", link: "https://www.militarytimes.com/veterans/military-history/2025/09/17/why-truman-changed-the-war-department-to-the-department-of-defense/" },
+      successorId: "national-military-establishment",
+      what: { note: "The executive department George Washington signed into law on August 7, 1789, to run the nation's army.", link: EO_14347 },
+      fact: [{ note: "Strictly, the 1789 War Department became the Department of the Army in 1947; the umbrella above it was a brand-new product. The lineage is marketing, not a migration.", link: "https://www.militarytimes.com/veterans/military-history/2025/09/17/why-truman-changed-the-war-department-to-the-department-of-defense/" }] },
+    { id: "national-military-establishment", name: "National Military Establishment", category: "Federal departments", status: EGG_ST("renamed", "https://www.militarytimes.com/veterans/military-history/2025/09/17/why-truman-changed-the-war-department-to-the-department-of-defense/"),
+      from: { date: "1947", link: "https://www.militarytimes.com/veterans/military-history/2025/09/17/why-truman-changed-the-war-department-to-the-department-of-defense/" }, to: { date: "1949", link: "https://www.militarytimes.com/veterans/military-history/2025/09/17/why-truman-changed-the-war-department-to-the-department-of-defense/" },
+      successorId: "department-of-defense",
+      what: { note: "The 1947 umbrella over the Army, the Navy, and the newly created Air Force.", link: "https://www.militarytimes.com/veterans/military-history/2025/09/17/why-truman-changed-the-war-department-to-the-department-of-defense/" },
+      fact: [{ note: "Lasted two years in what amounts to Public Preview before Congress amended the National Security Act and shipped it GA as the Department of Defense.", link: "https://www.militarytimes.com/veterans/military-history/2025/09/17/why-truman-changed-the-war-department-to-the-department-of-defense/" }] },
+    { id: "department-of-defense", name: "Department of Defense", category: "Federal departments", status: EGG_ST("renamed", EO_14347),
+      from: { date: "1949", link: "https://www.militarytimes.com/veterans/military-history/2025/09/17/why-truman-changed-the-war-department-to-the-department-of-defense/" }, to: { date: "2025-09", link: EO_14347 },
+      successorId: "department-of-war",
+      what: { note: "The cabinet-level department created by the 1949 amendments to the National Security Act.", link: "https://www.militarytimes.com/veterans/military-history/2025/09/17/why-truman-changed-the-war-department-to-the-department-of-defense/" },
+      fact: [{ note: "\"Renamed\" is doing a lot of work here: statutorily, this is still the name - see the Limitations on its successor.", link: EO_14347 }] },
+    { id: "department-of-war", name: "Department of War", category: "Federal departments", status: EGG_ST("active", EO_14347),
+      from: { date: "2025-09", link: EO_14347 }, occasion: { date: "2025-09", link: EO_14347, note: "Executive Order 14347" },
+      what: { note: "The Department of Defense, under a secondary title authorised by executive order on September 5, 2025.", link: EO_14347 },
+      fact: [
+        { note: "A full rollback to the 1789 display name after a 76-year run under the Defense branding. Same five-sided building.", link: EO_14347 },
+        { note: "Shipped as an alias rather than a migration: the order asks the Secretary for recommendations on the actions required to make the change permanent.", link: EO_14347 },
+      ],
+      limitations: { note: "Display name only: usable in official correspondence, public communications, ceremonial contexts, and non-statutory documents. Statutory references to the Department of Defense remain controlling until Congress changes the law.", link: EO_14347, date: "2026-09-23" },
+      prediction: ["Department of War (Serverless)", "Department of Peace Preview", "Agent Bricks: Pentagon"] },
+
+    // Fort Bragg -> Fort Liberty -> Fort Bragg (a different Bragg)
+    { id: "fort-bragg-braxton", name: "Fort Bragg", category: "Military bases", status: EGG_ST("renamed", ARMY_2023),
+      to: { date: "2023-06", link: ARMY_2023 }, successorId: "fort-liberty",
+      what: { note: "The Army installation in North Carolina, originally named for Confederate General Braxton Bragg.", link: ARMY_2025 },
+      fact: [{ note: "Home of the XVIII Airborne Corps. Also, from 2023, home of a very large signage-replacement budget line.", link: ARMY_2023 }] },
+    { id: "fort-liberty", name: "Fort Liberty", category: "Military bases", status: EGG_ST("renamed", ARMY_2025),
+      from: { date: "2023-06", link: ARMY_2023 }, to: { date: "2025-02", link: ARMY_2025 }, successorId: "fort-bragg",
+      what: { note: "The same installation, redesignated on June 2, 2023 as part of removing Confederate names from Army bases.", link: ARMY_2023 },
+      fact: [{ note: "Survived about twenty months - a shorter deprecation window than most Databricks Preview features.", link: ARMY_2025 }] },
+    { id: "fort-bragg", name: "Fort Bragg", category: "Military bases", status: EGG_ST("active", ARMY_2025),
+      from: { date: "2025-02", link: ARMY_2025 }, occasion: { date: "2025-02", link: ARMY_2025, note: "SecDef memorandum" },
+      what: { note: "The same installation, renamed on February 10, 2025 - this time for Pfc. Roland L. Bragg, a World War II paratrooper decorated for the Battle of the Bulge.", link: ARMY_2025 },
+      fact: [
+        { note: "Zero characters changed on the gate; the entire rename lives in the metadata. Same name, different Bragg - a textbook backwards-compatible release.", link: ARMY_2025 },
+        { note: "The memo was signed aboard a C-17 somewhere between Joint Base Andrews and Stuttgart. True in-flight deployment.", link: ARMY_2025 },
+      ],
+      prediction: ["Fort Bragg (the other other Bragg)", "Fort Bragg v3", "Fort Liberty LTS"] },
+
+    // NAFTA -> USMCA (and CUSMA, and T-MEC)
+    { id: "nafta", name: "NAFTA", category: "Trade agreements", status: EGG_ST("renamed", USTR_USMCA),
+      from: { date: "1994-01", link: USTR_USMCA }, to: { date: "2020-07", link: USTR_USMCA }, successorId: "usmca",
+      aliases: ["North American Free Trade Agreement"],
+      what: { note: "The North American Free Trade Agreement between the United States, Canada, and Mexico.", link: USTR_USMCA },
+      fact: [{ note: "Twenty-six years in production, which in trade-agreement years is roughly a Hadoop cluster.", link: USTR_USMCA }] },
+    { id: "usmca", name: "USMCA", category: "Trade agreements", status: EGG_ST("active", USTR_USMCA),
+      from: { date: "2020-07", link: USTR_USMCA }, occasion: { date: "2020-07", link: USTR_USMCA, note: "Entered into force July 1, 2020" },
+      aliases: ["CUSMA", "T-MEC", "United States-Mexico-Canada Agreement"],
+      what: { note: "The United States-Mexico-Canada Agreement, which replaced NAFTA.", link: USTR_USMCA },
+      fact: [
+        { note: "One product, per-region display names: the same agreement is USMCA in Washington and CUSMA in Ottawa. A multi-cloud naming fracture, ratified.", link: "https://www.international.gc.ca/trade-commerce/trade-agreements-accords-commerciaux/agr-acc/cusma-aceum/index.aspx?lang=eng" },
+      ],
+      limitations: { note: "Ships with a 16-year term and a built-in joint review on its sixth anniversary; without all three parties confirming an extension, it heads for end of life.", link: USMCA_CH34, date: "2026-09-23" },
+      prediction: ["USMCA Pro", "NAFTA (Classic)", "North America One"] },
+  ];
+
+  // The egg's own rail, swapped in for NAV by renderNav() while EGG is on. Same shape as
+  // NAV: items with `ids` filter to those cards; items without are the honest empty state.
+  Object.assign(ICONS, {
+    "egg-flag": '<path d="M5 21V4"/><path d="M5 4h11l-2 4 2 4H5"/>',
+    "egg-wave": '<path d="M3 9c2 0 2-2 4.5-2S10 9 12 9s2.5-2 4.5-2S19 9 21 9"/><path d="M3 15c2 0 2-2 4.5-2s2.5 2 4.5 2 2.5-2 4.5-2 2.5 2 4.5 2"/>',
+    "egg-mountain": '<path d="m3 20 6.5-11 4 6.5 2.5-4L21 20z"/><path d="m8 11.5 1.5 1.5 1.5-1.5"/>',
+    "egg-building": '<path d="M12 3 21 8v1H3V8z"/><path d="M5 9v9M9.5 9v9M14.5 9v9M19 9v9M3 20h18"/>',
+    "egg-base": '<path d="M12 3 5 6v5c0 4.4 3 8 7 9 4-1 7-4.6 7-9V6z"/><path d="m9.5 12 2 2 3.5-4"/>',
+    "egg-trade": '<path d="M4 8h13l-3-3M20 16H7l3 3"/>',
+    "egg-spark": '<path d="M12 3l1.9 5.1L19 10l-5.1 1.9L12 17l-1.9-5.1L5 10l5.1-1.9z"/><path d="M18.5 15.5l.7 1.8 1.8.7-1.8.7-.7 1.8-.7-1.8-1.8-.7 1.8-.7z"/>',
+    "egg-globe": '<circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.5 2.7 3.5 5.7 3.5 9s-1 6.3-3.5 9c-2.5-2.7-3.5-5.7-3.5-9s1-6.3 3.5-9z"/>',
+    "egg-doc": '<path d="M7 3h7l4 4v14H7z"/><path d="M14 3v4h4M10 12h5M10 16h5"/>',
+  });
+  const EGG_NAV = [
+    { label: "", items: [
+      { label: "Home", icon: "home", home: true },
+      { label: "All Executive Orders", icon: "egg-flag", ids: EGG_DATA.map((d) => d.id) },
+      { label: "Federal Register", icon: "egg-doc" },
+    ] },
+    { label: "Geography", items: [
+      { label: "Gulfs & Oceans", icon: "egg-wave", ids: ["gulf-of-mexico", "gulf-of-america"] },
+      { label: "Mountains", icon: "egg-mountain", ids: ["denali-original", "mount-mckinley-1896", "denali-2015", "mount-mckinley"] },
+      { label: "Greenland", icon: "egg-globe" },
+    ] },
+    { label: "Defense", items: [
+      { label: "Departments", icon: "egg-building", ids: ["department-of-war-1789", "national-military-establishment", "department-of-defense", "department-of-war"] },
+      { label: "Military Bases", icon: "egg-base", ids: ["fort-bragg-braxton", "fort-liberty", "fort-bragg"] },
+    ] },
+    { label: "Commerce", items: [
+      { label: "Trade Agreements", icon: "egg-trade", ids: ["nafta", "usmca"] },
+    ] },
+    { label: "Technology", items: [
+      { label: "Super Intelligence", icon: "egg-spark", ids: ["artificial-intelligence", "super-intelligence"] },
+    ] },
+  ];
+
+  let EGG = false;
+  let eggSaved = null; // { data, sub, edition } - the real catalogue, restored on exit
+
+  const eggNorm = (q) => q.toLowerCase().replace(/[.]/g, "").replace(/\s+/g, " ").trim();
+  const isEggTrigger = (q) => EGG_TRIGGERS.has(eggNorm(q));
+
+  // Called at the top of render(): the query decides the mode, so every path that sets
+  // the search (typing, ?q= links, the "/" clear, Home, roulette) enters or leaves it.
+  function syncEgg() {
+    const q = searchEl.value;
+    if (!EGG && isEggTrigger(q)) enterEgg(q);
+    else if (EGG && q.trim() === "" && !activeSection) exitEgg();
+  }
+
+  function enterEgg(q) {
+    EGG = true;
+    const sub = $(".page-sub");
+    const edition = $(".brand-edition");
+    eggSaved = { data: DATA, sub: sub ? sub.innerHTML : "", edition: edition ? edition.textContent : "" };
+    DATA = EGG_DATA;
+    document.documentElement.dataset.egg = "federal";
+    if (edition) edition.textContent = "federal edition";
+    renderNav();
+    if (sub) {
+      sub.textContent = "Every geographic feature, military base, federal department, trade deal, and branch of computer science the executive branch has renamed - sourced, dated, and occasionally renamed back.";
+    }
+    let banner = $("#egg-banner");
+    if (!banner) {
+      banner = document.createElement("div");
+      banner.id = "egg-banner";
+      banner.className = "egg-banner";
+      banner.setAttribute("role", "alert");
+      banner.innerHTML =
+        `<span class="egg-banner-icon" aria-hidden="true">⚠</span>` +
+        `<span class="egg-banner-text"><b>You are viewing Executive Re-Bricks.</b> ` +
+        `Click <button type="button" class="egg-revoke">Revoke Executive Order</button> or press <kbd>Esc</kbd> ` +
+        `to return to Apache Spark &amp; Unity Catalog deprecations.</span>`;
+      banner.querySelector(".egg-revoke").addEventListener("click", revokeEgg);
+      resultsEl.insertAdjacentElement("beforebegin", banner);
+    }
+    banner.hidden = false;
+    renderCounter();
+    track("easter-egg", { egg: "federal", term: eggNorm(q) });
+  }
+
+  function exitEgg() {
+    EGG = false;
+    if (eggSaved) {
+      DATA = eggSaved.data;
+      const sub = $(".page-sub");
+      if (sub) sub.innerHTML = eggSaved.sub;
+      const edition = $(".brand-edition");
+      if (edition) edition.textContent = eggSaved.edition;
+    }
+    eggSaved = null;
+    renderNav();
+    delete document.documentElement.dataset.egg;
+    const banner = $("#egg-banner");
+    if (banner) banner.hidden = true;
+    renderCounter();
+  }
+
+  // The banner's button and ESC: clearing the query is what leaves the mode.
+  function revokeEgg() {
+    if (!EGG) return;
+    searchEl.value = "";
+    focusId = null;
+    activeSection = null;
+    writeURL();
+    render();
+    searchEl.focus();
+  }
+
   // ---- boot ----
   init();
 
@@ -191,7 +434,8 @@
     let rows = DATA.slice();
     if (activeCategory) rows = rows.filter((d) => d.category === activeCategory);
     const q = searchEl.value.trim().toLowerCase();
-    if (q) rows = rows.filter((d) => haystack(d).includes(q));
+    // In the easter egg the trigger itself shows the whole federal catalogue.
+    if (q && !(EGG && isEggTrigger(q))) rows = rows.filter((d) => haystack(d).includes(q));
     return rows;
   }
 
@@ -253,7 +497,7 @@
   function renderNav() {
     const nav = $("#nav");
     if (!nav) return;
-    nav.innerHTML = NAV.map((group) => {
+    nav.innerHTML = (EGG ? EGG_NAV : NAV).map((group) => {
       const label = group.label
         ? `<div class="nav-group-label">${escapeHtml(group.label)}</div>`
         : "";
@@ -365,6 +609,7 @@
 
   // ---- rendering ----
   function render() {
+    syncEgg();
     // A deep-linked entry (#id / ?id=) gets its own crawlable <title>/description, but
     // it still renders inside the full list - focusEntry() scrolls to and flashes the
     // card rather than collapsing the page down to that single entry.
@@ -404,7 +649,7 @@
       const yearNote = activeYear ? ` in <b>${escapeHtml(activeYear)}</b>` : "";
       const line = EMPTY_LINES[emptyIdx++ % EMPTY_LINES.length];
       resultsEl.innerHTML = activeSection
-        ? `<div class="empty">Nothing${kindNote}${yearNote} under <b>${escapeHtml(activeSection.label)}</b> - yet.<br>Either it kept its name, or Databricks hasn't gotten to it.</div>`
+        ? `<div class="empty">Nothing${kindNote}${yearNote} under <b>${escapeHtml(activeSection.label)}</b> - yet.<br>${EGG ? "Either it kept its name, or no one has signed the order yet." : "Either it kept its name, or Databricks hasn't gotten to it."}</div>`
         : `<p class="empty">No results${kindNote}${yearNote}. ${line}</p>`;
       return;
     }
@@ -532,7 +777,7 @@
     const qb = $("#quiz-banner");
     if (qb) qb.hidden = searching;
     const sub = $(".page-sub");
-    if (sub) sub.hidden = searching;
+    if (sub) sub.hidden = searching && !EGG; // the egg's tagline is the joke - keep it up
   }
 
   // A record's lifecycle as a flow key shared by the chain arrows' colors: a
@@ -945,7 +1190,7 @@
     const preds = Array.isArray(d.prediction) ? d.prediction.filter(Boolean) : [];
     if (!preds.length) return "";
     const start = hashStr(d.id + "p") % preds.length;
-    return `<button class="odds-btn" data-preds="${escapeAttr(JSON.stringify(preds))}" data-i="${start}" title="Our AI's best guess at the next rebrand" aria-label="Ask Genie">✨ Ask Genie</button>`;
+    return `<button class="odds-btn" data-preds="${escapeAttr(JSON.stringify(preds))}" data-i="${start}" title="Our AI's best guess at the next rebrand" aria-label="${EGG ? "Executive Order" : "Ask Genie"}">✨ ${EGG ? "Executive Order" : "Ask Genie"}</button>`;
   }
 
   // The AI-guess button reveals a made-up next name: a beat of "thinking", then the
@@ -1057,6 +1302,10 @@
   function renderCounter() {
     const el = $("#counter-text");
     if (!el) return;
+    if (EGG) {
+      el.innerHTML = "<b>0</b> days since the last rename";
+      return;
+    }
     // days since the most recent change (rename or deprecation) anywhere in the dataset
     const latest = DATA
       .map(changedAt)
@@ -1189,6 +1438,11 @@
     } catch (e) {
       document.documentElement.dataset.theme = "dark";
     }
+
+    // ESC leaves the easter egg (unless a modal/quiz owns the key right now).
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape" && EGG && !document.querySelector(".quiz-backdrop:not([hidden])")) revokeEgg();
+    });
 
     // "/" focuses search, like every tool this audience already lives in.
     document.addEventListener("keydown", (e) => {
