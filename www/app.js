@@ -157,6 +157,8 @@
     "45", "47", "eo 14172", "14172", "eo 14347", "14347", "executive order",
     "gulf of america", "fort bragg", "fort liberty", "department of war", "mount mckinley",
     "super intelligence", "superintelligence",
+    "lake america", "lake ontario", "eo 14422", "14422",
+    "space force", "cape canaveral", "cape kennedy", "banana river", "patrick space force base",
   ]);
   const EO_14172 = "https://www.whitehouse.gov/presidential-actions/2025/01/restoring-names-that-honor-american-greatness/";
   const DOI_2025 = "https://www.doi.gov/pressreleases/interior-department-advances-restoration-historic-names-honoring-american-greatness";
@@ -167,6 +169,11 @@
   const USTR_USMCA = "https://ustr.gov/trade-agreements/free-trade-agreements/united-states-mexico-canada-agreement";
   const USMCA_CH34 = "https://ustr.gov/sites/default/files/files/agreements/FTA/USMCA/Text/34_Final_Provisions.pdf";
   const WH_UNGA_2026 = "https://www.whitehouse.gov/releases/2026/09/president-trump-at-the-united-nations-while-others-have-talked-i-have-acted/";
+  const EO_14422 = "https://www.whitehouse.gov/presidential-actions/2026/08/honoring-the-american-history-of-the-great-lakes-and-renaming-lake-ontario-as-lake-america-3a36/";
+  const PENCE_2020 = "https://trumpwhitehouse.archives.gov/briefings-statements/remarks-vice-president-pence-installation-renaming-ceremony-cape-canaveral-fl/";
+  const USSF_2020 = "https://www.spaceforce.mil/News/Article/2441804/2-famed-bases-re-designated-to-highlight-space-force-connection/";
+  const SLD45_2020 = "https://www.patrick.spaceforce.mil/News/Article-Display/Article/2445557/patrick-afb-cape-canaveral-afs-renamed-as-space-force-installations/";
+  const NASA_KSC = "https://www.nasa.gov/kennedy/kennedy-space-center-history";
   const DARTMOUTH_AI = "https://home.dartmouth.edu/about/artificial-intelligence-ai-coined-dartmouth";
   const EGG_ST = (value, link) => ({ value, link, date: "2026-09-23" });
   const EGG_DATA = [
@@ -184,6 +191,59 @@
       ],
       limitations: { note: "Announced in a speech; the White House release quotes the remark, not an executive order, so for now the migration path is the transcript.", link: WH_UNGA_2026, date: "2026-09-23" },
       prediction: ["SI/BI Dashboards", "Mosaic SI", "Artificial Super Intelligence (Serverless)"] },
+
+    // Lake Ontario -> Lake America (EO 14422, 2026-08-27)
+    { id: "lake-ontario", name: "Lake Ontario", category: "Geography", status: EGG_ST("renamed", EO_14422),
+      to: { date: "2026-08", link: EO_14422 }, successorId: "lake-america",
+      what: { note: "The easternmost Great Lake, bounded by New York State on the south and east and by the Canadian province of Ontario on the north, west, and southwest.", link: EO_14422 },
+      fact: [{ note: "The lake carried the name Ontario on early explorers' maps long before the province used it - so the upstream table got renamed while the downstream one kept the old column name.", link: "https://www.snopes.com/fact-check/lake-ontario-name-canada/" }] },
+    { id: "lake-america", name: "Lake America", category: "Geography", status: EGG_ST("active", EO_14422),
+      from: { date: "2026-08", link: EO_14422 }, occasion: { date: "2026-08", link: EO_14422, note: "Executive Order 14422" },
+      what: { note: "Lake Ontario, renamed by executive order on August 27, 2026 - the whole lake, Canadian shoreline included.", link: EO_14422 },
+      fact: [
+        { note: "The release notes cite prior contributions: a historic fort at Oswego, War of 1812 shipbuilding at Sackets Harbor, and the US Coast Guard supplying 9 of the 11 ice-breaking vessels. Ice-breaking as a naming right is a new licensing model.", link: EO_14422 },
+        { note: "The Interior Department gets 30 days to apply it, which puts the migration deadline at September 26, 2026. Tight, even for a Databricks Preview.", link: EO_14422 },
+      ],
+      limitations: { note: "Scope creep by design: unlike the Gulf order, which stopped at the seaward boundary, this one defines the lake by its Canadian shores too - yet it can only instruct the US Secretary of the Interior and Board on Geographic Names.", link: EO_14422, date: "2026-09-23" },
+      prediction: ["Lake America (Great Lakes Edition)", "Lake Formerly Known as Ontario", "Lakebase America"] },
+
+    // Cape Canaveral: Missile Test Annex -> Cape Kennedy AFS -> Cape Canaveral AFS -> Space Force Station
+    { id: "cape-canaveral-missile-test-annex", name: "Cape Canaveral Missile Test Annex", category: "Military bases", status: EGG_ST("renamed", NASA_KSC),
+      to: { date: "1963", link: NASA_KSC }, successorId: "cape-kennedy-air-force-station",
+      what: { note: "The Air Force's missile launch site on Cape Canaveral, under its early name.", link: NASA_KSC },
+      fact: [{ note: "Named, sensibly, after the cape it sits on. This would not last.", link: NASA_KSC }] },
+    { id: "cape-kennedy-air-force-station", name: "Cape Kennedy Air Force Station", category: "Military bases", status: EGG_ST("renamed", SLD45_2020),
+      from: { date: "1963", link: NASA_KSC }, to: { date: "1973", link: SLD45_2020 }, successorId: "cape-canaveral-air-force-station",
+      what: { note: "The same launch site, renamed after President Johnson designated NASA's neighbouring launch facilities the John F. Kennedy Space Center in November 1963.", link: NASA_KSC },
+      fact: [{ note: "A downstream rename: NASA changed its name first, and the Air Force \"subsequently\" followed - the dependency graph, in NASA's own wording.", link: NASA_KSC }] },
+    { id: "cape-canaveral-air-force-station", name: "Cape Canaveral Air Force Station", category: "Military bases", status: EGG_ST("renamed", PENCE_2020),
+      from: { date: "1973", link: SLD45_2020 }, to: { date: "2020-12", link: PENCE_2020 }, successorId: "cape-canaveral-space-force-station",
+      what: { note: "The same launch site, back on the Cape Canaveral name after its decade as Cape Kennedy.", link: SLD45_2020 },
+      fact: [{ note: "The rollback only applied to one side of the river: NASA's Kennedy Space Center kept its name, and the two neighbours are now jointly branded the Cape Canaveral Spaceport. A view over two namespaces.", link: NASA_KSC }] },
+    { id: "cape-canaveral-space-force-station", name: "Cape Canaveral Space Force Station", category: "Military bases", status: EGG_ST("active", PENCE_2020),
+      from: { date: "2020-12", link: PENCE_2020 }, occasion: { date: "2020-12", link: PENCE_2020, note: "Renamed by Vice President Pence" },
+      what: { note: "The same launch site, redesignated on December 9, 2020 as one of the first two installations of the US Space Force.", link: USSF_2020 },
+      fact: [
+        { note: "\"Today we make history with the first two installations in the history of the United States Space Force to bear the name of this new branch of the service.\" One word changed: Air to Space.", link: USSF_2020 },
+        { note: "Shipped with a live demo: the Vice President unveiled the new signs on stage, in the run-up to the Space Force's first anniversary.", link: USSF_2020 },
+      ],
+      limitations: { note: "Renames the installation only - NASA's Kennedy Space Center next door keeps its name, so the Cape still serves two brands.", link: NASA_KSC, date: "2026-09-23" },
+      prediction: ["Cape Canaveral Star Fleet Station", "Cape Kennedy Space Force Station", "Cape Canaveral Space Force Station (Serverless)"] },
+
+    // Patrick: Naval Air Station Banana River -> Patrick AFB -> Patrick SFB
+    { id: "naval-air-station-banana-river", name: "Naval Air Station Banana River", category: "Military bases", status: EGG_ST("renamed", SLD45_2020),
+      from: { date: "1940", link: SLD45_2020 }, to: { date: "1947", link: SLD45_2020 }, successorId: "patrick-air-force-base",
+      what: { note: "A US Navy air station on Florida's Space Coast, named for the Banana River it sat on.", link: SLD45_2020 },
+      fact: [{ note: "Several original hangars, runway segments, and seaplane ramps into the Banana River are still part of the modern base - legacy code nobody dares delete.", link: SLD45_2020 }] },
+    { id: "patrick-air-force-base", name: "Patrick Air Force Base", category: "Military bases", status: EGG_ST("renamed", PENCE_2020),
+      to: { date: "2020-12", link: PENCE_2020 }, successorId: "patrick-space-force-base",
+      what: { note: "The same installation after it passed from the Navy to the Air Force.", link: SLD45_2020 },
+      fact: [{ note: "Got here via an intermediate release, the \"Joint Long Range Proving Ground\", which the Air Force renamed again before anyone finished saying it.", link: SLD45_2020 }] },
+    { id: "patrick-space-force-base", name: "Patrick Space Force Base", category: "Military bases", status: EGG_ST("active", PENCE_2020),
+      from: { date: "2020-12", link: PENCE_2020 }, occasion: { date: "2020-12", link: PENCE_2020, note: "Renamed by Vice President Pence" },
+      what: { note: "The same installation, redesignated on December 9, 2020 alongside Cape Canaveral as one of the first two Space Force bases.", link: USSF_2020 },
+      fact: [{ note: "Same Patrick, new branch - a batch rename: both bases were migrated in one ceremony, held on the other base.", link: SLD45_2020 }],
+      prediction: ["Patrick Space Force Base Pro", "Naval Air Station Banana River (Classic)", "Patrick Galactic Command"] },
 
     // Gulf of Mexico -> Gulf of America
     { id: "gulf-of-mexico", name: "Gulf of Mexico", category: "Geography", status: EGG_ST("renamed", EO_14172),
@@ -286,6 +346,8 @@
   Object.assign(ICONS, {
     "egg-flag": '<path d="M5 21V4"/><path d="M5 4h11l-2 4 2 4H5"/>',
     "egg-wave": '<path d="M3 9c2 0 2-2 4.5-2S10 9 12 9s2.5-2 4.5-2S19 9 21 9"/><path d="M3 15c2 0 2-2 4.5-2s2.5 2 4.5 2 2.5-2 4.5-2 2.5 2 4.5 2"/>',
+    "egg-lake": '<ellipse cx="12" cy="13" rx="9" ry="6"/><path d="M7 13c1.2 0 1.2-1 2.5-1s1.3 1 2.5 1 1.2-1 2.5-1 1.3 1 2.5 1"/>',
+    "egg-rocket": '<path d="M12 3c3 2 4.5 5.5 4.5 9.5L14 16h-4l-2.5-3.5C7.5 8.5 9 5 12 3z"/><circle cx="12" cy="9.5" r="1.6"/><path d="M10 16l-1.5 4M14 16l1.5 4M12 16v5"/>',
     "egg-mountain": '<path d="m3 20 6.5-11 4 6.5 2.5-4L21 20z"/><path d="m8 11.5 1.5 1.5 1.5-1.5"/>',
     "egg-building": '<path d="M12 3 21 8v1H3V8z"/><path d="M5 9v9M9.5 9v9M14.5 9v9M19 9v9M3 20h18"/>',
     "egg-base": '<path d="M12 3 5 6v5c0 4.4 3 8 7 9 4-1 7-4.6 7-9V6z"/><path d="m9.5 12 2 2 3.5-4"/>',
@@ -302,12 +364,14 @@
     ] },
     { label: "Geography", items: [
       { label: "Gulfs & Oceans", icon: "egg-wave", ids: ["gulf-of-mexico", "gulf-of-america"] },
+      { label: "Lakes", icon: "egg-lake", ids: ["lake-ontario", "lake-america"] },
       { label: "Mountains", icon: "egg-mountain", ids: ["denali-original", "mount-mckinley-1896", "denali-2015", "mount-mckinley"] },
       { label: "Greenland", icon: "egg-globe" },
     ] },
     { label: "Defense", items: [
       { label: "Departments", icon: "egg-building", ids: ["department-of-war-1789", "national-military-establishment", "department-of-defense", "department-of-war"] },
       { label: "Military Bases", icon: "egg-base", ids: ["fort-bragg-braxton", "fort-liberty", "fort-bragg"] },
+      { label: "Space Force", icon: "egg-rocket", ids: ["cape-canaveral-missile-test-annex", "cape-kennedy-air-force-station", "cape-canaveral-air-force-station", "cape-canaveral-space-force-station", "naval-air-station-banana-river", "patrick-air-force-base", "patrick-space-force-base"] },
     ] },
     { label: "Commerce", items: [
       { label: "Trade Agreements", icon: "egg-trade", ids: ["nafta", "usmca"] },
