@@ -307,7 +307,7 @@ def scorecard_html(items, inl):
     # Filter chips and the expand event. Same guarded track() shape as INLINE_JS: analytics can
     # never throw into the reader's path. Non-bubbling `toggle` is caught in the capture phase.
     script = """<script>(function(){var sc=document.getElementById('scorecard');if(!sc)return;
-function track(n,d){try{if(window.umami)window.umami.track(n,d);}catch(e){}}
+function track(n,d){try{if(window.goatcounter&&window.goatcounter.count)window.goatcounter.count({path:n,title:d?JSON.stringify(d):n,event:true});}catch(e){}}
 var slug=location.pathname.split('/').filter(Boolean).pop()||'';
 sc.addEventListener('click',function(e){var b=e.target.closest('.sc-chip');if(!b)return;
 var v=b.getAttribute('data-v');sc.setAttribute('data-filter',v);

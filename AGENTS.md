@@ -249,7 +249,7 @@ while **Renamed** is only superseded former names. It's orthogonal to search, ch
 rail sections; Home and the roulette reset it to all three. The year timeline mirrors the
 same buckets as stacked, colour-coded segments and follows the filter live.
 
-**Analytics.** Umami (cookieless) plus a guarded `track(name, data)` helper for custom events -
+**Analytics.** GoatCounter (cookieless, self-hosted at `s.rebricked.org`) plus a guarded `track(name, data)` helper for custom events -
 every call is wrapped so a blocked/absent script can't affect the page. LinkedIn share links get
 UTM tags via `withUTM(url, params)`. Keep new tracking behind `track()`; never let analytics throw
 into a user path.
@@ -258,10 +258,10 @@ The script tag lives in **two** places and must stay in both, or a whole class o
 uncounted: hand-written in [`index.html`](www/index.html), and as the `ANALYTICS` constant in
 [`build_badges.py`](scripts/build_badges.py), which `build_entries.py` injects into its shared
 `HEAD` (covering the entry pages, the vendor hub, and - since `build_posts.py` imports that same
-`HEAD` - the guides and the Learn index) and the badge template injects too. Same website id
+`HEAD` - the guides and the Learn index) and the badge template injects too. Same count endpoint
 everywhere, so it is one dataset. Two deliberate exclusions: `OG_PAGE`, the template a headless
-browser loads to render `og.png` (it would count the build as traffic), and any hostname other
-than `rebricked.org`, via `data-domains` (it keeps `python -m http.server` previews out of the
+browser loads to render `og.png` (it would count the build as traffic), and localhost, which
+GoatCounter's `count.js` skips on its own (it keeps `python -m http.server` previews out of the
 production stats). **Adding a new generated page? Put `ANALYTICS` in its head.** The static
 [`disclaimer`](www/disclaimer/index.html) and [`subscribe`](www/subscribe/index.html) pages carry
 their own copy since no generator owns them.

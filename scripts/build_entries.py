@@ -863,7 +863,7 @@ SF_HUB_BODY = """
 # filter; kept guarded because analytics must never throw into a reader's path.
 SF_HUB_JS = """<script>
 (function () {
-  function track(name, data) { try { if (window.umami) window.umami.track(name, data); } catch (e) {} }
+  function track(name, data) { try { if (window.goatcounter && window.goatcounter.count) window.goatcounter.count({ path: name, title: data ? JSON.stringify(data) : name, event: true }); } catch (e) {} }
   var rows = [].slice.call(document.querySelectorAll('.sf-row'));
   var empty = document.getElementById('sf-empty');
   var box = document.getElementById('hub-filter');

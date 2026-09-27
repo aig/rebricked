@@ -88,10 +88,10 @@ Then open <http://localhost:8777/>.
 
 ## Analytics & privacy
 
-Visits are counted with [Umami](https://umami.is) - cookieless, no personal data, so no
+Visits are counted with [GoatCounter](https://www.goatcounter.com) - cookieless, no personal data, so no
 consent banner is required. A few anonymous custom events (filter toggles, quiz opens,
 searches, shares) help show what people use. LinkedIn share links carry
-[UTM tags](https://docs.umami.is/docs/utm) so shared traffic is attributed. Everything is
+UTM tags so shared traffic is attributed. Everything is
 guarded: if the analytics script is blocked or absent, the app behaves identically.
 
 ## Authors

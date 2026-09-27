@@ -9,10 +9,11 @@
   const chipsEl = $("#chips") || document.createElement("div");
   const toastEl = $("#toast");
 
-  // Umami custom events. No-op if the analytics script is blocked, absent, or not yet
-  // loaded - tracking must never affect the app, so every call is guarded.
+  // GoatCounter custom events: the name becomes the event path, the data its title. No-op if
+  // the analytics script is blocked, absent, or not yet loaded - tracking must never affect
+  // the app, so every call is guarded.
   function track(name, data) {
-    try { if (window.umami) window.umami.track(name, data); } catch (e) {}
+    try { if (window.goatcounter && window.goatcounter.count) window.goatcounter.count({ path: name, title: data ? JSON.stringify(data) : name, event: true }); } catch (e) {}
   }
 
   let DATA = [];
@@ -2360,7 +2361,7 @@
 
   // Append UTM params to a URL's query string - kept before any #fragment so analytics
   // can read them (a fragment query is invisible to the server/tracker). Falsy values
-  // are dropped. See https://docs.umami.is/docs/utm
+  // are dropped. GoatCounter records utm_source/utm_campaign as the referrer campaign.
   function withUTM(url, params) {
     const hashAt = url.indexOf("#");
     const base = hashAt === -1 ? url : url.slice(0, hashAt);

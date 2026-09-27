@@ -9,6 +9,23 @@ shows the what. Plain, simple English: short sentences, common words, no jargon 
 and product names themselves. Some older entries have no `Why:` line - the reason was never
 recorded, and a made-up reason is worse than none.
 
+## 2026-09-27
+
+### Changed
+- **Analytics moved from Umami Cloud to a self-hosted GoatCounter at `s.rebricked.org`.**
+
+  **Why:** the visit counts were kept by a third-party cloud service. Hosting the counter on our
+  own subdomain keeps the data with us, and a first-party script is blocked less often than
+  `cloud.umami.is`.
+
+  **What:** every page now loads `//s.rebricked.org/count.js` instead of the Umami script: the
+  app, the static disclaimer and subscribe pages, the committed badge pages, and every generated
+  page through the `ANALYTICS` constant in `build_badges.py`. Each guarded `track(name, data)`
+  helper now calls `goatcounter.count` with `event: true`, so event names are unchanged: the name
+  is the event path and the data is its title. `data-domains` is gone because `count.js` already
+  skips localhost. AGENTS.md, README and `docs/reference/analytics-events.md` describe the new
+  setup.
+
 ## 2026-09-20
 
 ### Added

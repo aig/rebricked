@@ -1,6 +1,6 @@
 # Analytics events
 
-Umami, cookieless, no personal data, so no consent banner. Everything is guarded: if the script is
+GoatCounter (self-hosted at `https://s.rebricked.org`), cookieless, no personal data, so no consent banner. Everything is guarded: if the script is
 blocked or absent the app behaves identically.
 
 ## The rules
@@ -25,13 +25,16 @@ The static [`disclaimer`](../../www/disclaimer/index.html) and
 [`subscribe`](../../www/subscribe/index.html) pages carry their own copy, because no generator owns
 them.
 
-Same website id everywhere, so it is one dataset.
+Same count endpoint (`https://s.rebricked.org/count`) everywhere, so it is one dataset.
+
+`track(name, data)` maps onto GoatCounter's event API: `name` becomes the event path, `data`
+(JSON-stringified) becomes its title, and `event: true` keeps it out of the pageview counts.
 
 **Two deliberate exclusions:**
 
 - `OG_PAGE` in `build_badges.py` - the template a headless browser loads to render `og.png`. Counting
   the build as traffic would pollute the stats.
-- any hostname other than `rebricked.org`, via `data-domains`. This keeps
+- localhost, which GoatCounter's `count.js` skips on its own. This keeps
   `python -m http.server` previews out of production numbers.
 
 ## Events from the app (`app.js`)

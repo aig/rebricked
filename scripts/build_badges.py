@@ -67,17 +67,17 @@ FAVICON = (
     "</svg>"
 )
 
-# Umami (cookieless, no consent banner) - the SAME website id index.html carries, so the
+# GoatCounter (cookieless, no consent banner) - the SAME endpoint index.html carries, so the
 # generated pages report into one dataset instead of going uncounted. Defined here because
 # build_entries.py and build_posts.py both import this module's chrome, so one edit covers
-# every generated page. `data-domains` keeps `python -m http.server` previews out of the
-# production stats; deliberately NOT injected into OG_PAGE, which a headless browser loads
-# to render og.png and would otherwise register as real traffic.
+# every generated page. count.js skips localhost on its own, which keeps
+# `python -m http.server` previews out of the production stats; deliberately NOT injected
+# into OG_PAGE, which a headless browser loads to render og.png and would otherwise register
+# as real traffic.
 ANALYTICS = (
-    '  <!-- Umami: privacy-first, cookieless analytics (no consent banner required) -->\n'
-    '  <script defer src="https://cloud.umami.is/script.js" '
-    'data-website-id="9d8f35c0-f2e1-4d45-a24d-a97559fa8361" '
-    'data-domains="rebricked.org"></script>'
+    '  <!-- GoatCounter: privacy-first, cookieless analytics (no consent banner required) -->\n'
+    '  <script data-goatcounter="https://s.rebricked.org/count" '
+    'async src="//s.rebricked.org/count.js"></script>'
 )
 
 # Theme before first paint - the same rule index.html applies to the app: dark by default, a
@@ -299,11 +299,11 @@ TOPBAR = (
 # and the analytics the static pages used to miss entirely.
 INLINE_JS = """<script>
 (function () {
-  // Same guarded wrapper as app.js's track(): a blocked or absent umami script must never
+  // Same guarded wrapper as app.js's track(): a blocked or absent goatcounter script must never
   // throw into a user path. Event names match app.js so the SPA and the static pages report
   // into the same funnel instead of two half-datasets.
   function track(name, data) {
-    try { if (window.umami) window.umami.track(name, data); } catch (e) {}
+    try { if (window.goatcounter && window.goatcounter.count) window.goatcounter.count({ path: name, title: data ? JSON.stringify(data) : name, event: true }); } catch (e) {}
   }
   // Which kind of static page this is, so one event name can be sliced by surface.
   var surface = document.querySelector('.post-doc') ? 'guide'
