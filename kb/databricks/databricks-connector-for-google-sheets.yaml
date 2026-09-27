@@ -1,0 +1,61 @@
+id: databricks-connector-for-google-sheets
+name: Databricks Connector for Google Sheets
+aliases:
+  - Google Sheets connector
+  - Google Sheets add-on
+  - Databricks for Google Sheets
+category: Developer experience
+what:
+  note: A Google Sheets add-on that connects to a Databricks workspace so you can import governed Unity Catalog tables, SQL query results and pivot tables into a sheet, refresh them on a schedule, ask Genie One for data, and write ranges back to Unity Catalog tables.
+  link: https://docs.databricks.com/aws/en/integrations/google-sheets/#:~:text=The%20Databricks%20Connector%20for%20Google%20Sheets%20connects%20your%20Databricks%20workspace%20with%20Google%20Sheets
+fact:
+  - note: The sheet's name is load-bearing - rename or delete a sheet tied to an import and it can no longer refresh, and one documented fix is to recreate a sheet with the exact same name.
+    link: https://docs.databricks.com/aws/en/integrations/google-sheets/query-data#:~:text=Renaming%20or%20deleting%20a%20sheet%20that%20is%20attached%20to%20an%20existing%20import%20prevents%20you%20from%20refreshing%20the%20import
+  - note: The ceiling is set by Google, not Databricks - imports go up to the Google Sheets limit of 10 million cells.
+    link: https://docs.databricks.com/aws/en/integrations/google-sheets/query-data#:~:text=The%20connector%20supports%20importing%20up%20to%20the%20Google%20Sheets%20limit%20of%2010%20million%20cells
+  - note: Scheduled refreshes only work once a metastore admin creates a Unity Catalog connection with one very specific name - databricks_google_connection.
+    link: https://docs.databricks.com/aws/en/integrations/google-sheets/schedule-refresh#:~:text=A%20Unity%20Catalog%20connection%20called%20databricks_google_connection
+status:
+  value: active
+  link: https://docs.databricks.com/aws/en/release-notes/product/2026/april#:~:text=The%20Databricks%20Connector%20for%20Google%20Sheets%20is%20now%20generally%20available
+  date: '2026-09-27'
+releases:
+  - type: public-preview
+    date: 2025-03
+    link: https://docs.databricks.com/aws/en/release-notes/product/2025/march#:~:text=The%20Databricks%20Connector%20for%20Google%20Sheets%20allows%20you%20to%20connect%20to%20your%20Databricks%20workspace%20from%20Google%20Sheets
+  - type: ga
+    date: 2026-04
+    link: https://docs.databricks.com/aws/en/release-notes/product/2026/april#:~:text=The%20Databricks%20Connector%20for%20Google%20Sheets%20is%20now%20generally%20available
+introducedAt:
+  date: 2025-03
+  link: https://docs.databricks.com/aws/en/release-notes/product/2025/march#:~:text=The%20Databricks%20Connector%20for%20Google%20Sheets%20allows%20you%20to%20connect%20to%20your%20Databricks%20workspace%20from%20Google%20Sheets
+occasion:
+  date: 2026-04
+  link: https://www.databricks.com/blog/introducing-databricks-connector-google-sheets-real-time-governed-lakehouse-data-sheets-users#:~:text=The%20Databricks%20connector%20for%20Google%20Sheets%20is%20now%20Generally%20Available%20for%20all%20Databricks%20customers
+  note: Launch blog post (General Availability)
+limitations:
+  note: Runs on SQL warehouses only (all-purpose compute is not supported) and queries time out after 15 minutes. Write-back is table-level only - no row-level updates, appends or merges, and no views or materialized views. Scheduled refreshes can't be edited (delete and recreate), don't pick up edited queries, can't target pivot tables, hold at most 20 imports per schedule and cap query text at 4,096 characters. Renaming or deleting a sheet breaks its import's refresh, and Viewer or Commenter recipients of a shared sheet can't use the add-on.
+  link: https://docs.databricks.com/aws/en/integrations/google-sheets/write-back#:~:text=The%20Databricks%20Connector%20for%20Google%20Sheets%20only%20supports%20SQL%20warehouses
+  date: '2026-09-27'
+links:
+  - url: https://docs.databricks.com/aws/en/integrations/google-sheets/query-data
+    kind: official
+    label: 'Databricks docs: Query Databricks data in Google Sheets (timeout, sharing, limitations)'
+  - url: https://docs.databricks.com/aws/en/integrations/google-sheets/schedule-refresh
+    kind: official
+    label: 'Databricks docs: Schedule data refreshes in Google Sheets (scheduled refresh limitations)'
+  - url: https://docs.databricks.com/aws/en/integrations/google-sheets/write-back
+    kind: official
+    label: 'Databricks docs: Write data back to Databricks from Google Sheets'
+  - url: https://docs.databricks.com/aws/en/release-notes/product/2026/august
+    kind: official
+    label: 'Databricks release notes: Write data back from Google Sheets (August 20, 2026) and Genie One in Google Sheets (August 5, 2026)'
+  - url: https://learn.microsoft.com/azure/databricks/integrations/google-sheets/
+    kind: official
+    label: 'Microsoft Learn: Databricks Connector for Google Sheets (Azure Databricks)'
+prediction:
+  - Genie One for Sheets
+  - Lakehouse for Google Workspace
+  - Databricks Sheets Add-in
+source: https://docs.databricks.com/aws/en/integrations/google-sheets/
+verified: '2026-09-27'

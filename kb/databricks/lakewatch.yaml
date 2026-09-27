@@ -1,0 +1,48 @@
+id: lakewatch
+name: Lakewatch
+aliases:
+  - Databricks Lakewatch
+  - agentic SIEM
+  - security lakehouse
+category: Data governance
+what:
+  note: Databricks' agentic SIEM built on the security lakehouse - a security analytics platform built natively on the Databricks Data + AI Platform that unifies security telemetry, IT logs and business data under Unity Catalog governance for threat hunting, detection-as-code and AI-driven detection and response.
+  link: https://www.databricks.com/product/lakewatch#:~:text=a%20Tier%201%20security%20analytics%20platform%20built%20natively%20on%20the%20Databricks%20Data%20%2B%20AI%20Platform
+fact:
+  - note: To build a SIEM, Databricks acquired SiftD.ai, a startup founded by the creator of Splunk's own Search Processing Language (SPL) - the query language of the kind of SIEM it set out to replace.
+    link: https://www.databricks.com/blog/databricks-announces-lakewatch-new-agentic-siem#:~:text=Search%20Processing%20Language
+  - note: Its model supplier is also a customer of the idea - Claude models help power Lakewatch, and Anthropic runs its own security lakehouse on Databricks.
+    link: https://www.databricks.com/blog/databricks-announces-lakewatch-new-agentic-siem#:~:text=Anthropic%20also%20uses%20Databricks%20for%20its%20own%20security%20lakehouse
+  - note: Just over four months after launch it got reinforcements by acquisition - Databricks completed its purchase of Panther, an AI SOC platform, to layer detections-as-code workflows and 100+ integrations on top of Lakewatch.
+    link: https://www.databricks.com/blog/databricks-completes-acquisition-panther-accelerating-security-lakehouse-era#:~:text=officially%20completed%20the%20acquisition%20of%20Panther
+status:
+  value: active
+  link: https://www.databricks.com/blog/databricks-completes-acquisition-panther-accelerating-security-lakehouse-era#:~:text=Lakewatch%20is%20the%20core%20product%20powering%20the%20security%20lakehouse%20foundation
+  date: '2026-09-27'
+releases:
+  - type: private-preview
+    date: 2026-03
+    link: https://www.databricks.com/blog/databricks-announces-lakewatch-new-agentic-siem#:~:text=Lakewatch%20is%20launching%20today%20in%20Private%20Preview
+introducedAt:
+  date: 2026-03
+  link: https://www.databricks.com/blog/databricks-announces-lakewatch-new-agentic-siem#:~:text=a%20new%20agentic%20SIEM%20designed%20to%20help%20organizations%20defend%20against%20increasingly%20sophisticated%20agent%20attackers
+occasion:
+  date: 2026-03
+  link: https://www.databricks.com/blog/databricks-announces-lakewatch-new-agentic-siem#:~:text=Lakewatch%20is%20launching%20today%20in%20Private%20Preview
+  note: Launch blog and Private Preview, March 2026
+links:
+  - url: https://www.databricks.com/blog/databricks-announces-lakewatch-new-agentic-siem
+    kind: official
+    label: 'Databricks blog: Databricks Announces Lakewatch, New Agentic SIEM (March 24, 2026)'
+  - url: https://www.databricks.com/blog/databricks-completes-acquisition-panther-accelerating-security-lakehouse-era
+    kind: official
+    label: 'Databricks blog: Databricks Completes Acquisition of Panther (August 3, 2026)'
+  - url: https://www.databricks.com/blog/alert-fatigue-business-risk
+    kind: official
+    label: 'Databricks blog: Alert fatigue is a business risk (April 2026, restates the Private Preview status)'
+prediction:
+  - Genie Lakewatch
+  - Lakewatch One
+  - Unity Watch
+source: https://www.databricks.com/product/lakewatch
+verified: '2026-09-27'

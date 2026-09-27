@@ -35,6 +35,26 @@
       ]
     },
     {
+      "id": "databricks-blog",
+      "name": "Databricks Blog (English)",
+      "note": "Launch posts are where a new name is usually first said out loud - often a week or more before the docs catch up - and the Summit recap posts are the backing for most `occasion` fields. Two sitemaps: the current blog and the pre-2023 dated archive (/blog/YYYY/MM/DD/slug.html). Author, category and archive listing pages are excluded, and so are the `-article` URLs: alternate-layout copies whose canonical is the plain slug, which is mirrored anyway. About 3,400 posts, which don't change once published, so `refresh: new-only` downloads only posts not yet mirrored (use --force to re-check them all, --limit to spread the first run). The pages have no <article> or <main>, so `content` bounds the post between its header and the newsletter sign-up. Only the Markdown is kept; the raw HTML is ~700 KB of scripts per post.",
+      "sitemap": [
+        "https://www.databricks.com/en-blog-assets/sitemap/sitemap-index.xml",
+        "https://www.databricks.com/blog-legacy-assets/sitemap/sitemap-index.xml"
+      ],
+      "include": [
+        "^https://www\\.databricks\\.com/blog/[^/]+$",
+        "^https://www\\.databricks\\.com/blog/\\d{4}/\\d{2}/\\d{2}/[^/]+$"
+      ],
+      "exclude": ["-article$"],
+      "refresh": "new-only",
+      "content": {
+        "start": "<header class=\"flex flex-col items-center",
+        "end": "Get the latest posts in your inbox"
+      },
+      "keep_html": false
+    },
+    {
       "id": "databricks-resource-limits",
       "name": "Databricks Resource Limits (AWS)",
       "urls": ["https://docs.databricks.com/aws/en/resources/limits"]

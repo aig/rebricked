@@ -1,0 +1,58 @@
+id: lakebase-search
+name: Lakebase Search
+aliases:
+  - lakebase_vector
+  - lakebase_text
+  - Lakebase hybrid search
+category: Data engineering
+what:
+  note: Hybrid vector and keyword search built into Lakebase Postgres projects through two Postgres extensions - lakebase_vector for pgvector-compatible approximate nearest-neighbor search and lakebase_text for BM25 full-text search - combinable into one ranked hybrid result.
+  link: https://docs.databricks.com/aws/en/oltp/projects/lakebase-search#:~:text=Lakebase%20Search%20adds%20hybrid%20vector%20and%20keyword%20search%20to%20Lakebase%20projects
+fact:
+  - note: Its vector index goes on a serious diet - RaBitQ quantization shrinks the footprint 32x, so a 100-million-vector index that once needed 300GB of RAM fits in under 10GB.
+    link: https://www.databricks.com/blog/announcing-lakebase-search-agent-native-retrieval-built-lakebase-postgres#:~:text=A%20100%2Dmillion%2Dvector%20index%20that%20previously%20required%20300GB%20of%20RAM%20fits%20into%20under%2010GB
+  - note: The indexes live in storage rather than RAM, so they survive scale-to-zero without warmup - in Databricks' 100-million-vector benchmark the first query after waking up took 1.13 seconds.
+    link: https://www.databricks.com/blog/announcing-lakebase-search-agent-native-retrieval-built-lakebase-postgres#:~:text=the%20first%20cold%2Dcache%20query%20takes%201.13%20seconds
+  - note: Switching it on is a one-way door - enabling it on a project cannot be undone, and it restarts every compute in the project on the way in.
+    link: https://docs.databricks.com/aws/en/oltp/projects/lakebase-search#:~:text=Enabling%20Lakebase%20Search%20on%20a%20project%20is%20irreversible
+status:
+  value: active
+  link: https://docs.databricks.com/aws/en/release-notes/lakebase/#:~:text=Lakebase%20Search%20is%20now%20generally%20available
+  date: '2026-09-27'
+releases:
+  - type: beta
+    date: 2026-06
+    link: https://docs.databricks.com/aws/en/release-notes/lakebase/#:~:text=Lakebase%20Search%20brings%20scalable%20vector%20and%20keyword%20search%20to%20Lakebase%20projects%20through%20two%20new%20Postgres%20extensions
+  - type: ga
+    date: 2026-09
+    link: https://docs.databricks.com/aws/en/release-notes/lakebase/#:~:text=Lakebase%20Search%20is%20now%20generally%20available
+introducedAt:
+  date: 2026-06
+  link: https://docs.databricks.com/aws/en/release-notes/lakebase/#:~:text=Lakebase%20Search%20brings%20scalable%20vector%20and%20keyword%20search%20to%20Lakebase%20projects%20through%20two%20new%20Postgres%20extensions
+occasion:
+  date: 2026-06
+  link: https://www.databricks.com/blog/announcing-lakebase-search-agent-native-retrieval-built-lakebase-postgres#:~:text=available%20now%20in%20beta%20on%20AWS%20and%20Azure
+  note: Announcement blog, June 16, 2026 (Beta on AWS and Azure)
+limitations:
+  note: Requires Postgres 16 or later. Enabling it on a project is irreversible and restarts all computes in the project, dropping active connections. BM25 indexes compute corpus statistics at build time rather than incrementally, so build them after loading data, and embeddings must be generated outside Lakebase (for example with Model Serving) before they are stored.
+  link: https://docs.databricks.com/aws/en/oltp/projects/lakebase-search#:~:text=Enabling%20Lakebase%20Search%20on%20a%20project%20is%20irreversible
+  date: '2026-09-27'
+links:
+  - url: https://docs.databricks.com/aws/en/release-notes/lakebase/
+    kind: official
+    label: 'Databricks docs: Lakebase release notes (Beta June 16, 2026; GA September 18, 2026)'
+  - url: https://docs.databricks.com/aws/en/oltp/projects/lakebase-vector
+    kind: official
+    label: 'Databricks docs: lakebase_vector'
+  - url: https://docs.databricks.com/aws/en/oltp/projects/lakebase-text
+    kind: official
+    label: 'Databricks docs: lakebase_text'
+  - url: https://www.databricks.com/blog/announcing-lakebase-search-agent-native-retrieval-built-lakebase-postgres
+    kind: community
+    label: 'Databricks blog: Announcing Lakebase Search (June 2026)'
+prediction:
+  - Lakebase Search One
+  - Genie Base Search
+  - Lakebase Retrieval
+source: https://docs.databricks.com/aws/en/oltp/projects/lakebase-search
+verified: '2026-09-27'

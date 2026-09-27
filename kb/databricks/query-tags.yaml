@@ -1,0 +1,49 @@
+id: query-tags
+name: Query tags
+aliases:
+  - Query Tags
+  - SET QUERY_TAGS
+  - query_tags
+category: Compute / BI
+what:
+  note: Custom key-value pairs attached to SQL workloads on Databricks SQL warehouses, set per session or per statement from SQL, the Statement Execution API, dbt, Power BI, Tableau and the drivers, and recorded in system.query.history for grouping, filtering and cost attribution.
+  link: https://docs.databricks.com/aws/en/sql/user/queries/query-tags#:~:text=Query%20tags%20are%20custom%20key%2Dvalue%20pairs%20that%20you%20apply%20to%20SQL%20workloads
+fact:
+  - note: dbt gets tagged whether it asks or not - every dbt run carries reserved keys such as @@dbt_model_name that you can't override.
+    link: https://docs.databricks.com/aws/en/sql/user/queries/query-tags#:~:text=The%20following%20reserved%20query%20tag%20keys%20are%20set%20automatically%20for%20all%20dbt%20runs%20and%20can%27t%20be%20overridden
+  - note: Power BI stamps its own workspace, report and visual IDs onto queries automatically - but only over the ADBC driver, not ODBC.
+    link: https://docs.databricks.com/aws/en/sql/user/queries/query-tags#:~:text=Auto%20query%20tags%20are%20only%20available%20when%20using%20the%20Arrow%20Database%20Connectivity%20%28ADBC%29%20driver
+  - note: Genie labels its own homework - queries it generates from benchmarks carry query tags, so you can tell real users from self-tests in query history.
+    link: https://docs.databricks.com/aws/en/ai-bi/release-notes/2026#:~:text=Genie%20attaches%20query%20tags%20to%20queries%20generated%20from%20benchmarks
+status:
+  value: active
+  link: https://docs.databricks.com/aws/en/sql/user/queries/query-tags#:~:text=This%20feature%20is%20in%20Public%20Preview
+  date: '2026-09-27'
+releases:
+  - type: public-preview
+    date: 2026-02
+    link: https://docs.databricks.com/aws/en/release-notes/product/2026/february#:~:text=You%20can%20now%20apply%20custom%20key%2Dvalue%20tags%20to%20SQL%20workloads%20on%20Databricks%20SQL%20warehouses
+introducedAt:
+  date: 2026-02
+  link: https://docs.databricks.com/aws/en/release-notes/product/2026/february#:~:text=You%20can%20now%20apply%20custom%20key%2Dvalue%20tags%20to%20SQL%20workloads%20on%20Databricks%20SQL%20warehouses
+occasion:
+  date: 2026-06
+  link: https://www.databricks.com/blog/query-tags-context-your-warehouse-queries-have-been-missing#:~:text=Query%20Tags%20have%20already%20seen%20strong%20adoption%2C%20with%20hundreds%20of%20customers%20tagging%20millions%20of%20queries%20weekly
+  note: Launch blog post (Public Preview)
+limitations:
+  note: 'Databricks SQL workloads only - the query_tags column is not populated for other compute. Up to 10 KB of tags per session (extra tags are dropped), at most 20 user-specified tags per query, keys and values up to 128 characters, keys may not contain , : - / = or . and @@ keys are reserved. Tags are stored as plain text and might be replicated globally, so keep secrets and PII out of them.'
+  link: https://docs.databricks.com/aws/en/sql/user/queries/query-tags#:~:text=Query%20tags%20are%20limited%20to%2010%20KB%20per%20session
+  date: '2026-09-27'
+links:
+  - url: https://docs.databricks.com/aws/en/sql/language-manual/sql-ref-syntax-aux-conf-mgmt-set-query-tags
+    kind: official
+    label: 'Databricks SQL reference: SET QUERY_TAGS'
+  - url: https://www.databricks.com/blog/granular-usage-attribution-dbt-pipelines-query-tags
+    kind: official
+    label: 'Databricks blog: Granular usage attribution for dbt pipelines with Query Tags'
+prediction:
+  - Query Labels
+  - Unity Catalog Query Tags
+  - Genie Cost Stickers
+source: https://docs.databricks.com/aws/en/sql/user/queries/query-tags
+verified: '2026-09-27'

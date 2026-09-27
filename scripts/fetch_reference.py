@@ -7,8 +7,16 @@ release notes ship.
 
 Sources live in scripts/sources.json - add an entry there to track another site,
 no code change needed. Each source discovers page URLs either from a `sitemap`
-(filtered by `include` / `exclude` regexes over the <loc> entries) or from an
-explicit `urls` list.
+(one URL or a list, filtered by `include` / `exclude` regexes over the <loc>
+entries) or from an explicit `urls` list. Optional per-source keys:
+
+  "refresh": "new-only"   only download pages not yet in the manifest (for
+                          archives like a blog, whose posts don't change once
+                          published); --force still re-fetches everything
+  "content": {"start", "end"}
+                          literal HTML markers bounding the page body, for
+                          sites with no <article>/<main> to extract from
+  "keep_html": false      store only the .md, not the raw HTML
 
 Files mirror the URL path, so the local tree reads like the site (wget -r style):
 
@@ -29,6 +37,7 @@ Run:
   python scripts/fetch_reference.py databricks-release-notes   # one source by id
   python scripts/fetch_reference.py --force             # ignore 304, re-fetch all
   python scripts/fetch_reference.py --list              # show sources, fetch nothing
+  python scripts/fetch_reference.py databricks-blog --limit 200   # cap downloads per run
 
 Standard library only - no pip installs.
 """
@@ -121,10 +130,12 @@ def discover_urls(source):
     sm = source.get("sitemap")
     if not sm:
         raise ValueError(f"source {source['id']} has neither 'sitemap' nor 'urls'")
+    sitemaps = [sm] if isinstance(sm, str) else sm
     inc = [re.compile(p) for p in source.get("include", [])]
     exc = [re.compile(p) for p in source.get("exclude", [])]
     out = []
-    for loc in sitemap_locs(sm):
+    seen = set()
+    for loc in (loc for s in sitemaps for loc in sitemap_locs(s, seen)):
         if inc and not any(r.search(loc) for r in inc):
             continue
         if any(r.search(loc) for r in exc):
@@ -276,13 +287,31 @@ class ArticleToMarkdown(HTMLParser):
         md = "".join(self.out)
         md = re.sub(r"[ \t]+\n", "\n", md)      # trailing spaces
         md = re.sub(r"\n{3,}", "\n\n", md)      # collapse blank runs
+        md = re.sub(r"(\n#+[ \t]*)+\s*$", "", md)  # a heading cut off by a content end marker
         return md.strip() + "\n"
 
 
-def extract_markdown(html_bytes):
+def slice_content(html, content):
+    """Cut the page body out between a source's literal start/end markers.
+
+    Wrapped in <article> so the extractor treats it as the main content. A page
+    missing the start marker is returned whole (the extractor then falls back to
+    its own <article>/<main> search); a missing end marker means "to the end".
+    """
+    start = html.find(content.get("start", ""))
+    if start < 0:
+        return html
+    end = html.find(content["end"], start) if content.get("end") else -1
+    return "<article>" + html[start:end if end >= 0 else None] + "</article>"
+
+
+def extract_markdown(html_bytes, content=None):
     parser = ArticleToMarkdown()
+    html = html_bytes.decode("utf-8", "replace")
+    if content:
+        html = slice_content(html, content)
     try:
-        parser.feed(html_bytes.decode("utf-8", "replace"))
+        parser.feed(html)
     except Exception:  # a malformed page shouldn't kill the whole run
         pass
     return parser.markdown()
@@ -344,15 +373,25 @@ def now_iso():
 # --------------------------------------------------------------------------- #
 # Per-source run
 # --------------------------------------------------------------------------- #
-def fetch_source(source, manifest, force=False):
+def fetch_source(source, manifest, force=False, limit=None):
     sid = source["id"]
     pages = manifest["pages"]
     print(f"\n== {sid} :: {source.get('name', sid)}")
     urls = discover_urls(source)
     print(f"   discovered {len(urls)} page(s)")
-
     counts = {"new": 0, "updated": 0, "unchanged": 0, "error": 0}
+    if source.get("refresh") == "new-only" and not force:
+        known = [u for u in urls if pages.get(u, {}).get("sha256")]
+        counts["unchanged"] = len(known)
+        urls = [u for u in urls if not pages.get(u, {}).get("sha256")]
+        print(f"   new-only: {len(known)} already mirrored, {len(urls)} to fetch")
+    keep_html = source.get("keep_html", True)
+
+    downloads = 0
     for i, url in enumerate(urls, 1):
+        if limit is not None and downloads >= limit:
+            print(f"   --limit {limit} reached; {len(urls) - i + 1} page(s) left for the next run")
+            break
         stem = OUT_ROOT / local_stem(url)
         rel = rel_str(stem)
         rec = pages.get(url, {})
@@ -393,8 +432,9 @@ def fetch_source(source, manifest, force=False):
         stem.parent.mkdir(parents=True, exist_ok=True)
         html_path = stem.with_suffix(".html")
         md_path = stem.with_suffix(".md")
-        html_path.write_bytes(body)
-        md_path.write_text(extract_markdown(body), encoding="utf-8")
+        if keep_html:
+            html_path.write_bytes(body)
+        md_path.write_text(extract_markdown(body, source.get("content")), encoding="utf-8")
 
         pages[url] = {
             "source": sid,
@@ -402,11 +442,12 @@ def fetch_source(source, manifest, force=False):
             "last_modified": hdrs.get("Last-Modified"),
             "sha256": digest,
             "bytes": len(body),
-            "html": rel_str(html_path),
+            "html": rel_str(html_path) if keep_html else None,
             "md": rel_str(md_path),
             "fetched_at": now_iso(),
             "checked_at": now_iso(),
         }
+        downloads += 1
         counts["updated" if not is_new else "new"] += 1
         tag = "NEW" if is_new else "UPD"
         print(f"   [{i}/{len(urls)}] {tag} {rel} ({len(body):,} B)")
@@ -425,6 +466,8 @@ def main(argv=None):
                     help="ignore conditional caching and re-fetch every page")
     ap.add_argument("--list", action="store_true",
                     help="list configured sources and exit")
+    ap.add_argument("--limit", type=int, metavar="N",
+                    help="download at most N pages per source this run (the rest wait for the next)")
     args = ap.parse_args(argv)
 
     config = json.loads(CONFIG.read_text(encoding="utf-8"))
@@ -433,7 +476,8 @@ def main(argv=None):
 
     if args.list:
         for s in sources:
-            how = s.get("sitemap") or f"{len(s.get('urls', []))} explicit url(s)"
+            sm = s.get("sitemap")
+            how = (sm if isinstance(sm, str) else ", ".join(sm or []))                 or f"{len(s.get('urls', []))} explicit url(s)"
             print(f"{s['id']:36} {s.get('name', '')}\n{'':36} {how}")
         return 0
 
@@ -450,7 +494,7 @@ def main(argv=None):
     totals = {"new": 0, "updated": 0, "unchanged": 0, "error": 0}
     try:
         for s in selected:
-            c = fetch_source(s, manifest, force=args.force)
+            c = fetch_source(s, manifest, force=args.force, limit=args.limit)
             for k in totals:
                 totals[k] += c[k]
             save_manifest(manifest)  # persist after each source, so a crash keeps progress

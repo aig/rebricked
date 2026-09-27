@@ -1,0 +1,45 @@
+id: customerlake
+name: CustomerLake
+aliases:
+  - Databricks CustomerLake
+  - Agentic CDP
+  - CustomerLake CDP
+category: AI / ML
+what:
+  note: An agentic Customer Data Platform (CDP) embedded natively in Databricks that brings Customer 360, identity resolution, audience building, campaign automation, activation and personalization onto the governed lakehouse, driven by Profile Agents and Campaign Agents.
+  link: https://www.databricks.com/blog/introducing-customerlake-agentic-cdp#:~:text=brings%20core%20CDP%20capabilities%2C%20including%20Customer%20360%2C%20identity%20resolution
+fact:
+  - note: The launch pitch promised the perfect customer experience, delivered a billion times a day.
+    link: https://www.databricks.com/blog/introducing-customerlake-agentic-cdp#:~:text=a%20billion%20times%20a%20day
+  - note: It retires the one-off campaign in favour of infinity campaigns - continuous, agent-driven engagement loops that adapt as customers change instead of being rebuilt by hand.
+    link: https://www.databricks.com/blog/introducing-customerlake-agentic-cdp#:~:text=continuous%2C%20agent%2Ddriven%20engagement%20loops
+  - note: Its identity resolution is called Agentic Identity Resolution, or AIR, and mixes deterministic, probabilistic and agentic workflows to decide which records are the same customer.
+    link: https://www.databricks.com/blog/introducing-customerlake-agentic-cdp#:~:text=combines%20deterministic%2C%20probabilistic%2C%20and%20agentic%20workflows
+status:
+  value: active
+  link: https://www.databricks.com/blog/introducing-customerlake-agentic-cdp#:~:text=CustomerLake%20is%20now%20available%20in%20Private%20Preview
+  date: '2026-09-27'
+releases:
+  - type: private-preview
+    date: 2026-06
+    link: https://www.databricks.com/blog/introducing-customerlake-agentic-cdp#:~:text=CustomerLake%20is%20now%20available%20in%20Private%20Preview
+introducedAt:
+  date: 2026-06
+  link: https://www.databricks.com/blog/introducing-customerlake-agentic-cdp#:~:text=a%20new%20Agentic%20Customer%20Data%20Platform
+occasion:
+  date: 2026-06
+  link: https://www.databricks.com/blog/introducing-customerlake-agentic-cdp#:~:text=Today%20at%20Data%20%2B%20AI%20Summit
+  note: Data + AI Summit 2026
+links:
+  - url: https://www.databricks.com/product/customerlake-cdp
+    kind: official
+    label: 'Databricks product page: CustomerLake Agentic CDP'
+  - url: https://www.databricks.com/blog/what-is-an-agentic-cdp
+    kind: official
+    label: 'Databricks blog: Introducing the Agentic CDP (founders post, June 2026)'
+prediction:
+  - Genie CustomerLake
+  - CustomerLake One
+  - Lakeflow Customer
+source: https://www.databricks.com/blog/introducing-customerlake-agentic-cdp
+verified: '2026-09-27'

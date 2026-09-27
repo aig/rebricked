@@ -200,15 +200,17 @@ entries can be fact-checked and new renames spotted as release notes ship.
 | | |
 |---|---|
 | Reads | [`scripts/sources.json`](../../scripts/sources.json), `reference/manifest.json` |
-| Writes | `reference/<host>/<path>.html` and `.md`, plus the manifest - all gitignored |
+| Writes | `reference/<host>/<path>.html` and `.md` (only `.md` for a `keep_html: false` source), plus the manifest - all gitignored |
 | Needs | network access. Standard library only |
-| Flags | `--force` (ignore 304 and re-fetch), `--list` (show sources, fetch nothing) |
+| Flags | `--force` (ignore 304 and `new-only`, re-fetch everything), `--list` (show sources, fetch nothing), `--limit N` (at most N downloads per source this run) |
 | Args | zero or more source ids. Default: all |
 
 Incremental: ETag and Last-Modified per page go into the manifest and come back as
-`If-None-Match` / `If-Modified-Since`, so unchanged pages 304 and are skipped. Source ids today are
-`databricks-release-notes`, `databricks-resource-limits`, and `azure-databricks-release-notes`. Add a
-source by editing `sources.json` - no code change.
+`If-None-Match` / `If-Modified-Since`, so unchanged pages 304 and are skipped. A source with
+`refresh: "new-only"` (the blog) skips pages it already has entirely. Per-source keys (`sitemap` as
+one URL or a list, `include`/`exclude`, `urls`, `refresh`, `content`, `keep_html`) and the current
+source ids are listed in [how-to/refresh-the-reference-mirror.md](../how-to/refresh-the-reference-mirror.md#track-another-site).
+Add a source by editing `sources.json` - no code change.
 
 ## What CI runs
 

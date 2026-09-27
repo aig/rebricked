@@ -1,0 +1,54 @@
+id: databricks-document-intelligence
+name: Databricks Document Intelligence
+aliases:
+  - Document Intelligence
+  - Intelligent document processing
+  - IDP
+category: AI / ML
+what:
+  note: Databricks' umbrella name for its intelligent document processing stack - a set of research-built AI Functions (ai_parse_document, ai_extract, ai_classify, and ai_prep_search in Beta) that parse, extract, and classify PDFs, images, Word files, and slides at scale in SQL, through REST APIs, or in the no-code Agent Bricks UI.
+  link: https://www.databricks.com/product/artificial-intelligence/document-intelligence#:~:text=Document%20Intelligence%20is%20a%20set%20of%20AI%20Functions%20on%20the%20Databricks%20Data%20%2B%20AI%20Platform
+fact:
+  - note: It was born out of a benchmark embarrassment - Databricks found that even highly capable frontier agents scored below 50% accuracy on real enterprise document tasks, and concluded the bottleneck was reading, not reasoning.
+    link: https://www.databricks.com/blog/why-frontier-agents-cant-read-documents-and-how-were-fixing-it#:~:text=scored%20below%2050%25%20accuracy%20on%20document%20reasoning%20tasks
+  - note: Swapping nothing but the document layer helps - pre-processing treasury bond documents with ai_parse_document gave a 16% average gain across every agent framework Databricks tested, with the agents themselves left untouched.
+    link: https://www.databricks.com/blog/why-frontier-agents-cant-read-documents-and-how-were-fixing-it#:~:text=delivered%20a%2016%25%20average%20performance%20gain%20across%20every%20agent%20framework%20we%20tested
+  - note: Its hardest-mode extractor manages a team - ai_extract Precision Mode reasons in stages, spawns subagents to extract in parallel, and merges their results into one output.
+    link: https://www.databricks.com/blog/databricks-document-intelligence-pushing-frontier-complex-document-extraction#:~:text=spawns%20subagents%20to%20extract%20in%20parallel
+status:
+  value: active
+  link: https://docs.databricks.com/aws/en/agents/agent-bricks/intelligent-document-processing#:~:text=Databricks%20gives%20you%20three%20ways%20to%20run%20IDP
+  date: '2026-09-27'
+introducedAt:
+  date: 2026-04
+  link: https://www.databricks.com/blog/why-frontier-agents-cant-read-documents-and-how-were-fixing-it#:~:text=announce%20Document%20Intelligence
+occasion:
+  date: 2026-04
+  link: https://docs.databricks.com/aws/en/release-notes/product/2026/april#:~:text=is%20now%20generally%20available.%20This%20function%20parses%20structured%20content
+  note: Announced April 16, 2026, the same day ai_parse_document went GA
+limitations:
+  note: Its parsing step, ai_parse_document, is limited to documents of at most 500 pages and 100 MB - a longer document fails immediately unless you pass a page range that stays within the limit.
+  link: https://docs.databricks.com/aws/en/sql/language-manual/functions/ai_parse_document#:~:text=Documents%20are%20limited%20to%20a%20maximum%20of%20500%20pages
+  date: '2026-09-27'
+links:
+  - url: https://www.databricks.com/product/artificial-intelligence/document-intelligence
+    kind: official
+    label: 'Databricks product page: Document Intelligence'
+  - url: https://docs.databricks.com/aws/en/agents/agent-bricks/intelligent-document-processing
+    kind: official
+    label: 'Databricks docs: Intelligent document processing (where the docs file it)'
+  - url: https://www.databricks.com/blog/why-frontier-agents-cant-read-documents-and-how-were-fixing-it
+    kind: community
+    label: 'Databricks blog: Introducing Document Intelligence on Databricks (April 2026)'
+  - url: https://www.databricks.com/blog/pdfs-production-announcing-state-art-document-intelligence-databricks
+    kind: community
+    label: 'Databricks blog: PDFs to Production, the ai_parse_document launch (November 2025)'
+  - url: https://www.databricks.com/blog/databricks-document-intelligence-pushing-frontier-complex-document-extraction
+    kind: community
+    label: 'Databricks blog: Precision Mode in AI Extract (August 2026)'
+prediction:
+  - Genie Document Intelligence
+  - Document Bricks
+  - Lakeflow Read
+source: https://docs.databricks.com/aws/en/agents/agent-bricks/intelligent-document-processing
+verified: '2026-09-27'

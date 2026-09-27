@@ -1,0 +1,42 @@
+id: genie-app-builder
+name: Genie App Builder
+aliases:
+  - App Spaces
+  - Governed agentic app-building
+  - no-code Databricks apps
+category: Developer experience
+what:
+  note: A Databricks-native tool that builds Databricks apps from natural-language prompts, directly in the Databricks UI, inside an App Space that governs who can create apps, how they are shared, and what permissions they have.
+  link: https://docs.databricks.com/aws/en/dev-tools/databricks-apps/genie-app-builder#:~:text=building%20Databricks%20apps%20with%20natural%20language%2C%20directly%20in%20the%20Databricks%20UI
+fact:
+  - note: You never touch a framework yourself, yet there is one underneath - every app it writes is built on Databricks AppKit.
+    link: https://docs.databricks.com/aws/en/dev-tools/databricks-apps/genie-app-builder#:~:text=Genie%20App%20Builder%20builds%20apps%20with%20Databricks%20AppKit
+  - note: Deployed apps nap when nobody is looking - they scale to zero when idle, and anything kept in memory or on local disk is forgotten when they do.
+    link: https://docs.databricks.com/aws/en/dev-tools/databricks-apps/genie-app-builder#:~:text=State%20in%20memory%20or%20on%20local%20disk%20is%20lost%20when%20the%20app%20scales%20down
+  - note: The preview toggle an admin flips to turn it on does not say Genie App Builder at all - it is called Governed agentic app-building.
+    link: https://docs.databricks.com/aws/en/dev-tools/databricks-apps/genie-app-builder#:~:text=turn%20on%20Governed%20agentic%20app-building%20from%20the%20Previews%20page
+status:
+  value: active
+  link: https://docs.databricks.com/aws/en/dev-tools/databricks-apps/genie-app-builder#:~:text=This%20feature%20is%20in%20Beta
+  date: '2026-09-27'
+releases:
+  - type: beta
+    date: 2026-09
+    link: https://docs.databricks.com/aws/en/release-notes/product/2026/september#:~:text=Build%20governed%20data%20and%20AI%20apps%20without%20code
+introducedAt:
+  date: 2026-09
+  link: https://docs.databricks.com/aws/en/release-notes/product/2026/september#:~:text=Genie%20App%20Builder%20builds%20apps%20from%20natural-language%20prompts
+limitations:
+  note: Beta only in selected AWS and Azure regions, and it needs partner-powered AI features on. Apps built in App Spaces have no general public internet egress - outbound access is limited to the workspace and Databricks-managed npm/PyPI proxies, custom package repositories are not supported, and workspace Secure Egress Gateway and serverless Private Link configurations do not apply.
+  link: https://docs.databricks.com/aws/en/dev-tools/databricks-apps/genie-app-builder#:~:text=Apps%20built%20in%20App%20Spaces%20have%20no%20general%20public%20internet%20egress
+  date: '2026-09-27'
+links:
+  - url: https://docs.databricks.com/aws/en/release-notes/product/2026/september
+    kind: official
+    label: 'Databricks release notes: Build governed data and AI apps without code (Beta), September 23, 2026'
+prediction:
+  - Genie App Builder One
+  - Genie Apps
+  - Lakeflow App Designer
+source: https://docs.databricks.com/aws/en/dev-tools/databricks-apps/genie-app-builder
+verified: '2026-09-27'

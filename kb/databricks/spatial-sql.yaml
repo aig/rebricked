@@ -1,0 +1,66 @@
+id: spatial-sql
+name: Spatial SQL
+aliases:
+  - GEOMETRY type
+  - GEOGRAPHY type
+  - ST geospatial functions
+  - ST_ functions
+  - Databricks geospatial
+category: Data engineering
+what:
+  note: Native GEOMETRY and GEOGRAPHY column types plus a built-in library of ST_* SQL functions for importing, exporting, measuring, constructing, transforming, and spatially joining geospatial data directly in Databricks SQL and Databricks Runtime.
+  link: https://docs.databricks.com/aws/en/sql/language-manual/sql-ref-st-geospatial-functions#:~:text=ST%20geospatial%20functions%20operate%20on%20objects%20of%20type%20GEOGRAPHY%20and%2For%20GEOMETRY
+fact:
+  - note: 'It only graduated halfway: GEOMETRY support is generally available, while GEOGRAPHY support is still sitting in Public Preview.'
+    link: https://docs.databricks.com/aws/en/sql/language-manual/sql-ref-st-geospatial-functions#:~:text=Support%20for%20GEOGRAPHY%20values%20is%20in%20Public%20Preview
+  - note: A GEOMETRY column can pick from about 11,000 coordinate reference systems, but GEOGRAPHY is a one-planet type - the only SRID it will accept is 4326.
+    link: https://docs.databricks.com/aws/en/sql/language-manual/data-types/geography-type#:~:text=The%20only%20SRID%20value%20allowed%20for%20the%20GEOGRAPHY%20type%20is%204326
+  - note: AI/BI dashboard maps can skip the lookup tables and latitude/longitude columns entirely and draw shapes straight from a GEOMETRY or GEOGRAPHY column.
+    link: https://docs.databricks.com/aws/en/dashboards/manage/visualizations/maps#:~:text=render%20shapes%20from%20a%20GEOMETRY%20or%20GEOGRAPHY%20column
+status:
+  value: active
+  link: https://docs.databricks.com/aws/en/sql/language-manual/sql-ref-st-geospatial-functions#:~:text=Support%20for%20GEOMETRY%20values%20is%20generally%20available
+  date: '2026-09-27'
+releases:
+  - type: public-preview
+    date: 2025-09
+    link: https://www.databricks.com/blog/introducing-spatial-sql-databricks-80-functions-high-performance-geospatial-analytics#:~:text=over%2080%20Spatial%20SQL%20functions%2C%20now%20available%20for%20public%20preview
+  - type: ga
+    date: 2026-06
+    link: https://www.databricks.com/blog/geospatial-unbounded-spatial-sql-ga-aibi-maps-delta-sharing-and-iceberg-v3#:~:text=Spatial%20SQL%20is%20now%20Generally%20Available
+introducedAt:
+  date: 2025-08
+  link: https://docs.databricks.com/aws/en/release-notes/runtime/17.1#:~:text=You%20can%20now%20store%20geospatial%20data%20in%20built%2Din%20GEOMETRY%20and%20GEOGRAPHY%20columns%20for%20improved%20performance%20of%20spatial%20queries
+occasion:
+  date: 2026-06
+  link: https://www.databricks.com/blog/geospatial-unbounded-spatial-sql-ga-aibi-maps-delta-sharing-and-iceberg-v3#:~:text=The%20best%20Data%20Where%2Dhouse%20is%20on%20Databricks%20with%20full%20geospatial%20support
+  note: GA announced June 11, 2026
+limitations:
+  note: Needs Databricks SQL or Databricks Runtime 17.1 and above. GEOMETRY and GEOGRAPHY columns can't be dimensions in metric views or Lakeflow pipelines materialized views, since geospatial data has no GROUP BY support (use them as measures instead). A GEOMETRY(ANY) or GEOGRAPHY(ANY) column, which allows a different SRID per row, can't be persisted, and GEOGRAPHY only accepts SRID 4326. GEOGRAPHY support is still in Public Preview.
+  link: https://docs.databricks.com/aws/en/sql/language-manual/data-types/geometry-type#:~:text=GEOMETRY%20columns%20are%20not%20supported%20as%20dimensions%20in%20metric%20views%20or%20Lakeflow%20pipelines%20materialized%20views
+  date: '2026-09-27'
+links:
+  - url: https://docs.databricks.com/aws/en/sql/language-manual/data-types/geometry-type
+    kind: official
+    label: 'Databricks docs: GEOMETRY type'
+  - url: https://docs.databricks.com/aws/en/sql/language-manual/data-types/geography-type
+    kind: official
+    label: 'Databricks docs: GEOGRAPHY type'
+  - url: https://docs.databricks.com/aws/en/release-notes/runtime/17.1
+    kind: official
+    label: 'Databricks Runtime 17.1 release notes: GEOMETRY and GEOGRAPHY data types (August 2025)'
+  - url: https://docs.databricks.com/aws/en/sql/language-manual/sql-ref-h3-geospatial-functions
+    kind: official
+    label: 'Databricks docs: H3 geospatial functions (the older, grid-index approach)'
+  - url: https://www.databricks.com/blog/introducing-spatial-sql-databricks-80-functions-high-performance-geospatial-analytics
+    kind: community
+    label: 'Databricks Blog: Introducing Spatial SQL (Public Preview, September 2025)'
+  - url: https://www.databricks.com/blog/geospatial-unbounded-spatial-sql-ga-aibi-maps-delta-sharing-and-iceberg-v3
+    kind: community
+    label: 'Databricks Blog: Spatial SQL GA (June 2026)'
+prediction:
+  - Unity Spatial
+  - Genie Where
+  - Lakehouse//GEO
+source: https://docs.databricks.com/aws/en/sql/language-manual/sql-ref-st-geospatial-functions
+verified: '2026-09-27'

@@ -16,6 +16,7 @@ python scripts/fetch_reference.py databricks-release-notes   # one source by id
 python scripts/fetch_reference.py databricks-resource-limits # the numeric limits page
 python scripts/fetch_reference.py --force                    # ignore 304, re-fetch everything
 python scripts/fetch_reference.py --list                     # show sources, fetch nothing
+python scripts/fetch_reference.py databricks-blog --limit 500 # at most 500 downloads this run
 ```
 
 Standard library only - no pip install needed.
@@ -43,11 +44,25 @@ things actually download: new pages (a fresh month in the sitemap) and changed p
 month gaining entries). This is why the routine cost of running it is close to zero, and why
 `--force` exists for when you suspect the manifest is lying.
 
+A source marked `"refresh": "new-only"` skips even the conditional request for pages it already
+has, and downloads only URLs new to its sitemap. That is for archives whose pages don't change
+once published: the blog has about 3,400 posts, and asking about each of them on every run would
+make a routine refresh take the better part of an hour for nothing. `--force` still re-fetches
+them all. `--limit N` caps downloads per source per run, which spreads a large first fetch over
+several runs; progress is saved, so the next run picks up where the last stopped.
+
 ## Track another site
 
 Sources are declared in [`scripts/sources.json`](../../scripts/sources.json) - **adding one needs no
-code change**. Each source discovers URLs either from a `sitemap` (filtered by `include` /
-`exclude` regexes over the `<loc>` entries) or from an explicit `urls` list.
+code change**. Each source discovers URLs either from a `sitemap` (one URL or a list, filtered by
+`include` / `exclude` regexes over the `<loc>` entries) or from an explicit `urls` list. Optional
+keys:
+
+| key | What it does |
+|---|---|
+| `refresh: "new-only"` | Download only pages not yet in the manifest (see above) |
+| `content: { start, end }` | Literal HTML markers bounding the page body, for sites with no `<article>` or `<main>`. A page without the start marker falls back to the normal extraction |
+| `keep_html: false` | Write only the `.md`, not the raw HTML |
 
 Current source ids:
 
@@ -59,6 +74,13 @@ Current source ids:
 | `databricks-unity-gateway-release-notes` | The Unity Gateway release notes page |
 | `databricks-resource-limits` | The Databricks resource limits page |
 | `azure-databricks-release-notes` | Azure Databricks release notes on Microsoft Learn |
+| `databricks-blog` | Every English post on the Databricks blog, current and the pre-2023 dated archive. Markdown only, new posts only |
+
+**The blog is mirrored for launch posts.** A new name is often said out loud in a blog post a week
+or more before the docs catch up, and the Summit recap posts back most `occasion` fields. Its pages
+have no `<article>` or `<main>`, so the source cuts each post out between its header and the
+newsletter sign-up. If Databricks redesigns the blog, those markers are the thing to update: posts
+will start coming out as empty `.md` files.
 
 **The AI/BI notes are separate for a reason.** The AI/BI and Genie One product lines publish their
 own release notes, and Genie naming and preview-gate changes land there *first* - sometimes only

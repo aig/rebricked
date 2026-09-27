@@ -11,6 +11,73 @@ recorded, and a made-up reason is worse than none.
 
 ## 2026-09-27
 
+### Added
+- **Ten new cards for 2026 launches that only the blog had announced: Lakewatch, CustomerLake,
+  Genie ZeroOps, Databricks Document Intelligence, Lakebase Search, Spatial SQL, Real-Time Mode,
+  Default Warehouse, the Databricks Connector for Google Sheets, and Query tags.**
+
+  **Why:** the first full blog mirror made it possible to compare 2026's product and announcement
+  posts with the cards, and it showed a blind spot. Eight of these names never appear in the
+  release-notes mirror, so every earlier sweep of the release notes had missed them by design:
+  Lakewatch, CustomerLake, Genie ZeroOps and Document Intelligence were launched in blog posts and
+  at Data + AI Summit, and Spatial SQL and Real-Time Mode reached GA in a blog post with no release
+  note at all. The other four were in the release notes but under wording no earlier sweep matched.
+  A reader searching for any of these names found nothing.
+
+  **What:** ten `active` feature cards, each wired into the rail section where the product lives
+  (Agents, Compute, Catalog, Jobs & Pipelines, SQL Warehouses, SQL Editor). Nine are backed by
+  docs.databricks.com. Lakewatch and CustomerLake have no docs page yet, so they cite the official
+  product page and launch blogs, and both are marked Private Preview only as far as the last
+  official statement goes. Genie ZeroOps follows its docs where they contradict the launch blog
+  (no sandbox-validated fixes, no model monitoring yet). Lakebase Search went GA on September 18,
+  so it carries both stages. Document Intelligence is an umbrella brand over `ai_parse_document`,
+  `ai_extract` and `ai_classify`, not a rename, so no chain was changed. Spatial SQL and
+  Real-Time Mode cite the official GA blogs for their GA stage because no doc or release note
+  dates it. "Unity Catalog Pages" turned out to be the existing `pages` card under a marketing
+  name: it gains that alias and its September launch blog as the occasion. Left out on purpose:
+  sub-features of existing cards (Smart Routing, Budgets, Cross-Engine ABAC and the like),
+  acquisitions, programs and certifications, and a Mosaic deprecation that no official doc states.
+  `check_anchors.py` passes on all eleven touched cards (152 URLs).
+
+- **The reference mirror now fetches the Databricks blog: every English post, new posts only on
+  each run.**
+
+  **Why:** launch posts are often the first place a new name is said out loud, a week or more
+  before the docs catch up, and the Summit recap posts back most `occasion` fields. Until now each
+  of them was looked up live one at a time. The blog did not fit the fetcher as it was: its two
+  sitemaps list about 3,400 posts that never change once published, so re-asking about each one on
+  every run would have cost most of an hour. Its pages also have no `<article>` or `<main>`, so the
+  extractor would have written an empty file for every post.
+
+  **What:** a new `databricks-blog` source in `sources.json`, and three generic source options in
+  `fetch_reference.py` that it uses: `sitemap` may now be a list, `refresh: "new-only"` downloads
+  only URLs not yet in the manifest, and `content: { start, end }` gives literal HTML markers that
+  bound the page body. A fourth, `keep_html: false`, writes only the Markdown, because each raw blog
+  page is about 700 KB of scripts. A new `--limit N` flag caps downloads per run so the first fetch
+  can be spread out. Posts land at `reference/www.databricks.com/blog/<slug>.md`. The docs pages for
+  the mirror describe the new keys and flag.
+
+- **Refreshed the release-notes mirror, added Genie App Builder, and moved the Genie One MCP
+  server card to GA with its old address on a deprecation clock.**
+
+  **Why:** the mirror was last read on September 19, so the platform notes for September 19 to 29
+  and the September 24 AI/BI notes had never been compared with the cards. Refetching all 216
+  pages surfaced one new product and one card that had gone wrong. Genie App Builder (Beta,
+  September 23) builds governed Databricks apps from natural-language prompts and had no card. The
+  Genie One MCP server went GA on September 25 as the MCP Service `system.ai.genie_one_mcp`, and
+  its Beta endpoint `/api/2.0/mcp/genie` is deprecated and will be sunset on October 31, 2026.
+  The card still called it a Beta managed MCP server, still told readers that service principals
+  were unsupported, and one fact described the address that is now going away as its home. The
+  new models, connectors, the DeepSeek V4 Pro retirement, and the other GA notes were read and
+  left out: they are rolling lists or sub-features of cards that already exist.
+
+  **What:** a new `genie-app-builder` card (`active`, Beta from September 2026, Developer
+  experience, wired into the Apps rail section), with the App Space governance model, the egress
+  limits, and the preview toggle's own name, Governed agentic app-building, as an alias.
+  `genie-one-mcp-server` gains a `ga` stage for 2026-09, the `system.ai.genie_one_mcp` alias, a
+  fact and a limitation for the October 31 sunset, and a rewritten limitations note that drops the
+  stale preview and service-principal claims. `check_anchors.py` passes on both cards.
+
 ### Changed
 - **Analytics moved from Umami Cloud to a self-hosted GoatCounter at `s.rebricked.org`.**
 

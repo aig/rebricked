@@ -1,0 +1,51 @@
+id: default-warehouse
+name: Default Warehouse
+aliases:
+  - Default SQL warehouse
+  - Default SQL warehouse settings
+  - User-level default warehouse
+category: Compute / BI
+what:
+  note: A Databricks SQL setting that lets a workspace admin pick the SQL warehouse automatically selected in the SQL editor, AI/BI dashboards, Genie, Alerts and Catalog Explorer, which individual users can override with their own user-level default.
+  link: https://docs.databricks.com/aws/en/admin/sql/#:~:text=The%20default%20SQL%20warehouse%20in%20a%20workspace%20is%20automatically%20selected%20in%20most%20SQL%20authoring%20surfaces
+fact:
+  - note: Before it existed, the warehouse picker fell back to whatever you used last or plain alphabetical order - so a warehouse's name could decide which compute your ad hoc query woke up.
+    link: https://www.databricks.com/blog/protect-performance-and-reduce-surprise-costs-default-warehouse#:~:text=falls%20back%20to%20%22Last%20Selected%22%20behavior%20or%20alphabetical%20ordering
+  - note: Opting out is the default - leave the setting on Last selected and the workspace behaves exactly as it did before.
+    link: https://docs.databricks.com/aws/en/admin/sql/#:~:text=To%20keep%20the%20current%20behavior%2C%20leave%20the%20setting%20as%20Last%20selected
+  - note: Where admins pointed the default at a smaller warehouse, the share of Catalog Explorer queries landing on small warehouses rose from 77% to 96%.
+    link: https://www.databricks.com/blog/protect-performance-and-reduce-surprise-costs-default-warehouse#:~:text=increased%20from%2077%25%20to%2096%25
+status:
+  value: active
+  link: https://docs.databricks.com/aws/en/admin/sql/#:~:text=The%20default%20SQL%20warehouse%20in%20a%20workspace%20is%20automatically%20selected%20in%20most%20SQL%20authoring%20surfaces
+  date: '2026-09-27'
+releases:
+  - type: beta
+    date: 2025-08
+    link: https://docs.databricks.com/aws/en/sql/release-notes/2025#:~:text=Set%20a%20default%20warehouse%20that%20will%20be%20automatically%20selected%20in%20the%20compute%20selector
+  - type: ga
+    date: 2026-02
+    link: https://docs.databricks.com/aws/en/release-notes/product/2026/february#:~:text=Default%20SQL%20warehouse%20settings%20are%20now%20generally%20available
+introducedAt:
+  date: 2025-08
+  link: https://docs.databricks.com/aws/en/sql/release-notes/2025#:~:text=Set%20a%20default%20warehouse%20that%20will%20be%20automatically%20selected%20in%20the%20compute%20selector
+occasion:
+  date: 2026-03
+  link: https://www.databricks.com/blog/protect-performance-and-reduce-surprise-costs-default-warehouse#:~:text=Default%20Warehouse%2C%20now%20generally%20available%20in%20Databricks%20SQL
+  note: Launch blog post (General Availability)
+links:
+  - url: https://docs.databricks.com/aws/en/compute/sql-warehouse/create#user-default
+    kind: official
+    label: 'Databricks docs: Set a user-level default warehouse'
+  - url: https://docs.databricks.com/aws/en/release-notes/product/2026/february
+    kind: official
+    label: 'Databricks release notes: Default SQL warehouse settings (General Availability), February 5, 2026'
+  - url: https://www.databricks.com/blog/protect-performance-and-reduce-surprise-costs-default-warehouse
+    kind: official
+    label: 'Databricks blog: Protect Performance and Reduce Surprise Costs with Default Warehouse (March 27, 2026)'
+prediction:
+  - Default Warehouse One
+  - Genie Warehouse Picker
+  - Serverless Default Default Warehouse
+source: https://docs.databricks.com/aws/en/admin/sql/
+verified: '2026-09-27'
