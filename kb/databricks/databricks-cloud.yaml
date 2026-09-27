@@ -1,0 +1,28 @@
+id: databricks-cloud
+name: Databricks Cloud
+category: Compute / BI
+what:
+  note: The original name of Databricks' hosted, zero-management Apache Spark platform, unveiled at Spark Summit 2014 with notebooks and cluster management built in.
+  link: https://www.databricks.com/blog/2014/06/30/databricks-unveils-spark-based-cloud-platform.html#:~:text=announced%20today%20the%20launch%20of%20Databricks%20Cloud
+fact:
+  - note: Launched on June 30, 2014 in the same press release as a $33 million Series B, so the product and the money to build it arrived on the same day.
+    link: https://www.databricks.com/blog/2014/06/30/databricks-unveils-spark-based-cloud-platform.html#:~:text=close%20of%20%2433%20million%20in%20series%20B%20funding
+  - note: 'Its July 2014 intro post still lives at /blog/2014/07/14/databricks-cloud-making-big-data-easy, even though the post''s own title now reads "Databricks: Making Big Data Easy": the URL remembers what the headline forgot.'
+    link: https://www.databricks.com/blog/2014/07/14/databricks-cloud-making-big-data-easy.html#:~:text=Databricks%3A%20Making%20Big%20Data%20Easy
+status:
+  value: renamed
+  link: https://www.databricks.com/company/newsroom/press-releases/databricks-announces-general-availability-cloud-platform-dramatically-simplifies-big-data-processing#:~:text=formerly%20known%20as%20Databricks%20Cloud
+  date: '2026-09-27'
+from:
+  date: 2014-06
+  link: https://www.databricks.com/blog/2014/06/30/databricks-unveils-spark-based-cloud-platform.html#:~:text=announced%20today%20the%20launch%20of%20Databricks%20Cloud
+to:
+  date: 2015-06
+  link: https://www.databricks.com/company/newsroom/press-releases/databricks-announces-general-availability-cloud-platform-dramatically-simplifies-big-data-processing#:~:text=formerly%20known%20as%20Databricks%20Cloud
+successorId: databricks
+occasion:
+  date: 2014-06
+  link: https://www.databricks.com/blog/2014/06/30/databricks-unveils-spark-based-cloud-platform.html#:~:text=announced%20today%20the%20launch%20of%20Databricks%20Cloud
+  note: Spark Summit 2014
+source: https://www.databricks.com/blog/2014/06/30/databricks-unveils-spark-based-cloud-platform.html
+verified: '2026-09-27'

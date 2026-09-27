@@ -11,8 +11,8 @@ what:
 fact:
   - note: 'It works by not doing the work: instead of recording change events on every write it derives them when someone asks, which is how the docs get to promise better write performance and lower storage costs in the same sentence.'
     link: https://docs.databricks.com/aws/en/tables/features/change-data-feed#:~:text=improves%20write%20performance%20and%20reduces%20storage%20costs
-  - note: The reading side did not move an inch - the same table_changes() function and the same batch, Structured Streaming, and Delta Lake Sharing paths, only the answer now comes from row tracking instead of stored change files.
-    link: https://docs.databricks.com/aws/en/tables/features/change-data-feed#:~:text=works%20with%20batch%20queries%2C%20Structured%20Streaming%2C%20and%20Databricks%2Dto%2DDatabricks%20Delta%20Lake%20Sharing
+  - note: The reading side did not move an inch - the same table_changes() function and the same batch, Structured Streaming, and Databricks-to-Databricks OpenSharing paths, only the answer now comes from row tracking instead of stored change files.
+    link: https://docs.databricks.com/aws/en/tables/features/change-data-feed#:~:text=works%20with%20batch%20queries%2C%20Structured%20Streaming%2C%20and%20Databricks%2Dto%2DDatabricks%20OpenSharing
   - note: It reaches Iceberg v3 tables, which the Iceberg spec itself never provided for - so only Databricks readers can see those changes and an external Iceberg client gets nothing.
     link: https://docs.databricks.com/aws/en/tables/features/change-data-feed#:~:text=but%20external%20Iceberg%20readers%20cannot
 status:
@@ -42,4 +42,4 @@ prediction:
   - Lakeflow Change Data Feed
   - Unity Catalog Change Feed
 source: https://docs.databricks.com/aws/en/tables/features/change-data-feed
-verified: '2026-09-10'
+verified: '2026-09-27'

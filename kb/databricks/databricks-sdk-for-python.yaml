@@ -1,0 +1,41 @@
+id: databricks-sdk-for-python
+name: Databricks SDK for Python
+aliases:
+  - databricks-sdk
+  - Python SDK
+  - databricks.sdk
+category: Developer experience
+what:
+  note: The official Python library for automating Databricks accounts, workspaces, and resources from code, installed as the databricks-sdk package and built on Databricks unified authentication.
+  link: https://docs.databricks.com/aws/en/release-notes/product/2023/june#:~:text=The%20Databricks%20SDK%20for%20Python%20is%20now%20available%20as%20a%20Beta
+fact:
+  - note: Its docs call it Beta and okay to use in production in the same sentence, and it has carried that label since June 2023.
+    link: https://docs.databricks.com/aws/en/dev-tools/sdk-python#:~:text=The%20Databricks%20SDK%20for%20Python%20is%20in%20Beta%20and%20is%20okay%20to%20use%20in%20production
+  - note: It can bring dbutils to your laptop, but only part of it - from a local machine you get just the fs, secrets, widgets, and jobs command groups.
+    link: https://docs.databricks.com/aws/en/dev-tools/sdk-python#:~:text=Databricks%20Utilities%20has%20access%20only%20to%20the
+  - note: Beta meant it - version 0.7.0 alone shipped a breaking change for the files API as well as 17 additional breaking changes.
+    link: https://docs.databricks.com/aws/en/release-notes/product/2023/august#:~:text=introduces%20a%20breaking%20change%20for%20the%20files%20API%20as%20well%20as%2017%20additional%20breaking%20changes
+status:
+  value: active
+  link: https://docs.databricks.com/aws/en/dev-tools/sdk-python#:~:text=In%20this%20article%2C%20you%20learn%20how%20to%20automate%20Databricks%20operations%20and%20accelerate%20development%20with%20the%20Databricks%20SDK%20for%20Python
+  date: '2026-09-27'
+releases:
+  - type: beta
+    date: 2023-06
+    link: https://docs.databricks.com/aws/en/release-notes/product/2023/june#:~:text=The%20Databricks%20SDK%20for%20Python%20is%20now%20available%20as%20a%20Beta
+introducedAt:
+  date: 2023-06
+  link: https://docs.databricks.com/aws/en/release-notes/product/2023/june#:~:text=The%20Databricks%20SDK%20for%20Python%20is%20now%20available%20as%20a%20Beta
+links:
+  - url: https://github.com/databricks/databricks-sdk-py
+    kind: official
+    label: 'GitHub: databricks/databricks-sdk-py'
+  - url: https://pypi.org/project/databricks-sdk/
+    kind: internet
+    label: 'PyPI: databricks-sdk'
+prediction:
+  - Databricks SDK for Python One
+  - Genie SDK
+  - Unity SDK for Python
+source: https://docs.databricks.com/aws/en/dev-tools/sdk-python
+verified: '2026-09-27'

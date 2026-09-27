@@ -1,0 +1,35 @@
+id: databricks-data-ai-platform
+name: Databricks Data + AI Platform
+aliases:
+  - Data + AI Platform
+  - Databricks Data and AI Platform
+  - Data and AI Platform
+category: Compute / BI
+what:
+  note: Databricks' current name for its unified, open platform for building, deploying, sharing and maintaining enterprise data, analytics and AI solutions at scale, integrated with your cloud storage and security.
+  link: https://docs.databricks.com/aws/en/introduction/#:~:text=The%20Databricks%20Data%20%2B%20AI%20Platform%20integrates%20with%20cloud%20storage
+fact:
+  - note: It ships with its own Postgres-based OLTP database, Lakebase, so the analytics platform now also keeps the transactional books.
+    link: https://docs.databricks.com/aws/en/introduction/#:~:text=Lakebase%20is%20an%20online%20transactional%20processing
+  - note: Databricks press boilerplate says over 60% of the Fortune 500 rely on it, which is a lot of companies updating their slide decks.
+    link: https://www.databricks.com/company/newsroom/press-releases/databricks-unveils-data-intelligence-marketing#:~:text=over%2060%25%20of%20the%20Fortune%20500
+status:
+  value: active
+  link: https://docs.databricks.com/aws/en/introduction/#:~:text=The%20Databricks%20Data%20%2B%20AI%20Platform%20integrates%20with%20cloud%20storage
+  date: '2026-09-27'
+from:
+  date: '2026'
+  link: https://docs.databricks.com/aws/en/introduction/#:~:text=The%20Databricks%20Data%20%2B%20AI%20Platform%20integrates%20with%20cloud%20storage
+links:
+  - url: https://learn.microsoft.com/en-us/azure/databricks/introduction/
+    kind: official
+    label: 'Microsoft Learn: What is Azure Databricks?'
+  - url: https://www.databricks.com/product/platform
+    kind: official
+    label: 'Databricks: The Databricks Data and AI Platform'
+prediction:
+  - Databricks Agent Platform
+  - Databricks Data + AI + Agents Platform
+  - Databricks Intelligence One
+source: https://docs.databricks.com/aws/en/introduction/
+verified: '2026-09-27'

@@ -1,0 +1,56 @@
+id: vnet-injection
+name: VNet injection
+aliases:
+  - Bring Your Own VNET
+  - BYO VNet
+  - VNet-injected workspace
+  - Deploy Azure Databricks in your Azure virtual network
+category: Compute / BI
+what:
+  note: Deploying an Azure Databricks workspace's classic compute plane into an Azure virtual network you own, for network customization, private connectivity to Azure services and on-premises sources, custom DNS, and traffic inspection.
+  link: https://learn.microsoft.com/en-us/azure/databricks/security/network/classic/vnet-inject#:~:text=Deploy%20Azure%20Databricks%20in%20your%20Azure%20VNet%20to%20enable%20network%20customization
+fact:
+  - note: 'The "public subnet" is a nickname, not a promise: the host subnet is sometimes called the public subnet, yet with secure cluster connectivity both of the workspace subnets use only private IPs.'
+    link: https://learn.microsoft.com/en-us/azure/databricks/security/network/classic/vnet-inject#:~:text=A%20host%20subnet%20%28sometimes%20called%20the%20public%20subnet%29
+  - note: Choose your subnet sizes like a tattoo - the docs state flatly that subnet CIDR ranges cannot be changed after deployment.
+    link: https://learn.microsoft.com/en-us/azure/databricks/security/network/classic/vnet-inject#:~:text=Subnet%20CIDR%20ranges%20cannot%20be%20changed%20after%20deployment
+  - note: It took seven years to get a way in after the fact - only in March 2026 did migrating an existing workspace from a Databricks-managed VNet into your own VNet become generally available.
+    link: https://learn.microsoft.com/en-us/azure/databricks/release-notes/product/2026/march#:~:text=Update%20workspace%20network%20configuration%20to%20VNet%20injection%20is%20now%20GA
+status:
+  value: active
+  link: https://learn.microsoft.com/en-us/azure/databricks/security/network/classic/vnet-inject#:~:text=Deploy%20Azure%20Databricks%20in%20your%20Azure%20VNet%20to%20enable%20network%20customization
+  date: '2026-09-27'
+releases:
+  - type: public-preview
+    date: 2019-01
+    link: https://learn.microsoft.com/en-us/azure/databricks/release-notes/product/2019/january#:~:text=Deploy%20Azure%20Databricks%20in%20your%20own%20Azure%20virtual%20network%20%28VNet%20injection%29
+  - type: ga
+    date: 2019-10
+    link: https://learn.microsoft.com/en-us/azure/databricks/release-notes/product/2019/october#:~:text=also%20known%20as%20VNet%20injection%2C%20is%20GA
+introducedAt:
+  date: 2019-01
+  link: https://learn.microsoft.com/en-us/azure/databricks/release-notes/product/2019/january#:~:text=Deploy%20Azure%20Databricks%20in%20your%20own%20Azure%20virtual%20network%20%28VNet%20injection%29
+occasion:
+  date: 2019-03
+  link: https://www.databricks.com/blog/2019/03/20/azure-databricks-bring-your-own-vnet.html#:~:text=Bring%20Your%20Own%20VNET
+  note: Azure Databricks - Bring Your Own VNET blog post
+limitations:
+  note: The VNet must be in the same region and subscription as the workspace, with an address space between /16 and /24, and two dedicated subnets (container and host) of at least /26 recommended. Subnets cannot be shared across workspaces or host other Azure resources, and subnet CIDR ranges cannot be changed after deployment. After March 31, 2026, new VNets require an explicit outbound connectivity method (Databricks recommends a NAT gateway).
+  link: https://learn.microsoft.com/en-us/azure/databricks/security/network/classic/vnet-inject#:~:text=Subnet%20CIDR%20ranges%20cannot%20be%20changed%20after%20deployment
+  date: '2026-09-27'
+links:
+  - url: https://learn.microsoft.com/en-us/azure/databricks/security/network/classic/update-workspaces
+    kind: official
+    label: 'Microsoft Learn: Update workspace network configuration (migrate to VNet injection)'
+  - url: https://learn.microsoft.com/en-us/azure/databricks/release-notes/product/2019/october
+    kind: official
+    label: 'Azure Databricks release notes: VNet injection is GA (October 9, 2019)'
+  - url: https://docs.databricks.com/aws/en/security/network/classic/customer-managed-vpc
+    kind: official
+    label: 'Databricks docs: Customer-managed VPC, the AWS counterpart'
+prediction:
+  - Lakehouse VNet
+  - Bring Your Own Compute Plane
+  - Unity VNet
+source: https://learn.microsoft.com/en-us/azure/databricks/security/network/classic/vnet-inject
+verified: '2026-09-27'

@@ -1,0 +1,44 @@
+id: mlflow-ai-gateway
+name: MLflow AI Gateway
+aliases:
+  - AI Gateway routes
+  - mlflow.gateway
+category: AI / ML
+what:
+  note: A 2023 enterprise API gateway for large language models that let an organization centralize governance, credential management, and rate limits for its model APIs - SaaS LLMs and Databricks Model Serving endpoints alike - behind named Routes.
+  link: https://www.databricks.com/blog/using-ai-gateway-llama2-rag-apps#:~:text=The%20recently%20announced%20MLflow%20AI%20Gateway%20allows%20organizations%20to%20centralize%20governance%2C%20credential%20management%2C%20and%20rate%20limits
+fact:
+  - note: Everything hung off an object called a Route - you handed out Routes instead of API keys, so teams could call an LLM without ever seeing its credentials.
+    link: https://www.databricks.com/blog/using-ai-gateway-llama2-rag-apps#:~:text=via%20an%20object%20called%20a%20Route
+  - note: MLflow 2.7's new prompt engineering UI was built on top of it, working with any MLflow AI Gateway route.
+    link: https://www.databricks.com/blog/mlflow-2-7-llmops-prompt-eng-ai-gateway-updates#:~:text=works%20with%20any%20MLflow%20AI%20Gateway%20route
+  - note: Not to be confused with the Mosaic AI Gateway that arrived in September 2024 - a different product with a very similar name, to which this gateway's own 2023 announcement URL, /blog/announcing-mlflow-ai-gateway, now redirects.
+    link: https://www.databricks.com/blog/announcing-mlflow-ai-gateway
+status:
+  value: renamed
+  link: https://www.databricks.com/blog/build-genai-apps-faster-new-foundation-model-capabilities#:~:text=External%20Models%20%28formerly%20AI%20Gateway%29
+  date: '2026-09-27'
+from:
+  date: '2023'
+  link: https://www.databricks.com/blog/using-ai-gateway-llama2-rag-apps#:~:text=We%20recently%20announced%20the%20MLflow%20AI%20Gateway
+to:
+  date: 2023-12
+  link: https://www.databricks.com/blog/build-genai-apps-faster-new-foundation-model-capabilities#:~:text=External%20Models%20%28formerly%20AI%20Gateway%29
+successorId: external-models
+links:
+  - url: https://www.databricks.com/blog/using-ai-gateway-llama2-rag-apps
+    kind: official
+    label: 'Databricks Blog: Using MLflow AI Gateway and Llama 2 to Build Generative AI Apps (August 24, 2023)'
+  - url: https://www.databricks.com/blog/build-genai-apps-faster-new-foundation-model-capabilities
+    kind: official
+    label: 'Databricks Blog: Build GenAI Apps Faster with New Foundation Model Capabilities - "External Models (formerly AI Gateway)" (December 11, 2023)'
+  - url: https://mlflow.org/docs/2.9.0/llms/gateway/migration.html
+    kind: community
+    label: 'MLflow 2.9.0 docs: MLflow AI Gateway Migration Guide - the gateway is deprecated, Routes become endpoints'
+  - url: https://docs.databricks.com/en/machine-learning/ai-gateway/index.html
+    kind: official
+    label: 'Databricks docs: the old AI Gateway docs address, which now redirects to the External models page'
+prediction:
+  - MLflow AI Gateway Gateway
+source: https://www.databricks.com/blog/using-ai-gateway-llama2-rag-apps
+verified: '2026-09-27'

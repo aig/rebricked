@@ -15,7 +15,7 @@ fact:
 status:
   value: active
   link: https://docs.databricks.com/aws/en/dev-tools/databricks-apps/#:~:text=Databricks%20Apps%20enables%20developers%20to%20build%20and%20deploy%20secure%20data%20and%20AI%20applications
-  date: '2026-09-19'
+  date: '2026-09-27'
 releases:
   - type: public-preview
     date: 2024-10
@@ -23,7 +23,7 @@ releases:
   - type: ga
     date: 2025-05
     link: https://docs.databricks.com/aws/en/release-notes/product/2025/may#:~:text=Databricks%20Apps%20is%20now%20generally%20available%20%28GA%29.
-introducedAt:
+from:
   date: 2024-10
   link: https://docs.databricks.com/aws/en/release-notes/product/2024/october#:~:text=with%20Databricks%20Apps%20%28Public%20Preview%29
 occasion:
@@ -52,4 +52,4 @@ prediction:
   - Lakeflow Apps
   - Databricks Apps One
 source: https://docs.databricks.com/aws/en/dev-tools/databricks-apps/
-verified: '2026-09-19'
+verified: '2026-09-27'

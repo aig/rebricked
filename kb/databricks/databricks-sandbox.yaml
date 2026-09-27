@@ -5,19 +5,19 @@ aliases:
   - databricks sandbox
 category: Compute / BI
 what:
-  note: A serverless compute environment for humans and agents, reachable over SSH, where a coding agent can run and throw away environments inside the workspace governance boundary.
-  link: https://docs.databricks.com/aws/en/compute/serverless/sandbox#:~:text=Databricks%20Sandbox%20is%20a%20compute%20environment%20for%20humans%20and%20agents%2C%20accessible%20over%20SSH
+  note: An isolated, on-demand serverless environment for running untrusted code - an agent harness, AI-written code, background workers, or an IDE/SSH session - driven through the Databricks REST API, SDK, or CLI, with a persistent home directory.
+  link: https://docs.databricks.com/aws/en/compute/serverless/sandbox#:~:text=Databricks%20Sandbox%20lets%20you%20run%20untrusted%20code%20in%20an%20isolated%20environment
 fact:
   - note: The home directory is /home/sandbox-agent, which is a fairly direct statement about who the docs think the primary user is.
     link: https://docs.databricks.com/aws/en/compute/serverless/sandbox#:~:text=Data%20in%20your%20home%20directory%20%28%2Fhome%2Fsandbox-agent%29%20persists%20for%20the%20lifetime%20of%20your%20Databricks%20Sandbox
   - note: The first time you SSH in, Databricks quietly rewires coding harnesses such as Claude and Codex to send their inference through AI Gateway, so the agent is governed before it types anything.
     link: https://docs.databricks.com/aws/en/compute/serverless/sandbox#:~:text=automatically%20configures%20common%20coding%20harnesses%20such%20as%20Claude%20and%20Codex%20to%20use%20AI%20Gateway
-  - note: Many concurrent SSH sessions can share one sandbox and one filesystem, so an agent can be editing files in one session while you tail its logs from another.
-    link: https://docs.databricks.com/aws/en/compute/serverless/sandbox#:~:text=You%20can%20start%20many%20concurrent%20SSH%20sessions%20to%20one%20Databricks%20Sandbox
+  - note: Stopping a sandbox does not stop the storage bill - the home directory is billed for as long as the sandbox exists, so the only way to stop paying for storage is to delete it.
+    link: https://docs.databricks.com/aws/en/compute/serverless/sandbox#:~:text=To%20stop%20paying%20for%20storage%2C%20you%20must%20delete%20the%20sandbox
 status:
   value: active
   link: https://docs.databricks.com/aws/en/compute/serverless/sandbox#:~:text=This%20feature%20is%20in%20Beta
-  date: '2026-09-13'
+  date: '2026-09-27'
 releases:
   - type: beta
     date: '2026'
@@ -26,9 +26,9 @@ introducedAt:
   date: '2026'
   link: https://docs.databricks.com/aws/en/compute/serverless/sandbox#:~:text=This%20feature%20is%20in%20Beta
 limitations:
-  note: Fixed at 4 cores, 16 GB RAM and up to 100 GB of storage, with a maximum of 40 sandboxes per user and 100 per workspace; it doesn't yet integrate with serverless egress control, so it shouldn't be used in an SEG-enabled workspace; public IP addresses can change at any time; and home-directory data will be deleted when the Beta period ends.
-  link: https://docs.databricks.com/aws/en/compute/serverless/sandbox#:~:text=Tech%20specs%3A%204%20cores%2C%2016%20GB%20RAM%2C%20up%20to%20100%20GB%20storage
-  date: '2026-09-13'
+  note: Fixed at 4 vCPUs and 8 GB of RAM, with up to 100 GB in the home directory and 10 GB outside it (deleted on stop); default quotas of 40 active sandboxes per user (400 total) and 100 active per workspace (1,000 total); network egress is unrestricted and not configurable, ingress is closed; public IP addresses can change at any time; it is not a Spark runtime; the startup environment can't be customized; and Databricks might purge sandbox data at the end of the Beta.
+  link: https://docs.databricks.com/aws/en/compute/serverless/sandbox#:~:text=Databricks%20Sandbox%20comes%20with%204%20vCPUs%20and%208%20GB%20of%20RAM
+  date: '2026-09-27'
 links:
   - url: https://learn.microsoft.com/en-us/azure/databricks/compute/serverless/sandbox
     kind: official
@@ -38,4 +38,4 @@ prediction:
   - Lakebox
   - Agent Bricks Sandbox
 source: https://docs.databricks.com/aws/en/compute/serverless/sandbox
-verified: '2026-09-13'
+verified: '2026-09-27'

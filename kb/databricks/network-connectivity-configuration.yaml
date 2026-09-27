@@ -1,0 +1,63 @@
+id: network-connectivity-configuration
+name: Network connectivity configuration
+aliases:
+  - NCC
+  - NCCs
+  - network connectivity configurations
+  - serverless network connectivity
+  - Serverless secure connectivity
+category: Compute / BI
+what:
+  note: Account-level, regional object that manages serverless compute networking - the private endpoints (Private Link) and stable firewall identities serverless compute uses to reach your resources - and is attached to one or more workspaces in a region.
+  link: https://docs.databricks.com/aws/en/security/network/serverless-network-security/#:~:text=Serverless%20network%20connectivity%20is%20managed%20with%20network%20connectivity%20configurations%20%28NCCs%29
+fact:
+  - note: Before NCCs, Azure customers allowlisted serverless SQL in their storage firewalls by copying subnet IDs straight out of the Azure Databricks documentation.
+    link: https://learn.microsoft.com/en-us/azure/databricks/release-notes/product/2023/october#:~:text=subnet%20IDs%20that%20were%20listed%20in%20Azure%20Databricks%20documentation%20before%20October%2031%2C%202023
+  - note: The stable IPs were not so stable - the Public Preview's legacy list was decommissioned, and anyone still allowlisting those copied IPs can expect serverless compute to hit 403 Forbidden.
+    link: https://docs.databricks.com/aws/en/security/network/serverless-network-security/#:~:text=The%20legacy%20list%20of%20stable%20IPs%20from%20the%20Public%20Preview%20was%20decommissioned
+  - note: A network object that also attaches to a data catalog - an NCC can be attached to a metastore to give OpenSharing SecureConnect private connectivity.
+    link: https://docs.databricks.com/aws/en/security/network/serverless-network-security/#:~:text=NCCs%20can%20be%20attached%20to%20a%20metastore%20to%20enable%20private%20connectivity%20for%20OpenSharing%20SecureConnect
+status:
+  value: active
+  link: https://docs.databricks.com/aws/en/security/network/serverless-network-security/#:~:text=Serverless%20network%20connectivity%20is%20managed%20with%20network%20connectivity%20configurations%20%28NCCs%29
+  date: '2026-09-27'
+releases:
+  - type: public-preview
+    date: 2023-10
+    link: https://learn.microsoft.com/en-us/azure/databricks/release-notes/product/2023/october#:~:text=Serverless%20secure%20connectivity%20for%20Databricks%20SQL%20Serverless%20%28Public%20Preview%29
+  - type: ga
+    date: 2024-04
+    link: https://learn.microsoft.com/en-us/azure/databricks/release-notes/product/2024/april#:~:text=Private%20Endpoints%20can%20be%20configured%20and%20managed%20in%20the%20account%20using%20Network%20connectivity%20configurations%20%28NCC%29
+introducedAt:
+  date: 2023-10
+  link: https://learn.microsoft.com/en-us/azure/databricks/release-notes/product/2023/october#:~:text=Serverless%20secure%20connectivity%20for%20Databricks%20SQL%20Serverless%20%28Public%20Preview%29
+occasion:
+  date: 2024-02
+  link: https://www.databricks.com/blog/announcing-general-availability-azure-private-link-and-azure-storage-firewall-support#:~:text=Network%20Connectivity%20Configuration%20%28NCC%29
+  note: Azure Private Link and Azure Storage firewall for DBSQL Serverless GA blog
+limitations:
+  note: An NCC is regional and attaches only to workspaces in its own region. Per account, up to 10 NCCs per region and up to 50 workspaces per NCC; private endpoints are capped per region across all NCCs (on AWS 30 for S3 and 100 for VPC resources; on Azure 100). These are fixed limits.
+  link: https://docs.databricks.com/aws/en/security/network/concepts/privatelink-concepts#:~:text=Up%20to%2010%20NCCs%20per%20region%20per%20account
+  date: '2026-09-27'
+links:
+  - url: https://learn.microsoft.com/en-us/azure/databricks/security/network/serverless-network-security/
+    kind: official
+    label: 'Microsoft Learn: Serverless compute plane networking (What is an NCC?)'
+  - url: https://docs.databricks.com/aws/en/release-notes/product/2024/may
+    kind: official
+    label: 'Databricks release notes: serverless firewall configuration via NCCs extended to jobs, notebooks, pipelines and model serving (May 31, 2024)'
+  - url: https://docs.databricks.com/api/account/networkconnectivity/createnetworkconnectivityconfiguration
+    kind: official
+    label: 'Databricks REST API: Network Connectivity Configuration'
+  - url: https://docs.databricks.com/aws/en/security/network/serverless-network-security/network-policies
+    kind: official
+    label: 'Databricks docs: What is serverless egress control? (network policies, a separate object)'
+  - url: https://docs.databricks.com/aws/en/security/network/serverless-network-security/private-network-gateway
+    kind: official
+    label: 'Databricks docs: Private network gateway, which reuses your existing NCC'
+prediction:
+  - Serverless Network Profile
+  - Unity Connectivity Configuration
+  - Lakehouse Egress Settings
+source: https://docs.databricks.com/aws/en/security/network/serverless-network-security/
+verified: '2026-09-27'

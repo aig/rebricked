@@ -1,0 +1,51 @@
+id: managed-mlflow
+name: Managed MLflow
+aliases:
+  - MLflow on Databricks
+  - Databricks-managed MLflow
+  - hosted MLflow
+  - MLflow 3 on Databricks
+category: AI / ML
+what:
+  note: 'The fully managed, hosted version of open source MLflow on Databricks, built on Unity Catalog: experiment tracking, model evaluation, a production model registry, and deployment tools for ML models, plus tracing, evaluation, and prompt management for agents and LLM apps, all wired into the workspace security model.'
+  link: https://docs.databricks.com/aws/en/mlflow/#:~:text=Databricks%20provides%20a%20fully%20managed%20and%20hosted%20version%20of%20MLflow
+fact:
+  - note: 'It went GA with two names in one breath: the April 2019 release note is headlined "MLflow on Databricks (GA)" while its first sentence announces that "Managed MLflow on Databricks is now generally available" - and the docs still use both.'
+    link: https://docs.databricks.com/aws/en/release-notes/product/2019/april#:~:text=Managed%20MLflow%20on%20Databricks%20is%20now%20generally%20available
+  - note: The Public Preview shipped as part of Databricks platform Version 2.92, and its headline trick was that logging a run from a notebook made Databricks quietly snapshot the notebook revision so the exact code could be replayed later.
+    link: https://docs.databricks.com/aws/en/release-notes/product/2019/february#:~:text=Databricks%20automatically%20captures%20notebook%20revisions%20so%20you%20can%20reproduce%20the%20same%20code%20and%20runs%20later
+  - note: The docs now introduce MLflow as the largest open source AI engineering platform for agents, LLMs, and ML models, with over 30 million monthly downloads - quite a promotion for a tool that started out logging parameters and metrics.
+    link: https://docs.databricks.com/aws/en/mlflow/#:~:text=With%20over%2030%20million%20monthly%20downloads
+status:
+  value: active
+  link: https://docs.databricks.com/aws/en/mlflow/#:~:text=Databricks%20provides%20a%20fully%20managed%20and%20hosted%20version%20of%20MLflow
+  date: '2026-09-27'
+releases:
+  - type: public-preview
+    date: 2019-02
+    link: https://docs.databricks.com/aws/en/release-notes/product/2019/february#:~:text=Managed%20MLflow%20on%20Databricks%20Public%20Preview
+  - type: ga
+    date: 2019-04
+    link: https://docs.databricks.com/aws/en/release-notes/product/2019/april#:~:text=Managed%20MLflow%20on%20Databricks%20is%20now%20generally%20available
+introducedAt:
+  date: 2019-02
+  link: https://docs.databricks.com/aws/en/release-notes/product/2019/february#:~:text=Managed%20MLflow%20on%20Databricks%20Public%20Preview
+links:
+  - url: https://docs.databricks.com/aws/en/release-notes/product/2019/february#:~:text=Managed%20MLflow%20on%20Databricks%20Public%20Preview
+    kind: official
+    label: 'Databricks release notes: Managed MLflow on Databricks Public Preview (February 26 - March 5, 2019)'
+  - url: https://docs.databricks.com/aws/en/release-notes/product/2019/april#:~:text=Managed%20MLflow%20on%20Databricks%20is%20now%20generally%20available
+    kind: official
+    label: 'Databricks release notes: MLflow on Databricks GA (April 25, 2019)'
+  - url: https://docs.databricks.com/aws/en/release-notes/product/2025/june#:~:text=MLflow%203.0%20is%20now%20generally%20available
+    kind: official
+    label: 'Databricks release notes: MLflow 3.0 is generally available (June 10, 2025) - Logged Models and deployment jobs'
+  - url: https://docs.databricks.com/aws/en/mlflow/#:~:text=MLflow%203%20also%20introduces%20the%20concepts%20of%20Logged%20Models%20and%20Deployment%20Jobs
+    kind: official
+    label: 'Databricks docs: MLflow on Databricks - MLflow 3, and open source vs. Databricks-managed MLflow features'
+prediction:
+  - Unity MLflow
+  - Lakeflow Experiments
+  - Genie Flow
+source: https://docs.databricks.com/aws/en/mlflow/
+verified: '2026-09-27'

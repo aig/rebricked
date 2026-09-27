@@ -1,0 +1,41 @@
+id: lakehouse-apps
+name: Lakehouse Apps
+aliases:
+  - Databricks Lakehouse Apps
+category: Developer experience
+what:
+  note: The 2023 announcement of native, secure applications that run entirely inside a customer's Databricks environment, on their own data and under Databricks security and governance, distributed through Databricks Marketplace.
+  link: https://www.databricks.com/company/newsroom/press-releases/databricks-announces-lakehouse-apps-and-expands-databricks#:~:text=today%20introduced%20Lakehouse%20Apps%2C%20a%20new%20way%20for%20developers%20to%20build%20native%2C%20secure%20applications%20for%20Databricks
+fact:
+  - note: It launched with a partner lineup rather than a product - Retool, Posit, Kumo.ai, and Lamini were named as early development partners on day one.
+    link: https://www.databricks.com/company/newsroom/press-releases/databricks-announces-lakehouse-apps-and-expands-databricks#:~:text=Early%20development%20partners%20for%20Lakehouse%20Apps%20include%20Retool%2C%20Posit%2C%20Kumo.ai%2C%20and%20Lamini
+  - note: The June 2023 press release announced it without shipping it - Lakehouse Apps were only "expected in preview in the coming year."
+    link: https://www.databricks.com/company/newsroom/press-releases/databricks-announces-lakehouse-apps-and-expands-databricks#:~:text=Lakehouse%20Apps%20and%20AI%20model%20sharing%20in%20Databricks%20Marketplace%20are%20expected%20in%20preview%20in%20the%20coming%20year
+  - note: The pitch was that apps would come to the data, not the other way round - they would run entirely inside the customer's Lakehouse instance, using their data.
+    link: https://www.databricks.com/company/newsroom/press-releases/databricks-announces-lakehouse-apps-and-expands-databricks#:~:text=run%20entirely%20inside%20their%20Lakehouse%20instance%2C%20using%20their%20data
+status:
+  value: renamed
+  link: https://www.databricks.com/blog/introducing-lakehouse-apps#:~:text=Introducing%20Databricks%20Apps
+  date: '2026-09-27'
+from:
+  date: 2023-06
+  link: https://www.databricks.com/company/newsroom/press-releases/databricks-announces-lakehouse-apps-and-expands-databricks#:~:text=today%20introduced%20Lakehouse%20Apps
+to:
+  date: 2024-10
+  link: https://docs.databricks.com/aws/en/release-notes/product/2024/october#:~:text=with%20Databricks%20Apps%20%28Public%20Preview%29
+successorId: databricks-apps
+occasion:
+  date: 2023-06
+  link: https://www.databricks.com/company/newsroom/press-releases/databricks-announces-lakehouse-apps-and-expands-databricks#:~:text=today%20introduced%20Lakehouse%20Apps
+  note: Announced June 20, 2023, ahead of Data + AI Summit 2023
+links:
+  - url: https://www.databricks.com/company/newsroom/press-releases/databricks-announces-lakehouse-apps-and-expands-databricks
+    kind: official
+    label: 'Databricks newsroom: Databricks Announces Lakehouse Apps and Expands the Databricks Marketplace (June 20, 2023)'
+  - url: https://www.databricks.com/blog/introducing-lakehouse-apps
+    kind: official
+    label: 'Databricks Blog: the /introducing-lakehouse-apps URL now carries the October 2024 "Introducing Databricks Apps" Public Preview post'
+prediction:
+  - Lakehouse Apps Classic
+source: https://www.databricks.com/company/newsroom/press-releases/databricks-announces-lakehouse-apps-and-expands-databricks
+verified: '2026-09-27'

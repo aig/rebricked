@@ -1,0 +1,49 @@
+id: unity-gateway-skills
+name: Unity Gateway Skills
+aliases:
+  - Skills
+  - agent skills
+  - Databricks skill registry
+  - databricks-skill-registry
+category: Data governance
+what:
+  note: A central place in Unity Gateway to discover, publish, and govern agent skills across an organization, each skill stored as a Unity Catalog securable so the same grants, tags, and audit that protect tables decide who can use it.
+  link: https://docs.databricks.com/aws/en/agents/uc-skills/#:~:text=Unity%20Gateway%20Skills%20give%20you%20a%20central%20location%20to%20discover%2C%20publish%2C%20and%20govern%20agent%20skills%20across%20your%20organization
+fact:
+  - note: Your coding agent reaches the registry through an MCP server literally named databricks-skill-registry, which the Unity Gateway CLI registers for you when it signs you in.
+    link: https://docs.databricks.com/aws/en/agents/uc-skills/create-share-uc-skills#:~:text=registers%20the%20Databricks%20Skills%20MCP%20server
+  - note: 'The whole setup is three commands, and the docs even hand you a prompt so your coding agent can type them itself: install the ug CLI, run ug configure, then ug skills.'
+    link: https://docs.databricks.com/aws/en/agents/uc-skills/create-share-uc-skills#:~:text=Have%20your%20agent%20install%20and%20connect%20the%20Unity%20Gateway%20CLI%20for%20you
+  - note: For all the new branding underneath it is still a Unity Catalog object - the docs call a skill a first-class Unity Catalog securable.
+    link: https://docs.databricks.com/aws/en/agents/uc-skills/#:~:text=a%20skill%20is%20a%20first%2Dclass%20Unity%20Catalog%20securable
+status:
+  value: active
+  link: https://docs.databricks.com/aws/en/agents/uc-skills/#:~:text=Unity%20Gateway%20Skills%20give%20you%20a%20central%20location
+  date: '2026-09-27'
+releases:
+  - type: beta
+    date: 2026-08
+    link: https://docs.databricks.com/aws/en/release-notes/product/2026/august#:~:text=Unity%20Catalog%20Skills%20%28Beta%29
+from:
+  date: 2026-09
+  link: https://docs.databricks.com/aws/en/agents/uc-skills/#:~:text=Unity%20Gateway%20Skills%20give%20you%20a%20central%20location
+limitations:
+  note: Beta, and an account admin has to enable the Unity AI preview from the account console Previews page before anyone can create or use a skill. The schema must sit in a standard Unity Catalog catalog and resolve to a managed storage location or skill creation fails, and workspaces enforcing the Compliance Security Profile can read existing skills but cannot create, update, or delete them.
+  link: https://docs.databricks.com/aws/en/ai-gateway/govern-skills#:~:text=creating%2C%20updating%2C%20and%20deleting%20skills%20is%20blocked
+  date: '2026-09-27'
+links:
+  - url: https://docs.databricks.com/aws/en/agents/uc-skills/create-share-uc-skills
+    kind: official
+    label: 'Databricks docs: Create and share Unity Gateway Skills'
+  - url: https://docs.databricks.com/aws/en/ai-gateway/govern-skills
+    kind: official
+    label: 'Databricks docs: Govern skills'
+  - url: https://docs.databricks.com/aws/en/ai-gateway/coding-agent-quickstart
+    kind: official
+    label: 'Databricks docs: Get started with coding agents (the ug CLI)'
+prediction:
+  - Genie Skills
+  - Unity Gateway Skills One
+  - Agent Bricks Skills
+source: https://docs.databricks.com/aws/en/agents/uc-skills/
+verified: '2026-09-27'

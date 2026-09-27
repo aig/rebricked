@@ -17,29 +17,32 @@ fact:
 status:
   value: active
   link: https://docs.databricks.com/aws/en/data-governance/unity-catalog/data-classification#:~:text=uses%20an%20agentic%20AI%20system%20to%20automatically%20classify%20and%20tag
-  date: '2026-08-20'
+  date: '2026-09-27'
 releases:
   - type: public-preview
     date: 2025-10
-    link: https://docs.databricks.com/aws/en/release-notes/product/2025/october#:~:text=is%20now%20in%20Public%20Preview%20and%20supports%20all%20catalog%20types
+    link: https://www.databricks.com/blog/find-sensitive-data-scale-data-classification-unity-catalog#:~:text=announce%20the%20Public%20Preview%20of%20Databricks%20Data%20Classification%20on%20AWS%2C%20Azure%20Databricks%2C%20and%20GCP
   - type: ga
     date: 2026-04
     link: https://docs.databricks.com/aws/en/release-notes/product/2026/april#:~:text=Databricks%20Data%20Classification%20is%20now%20GA
 introducedAt:
   date: 2025-10
-  link: https://docs.databricks.com/aws/en/release-notes/product/2025/october#:~:text=is%20now%20in%20Public%20Preview%20and%20supports%20all%20catalog%20types
+  link: https://www.databricks.com/blog/find-sensitive-data-scale-data-classification-unity-catalog#:~:text=announce%20the%20Public%20Preview%20of%20Databricks%20Data%20Classification%20on%20AWS%2C%20Azure%20Databricks%2C%20and%20GCP
 occasion:
   date: 2026-05
   link: https://www.databricks.com/blog/abac-row-filtering-and-column-masking-policies-governed-tags-and-data-classification-are-now#:~:text=announce%20the%20General%20Availability%20of%20three%20complementary%20capabilities
   note: GA announcement blog, May 2026
 limitations:
-  note: Views and metric views are not supported, and for a view built on existing tables Databricks recommends classifying the underlying tables instead. Detection exclusions, and their use to improve future classification accuracy, are still in Beta.
-  link: https://docs.databricks.com/aws/en/data-governance/unity-catalog/data-classification#:~:text=Views%20and%20metric%20views%20are%20not%20supported
-  date: '2026-08-20'
+  note: Scanning Unity Catalog views is only in Beta (a workspace admin turns on Data Classification View Scanning from the Previews page), and even then view columns are classified but not tagged with class.* unless ABAC on Views (Beta) is enabled. Metric views and views with unsafe definitions are not scanned. Detection exclusions, and their use to improve future classification accuracy, are still in Beta.
+  link: https://docs.databricks.com/aws/en/data-governance/unity-catalog/data-classification#:~:text=Metric%20views%20and%20views%20with%20unsafe%20definitions%20are%20not%20scanned
+  date: '2026-09-27'
 links:
-  - url: https://docs.databricks.com/aws/en/release-notes/product/2025/september#:~:text=This%20table%20captures%20detections%20of%20sensitive%20data%20at%20the%20column%20level
+  - url: https://docs.databricks.com/aws/en/admin/system-tables/data-classification#:~:text=The%20table%20stores%20detections%20for%20sensitive%20data%20classes%20at%20the%20column%20level
     kind: official
-    label: 'Databricks release notes: data classification system table in Beta (September 30, 2025)'
+    label: 'Databricks docs: data classification system table reference (system.data_classification.results)'
+  - url: https://docs.databricks.com/aws/en/release-notes/data-classification
+    kind: official
+    label: 'Databricks docs: Data Classification release notes'
   - url: https://docs.databricks.com/aws/en/data-governance/unity-catalog/data-classification#:~:text=Detection%20exclusions%20and%20their%20use%20to%20improve%20future%20classification%20accuracy
     kind: official
     label: 'Databricks docs: detection exclusions are in Beta'
@@ -51,4 +54,4 @@ prediction:
   - Unity Catalog sensitivity labels
   - Classification Hub
 source: https://docs.databricks.com/aws/en/data-governance/unity-catalog/data-classification
-verified: '2026-08-20'
+verified: '2026-09-27'

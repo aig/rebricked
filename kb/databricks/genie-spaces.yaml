@@ -5,12 +5,19 @@ what:
   note: Curated, governed conversational query spaces scoped to a business domain, letting business users ask questions of their structured data in plain English (text-to-SQL).
   link: https://docs.databricks.com/aws/en/genie-agents/set-up#:~:text=ask%20questions%20of%20their%20data%20in%20Databricks
 fact:
-  - note: A Genie Space was a topic-scoped room where analysts hand-fed the AI tables, metric definitions and sample queries, so a business user could ask 'how's my sales pipeline?' and get an answer instead of Slacking the data team.
-    link: https://docs.databricks.com/aws/en/genie-agents/set-up#:~:text=the%20natural%2Dlanguage%20chat%20interface%20that%20business%20users
+  - note: A Genie Space was a topic-scoped room where analysts hand-fed the AI tables, example SQL queries and instructions, so a business user could ask 'how's my sales pipeline?' in a chat box and get an answer instead of Slacking the data team.
+    link: https://docs.databricks.com/aws/en/genie-agents/set-up#:~:text=the%20natural%2Dlanguage%20chat%20interface%20where%20business%20users%20ask%20questions%20of%20their%20data
 status:
   value: renamed
   link: https://docs.databricks.com/aws/en/genie-agents/set-up#:~:text=Genie%20Agents%20were%20formerly%20known%20as%20Genie%20Spaces.
-  date: '2026-08-20'
+  date: '2026-09-27'
+releases:
+  - type: public-preview
+    date: 2024-06
+    link: https://www.databricks.com/company/newsroom/press-releases/introducing-databricks-aibi-intelligent-analytics-real-world-data#:~:text=Genie%20is%20in%20public%20preview%20starting%20today
+  - type: ga
+    date: 2024-12
+    link: https://docs.databricks.com/aws/en/ai-bi/release-notes/2024#:~:text=Genie%20Agents%20%28formerly%20Genie%20Spaces%29%20are%20now%20generally%20available
 from:
   date: 2024-06
   link: https://www.databricks.com/company/newsroom/press-releases/introducing-databricks-aibi-intelligent-analytics-real-world-data#:~:text=Genie%20is%20in%20public%20preview%20starting%20today
@@ -18,6 +25,10 @@ to:
   date: 2026-07
   link: https://docs.databricks.com/aws/en/ai-bi/release-notes/2026#:~:text=are%20now%20called%20Genie%20Agents
 successorId: genie-agents
+occasion:
+  date: 2025-06
+  link: https://www.databricks.com/blog/aibi-genie-now-generally-available#:~:text=Generally%20Available%20on%20all%20clouds
+  note: GA on all clouds announced, June 2025
 links:
   - url: https://www.databricks.com/blog/aibi-genie-now-generally-available
     kind: community
@@ -26,4 +37,4 @@ links:
     kind: internet
     label: 'Atlan: AI/BI Genie explainer'
 source: https://docs.databricks.com/aws/en/genie-agents/set-up
-verified: '2026-08-20'
+verified: '2026-09-27'

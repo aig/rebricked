@@ -1,0 +1,40 @@
+id: agent-inference-tables
+name: Agent inference tables
+aliases:
+  - payload_request_logs
+  - payload_assessment_logs
+  - request_logs
+  - assessment_logs
+  - Request and assessment logs
+category: AI / ML
+what:
+  note: The Unity Catalog tables that agents.deploy() created for an agent on Model Serving - a raw payload table plus derived request_logs (formatted requests, responses, and MLflow traces) and assessment_logs (Review App feedback) tables.
+  link: https://docs.databricks.com/aws/en/agents/custom-agents/model-serving/request-assessment-logs#:~:text=When%20you%20deploy%20an%20agent%2C%20Databricks%20creates%20three%20inference%20tables
+fact:
+  - note: 'Patience was part of the schema: raw JSON reached the payload table within an hour, and the formatted request and assessment logs took additional time on top of that.'
+    link: https://docs.databricks.com/aws/en/agents/custom-agents/model-serving/request-assessment-logs#:~:text=Raw%20JSON%20data%20enters%20the%20payload%20table%20within%20one%20hour
+  - note: The derived tables never listened for edits - deleting or updating rows in the payload table did not sync to the request and assessment logs built from it.
+    link: https://docs.databricks.com/aws/en/agents/custom-agents/model-serving/request-assessment-logs#:~:text=Changes%20to%20the%20payload%20table%20(deletions%20or%20updates)%20don't%20automatically%20sync%20to%20the%20derived%20tables
+  - note: 'Only two of the three tables died: the raw payload table still receives data from new requests, while its two formatted offspring stopped being populated.'
+    link: https://docs.databricks.com/aws/en/agents/custom-agents/model-serving/request-assessment-logs#:~:text=The%20raw%20payload%20table%20continues%20to%20receive%20data%20from%20new%20requests
+status:
+  value: deprecated
+  link: https://docs.databricks.com/aws/en/agents/custom-agents/model-serving/request-assessment-logs#:~:text=These%20tables%20have%20been%20deprecated
+  date: '2026-09-27'
+deprecatedAt:
+  date: 2025-10
+  link: https://docs.databricks.com/aws/en/release-notes/product/2025/october#:~:text=The%20payload_request_logs%20and%20payload_assessment_logs%20tables%20are%20deprecated
+removedAt:
+  date: 2025-12
+  link: https://docs.databricks.com/aws/en/agents/custom-agents/model-serving/request-assessment-logs#:~:text=As%20of%20December%204%2C%202025%2C%20Databricks%20no%20longer%20automatically%20populates
+successorId: mlflow-tracing
+replacement: MLflow 3 real-time tracing
+links:
+  - url: https://docs.databricks.com/aws/en/release-notes/product/2025/october
+    kind: official
+    label: 'Databricks release notes (October 29, 2025): request logs and assessment logs tables deprecated'
+  - url: https://learn.microsoft.com/en-us/azure/databricks/agents/custom-agents/model-serving/request-assessment-logs
+    kind: official
+    label: 'Microsoft Learn: Agent inference tables - request and assessment logs (deprecated)'
+source: https://docs.databricks.com/aws/en/agents/custom-agents/model-serving/request-assessment-logs
+verified: '2026-09-27'

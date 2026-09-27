@@ -1,0 +1,41 @@
+id: copy-into
+name: COPY INTO
+aliases:
+  - COPY INTO command
+  - COPY INTO SQL command
+category: Data engineering
+what:
+  note: A retryable, idempotent SQL command that loads data from a file location into a Delta table, skipping files in the source location that it has already loaded.
+  link: https://docs.databricks.com/aws/en/sql/language-manual/delta-copy-into#:~:text=Loads%20data%20from%20a%20file%20location%20into%20a%20Delta%20table
+fact:
+  - note: 'Its idea of "already loaded" is stubborn: a file it has ingested is skipped on later runs even if you modify that file afterwards.'
+    link: https://docs.databricks.com/aws/en/sql/language-manual/delta-copy-into#:~:text=This%20is%20true%20even%20if%20the%20files%20have%20been%20modified%20since%20they%20were%20loaded
+  - note: It can target a columnless placeholder Delta table and infer the schema on load, but until COPY INTO fills it, that table is unusable by anything else - INSERT INTO and MERGE INTO are not allowed to write to it.
+    link: https://docs.databricks.com/aws/en/ingestion/cloud-object-storage/copy-into/#:~:text=The%20empty%20Delta%20table%20is%20not%20usable%20outside%20COPY%20INTO
+  - note: The release note that introduced it made its pitch by complaint, noting that to load data into Delta Lake at the time you had to use Apache Spark DataFrame APIs.
+    link: https://docs.databricks.com/aws/en/release-notes/product/2020/february#:~:text=To%20load%20data%20into%20Delta%20Lake%20today%20you%20have%20to%20use%20Apache%20Spark%20DataFrame%20APIs
+status:
+  value: active
+  link: https://docs.databricks.com/aws/en/ingestion/cloud-object-storage/copy-into/#:~:text=You%20can%20use%20the%20COPY%20INTO%20SQL%20command%20to%20load%20data%20from%20a%20file%20location%20into%20a%20Delta%20table
+  date: '2026-09-27'
+introducedAt:
+  date: 2020-02
+  link: https://docs.databricks.com/aws/en/release-notes/product/2020/february#:~:text=The%20COPY%20INTO%20SQL%20command%20lets%20you%20load%20data%20into%20Delta%20Lake%20with%20idempotent%20retries
+occasion:
+  date: 2020-02
+  link: https://docs.databricks.com/aws/en/release-notes/product/2020/february#:~:text=The%20COPY%20INTO%20SQL%20command%20lets%20you%20load%20data%20into%20Delta%20Lake%20with%20idempotent%20retries
+  note: Databricks Runtime 6.4 (Public Preview)
+limitations:
+  note: Databricks recommends streaming tables for a more scalable and robust file ingestion experience in SQL, and Auto Loader when ingesting directories with a very large number of files. A schemaless placeholder table cannot be written by INSERT INTO or MERGE INTO until COPY INTO has loaded data into it.
+  link: https://docs.databricks.com/aws/en/ingestion/cloud-object-storage/copy-into/#:~:text=Databricks%20recommends%20that%20SQL%20users%20use%20streaming%20tables
+  date: '2026-09-27'
+links:
+  - url: https://www.databricks.com/blog/easy-ingestion-lakehouse-copy
+    kind: official
+    label: 'Databricks blog: Easy Ingestion to Lakehouse With COPY INTO'
+prediction:
+  - COPY INTO ONE
+  - PASTE INTO
+  - Lakeflow Copy
+source: https://docs.databricks.com/aws/en/ingestion/cloud-object-storage/copy-into/
+verified: '2026-09-27'

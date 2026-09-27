@@ -1,0 +1,31 @@
+id: databricks-lakehouse-platform
+name: Databricks Lakehouse Platform
+aliases:
+  - Lakehouse Platform
+  - Databricks Lakehouse
+category: Compute / BI
+what:
+  note: The platform's lakehouse-era name, the one platform thousands of organizations used to unify their data, analytics and AI on an open data lakehouse.
+  link: https://www.databricks.com/company/newsroom/press-releases/databricks-raises-1-6-billion-series-h-investment-at-38-billion-valuation#:~:text=rely%20on%20the%20Databricks%20Lakehouse%20Platform%20to%20unify%20their%20data
+fact:
+  - note: Its Series H round in August 2021 raised $1.6 billion at a $38 billion post-money valuation, partly to accelerate adoption of the Lakehouse Platform globally.
+    link: https://www.databricks.com/company/newsroom/press-releases/databricks-raises-1-6-billion-series-h-investment-at-38-billion-valuation#:~:text=38%20billion%20post%2Dmoney%20valuation
+  - note: Databricks bought German low-code startup 8080 Labs in October 2021 to bring this lakehouse platform to citizen data scientists, clicks instead of code.
+    link: https://www.databricks.com/company/newsroom/press-releases/databricks-acquires-low-code-no-code-company-to-expand-its-lakehouse-platform-to-citizen-data-scientists#:~:text=expansion%20into%20the%20low%2Dcode%2Fno%2Dcode%20space
+status:
+  value: renamed
+  link: https://docs.databricks.com/aws/en/assets/files/scope-of-the-data-intelligence-platform-aws-3f48aa7f45c5cbef41f81791781a1509.pdf
+  date: '2026-09-27'
+from:
+  date: '2021'
+  link: https://www.databricks.com/company/newsroom/press-releases/databricks-raises-1-6-billion-series-h-investment-at-38-billion-valuation#:~:text=rely%20on%20the%20Databricks%20Lakehouse%20Platform%20to%20unify%20their%20data
+to:
+  date: 2023-11
+  link: https://www.databricks.com/blog/what-is-a-data-intelligence-platform#:~:text=November%2015%2C%202023
+successorId: databricks-data-intelligence-platform
+links:
+  - url: https://www.databricks.com/company/newsroom/press-releases/databricks-launches-partner-connect-to-open-and-extend-the-lakehouse-ecosystem
+    kind: official
+    label: 'Press release: Partner Connect (Nov 2021), Lakehouse Platform boilerplate'
+source: https://www.databricks.com/company/newsroom/press-releases/databricks-raises-1-6-billion-series-h-investment-at-38-billion-valuation
+verified: '2026-09-27'

@@ -11,7 +11,98 @@ recorded, and a made-up reason is worse than none.
 
 ## 2026-09-27
 
+### Changed
+- **The first full read of the Databricks blog back to 2013 added twenty cards and corrected
+  twenty-one: seven platform names from Databricks Cloud to the Data + AI Platform, the missing first
+  names of Repos, Jobs, Apps and AUTO CDC, four retirements, and a dozen dates the cards had wrong.**
+
+  **Why:** six agents compared all 2,594 posts from 2013 to 2025 against the cards and found two kinds
+  of gap. Names were missing from the front of chains, because each chain started where the release
+  notes started (2018) or where the current name did: Repos began at its 2021 GA instead of its 2020
+  preview as Databricks Projects, Lakeflow Jobs had no card for the 2015 "Jobs" it was renamed from, and
+  the platform itself had no card at all. And dates were wrong. The SQL endpoint rename was dated 2023
+  when the Databricks SQL release notes log it on June 23, 2022, and Liquid clustering's preview and GA
+  both cited *Automatic* liquid clustering from 2025 instead of its own 2023 preview and 2024 GA. The
+  scan also showed why the blog cannot be quoted for old names: Databricks has rewritten old posts to use
+  current names (626 posts now say "Data + AI Platform"), and only URL slugs keep the originals. So every
+  name and date here was taken from docs, release notes or press releases, not from blog text.
+
+  **What:** new rename chains:
+  - `databricks-cloud` -> `databricks` -> `databricks-unified-analytics-platform` ->
+    `databricks-unified-data-analytics-platform` -> `databricks-lakehouse-platform` ->
+    `databricks-data-intelligence-platform` -> `databricks-data-ai-platform`, from press releases and the
+    "What is Databricks?" page. This reverses the July 2026 note below that excluded Lakehouse Platform ->
+    Data Intelligence Platform as a repositioning. The last link is dated to the year only (2026), because
+    no announcement exists.
+  - `databricks-projects` -> `databricks-repos`, `databricks-jobs` -> `lakeflow-jobs` (the June 2025 note:
+    "The product known as Databricks Jobs is now Lakeflow Jobs"), `standard-clusters` ->
+    `no-isolation-shared-access-mode`, `apply-changes` -> `auto-cdc`, `lakehouse-apps` -> `databricks-apps`,
+    and `mlflow-ai-gateway` -> `external-models`. The Projects and Lakehouse Apps links are inferred (the
+    same feature under a new name, and an old URL that now serves the new post), not stated.
+  - Retirements: `dbrx` (retired 2025), `sparkr` (deprecated in DBR 16.0), `library-utility` (removed in
+    DBR 11.0), and `agent-inference-tables` (stopped filling December 4, 2025, pointing at MLflow Tracing).
+  - A new `ai-generated-comments` card, with "AI-generated documentation" as an alias because the docs call
+    it "also known as", not a former name.
+
+  Corrected: the SQL endpoint/warehouse rename date and warehouse GA, Liquid clustering's timeline,
+  Genie Spaces' missing stages (GA December 2024 per the AI/BI notes), release stages on compute policies,
+  Databricks Light, Databricks One and Runtime for Genomics, Lakehouse Federation's month, and new aliases
+  or launch dates on Photon (Delta Engine), delta cache (Databricks Cache), serverless pools, Databricks
+  Light and Serverless Real-Time Inference. Left out because no official source backs them: LakehouseIQ ->
+  DatabricksIQ, MLflow Pipelines -> Recipes, Runtime with Conda, and a 2017 date for Databricks Delta's
+  preview. `check_anchors.py` passes across all 3,081 URLs, except the known Terraform registry timeout
+  and one techzine.eu link that blocks automated readers.
+
+- **A full citation sweep found 22 dead quotes on 12 cards. Fixing them surfaced one rename (Unity
+  Catalog Skills is now Unity Gateway Skills) and five claims that had quietly stopped being true.**
+
+  **Why:** `check_anchors.py` across all 2,846 cited URLs found 22 `#:~:text=` quotes no longer on
+  their pages. A dead quote on a live vendor doc is often the first sign that the doc changed what it
+  says, and here it usually was. Databricks Sandbox was rewritten (8 GB of RAM, not 16, and SSH is now
+  one option rather than the product). AI Runtime moved its content to an overview page and dropped the
+  seven-day run limit for two days in notebooks and 14 days for CLI jobs. Custom URLs now work with
+  inbound Private Link, so the card's headline limitation was gone. SQL warehouses can now reach Unity
+  Catalog secrets through UDFs. Data Classification scans views in Beta, and Databricks deleted the
+  October 2025 release note that dated its preview. The Skills docs were retitled "Unity Gateway Skills"
+  by September 16, with no rename note, following the Unity Gateway rebrand.
+
+  **What:** every one of the 22 was re-checked against the live page, not just re-quoted: 9 cards had a
+  claim rewritten to current truth, 3 had quotes re-anchored to reworded text, 2 facts were replaced
+  because their claim no longer holds anywhere (the Sandbox SSH-sessions fact and the SnowSQL
+  "begin transitioning" fact), and the compliance-security-profile fact moved to the HIPAA page that
+  still states it. Data Classification's 2025-10 preview date now rests on the launch blog.
+  `unity-catalog-skills` is now `renamed` (to 2026-09) with `successorId: unity-gateway-skills`, a new
+  `active` card that takes over the current aliases, maturity timeline and limitations and joins it in
+  the Catalog rail section. SnowSQL stays `legacy`: Snowflake gives a support end date (April 16, 2028),
+  not a retirement. The sweep now reads OK 2,856; the one remaining failure is the Terraform registry
+  timing out in the headless browser, and the one `BLOCKED` is a techzine.eu news link.
+
 ### Added
+- **Fifteen cards for long-standing core products the dataset had never tracked: COPY INTO, Lineage
+  in Unity Catalog, Managed MLflow, Compute policies, Instance pools, Serverless SQL warehouses, the
+  Terraform provider, the Python and Go SDKs, AI Playground, Databricks Runtime for Machine
+  Learning, Customer-managed VPC, VNet injection, Private Link, and Network Connectivity
+  Configurations.**
+
+  **Why:** `COVERAGE-GAPS.md` had listed these as the marquee products most worth adding, some of
+  them for months. They are among the most-used things on the platform, and several carry exactly the
+  kind of history this site exists for: cluster policies are now called compute policies, serverless
+  SQL warehouses launched as serverless SQL endpoints, and the Terraform provider moved from the
+  `databrickslabs` namespace to `databricks`. A reader searching any of those old names found nothing.
+
+  **What:** fifteen `active` feature cards, each with sourced release stages where a dated official
+  source exists, limitations from the docs (numeric quotas checked against the resource-limits mirror
+  and written as raisable where the limit is soft), and each wired into its rail section (Compute,
+  SQL Warehouses, Data Ingestion, Catalog, Workspace, Models, Agents). No rename chains: the
+  cluster-to-compute policy rename, the Terraform namespace move, and the serverless endpoint name are
+  documented but not dated anywhere official, so each is an alias plus a fact rather than a `renamed`
+  card. `customer-managed-vpc` and `vnet-injection` are separate cards because AWS and Azure name the
+  feature differently. Left out: a Java SDK card and a COPY INTO GA stage (no dated source), and
+  classic/pro warehouse deprecation (the docs make no such call). `COVERAGE-GAPS.md` is reconciled to
+  227 entries, gains §22 for the blog-only launches, and its marquee list is down to Budgets and a few
+  identity/networking items. `check_anchors.py` passes on every new card; only the Terraform registry,
+  an extra link, is `BLOCKED`.
+
 - **Ten new cards for 2026 launches that only the blog had announced: Lakewatch, CustomerLake,
   Genie ZeroOps, Databricks Document Intelligence, Lakebase Search, Spatial SQL, Real-Time Mode,
   Default Warehouse, the Databricks Connector for Google Sheets, and Query tags.**

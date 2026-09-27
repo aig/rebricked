@@ -1,0 +1,39 @@
+id: instance-pools
+name: Instance pools
+aliases:
+  - Pools
+  - Databricks pools
+  - Instance pool
+  - Pool-backed clusters
+  - Instance Pools API
+category: Compute / BI
+what:
+  note: A set of idle, ready-to-use cloud instances that clusters draw their driver and worker nodes from, cutting cluster start and autoscaling times; released instances return to the pool for the next cluster.
+  link: https://docs.databricks.com/aws/en/compute/pool-index#:~:text=Databricks%20pools%20are%20a%20set%20of%20idle%2C%20ready%2Dto%2Duse%20instances
+fact:
+  - note: An idle pool costs you nothing in Databricks terms - no DBUs are charged while instances sit waiting, though your cloud provider happily bills for the VMs.
+    link: https://docs.databricks.com/aws/en/compute/pool-index#:~:text=Databricks%20does%20not%20charge%20DBUs%20while%20instances%20are%20idle%20in%20the%20pool
+  - note: The pool docs open by talking you out of pools, recommending serverless compute instead wherever your workload supports it.
+    link: https://docs.databricks.com/aws/en/compute/pool-index#:~:text=Databricks%20recommends%20using%20serverless%20compute%20instead%20of%20pools
+  - note: A pool gets three default tags stamped on it and room for exactly 43 custom ones - not 40, not 50.
+    link: https://docs.databricks.com/aws/en/compute/pools#:~:text=You%20can%20add%20up%20to%2043%20custom%20tags
+status:
+  value: active
+  link: https://docs.databricks.com/aws/en/compute/pool-index#:~:text=Databricks%20pools%20are%20a%20set%20of%20idle%2C%20ready%2Dto%2Duse%20instances
+  date: '2026-09-27'
+releases:
+  - type: public-preview
+    date: 2019-07
+    link: https://docs.databricks.com/aws/en/release-notes/product/2019/july#:~:text=Keep%20a%20pool%20of%20instances%20on%20standby%20for%20quick%20cluster%20launch
+  - type: ga
+    date: 2019-10
+    link: https://docs.databricks.com/aws/en/release-notes/product/2019/october#:~:text=Pools%20of%20instances%20for%20quick%20cluster%20launch%20generally%20available
+introducedAt:
+  date: 2019-07
+  link: https://docs.databricks.com/aws/en/release-notes/product/2019/july#:~:text=Keep%20a%20pool%20of%20instances%20on%20standby%20for%20quick%20cluster%20launch
+prediction:
+  - Warm pools
+  - Serverless instance pools
+  - Lakeflow pools
+source: https://docs.databricks.com/aws/en/compute/pool-index
+verified: '2026-09-27'

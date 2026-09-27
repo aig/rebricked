@@ -1,0 +1,53 @@
+id: ai-generated-comments
+name: AI-generated comments
+aliases:
+  - AI-generated documentation
+  - AI-generated table comments
+  - AI comments
+category: Data governance
+what:
+  note: LLM-suggested descriptions for Unity Catalog objects and table columns - catalogs, schemas, tables, views, functions, models, volumes - generated from object metadata in Catalog Explorer, reviewed and edited by a person before saving.
+  link: https://docs.databricks.com/aws/en/comments/ai-comments#:~:text=Comments%20are%20powered%20by%20a%20large%20language%20model%20%28LLM%29%20that%20takes%20into%20account%20object%20metadata
+fact:
+  - note: The docs openly admit its other name - the page introduces AI-generated comments "also known as AI-generated documentation", which is what the October 2023 launch blog called it.
+    link: https://docs.databricks.com/aws/en/comments/ai-comments#:~:text=also%20known%20as%20AI-generated%20documentation
+  - note: Clicking save on a friendly suggested sentence runs an ALTER SQL command under the hood, which the docs warn can disrupt pipelines and jobs.
+    link: https://docs.databricks.com/aws/en/comments/ai-comments#:~:text=Saving%20comments%20triggers%20an%20ALTER%20SQL%20command
+  - note: It will happily describe your columns but should not be trusted to spot PII - the docs say not to rely on it for data classification tasks.
+    link: https://docs.databricks.com/aws/en/comments/ai-comments#:~:text=should%20not%20be%20relied%20on%20for%20data%20classification%20tasks%20such%20as%20detecting%20columns%20with%20PII
+status:
+  value: active
+  link: https://docs.databricks.com/aws/en/comments/ai-comments#:~:text=Add%20AI-generated%20comments%20to%20Unity%20Catalog%20objects
+  date: '2026-09-27'
+releases:
+  - type: public-preview
+    date: 2023-10
+    link: https://docs.databricks.com/aws/en/release-notes/product/2023/october#:~:text=AI-generated%20table%20comments%20%28Public%20Preview%29
+  - type: ga
+    date: 2024-06
+    link: https://docs.databricks.com/aws/en/release-notes/product/2024/june#:~:text=AI-generated%20comments%20are%20now%20generally%20available
+introducedAt:
+  date: 2023-10
+  link: https://docs.databricks.com/aws/en/release-notes/product/2023/october#:~:text=AI-generated%20table%20comments%20%28Public%20Preview%29
+limitations:
+  note: Comments are generated per object on request in Catalog Explorer, with no workspace-level or catalog-level toggle; suggestions must be reviewed before saving and are not suitable for data classification such as PII detection.
+  link: https://docs.databricks.com/aws/en/comments/ai-comments#:~:text=There%20is%20no%20workspace-level%20or%20catalog-level%20toggle
+  date: '2026-09-27'
+links:
+  - url: https://www.databricks.com/blog/announcing-public-preview-ai-generated-documentation-databricks-unity-catalog
+    kind: official
+    label: 'Databricks Blog: Announcing Public Preview of AI Generated Documentation In Databricks Unity Catalog (October 19, 2023)'
+  - url: https://www.databricks.com/blog/announcing-general-availability-databricks-assistant-and-ai-generated-comments
+    kind: official
+    label: 'Databricks Blog: GA of Databricks Assistant and AI-generated comments (June 27, 2024)'
+  - url: https://docs.databricks.com/aws/en/release-notes/product/2026/april
+    kind: official
+    label: 'Databricks release notes: language selector for AI-generated comments in Catalog Explorer (April 22, 2026)'
+  - url: https://learn.microsoft.com/en-us/azure/databricks/comments/ai-comments
+    kind: official
+    label: 'Microsoft Learn: Add AI-generated comments to Unity Catalog objects (Azure Databricks)'
+prediction:
+  - Genie Comments
+  - AI-generated comments on AI-generated comments
+source: https://docs.databricks.com/aws/en/comments/ai-comments
+verified: '2026-09-27'

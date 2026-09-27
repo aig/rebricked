@@ -1,0 +1,54 @@
+id: ai-playground
+name: AI Playground
+aliases:
+  - Playground
+  - Databricks AI Playground
+  - LLM playground
+category: AI / ML
+what:
+  note: A no-code chat environment in the Databricks workspace for interactively testing, prompting, and comparing LLMs side by side, and for prototyping tool-calling agents and question-answering bots that can then be exported to code.
+  link: https://docs.databricks.com/aws/en/large-language-models/ai-playground#:~:text=The%20AI%20Playground%20is%20a%20chat%20environment%20for%20Large%20Language%20Models
+fact:
+  - note: It has moved house in the sidebar - in December 2023 you found the Playground item under Machine Learning, and today the docs send you to Playground under AI/ML.
+    link: https://docs.databricks.com/aws/en/large-language-models/ai-playground#:~:text=Select%20Playground%20from%20the%20left%20navigation%20pane%20under%20AI%2FML
+  - note: Pressing the + adds another endpoint to the same chat, so several models answer the same prompt at once and you can compare their responses next to each other.
+    link: https://docs.databricks.com/aws/en/large-language-models/ai-playground#:~:text=compare%20multiple%20model%20responses
+  - note: It started as a place to chat with LLMs, and in September 2024 learned to prototype, build, and then export tool-calling AI agents, with Unity Catalog functions as the tools.
+    link: https://docs.databricks.com/aws/en/release-notes/product/2024/september#:~:text=Use%20the%20AI%20Playground%20to%20prototype%2C%20build%2C%20and%20then%20export%20tool%2Dcalling%20AI%20agents
+status:
+  value: active
+  link: https://docs.databricks.com/aws/en/large-language-models/ai-playground#:~:text=The%20AI%20Playground%20is%20a%20chat%20environment%20for%20Large%20Language%20Models
+  date: '2026-09-27'
+releases:
+  - type: public-preview
+    date: 2023-12
+    link: https://www.databricks.com/blog/Integrating-NVIDIA-TensorRT-LLM#:~:text=currently%20in%20public%20preview
+  - type: ga
+    date: 2025-08
+    link: https://docs.databricks.com/aws/en/release-notes/product/2025/august#:~:text=AI%20Playground%20is%20now%20GA
+introducedAt:
+  date: 2023-12
+  link: https://www.databricks.com/blog/building-high-quality-rag-applications-databricks#:~:text=The%20new%20interactive%20AI%20Playground%20allows%20easy%20chat%20with%20these%20models
+occasion:
+  date: 2023-12
+  link: https://www.databricks.com/blog/building-high-quality-rag-applications-databricks#:~:text=The%20new%20interactive%20AI%20Playground%20allows%20easy%20chat%20with%20these%20models
+  note: Debuted with the Databricks RAG tools launch, December 6, 2023
+links:
+  - url: https://www.databricks.com/blog/building-high-quality-rag-applications-databricks
+    kind: official
+    label: 'Databricks Blog: Creating High Quality RAG Applications with Databricks (December 6, 2023) - introduces the new interactive AI Playground'
+  - url: https://docs.databricks.com/aws/en/release-notes/product/2024/september#:~:text=Use%20the%20AI%20Playground%20to%20prototype%2C%20build%2C%20and%20then%20export%20tool%2Dcalling%20AI%20agents
+    kind: official
+    label: 'Databricks release notes: Prototype and export tool-calling AI agents in AI Playground (September 24, 2024)'
+  - url: https://docs.databricks.com/aws/en/release-notes/product/2025/april#:~:text=you%20can%20now%20add%20the%20vector%20search%20index%20to%20your%20AI%20agents%20directly%20in%20AI%20Playground
+    kind: official
+    label: 'Databricks release notes: Use vector search indexes to prototype tool-calling agents in AI Playground (April 23, 2025)'
+  - url: https://docs.databricks.com/aws/en/release-notes/product/2025/august#:~:text=AI%20Playground%20is%20now%20GA
+    kind: official
+    label: 'Databricks release notes: AI Playground is now GA (August 1, 2025)'
+prediction:
+  - Genie Playground
+  - Agent Bricks Sandbox
+  - Unity Playground
+source: https://docs.databricks.com/aws/en/large-language-models/ai-playground
+verified: '2026-09-27'

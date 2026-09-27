@@ -1,5 +1,7 @@
 id: sql-endpoint
 name: SQL Endpoint
+aliases:
+  - SQL Endpoints
 category: Compute / BI
 what:
   note: SQL-optimized compute that powers Databricks SQL.
@@ -9,14 +11,14 @@ fact:
     link: https://docs.databricks.com/aws/en/compute/sql-warehouse/#:~:text=Starter%20Warehouse
 status:
   value: renamed
-  link: https://docs.databricks.com/aws/en/compute/sql-warehouse/#:~:text=SQL%20endpoints%20were%20renamed%20as%20SQL%20warehouses
-  date: '2026-08-20'
+  link: https://docs.databricks.com/aws/en/sql/release-notes/2022#:~:text=Databricks%20changed%20the%20name%20from%20SQL%20endpoint%20to%20SQL%20warehouse
+  date: '2026-09-27'
 from:
   date: '2021'
   link: https://www.databricks.com/blog/2021/09/30/databricks-sql-delivering-a-production-sql-development-experience-on-the-data-lake.html#:~:text=tools%20of%20their%20choice%20to%20SQL%20endpoints
 to:
-  date: '2023'
-  link: https://docs.databricks.com/aws/en/compute/sql-warehouse/#:~:text=In%202023%2C%20SQL%20endpoints%20were%20renamed%20as%20SQL%20warehouses
+  date: 2022-06
+  link: https://docs.databricks.com/aws/en/sql/release-notes/2022#:~:text=Databricks%20changed%20the%20name%20from%20SQL%20endpoint%20to%20SQL%20warehouse
 successorId: sql-warehouse
 links:
   - url: https://www.databricks.com/blog/2021/09/30/databricks-sql-delivering-a-production-sql-development-experience-on-the-data-lake.html
@@ -26,4 +28,4 @@ links:
     kind: internet
     label: 'TDS: SQL Analytics & endpoints'
 source: https://docs.databricks.com/aws/en/compute/sql-warehouse/
-verified: '2026-08-20'
+verified: '2026-09-27'

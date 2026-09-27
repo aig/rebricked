@@ -1,0 +1,40 @@
+id: sparkr
+name: SparkR
+aliases:
+  - SparkR in Databricks
+  - library(SparkR)
+  - SparkDataFrame
+category: Developer experience
+what:
+  note: The Apache Spark R API that shipped in every Databricks Runtime, giving R notebooks a distributed data frame with selection, filtering, and aggregation over large datasets.
+  link: https://docs.databricks.com/aws/en/sparkr/#:~:text=SparkR%20is%20an%20R%20interface%20to%20Apache%20Spark%20that%20provides%20a%20distributed%20data%20frame%20implementation
+fact:
+  - note: Databricks deprecated it before Apache did - the Runtime 16.0 notes say SparkR was deprecated in preparation for its deprecation in the upcoming Spark 4 release.
+    link: https://docs.databricks.com/aws/en/release-notes/runtime/16.0#:~:text=SparkR%20in%20Databricks%20is%20deprecated%20in%20preparation%20for%20its%20deprecation%20in%20the%20upcoming%20Spark%204%20release
+  - note: 'It was partly a Databricks child all along: SparkR is built by the Spark community and developers from Databricks, which is why it mirrors the Scala classes and DataFrame API so closely.'
+    link: https://docs.databricks.com/aws/en/sparkr/sparkr-vs-sparklyr#:~:text=SparkR%20is%20built%20by%20the%20Spark%20community%20and%20developers%20from%20Databricks
+  - note: Deprecation did not stop the upgrades - Databricks Runtime 18.0 still bumped SparkR from 4.0.0 to 4.1.0, more than a year after the deprecation notice.
+    link: https://docs.databricks.com/aws/en/release-notes/runtime/18.0#:~:text=SparkR%20from%204.0.0%20to%204.1.0
+status:
+  value: deprecated
+  link: https://docs.databricks.com/aws/en/sparkr/#:~:text=SparkR%20in%20Databricks%20is%20deprecated%20in%20Databricks%20Runtime%2016.0%20and%20above
+  date: '2026-09-27'
+deprecatedAt:
+  date: 2024-11
+  link: https://docs.databricks.com/aws/en/release-notes/runtime/16.0#:~:text=SparkR%20in%20Databricks%20is%20deprecated%20in%20preparation%20for%20its%20deprecation%20in%20the%20upcoming%20Spark%204%20release
+replacement: sparklyr
+links:
+  - url: https://docs.databricks.com/aws/en/sparkr/sparkr-migration
+    kind: official
+    label: 'Databricks docs: Migrate from SparkR to sparklyr'
+  - url: https://docs.databricks.com/aws/en/sparkr/sparkr-vs-sparklyr
+    kind: official
+    label: 'Databricks docs: Comparing SparkR and sparklyr'
+  - url: https://docs.databricks.com/aws/en/release-notes/product/2024/november
+    kind: official
+    label: 'Databricks release notes: Databricks Runtime 16.0 GA (November 2024)'
+  - url: https://learn.microsoft.com/en-us/azure/databricks/sparkr/
+    kind: official
+    label: 'Microsoft Learn: Azure Databricks for R developers (same SparkR deprecation notice)'
+source: https://docs.databricks.com/aws/en/sparkr/sparkr-vs-sparklyr
+verified: '2026-09-27'

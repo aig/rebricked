@@ -2,7 +2,6 @@ id: lakeflow-jobs
 name: Lakeflow Jobs
 aliases:
   - Workflows
-  - Jobs
   - Jobs & Pipelines
 category: Data engineering
 what:
@@ -44,4 +43,4 @@ prediction:
   - Lakeflow Agentic Jobs
   - Jobs One
 source: https://learn.microsoft.com/en-us/azure/databricks/jobs/
-verified: '2026-08-20'
+verified: '2026-09-27'

@@ -3,6 +3,7 @@ name: Photon
 aliases:
   - Photon engine
   - Photon acceleration
+  - Delta Engine
 category: Compute / BI
 what:
   note: The Databricks-native vectorized query engine that accelerates SQL workloads, DataFrame API calls, ETL pipelines and stateless streaming, written to be drop-in compatible with existing Apache Spark code.
@@ -36,9 +37,13 @@ limitations:
   note: No support for UDFs, RDD APIs or Dataset APIs, and only stateless streaming - stateful streaming is unsupported. Queries that already finish in under two seconds see little benefit.
   link: https://docs.databricks.com/aws/en/compute/photon#:~:text=Photon%20supports%20stateless%20streaming%20only
   date: '2026-08-20'
+links:
+  - url: https://learn.microsoft.com/en-us/azure/architecture/solution-ideas/articles/azure-databricks-modern-analytics-architecture#:~:text=Uses%20a%20Photon%2Dpowered%20Delta%20Engine%20to%20improve%20performance
+    kind: official
+    label: 'Microsoft Learn: a Photon-powered Delta Engine'
 prediction:
   - Photon 2
   - Lakehouse Engine
   - Unity Engine
 source: https://docs.databricks.com/aws/en/compute/photon
-verified: '2026-09-20'
+verified: '2026-09-27'

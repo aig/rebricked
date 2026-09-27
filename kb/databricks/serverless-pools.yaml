@@ -3,6 +3,7 @@ name: Serverless pools
 aliases:
   - Serverless Pool
   - Serverless pool cluster type
+  - Databricks Serverless
 category: Compute / BI
 what:
   note: The original Cluster Type option for auto-managed compute shared by several concurrently active users, swapped out of the cluster dropdown in July 2018 for the High Concurrency cluster mode.
@@ -17,14 +18,25 @@ fact:
 status:
   value: renamed
   link: https://docs.databricks.com/aws/en/release-notes/product/2018/july#:~:text=option%20has%20been%20replaced%20by
-  date: '2026-08-20'
+  date: '2026-09-27'
+from:
+  date: 2017-06
+  link: https://www.databricks.com/blog/2017/06/07/databricks-serverless-next-generation-resource-management-for-apache-spark.html#:~:text=we%20have%20launched%20our%20first%20phase%20of%20Databricks%20Serverless%2C%20called%20Serverless%20Pools
 to:
   date: 2018-07
   link: https://docs.databricks.com/aws/en/release-notes/product/2018/july#:~:text=option%20has%20been%20replaced%20by
 successorId: high-concurrency-clusters
+occasion:
+  date: 2017-06
+  link: https://www.databricks.com/blog/2017/06/07/databricks-serverless-next-generation-resource-management-for-apache-spark.html#:~:text=we%20have%20launched%20our%20first%20phase%20of%20Databricks%20Serverless%2C%20called%20Serverless%20Pools
+  note: Spark Summit 2017 (today's Data + AI Summit), as the first phase of Databricks Serverless
+links:
+  - url: https://www.databricks.com/blog/2017/06/07/databricks-serverless-next-generation-resource-management-for-apache-spark.html
+    kind: official
+    label: 'Databricks blog (June 7, 2017): Databricks Serverless, Next Generation Resource Management for Apache Spark'
 prediction:
   - Serverless pools (again)
   - Auto pools
   - Pool mode
 source: https://docs.databricks.com/aws/en/release-notes/product/2018/july
-verified: '2026-08-20'
+verified: '2026-09-27'

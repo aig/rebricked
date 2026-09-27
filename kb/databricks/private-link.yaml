@@ -1,0 +1,77 @@
+id: private-link
+name: Private Link
+aliases:
+  - PrivateLink
+  - AWS PrivateLink
+  - Azure Private Link
+  - Inbound Private Link
+  - Front-end Private Link
+  - Outbound Private Link
+  - Serverless Private Link
+  - Classic compute plane Private Link
+  - Back-end Private Link
+  - Classic PrivateLink
+category: Compute / BI
+what:
+  note: 'Private connectivity to and from Databricks over the cloud provider''s private endpoint service (AWS PrivateLink or Azure Private Link), in three independently enabled flavours: inbound (front-end) from users to workspaces and account-level resources, classic compute plane (back-end) from clusters to the control plane, and outbound (serverless) from serverless compute to your own resources.'
+  link: https://docs.databricks.com/aws/en/security/network/concepts/privatelink-concepts#:~:text=You%20can%20enable%20inbound%20%28front%2Dend%29%2C%20outbound%20%28serverless%29%2C%20or%20classic%20compute%20%28back%2Dend%29%20Private%20Link%20connections%20independently
+fact:
+  - note: For its first year and a half on AWS, turning it on started with asking - only in August 2022 did Databricks announce you no longer need to contact them to enable PrivateLink on your account.
+    link: https://docs.databricks.com/aws/en/release-notes/product/2022/august#:~:text=You%20no%20longer%20need%20to%20contact%20Databricks%20to%20enable%20PrivateLink%20on%20your%20account
+  - note: The original default was maximally trusting - the private access level started out as ANY, which filtered nothing about which VPC endpoints could reach your workspace, until Databricks deprecated it in 2022.
+    link: https://docs.databricks.com/aws/en/release-notes/product/2022/august#:~:text=Historically%2C%20the%20private%20access%20level%20default%20was
+  - note: Since October 2022 IP access lists no longer block PrivateLink traffic - they only police requests arriving over the public internet, so a private IP you had blocked could suddenly be let in.
+    link: https://docs.databricks.com/aws/en/release-notes/product/2022/october#:~:text=IP%20access%20lists%20no%20longer%20block%20PrivateLink%20traffic
+status:
+  value: active
+  link: https://docs.databricks.com/aws/en/security/network/concepts/privatelink-concepts#:~:text=You%20can%20enable%20inbound%20%28front%2Dend%29%2C%20outbound%20%28serverless%29%2C%20or%20classic%20compute%20%28back%2Dend%29%20Private%20Link%20connections%20independently
+  date: '2026-09-27'
+releases:
+  - type: public-preview
+    date: 2021-04
+    link: https://docs.databricks.com/aws/en/release-notes/product/2021/april#:~:text=AWS%20PrivateLink%20for%20Databricks%20workspaces%20%28Public%20Preview%29
+  - type: ga
+    date: 2022-10
+    link: https://docs.databricks.com/aws/en/release-notes/product/2022/october#:~:text=AWS%20PrivateLink%20support%20is%20now%20generally%20available
+introducedAt:
+  date: 2021-04
+  link: https://docs.databricks.com/aws/en/release-notes/product/2021/april#:~:text=AWS%20PrivateLink%20for%20Databricks%20workspaces%20%28Public%20Preview%29
+occasion:
+  date: 2021-04
+  link: https://www.databricks.com/blog/2021/04/23/private-databricks-workspaces-with-aws-privatelink-is-in-public-preview.html#:~:text=PrivateLink%20connectivity%20for%20Databricks%20workspaces%20on%20AWS
+  note: Private Databricks Workspaces With AWS PrivateLink launch blog (Public Preview)
+limitations:
+  note: Requires the Enterprise tier on AWS (Premium on Azure). Classic compute plane (back-end) Private Link, and inbound Private Link on a workspace with a classic compute plane, need a customer-managed VPC (VNet injection on Azure) and secure cluster connectivity; outbound (serverless) and serverless-only workspaces do not. On AWS, VPC endpoint registrations and network configurations cannot be updated after creation, and an account holds at most 110 VPC endpoint registrations and 55 private access settings objects (fixed limits).
+  link: https://docs.databricks.com/aws/en/security/network/classic/privatelink#:~:text=Your%20Databricks%20workspace%20must%20use%20a%20customer%2Dmanaged%20VPC%20for%20classic%20compute%20plane%20%28back%2Dend%29%20Private%20Link
+  date: '2026-09-27'
+links:
+  - url: https://learn.microsoft.com/en-us/azure/databricks/security/network/classic/private-link
+    kind: official
+    label: 'Microsoft Learn: Azure Private Link concepts for Azure Databricks'
+  - url: https://learn.microsoft.com/en-us/azure/databricks/release-notes/product/2022/august
+    kind: official
+    label: 'Azure Databricks release notes: Azure Private Link Public Preview (August 2022)'
+  - url: https://learn.microsoft.com/en-us/azure/databricks/release-notes/product/2023/january
+    kind: official
+    label: 'Azure Databricks release notes: Azure Private Link GA (January 2023)'
+  - url: https://docs.databricks.com/aws/en/security/network/front-end/front-end-private-connect
+    kind: official
+    label: 'Databricks docs: Configure inbound PrivateLink for workspaces'
+  - url: https://docs.databricks.com/aws/en/security/network/classic/privatelink
+    kind: official
+    label: 'Databricks docs: Configure classic private connectivity to Databricks (back-end)'
+  - url: https://docs.databricks.com/aws/en/release-notes/product/2026/june
+    kind: official
+    label: 'Databricks release notes: Inbound Private Link for performance-intensive services GA (June 2026)'
+  - url: https://docs.databricks.com/aws/en/release-notes/product/2026/july
+    kind: official
+    label: 'Databricks release notes: Private Link for account-level resources (Beta, July 2026)'
+  - url: https://www.databricks.com/blog/inbound-private-link-now-supports-account-level-genie-one-account-console-and-custom-urls
+    kind: official
+    label: 'Databricks blog: Inbound Private Link now supports account-level Genie One, the account console, and custom URLs'
+prediction:
+  - Unity Private Link
+  - Lakehouse Private Link
+  - Omnidirectional Private Link
+source: https://docs.databricks.com/aws/en/security/network/concepts/privatelink-concepts
+verified: '2026-09-27'

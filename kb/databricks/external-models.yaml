@@ -1,0 +1,46 @@
+id: external-models
+name: External models
+aliases:
+  - External models through Model Serving
+  - External model endpoints
+category: AI / ML
+what:
+  note: Third-party models hosted outside Databricks, such as OpenAI and Anthropic, served through a Model Serving endpoint so an organization can manage many LLM providers behind one unified interface.
+  link: https://docs.databricks.com/aws/en/machine-learning/foundation-models/external-models/#:~:text=External%20models%20are%20third-party%20models%20hosted%20outside%20of%20Databricks
+fact:
+  - note: Its security pitch is a single place to keep secrets - API keys live in one secure location, so nobody has to paste them into code or look after them on their own.
+    link: https://docs.databricks.com/aws/en/machine-learning/foundation-models/external-models/#:~:text=By%20storing%20API%20keys%20in%20one%20secure%20location
+  - note: If your provider is not on the list, a custom provider option takes any model behind a proxy, as long as it speaks the OpenAI API.
+    link: https://docs.databricks.com/aws/en/machine-learning/foundation-models/external-models/#:~:text=models%20behind%20custom%20proxies%20that%20are%20OpenAI%20API%20compatible
+  - note: The docs sidebar now files it under Legacy endpoints, while the page itself points newcomers to registering providers as governed Unity Catalog objects instead.
+    link: https://docs.databricks.com/aws/en/machine-learning/foundation-models/external-models/#:~:text=To%20register%20external%20model%20providers%20as%20governed%20Unity%20Catalog%20objects
+status:
+  value: active
+  link: https://docs.databricks.com/aws/en/machine-learning/foundation-models/external-models/#:~:text=This%20page%20describes%20external%20models%20configured%20directly%20on%20a%20Model%20Serving%20endpoint
+  date: '2026-09-27'
+releases:
+  - type: public-preview
+    date: 2023-12
+    link: https://docs.databricks.com/aws/en/release-notes/product/2023/december#:~:text=External%20models%20support%20in%20Model%20Serving%20is%20in%20Public%20Preview
+from:
+  date: 2023-12
+  link: https://docs.databricks.com/aws/en/release-notes/product/2023/december#:~:text=External%20models%20support%20in%20Model%20Serving%20is%20in%20Public%20Preview
+limitations:
+  note: Depending on the external model you choose, your data might be processed outside the region where it originated; NCC support for external models, including AWS PrivateLink, is still in Public Preview.
+  link: https://docs.databricks.com/aws/en/machine-learning/foundation-models/external-models/#:~:text=your%20configuration%20might%20cause%20your%20data%20to%20be%20processed%20outside%20of%20the%20region
+  date: '2026-09-27'
+links:
+  - url: https://docs.databricks.com/aws/en/release-notes/product/2023/december
+    kind: official
+    label: 'Databricks release notes: External models support in Model Serving is in Public Preview (December 11, 2023)'
+  - url: https://docs.databricks.com/aws/en/ai-gateway/model-provider-services
+    kind: official
+    label: 'Databricks docs: Model providers external to Databricks - providers registered as Unity Catalog model provider services'
+  - url: https://learn.microsoft.com/en-us/azure/databricks/generative-ai/external-models/
+    kind: official
+    label: 'Microsoft Learn: External models in Model Serving (Azure Databricks)'
+prediction:
+  - Genie External Models
+  - Unity External Models
+source: https://docs.databricks.com/aws/en/machine-learning/foundation-models/external-models/
+verified: '2026-09-27'

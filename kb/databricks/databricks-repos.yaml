@@ -12,12 +12,15 @@ status:
   link: https://learn.microsoft.com/en-us/azure/databricks/repos/what-happened-repos#:~:text=Repos%20are%20now%20called%20Git%20folders.
   date: '2026-08-20'
 releases:
+  - type: public-preview
+    date: 2021-03
+    link: https://www.databricks.com/blog/2021/03/16/productionize-data-science-with-repos-on-databricks.html#:~:text=Repos%20are%20in%20Public%20Preview
   - type: ga
     date: 2021-08
     link: https://docs.databricks.com/aws/en/release-notes/product/2021/august#:~:text=Databricks%20Repos%20is%20now%20generally%20available.
 from:
-  date: '2021'
-  link: https://docs.databricks.com/aws/en/release-notes/product/2021/august#:~:text=Databricks%20Repos%20is%20now%20generally%20available.
+  date: 2021-03
+  link: https://docs.databricks.com/aws/en/release-notes/product/2021/march#:~:text=Databricks%20Repos%20let%20you%20use%20Git%20repositories%20to%20integrate%20Databricks%20with%20CI%2FCD%20systems
 to:
   date: 2024-03
   link: https://docs.databricks.com/aws/en/release-notes/product/2024/march#:~:text=former%20Databricks%20Repos%20feature%20is%20now%20called
@@ -30,4 +33,4 @@ links:
     kind: internet
     label: 'DriveDataScience: Repos & Git CI/CD'
 source: https://learn.microsoft.com/en-us/azure/databricks/repos/what-happened-repos
-verified: '2026-08-20'
+verified: '2026-09-27'

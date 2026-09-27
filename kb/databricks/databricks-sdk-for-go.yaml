@@ -1,0 +1,37 @@
+id: databricks-sdk-for-go
+name: Databricks SDK for Go
+aliases:
+  - databricks-sdk-go
+  - Go SDK
+category: Developer experience
+what:
+  note: The official Go module for automating Databricks accounts, workspaces, and resources from Go code, published as github.com/databricks/databricks-sdk-go and built on Databricks unified authentication.
+  link: https://docs.databricks.com/aws/en/release-notes/product/2023/june#:~:text=The%20Databricks%20SDK%20for%20Go%20is%20now%20available%20as%20a%20Beta
+fact:
+  - note: Its docs file it under Beta while calling it okay to use in production, and ask you to pin a specific minor version in go.mod for the duration.
+    link: https://docs.databricks.com/aws/en/dev-tools/sdk-go#:~:text=This%20feature%20is%20in%20Beta%20and%20is%20okay%20to%20use%20in%20production
+  - note: Version 0.18.0 alone introduced 17 breaking API changes while adding 30 APIs, which is what a Beta label buys you.
+    link: https://docs.databricks.com/aws/en/release-notes/product/2023/august#:~:text=introduces%2017%20breaking%20API%20changes%2C%20adds%2030%20APIs
+  - note: The getting-started guide still pins version 0.8.0 in its example, politely asking you to replace it with the latest version from the changelog.
+    link: https://docs.databricks.com/aws/en/dev-tools/sdk-go#:~:text=replacing%200.8.0%20with%20the%20latest%20version
+status:
+  value: active
+  link: https://docs.databricks.com/aws/en/dev-tools/sdk-go#:~:text=In%20this%20article%2C%20you%20learn%20how%20to%20automate%20Databricks%20operations%20and%20accelerate%20development%20with%20the%20Databricks%20SDK%20for%20Go
+  date: '2026-09-27'
+releases:
+  - type: beta
+    date: 2023-06
+    link: https://docs.databricks.com/aws/en/release-notes/product/2023/june#:~:text=The%20Databricks%20SDK%20for%20Go%20is%20now%20available%20as%20a%20Beta
+introducedAt:
+  date: 2023-06
+  link: https://docs.databricks.com/aws/en/release-notes/product/2023/june#:~:text=The%20Databricks%20SDK%20for%20Go%20is%20now%20available%20as%20a%20Beta
+links:
+  - url: https://github.com/databricks/databricks-sdk-go
+    kind: official
+    label: 'GitHub: databricks/databricks-sdk-go'
+prediction:
+  - Databricks SDK for Go One
+  - GoBricks
+  - Unity SDK for Go
+source: https://docs.databricks.com/aws/en/dev-tools/sdk-go
+verified: '2026-09-27'

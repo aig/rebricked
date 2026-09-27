@@ -1,0 +1,48 @@
+id: compute-policies
+name: Compute policies
+aliases:
+  - Cluster policies
+  - Cluster policy
+  - Compute policy
+  - Policy families
+category: Data governance
+what:
+  note: Admin-defined rule sets that limit what compute a user or group can create - fixing, hiding or ranging cluster attributes, capping resources per user and DBUs per hour, and optionally inheriting from a Databricks-provided policy family template.
+  link: https://docs.databricks.com/aws/en/admin/clusters/policies#:~:text=workspace%20admins%20can%20use%20to%20limit%20a%20user%20or%20group
+fact:
+  - note: The rename never got a release note, and it has not finished happening - the serverless SQL warehouse limitations still say Cluster policies are not supported, in a sentence that links to a page titled Create and manage compute policies.
+    link: https://docs.databricks.com/aws/en/compute/sql-warehouse/serverless#:~:text=Cluster%20policies%2C%20including%20spot%20instance%20policies%2C%20are%20not%20supported
+  - note: Its own vocabulary got renamed before the feature did - within months the Free form policy type became Unrestricted, and the whitelist and blacklist types became allowlist and blocklist.
+    link: https://docs.databricks.com/aws/en/release-notes/product/2021/january#:~:text=Free%20form%20cluster%20policy%20type%20has%20been%20renamed%20to%20Unrestricted
+  - note: Policy families are templates you may inherit from and never touch - the docs say flatly that you cannot create, edit, or delete them.
+    link: https://docs.databricks.com/aws/en/admin/clusters/policy-families#:~:text=You%20cannot%20create%2C%20edit%2C%20or%20delete%20policy%20families
+status:
+  value: active
+  link: https://docs.databricks.com/aws/en/admin/clusters/policies#:~:text=workspace%20admins%20can%20use%20to%20limit%20a%20user%20or%20group
+  date: '2026-09-27'
+releases:
+  - type: public-preview
+    date: 2020-06
+    link: https://docs.databricks.com/aws/en/release-notes/product/2020/june#:~:text=Simplify%20and%20control%20cluster%20creation%20using%20cluster%20policies%20%28Public%20Preview%29
+  - type: ga
+    date: 2023-04
+    link: https://www.databricks.com/blog/2023/04/07/announcing-general-availability-cluster-policies.html#:~:text=cluster%20policies%20are%20now%20generally%20available
+introducedAt:
+  date: 2020-06
+  link: https://docs.databricks.com/aws/en/release-notes/product/2020/june#:~:text=Cluster%20policies%20are%20admin%2Ddefined%2C%20reusable%20cluster%20templates
+links:
+  - url: https://www.databricks.com/blog/2020/07/02/allow-simple-cluster-creation-with-full-admin-control-using-cluster-policies.html
+    kind: official
+    label: 'Databricks blog (2020): Allow Simple Cluster Creation with Full Admin Control Using Cluster Policies'
+  - url: https://docs.databricks.com/aws/en/admin/clusters/policy-families
+    kind: official
+    label: Default policies and policy families
+  - url: https://www.databricks.com/blog/2023/04/07/announcing-general-availability-cluster-policies.html
+    kind: official
+    label: 'Databricks blog (April 7, 2023): Announcing General Availability of Cluster Policies'
+prediction:
+  - Compute guardrails
+  - Serverless policies
+  - Unity Compute Policies
+source: https://docs.databricks.com/aws/en/admin/clusters/policies
+verified: '2026-09-27'

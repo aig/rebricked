@@ -3,6 +3,7 @@ name: Databricks Light
 aliases:
   - Data Engineering Light
   - Light 2.4
+  - Databricks Basic
 category: Compute / BI
 what:
   note: Databricks' packaging of the plain open source Apache Spark runtime, offered as a cheaper runtime option for jobs that did not need Databricks Runtime's performance, reliability or autoscaling.
@@ -17,7 +18,11 @@ fact:
 status:
   value: retired
   link: https://docs.databricks.com/aws/en/archive/runtime/light#:~:text=no%20longer%20supported
-  date: '2026-08-20'
+  date: '2026-09-27'
+releases:
+  - type: ga
+    date: 2019-03
+    link: https://docs.databricks.com/aws/en/release-notes/product/2019/march#:~:text=is%20now%20generally%20available.%20Databricks%20Light%20is%20the%20Databricks%20packaging
 deprecatedAt:
   date: 2021-07
   link: https://docs.databricks.com/aws/en/release-notes/product/2021/july#:~:text=Support%20for%20the%20original%20Databricks%20Light%202.4%20ends
@@ -28,5 +33,8 @@ links:
   - url: https://docs.databricks.com/aws/en/release-notes/product/2019/march
     kind: official
     label: 'Databricks release notes: Databricks Light generally available (March 2019)'
+  - url: https://www.databricks.com/blog/2019/03/26/data-engineering-light-expanding-choice-for-production-workloads.html
+    kind: official
+    label: 'Databricks blog (March 26, 2019): Data Engineering Light GA, formerly known as Databricks Basic'
 source: https://docs.databricks.com/aws/en/archive/runtime/light
-verified: '2026-08-20'
+verified: '2026-09-27'

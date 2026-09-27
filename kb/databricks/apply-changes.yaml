@@ -1,0 +1,30 @@
+id: apply-changes
+name: APPLY CHANGES
+aliases:
+  - APPLY CHANGES INTO
+  - APPLY CHANGES API
+  - apply_changes()
+category: Data engineering
+what:
+  note: The original DLT change data capture API - the APPLY CHANGES INTO SQL statement and apply_changes() Python function that apply CDC records to a streaming table as SCD type 1 or type 2.
+  link: https://docs.databricks.com/aws/en/ldp/cdc#:~:text=The%20AUTO%20CDC%20APIs%20replace%20the%20APPLY%20CHANGES%20APIs%20and%20have%20the%20same%20syntax
+fact:
+  - note: It never actually stopped working - the docs still list the APPLY CHANGES APIs as available, just gently recommend you stop typing them.
+    link: https://docs.databricks.com/aws/en/ldp/cdc#:~:text=The%20APPLY%20CHANGES%20APIs%20are%20still%20available
+  - note: Its name outlived the rename in the URLs - the current SQL reference page still lives at a path ending ldp-sql-ref-apply-changes-into.
+    link: https://docs.databricks.com/aws/en/ldp/developer/ldp-sql-ref-apply-changes-into
+  - note: It launched with SCD type 1 only; keeping the full history of changed records as SCD type 2 arrived four months later.
+    link: https://docs.databricks.com/aws/en/release-notes/product/2022/june#:~:text=Your%20DLT%20pipelines%20can%20now%20use%20SCD%20type%202
+status:
+  value: renamed
+  link: https://docs.databricks.com/aws/en/ldp/developer/ldp-python-ref-apply-changes#:~:text=This%20function%20replaces%20the%20previous%20function
+  date: '2026-09-27'
+from:
+  date: 2022-02
+  link: https://docs.databricks.com/aws/en/release-notes/product/2022/february#:~:text=You%20can%20now%20implement%20change%20data%20capture%20%28CDC%29%20processing%20in%20your%20DLT%20pipelines
+to:
+  date: 2025-06
+  link: https://docs.databricks.com/aws/en/release-notes/product/2025/june#:~:text=Databricks%20recommends%20replacing%20usage%20of
+successorId: auto-cdc
+source: https://docs.databricks.com/aws/en/ldp/cdc
+verified: '2026-09-27'

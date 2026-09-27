@@ -1,0 +1,30 @@
+id: databricks-unified-analytics-platform
+name: Databricks Unified Analytics Platform
+aliases:
+  - Unified Analytics Platform
+category: Compute / BI
+what:
+  note: Databricks' 2017-2019 name for its platform, pitched as one place for data science teams to collaborate with data engineering and lines of business on Apache Spark.
+  link: https://www.databricks.com/company/newsroom/press-releases/databricks-unveils-serverless-platform-apache-spark#:~:text=Databricks%20provides%20a%20Unified%20Analytics%20Platform%20for%20data%20science%20teams
+fact:
+  - note: Azure Databricks was born under this banner, announced as the Unified Analytics Platform offered as an integrated service within the Azure Portal.
+    link: https://www.databricks.com/company/newsroom/press-releases/databricks-becomes-microsoft-partner-to-offer-its-unified-analytics-platform-as-an-integrated-microsoft-azure-service#:~:text=Unified%20Analytics%20Platform%20will%20be%20offered%20as%20an%20integrated%20service%20within%20the%20Azure%20Portal%20as%20Azure%20Databricks
+  - note: Old 2017 blog posts still say Unified Analytics Platform in the link text, but the links now quietly land on the data lakehouse product page.
+    link: https://www.databricks.com/blog/2017/08/23/best-practices-for-coarse-grained-data-security-in-databricks.html#:~:text=Unified%20Analytics%20Platform
+status:
+  value: renamed
+  link: https://www.databricks.com/company/newsroom/press-releases/databricks-partners-tableau-enabling-business-intelligence-on-data-lakes#:~:text=Databricks%20provides%20a%20Unified%20Data%20Analytics%20Platform%20for%20data%20science%20teams
+  date: '2026-09-27'
+from:
+  date: '2017'
+  link: https://www.databricks.com/company/newsroom/press-releases/databricks-unveils-serverless-platform-apache-spark#:~:text=Databricks%20provides%20a%20Unified%20Analytics%20Platform%20for%20data%20science%20teams
+to:
+  date: '2019'
+  link: https://www.databricks.com/company/newsroom/press-releases/databricks-partners-tableau-enabling-business-intelligence-on-data-lakes#:~:text=Databricks%20provides%20a%20Unified%20Data%20Analytics%20Platform%20for%20data%20science%20teams
+successorId: databricks-unified-data-analytics-platform
+links:
+  - url: https://www.databricks.com/company/newsroom/press-releases/databricks-open-sources-delta-lake-for-data-lake-reliability
+    kind: official
+    label: 'Press release: Delta Lake open sourced (April 2019), still under this name'
+source: https://www.databricks.com/company/newsroom/press-releases/databricks-unveils-serverless-platform-apache-spark
+verified: '2026-09-27'

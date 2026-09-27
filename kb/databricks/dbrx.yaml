@@ -1,0 +1,43 @@
+id: dbrx
+name: DBRX
+aliases:
+  - DBRX Instruct
+  - DBRX Base
+  - databricks-dbrx-instruct
+category: AI / ML
+what:
+  note: Databricks' own open mixture-of-experts large language model family, served through Foundation Model APIs as DBRX Instruct (a fine-tuned chat model on pay-per-token endpoints) and DBRX Base (a pretrained model on provisioned throughput).
+  link: https://docs.databricks.com/aws/en/release-notes/product/2024/march#:~:text=Mosaic%20AI%20Model%20Serving%20now%20supports%20DBRX%20Base%20and%20DBRX%20Instruct
+fact:
+  - note: 'It was home-grown: the launch note calls DBRX Base and DBRX Instruct state-of-the-art mixture of experts language models trained by Databricks, not a partner model on loan.'
+    link: https://docs.databricks.com/aws/en/release-notes/product/2024/march#:~:text=mixture%20of%20experts%20(MoE)%20language%20models%20trained%20by%20Databricks
+  - note: The raw pretrained sibling was never on the pay-per-token menu - DBRX Base only ever ran on provisioned throughput endpoints, and only in a limited set of regions.
+    link: https://docs.databricks.com/aws/en/release-notes/product/2024/march#:~:text=DBRX%20Base%20is%20a%20pretrained%20model%20available%20in%20limited%20provisioned%20throughput%20serving%20endpoint%20regions
+  - note: When function calling reached Public Preview in June 2024, DBRX Instruct was one of just two pay-per-token models it worked with.
+    link: https://docs.databricks.com/aws/en/release-notes/product/2024/june#:~:text=This%20functionality%20is%20available%20using%20Foundation%20Model%20APIs%20pay%2Dper%2Dtoken%20models%3A%20DBRX%20Instruct
+status:
+  value: retired
+  link: https://docs.databricks.com/aws/en/machine-learning/retired-models-policy#:~:text=DBRX%20%2F%20DBRX%20Instruct
+  date: '2026-09-27'
+from:
+  date: 2024-03
+  link: https://docs.databricks.com/aws/en/release-notes/product/2024/march#:~:text=Mosaic%20AI%20Model%20Serving%20now%20supports%20DBRX%20Base%20and%20DBRX%20Instruct
+deprecatedAt:
+  date: 2025-04
+  link: https://docs.databricks.com/aws/en/release-notes/product/2025/april#:~:text=The%20DBRX%20Instruct%20and%20Mixtral%2D8x7B%20Instruct%20models%20are%20retired%20on%20Foundation%20Model%20APIs%20pay%2Dper%2Dtoken
+removedAt:
+  date: 2025-12
+  link: https://docs.databricks.com/aws/en/machine-learning/retired-models-policy#:~:text=DBRX%20%2F%20DBRX%20Instruct
+replacement: Meta-Llama-4-Maverick (pay-per-token) or a comparable model on provisioned throughput
+links:
+  - url: https://docs.databricks.com/aws/en/release-notes/product/2025/april
+    kind: official
+    label: 'Databricks release notes (April 2025): DBRX retired on Foundation Model APIs pay-per-token and on Foundation Model Fine-tuning'
+  - url: https://docs.databricks.com/aws/en/machine-learning/retired-models-policy
+    kind: official
+    label: 'Databricks docs: AI models maintenance policy - DBRX pay-per-token retired April 30, 2025, provisioned throughput December 19, 2025'
+  - url: https://learn.microsoft.com/en-us/azure/databricks/release-notes/product/2024/march
+    kind: official
+    label: 'Microsoft Learn: DBRX Base and DBRX Instruct arrive in Model Serving (March 2024)'
+source: https://docs.databricks.com/aws/en/machine-learning/retired-models-policy
+verified: '2026-09-27'

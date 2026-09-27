@@ -1,0 +1,38 @@
+id: databricks-data-intelligence-platform
+name: Databricks Data Intelligence Platform
+aliases:
+  - Data Intelligence Platform
+category: Compute / BI
+what:
+  note: The platform's generative-AI-era name, the lakehouse topped with an AI engine for data intelligence, search and discovery, an assistant and performance optimizations.
+  link: https://docs.databricks.com/aws/en/assets/files/scope-of-the-data-intelligence-platform-aws-3f48aa7f45c5cbef41f81791781a1509.pdf
+fact:
+  - note: Databricks' own reference-architecture PDF in the docs still titles its platform diagram Databricks "Data Intelligence Platform", quotation marks and all.
+    link: https://docs.databricks.com/aws/en/assets/files/scope-of-the-data-intelligence-platform-aws-3f48aa7f45c5cbef41f81791781a1509.pdf
+  - note: Its launch essay, dated November 15, 2023, carried eight bylines from Databricks founders and executives, from Ali Ghodsi through Reynold Xin and Matei Zaharia.
+    link: https://www.databricks.com/blog/what-is-a-data-intelligence-platform#:~:text=Reynold%20Xin%20and%20Matei%20Zaharia
+  - note: Partner accelerators run on it, including Dronelytics, which turns drone imagery into transmission asset inspections.
+    link: https://www.databricks.com/blog/vertical-advantage-transforming-industries-lakebase-and-agentic-ai#:~:text=Dronelytics%20is%20an%20end%2Dto%2Dend%20aerial%20intelligence%20accelerator%20built%20on%20the%20Databricks%20Data%20Intelligence%20Platform
+status:
+  value: renamed
+  link: https://docs.databricks.com/aws/en/introduction/#:~:text=The%20Databricks%20Data%20%2B%20AI%20Platform%20integrates%20with%20cloud%20storage
+  date: '2026-09-27'
+from:
+  date: 2023-11
+  link: https://www.databricks.com/blog/what-is-a-data-intelligence-platform#:~:text=November%2015%2C%202023
+to:
+  date: '2026'
+  link: https://docs.databricks.com/aws/en/introduction/#:~:text=The%20Databricks%20Data%20%2B%20AI%20Platform%20integrates%20with%20cloud%20storage
+successorId: databricks-data-ai-platform
+links:
+  - url: https://www.databricks.com/blog/leveraging-databricks-support-fisc-security-guidelines
+    kind: community
+    label: 'Databricks blog: FISC guidelines (Aug 2026), still under this name'
+  - url: https://www.hpcwire.com/bigdatawire/2023/11/16/databricks-were-a-data-intelligence-platform-now/
+    kind: internet
+    label: 'BigDATAwire: Databricks: We''re a Data Intelligence Platform Now (Nov 2023)'
+  - url: https://www.techtarget.com/searchdatamanagement/news/366560094/Databricks-puts-AI-at-core-of-new-Data-Intelligence-Platform
+    kind: internet
+    label: 'TechTarget: Databricks puts AI at core of new Data Intelligence Platform'
+source: https://docs.databricks.com/aws/en/assets/files/scope-of-the-data-intelligence-platform-aws-3f48aa7f45c5cbef41f81791781a1509.pdf
+verified: '2026-09-27'

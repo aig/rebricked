@@ -13,8 +13,8 @@ fact:
     link: https://docs.databricks.com/aws/en/security/privacy/enhanced-security-compliance#:~:text=you%20must%20delete%20the%20workspace%20and%20create%20a%20new%20one%20without%20the%20compliance%20security%20profile
   - note: Workspaces running it get a shield logo next to the workspace name in the top-right of the UI, and if the shield is missing the docs tell you to contact your account team.
     link: https://docs.databricks.com/aws/en/security/privacy/enhanced-security-compliance#:~:text=The%20workspace%20also%20has%20a%20shield%20logo%20displayed%20in%20the%20workspace%20UI
-  - note: Turning it on is also a way of turning most previews off - only the Public Preview, Private Preview, and Beta features on an explicit allow-list work in a profile-enabled workspace, and nothing else pre-GA does.
-    link: https://docs.databricks.com/aws/en/security/privacy/security-profile#:~:text=The%20compliance%20security%20profile%20does%20not%20support%20any%20other%20Public%20Preview%2C%20Private%20Preview%2C%20or%20Beta%20features
+  - note: Turning it on is also a way of turning most previews off - only specific preview features are supported for processing regulated data, and the HIPAA docs flatly say not to use any other preview feature on PHI.
+    link: https://docs.databricks.com/aws/en/security/privacy/hipaa#:~:text=Only%20specific%20preview%20features%20are%20supported%20for%20processing%20regulated%20data.
 status:
   value: active
   link: https://docs.databricks.com/aws/en/security/privacy/security-profile#:~:text=The%20compliance%20security%20profile%20enables%20additional%20monitoring
@@ -48,4 +48,4 @@ prediction:
   - Unity Compliance Profile
   - Lakehouse Lockdown
 source: https://docs.databricks.com/aws/en/security/privacy/security-profile
-verified: '2026-09-11'
+verified: '2026-09-27'

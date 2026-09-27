@@ -1,0 +1,55 @@
+id: customer-managed-vpc
+name: Customer-managed VPC
+aliases:
+  - customer managed VPC
+  - Bring your own VPC
+  - BYO VPC
+  - Deploy Databricks workspaces in your own VPC
+category: Compute / BI
+what:
+  note: Deploying a Databricks workspace's classic compute plane into a VPC you create and manage yourself (on AWS, and on Google Cloud), instead of the default VPC that Databricks creates and configures in your cloud account.
+  link: https://docs.databricks.com/aws/en/security/network/classic/customer-managed-vpc#:~:text=you%20can%20create%20your%20Databricks%20workspaces%20within%20your%20own%20VPC
+fact:
+  - note: The optional extra is on its way to becoming the only option - Databricks says it plans to deprecate classic workspace creation with a Databricks-managed VPC, so new classic workspaces will require a customer-managed one.
+    link: https://docs.databricks.com/aws/en/security/network/classic/customer-managed-vpc#:~:text=Databricks%20plans%20to%20deprecate%20classic%20workspace%20creation%20with%20a%20Databricks%2Dmanaged%20VPC
+  - note: An existing workspace on a Databricks-managed VPC cannot be moved into your own VPC - the 2022 escape hatch only covered workspaces whose deployment had already failed.
+    link: https://docs.databricks.com/aws/en/release-notes/product/2022/october#:~:text=For%20a%20failed%20workspace%2C%20you%20can%20now%20convert%20a%20workspace%20with%20Databricks%2Dmanaged%20VPC%20to%20use%20a%20customer%2Dmanaged%20VPC
+  - note: Subnet sizing comes with built-in halving - every node takes two IP addresses, one for management traffic and one for Spark, so a subnet fits half as many instances as it has free IPs.
+    link: https://docs.databricks.com/aws/en/security/network/classic/customer-managed-vpc#:~:text=Databricks%20assigns%20two%20IP%20addresses%20per%20node%2C%20one%20for%20management%20traffic%20and%20one%20for%20Apache%20Spark%20applications
+status:
+  value: active
+  link: https://docs.databricks.com/aws/en/security/network/classic/customer-managed-vpc#:~:text=you%20can%20create%20your%20Databricks%20workspaces%20within%20your%20own%20VPC
+  date: '2026-09-27'
+releases:
+  - type: public-preview
+    date: 2020-06
+    link: https://docs.databricks.com/aws/en/release-notes/product/2020/june#:~:text=Deploy%20Databricks%20workspaces%20in%20your%20own%20VPC
+  - type: ga
+    date: 2020-08
+    link: https://docs.databricks.com/aws/en/release-notes/product/2020/august#:~:text=Customer%2Dmanaged%20VPC%20is%20GA
+introducedAt:
+  date: 2020-06
+  link: https://docs.databricks.com/aws/en/release-notes/product/2020/june#:~:text=Deploy%20Databricks%20workspaces%20in%20your%20own%20VPC
+limitations:
+  note: You must pick the VPC when you first create the workspace - an existing workspace on a Databricks-managed VPC cannot be moved into one (a customer-managed workspace can be moved to another VPC). The VPC needs DNS hostnames and resolution enabled, at least two private subnets in different Availability Zones (one workspace subnet per AZ), each with a netmask between /17 and /26 and outbound access via NAT or a similar appliance, plus one to five security groups; region availability is limited. Network configurations per account default to 11 on Premium and 55 on Enterprise, raisable on request.
+  link: https://docs.databricks.com/aws/en/security/network/classic/customer-managed-vpc#:~:text=You%20cannot%20move%20an%20existing%20workspace%20with%20a%20Databricks%2Dmanaged%20VPC%20to%20use%20a%20customer%2Dmanaged%20VPC
+  date: '2026-09-27'
+links:
+  - url: https://docs.databricks.com/gcp/en/security/network/classic/customer-managed-vpc
+    kind: official
+    label: 'Databricks on Google Cloud docs: Configure a customer-managed VPC'
+  - url: https://www.databricks.com/blog/2022/04/27/bring-your-own-vpc-to-databricks-on-google-cloud.html
+    kind: official
+    label: 'Databricks blog: Bring Your Own VPC to Databricks on Google Cloud (April 2022)'
+  - url: https://docs.databricks.com/aws/en/resources/limits
+    kind: official
+    label: 'Databricks docs: Resource limits (network configurations per account)'
+  - url: https://learn.microsoft.com/en-us/azure/databricks/security/network/classic/vnet-inject
+    kind: official
+    label: 'Microsoft Learn: VNet injection, the Azure Databricks counterpart'
+prediction:
+  - Customer-managed Lakehouse Network
+  - Bring Your Own Compute Plane
+  - Unity VPC
+source: https://docs.databricks.com/aws/en/security/network/classic/customer-managed-vpc
+verified: '2026-09-27'

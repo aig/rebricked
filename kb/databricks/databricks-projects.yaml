@@ -1,0 +1,35 @@
+id: databricks-projects
+name: Databricks Projects
+aliases:
+  - Git-based Projects
+  - Projects
+category: Developer experience
+what:
+  note: Git-based workspace capability, previewed in 2020, for creating or cloning Git repositories in Databricks and keeping notebooks, code, data files and library dependencies in sync.
+  link: https://www.databricks.com/blog/2020/06/25/introducing-the-next-generation-data-science-workspace.html#:~:text=a%20new%20Git%2Dbased%20capability%20named%20Databricks%20Projects
+fact:
+  - note: It promised to catch secrets you were about to commit, so the token you pasted into a notebook cell would never make it to the remote.
+    link: https://www.databricks.com/blog/2020/11/19/new-features-to-accelerate-the-path-to-production-with-the-next-generation-data-science-workspace.html#:~:text=Databricks%20Projects%20will%20detect%20those%20before%20you%20actually%20commit%20your%20code
+  - note: The name never quite left - Databricks' own blog posts about its successor still deep-link to a docs anchor called projects-api-experimental.
+    link: https://www.databricks.com/blog/2021/10/07/databricks-repos-is-now-generally-available.html
+status:
+  value: renamed
+  link: https://docs.databricks.com/aws/en/release-notes/product/2021/march#:~:text=Databricks%20Repos%20let%20you%20use%20Git%20repositories%20to%20integrate%20Databricks%20with%20CI%2FCD%20systems
+  date: '2026-09-27'
+releases:
+  - type: public-preview
+    date: 2020-06
+    link: https://www.databricks.com/blog/2020/06/25/introducing-the-next-generation-data-science-workspace.html#:~:text=Available%20in%20preview%3A%20Git%2Dbased%20Databricks%20Projects
+from:
+  date: 2020-06
+  link: https://www.databricks.com/blog/2020/06/25/introducing-the-next-generation-data-science-workspace.html#:~:text=Available%20in%20preview%3A%20Git%2Dbased%20Databricks%20Projects
+to:
+  date: 2021-03
+  link: https://docs.databricks.com/aws/en/release-notes/product/2021/march#:~:text=Databricks%20Repos%20let%20you%20use%20Git%20repositories%20to%20integrate%20Databricks%20with%20CI%2FCD%20systems
+successorId: databricks-repos
+occasion:
+  date: 2020-06
+  link: https://www.databricks.com/blog/2020/06/25/introducing-the-next-generation-data-science-workspace.html#:~:text=Watch%20Spark%20%2B%20AI%20Summit%20Keynotes%20here
+  note: Spark + AI Summit 2020
+source: https://www.databricks.com/blog/2020/06/25/introducing-the-next-generation-data-science-workspace.html
+verified: '2026-09-27'

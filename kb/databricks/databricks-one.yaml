@@ -10,20 +10,31 @@ fact:
 status:
   value: renamed
   link: https://docs.databricks.com/aws/en/genie-one/genie#:~:text=Genie%20One%20was%20previously%20known%20as%20Databricks%20One.
-  date: '2026-08-20'
+  date: '2026-09-27'
+releases:
+  - type: public-preview
+    date: 2025-09
+    link: https://docs.databricks.com/aws/en/release-notes/product/2025/september#:~:text=a%20simplified%20user%20interface%20designed%20for%20business%20users%2C%20is%20now%20in%20Public%20Preview
 from:
-  date: '2025'
+  date: 2025-06
   link: https://www.databricks.com/blog/introducing-databricks-one#:~:text=Introducing%20Databricks%20One
 to:
   date: 2026-04
   link: https://docs.databricks.com/aws/en/ai-bi/release-notes/2026#:~:text=Databricks%20One%2C%20the%20simplified%20Databricks%20interface%2C%20has%20been%20renamed%20to%20Genie.
 successorId: genie
+occasion:
+  date: 2025-06
+  link: https://www.databricks.com/blog/announcing-public-preview-databricks-one#:~:text=At%20this%20year%E2%80%99s%20Data%20%2B%20AI%20Summit
+  note: Data + AI Summit 2025
 links:
   - url: https://www.databricks.com/blog/introducing-databricks-one
     kind: community
     label: 'Databricks blog: Databricks One'
+  - url: https://www.databricks.com/blog/announcing-public-preview-databricks-one
+    kind: official
+    label: 'Databricks blog (September 17, 2025): Announcing Public Preview of Databricks One'
   - url: https://www.prnewswire.com/news-releases/databricks-unveils-databricks-one-a-new-experience-to-bring-data-and-ai-to-every-corner-of-the-business-302478822.html
     kind: internet
     label: 'PR Newswire: Databricks One unveiled'
 source: https://docs.databricks.com/aws/en/genie-one/genie
-verified: '2026-08-20'
+verified: '2026-09-27'

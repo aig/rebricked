@@ -1,0 +1,39 @@
+id: auto-cdc
+name: AUTO CDC
+aliases:
+  - AUTO CDC INTO
+  - AUTO CDC APIs
+  - create_auto_cdc_flow()
+  - FLOW AUTO CDC
+category: Data engineering
+what:
+  note: Declarative change data capture API for Lakeflow pipelines and Databricks SQL streaming tables that applies CDC records as SCD type 1 or type 2, handling out-of-order events without hand-written MERGE logic.
+  link: https://docs.databricks.com/aws/en/ldp/cdc#:~:text=The%20AUTO%20CDC%20APIs%20replace%20the%20APPLY%20CHANGES%20APIs%20and%20have%20the%20same%20syntax
+fact:
+  - note: The rename was purely cosmetic - the Python function keeps exactly the same signature as the one it replaced, and the docs simply recommend updating to the new name.
+    link: https://docs.databricks.com/aws/en/ldp/developer/ldp-python-ref-apply-changes#:~:text=The%20two%20functions%20have%20the%20same%20signature
+  - note: The old verb survives inside the new syntax - an AUTO CDC statement still says APPLY AS DELETE WHEN to mark deletes.
+    link: https://docs.databricks.com/aws/en/ldp/developer/ldp-sql-ref-apply-changes-into#:~:text=APPLY%20AS%20DELETE%20WHEN
+  - note: In June 2026 it escaped the pipeline - a FLOW AUTO CDC clause on CREATE STREAMING TABLE in Databricks SQL went generally available, pitched as CDC without the complex logic MERGE INTO needs.
+    link: https://docs.databricks.com/aws/en/release-notes/product/2026/june#:~:text=without%20the%20complex%20logic%20that
+status:
+  value: active
+  link: https://docs.databricks.com/aws/en/ldp/cdc#:~:text=Databricks%20recommends%20using%20the%20AUTO%20CDC%20APIs%20in%20their%20place
+  date: '2026-09-27'
+from:
+  date: 2025-06
+  link: https://docs.databricks.com/aws/en/release-notes/product/2025/june#:~:text=AUTO%20CDC%20APIs%20replace%20APPLY%20CHANGES
+occasion:
+  date: 2025-06
+  link: https://docs.databricks.com/aws/en/release-notes/product/2025/june
+  note: Data + AI Summit 2025
+limitations:
+  note: Identity columns are not supported on tables that are the target of AUTO CDC processing in Lakeflow pipelines.
+  link: https://docs.databricks.com/aws/en/ldp/limitations#:~:text=Identity%20columns%20are%20not%20supported%20with%20tables%20that%20are%20the%20target%20of%20AUTO%20CDC%20processing
+  date: '2026-09-27'
+prediction:
+  - AUTO CDC AUTO
+  - Genie CDC
+  - Agentic Change Capture
+source: https://docs.databricks.com/aws/en/ldp/cdc
+verified: '2026-09-27'

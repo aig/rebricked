@@ -2,6 +2,7 @@ id: delta-cache
 name: Delta cache
 aliases:
   - DBIO cache
+  - Databricks Cache
   - Delta caching
 category: Compute / BI
 what:
@@ -10,8 +11,10 @@ what:
 fact:
   - note: The name was always a little bit of a lie - it caches remote Parquet files, so it worked on plenty of data that was never a Delta table.
     link: https://docs.databricks.com/aws/en/optimizations/disk-cache#:~:text=creating%20copies%20of%20remote%20Parquet%20data%20files%20in%20nodes
-  - note: 'This was the second name, not the first: the same feature shipped earlier as the DBIO cache, making the 2022 change the third label for one cache.'
+  - note: 'It was not the first name either: the docs record the same feature as the DBIO cache too, so the 2022 change gave one cache at least its third label.'
     link: https://docs.databricks.com/aws/en/optimizations/disk-cache#:~:text=formerly%20referred%20to%20as%20the
+  - note: Its January 2018 general-availability announcement sold it under yet another name, Databricks Cache, promising scans up to 10x faster without any application code change.
+    link: https://www.databricks.com/blog/2018/01/09/databricks-cache-boosts-apache-spark-performance.html#:~:text=announce%20the%20general%20availability%20of%20Databricks%20Cache
 status:
   value: renamed
   link: https://docs.databricks.com/aws/en/release-notes/product/2022/september#:~:text=caching%20functionality%20previously%20referred%20to%20as%20the
@@ -25,4 +28,4 @@ prediction:
   - Predictive cache
   - Unity cache
 source: https://docs.databricks.com/aws/en/optimizations/disk-cache
-verified: '2026-08-20'
+verified: '2026-09-27'

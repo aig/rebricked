@@ -1,0 +1,49 @@
+id: databricks-runtime-for-machine-learning
+name: Databricks Runtime for Machine Learning
+aliases:
+  - Databricks Runtime ML
+  - DBR ML
+  - Databricks Runtime for ML
+  - ML runtime
+  - Machine learning checkbox
+category: Compute / BI
+what:
+  note: A variant of Databricks Runtime for classic compute that comes pre-built with machine learning and deep learning infrastructure and the most common ML and DL libraries (with a Databricks-tested set of top-tier libraries updated every release), enabled by ticking the Machine learning checkbox when you create compute.
+  link: https://docs.databricks.com/aws/en/machine-learning/databricks-runtime-ml#:~:text=automates%20the%20creation%20of%20a%20compute%20resource%20with%20pre%2Dbuilt%20machine%20learning%20and%20deep%20learning%20infrastructure
+fact:
+  - note: 'Its May 2018 debut was a Beta pitched on one party trick: a cluster where TensorFlow, CUDA, and cuDNN already agreed with each other, plus distributed TensorFlow training via Horovod - and it was not available on Community Edition accounts.'
+    link: https://docs.databricks.com/aws/en/release-notes/product/2018/may#:~:text=It%20is%20not%20available%20on%20Community%20Edition%20accounts
+  - note: It spent almost a year in Beta across versions 4.1 to 5.2 before 5.3 ML, in April 2019, earned the release note line "we have achieved our first GA of Databricks Runtime ML!"
+    link: https://docs.databricks.com/aws/en/release-notes/product/2019/april#:~:text=we%20have%20achieved%20our%20first%20GA%20of%20Databricks%20Runtime%20ML
+  - note: From release 6.1 in October 2019 the plain Databricks Runtime went CPU-only, so the ML runtime became the way to get a GPU cluster - until the docs started recommending serverless AI Runtime over it for custom deep learning on GPUs.
+    link: https://docs.databricks.com/aws/en/release-notes/product/2019/october#:~:text=If%20you%20want%20to%20use%20GPU%20clusters%2C%20you%20must%20use%20Databricks%20Runtime%20ML
+status:
+  value: active
+  link: https://docs.databricks.com/aws/en/machine-learning/databricks-runtime-ml#:~:text=automates%20the%20creation%20of%20a%20compute%20resource%20with%20pre%2Dbuilt%20machine%20learning%20and%20deep%20learning%20infrastructure
+  date: '2026-09-27'
+releases:
+  - type: beta
+    date: 2018-05
+    link: https://docs.databricks.com/aws/en/release-notes/product/2018/may#:~:text=provides%20a%20ready%2Dto%2Dgo%20environment%20for%20machine%20learning%20and%20data%20science
+  - type: ga
+    date: 2019-04
+    link: https://docs.databricks.com/aws/en/release-notes/product/2019/april#:~:text=we%20have%20achieved%20our%20first%20GA%20of%20Databricks%20Runtime%20ML
+introducedAt:
+  date: 2018-05
+  link: https://docs.databricks.com/aws/en/release-notes/product/2018/may#:~:text=provides%20a%20ready%2Dto%2Dgo%20environment%20for%20machine%20learning%20and%20data%20science
+links:
+  - url: https://docs.databricks.com/aws/en/release-notes/product/2018/may#:~:text=provides%20a%20ready%2Dto%2Dgo%20environment%20for%20machine%20learning%20and%20data%20science
+    kind: official
+    label: 'Databricks release notes: Databricks Runtime 4.1 for Machine Learning (Beta), May 18, 2018'
+  - url: https://docs.databricks.com/aws/en/release-notes/product/2019/april#:~:text=we%20have%20achieved%20our%20first%20GA%20of%20Databricks%20Runtime%20ML
+    kind: official
+    label: 'Databricks release notes: Databricks Runtime 5.3 ML, the first GA (April 3, 2019)'
+  - url: https://docs.databricks.com/aws/en/machine-learning/databricks-runtime-ml#:~:text=Databricks%20recommends%20using%20AI%20Runtime%20instead%20of%20Databricks%20Runtime%20ML
+    kind: official
+    label: 'Databricks docs: for custom deep learning on GPUs, Databricks recommends serverless AI Runtime instead (a separate offering, not a rename)'
+prediction:
+  - Databricks Runtime for Agents
+  - Lakeflow Runtime ML
+  - Genie Runtime
+source: https://docs.databricks.com/aws/en/machine-learning/databricks-runtime-ml
+verified: '2026-09-27'

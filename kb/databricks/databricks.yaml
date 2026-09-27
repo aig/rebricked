@@ -1,0 +1,34 @@
+id: databricks
+name: Databricks
+aliases:
+  - Databricks platform
+category: Compute / BI
+what:
+  note: The hosted Apache Spark data platform under the plain company name, after it went generally available in June 2015 and dropped the word Cloud.
+  link: https://www.databricks.com/company/newsroom/press-releases/databricks-announces-general-availability-cloud-platform-dramatically-simplifies-big-data-processing#:~:text=formerly%20known%20as%20Databricks%20Cloud
+fact:
+  - note: 'At GA it ran on exactly one cloud: it was available as a hosted platform on Amazon Web Services with a monthly subscription.'
+    link: https://www.databricks.com/company/newsroom/press-releases/databricks-announces-general-availability-cloud-platform-dramatically-simplifies-big-data-processing#:~:text=Databricks%20is%20available%20as%20a%20hosted%20platform%20on%20Amazon%20Web%20Services%20with%20a%20monthly%20subscription
+  - note: Unveiled at Spark Summit 2014, it spent months in limited availability starting that November before Databricks opened it to everyone.
+    link: https://www.databricks.com/blog/2015/06/15/databricks-is-now-generally-available.html#:~:text=launched%20it%20in%20limited%20availability%20in%20November
+status:
+  value: renamed
+  link: https://www.databricks.com/company/newsroom/press-releases/databricks-unveils-serverless-platform-apache-spark#:~:text=Databricks%20provides%20a%20Unified%20Analytics%20Platform%20for%20data%20science%20teams
+  date: '2026-09-27'
+from:
+  date: 2015-06
+  link: https://www.databricks.com/company/newsroom/press-releases/databricks-announces-general-availability-cloud-platform-dramatically-simplifies-big-data-processing#:~:text=formerly%20known%20as%20Databricks%20Cloud
+to:
+  date: '2017'
+  link: https://www.databricks.com/company/newsroom/press-releases/databricks-unveils-serverless-platform-apache-spark#:~:text=Databricks%20provides%20a%20Unified%20Analytics%20Platform%20for%20data%20science%20teams
+successorId: databricks-unified-analytics-platform
+occasion:
+  date: 2015-06
+  link: https://www.databricks.com/company/newsroom/press-releases/databricks-announces-general-availability-cloud-platform-dramatically-simplifies-big-data-processing#:~:text=formerly%20known%20as%20Databricks%20Cloud
+  note: General availability at Spark Summit 2015
+links:
+  - url: https://www.databricks.com/blog/2015/06/15/databricks-is-now-generally-available.html
+    kind: community
+    label: 'Databricks blog: Databricks is now Generally Available (2015)'
+source: https://www.databricks.com/company/newsroom/press-releases/databricks-announces-general-availability-cloud-platform-dramatically-simplifies-big-data-processing
+verified: '2026-09-27'

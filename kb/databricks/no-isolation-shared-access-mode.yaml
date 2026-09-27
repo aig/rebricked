@@ -20,7 +20,7 @@ status:
   link: https://docs.databricks.com/aws/en/admin/account-settings/no-isolation-shared#:~:text=use%20the%20legacy%20access%20mode
   date: '2026-08-20'
 from:
-  date: '2022'
+  date: 2022-08
   link: https://docs.databricks.com/aws/en/release-notes/product/2022/august#:~:text=Cluster%20UI%20preview%20and%20access%20mode%20replaces%20security%20mode
 deprecatedAt:
   date: 2025-12
@@ -35,4 +35,4 @@ links:
     kind: internet
     label: 'SEC Consult: cluster isolation advisory'
 source: https://docs.databricks.com/aws/en/admin/account-settings/no-isolation-shared
-verified: '2026-08-20'
+verified: '2026-09-27'

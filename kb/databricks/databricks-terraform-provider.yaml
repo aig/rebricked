@@ -1,0 +1,47 @@
+id: databricks-terraform-provider
+name: Databricks Terraform provider
+aliases:
+  - databricks/databricks
+  - databrickslabs/databricks
+  - Terraform provider
+  - Databricks Labs Terraform provider
+  - terraform-provider-databricks
+category: Developer experience
+what:
+  note: A HashiCorp Terraform provider for managing Databricks workspaces, their resources, and the associated cloud infrastructure as code, with the goal of supporting all Databricks REST APIs.
+  link: https://docs.databricks.com/aws/en/dev-tools/terraform/#:~:text=The%20goal%20of%20the%20Databricks%20Terraform%20provider%20is%20to%20support%20all%20Databricks%20REST%20APIs
+fact:
+  - note: It started life as a Databricks Labs project under the databrickslabs/databricks source address, and old configs still pointing there fail to install until you replace it with databricks/databricks in every .tf file.
+    link: https://docs.databricks.com/aws/en/dev-tools/terraform/troubleshoot#:~:text=Replace%20databrickslabs%2Fdatabricks%20with%20databricks%2Fdatabricks%20in%20all%20of%20your%20.tf%20files
+  - note: The move left a forwarding address on the docs - the troubleshooting page still sends provider bugs to Issues in the databrickslabs/terraform-provider-databricks GitHub repository.
+    link: https://docs.databricks.com/aws/en/dev-tools/terraform/troubleshoot#:~:text=Issues%20in%20the%20databrickslabs%2Fterraform%2Dprovider%2Ddatabricks%20GitHub%20repository
+  - note: Its launch post credits a customer obsessed crew from the Databricks Labs who teamed up and started building it a few months before the announcement.
+    link: https://www.databricks.com/blog/2020/09/11/announcing-databricks-labs-terraform-integration-on-aws-and-azure.html#:~:text=customer%20obsessed%20crew%20from%20the%20Databricks%20Labs
+status:
+  value: active
+  link: https://docs.databricks.com/aws/en/dev-tools/terraform/#:~:text=You%20can%20use%20the%20Databricks%20Terraform%20provider%20to%20manage%20your%20Databricks%20workspaces
+  date: '2026-09-27'
+releases:
+  - type: ga
+    date: 2022-06
+    link: https://docs.databricks.com/aws/en/release-notes/product/2022/june#:~:text=The%20Databricks%20Terraform%20provider%20is%20now%20generally%20available
+introducedAt:
+  date: 2020-09
+  link: https://www.databricks.com/blog/2020/09/11/announcing-databricks-labs-terraform-integration-on-aws-and-azure.html#:~:text=We%20are%20pleased%20to%20announce%20integration%20for%20deploying%20and%20managing%20Databricks%20environments
+occasion:
+  date: 2022-06
+  link: https://www.databricks.com/blog/2022/06/22/databricks-terraform-provider-is-now-generally-available.html#:~:text=Databricks%20Terraform%20Provider%20Is%20Now%20Generally%20Available
+  note: GA announcement blog post
+links:
+  - url: https://registry.terraform.io/providers/databricks/databricks/latest/docs
+    kind: internet
+    label: 'Terraform Registry: databricks/databricks'
+  - url: https://github.com/databricks/terraform-provider-databricks
+    kind: official
+    label: 'GitHub: databricks/terraform-provider-databricks'
+prediction:
+  - Databricks Terraform provider One
+  - Unity Terraform
+  - Lakeform
+source: https://docs.databricks.com/aws/en/dev-tools/terraform/
+verified: '2026-09-27'

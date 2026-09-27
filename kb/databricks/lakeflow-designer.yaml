@@ -33,9 +33,9 @@ occasion:
   link: https://docs.databricks.com/aws/en/release-notes/product/2026/june#:~:text=Lakeflow%20Designer%20is%20now%20generally%20available
   note: GA June 16, 2026
 limitations:
-  note: By default, operators process only a limited sample of data; setting Rows scanned to Max reruns all upstream operators over the complete, unbounded dataset and can take a long time.
-  link: https://docs.databricks.com/aws/en/designer/what-is-lakeflow-designer#:~:text=operators%20process%20a%20limited%20sample%20of%20data
-  date: '2026-08-20'
+  note: By default, operator previews process only a limited sample of data; setting Rows scanned to All rows reruns the operator and its upstream operators over the complete, unbounded dataset and can take a long time. Scheduled and job runs always process the complete dataset.
+  link: https://docs.databricks.com/aws/en/designer/build-transformation#:~:text=operators%20process%20a%20limited%20sample%20of%20data%2C%20for%20previews
+  date: '2026-09-27'
 links:
   - url: https://www.databricks.com/blog/announcing-lakeflow-designer-no-code-etl
     kind: community
@@ -48,4 +48,4 @@ prediction:
   - Lakeflow Canvas
   - Agentic Designer
 source: https://docs.databricks.com/aws/en/designer/
-verified: '2026-08-20'
+verified: '2026-09-27'

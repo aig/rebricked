@@ -1,0 +1,47 @@
+id: lineage-in-unity-catalog
+name: Lineage in Unity Catalog
+aliases:
+  - Unity Catalog data lineage
+  - data lineage
+  - column lineage
+  - table lineage
+  - system.access.table_lineage
+category: Data governance
+what:
+  note: Unity Catalog automatically captures lineage for queries run on Databricks down to the column level, aggregated across every workspace on the metastore, viewable in Catalog Explorer and queryable through the lineage system tables.
+  link: https://docs.databricks.com/aws/en/data-governance/unity-catalog/data-lineage#:~:text=Unity%20Catalog%20captures%20lineage%20automatically%20for%20queries%20run%20on%20Databricks
+fact:
+  - note: The Public Preview announcement promised lineage across every language and then spelled it "Lingeage" in the very next breath.
+    link: https://docs.databricks.com/aws/en/release-notes/product/2022/september#:~:text=Lingeage%20data%20is%20captured%20across%20all%20languages
+  - note: A feature for a site about renames - lineage is not preserved for renamed catalogs, schemas, tables, views, or columns.
+    link: https://docs.databricks.com/aws/en/data-governance/unity-catalog/data-lineage#:~:text=Lineage%20is%20not%20preserved%20for%20renamed%20catalogs%2C%20schemas%2C%20tables%2C%20views%2C%20or%20columns
+  - note: It remembers what you tried to undo - transactions emit lineage as each read and write occurs, and those events persist even if the transaction is rolled back.
+    link: https://docs.databricks.com/aws/en/data-governance/unity-catalog/data-lineage#:~:text=Lineage%20events%20persist%20even%20if%20the%20transaction%20is%20rolled%20back
+status:
+  value: active
+  link: https://docs.databricks.com/aws/en/data-governance/unity-catalog/data-lineage#:~:text=Unity%20Catalog%20captures%20lineage%20automatically%20for%20queries%20run%20on%20Databricks
+  date: '2026-09-27'
+releases:
+  - type: public-preview
+    date: 2022-09
+    link: https://docs.databricks.com/aws/en/release-notes/product/2022/september#:~:text=Capture%20and%20view%20lineage%20data%20with%20Unity%20Catalog%20%28Public%20Preview%29
+  - type: ga
+    date: 2022-12
+    link: https://docs.databricks.com/aws/en/release-notes/product/2022/december#:~:text=Databricks%20is%20pleased%20to%20announce%20the%20general%20availability%20of%20Unity%20Catalog%20support%20for%20capturing%20and%20viewing%20lineage%20data
+introducedAt:
+  date: 2022-09
+  link: https://docs.databricks.com/aws/en/release-notes/product/2022/september#:~:text=Capture%20and%20view%20lineage%20data%20with%20Unity%20Catalog%20%28Public%20Preview%29
+limitations:
+  note: Lineage captured before September 1, 2024 is not available, and the lineage system tables keep only a rolling 1-year window. Lineage is not preserved across renames, and is not captured for RDDs, global temp views, Spark SQL dataset checkpointing, or system.information_schema tables. Jobs submitted via runs submit or spark submit lose the link to the job run, column lineage is lost when a source or target is referenced by path, and UDF lineage is table-level only.
+  link: https://docs.databricks.com/aws/en/data-governance/unity-catalog/data-lineage#:~:text=Lineage%20data%20captured%20before%20September%201%2C%202024%20is%20not%20available
+  date: '2026-09-27'
+links:
+  - url: https://docs.databricks.com/aws/en/admin/system-tables/lineage
+    kind: official
+    label: Lineage system tables reference
+prediction:
+  - Genie Lineage
+  - Unity Ancestry
+  - Lineage One
+source: https://docs.databricks.com/aws/en/data-governance/unity-catalog/data-lineage
+verified: '2026-09-27'

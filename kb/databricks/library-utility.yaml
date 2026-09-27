@@ -1,0 +1,53 @@
+id: library-utility
+name: Library utility (dbutils.library)
+aliases:
+  - Library utilities
+  - dbutils.library
+  - dbutils.library.installPyPI
+  - dbutils.library.install
+  - dbutils.library.updateCondaEnv
+category: Developer experience
+what:
+  note: The dbutils module for installing Python libraries from inside a notebook (install, installPyPI, list, updateCondaEnv) into an environment scoped to that notebook session, on both driver and executors.
+  link: https://docs.databricks.com/aws/en/archive/dev-tools/dbutils-library#:~:text=The%20library%20utility%20allows%20you%20to%20install%20Python%20libraries%20and%20create%20an%20environment%20scoped%20to%20a%20notebook%20session
+fact:
+  - note: 'installPyPI refused pip-style strings: azureml-sdk[databricks]==1.19.0 was invalid, because the version and extras keys had to be passed as separate arguments.'
+    link: https://docs.databricks.com/aws/en/archive/dev-tools/dbutils-library#:~:text=The%20version%20and%20extras%20keys%20cannot%20be%20part%20of%20the%20PyPI%20package%20string
+  - note: 'The official egg-file workaround for its replacement begins with %pip install of a library that, in the docs'' own words, doesn''t need to be a real library.'
+    link: https://docs.databricks.com/aws/en/archive/dev-tools/dbutils-library#:~:text=This%20doesn't%20need%20to%20be%20a%20real%20library
+  - note: One command outlived the module - restartPython is still the documented way to restart the Python process, while most other dbutils.library methods are deprecated.
+    link: https://docs.databricks.com/aws/en/dev-tools/databricks-utils#:~:text=Most%20methods%20in%20the%20dbutils.library%20module%20are%20deprecated
+status:
+  value: deprecated
+  link: https://docs.databricks.com/aws/en/archive/dev-tools/dbutils-library#:~:text=Most%20library%20utility%20commands%20are%20deprecated
+  date: '2026-09-27'
+releases:
+  - type: ga
+    date: 2019-06
+    link: https://docs.databricks.com/aws/en/release-notes/product/2019/june#:~:text=Library%20utilities%20generally%20available
+deprecatedAt:
+  date: 2022-06
+  link: https://docs.databricks.com/aws/en/archive/runtime-release-notes/11.0#:~:text=Databricks%20released%20this%20version%20in%20June%202022
+removedAt:
+  date: 2022-06
+  link: https://docs.databricks.com/aws/en/archive/dev-tools/dbutils-library#:~:text=dbutils.library.install%20and%20dbutils.library.installPyPI%20APIs%20are%20removed%20in%20Databricks%20Runtime%2011.0%20and%20above
+replacement: '%pip magic commands (notebook-scoped Python libraries)'
+limitations:
+  note: Most library utilities were never available on Databricks Runtime ML, library install sources were limited to dbfs and s3, and detaching the notebook destroyed the environment it built.
+  link: https://docs.databricks.com/aws/en/archive/dev-tools/dbutils-library#:~:text=Most%20library%20utilities%20are%20not%20available%20on%20Databricks%20Runtime%20ML
+  date: '2026-09-27'
+links:
+  - url: https://docs.databricks.com/aws/en/libraries/notebooks-python-libraries
+    kind: official
+    label: 'Databricks docs: Notebook-scoped Python libraries (%pip, the recommended replacement)'
+  - url: https://docs.databricks.com/aws/en/archive/runtime-release-notes/11.0
+    kind: official
+    label: 'Databricks Runtime 11.0 release notes (June 2022): the runtime where install and installPyPI are gone'
+  - url: https://docs.databricks.com/aws/en/release-notes/product/2019/june
+    kind: official
+    label: 'Databricks release notes (June 2019): Library utilities generally available in Databricks Runtime 5.4'
+  - url: https://learn.microsoft.com/en-us/azure/databricks/archive/dev-tools/dbutils-library
+    kind: official
+    label: 'Microsoft Learn (archived): Library utility (dbutils.library) (legacy)'
+source: https://docs.databricks.com/aws/en/archive/dev-tools/dbutils-library
+verified: '2026-09-27'

@@ -1,0 +1,30 @@
+id: databricks-unified-data-analytics-platform
+name: Databricks Unified Data Analytics Platform
+aliases:
+  - Unified Data Analytics Platform
+category: Compute / BI
+what:
+  note: The 2019-2020 name for the platform, the same unified analytics pitch with Data added, for data science, data engineering and business teams building data products.
+  link: https://www.databricks.com/company/newsroom/press-releases/databricks-partners-tableau-enabling-business-intelligence-on-data-lakes#:~:text=Databricks%20provides%20a%20Unified%20Data%20Analytics%20Platform%20for%20data%20science%20teams
+fact:
+  - note: A 2020 Forrester Total Economic Impact study credited it with a 417 percent return on investment over three years, a number that fit neatly in a headline.
+    link: https://www.databricks.com/company/newsroom/press-releases/databricks-unified-data-analytics-platform-can-generate-417-percent-return-on-investment-according-to-tei-study#:~:text=417%20percent%20return%20on%20investment
+  - note: The November 2020 SQL Analytics launch press release still signs off with thousands of data teams that leverage its Unified Data Analytics Platform.
+    link: https://www.databricks.com/company/newsroom/press-releases/databricks-launches-sql-analytics-to-enable-cloud-data-warehousing-on-data-lakes#:~:text=leverage%20its%20Unified%20Data%20Analytics%20Platform
+status:
+  value: renamed
+  link: https://www.databricks.com/company/newsroom/press-releases/databricks-raises-1-6-billion-series-h-investment-at-38-billion-valuation#:~:text=rely%20on%20the%20Databricks%20Lakehouse%20Platform%20to%20unify%20their%20data
+  date: '2026-09-27'
+from:
+  date: '2019'
+  link: https://www.databricks.com/company/newsroom/press-releases/databricks-partners-tableau-enabling-business-intelligence-on-data-lakes#:~:text=Databricks%20provides%20a%20Unified%20Data%20Analytics%20Platform%20for%20data%20science%20teams
+to:
+  date: '2021'
+  link: https://www.databricks.com/company/newsroom/press-releases/databricks-raises-1-6-billion-series-h-investment-at-38-billion-valuation#:~:text=rely%20on%20the%20Databricks%20Lakehouse%20Platform%20to%20unify%20their%20data
+successorId: databricks-lakehouse-platform
+links:
+  - url: https://www.databricks.com/blog/what-is-unified-data-analytics-platform
+    kind: community
+    label: 'Databricks blog: What is a Unified Data Analytics Platform?'
+source: https://www.databricks.com/company/newsroom/press-releases/databricks-partners-tableau-enabling-business-intelligence-on-data-lakes
+verified: '2026-09-27'

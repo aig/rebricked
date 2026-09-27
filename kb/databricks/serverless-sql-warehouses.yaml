@@ -1,0 +1,47 @@
+id: serverless-sql-warehouses
+name: Serverless SQL warehouses
+aliases:
+  - Serverless SQL warehouse
+  - Serverless SQL endpoints
+  - Serverless SQL
+  - Databricks SQL Serverless
+  - DBSQL Serverless
+category: Compute / BI
+what:
+  note: The SQL warehouse type that runs in the Databricks-managed serverless compute plane rather than your cloud account, supporting Photon, Predictive IO and Intelligent Workload Management, and the default type in the UI where serverless is available.
+  link: https://docs.databricks.com/aws/en/compute/sql-warehouse/warehouse-types#:~:text=supports%20all%20of%20the%20performance%20features
+fact:
+  - note: Its launch note handed everything that came before it a retronym - the SQL endpoints living in your own AWS account were, from that day, now called Classic SQL endpoints.
+    link: https://docs.databricks.com/aws/en/release-notes/product/2021/august#:~:text=now%20called%20Classic%20SQL%20endpoints
+  - note: On the day it went GA, Databricks stopped creating a serverless starter SQL warehouse for you.
+    link: https://docs.databricks.com/aws/en/release-notes/product/2023/march#:~:text=Databricks%20no%20longer%20creates%20a%20serverless%20starter%20SQL%20warehouse
+  - note: You do not get to pick the chip - Databricks might change the CPU architecture behind a serverless SQL warehouse between restarts, without notice.
+    link: https://docs.databricks.com/aws/en/compute/sql-warehouse/serverless#:~:text=might%20change%20the%20CPU%20architecture%20that%20backs%20a%20serverless%20SQL%20warehouse%20between%20restarts%2C%20without%20notice
+status:
+  value: active
+  link: https://docs.databricks.com/aws/en/compute/sql-warehouse/warehouse-types#:~:text=Databricks%20SQL%20supports%20serverless%2C%20pro%2C%20and%20classic%20types
+  date: '2026-09-27'
+releases:
+  - type: public-preview
+    date: 2021-08
+    link: https://docs.databricks.com/aws/en/release-notes/product/2021/august#:~:text=Serverless%20SQL%20provides%20instant%20compute
+  - type: ga
+    date: 2023-03
+    link: https://docs.databricks.com/aws/en/release-notes/product/2023/march#:~:text=Databricks%20SQL%20Serverless%20is%20GA
+introducedAt:
+  date: 2021-08
+  link: https://docs.databricks.com/aws/en/release-notes/product/2021/august#:~:text=Serverless%20SQL%20provides%20instant%20compute
+limitations:
+  note: Cluster policies (including spot instance policies) are not supported, customer-managed VPCs do not apply, customer-managed keys are not used for EBS storage encryption, and a workspace with an external Hive legacy metastore or workspace-level Hive metastore credentials cannot deploy them.
+  link: https://docs.databricks.com/aws/en/compute/sql-warehouse/serverless#:~:text=Serverless%20warehouses%20have%20the%20following%20limitations
+  date: '2026-09-27'
+links:
+  - url: https://www.databricks.com/blog/2021/08/30/announcing-databricks-serverless-sql.html
+    kind: official
+    label: 'Databricks blog (2021): Announcing serverless compute for Databricks SQL'
+prediction:
+  - Serverless SQL warehouses (Real-Time Edition)
+  - Instant warehouses
+  - Lakehouse Serverless SQL
+source: https://docs.databricks.com/aws/en/compute/sql-warehouse/warehouse-types
+verified: '2026-09-27'

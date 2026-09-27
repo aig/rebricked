@@ -1,8 +1,6 @@
 id: sql-warehouse
 name: SQL Warehouse
 aliases:
-  - SQL Endpoint
-  - SQL Endpoints
   - SQL Warehouses
 category: Compute / BI
 what:
@@ -11,21 +9,21 @@ what:
 fact:
   - note: The serverless flavor spins up in seconds - typically 2 to 6 - where a classic warehouse takes several minutes (around four) to start.
     link: https://docs.databricks.com/aws/en/compute/sql-warehouse/warehouse-types#:~:text=typically%20between%202%20and%206%20seconds
-  - note: 'Sources can''t agree on when the rename happened: Databricks docs date it to 2023, while some write-ups swear it was 2022.'
-    link: https://docs.databricks.com/aws/en/compute/sql-warehouse/#:~:text=SQL%20endpoints%20were%20renamed%20as%20SQL%20warehouses
+  - note: 'Databricks can''t agree with itself on when the rename happened: the SQL warehouse page says 2023, a year after the release notes logged the name change on June 23, 2022, explaining that a warehouse is more than just an API entry point.'
+    link: https://docs.databricks.com/aws/en/compute/sql-warehouse/#:~:text=In%202023%2C%20SQL%20endpoints%20were%20renamed%20as%20SQL%20warehouses
   - note: There is a panel devoted to answering 'why is this thing still awake?' - color-coded annotations say whether a warehouse is held open by query activity, queries still fetching, open sessions, or plain idling.
     link: https://docs.databricks.com/aws/en/release-notes/product/2026/july#:~:text=explain%20why%20a%20warehouse%20remains%20active%2C%20including%20query%20activity%2C%20fetching%20queries%2C%20open%20sessions%2C%20and%20idle%20states
 status:
   value: active
   link: https://docs.databricks.com/aws/en/compute/sql-warehouse/#:~:text=SQL%20endpoints%20were%20renamed%20as%20SQL%20warehouses
-  date: '2026-08-20'
+  date: '2026-09-27'
 releases:
   - type: ga
-    date: '2023'
-    link: https://docs.databricks.com/aws/en/compute/sql-warehouse/
+    date: 2021-12
+    link: https://docs.databricks.com/aws/en/sql/release-notes/2021#:~:text=Databricks%20SQL%20is%20Generally%20Available
 from:
-  date: '2023'
-  link: https://docs.databricks.com/aws/en/compute/sql-warehouse/#:~:text=In%202023%2C%20SQL%20endpoints%20were%20renamed%20as%20SQL%20warehouses
+  date: 2022-06
+  link: https://docs.databricks.com/aws/en/sql/release-notes/2022#:~:text=Databricks%20changed%20the%20name%20from%20SQL%20endpoint%20to%20SQL%20warehouse
 limitations:
   note: The maximum number of queries in a warehouse queue is 1000 for all warehouse types, and pro/classic SKUs have a fixed limit of one cluster per 10 concurrent queries.
   link: https://docs.databricks.com/aws/en/compute/sql-warehouse/warehouse-behavior#:~:text=maximum%20number%20of%20queries%20in%20a%20queue
@@ -42,4 +40,4 @@ prediction:
   - Genie Warehouse
   - Lakehouse Warehouse
 source: https://docs.databricks.com/aws/en/compute/sql-warehouse/
-verified: '2026-08-20'
+verified: '2026-09-27'

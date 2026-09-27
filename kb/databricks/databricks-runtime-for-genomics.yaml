@@ -5,6 +5,7 @@ aliases:
   - Databricks Genomics runtime
   - Databricks Runtime Genomics
   - DBR for Genomics
+  - Databricks Unified Analytics Platform for Genomics
 category: Data engineering
 what:
   note: A variant of Databricks Runtime optimized for working with genomic and biomedical data, built on top of each matching standard runtime release and bundling genomics libraries and pipelines such as Glow, Hail and the DNASeq pipeline so bioinformatics workloads ran on Spark without assembling the stack yourself.
@@ -19,8 +20,11 @@ fact:
 status:
   value: retired
   link: https://docs.databricks.com/aws/en/release-notes/product/2023/august#:~:text=support%20for%20Databricks%20Runtime%20for%20Genomics%20was%20removed%20on%20September%2024%2C%202022
-  date: '2026-09-11'
+  date: '2026-09-27'
 releases:
+  - type: private-preview
+    date: 2018-06
+    link: https://www.databricks.com/blog/2018/06/06/unified-analytics-platform-for-genomics.html#:~:text=is%20currently%20in%20preview%20with%20multiple%20Databricks%20customers
   - type: ga
     date: 2019-10
     link: https://docs.databricks.com/aws/en/release-notes/product/2019/october#:~:text=Beginning%20with%20release%206.0%2C%20Databricks%20Runtime%20for%20Genomics%20is%20generally%20available
@@ -31,7 +35,14 @@ removedAt:
   date: 2022-09
   link: https://docs.databricks.com/aws/en/release-notes/product/2023/august#:~:text=support%20for%20Databricks%20Runtime%20for%20Genomics%20was%20removed%20on%20September%2024%2C%202022
 replacement: Open source Glow and genomics-pipelines
+occasion:
+  date: 2018-06
+  link: https://www.databricks.com/blog/2018/06/06/unified-analytics-platform-for-genomics.html#:~:text=Today%20we%20are%20proud%20to%20introduce%20the%20Databricks%20Unified%20Analytics%20Platform%20for%20Genomics
+  note: Introduced as the Databricks Unified Analytics Platform for Genomics, June 2018
 links:
+  - url: https://www.databricks.com/blog/2018/06/06/unified-analytics-platform-for-genomics.html
+    kind: official
+    label: 'Databricks blog (June 6, 2018): Accelerating Discovery with a Unified Analytics Platform for Genomics'
   - url: https://docs.databricks.com/aws/en/release-notes/product/2021/february
     kind: official
     label: 'Databricks release notes: Databricks Runtime for Genomics now deprecated (February 1, 2021)'
@@ -48,4 +59,4 @@ links:
     kind: internet
     label: 'GitHub: databricks/genomics-pipelines, open source equivalents of the runtime pipelines'
 source: https://docs.databricks.com/aws/en/release-notes/product/2023/august
-verified: '2026-09-11'
+verified: '2026-09-27'

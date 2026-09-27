@@ -1,0 +1,30 @@
+id: standard-clusters
+name: Standard clusters
+aliases:
+  - Standard cluster mode
+  - Standard mode clusters
+category: Compute / BI
+what:
+  note: The original default cluster mode - a cluster that multiple users could share with no isolation between them, recommended for single users and running Python, SQL, R and Scala.
+  link: https://learn.microsoft.com/en-us/azure/databricks/archive/compute/configure#:~:text=Standard%20mode%20clusters%20%28sometimes%20called%20No%20Isolation%20Shared%20clusters%29%20can%20be%20shared%20by%20multiple%20users
+fact:
+  - note: It was the default cluster mode, yet the docs officially recommended it for single users only - while warning it could be shared by multiple users with no isolation between them.
+    link: https://learn.microsoft.com/en-us/azure/databricks/archive/compute/configure#:~:text=A%20Standard%20cluster%20is%20recommended%20for%20single%20users%20only
+  - note: A High Concurrency cluster without Table ACLs or credential passthrough quietly ran with exactly the same settings as a Standard one.
+    link: https://learn.microsoft.com/en-us/azure/databricks/archive/compute/configure#:~:text=the%20same%20settings%20are%20used%20as%20Standard%20mode%20clusters
+  - note: Retiring the word did not last - 'standard' came back as the name for the formerly shared access mode, which is the isolated, Unity Catalog one.
+    link: https://docs.databricks.com/aws/en/release-notes/product/2025/february#:~:text=standard%20access%20mode%20compute%20%28formerly%20shared%20access%20mode%29
+status:
+  value: renamed
+  link: https://learn.microsoft.com/en-us/azure/databricks/archive/compute/configure#:~:text=Standard%20mode%20clusters%20are%20now%20called%20No%20Isolation%20Shared%20access%20mode%20clusters
+  date: '2026-09-27'
+to:
+  date: 2022-08
+  link: https://docs.databricks.com/aws/en/release-notes/product/2022/august#:~:text=Cluster%20UI%20preview%20and%20access%20mode%20replaces%20security%20mode
+successorId: no-isolation-shared-access-mode
+links:
+  - url: https://learn.microsoft.com/en-us/azure/databricks/archive/compute/cluster-ui-preview
+    kind: official
+    label: 'MS Learn (archived): Clusters UI changes and cluster access modes'
+source: https://learn.microsoft.com/en-us/azure/databricks/archive/compute/configure
+verified: '2026-09-27'

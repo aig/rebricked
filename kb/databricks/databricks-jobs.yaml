@@ -1,0 +1,29 @@
+id: databricks-jobs
+name: Databricks Jobs
+aliases:
+  - Jobs
+  - Databricks jobs
+category: Data engineering
+what:
+  note: Databricks' built-in scheduler and orchestrator for running notebooks, Spark applications and later multi-task DAGs as production jobs.
+  link: https://www.databricks.com/blog/2015/03/18/databricks-launches-jobs-feature-for-production-workloads.html#:~:text=Databricks%20now%20includes%20a%20new%20feature%20called%20Jobs
+fact:
+  - note: Its headline trick in 2015 was running a notebook as a scheduled production job, so the scratchpad you explored in became the pipeline you shipped.
+    link: https://www.databricks.com/blog/2015/03/18/databricks-launches-jobs-feature-for-production-workloads.html#:~:text=allows%20running%20Databricks%20notebooks%20as%20jobs
+  - note: It launched already in production - the announcement admitted several early-adopter customers were running it before its first official release.
+    link: https://www.databricks.com/blog/2015/03/18/databricks-launches-jobs-feature-for-production-workloads.html#:~:text=Although%20this%20is%20the%20first%20official%20release%20of%20the%20Jobs%20feature
+  - note: It took until July 2021 for a single job to run more than one task, via a directed acyclic graph of task dependencies.
+    link: https://docs.databricks.com/aws/en/release-notes/product/2021/july#:~:text=allows%20you%20to%20orchestrate%20and%20run%20a%20job%20with%20multiple%20tasks
+status:
+  value: renamed
+  link: https://docs.databricks.com/aws/en/release-notes/product/2025/june#:~:text=The%20product%20known%20as%20Databricks%20Jobs%20is%20now%20Lakeflow%20Jobs
+  date: '2026-09-27'
+from:
+  date: 2015-03
+  link: https://www.databricks.com/blog/2015/03/18/databricks-launches-jobs-feature-for-production-workloads.html#:~:text=Databricks%20now%20includes%20a%20new%20feature%20called%20Jobs
+to:
+  date: 2025-06
+  link: https://docs.databricks.com/aws/en/release-notes/product/2025/june#:~:text=The%20product%20known%20as%20Databricks%20Jobs%20is%20now%20Lakeflow%20Jobs
+successorId: lakeflow-jobs
+source: https://docs.databricks.com/aws/en/release-notes/product/2025/june
+verified: '2026-09-27'
