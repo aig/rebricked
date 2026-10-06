@@ -1,0 +1,44 @@
+id: managed-agent-memory
+name: Managed agent memory
+aliases:
+  - agent memory
+  - long-term agent memory
+category: AI / ML
+what:
+  note: A fully managed, Lakebase-backed store that gives agents durable long-term memory across conversations, usable from agents built on any framework.
+  link: https://docs.databricks.com/aws/en/agents/agent-memory/managed-memory
+fact:
+  - note: For all the agent talk, recall is old-school full-text BM25 search, returning a relevance-ranked top-N of at most 100 entries.
+    link: https://docs.databricks.com/aws/en/agents/agent-memory/managed-memory
+  - note: A memory store can never forget its own name - display_name is immutable after creation, and only the description can be changed.
+    link: https://docs.databricks.com/aws/en/agents/agent-memory/managed-memory
+  - note: It moved house within a quarter - the June 2026 Beta note kept memories in Unity Catalog memory stores, while the September note describes it as a Lakebase-backed store.
+    link: https://docs.databricks.com/aws/en/release-notes/product/2026/june#:~:text=Memory%20is%20stored%20in%20Unity%20Catalog%20memory%20stores
+status:
+  value: active
+  link: https://docs.databricks.com/aws/en/agents/agent-memory/managed-memory
+  date: '2026-10-06'
+releases:
+  - type: beta
+    date: 2026-06
+    link: https://docs.databricks.com/aws/en/release-notes/product/2026/june#:~:text=Managed%20agent%20memory%20is%20in%20Beta
+introducedAt:
+  date: 2026-06
+  link: https://docs.databricks.com/aws/en/release-notes/product/2026/june#:~:text=Managed%20agent%20memory%20is%20in%20Beta
+limitations:
+  note: Beta. Long-term memory only (short-term history is managed agent sessions); search is full-text BM25 returning up to 100 entries; access control is per store, with no per-entry or per-actor control; a store's display_name cannot be changed after creation. During the preview you pay for the underlying Lakebase instance.
+  link: https://docs.databricks.com/aws/en/agents/agent-memory/managed-memory
+  date: '2026-10-06'
+links:
+  - url: https://docs.databricks.com/aws/en/release-notes/product/2026/june
+    kind: official
+    label: 'Databricks release notes: Managed agent memory is in Beta (June 23, 2026)'
+  - url: https://docs.databricks.com/aws/en/release-notes/product/2026/september
+    kind: official
+    label: 'Databricks release notes: Managed agent memory and sessions are in Beta (September 16, 2026)'
+prediction:
+  - Lakebase Memory
+  - Genie Recall
+  - Unity Memory
+source: https://docs.databricks.com/aws/en/agents/agent-memory/managed-memory
+verified: '2026-10-06'

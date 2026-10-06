@@ -9,6 +9,30 @@ shows the what. Plain, simple English: short sentences, common words, no jargon 
 and product names themselves. Some older entries have no `Why:` line - the reason was never
 recorded, and a made-up reason is worse than none.
 
+## 2026-10-06
+
+### Added
+- **Four new cards close the gaps found after the October 6 refresh of the reference copy: Agent
+  Bricks CLI, Managed agent memory, Managed agent sessions, and Budgets.**
+
+  **Why:** the gap report was last checked on September 27. Since then, the September notes had two
+  launches with no card to attach them to: the Agent Bricks CLI (Beta, September 29, 2026) and managed
+  agent memory and sessions (Beta, September 16, 2026). Managed agent memory had been an open row on the
+  report since its first Beta on June 23, 2026, when it was described as Unity Catalog memory stores.
+  The September note relaunched it next to sessions as a store built on Lakebase. Budgets had been the one open item on the
+  report's "most worth adding" list. It has been on the release notes since its June 2024 Public Preview
+  and reached GA on July 6, 2026, but only the budget *policy* cards existed, and those are a different
+  feature.
+
+  **What:** four `active` features, each with a sourced `releases` timeline. `agent-bricks-cli`
+  (AI / ML, Beta 2026-09). `managed-agent-memory` (AI / ML, Beta 2026-06; the change from Unity Catalog
+  to Lakebase storage is recorded as a fact) and `managed-agent-sessions` (AI / ML, Beta 2026-09). They
+  are two cards because Databricks documents them as two products on two pages. `budgets` (Data governance, Public Preview 2024-06, GA 2026-07), with its documented limits:
+  1,000 budgets per account, four alerts per budget, up to 24 hours of alert delay, and list prices
+  only. All four ids are in `app.js` `NAV`: the three agent cards under AI/ML > Agents and `budgets`
+  under Catalog, next to the budget-policy cards. `COVERAGE-GAPS.md` has a 2026-10-06 update-log
+  entry. Every citation passed `check_anchors.py`.
+
 ## 2026-09-27
 
 ### Changed

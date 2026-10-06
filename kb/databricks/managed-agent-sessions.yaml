@@ -1,0 +1,35 @@
+id: managed-agent-sessions
+name: Managed agent sessions
+aliases:
+  - agent sessions
+  - agent conversation history
+category: AI / ML
+what:
+  note: A fully managed, Lakebase-backed, framework-agnostic store for an agent's session state - the conversation history an agent reloads at the start of a turn and appends to as it runs.
+  link: https://docs.databricks.com/aws/en/agents/agent-memory/managed-sessions
+fact:
+  - note: It is deliberately unopinionated about what a turn looks like - every item appended to a session can be any JSON-compatible value.
+    link: https://docs.databricks.com/aws/en/agents/agent-memory/managed-sessions
+  - note: The preview has no line item of its own - you are billed only for the Lakebase instance the sessions live in.
+    link: https://docs.databricks.com/aws/en/agents/agent-memory/managed-sessions
+status:
+  value: active
+  link: https://docs.databricks.com/aws/en/release-notes/product/2026/september#:~:text=Managed%20agent%20memory%20and%20sessions%20are%20in%20Beta
+  date: '2026-10-06'
+releases:
+  - type: beta
+    date: 2026-09
+    link: https://docs.databricks.com/aws/en/release-notes/product/2026/september#:~:text=Managed%20agent%20memory%20and%20sessions%20are%20in%20Beta
+introducedAt:
+  date: 2026-09
+  link: https://docs.databricks.com/aws/en/release-notes/product/2026/september#:~:text=Managed%20agent%20memory%20and%20sessions%20are%20in%20Beta
+links:
+  - url: https://docs.databricks.com/aws/en/release-notes/product/2026/september
+    kind: official
+    label: 'Databricks release notes: Managed agent memory and sessions are in Beta (September 16, 2026)'
+prediction:
+  - Lakebase Sessions
+  - Genie Threads
+  - Agent History
+source: https://docs.databricks.com/aws/en/agents/agent-memory/managed-sessions
+verified: '2026-10-06'

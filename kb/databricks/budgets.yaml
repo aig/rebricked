@@ -1,0 +1,50 @@
+id: budgets
+name: Budgets
+aliases:
+  - account budgets
+  - budget alerts
+category: Data governance
+what:
+  note: Account-level spending thresholds in USD at list price, account-wide or filtered by workspace, team, or custom tags, with email alerts and - for Unity Gateway requests, including Genie - per-user limits that can block usage.
+  link: https://docs.databricks.com/aws/en/admin/account-settings/budgets
+fact:
+  - note: A budget does not know your discount - it tracks list prices and ignores billing credits and negotiated rates, so the number it alarms on is the one before your deal.
+    link: https://docs.databricks.com/aws/en/admin/account-settings/budgets
+  - note: The alarm can run late - there can be up to a 24-hour delay between the usage and the email telling you about it.
+    link: https://docs.databricks.com/aws/en/admin/account-settings/budgets
+  - note: It spent two years in Public Preview, from June 2024 to its GA in July 2026.
+    link: https://docs.databricks.com/aws/en/release-notes/product/2026/july#:~:text=Budgets%2C%20including%20budgets%20for%20Unity%20Gateway%2C%20are%20now%20generally%20available
+status:
+  value: active
+  link: https://docs.databricks.com/aws/en/release-notes/product/2026/july#:~:text=Budgets%2C%20including%20budgets%20for%20Unity%20Gateway%2C%20are%20now%20generally%20available
+  date: '2026-10-06'
+releases:
+  - type: public-preview
+    date: 2024-06
+    link: https://docs.databricks.com/aws/en/release-notes/product/2024/june#:~:text=Account%20admins%20can%20now%20create%20budgets%20to%20track%20spending
+  - type: ga
+    date: 2026-07
+    link: https://docs.databricks.com/aws/en/release-notes/product/2026/july#:~:text=Budgets%2C%20including%20budgets%20for%20Unity%20Gateway%2C%20are%20now%20generally%20available
+introducedAt:
+  date: 2024-06
+  link: https://docs.databricks.com/aws/en/release-notes/product/2024/june#:~:text=Account%20admins%20can%20now%20create%20budgets%20to%20track%20spending
+limitations:
+  note: Account admins create and manage budgets (workspace admins can manage workspace-scoped ones through Governance Hub); up to 1,000 budgets per account and four alerts per budget, each with a unique monthly threshold; email alerts can lag usage by up to 24 hours; block thresholds are enforced approximately; list prices only, with no credits or negotiated discounts.
+  link: https://docs.databricks.com/aws/en/admin/account-settings/budgets
+  date: '2026-10-06'
+links:
+  - url: https://docs.databricks.com/aws/en/release-notes/product/2024/june
+    kind: official
+    label: 'Databricks release notes: Create budgets to monitor account spending (Public Preview, June 13, 2024)'
+  - url: https://docs.databricks.com/aws/en/release-notes/product/2026/july
+    kind: official
+    label: 'Databricks release notes: Budgets are now generally available (July 6, 2026)'
+  - url: https://docs.databricks.com/aws/en/ai-gateway/budgets
+    kind: official
+    label: Manage budgets for Unity Gateway
+prediction:
+  - Spend Policies
+  - Cost Guardrails
+  - Unity Budgets
+source: https://docs.databricks.com/aws/en/admin/account-settings/budgets
+verified: '2026-10-06'

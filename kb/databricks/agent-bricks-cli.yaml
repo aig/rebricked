@@ -1,0 +1,37 @@
+id: agent-bricks-cli
+name: Agent Bricks CLI
+aliases:
+  - databricks-agentbricks
+  - agentbricks
+category: AI / ML
+what:
+  note: A command-line tool for developers who build custom agents in code - scaffold a project from a framework template, run it locally against Databricks model serving, and deploy it to the Databricks agent runtime.
+  link: https://docs.databricks.com/aws/en/agents/custom-agents/agent-bricks-cli
+fact:
+  - note: The whole lifecycle is three verbs - agentbricks init, agentbricks dev, agentbricks deploy - with an agent.toml file as the declarative source of truth for every Databricks resource the agent needs.
+    link: https://docs.databricks.com/aws/en/agents/custom-agents/agent-bricks-cli
+  - note: It ships with exactly two framework templates, LangGraph and the OpenAI Agents SDK, and switches MLflow tracing on by default so every run lands in a per-project experiment.
+    link: https://docs.databricks.com/aws/en/agents/custom-agents/agent-bricks-cli
+  - note: It is a CLI that needs another CLI - the Databricks CLI has to be installed and on your path before pip install databricks-agentbricks is any use.
+    link: https://docs.databricks.com/aws/en/agents/custom-agents/agent-bricks-cli
+status:
+  value: active
+  link: https://docs.databricks.com/aws/en/release-notes/product/2026/september#:~:text=Agent%20Bricks%20CLI%20is%20in%20Beta
+  date: '2026-10-06'
+releases:
+  - type: beta
+    date: 2026-09
+    link: https://docs.databricks.com/aws/en/release-notes/product/2026/september#:~:text=Agent%20Bricks%20CLI%20is%20in%20Beta
+introducedAt:
+  date: 2026-09
+  link: https://docs.databricks.com/aws/en/release-notes/product/2026/september#:~:text=Agent%20Bricks%20CLI%20is%20in%20Beta
+links:
+  - url: https://docs.databricks.com/aws/en/release-notes/product/2026/september
+    kind: official
+    label: 'Databricks release notes: Agent Bricks CLI is in Beta (September 29, 2026)'
+prediction:
+  - Agent Bricks Kit
+  - Lakeflow Agents CLI
+  - Genie Builder CLI
+source: https://docs.databricks.com/aws/en/agents/custom-agents/agent-bricks-cli
+verified: '2026-10-06'

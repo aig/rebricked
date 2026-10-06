@@ -12,6 +12,11 @@
 
 ## Update log
 
+- **2026-10-06** - Refreshed the reference copy (the October 2026 release notes and 22 new blog posts) and
+  compared everything published since 2026-09-27. Four cards added: **Agent Bricks CLI**, **Managed agent
+  memory** (first Beta June 2026, so its §13 row is closed), **Managed agent sessions**, and **Budgets**,
+  which closes the last item on the "most worth adding" list. Every other September and October heading
+  already had a card, or is a sub-feature or a hosted-model change (§21 rows added).
 - **2026-09-27** - Added the blog as a second comparison source and closed the marquee list. The new
   `databricks-blog` mirror source made it possible to compare every 2026 Product/Announcements/Platform post
   against the cards; the product-level names it found are in the new **§22**, most of them absent from the release
@@ -394,7 +399,7 @@ For reference, the project already covers these ~50 concepts (with their rename/
 | 2026-04 | `ai_prep_search` |
 | 2026-04 | AI Gateway MCP governance **[adjacent]** |
 | 2026-04 | Vector Search retrieval-quality evaluation **[adjacent]** |
-| 2026-06 | Managed agent memory |
+| 2026-06 | Managed agent memory - ✓ now covered (`managed-agent-memory`) |
 | 2026-06 | Omnigent (coding agent meta-harness) - ✓ now covered (`omnigent`) |
 | 2026-06 | `ai_query` (GA general-purpose) **[adjacent]** (extends `ai-functions`) |
 | 2026-02 | AI Gateway (Beta / new UI, coding-agent control plane) **[adjacent]** |
@@ -491,7 +496,7 @@ FedRAMP Moderate (2022-08), FedRAMP High / GovCloud (2024-04), PCI-DSS (2022-06)
 | 2016-02 | Databricks Community Edition (free tier; retired 2026-01) / Databricks Free Edition (2025-06 replacement) — ✓ now covered |
 | 2020-12 | New account console |
 | 2023-06 | System tables - ✓ now covered (`system-tables`) |
-| 2024-06 | Budgets |
+| 2024-06 | Budgets - ✓ now covered (`budgets`) |
 | 2024-06 | Cost management / usage dashboard |
 | 2024-10 | Serverless budget policies - ✓ now covered (`serverless-budget-policies` -> `serverless-usage-policies`) |
 | 2025-07 | Databricks release notes RSS feed |
@@ -554,6 +559,11 @@ retirements are excluded per §14; the connectors are appended to the §2 list.
 | 2026-09 | Unity Gateway CLI (`ug`), central coding-agent configuration **[adjacent]** (extends `unity-gateway`) |
 | 2026-09 | Horizontal scaling for Databricks Apps (GA, dated September 29) **[adjacent]** (extends `databricks-apps`) |
 | 2026-09 | DeepSeek V4 Pro (0813) scheduled for retirement (hosted model - excluded by §14 policy) |
+| 2026-09 | Agent Bricks CLI (`databricks-agentbricks`, Beta) - ✓ now covered (`agent-bricks-cli`) |
+| 2026-09 | Managed agent sessions (Beta) - ✓ now covered (`managed-agent-sessions`) |
+| 2026-10 | Customer-managed keys for query history (GA) **[adjacent]** (extends `system-tables`) |
+| 2026-10 | `ai_decide` AI Function (blog, September 30) **[adjacent]** (extends `ai-functions`) |
+| 2026-10 | Gemini 2.5 Pro and Gemini 2.5 Flash retired (hosted models - excluded by §14 policy) |
 
 ## 22. Launches found only on the Databricks blog (2026)
 
@@ -621,6 +631,6 @@ release notes or press releases before it became a card.
 
 ## How to use this
 
-- **Genuinely absent marquee products** most worth adding to `rebricked` (as of 2026-09-27): Budgets (the account budgets feature; the budget-policy cards cover only policies), serverless egress control / network policies, the Databricks SDK for Java, SCIM provisioning, service principals, and the pre-2026 launches the blog mirror has not yet been compared for. *(COPY INTO, Unity Catalog data lineage, Managed MLflow, Cluster policies, Instance pools, Serverless SQL warehouses, the Terraform provider, the Python and Go SDKs, AI Playground, Databricks Runtime for ML, Customer-managed VPC, PrivateLink and Network Connectivity Configurations were added on 2026-09-27. Photon, Auto Loader, AutoML, Foundation Model APIs, System tables, Databricks Marketplace, AI Gateway, Lakeflow Connect, Partner Connect, Databricks Apps, MLflow Model Registry, MLflow Tracing, Mosaic AI Agent Framework, the VS Code extension, Deletion vectors, Predictive optimization, and AI Functions were on earlier versions of this list and have since been added - see the update log.)*
+- **Genuinely absent marquee products** most worth adding to `rebricked` (as of 2026-09-27): serverless egress control / network policies, the Databricks SDK for Java, SCIM provisioning, service principals, and the pre-2026 launches the blog mirror has not yet been compared for. *(Budgets was added on 2026-10-06. COPY INTO, Unity Catalog data lineage, Managed MLflow, Cluster policies, Instance pools, Serverless SQL warehouses, the Terraform provider, the Python and Go SDKs, AI Playground, Databricks Runtime for ML, Customer-managed VPC, PrivateLink and Network Connectivity Configurations were added on 2026-09-27. Photon, Auto Loader, AutoML, Foundation Model APIs, System tables, Databricks Marketplace, AI Gateway, Lakeflow Connect, Partner Connect, Databricks Apps, MLflow Model Registry, MLflow Tracing, Mosaic AI Agent Framework, the VS Code extension, Deletion vectors, Predictive optimization, and AI Functions were on earlier versions of this list and have since been added - see the update log.)*
 - **[adjacent]** items extend something already covered — add only if you want sub-feature granularity.
 - The **hosted foundation models** and **Lakeflow Connect connectors** are the two highest-volume buckets; they are legitimately many, not minor, and are listed in full above.
