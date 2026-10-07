@@ -7,35 +7,51 @@ aliases:
 category: AI / ML
 what:
   note: Agent Bricks capability that orchestrates multiple specialized agents, routing each request to the right one.
-  link: https://docs.databricks.com/aws/en/generative-ai/agent-bricks/multi-agent-supervisor#:~:text=coordinates%20Genie%20Agents%2C%20agent%20endpoints
+  link: https://docs.databricks.com/aws/en/agents/agent-bricks/multi-agent-supervisor#:~:text=coordinates%20Genie%20Agents%2C%20agent%20endpoints
 fact:
   - note: It's an agent whose entire job is bossing other agents around - routing each request to the right specialist - and its doc URL still reads /multi-agent-supervisor.
-    link: https://docs.databricks.com/aws/en/generative-ai/agent-bricks/multi-agent-supervisor#:~:text=Use%20Supervisor%20Agent%20to%20create%20a%20supervisor%20system
+    link: https://docs.databricks.com/aws/en/agents/agent-bricks/multi-agent-supervisor#:~:text=Use%20Supervisor%20Agent%20to%20create%20a%20supervisor%20system
   - note: It can now supervise supervisors - another Supervisor Agent counts as a subagent tool - and a single system tops out at 50 agents, so the org chart has a documented headcount cap.
     link: https://docs.databricks.com/aws/en/release-notes/product/2026/may#:~:text=nesting%20supervisor%20agents%20as%20subagent%20tools
+  - note: It went GA in February 2026 and was on the legacy shelf by October, where the docs tell you to replace one supervisor with either a low-code agent or a CLI, depending on whether you prefer clicking or typing.
+    link: https://docs.databricks.com/aws/en/agents/legacy/#:~:text=To%20coordinate%20multiple%20agents%20in%20code
 status:
-  value: active
-  link: https://docs.databricks.com/aws/en/generative-ai/agent-bricks/multi-agent-supervisor#:~:text=Use%20Supervisor%20Agent%20to%20create%20a%20supervisor%20system
-  date: '2026-08-20'
+  value: legacy
+  link: https://docs.databricks.com/aws/en/agents/legacy/#:~:text=no%20longer%20best%20practice%20for%20building%20agents
+  date: '2026-10-07'
 releases:
   - type: beta
     date: 2025-07
-    link: https://docs.databricks.com/aws/en/generative-ai/agent-bricks/multi-agent-supervisor
+    link: https://docs.databricks.com/aws/en/agents/agent-bricks/multi-agent-supervisor
   - type: ga
     date: 2026-02
     link: https://docs.databricks.com/aws/en/release-notes/product/2026/february#:~:text=Supervisor%20Agent%20is%20now%20Generally%20Available
 from:
   date: 2026-02
   link: https://docs.databricks.com/aws/en/release-notes/product/2026/february#:~:text=has%20been%20renamed%20to%20Supervisor%20Agent
+deprecatedAt:
+  date: 2026-10
+  link: https://docs.databricks.com/aws/en/release-notes/product/2026/october#:~:text=are%20now%20in%20a%20Legacy%20section
+successorId: genie-agents
+replacement: Genie Agents for low-code agents; the Agent Bricks CLI to coordinate multiple agents in code
 occasion:
   date: 2026-02
   link: https://www.databricks.com/blog/agent-bricks-supervisor-agent-now-ga-orchestrate-enterprise-agents#:~:text=Agent%20Bricks%20Supervisor%20Agent%20is%20Now%20GA
   note: Supervisor Agent GA, February 2026
 limitations:
-  note: A single supervisor system cannot use more than 50 agents, and AI Search index subagents support only Delta Sync indexes. It needs serverless compute, Unity Catalog, Model Serving access and a nonzero serverless usage policy budget in a supported region. Web search requires databricks-gpt-5 in the allowlist and is unavailable in workspaces with the Enhanced Security and Compliance add-on or in regions lacking web-search-capable models.
-  link: https://docs.databricks.com/aws/en/generative-ai/agent-bricks/multi-agent-supervisor#:~:text=cannot%20use%20more%20than%2050%20agents
-  date: '2026-08-20'
+  note: A single supervisor system cannot use more than 50 agents, and AI Search index subagents support only Delta Sync indexes. It needs serverless compute, Unity Catalog, Model Serving access and a nonzero serverless usage policy budget in a supported region. Web search is unavailable in workspaces with the Enhanced Security and Compliance add-on or in regions lacking web-search-capable models.
+  link: https://docs.databricks.com/aws/en/agents/agent-bricks/multi-agent-supervisor#:~:text=cannot%20use%20more%20than%2050%20agents
+  date: '2026-10-07'
 links:
+  - url: https://docs.databricks.com/aws/en/agents/legacy/
+    kind: official
+    label: 'Databricks docs: Legacy agent offerings'
+  - url: https://learn.microsoft.com/en-us/azure/databricks/agents/legacy/
+    kind: official
+    label: 'Microsoft Learn: Legacy agent offerings'
+  - url: https://docs.databricks.com/aws/en/agents/custom-agents/agent-bricks-cli
+    kind: official
+    label: 'Databricks docs: Agent Bricks CLI (replacement for coordinating agents in code)'
   - url: https://www.databricks.com/blog/agent-bricks-supervisor-agent-now-ga-orchestrate-enterprise-agents
     kind: community
     label: 'Databricks Blog: Supervisor Agent GA'
@@ -45,9 +61,8 @@ links:
   - url: https://docs.databricks.com/aws/en/release-notes/product/2026/march
     kind: official
     label: 'Databricks release notes: Supervisor Agent for Enhanced Security and Compliance workspaces, long-running tasks (March 2026)'
-prediction:
-  - Chief Agent Officer
-  - Agent Supervisor Prime
-  - Genie Supervisor
-source: https://docs.databricks.com/aws/en/generative-ai/agent-bricks/multi-agent-supervisor
-verified: '2026-08-20'
+  - url: https://docs.databricks.com/aws/en/release-notes/product/2026/october
+    kind: official
+    label: 'Databricks release notes: Legacy section for agent offerings (October 2026)'
+source: https://docs.databricks.com/aws/en/agents/agent-bricks/multi-agent-supervisor
+verified: '2026-10-07'

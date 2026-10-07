@@ -9,6 +9,29 @@ shows the what. Plain, simple English: short sentences, common words, no jargon 
 and product names themselves. Some older entries have no `Why:` line - the reason was never
 recorded, and a made-up reason is worse than none.
 
+## 2026-10-07
+
+### Changed
+- **Supervisor Agent is now `legacy`, not `active` ([#11](https://github.com/aig/rebricked/issues/11)).**
+
+  **Why:** issue #11 reported that Supervisor Agent is now a legacy offering. We did not take the
+  issue's word for it and checked every claim against the live docs on both clouds. The Databricks
+  (AWS) and Microsoft Learn "Legacy agent offerings" pages, both updated October 6, 2026, list
+  Supervisor Agent and say legacy offerings "are no longer best practice for building agents", stay
+  documented so existing agents can be maintained and migrated, and should not be used for new agents.
+  (The issue quotes this as "building new agents", which is not the docs' wording.) The Supervisor
+  Agent page itself now opens with "This is a legacy offering." The card still said `active` from its
+  August 20 check, so it was wrong. The docs pages give no legacy date of their own. The October 5,
+  2026 release note is what moved agent offerings into the new Legacy section, so the date is 2026-10.
+
+  **What:** `supervisor-agent` now has `status.value: legacy`, with `deprecatedAt` 2026-10 (from the
+  October release note), `successorId: genie-agents`, and a `replacement` that also names the Agent
+  Bricks CLI for coordinating agents in code. Its `prediction` is gone, because deprecation cards do
+  not carry one. The doc links now use the pages' new `/aws/en/agents/` path. The limitations were
+  re-checked, a third fact was added, and both legacy pages were added to `links`. The
+  `agent-bricks-multi-agent-supervisor` -> `supervisor-agent` rename chain is unchanged. Every citation
+  passed `check_anchors.py`.
+
 ## 2026-10-06
 
 ### Added
