@@ -11,6 +11,22 @@ recorded, and a made-up reason is worse than none.
 
 ## 2026-10-09
 
+### Added
+- **New card: Genie Code CLI, Genie Code's terminal agent, in Beta since October 6, 2026.**
+
+  **Why:** the October 9 refresh of the reference copy turned up the October 6 release note "Genie
+  Code CLI is in Beta". Nothing in the data covered it. The `genie-code` card is about the workspace
+  assistant, and the docs say the CLI is a separate experience with its own tools, skills, and
+  instructions. It is also billed differently: through Unity Gateway, not under Genie pricing. So it
+  gets its own card instead of being folded into `genie-code`.
+
+  **What:** `genie-code-cli` is an `active` feature in `AI / ML`, with `introducedAt` and a `beta`
+  release stage both dated 2026-10 from the October release note. It has three facts (the model is
+  chosen by Databricks, GPT 5.6 during Beta; billing goes through Unity Gateway, not Genie; it does
+  not share tools or skills with workspace Genie Code) and `limitations` from the docs page. The
+  aliases are `genie` (the command) and `genie-code-cli` (the GitHub repo). It is wired into the
+  Genie Agents rail section next to `genie-code`. Every citation passed `check_anchors.py`.
+
 ### Changed
 - **Discover is now marked GA.**
 

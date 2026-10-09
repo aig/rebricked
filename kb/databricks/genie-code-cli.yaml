@@ -1,0 +1,44 @@
+id: genie-code-cli
+name: Genie Code CLI
+aliases:
+  - genie
+  - genie-code-cli
+category: AI / ML
+what:
+  note: A coding agent that runs locally in your terminal, tuned for data and AI work on Databricks - it edits local files, runs commands, and uses the Databricks CLI to discover data and build and deploy pipelines, models, and apps.
+  link: https://docs.databricks.com/aws/en/genie-code/genie-code-cli#:~:text=is%20a%20coding%20agent%20that%20runs%20locally%20in%20your%20terminal
+fact:
+  - note: 'You cannot pick its brain: Databricks chooses the model, and during Beta that model is GPT 5.6, which may not match what the other Genie surfaces use.'
+    link: https://docs.databricks.com/aws/en/genie-code/genie-code-cli#:~:text=During%20Beta%2C%20Genie%20Code%20CLI%20uses%20GPT%205.6
+  - note: It shares a first name with Genie but not a bill - usage is charged like calling the model directly through Unity Gateway, and Genie budgets do not touch it.
+    link: https://docs.databricks.com/aws/en/genie-code/genie-code-cli#:~:text=It%20is%20not%20billed%20under%20Genie%20pricing
+  - note: It is a separate experience from Genie Code in the workspace, with its own tools, skills, and instructions that it does not share with its workspace namesake.
+    link: https://docs.databricks.com/aws/en/genie-code/genie-code-cli#:~:text=It%20has%20its%20own%20tools%2C%20skills%2C%20and%20instructions
+status:
+  value: active
+  link: https://docs.databricks.com/aws/en/release-notes/product/2026/october#:~:text=Genie%20Code%20CLI%20is%20a%20coding%20agent%20that%20runs%20in%20your%20terminal
+  date: '2026-10-09'
+releases:
+  - type: beta
+    date: 2026-10
+    link: https://docs.databricks.com/aws/en/release-notes/product/2026/october#:~:text=Genie%20Code%20CLI%20is%20a%20coding%20agent%20that%20runs%20in%20your%20terminal
+introducedAt:
+  date: 2026-10
+  link: https://docs.databricks.com/aws/en/release-notes/product/2026/october#:~:text=Genie%20Code%20CLI%20is%20a%20coding%20agent%20that%20runs%20in%20your%20terminal
+limitations:
+  note: Model selection is managed by Databricks and you cannot choose a specific model; it is not billed under Genie usage or covered by Genie budgets, so spend is controlled with Unity Gateway budgets. It needs a workspace in a Unity Gateway supported region with Unity Catalog enabled, plus the Databricks CLI 1.0.0 or above installed separately, and it does not yet include all of the workspace Genie Code capabilities.
+  link: https://docs.databricks.com/aws/en/genie-code/genie-code-cli#:~:text=Model%20selection%20is%20managed%20by%20Databricks
+  date: '2026-10-09'
+links:
+  - url: https://docs.databricks.com/aws/en/release-notes/product/2026/october
+    kind: official
+    label: 'Databricks release notes: Genie Code CLI is in Beta (October 6, 2026)'
+  - url: https://github.com/databricks/genie-code-cli
+    kind: official
+    label: 'GitHub: databricks/genie-code-cli (install scripts and releases)'
+prediction:
+  - Genie Shell
+  - Genie Code Terminal
+  - Lakeflow Copilot CLI
+source: https://docs.databricks.com/aws/en/genie-code/genie-code-cli
+verified: '2026-10-09'
