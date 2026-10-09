@@ -13,10 +13,12 @@ fact:
     link: https://docs.databricks.com/aws/en/discover/discover-page#:~:text=a%20business%2Daligned%20organization%20layer%20where%20curators%20organize%20data%20assets
   - note: It entered Beta on February 18, 2026.
     link: https://docs.databricks.com/aws/en/release-notes/product/2026/february#:~:text=searching%2C%20browsing%2C%20and%20previewing%20data%20assets
+  - note: It went GA on October 8, 2026, under eight months from Beta to general availability, and the domains it organizes can now hold Genie Agents next to tables and notebooks.
+    link: https://docs.databricks.com/aws/en/release-notes/product/2026/october#:~:text=such%20as%20tables%2C%20dashboards%2C%20notebooks%2C%20and%20Genie%20Agents
 status:
   value: active
   link: https://docs.databricks.com/aws/en/discover/discover-page#:~:text=The%20Discover%20page%20is%20a%20curated%20browsing%20experience
-  date: '2026-08-20'
+  date: '2026-10-09'
 releases:
   - type: beta
     date: 2026-02
@@ -24,13 +26,16 @@ releases:
   - type: public-preview
     date: 2026-06
     link: https://docs.databricks.com/aws/en/release-notes/product/2026/june#:~:text=The%20Discover%20page%20is%20now%20in%20Public%20Preview
+  - type: ga
+    date: 2026-10
+    link: https://docs.databricks.com/aws/en/release-notes/product/2026/october#:~:text=are%20now%20generally%20available
 introducedAt:
   date: 2026-02
   link: https://docs.databricks.com/aws/en/release-notes/product/2026/february#:~:text=The%20Discover%20page%20provides%20a%20centralized%20interface
 limitations:
   note: Subdomains support only one level of nesting and must be created and managed from a workspace-level Manage Discover page (no account-level subdomain management yet). Domains and subdomains combined are capped at 300 per account, a fixed limit.
   link: https://docs.databricks.com/aws/en/uc-semantics/domains#:~:text=Subdomains%20support%20only%20one%20level%20of%20nesting
-  date: '2026-08-20'
+  date: '2026-10-09'
 links:
   - url: https://docs.databricks.com/aws/en/release-notes/product/2026/february
     kind: official
@@ -38,6 +43,9 @@ links:
   - url: https://docs.databricks.com/aws/en/release-notes/product/2026/june
     kind: official
     label: 'Databricks release notes: Discover page is now in Public Preview (June 2026)'
+  - url: https://docs.databricks.com/aws/en/release-notes/product/2026/october
+    kind: official
+    label: 'Databricks release notes: The Discover page and domains are now GA (October 2026)'
   - url: https://docs.databricks.com/aws/en/resources/limits
     kind: official
     label: 'Databricks resource limits: 300 domains per account (fixed)'
@@ -46,4 +54,4 @@ prediction:
   - Unity Marketplace
   - Databricks Atlas
 source: https://docs.databricks.com/aws/en/discover/discover-page
-verified: '2026-08-20'
+verified: '2026-10-09'

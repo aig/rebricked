@@ -9,6 +9,22 @@ shows the what. Plain, simple English: short sentences, common words, no jargon 
 and product names themselves. Some older entries have no `Why:` line - the reason was never
 recorded, and a made-up reason is worse than none.
 
+## 2026-10-09
+
+### Changed
+- **Discover is now marked GA.**
+
+  **Why:** the October 9 refresh of the reference copy picked up the October 8, 2026 release note
+  "The Discover page and domains are now GA". The card still showed Public Preview from its August 20
+  check, so its maturity pill was out of date. The Discover and domains doc pages still mark some
+  parts as Beta (Pages, account-scoped Discover, the domains REST API). Those are parts of the
+  feature, so the release note's GA call is what the card now follows.
+
+  **What:** `discover` gets a `ga` stage dated 2026-10 at the end of `releases`, a third fact about
+  the GA, and the October release note in `links`. `status`, `limitations` and `verified` were
+  re-checked against the live pages and moved to 2026-10-09. The 300-domain fixed limit is
+  unchanged in the resource-limits page. Every citation passed `check_anchors.py`.
+
 ## 2026-10-07
 
 ### Changed
