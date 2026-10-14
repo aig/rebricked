@@ -31,7 +31,7 @@ from:
   link: https://docs.databricks.com/aws/en/release-notes/product/2026/february#:~:text=has%20been%20renamed%20to%20Supervisor%20Agent
 deprecatedAt:
   date: 2026-10
-  link: https://docs.databricks.com/aws/en/release-notes/product/2026/october#:~:text=are%20now%20in%20a%20Legacy%20section
+  link: https://docs.databricks.com/aws/en/release-notes/product/2026/october#:~:text=Knowledge%20Assistant%20and%20Supervisor%20Agent%20are%20now%20legacy
 successorId: genie-agents
 replacement: Genie Agents for low-code agents; the Agent Bricks CLI to coordinate multiple agents in code
 occasion:
@@ -63,6 +63,6 @@ links:
     label: 'Databricks release notes: Supervisor Agent for Enhanced Security and Compliance workspaces, long-running tasks (March 2026)'
   - url: https://docs.databricks.com/aws/en/release-notes/product/2026/october
     kind: official
-    label: 'Databricks release notes: Legacy section for agent offerings (October 2026)'
+    label: 'Databricks release notes: Knowledge Assistant and Supervisor Agent are now legacy (October 12, 2026)'
 source: https://docs.databricks.com/aws/en/agents/agent-bricks/multi-agent-supervisor
 verified: '2026-10-07'

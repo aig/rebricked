@@ -13,12 +13,12 @@ fact:
     link: https://docs.databricks.com/aws/en/large-language-models/ai-playground#:~:text=Select%20Playground%20from%20the%20left%20navigation%20pane%20under%20AI%2FML
   - note: Pressing the + adds another endpoint to the same chat, so several models answer the same prompt at once and you can compare their responses next to each other.
     link: https://docs.databricks.com/aws/en/large-language-models/ai-playground#:~:text=compare%20multiple%20model%20responses
-  - note: It started as a place to chat with LLMs, and in September 2024 learned to prototype, build, and then export tool-calling AI agents, with Unity Catalog functions as the tools.
-    link: https://docs.databricks.com/aws/en/release-notes/product/2024/september#:~:text=Use%20the%20AI%20Playground%20to%20prototype%2C%20build%2C%20and%20then%20export%20tool%2Dcalling%20AI%20agents
+  - note: It learned to prototype and export tool-calling agents in September 2024, and two years later that is the part the docs call legacy - chatting with models is still fine, but agents now go to the Agent Bricks CLI.
+    link: https://docs.databricks.com/aws/en/large-language-models/ai-playground#:~:text=Building%20agents%20in%20AI%20Playground%20is%20a%20legacy%20approach
 status:
   value: active
   link: https://docs.databricks.com/aws/en/large-language-models/ai-playground#:~:text=The%20AI%20Playground%20is%20a%20chat%20environment%20for%20Large%20Language%20Models
-  date: '2026-09-27'
+  date: '2026-10-14'
 releases:
   - type: public-preview
     date: 2023-12
@@ -33,7 +33,14 @@ occasion:
   date: 2023-12
   link: https://www.databricks.com/blog/building-high-quality-rag-applications-databricks#:~:text=The%20new%20interactive%20AI%20Playground%20allows%20easy%20chat%20with%20these%20models
   note: Debuted with the Databricks RAG tools launch, December 6, 2023
+limitations:
+  note: Building agents in AI Playground is a legacy approach; to build and test agents, the docs point to the Agent Bricks CLI and running the agent locally with agentbricks dev.
+  link: https://docs.databricks.com/aws/en/large-language-models/ai-playground#:~:text=Building%20agents%20in%20AI%20Playground%20is%20a%20legacy%20approach
+  date: '2026-10-14'
 links:
+  - url: https://docs.databricks.com/aws/en/agents/legacy/
+    kind: official
+    label: 'Databricks docs: Legacy agent offerings (agent building in AI Playground)'
   - url: https://www.databricks.com/blog/building-high-quality-rag-applications-databricks
     kind: official
     label: 'Databricks Blog: Creating High Quality RAG Applications with Databricks (December 6, 2023) - introduces the new interactive AI Playground'
@@ -51,4 +58,4 @@ prediction:
   - Agent Bricks Sandbox
   - Unity Playground
 source: https://docs.databricks.com/aws/en/large-language-models/ai-playground
-verified: '2026-09-27'
+verified: '2026-10-14'

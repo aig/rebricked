@@ -9,6 +9,95 @@ shows the what. Plain, simple English: short sentences, common words, no jargon 
 and product names themselves. Some older entries have no `Why:` line - the reason was never
 recorded, and a made-up reason is worse than none.
 
+## 2026-10-14
+
+### Added
+- **New card: Supervisor API, `retired` on September 30, 2026.**
+
+  **Why:** the Legacy agent offerings page (updated October 13, 2026) lists "Supervisor API
+  (deprecated)", and its own page now says it "reached end of life on September 30, 2026. It is no
+  longer available." Nothing in the data covered it, so a reader looking for it found nothing.
+
+  **What:** `supervisor-api` is `retired`, with a `beta` stage from the April 2026 release note,
+  `removedAt` 2026-09, `successorId: agent-bricks-cli`, three facts, and its documented limitations
+  written in the past tense. No release note or doc gives the day it was first marked deprecated, so
+  `deprecatedAt` uses the end-of-life month (2026-09) rather than a guessed earlier date. Wired into
+  the Agents rail section.
+
+- **New card: Agent Runtime, the serverless home for code agents.**
+
+  **Why:** the October 5, 2026 release note introduced Agent Runtime alongside `DurableAgentServer`,
+  and the Legacy page now names it as where new code agents run. Two legacy calls in this update
+  point to it, so it needed a card of its own.
+
+  **What:** `agent-runtime` is an `active` feature in `AI / ML`, `introducedAt` 2026-10 from the
+  October note. The docs page shows no release stage, so `releases` is omitted. Facts and
+  `limitations` come from the page (each deployment is an app, 1 to 5 instances, the agent server
+  cannot be changed after deploy). Wired into the Agents rail section.
+
+### Changed
+- **Custom Agents is now `legacy`.**
+
+  **Why:** the card's own source page is now titled "Run agents on Databricks Apps using the legacy
+  agent server", and the October 5 release note put the MLflow `AgentServer` and agents deployed to
+  Model Serving (the card's two deployment paths) into the Legacy section. The `/agents/` landing
+  page no longer uses the name "Custom Agents" at all, and its `what.link` quote had gone dead.
+
+  **What:** `custom-agents` gets `status.value: legacy`, `deprecatedAt` 2026-10, `successorId:
+  agent-bricks-cli`, and a `replacement` naming the CLI, `DurableAgentServer` and Agent Runtime.
+  `what.link` and one fact were re-sourced, and `prediction` was dropped.
+
+- **AI Playground stays `active`, but its agent-building part is noted as legacy.**
+
+  **Why:** the Legacy page lists AI Playground, but the Playground page itself only says "Building
+  agents in AI Playground is a legacy approach" and still describes the product as a chat
+  environment for LLMs. Marking the whole card legacy would overstate what the docs say.
+
+  **What:** the September 2024 agent-prototyping fact is replaced with one about that part going
+  legacy, and a new `limitations` line and a Legacy page link say the same thing.
+
+- **Managed agent memory notes that its first version is deprecated.**
+
+  **Why:** the June 2026 Unity Catalog memory stores now have their own page, "Managed agent memory
+  (legacy)", which says "This is an earlier version of the managed agent memory store and is
+  deprecated." The current Lakebase-backed product is the same card, so this is a fact, not a status
+  change.
+
+  **What:** the "moved house" fact now ends with the deprecation and cites the legacy page, which
+  is also added to `links`. All five cards in this group passed `check_anchors.py`.
+
+- **Knowledge Assistant is now `legacy`, not `active`.**
+
+  **Why:** the October 14 refresh of the reference copy turned up the October 12, 2026 release note
+  "Knowledge Assistant and Supervisor Agent are now legacy". The card still said `active` from its
+  August 20 check. The live Knowledge Assistant page now opens with "This is a legacy offering" and
+  points new low-code agents at Genie Agents and new code agents at the Agent Bricks CLI. Its doc
+  also moved from `/generative-ai/agent-bricks/` to `/agents/agent-bricks/`.
+
+  **What:** `knowledge-assistant` now has `status.value: legacy`, `deprecatedAt` 2026-10 from the
+  October release note, `successorId: genie-agents`, and a `replacement` naming both successors, the
+  same shape as `supervisor-agent`. A third fact covers the move to legacy, links point at the new
+  doc path, and the `prediction` field was dropped (deprecations do not carry one).
+
+- **Supervisor Agent's legacy date now cites the release note that names it.**
+
+  **Why:** its `deprecatedAt` pointed at the October 5 note, which only says agent offerings moved
+  into a Legacy section and never names Supervisor Agent. The October 12 note says so outright.
+
+  **What:** `deprecatedAt.link` and the matching `links` row now point at the October 12 note. The
+  date (2026-10) is unchanged.
+
+- **Declarative Feature Engineering (Feature Views) is now marked GA.**
+
+  **Why:** the October 12, 2026 release note says "Feature Views are now generally available". The
+  live page has also dropped its Public Preview banner, so the card's `status.link` quote no longer
+  matched anything.
+
+  **What:** a `ga` stage dated 2026-10 is appended to `releases`, `status.link` now quotes a sentence
+  still on the page, and the October note is in `links`. The page now uses only the name "Feature
+  Views", which may be a rename; that is left for a separate, sourced decision. Every citation on all
+  three cards passed `check_anchors.py`.
+
 ## 2026-10-09
 
 ### Added

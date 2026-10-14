@@ -16,8 +16,8 @@ fact:
     link: https://docs.databricks.com/aws/en/release-notes/feature-store/databricks-feature-store#:~:text=need%20migration%20to%20the%20Public%20Preview%20representation
 status:
   value: active
-  link: https://docs.databricks.com/aws/en/machine-learning/feature-store/feature-views#:~:text=This%20feature%20is%20in%20Public%20Preview
-  date: '2026-08-20'
+  link: https://docs.databricks.com/aws/en/machine-learning/feature-store/feature-views#:~:text=Features%20can%20be%20defined%20using%20a%20variety%20of%20sources
+  date: '2026-10-14'
 releases:
   - type: beta
     date: 2026-03
@@ -25,6 +25,9 @@ releases:
   - type: public-preview
     date: 2026-07
     link: https://www.databricks.com/blog/introducing-feature-views#:~:text=Public%20Preview%20of%20Feature%20Views
+  - type: ga
+    date: 2026-10
+    link: https://docs.databricks.com/aws/en/release-notes/product/2026/october#:~:text=Feature%20Views%20are%20now%20generally%20available
 introducedAt:
   date: 2026-03
   link: https://docs.databricks.com/aws/en/release-notes/product/2026/march#:~:text=Declarative%20Feature%20Engineering%20APIs%20are%20now%20available%20in%20Beta
@@ -33,6 +36,9 @@ limitations:
   link: https://docs.databricks.com/aws/en/machine-learning/feature-store/feature-views#:~:text=Entity%20columns%20cannot%20be%20of%20type%20DATE%20or%20TIMESTAMP
   date: '2026-08-20'
 links:
+  - url: https://docs.databricks.com/aws/en/release-notes/product/2026/october
+    kind: official
+    label: 'Databricks release notes: Feature Views are now generally available (October 12, 2026)'
   - url: https://docs.databricks.com/aws/en/release-notes/product/2026/march
     kind: official
     label: 'Databricks release notes: Declarative Feature Engineering APIs Beta (March 2026)'
@@ -47,4 +53,4 @@ prediction:
   - Lakeflow Features
   - Genie Features
 source: https://docs.databricks.com/aws/en/machine-learning/feature-store/feature-views
-verified: '2026-08-20'
+verified: '2026-10-14'

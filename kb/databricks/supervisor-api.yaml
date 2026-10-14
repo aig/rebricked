@@ -1,0 +1,51 @@
+id: supervisor-api
+name: Supervisor API
+aliases:
+  - Agent Bricks Supervisor API
+category: AI / ML
+what:
+  note: An OpenResponses-compatible endpoint that built an agent in a single request - you supplied the model, tools, and instructions, and Databricks ran the agent loop of calling the model, executing tools, and synthesizing the answer.
+  link: https://docs.databricks.com/aws/en/agents/agent-bricks/supervisor-api#:~:text=The%20Supervisor%20API%20simplifies%20building%20custom%20agents%20on%20Databricks
+fact:
+  - note: It lasted about six months - launched in Beta in April 2026 and switched off on September 30, 2026 - and the April release note that announced it now links to it as "Supervisor API (deprecated)".
+    link: https://docs.databricks.com/aws/en/release-notes/product/2026/april#:~:text=lets%20you%20build%20agents%20in%20a%20single%20API%20call
+  - note: Its official replacement is homework - Databricks recommends writing your own agent loop and deploying it with the Agent Bricks CLI.
+    link: https://docs.databricks.com/aws/en/agents/agent-bricks/supervisor-api#:~:text=Databricks%20recommends%20writing%20your%20own%20agent%20loop
+  - note: When a request needed computation, the Supervisor wrote and ran the code itself in a sandboxed serverless session, so you never enabled, configured, or supplied it.
+    link: https://docs.databricks.com/aws/en/agents/agent-bricks/supervisor-api#:~:text=The%20Supervisor%20writes%20and%20runs%20the%20code%20itself%20when%20needed
+status:
+  value: retired
+  link: https://docs.databricks.com/aws/en/agents/agent-bricks/supervisor-api#:~:text=The%20Supervisor%20API%20reached%20end%20of%20life%20on%20September%2030%2C%202026
+  date: '2026-10-14'
+releases:
+  - type: beta
+    date: 2026-04
+    link: https://docs.databricks.com/aws/en/release-notes/product/2026/april#:~:text=Supervisor%20API%20for%20building%20agents%20%28Beta%29
+deprecatedAt:
+  date: 2026-09
+  link: https://docs.databricks.com/aws/en/agents/agent-bricks/supervisor-api#:~:text=The%20Supervisor%20API%20reached%20end%20of%20life%20on%20September%2030%2C%202026
+removedAt:
+  date: 2026-09
+  link: https://docs.databricks.com/aws/en/agents/agent-bricks/supervisor-api#:~:text=It%20is%20no%20longer%20available
+successorId: agent-bricks-cli
+replacement: Your own agent loop, deployed with the Agent Bricks CLI
+occasion:
+  date: 2026-09
+  link: https://docs.databricks.com/aws/en/agents/agent-bricks/supervisor-api#:~:text=The%20Supervisor%20API%20reached%20end%20of%20life%20on%20September%2030%2C%202026
+  note: End of life, September 30, 2026
+limitations:
+  note: While it ran, background mode requests had a maximum execution time of 30 minutes, stream and background could not both be true in one request, there was no automatic failure recovery with exactly-once guarantees, and usage tracking was not supported in the beta.
+  link: https://docs.databricks.com/aws/en/agents/agent-bricks/supervisor-api#:~:text=Background%20mode%20requests%20have%20a%20maximum%20execution%20time%20of%2030%20minutes
+  date: '2026-10-14'
+links:
+  - url: https://docs.databricks.com/aws/en/release-notes/product/2026/april
+    kind: official
+    label: 'Databricks release notes: Supervisor API for building agents (Beta) (April 2026)'
+  - url: https://docs.databricks.com/aws/en/agents/legacy/
+    kind: official
+    label: 'Databricks docs: Legacy agent offerings'
+  - url: https://learn.microsoft.com/en-us/azure/databricks/agents/agent-bricks/supervisor-api
+    kind: official
+    label: 'Microsoft Learn: Supervisor API'
+source: https://docs.databricks.com/aws/en/agents/agent-bricks/supervisor-api
+verified: '2026-10-14'

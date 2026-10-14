@@ -1,0 +1,43 @@
+id: agent-runtime
+name: Agent Runtime
+aliases:
+  - Databricks agent runtime
+  - Agent Bricks Agent Runtime
+category: AI / ML
+what:
+  note: Databricks-hosted serverless compute for agents - it runs your agent server, such as DurableAgentServer, on Databricks Apps, so you deploy agent code from the Agent Bricks CLI instead of provisioning servers.
+  link: https://docs.databricks.com/aws/en/agents/deploy/agent-runtime#:~:text=Agent%20Runtime%20runs%20your%20agent%20on%20Databricks%2Dhosted%20serverless%20compute
+fact:
+  - note: Under the new name it is still a Databricks App - every deployment is an app named agent-bricks-<name>, and you can monitor it in Databricks Apps like any other.
+    link: https://docs.databricks.com/aws/en/agents/deploy/agent-runtime#:~:text=Because%20each%20deployment%20is%20an%20app
+  - note: Scaling has a documented ceiling of five - an agent runs on 1 to 5 instances, set with the --instances flag.
+    link: https://docs.databricks.com/aws/en/agents/deploy/agent-runtime#:~:text=Run%20an%20agent%20on%201%20to%205%20instances
+  - note: Deployments are loyal to their agent server - to switch servers you create a new project and deploy it under a new name.
+    link: https://docs.databricks.com/aws/en/agents/deploy/agent-runtime#:~:text=change%20the%20agent%20server%20of%20an%20existing%20deployment
+status:
+  value: active
+  link: https://docs.databricks.com/aws/en/agents/deploy/agent-runtime#:~:text=Agent%20Runtime%20runs%20your%20agent%20on%20Databricks%2Dhosted%20serverless%20compute
+  date: '2026-10-14'
+introducedAt:
+  date: 2026-10
+  link: https://docs.databricks.com/aws/en/release-notes/product/2026/october#:~:text=Agent%20Runtime%20runs%20it%20on%20Databricks%20Apps
+limitations:
+  note: An agent runs on 1 to 5 instances, and the agent server of an existing deployment cannot be changed; switching servers means a new project deployed under a new name.
+  link: https://docs.databricks.com/aws/en/agents/deploy/agent-runtime#:~:text=change%20the%20agent%20server%20of%20an%20existing%20deployment
+  date: '2026-10-14'
+links:
+  - url: https://docs.databricks.com/aws/en/release-notes/product/2026/october
+    kind: official
+    label: 'Databricks release notes: Agent Bricks documentation for code-first agent development (October 5, 2026)'
+  - url: https://docs.databricks.com/aws/en/agents/deploy/
+    kind: official
+    label: 'Databricks docs: Deploy agents on Databricks'
+  - url: https://docs.databricks.com/aws/en/agents/deploy/agent-server
+    kind: official
+    label: 'Databricks docs: Agent Server (DurableAgentServer)'
+prediction:
+  - Agent Bricks Runtime
+  - Lakeflow Agents
+  - Genie Runtime
+source: https://docs.databricks.com/aws/en/agents/deploy/agent-runtime
+verified: '2026-10-14'

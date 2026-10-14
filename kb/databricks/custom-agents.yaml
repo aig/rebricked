@@ -6,19 +6,19 @@ aliases:
   - custom code agents
 category: AI / ML
 what:
-  note: The code-first brick in Agent Bricks - author an agent in Python with whatever library you like, wrap it in an MLflow ResponsesAgent, and deploy it as a Databricks App or to Model Serving.
-  link: https://docs.databricks.com/aws/en/agents/#:~:text=Build%20and%20deploy%20agents%2C%20including%20RAG%20applications%20and%20multi%2Dagent%20systems%2C%20with%20Python
+  note: The original code-first brick in Agent Bricks - author an agent in Python with whatever library you like, wrap it in an MLflow ResponsesAgent, and deploy it as a Databricks App with the MLflow AgentServer or to Model Serving.
+  link: https://docs.databricks.com/aws/en/agents/custom-agents/author-agent#:~:text=an%20earlier%20agent%20server%20that%20the%20app%20templates%20use
 fact:
   - note: The rename was announced in a blog post and nowhere else. No release note on any cloud says the words, and the docs were simply find-and-replaced under it.
     link: https://www.databricks.com/blog/custom-agents-now-available-databricks#:~:text=formerly%20Agent%20Framework
   - note: Your agent only shows up in the workspace Agents list if you named the app with an agent- prefix, so the product is opt-in at the level of a string.
     link: https://docs.databricks.com/aws/en/agents/custom-agents/author-agent#:~:text=its%20name%20must%20start%20with%20the
-  - note: It inherited a whole Model Serving deployment path, and every page of that path now opens by recommending you use Databricks Apps instead.
-    link: https://docs.databricks.com/aws/en/agents/custom-agents/model-serving/deploy-agent#:~:text=Databricks%20recommends%20deploying%20agents%20on%20Databricks%20Apps
+  - note: Its Model Serving path spent months telling you to move to Databricks Apps, and then in October 2026 the Apps path it recommended was filed under Legacy too.
+    link: https://docs.databricks.com/aws/en/release-notes/product/2026/october#:~:text=and%20agents%20deployed%20to%20Model%20Serving%2C%20are%20now%20in%20a%20Legacy%20section
 status:
-  value: active
-  link: https://docs.databricks.com/aws/en/agents/custom-agents/author-agent#:~:text=its%20name%20must%20start%20with%20the
-  date: '2026-09-17'
+  value: legacy
+  link: https://docs.databricks.com/aws/en/agents/legacy/#:~:text=no%20longer%20best%20practice%20for%20building%20agents
+  date: '2026-10-14'
 releases:
   - type: public-preview
     date: 2024-06
@@ -29,6 +29,11 @@ releases:
 from:
   date: 2026-02
   link: https://www.databricks.com/blog/custom-agents-now-available-databricks#:~:text=formerly%20Agent%20Framework
+deprecatedAt:
+  date: 2026-10
+  link: https://docs.databricks.com/aws/en/release-notes/product/2026/october#:~:text=and%20agents%20deployed%20to%20Model%20Serving%2C%20are%20now%20in%20a%20Legacy%20section
+successorId: agent-bricks-cli
+replacement: The Agent Bricks CLI, serving agents with DurableAgentServer on Agent Runtime
 occasion:
   date: 2026-02
   link: https://www.databricks.com/blog/custom-agents-now-available-databricks#:~:text=Agent%20Bricks%20Custom%20Agents%2C%20formerly%20Agent%20Framework%2C%20is%20now%20available%20on%20Databricks
@@ -36,14 +41,19 @@ occasion:
 limitations:
   note: Deploying on Databricks Apps supports only medium and large compute sizes, and the MLflow Review App Chat UI does not currently support agents deployed on Databricks Apps (use labeling sessions to evaluate existing traces instead).
   link: https://docs.databricks.com/aws/en/agents/custom-agents/author-agent#:~:text=Only%20medium%20and%20large%20compute%20sizes%20are%20supported
-  date: '2026-09-20'
+  date: '2026-10-14'
 links:
+  - url: https://docs.databricks.com/aws/en/agents/legacy/
+    kind: official
+    label: 'Databricks docs: Legacy agent offerings'
+  - url: https://docs.databricks.com/aws/en/release-notes/product/2026/october
+    kind: official
+    label: 'Databricks release notes: Agent Bricks documentation for code-first agent development, with a Legacy section (October 5, 2026)'
+  - url: https://docs.databricks.com/aws/en/agents/deploy/agent-runtime
+    kind: official
+    label: 'Databricks docs: Agent Runtime (where new code agents deploy)'
   - url: https://www.databricks.com/blog/custom-agents-now-available-databricks
     kind: official
     label: 'Databricks blog: Custom Agents now available on Databricks (February 2026)'
-prediction:
-  - Agent Bricks Code
-  - Genie Custom Agents
-  - Bring Your Own Agent
 source: https://docs.databricks.com/aws/en/agents/custom-agents/author-agent
-verified: '2026-09-20'
+verified: '2026-10-14'
