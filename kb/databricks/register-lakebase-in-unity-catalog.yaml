@@ -1,0 +1,29 @@
+id: register-lakebase-in-unity-catalog
+name: Register Lakebase in Unity Catalog
+aliases:
+  - Lakebase catalog
+  - Database catalog
+category: Data governance
+what:
+  note: Registers a Lakebase Postgres database as a read-only Unity Catalog catalog, so analytical access to its schemas, tables, and views is governed by Unity Catalog grants and can be joined with lakehouse data in cross-source queries.
+  link: https://docs.databricks.com/aws/en/oltp/projects/register-uc#:~:text=creates%20a%20read%2Donly%20catalog%20that%20represents%20your%20Postgres%20database
+fact:
+  - note: It puts your Postgres database in Unity Catalog as a catalog you can look at but not touch; every write still has to go through Lakebase itself.
+    link: https://docs.databricks.com/aws/en/oltp/projects/register-uc#:~:text=Catalogs%20registered%20from%20Lakebase%20databases%20are%20read%2Donly
+  - note: Only serverless compute is invited; point a Pro or classic SQL warehouse at the catalog and it is turned away.
+    link: https://docs.databricks.com/aws/en/oltp/projects/register-uc#:~:text=Pro%20and%20classic%20SQL%20warehouses%20and%20classic%20compute
+  - note: Branch a registered database and the branch inherits its parent's registration metadata, which is exactly why registering that branch as its own catalog then fails.
+    link: https://docs.databricks.com/aws/en/oltp/projects/register-uc#:~:text=When%20you%20create%20a%20branch%20from%20a%20database%20that%20is%20already%20registered%20in%20Unity%20Catalog
+status:
+  value: active
+  link: https://docs.databricks.com/aws/en/oltp/projects/ltap-overview#:~:text=Govern%20analytical%20access%20to%20Lakebase%20data
+  date: '2026-10-14'
+introducedAt:
+  date: 2025-06
+  link: https://www.databricks.com/blog/announcing-lakebase-public-preview#:~:text=Register%20a%20Postgres%20database%20in%20Unity%20Catalog
+limitations:
+  note: Registered catalogs are read-only, can be queried only from a serverless SQL warehouse or serverless notebook and job compute (not Pro or classic warehouses or classic compute), map one catalog to one Lakebase database, serve cached metadata that may need a manual refresh, and a branched database cannot be registered as a separate catalog.
+  link: https://docs.databricks.com/aws/en/oltp/projects/register-uc#:~:text=Catalogs%20registered%20from%20Lakebase%20databases%20are%20read%2Donly
+  date: '2026-10-14'
+source: https://docs.databricks.com/aws/en/oltp/projects/register-uc
+verified: '2026-10-14'

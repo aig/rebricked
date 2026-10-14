@@ -12,6 +12,27 @@ recorded, and a made-up reason is worse than none.
 ## 2026-10-14
 
 ### Added
+- **LTAP's building blocks get their own cards: synced tables, Register Lakebase in Unity Catalog,
+  LTAP Direct Writes, and Lakebase Change Data Feed (formerly Lakehouse sync).**
+
+  **Why:** the LTAP overview says plainly that "LTAP is an architecture, not a single feature",
+  and that "You implement LTAP by combining the capabilities" it lists. The data had a card for the
+  architecture but cards for only one of its parts (Lakehouse Real-Time). So a reader who searched
+  for the parts they actually turn on found nothing. While checking, the Lakebase release notes
+  showed that the CDC feature shipped in March 2026 as "Lakehouse sync (Beta)" and was called
+  Lakebase Change Data Feed by its May 2026 Public Preview, so that is a rename.
+
+  **What:** four `active` cards and one `renamed` card. `synced-tables` (Data engineering) and
+  `register-lakebase-in-unity-catalog` (Data governance) both have `introducedAt` 2025-06, from
+  the Lakebase Public Preview blog. Their status comes from the LTAP capability table, which marks
+  both GA. Neither capability page gives a GA date, so `releases` is left out. `ltap-direct-writes`
+  is `beta` from 2026-08 (August 25 release note). The `lakehouse-sync` (2026-03, Beta) card links
+  to `lakebase-change-data-feed` (2026-05, Public Preview). No doc dates the rename itself, so
+  `to` uses the first dated use of the new name. The LTAP card is still the umbrella entry. Its
+  description now leads with "an architecture, not a feature" and says which capability fits
+  which write direction. All six are in the Compute rail section, and `check_anchors.py` passes
+  for all of them.
+
 - **New card: Supervisor API, `retired` on September 30, 2026.**
 
   **Why:** the Legacy agent offerings page (updated October 13, 2026) lists "Supervisor API

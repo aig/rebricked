@@ -1,0 +1,31 @@
+id: ltap-direct-writes
+name: LTAP Direct Writes
+category: Data engineering
+what:
+  note: An opt-in option on a Lakebase synced table that writes its bulk loads straight into the storage layer behind the Lakebase branch instead of through the live compute endpoint, so the initial load (and every Snapshot-mode refresh) finishes faster without adding query load.
+  link: https://docs.databricks.com/aws/en/oltp/projects/sync-tables#:~:text=writes%20data%20directly%20into%20the%20storage%20layer%20backing%20your%20Lakebase%20branch
+fact:
+  - note: It is a checkbox you get exactly one chance to tick - it cannot be added to an existing synced table, so the documented fix is to delete the table and create it again.
+    link: https://docs.databricks.com/aws/en/oltp/projects/sync-tables#:~:text=delete%20the%20synced%20table%20and%20create%20a%20new%20one
+  - note: In Triggered and Continuous modes it accelerates precisely one load, the first; every change after that arrives incrementally instead.
+    link: https://docs.databricks.com/aws/en/oltp/projects/sync-tables#:~:text=The%20initial%20load%20only
+status:
+  value: active
+  link: https://docs.databricks.com/aws/en/oltp/projects/ltap-overview#:~:text=accelerates%20the%20initial%20load%20in%20every%20sync%20mode
+  date: '2026-10-14'
+releases:
+  - type: beta
+    date: 2026-08
+    link: https://docs.databricks.com/aws/en/release-notes/lakebase/#:~:text=LTAP%20Direct%20Writes%20speeds%20up%20how%20synced%20tables%20load%20into%20Lakebase
+introducedAt:
+  date: 2026-08
+  link: https://docs.databricks.com/aws/en/release-notes/lakebase/#:~:text=LTAP%20Direct%20Writes%20speeds%20up%20how%20synced%20tables%20load%20into%20Lakebase
+limitations:
+  note: Off by default and chosen only when a synced table is created (an existing synced table must be deleted and recreated to use it), supported only on Lakebase projects running Postgres 16, 17, or 18, and in Triggered and Continuous modes it accelerates only the initial load.
+  link: https://docs.databricks.com/aws/en/oltp/projects/sync-tables#:~:text=LTAP%20Direct%20Writes%20is%20supported%20on%20Lakebase%20projects%20running%20Postgres%2016
+  date: '2026-10-14'
+prediction:
+  - LTAP Direct Writes Direct
+  - Lakebase Express Load
+source: https://docs.databricks.com/aws/en/oltp/projects/sync-tables
+verified: '2026-10-14'

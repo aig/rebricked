@@ -1,0 +1,27 @@
+id: synced-tables
+name: Synced tables
+aliases:
+  - Lakebase synced tables
+category: Data engineering
+what:
+  note: A read-only Postgres copy of a Unity Catalog table, kept up to date by a managed Lakeflow pipeline in Snapshot, Triggered, or Continuous mode, so applications get low-latency OLTP reads on lakehouse data from Lakebase.
+  link: https://docs.databricks.com/aws/en/oltp/projects/sync-tables#:~:text=Synced%20tables%20let%20you%20serve%20lakehouse%20data%20through%20Lakebase%20Postgres
+fact:
+  - note: A full refresh briefly keeps two copies of your table, since the old Postgres version is not deleted until the new sync completes and both count toward the database size quota meanwhile.
+    link: https://docs.databricks.com/aws/en/oltp/projects/sync-tables#:~:text=the%20old%20version%20in%20Postgres%20is%20not%20deleted%20until%20the%20new%20sync%20completes
+  - note: A big sync can sit in INITIALIZING for its entire run, and the docs feel the need to promise this does not mean the pipeline is stuck.
+    link: https://docs.databricks.com/aws/en/oltp/projects/sync-tables#:~:text=A%20large%20sync%20can%20report%20INITIALIZING%20for%20the%20full%20run
+  - note: Rows with a null in any primary key column are not synced at all; they are simply left behind in the lakehouse.
+    link: https://docs.databricks.com/aws/en/oltp/projects/sync-tables#:~:text=Rows%20with%20nulls%20in%20primary%20key%20columns%20are%20excluded%20from%20the%20sync
+status:
+  value: active
+  link: https://docs.databricks.com/aws/en/oltp/projects/ltap-overview#:~:text=Serve%20Unity%20Catalog%20table%20data%20in%20Lakebase%20for%20low%2Dlatency%20OLTP%20reads
+  date: '2026-10-14'
+introducedAt:
+  date: 2025-06
+  link: https://www.databricks.com/blog/announcing-lakebase-public-preview#:~:text=Lakebase%20syncs%20with%20Unity%20Catalog%20managed%20tables
+prediction:
+  - Synced Tables One
+  - Unsynced tables
+source: https://docs.databricks.com/aws/en/oltp/projects/sync-tables
+verified: '2026-10-14'

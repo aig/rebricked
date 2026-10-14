@@ -1,0 +1,26 @@
+id: lakehouse-sync
+name: Lakehouse sync
+category: Data engineering
+what:
+  note: A Beta Lakebase feature that continuously replicated Lakebase Postgres tables to Unity Catalog Delta tables using CDC.
+  link: https://docs.databricks.com/aws/en/release-notes/lakebase/#:~:text=Continuously%20replicate%20Lakebase%20Postgres%20tables%20to%20Unity%20Catalog%20Delta%20tables%20using%20CDC
+fact:
+  - note: It never got a release note of its own - it debuted as the third bullet of one it shared with OAuth roles and budget policy tags.
+    link: https://docs.databricks.com/aws/en/release-notes/lakebase/#:~:text=Lakebase%20updates%3A%20OAuth%20role%20management%2C%20budget%20policies%20and%20tags%2C%20and%20Lakehouse%20sync
+status:
+  value: renamed
+  link: https://docs.databricks.com/aws/en/release-notes/lakebase/#:~:text=Continuously%20replicate%20Lakebase%20Postgres%20tables%20to%20Unity%20Catalog%20Delta%20tables%20using%20CDC
+  date: '2026-10-14'
+releases:
+  - type: beta
+    date: 2026-03
+    link: https://docs.databricks.com/aws/en/release-notes/lakebase/#:~:text=Continuously%20replicate%20Lakebase%20Postgres%20tables%20to%20Unity%20Catalog%20Delta%20tables%20using%20CDC
+from:
+  date: 2026-03
+  link: https://docs.databricks.com/aws/en/release-notes/lakebase/#:~:text=Continuously%20replicate%20Lakebase%20Postgres%20tables%20to%20Unity%20Catalog%20Delta%20tables%20using%20CDC
+to:
+  date: 2026-05
+  link: https://docs.databricks.com/aws/en/release-notes/lakebase/#:~:text=Lakebase%20Change%20Data%20Feed%20%28CDF%29%20captures%20row%2Dlevel%20changes
+successorId: lakebase-change-data-feed
+source: https://docs.databricks.com/aws/en/release-notes/lakebase/
+verified: '2026-10-14'

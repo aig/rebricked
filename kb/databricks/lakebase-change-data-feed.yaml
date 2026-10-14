@@ -1,0 +1,38 @@
+id: lakebase-change-data-feed
+name: Lakebase Change Data Feed
+aliases:
+  - Lakebase CDF
+category: Data engineering
+what:
+  note: Captures every insert, update, and delete on a Lakebase Postgres table from the write-ahead log and stores each as a new row in a Unity Catalog managed Delta table (one lb_<table>_history table per source), flushed about every 15 seconds, for downstream pipelines and audit.
+  link: https://docs.databricks.com/aws/en/oltp/projects/lakebase-cdf#:~:text=is%20captured%20from%20the%20write%2Dahead%20log
+fact:
+  - note: It runs on a Postgres extension called wal2delta, a name that doubles as the entire job description - read the WAL, write Delta.
+    link: https://docs.databricks.com/aws/en/oltp/projects/lakebase-cdf#:~:text=Lakebase%20CDF%20is%20powered%20by%20the%20wal2delta%20Postgres%20extension
+  - note: Do not turn on Delta Lake's own change data feed on its destination tables - a change feed of the change feed breaks the re-snapshot it runs when the source schema changes.
+    link: https://docs.databricks.com/aws/en/oltp/projects/lakebase-cdf#:~:text=Do%20not%20enable%20Delta%20Lake%20change%20data%20feed%20on%20a%20destination%20table
+  - note: An empty table stays out of the feed entirely until it holds at least one row, on the reasonable grounds that nothing has changed yet.
+    link: https://docs.databricks.com/aws/en/oltp/projects/lakebase-cdf#:~:text=A%20table%20is%20only%20synced%20if%20it%20contains%20data
+status:
+  value: active
+  link: https://docs.databricks.com/aws/en/oltp/projects/lakebase-cdf#:~:text=The%20Lakebase%20Change%20Data%20Feed%20feature%20is%20in%20Public%20Preview
+  date: '2026-10-14'
+releases:
+  - type: beta
+    date: 2026-03
+    link: https://docs.databricks.com/aws/en/release-notes/lakebase/#:~:text=Continuously%20replicate%20Lakebase%20Postgres%20tables%20to%20Unity%20Catalog%20Delta%20tables%20using%20CDC
+  - type: public-preview
+    date: 2026-05
+    link: https://docs.databricks.com/aws/en/release-notes/lakebase/#:~:text=Lakebase%20Change%20Data%20Feed%20%28CDF%29%20captures%20row%2Dlevel%20changes
+from:
+  date: 2026-05
+  link: https://docs.databricks.com/aws/en/release-notes/lakebase/#:~:text=Lakebase%20Change%20Data%20Feed%20%28CDF%29%20captures%20row%2Dlevel%20changes
+limitations:
+  note: Source tables need REPLICA IDENTITY FULL, partitioned tables are not supported, empty tables are skipped until they hold a row, destination history tables must not get row filters, column masks, or Delta change data feed, and it does not work when the destination catalog's managed storage is reachable only through a private endpoint.
+  link: https://docs.databricks.com/aws/en/oltp/projects/lakebase-cdf#:~:text=Lakebase%20partitioned%20tables%20are%20not%20supported
+  date: '2026-10-14'
+prediction:
+  - Lakebase Change Data Feed Feed
+  - Lakehouse sync
+source: https://docs.databricks.com/aws/en/oltp/projects/lakebase-cdf
+verified: '2026-10-14'
