@@ -1,0 +1,26 @@
+id: lakebase-advanced-postgres-telemetry
+name: Lakebase Advanced Postgres Telemetry
+category: Data engineering
+what:
+  note: The earlier name of the Lakebase workspace preview that captured Postgres telemetry and surfaced AI-detected database issues as Insights.
+  link: https://docs.databricks.com/aws/en/release-notes/lakebase/#:~:text=This%20preview%20was%20previously%20named
+fact:
+  - note: Its scheduled runs did not survive the rename - jobs set up through the old observability configurations stopped, and their dashboards kept their history but got no new data.
+    link: https://docs.databricks.com/aws/en/release-notes/lakebase/#:~:text=Their%20schedules%20do%20not%20carry%20over
+status:
+  value: renamed
+  link: https://docs.databricks.com/aws/en/release-notes/lakebase/#:~:text=This%20preview%20was%20previously%20named
+  date: '2026-10-20'
+releases:
+  - type: beta
+    date: 2026-07
+    link: https://docs.databricks.com/aws/en/release-notes/lakebase/#:~:text=Lakebase%20adds%20AI%2Dassisted%20troubleshooting
+from:
+  date: 2026-07
+  link: https://docs.databricks.com/aws/en/release-notes/lakebase/#:~:text=Lakebase%20adds%20AI%2Dassisted%20troubleshooting
+to:
+  date: 2026-10
+  link: https://docs.databricks.com/aws/en/release-notes/lakebase/#:~:text=This%20preview%20was%20previously%20named
+successorId: lakebase-insights
+source: https://docs.databricks.com/aws/en/release-notes/lakebase/
+verified: '2026-10-20'

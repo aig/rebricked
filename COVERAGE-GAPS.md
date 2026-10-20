@@ -12,6 +12,16 @@
 
 ## Update log
 
+- **2026-10-20** - Refreshed the reference copy (release notes and 35 new blog posts) and compared
+  everything published since 2026-10-06, then checked every card's lifecycle against all release-note
+  headings since January 2025. Two cards added for the rename **Lakebase Advanced Postgres Telemetry ->
+  Lakebase Insights**. Status fixes: **Query tags** GA (September 30), **Agentic code converter** GA for
+  SQL (October 15), and the `serverless_gpu` -> AI Runtime SDK package change recorded on `ai-runtime`.
+  Sub-features left to their cards: agent memory pipelines, governed tag propagation, budget ACLs, Genie
+  One code execution, Lakebase logical replication, Data Classification API GA, Iceberg in transactions.
+  Open: **Workday Data Connect** federation (Beta, blog only) and the predictive AI functions
+  (`ai_forecast`, `ai_top_drivers`, `ai_detect_anomalies`, `ai_predict_value`, `ai_predict_class`).
+  New hosted models and retirements are left out by the §14 policy.
 - **2026-10-06** - Refreshed the reference copy (the October 2026 release notes and 22 new blog posts) and
   compared everything published since 2026-09-27. Four cards added: **Agent Bricks CLI**, **Managed agent
   memory** (first Beta June 2026, so its §13 row is closed), **Managed agent sessions**, and **Budgets**,

@@ -1,0 +1,38 @@
+id: lakebase-insights
+name: Lakebase Insights
+aliases:
+  - Insights
+category: Data engineering
+what:
+  note: A background agent that reviews a Lakebase project's telemetry in system.lakebase, on a schedule or on demand, and reports issues and early warnings with a severity, evidence and recommended fixes.
+  link: https://docs.databricks.com/aws/en/oltp/projects/observability-ai-insights#:~:text=Insights%20is%20a%20background%20agent
+fact:
+  - note: Every finding comes with a Fix with Genie button, so the agent that spotted the problem hands it straight to the one that talks you through fixing it.
+    link: https://docs.databricks.com/aws/en/oltp/projects/observability-ai-insights#:~:text=Fix%20with%20Genie
+  - note: Each run bills twice over - for the compute it uses and for the model tokens it spends reading your telemetry.
+    link: https://docs.databricks.com/aws/en/oltp/projects/observability-ai-insights#:~:text=Each%20Insights%20run%20counts%20toward%20the%20compute%20and%20the%20model%20tokens
+status:
+  value: active
+  link: https://docs.databricks.com/aws/en/oltp/projects/observability-ai-insights#:~:text=This%20feature%20is%20in%20Beta
+  date: '2026-10-20'
+releases:
+  - type: beta
+    date: 2026-07
+    link: https://docs.databricks.com/aws/en/release-notes/lakebase/#:~:text=Lakebase%20adds%20AI%2Dassisted%20troubleshooting
+from:
+  date: 2026-10
+  link: https://docs.databricks.com/aws/en/release-notes/lakebase/#:~:text=This%20preview%20was%20previously%20named
+limitations:
+  note: Beta, and a workspace admin must enable the Lakebase Insights preview. You need CAN MANAGE on a project to configure it and see its findings, and a running compute. Analysis instructions are not configurable, scheduled runs start only after each project is configured, and severity is inferred, so check the evidence before acting.
+  link: https://docs.databricks.com/aws/en/oltp/projects/observability-ai-insights#:~:text=analysis%20instructions%20aren%27t%20configurable
+  date: '2026-10-20'
+links:
+  - url: https://docs.databricks.com/aws/en/release-notes/lakebase/
+    kind: official
+    label: 'Databricks Lakebase release notes: Lakebase Insights moves to per-project settings (October 19, 2026)'
+prediction:
+  - Lakebase Doctor
+  - Genie for Postgres
+  - Lakebase Advanced Postgres Insights
+source: https://docs.databricks.com/aws/en/oltp/projects/observability-ai-insights
+verified: '2026-10-20'

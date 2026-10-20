@@ -12,10 +12,12 @@ fact:
     link: https://docs.databricks.com/aws/en/machine-learning/ai-runtime/overview#:~:text=AI%20Runtime%20provides%20on%2Ddemand%20access%20to%20GPU%20resources.
   - note: It first showed up in June 2025 under the plainer name 'Serverless GPU compute.'
     link: https://docs.databricks.com/aws/en/release-notes/product/2025/june#:~:text=Serverless%20GPU%20compute%20is%20in%20Beta
+  - note: 'The old name outlived the rebrand in code: the Python package was still called serverless_gpu until the AI Runtime SDK (databricks-sdk-air) replaced it in GPU environment version 6, with support ending in version 7.'
+    link: https://docs.databricks.com/aws/en/machine-learning/ai-runtime/distributed-training#:~:text=The%20serverless_gpu%20package%20is%20deprecated
 status:
   value: active
   link: https://docs.databricks.com/aws/en/machine-learning/ai-runtime/overview#:~:text=AI%20Runtime%20is%20a%20compute%20offering%20at%20Databricks
-  date: '2026-09-27'
+  date: '2026-10-20'
 releases:
   - type: beta
     date: 2025-06
@@ -41,9 +43,12 @@ links:
   - url: https://docs.databricks.com/aws/en/release-notes/product/2026/march
     kind: official
     label: 'Databricks release notes: AI Runtime Public Preview (March 2026)'
+  - url: https://docs.databricks.com/aws/en/release-notes/product/2026/october
+    kind: official
+    label: 'Databricks release notes: Databricks AI Runtime SDK replaces serverless_gpu (October 13, 2026)'
 prediction:
   - Genie Runtime
   - Lakeflow GPU
   - Mosaic AI Runtime
 source: https://docs.databricks.com/aws/en/machine-learning/ai-runtime/
-verified: '2026-09-27'
+verified: '2026-10-20'

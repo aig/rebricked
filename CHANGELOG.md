@@ -9,6 +9,35 @@ shows the what. Plain, simple English: short sentences, common words, no jargon 
 and product names themselves. Some older entries have no `Why:` line - the reason was never
 recorded, and a made-up reason is worse than none.
 
+## 2026-10-20
+
+### Added
+- **Lakebase Insights gets a card, with its former name Lakebase Advanced Postgres Telemetry.**
+
+  **Why:** the October 19 Lakebase release note says the Insights preview "was previously named
+  Lakebase Advanced Postgres Telemetry". Neither name had a card, so a search for either found
+  nothing, and the rename itself was invisible.
+
+  **What:** `lakebase-insights` (`active`, Beta since 2026-07, `from` 2026-10) and
+  `lakebase-advanced-postgres-telemetry` (`renamed`, 2026-07 to 2026-10, `successorId`
+  `lakebase-insights`), both Data engineering and in the Compute section. Beta dates from the
+  July 24 Lakebase note that first shipped Insights; the old name appears only in the October one.
+
+### Changed
+- **Query tags and the agentic code converter are now marked GA, and AI Runtime records its
+  package swap.**
+
+  **Why:** a lifecycle check of every card against the release notes since January 2025 found
+  two cards still showing a preview stage after their GA, and one deprecation with nowhere to
+  sit.
+
+  **What:** `query-tags` gets a `ga` stage (2026-09, September 30 note), Lakehouse//RT compute in
+  its description and limits, and a definition quote the docs reworded. `agentic-code-converter`
+  gets a `ga` stage (2026-10, October 15 note, SQL target only; Notebooks stays Beta) and limits
+  re-read from the live page (the 1,000-line cap is gone). `ai-runtime` gets a fact: the
+  `serverless_gpu` package is deprecated, replaced by the AI Runtime SDK (`databricks-sdk-air`) in
+  GPU environment version 6, with support ending in version 7.
+
 ## 2026-10-14
 
 ### Added
