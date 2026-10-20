@@ -1,0 +1,49 @@
+id: servicenow-connector
+name: ServiceNow connector
+aliases:
+  - ServiceNow
+  - Lakeflow Connect for ServiceNow
+category: Data engineering
+what:
+  note: 'The managed Lakeflow Connect connector that incrementally ingests ServiceNow tables into Databricks, with SCD type 2, row filtering and up to 250 tables per pipeline.'
+  link: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/servicenow#:~:text=allows%20you%20to%20ingest%20data%20from%20ServiceNow%20into%20Databricks
+fact:
+  - note: 'A single dollar sign is a dealbreaker: if a table or any of its column names contains a $, the connector cannot ingest that table.'
+    link: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/servicenow-limits#:~:text=If%20the%20table%20name%20or%20any%20of%20the%20column%20names%20contain%20the%20character
+  - note: 'Machine-to-machine OAuth needs a ServiceNow instance on the Washington DC release or later, and ServiceNow ships with the client credentials grant switched off.'
+    link: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/servicenow-source-setup#:~:text=M2M%20OAuth%20requires%20the%20ServiceNow%20Washington%20DC%20release%20or%20later
+  - note: 'Delete a record and then restore it in ServiceNow, and the connector will not bring it back.'
+    link: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/servicenow-limits#:~:text=the%20connector%20does%20not%20reingest%20the%20restored%20record
+status:
+  value: active
+  link: https://docs.databricks.com/aws/en/release-notes/product/2025/august#:~:text=The%20fully%2Dmanaged%20ServiceNow%20ingestion%20connector%20in%20Lakeflow%20Connect%20is%20now%20generally%20available
+  date: '2026-10-20'
+releases:
+  - type: public-preview
+    date: 2025-03
+    link: https://docs.databricks.com/aws/en/release-notes/product/2025/march#:~:text=You%20can%20now%20ingest%20from%20ServiceNow%20using%20Databricks%20Lakeflow%20Connect
+  - type: ga
+    date: 2025-08
+    link: https://docs.databricks.com/aws/en/release-notes/product/2025/august#:~:text=The%20fully%2Dmanaged%20ServiceNow%20ingestion%20connector%20in%20Lakeflow%20Connect%20is%20now%20generally%20available
+introducedAt:
+  date: 2025-03
+  link: https://docs.databricks.com/aws/en/release-notes/product/2025/march#:~:text=You%20can%20now%20ingest%20from%20ServiceNow%20using%20Databricks%20Lakeflow%20Connect
+limitations:
+  note: 'Only tables with a sys_id column can be ingested, and incremental ingestion needs sys_updated_on, sys_created_on or sys_archived (otherwise the table is snapshotted and overwritten). At most 250 tables per pipeline, no tables or columns with a $ in the name, and restored records are not reingested.'
+  link: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/servicenow-limits#:~:text=The%20connector%20can%20only%20ingest%20tables%20with%20a%20sys_id%20column
+  date: '2026-10-20'
+links:
+  - url: https://docs.databricks.com/aws/en/release-notes/product/2025/march
+    kind: official
+    label: 'Databricks release notes: ServiceNow connector (Public Preview) (March 10, 2025)'
+  - url: https://docs.databricks.com/aws/en/release-notes/product/2025/august
+    kind: official
+    label: 'Databricks release notes: ServiceNow connector GA (August 8, 2025)'
+  - url: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/servicenow-limits
+    kind: official
+    label: 'Databricks docs: ServiceNow connector limitations'
+  - url: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/servicenow-source-setup
+    kind: official
+    label: 'Databricks docs: Configure ServiceNow for Databricks ingestion'
+source: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/servicenow
+verified: '2026-10-20'

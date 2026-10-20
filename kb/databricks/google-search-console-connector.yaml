@@ -1,0 +1,44 @@
+id: google-search-console-connector
+name: Google Search Console connector
+aliases:
+  - Google Search Console
+  - Search Console
+  - GSC
+category: Data engineering
+what:
+  note: 'The managed Lakeflow Connect connector that ingests search performance data, site metadata and sitemap information from Google Search Console into Databricks.'
+  link: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/google-search-console#:~:text=ingests%20search%20performance%20data%2C%20site%20metadata%2C%20and%20sitemap%20information
+fact:
+  - note: 'Patience is built in: Search Analytics data arrives with an approximate delay of two to four days, so the first sync can miss the most recent dates.'
+    link: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/google-search-console-limits#:~:text=approximate%20delay%20of%20two%20to%20four%20days
+  - note: 'The first sync reaches back up to 500 days of history, counted from the day the first pipeline update runs.'
+    link: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/google-search-console-limits#:~:text=up%20to%20500%20days%20of%20historical%20data%20on%20the%20first%20sync
+  - note: 'Hourly tables only cover the web and googleNews search types - image, video and news searches stay daily.'
+    link: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/google-search-console-limits#:~:text=Hourly%20search%20analytics%20data%20is%20available%20only%20for%20properties%20using%20the%20web%20and%20googleNews%20search%20types
+status:
+  value: active
+  link: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/google-search-console#:~:text=a%20workspace%20admin%20must%20turn%20on%20Lakeflow%20Connect%20for%20Google%20Search%20Console
+  date: '2026-10-20'
+releases:
+  - type: beta
+    date: 2026-08
+    link: https://docs.databricks.com/aws/en/release-notes/product/2026/august#:~:text=Use%20it%20to%20ingest%20search%20performance%20data%2C%20site%20metadata%2C%20and%20sitemap%20information
+introducedAt:
+  date: 2026-08
+  link: https://docs.databricks.com/aws/en/release-notes/product/2026/august#:~:text=Use%20it%20to%20ingest%20search%20performance%20data%2C%20site%20metadata%2C%20and%20sitemap%20information
+limitations:
+  note: 'Beta behind a workspace preview, API-only (no UI authoring) and no row filtering. The sites and sitemaps tables are fully refreshed on every update, column renames need a full refresh, Search Analytics lags two to four days, hourly tables support only the web and googleNews search types, and the first sync backfills at most 500 days.'
+  link: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/google-search-console-limits#:~:text=The%20sites%20and%20sitemaps%20tables%20do%20not%20support%20incremental%20ingestion
+  date: '2026-10-20'
+links:
+  - url: https://docs.databricks.com/aws/en/release-notes/product/2026/august
+    kind: official
+    label: 'Databricks release notes: August 2026'
+  - url: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/google-search-console
+    kind: official
+    label: 'Databricks docs: Google Search Console connector'
+  - url: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/google-search-console-limits
+    kind: official
+    label: 'Databricks docs: Google Search Console connector limitations'
+source: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/google-search-console
+verified: '2026-10-20'

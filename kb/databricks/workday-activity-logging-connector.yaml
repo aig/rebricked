@@ -1,0 +1,37 @@
+id: workday-activity-logging-connector
+name: Workday Activity Logging connector
+aliases:
+  - Workday Activity Logging
+  - Lakeflow Connect for Workday Activity Logging
+category: Data engineering
+what:
+  note: 'A managed Lakeflow Connect connector that incrementally ingests Workday user activity log events into Databricks.'
+  link: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/workday-activity-logging#:~:text=ingests%20user%20activity%20log%20events%20from%20Workday
+fact:
+  - note: 'Before the first log line arrives, an admin has to build four things in Workday: an integration system user, a security group, an OAuth client and a refresh token.'
+    link: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/workday-activity-logging#:~:text=create%20an%20integration%20system%20user%2C%20security%20group%2C%20OAuth%20client%2C%20and%20refresh%20token
+  - note: 'It is the audit trail of who did what in Workday, and it authenticates exactly one way - an OAuth refresh token; U2M, M2M and username/password are all marked not supported.'
+    link: https://docs.databricks.com/aws/en/release-notes/product/2026/september#:~:text=Authentication%20uses%20an%20OAuth%20refresh%20token
+  - note: 'Rename a column and the connector does not notice a rename - it records a brand-new column and a deleted one.'
+    link: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/workday-activity-logging#:~:text=Treated%20as%20a%20new%20column%20%28new%20name%29%20and%20deleted%20column%20%28old%20name%29
+status:
+  value: active
+  link: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/workday-activity-logging#:~:text=This%20feature%20is%20in%20Beta
+  date: '2026-10-20'
+releases:
+  - type: beta
+    date: 2026-09
+    link: https://docs.databricks.com/aws/en/release-notes/product/2026/september#:~:text=The%20connector%20incrementally%20ingests%20Workday%20user%20activity%20log%20events%20into%20Databricks
+introducedAt:
+  date: 2026-09
+  link: https://docs.databricks.com/aws/en/release-notes/product/2026/september#:~:text=The%20connector%20incrementally%20ingests%20Workday%20user%20activity%20log%20events%20into%20Databricks
+limitations:
+  note: 'Beta, enabled by a workspace admin from the Previews page. No UI-based pipeline authoring (API, notebook or Declarative Automation Bundles only), no API-based row filtering, no SCD Type 2, and no schema evolution for data type changes. OAuth refresh token is the only supported authentication.'
+  link: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/workday-activity-logging#:~:text=UI%2Dbased%20pipeline%20authoring%20Not%20supported
+  date: '2026-10-20'
+links:
+  - url: https://docs.databricks.com/aws/en/release-notes/product/2026/september
+    kind: official
+    label: 'Databricks release notes: Workday Activity Logging connector (Beta), September 28, 2026'
+source: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/workday-activity-logging
+verified: '2026-10-20'

@@ -1,0 +1,40 @@
+id: akamai-waf-connector
+name: 'Akamai WAF connector'
+aliases:
+  - 'Akamai WAF'
+  - 'Akamai'
+category: Data engineering
+what:
+  note: 'A managed Lakeflow Connect connector that ingests web application firewall (WAF) security events from the Akamai SIEM API into Databricks.'
+  link: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/akamai-waf#:~:text=ingests%20web%20application%20firewall%20%28WAF%29%20security%20events
+fact:
+  - note: 'It reads from Akamai''s Security Information and Event Management (SIEM) API, so your firewall''s blocked attacks end up as rows in a lakehouse.'
+    link: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/akamai-waf#:~:text=Akamai%20Security%20Information%20and%20Event%20Management%20%28SIEM%29%20API
+  - note: 'Signing in takes four secrets via Akamai EdgeGrid: client host, client token, client secret and access token.'
+    link: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/akamai-waf#:~:text=Akamai%20API%20client%20host%2C%20client%20token%2C%20client%20secret%2C%20and%20access%20token
+  - note: 'A renamed column is not tracked as a rename - it shows up as a new column next to a deleted one.'
+    link: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/akamai-waf#:~:text=Treated%20as%20a%20new%20column%20%28new%20name%29%20and%20deleted%20column%20%28old%20name%29
+status:
+  value: active
+  link: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/akamai-waf#:~:text=Lakeflow%20Connect%20for%20Akamai%20WAF%20from%20the%20Previews%20page
+  date: '2026-10-20'
+releases:
+  - type: beta
+    date: 2026-09
+    link: https://docs.databricks.com/aws/en/release-notes/product/2026/september#:~:text=The%20Akamai%20WAF%20connector%20is%20now%20available%20in%20Lakeflow%20Connect
+introducedAt:
+  date: 2026-09
+  link: https://docs.databricks.com/aws/en/release-notes/product/2026/september#:~:text=The%20Akamai%20WAF%20connector%20is%20now%20available%20in%20Lakeflow%20Connect
+limitations:
+  note: 'EdgeGrid authentication only, API-only pipeline authoring (no UI), no API-based row filtering, no SCD Type 2, and no data type changes in schema evolution; renames arrive as a new column plus a deleted one.'
+  link: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/akamai-waf
+  date: '2026-10-20'
+links:
+  - url: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/akamai-waf
+    kind: official
+    label: 'Databricks docs: Akamai WAF connector'
+  - url: https://docs.databricks.com/aws/en/release-notes/product/2026/september
+    kind: official
+    label: 'Databricks release notes: Akamai WAF connector (Beta, September 28, 2026)'
+source: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/akamai-waf
+verified: '2026-10-20'

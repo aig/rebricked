@@ -1,0 +1,38 @@
+id: aha-connector
+name: 'Aha! connector'
+aliases:
+  - 'Aha!'
+  - 'Aha'
+category: Data engineering
+what:
+  note: 'A managed Lakeflow Connect connector that ingests ideas, products, tasks and related product-management records from Aha! into Databricks.'
+  link: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/aha#:~:text=ingests%20ideas%2C%20products%2C%20tasks%2C%20and%20related%20product%2Dmanagement%20records
+fact:
+  - note: 'The exclamation mark is part of the product name, so the docs dutifully print it every time - including in the Previews toggle, Lakeflow Connect for Aha!.'
+    link: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/aha#:~:text=turn%20on%20Lakeflow%20Connect%20for%20Aha%21%20from%20the%20Previews%20page
+  - note: 'Authentication is one personal API key from Aha! - no OAuth, no username and password.'
+    link: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/aha#:~:text=Aha%21%20personal%20API%20key
+status:
+  value: active
+  link: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/aha#:~:text=turn%20on%20Lakeflow%20Connect%20for%20Aha%21%20from%20the%20Previews%20page
+  date: '2026-10-20'
+releases:
+  - type: beta
+    date: 2026-06
+    link: https://docs.databricks.com/aws/en/release-notes/product/2026/june#:~:text=Lakeflow%20Connect%20now%20supports%20a%20managed%20connector%20for%20ingestion%20from%20Aha%21
+introducedAt:
+  date: 2026-06
+  link: https://docs.databricks.com/aws/en/release-notes/product/2026/june#:~:text=Lakeflow%20Connect%20now%20supports%20a%20managed%20connector%20for%20ingestion%20from%20Aha%21
+limitations:
+  note: 'API key authentication only; no API-based row filtering, no SCD Type 2, no data type changes in schema evolution, and a column rename requires a full refresh.'
+  link: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/aha
+  date: '2026-10-20'
+links:
+  - url: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/aha
+    kind: official
+    label: 'Databricks docs: Aha! connector'
+  - url: https://docs.databricks.com/aws/en/release-notes/product/2026/june
+    kind: official
+    label: 'Databricks release notes: Aha! connector (Beta, June 8, 2026)'
+source: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/aha
+verified: '2026-10-20'

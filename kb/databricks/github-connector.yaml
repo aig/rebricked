@@ -1,0 +1,44 @@
+id: github-connector
+name: GitHub connector
+aliases:
+  - 'GitHub'
+  - 'GitHub managed ingestion connector'
+  - 'Lakeflow Connect for GitHub'
+category: Data engineering
+what:
+  note: 'A managed Lakeflow Connect connector that ingests GitHub.com organization data, such as repositories, commits, issues, pull requests, audit logs and file contents, into Databricks.'
+  link: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/github-overview#:~:text=allows%20you%20to%20ingest%20data%20from%20GitHub%20into%20Databricks
+fact:
+  - note: 'GitHub.com only - GitHub Enterprise Server instances are not supported.'
+    link: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/github-overview#:~:text=GitHub%20Enterprise%20Server%20%28GHES%29%20instances%20are%20not%20supported
+  - note: 'Deletes are invisible everywhere except repo_contents, and the docs blame GitHub: it is a GitHub API limitation.'
+    link: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/github-limits#:~:text=This%20is%20a%20GitHub%20API%20limitation
+  - note: 'repo_contents reads only the default branch and skips the body of any file larger than 100 MB, keeping just its path, sha and size.'
+    link: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/github-limits#:~:text=Files%20larger%20than%20100%20MB%20are%20not%20fetched
+status:
+  value: active
+  link: https://docs.databricks.com/aws/en/release-notes/product/2026/may#:~:text=The%20GitHub%20connector%20in%20Lakeflow%20Connect%20is%20now%20available%20in%20Beta
+  date: '2026-10-20'
+releases:
+  - type: beta
+    date: 2026-05
+    link: https://docs.databricks.com/aws/en/release-notes/product/2026/may#:~:text=The%20GitHub%20connector%20in%20Lakeflow%20Connect%20is%20now%20available%20in%20Beta
+introducedAt:
+  date: 2026-05
+  link: https://docs.databricks.com/aws/en/release-notes/product/2026/may#:~:text=The%20GitHub%20connector%20in%20Lakeflow%20Connect%20is%20now%20available%20in%20Beta
+limitations:
+  note: 'In Beta, GitHub.com only. Deletes are not captured except in repo_contents, and most tables, including pull_requests, are fully refreshed on every run. repo_contents covers the default branch only and skips files over 100 MB and binary contents. Audit logs reach back at most 180 days (90 on the free plan), and repository selection does not apply to organization-scoped tables.'
+  link: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/github-limits#:~:text=The%20GitHub%20connector%20doesn%27t%20support%20fetching%20deletes
+  date: '2026-10-20'
+links:
+  - url: https://docs.databricks.com/aws/en/release-notes/product/2026/may
+    kind: official
+    label: 'Databricks release notes: GitHub managed ingestion connector (Beta) (May 5, 2026)'
+  - url: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/github-source-setup
+    kind: official
+    label: 'Databricks docs: Configure OAuth U2M for GitHub ingestion'
+  - url: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/github-limits
+    kind: official
+    label: 'Databricks docs: GitHub connector limitations'
+source: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/github-overview
+verified: '2026-10-20'

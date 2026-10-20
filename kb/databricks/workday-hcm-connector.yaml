@@ -1,0 +1,37 @@
+id: workday-hcm-connector
+name: Workday HCM connector
+aliases:
+  - Workday HCM
+  - Workday Human Capital Management connector
+category: Data engineering
+what:
+  note: 'A managed Lakeflow Connect connector that ingests data from standard Workday Human Capital Management modules - workers, positions, payroll and talent records - into Databricks.'
+  link: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/workday-hcm-overview#:~:text=The%20managed%20Workday%20HCM%20connector%20in%20Lakeflow%20Connect%20allows%20you%20to%20ingest%20data%20from%20Workday%20HCM
+fact:
+  - note: 'Workday got two connectors that split the territory: this one takes the standard HCM modules, and anything from a custom report goes to the Workday Reports connector instead.'
+    link: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/workday-hcm-overview#:~:text=which%20ingests%20data%20from%20standard%20Workday%20HCM%20modules
+  - note: 'Incremental ingestion comes with an asterisk printed right in the table - supported for selected tables only.'
+    link: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/workday-hcm-overview#:~:text=Supported%20%28selected%20tables%20only%29
+  - note: 'Its job description is the whole HR file: workers, positions, payroll and talent records.'
+    link: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/workday-hcm-overview#:~:text=workers%2C%20positions%2C%20payroll%2C%20and%20talent%20records
+status:
+  value: active
+  link: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/workday-hcm-overview#:~:text=This%20feature%20is%20in%20Beta
+  date: '2026-10-20'
+releases:
+  - type: beta
+    date: 2026-03
+    link: https://docs.databricks.com/aws/en/release-notes/product/2026/march#:~:text=The%20managed%20Workday%20HCM%20connector%20in%20Lakeflow%20Connect%20is%20now%20available%20in%20Beta
+introducedAt:
+  date: 2026-03
+  link: https://docs.databricks.com/aws/en/release-notes/product/2026/march#:~:text=The%20managed%20Workday%20HCM%20connector%20in%20Lakeflow%20Connect%20is%20now%20available%20in%20Beta
+limitations:
+  note: 'Beta. Incremental ingestion for selected tables only. No SCD type 2, no API-based column selection or row filtering, and no automated schema evolution at all (new or deleted columns, data type changes, column renames, new tables). OAuth with a manual refresh token is the only supported authentication.'
+  link: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/workday-hcm-overview#:~:text=Supported%20%28selected%20tables%20only%29
+  date: '2026-10-20'
+links:
+  - url: https://docs.databricks.com/aws/en/release-notes/product/2026/march
+    kind: official
+    label: 'Databricks release notes: Workday HCM connector (Beta), March 9, 2026'
+source: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/workday-hcm-overview
+verified: '2026-10-20'

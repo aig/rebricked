@@ -1,0 +1,39 @@
+id: strac-connector
+name: Strac connector
+aliases:
+  - Strac
+category: Data engineering
+what:
+  note: 'The managed Lakeflow Connect connector that ingests data-security audit events from Strac into Databricks, authenticating with a Strac API key.'
+  link: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/strac#:~:text=ingest%20data%2Dsecurity%20audit%20events%20from%20Strac%20into%20Databricks
+fact:
+  - note: 'Getting a key is old-school: Strac has no self-serve API key console, so you email hello@strac.io and wait.'
+    link: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/strac-source-setup#:~:text=Strac%20does%20not%20have%20a%20self%2Dserve%20API%20key%20console
+  - note: 'The whole connector is one table - audit_events - and nothing else from Strac comes along.'
+    link: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/strac-pipeline#:~:text=The%20Strac%20connector%20ingests%20a%20single%20source%20table
+  - note: 'Keys announce their mode in the prefix (sk_test_ or sk_live_), and plain HTTP is refused outright.'
+    link: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/strac-source-setup#:~:text=All%20Strac%20API%20requests%20must%20be%20made%20over%20HTTPS
+status:
+  value: active
+  link: https://docs.databricks.com/aws/en/release-notes/product/2026/july#:~:text=The%20Strac%20connector%20is%20now%20available%20in%20Lakeflow%20Connect
+  date: '2026-10-20'
+releases:
+  - type: beta
+    date: 2026-07
+    link: https://docs.databricks.com/aws/en/release-notes/product/2026/july#:~:text=The%20Strac%20connector%20is%20now%20available%20in%20Lakeflow%20Connect
+introducedAt:
+  date: 2026-07
+  link: https://docs.databricks.com/aws/en/release-notes/product/2026/july#:~:text=The%20Strac%20connector%20is%20now%20available%20in%20Lakeflow%20Connect
+limitations:
+  note: 'A single source table, audit_events. No SCD type 2 because audit events are append-only. Without a start datetime it backfills the last 365 days. Column renames or data type changes need a full refresh.'
+  link: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/strac-limits#:~:text=Strac%20audit%20events%20are%20append%2Donly
+  date: '2026-10-20'
+links:
+  - url: https://docs.databricks.com/aws/en/release-notes/product/2026/july
+    kind: official
+    label: 'Databricks release notes: Strac connector (Beta), July 9, 2026'
+  - url: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/strac-limits
+    kind: official
+    label: 'Databricks docs: Strac connector limitations'
+source: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/strac
+verified: '2026-10-20'

@@ -1,0 +1,36 @@
+id: pendo-connector
+name: Pendo connector
+aliases:
+  - Pendo
+  - Lakeflow Connect for Pendo
+category: Data engineering
+what:
+  note: 'The managed Lakeflow Connect connector that ingests Pendo product analytics data into Databricks, authenticating with a Pendo API Integration Key.'
+  link: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/pendo-overview#:~:text=allows%20you%20to%20ingest%20product%20analytics%20data%20from%20Pendo%20into%20Databricks
+fact:
+  - note: 'There is no incremental mode at all - every pipeline update re-reads every Pendo table from scratch, so the schedule is also the API bill.'
+    link: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/pendo-limits#:~:text=The%20connector%20refreshes%20all%20tables%20on%20each%20pipeline%20update
+status:
+  value: active
+  link: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/pendo-overview#:~:text=a%20workspace%20admin%20must%20turn%20on%20Lakeflow%20Connect%20for%20Pendo
+  date: '2026-10-20'
+releases:
+  - type: beta
+    date: 2026-06
+    link: https://docs.databricks.com/aws/en/release-notes/product/2026/june#:~:text=Lakeflow%20Connect%20now%20supports%20a%20managed%20connector%20for%20ingestion%20from%20Pendo
+introducedAt:
+  date: 2026-06
+  link: https://docs.databricks.com/aws/en/release-notes/product/2026/june#:~:text=Lakeflow%20Connect%20now%20supports%20a%20managed%20connector%20for%20ingestion%20from%20Pendo
+limitations:
+  note: 'No incremental ingestion - all tables are refreshed on each pipeline update. No API-based row filtering, and data type changes or column renames need a full refresh. General SaaS connector limits apply.'
+  link: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/pendo-limits#:~:text=The%20connector%20doesn%27t%20support%20incremental%20ingestion
+  date: '2026-10-20'
+links:
+  - url: https://docs.databricks.com/aws/en/release-notes/product/2026/june
+    kind: official
+    label: 'Databricks release notes: Pendo connector (Beta) (June 2, 2026)'
+  - url: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/pendo-limits
+    kind: official
+    label: 'Databricks docs: Pendo connector limitations'
+source: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/pendo-overview
+verified: '2026-10-20'

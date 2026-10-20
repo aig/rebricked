@@ -1,0 +1,37 @@
+id: oracle-eloqua-connector
+name: Oracle Eloqua connector
+aliases:
+  - 'Oracle Eloqua'
+  - 'Eloqua'
+category: Data engineering
+what:
+  note: 'A managed Lakeflow Connect connector that ingests Oracle Eloqua marketing data such as contacts, accounts, campaigns, emails, forms, form submissions and website visitors into Databricks.'
+  link: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/oracle-eloqua#:~:text=ingests%20marketing%20data%20such%20as%20contacts%2C%20accounts%2C%20campaigns
+fact:
+  - note: 'Eloqua lives on data centers it calls pods, so the connection needs your pod''s base URL, such as secure.p03.eloqua.com.'
+    link: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/oracle-eloqua-source-setup#:~:text=Oracle%20Eloqua%20hosts%20each%20instance%20on%20one%20of%20several%20data%20centers%2C%20called%20pods
+  - note: 'To find that pod you curl login.eloqua.com/id with your site name, username and password glued together in one string.'
+    link: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/oracle-eloqua-source-setup#:~:text=The%20https%3A%2F%2Flogin.eloqua.com%2Fid%20endpoint%20returns%20this%20base%20URL
+  - note: 'Registering the OAuth app requires the Access to App Cloud Developer permission, so a marketer first has to become an app developer.'
+    link: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/oracle-eloqua-source-setup#:~:text=Access%20to%20App%20Cloud%20Developer%20action%20permission
+status:
+  value: active
+  link: https://docs.databricks.com/aws/en/release-notes/product/2026/october#:~:text=Oracle%20Eloqua%20connector%20is%20available%20in%20Beta
+  date: '2026-10-20'
+releases:
+  - type: beta
+    date: 2026-10
+    link: https://docs.databricks.com/aws/en/release-notes/product/2026/october#:~:text=Oracle%20Eloqua%20connector%20is%20available%20in%20Beta
+introducedAt:
+  date: 2026-10
+  link: https://docs.databricks.com/aws/en/release-notes/product/2026/october#:~:text=Oracle%20Eloqua%20connector%20is%20available%20in%20Beta
+limitations:
+  note: 'Beta, enabled by a workspace admin from the Previews page. OAuth U2M only, tables with VARIANT columns do not support SCD type 2, and a column rename requires a full refresh.'
+  link: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/oracle-eloqua#:~:text=To%20use%20it%2C%20a%20workspace%20admin%20must%20turn%20on%20Lakeflow%20Connect%20for%20Oracle%20Eloqua
+  date: '2026-10-20'
+links:
+  - url: https://docs.databricks.com/aws/en/release-notes/product/2026/october
+    kind: official
+    label: 'Databricks release notes: Oracle Eloqua connector is available in Beta (October 20, 2026)'
+source: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/oracle-eloqua
+verified: '2026-10-20'

@@ -1,0 +1,45 @@
+id: crowdstrike-falcon-event-stream-connector
+name: CrowdStrike Falcon Event Stream connector
+aliases:
+  - 'CrowdStrike Falcon Event Stream'
+  - 'CrowdStrike Falcon'
+  - 'Falcon Event Stream'
+  - 'Lakeflow Connect for CrowdStrike Falcon Event Stream'
+category: Data engineering
+what:
+  note: 'A managed Lakeflow Connect connector that ingests Falcon Event Stream events from CrowdStrike Falcon into Databricks, authenticated with OAuth 2.0 client credentials.'
+  link: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/crowdstrike-falcon-event-stream#:~:text=ingests%20Falcon%20Event%20Stream%20events%20from%20CrowdStrike%20Falcon%20into%20Databricks
+fact:
+  - note: 'No time travel on day one: with no checkpoint it starts the Event Stream feed at offset 0 and does not backfill a multi-day history.'
+    link: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/crowdstrike-falcon-event-stream-limits#:~:text=the%20connector%20starts%20the%20Event%20Stream%20feed%20at%20offset%200
+  - note: 'The Base URL is fussy - a bare https:// API hostname, and adding /sensors or any other path breaks it.'
+    link: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/crowdstrike-falcon-event-stream-limits#:~:text=The%20Unity%20Catalog%20connection%20Base%20URL%20must%20be%20an%20API%20hostname
+  - note: 'One table, events - detections, hosts and Falcon Data Replicator stay on the CrowdStrike side.'
+    link: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/crowdstrike-falcon-event-stream-limits#:~:text=It%20doesn%27t%20ingest%20other%20CrowdStrike%20Falcon%20APIs
+status:
+  value: active
+  link: https://docs.databricks.com/aws/en/release-notes/product/2026/september#:~:text=The%20CrowdStrike%20Falcon%20Event%20Stream%20connector%20is%20now%20available%20in%20Lakeflow%20Connect
+  date: '2026-10-20'
+releases:
+  - type: beta
+    date: 2026-09
+    link: https://docs.databricks.com/aws/en/release-notes/product/2026/september#:~:text=The%20CrowdStrike%20Falcon%20Event%20Stream%20connector%20is%20now%20available%20in%20Lakeflow%20Connect
+introducedAt:
+  date: 2026-09
+  link: https://docs.databricks.com/aws/en/release-notes/product/2026/september#:~:text=The%20CrowdStrike%20Falcon%20Event%20Stream%20connector%20is%20now%20available%20in%20Lakeflow%20Connect
+limitations:
+  note: 'In Beta, switched on from the Previews page. Ingests only the events table, with no SCD Type 2 and no historical backfill (a new feed starts at offset 0). The connection Base URL must be a bare API hostname with no path.'
+  link: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/crowdstrike-falcon-event-stream-limits#:~:text=The%20connector%20ingests%20a%20single%20table%2C%20events
+  date: '2026-10-20'
+links:
+  - url: https://docs.databricks.com/aws/en/release-notes/product/2026/september
+    kind: official
+    label: 'Databricks release notes: CrowdStrike Falcon Event Stream connector (Beta) (September 28, 2026)'
+  - url: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/crowdstrike-falcon-event-stream-source-setup
+    kind: official
+    label: 'Databricks docs: Configure authentication to CrowdStrike Falcon'
+  - url: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/crowdstrike-falcon-event-stream-limits
+    kind: official
+    label: 'Databricks docs: CrowdStrike Falcon Event Stream connector limitations'
+source: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/crowdstrike-falcon-event-stream
+verified: '2026-10-20'

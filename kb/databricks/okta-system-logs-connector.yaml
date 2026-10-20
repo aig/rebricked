@@ -1,0 +1,37 @@
+id: okta-system-logs-connector
+name: Okta System Logs connector
+aliases:
+  - 'Okta System Logs'
+  - 'Okta System Log'
+category: Data engineering
+what:
+  note: 'A managed Lakeflow Connect connector that incrementally ingests audit and security events from the Okta System Log into Databricks.'
+  link: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/okta-system-logs#:~:text=ingests%20audit%20and%20security%20events%20from%20your%20Okta%20organization%20into%20Databricks
+fact:
+  - note: 'Everything lands in one table, system_logs - user activity, authentication, security and configuration changes all in a single append-only stream.'
+    link: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/okta-system-logs-pipeline#:~:text=makes%20the%20system_logs%20source%20table%20available%20in%20the%20default%20source%20schema
+  - note: 'The SSWS token inherits its creator''s permissions, so deactivating that admin quietly affects the pipeline too.'
+    link: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/okta-system-logs-source-setup#:~:text=An%20API%20token%20has%20the%20same%20permissions%20as%20the%20administrator%20who%20creates%20it
+  - note: 'Databricks recommends a read-only administrator to own the token, for least-privilege access to the log that records privilege.'
+    link: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/okta-system-logs-source-setup#:~:text=Databricks%20recommends%20using%20a%20read-only%20administrator%20account
+status:
+  value: active
+  link: https://docs.databricks.com/aws/en/release-notes/product/2026/september#:~:text=Okta%20System%20Logs%20connector%20is%20now%20available%20in%20Beta
+  date: '2026-10-20'
+releases:
+  - type: beta
+    date: 2026-09
+    link: https://docs.databricks.com/aws/en/release-notes/product/2026/september#:~:text=Okta%20System%20Logs%20connector%20is%20now%20available%20in%20Beta
+introducedAt:
+  date: 2026-09
+  link: https://docs.databricks.com/aws/en/release-notes/product/2026/september#:~:text=Okta%20System%20Logs%20connector%20is%20now%20available%20in%20Beta
+limitations:
+  note: 'Beta, enabled by a workspace admin from the Previews page. API and bundle authoring only (no UI), SSWS API token only, no row filtering, no SCD type 2 since events are append-only, and no data type changes under schema evolution.'
+  link: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/okta-system-logs#:~:text=Okta%20System%20Log%20events%20are%20append-only
+  date: '2026-10-20'
+links:
+  - url: https://docs.databricks.com/aws/en/release-notes/product/2026/september
+    kind: official
+    label: 'Databricks release notes: Okta System Logs connector is available in Beta (September 28, 2026)'
+source: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/okta-system-logs
+verified: '2026-10-20'

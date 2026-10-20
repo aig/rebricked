@@ -1,0 +1,44 @@
+id: zendesk-support-connector
+name: Zendesk Support connector
+aliases:
+  - Zendesk Support
+  - Zendesk
+  - Zendesk connector
+category: Data engineering
+what:
+  note: 'A managed Lakeflow Connect connector that ingests Zendesk Support ticket data, knowledge base content and community forum data into Databricks.'
+  link: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/zendesk-support-overview#:~:text=including%20ticket%20data%2C%20knowledge%20base%20content%2C%20and%20community%20forum%20data
+fact:
+  - note: 'The Beta announcement promised help center content; by GA the docs call the same thing knowledge base content.'
+    link: https://docs.databricks.com/aws/en/release-notes/product/2026/february#:~:text=ticket%20data%2C%20help%20center%20content%2C%20and%20community%20forum%20data
+  - note: 'It went from Beta in February 2026 to generally available in April 2026 - under three months.'
+    link: https://docs.databricks.com/aws/en/release-notes/product/2026/april#:~:text=The%20Zendesk%20Support%20connector%20in%20Lakeflow%20Connect%20is%20now%20generally%20available
+  - note: 'Rename a column in Zendesk and the connector books it as a brand-new column plus a deleted one.'
+    link: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/zendesk-support-overview#:~:text=Treated%20as%20a%20new%20column%20%28new%20name%29%20and%20deleted%20column%20%28old%20name%29
+status:
+  value: active
+  link: https://docs.databricks.com/aws/en/release-notes/product/2026/april#:~:text=The%20Zendesk%20Support%20connector%20in%20Lakeflow%20Connect%20is%20now%20generally%20available
+  date: '2026-10-20'
+releases:
+  - type: beta
+    date: 2026-02
+    link: https://docs.databricks.com/aws/en/release-notes/product/2026/february#:~:text=The%20Zendesk%20Support%20connector%20allows%20you%20to%20ingest%20ticket%20data
+  - type: ga
+    date: 2026-04
+    link: https://docs.databricks.com/aws/en/release-notes/product/2026/april#:~:text=The%20Zendesk%20Support%20connector%20in%20Lakeflow%20Connect%20is%20now%20generally%20available
+introducedAt:
+  date: 2026-02
+  link: https://docs.databricks.com/aws/en/release-notes/product/2026/february#:~:text=The%20Zendesk%20Support%20connector%20allows%20you%20to%20ingest%20ticket%20data
+limitations:
+  note: 'Up to 250 tables per pipeline. No automated schema evolution for data type changes, and column renames arrive as a new column plus a deleted one. OAuth U2M is the only supported authentication (no OAuth M2M, manual refresh token or basic authentication).'
+  link: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/zendesk-support-overview#:~:text=Maximum%20number%20of%20tables%20per%20pipeline%20250
+  date: '2026-10-20'
+links:
+  - url: https://docs.databricks.com/aws/en/release-notes/product/2026/february
+    kind: official
+    label: 'Databricks release notes: Zendesk Support connector (Beta), February 2, 2026'
+  - url: https://docs.databricks.com/aws/en/release-notes/product/2026/april
+    kind: official
+    label: 'Databricks release notes: Zendesk Support connector (GA), April 28, 2026'
+source: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/zendesk-support-overview
+verified: '2026-10-20'

@@ -1,0 +1,40 @@
+id: veeva-vault-connector
+name: Veeva Vault connector
+aliases:
+  - Veeva Vault
+  - Veeva
+category: Data engineering
+what:
+  note: 'The managed Lakeflow Connect connector that uses Veeva''s Direct Data API to ingest Vault standard objects, custom objects, system tables and audit trail tables into Databricks.'
+  link: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/veeva-vault#:~:text=The%20connector%20uses%20Veeva%27s%20Direct%20Data%20API
+fact:
+  - note: 'Scheduling it more often than every 15 minutes buys nothing: Veeva only produces a new incremental archive every 15 minutes.'
+    link: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/veeva-vault-limits#:~:text=Veeva%20generates%20incremental%20archives%20every%2015%20minutes
+  - note: 'Take a long holiday and pay for it: Veeva keeps incremental archives for 10 days, so a pipeline that falls further behind needs a full refresh.'
+    link: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/veeva-vault-limits#:~:text=If%20a%20pipeline%20falls%20more%20than%2010%20days%20behind
+  - note: 'A full refresh takes two runs - the first only clears the staged archive state, the second actually reloads the data.'
+    link: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/veeva-vault-limits#:~:text=the%20process%20spans%20two%20pipeline%20updates
+status:
+  value: active
+  link: https://docs.databricks.com/aws/en/release-notes/product/2026/july#:~:text=The%20Veeva%20Vault%20connector%20is%20now%20available%20in%20Lakeflow%20Connect
+  date: '2026-10-20'
+releases:
+  - type: beta
+    date: 2026-07
+    link: https://docs.databricks.com/aws/en/release-notes/product/2026/july#:~:text=The%20Veeva%20Vault%20connector%20is%20now%20available%20in%20Lakeflow%20Connect
+introducedAt:
+  date: 2026-07
+  link: https://docs.databricks.com/aws/en/release-notes/product/2026/july#:~:text=The%20Veeva%20Vault%20connector%20is%20now%20available%20in%20Lakeflow%20Connect
+limitations:
+  note: 'Authentication is OAuth 2.0 M2M via Microsoft Entra ID only. New data appears at most every 15 minutes, a pipeline more than 10 days behind needs a full refresh, a full refresh spans two updates, id fields are always STRING, and only a fixed set of __sys tables is ingested.'
+  link: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/veeva-vault-limits#:~:text=Veeva%20retains%20incremental%20archives%20for%2010%20days
+  date: '2026-10-20'
+links:
+  - url: https://docs.databricks.com/aws/en/release-notes/product/2026/july
+    kind: official
+    label: 'Databricks release notes: Veeva Vault connector (Beta), July 1, 2026'
+  - url: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/veeva-vault-limits
+    kind: official
+    label: 'Databricks docs: Veeva Vault connector limitations'
+source: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/veeva-vault
+verified: '2026-10-20'

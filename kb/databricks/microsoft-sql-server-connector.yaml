@@ -1,0 +1,44 @@
+id: microsoft-sql-server-connector
+name: Microsoft SQL Server connector
+aliases:
+  - SQL Server connector
+  - Microsoft SQL Server ingestion connector
+  - Lakeflow Connect SQL Server
+category: Data engineering
+what:
+  note: 'A managed Lakeflow Connect database connector that incrementally ingests SQL Server tables (Azure SQL, Amazon RDS, VMs, on-premises) into Databricks using Microsoft change tracking or change data capture.'
+  link: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/sql-server-overview#:~:text=Microsoft%20SQL%20Server%20ingestion%20connector
+fact:
+  - note: It was in the very first batch of Lakeflow Connect sources in July 2024, next to Salesforce and Workday.
+    link: https://docs.databricks.com/aws/en/release-notes/product/2024/july#:~:text=Salesforce%2C%20Microsoft%20Azure%20SQL%20Database%2C%20Amazon%20RDS%20for%20SQL%20Server
+  - note: It comes in two shapes - the standard gateway-based setup with two pipelines, or integrated CDC that folds extraction into one pipeline.
+    link: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/sql-server-overview#:~:text=SQL%20Server%20supports%20two%20ingestion%20architectures
+  - note: Using Microsoft CDC needs SQL Server 2012 SP1 CU3 or later, because that patch added the command id column the gateway uses to tell an UPDATE from a DELETE-INSERT pair.
+    link: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/sql-server-limits#:~:text=SQL%20Server%202012%20service%20pack%201%20%28SP1%29%20cumulative%20update%20package%203
+status:
+  value: active
+  link: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/sql-server-overview#:~:text=Microsoft%20SQL%20Server%20ingestion%20connector
+  date: '2026-10-20'
+releases:
+  - type: public-preview
+    date: 2024-07
+    link: https://docs.databricks.com/aws/en/release-notes/product/2024/july#:~:text=Lakeflow%20Connect%20%28gated%20Public%20Preview%29
+  - type: ga
+    date: 2025-08
+    link: https://docs.databricks.com/aws/en/release-notes/product/2025/august#:~:text=Microsoft%20SQL%20Server%20connector%20GA
+introducedAt:
+  date: 2024-07
+  link: https://docs.databricks.com/aws/en/release-notes/product/2024/july#:~:text=Salesforce%2C%20Microsoft%20Azure%20SQL%20Database%2C%20Amazon%20RDS%20for%20SQL%20Server
+limitations:
+  note: Primary instances only (change tracking and CDC do not work on read replicas), the gateway must run continuously on classic compute and must not be stopped manually, 250 or fewer tables per pipeline is recommended, source names are case-sensitive, and column renames or type changes need a full refresh.
+  link: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/sql-server-limits#:~:text=Support%20is%20limited%20to%20primary%20SQL%20Server%20instances
+  date: '2026-10-20'
+links:
+  - url: https://docs.databricks.com/aws/en/release-notes/product/2025/august#:~:text=Microsoft%20SQL%20Server%20connector%20GA
+    kind: official
+    label: 'Release note: Microsoft SQL Server connector GA (August 2025)'
+  - url: https://docs.databricks.com/aws/en/release-notes/product/2025/september#:~:text=SQL%20Server%20connector%20supports%20SCD%20type%202
+    kind: official
+    label: 'Release note: SQL Server connector supports SCD type 2 (September 2025)'
+source: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/sql-server-overview
+verified: '2026-10-20'

@@ -23,6 +23,23 @@ recorded, and a made-up reason is worse than none.
   `lakebase-insights`), both Data engineering and in the Compute section. Beta dates from the
   July 24 Lakebase note that first shipped Insights; the old name appears only in the October one.
 
+- **Every Lakeflow Connect connector with a dated launch gets its own card: 64 connectors and three
+  connector types, all under Data Ingestion.**
+
+  **Why:** Lakeflow Connect had one card, while the docs list over 70 managed connectors by name. Most
+  of them shipped in 2026, and the gap report had kept them as one long line nobody could search. A
+  reader who typed "Jira" or "Salesforce" found nothing.
+
+  **What:** one `active` card per connector (Data engineering), each with its stages from the release
+  notes (51 Beta, 13 GA, 2 Public Preview), 1-3 facts and limits from the live connector and limits
+  pages. Plus `query-based-connectors`, `community-connectors` and `custom-connectors`. The cards sit
+  in the Data Ingestion rail item, which is where the console lists them, and `lakeflow-connect`
+  moved there from Jobs & Pipelines so the framework sits with its connectors. No renames turned up:
+  Salesforce, Workday Reports and Google Analytics Raw Data kept their names, and the MySQL
+  integrated CDC pipeline is a second architecture, recorded as a fact on `mysql-connector`. Left
+  out because no official source dates their launch: Kafka, Oracle (integrated CDC), LinkedIn Ads,
+  Marketo and OneDrive.
+
 ### Changed
 - **Query tags and the agentic code converter are now marked GA, and AI Runtime records its
   package swap.**

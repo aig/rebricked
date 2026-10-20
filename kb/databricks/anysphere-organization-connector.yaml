@@ -1,0 +1,40 @@
+id: anysphere-organization-connector
+name: 'Anysphere Organization connector'
+aliases:
+  - 'Anysphere Organization'
+  - 'Anysphere Org'
+category: Data engineering
+what:
+  note: 'A managed Lakeflow Connect connector that ingests organization and team data - members, groups and group members - from Anysphere (Cursor) into Databricks as daily snapshots.'
+  link: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/anysphere-organization#:~:text=ingest%20organization%20and%20team%20data%20from%20Anysphere%20%28Cursor%29%20into%20Databricks
+fact:
+  - note: 'Every run is a full snapshot, yet you still get a time series: each table keeps daily history through a snapshot_date partition column.'
+    link: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/anysphere-organization#:~:text=Every%20table%20retains%20daily%20history%20via%20the%20snapshot%5Fdate%20partition%20column
+  - note: 'Full-refresh snapshots with no CDC delete tracking mean SCD Type 2 is not available.'
+    link: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/anysphere-organization#:~:text=with%20no%20CDC%20delete%20tracking%2C%20so%20SCD%20type%202
+  - note: 'The Previews toggle could not fit the whole word - it is called Lakeflow Connect for Anysphere Org.'
+    link: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/anysphere-organization#:~:text=opting%20into%20the%20Lakeflow%20Connect%20for%20Anysphere%20Org%20preview
+status:
+  value: active
+  link: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/anysphere-organization#:~:text=opting%20into%20the%20Lakeflow%20Connect%20for%20Anysphere%20Org%20preview
+  date: '2026-10-20'
+releases:
+  - type: beta
+    date: 2026-09
+    link: https://docs.databricks.com/aws/en/release-notes/product/2026/september#:~:text=The%20Anysphere%20Organization%20connector%20is%20now%20available%20in%20Lakeflow%20Connect
+introducedAt:
+  date: 2026-09
+  link: https://docs.databricks.com/aws/en/release-notes/product/2026/september#:~:text=The%20Anysphere%20Organization%20connector%20is%20now%20available%20in%20Lakeflow%20Connect
+limitations:
+  note: 'Organization Admin API key authentication only; no incremental ingestion (every table is a full snapshot), no SCD Type 2, no API-based row filtering, no data type changes in schema evolution, and a column rename requires a full refresh.'
+  link: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/anysphere-organization
+  date: '2026-10-20'
+links:
+  - url: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/anysphere-organization
+    kind: official
+    label: 'Databricks docs: Anysphere Organization connector'
+  - url: https://docs.databricks.com/aws/en/release-notes/product/2026/september
+    kind: official
+    label: 'Databricks release notes: Anysphere Organization connector (Beta, September 9, 2026)'
+source: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/anysphere-organization
+verified: '2026-10-20'

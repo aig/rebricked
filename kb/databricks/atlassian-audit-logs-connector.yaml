@@ -1,0 +1,44 @@
+id: atlassian-audit-logs-connector
+name: Atlassian Audit Logs connector
+aliases:
+  - 'Atlassian Audit Logs'
+  - 'Atlassian audit log connector'
+  - 'Lakeflow Connect for Atlassian Audit Logs'
+category: Data engineering
+what:
+  note: 'A managed Lakeflow Connect connector that ingests Atlassian organization audit log events, such as user, security and configuration changes, into Databricks.'
+  link: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/atlassian-audit-logs#:~:text=ingests%20organization%20audit%20log%20events%2C%20such%20as%20user%2C%20security%2C%20and%20configuration%20changes
+fact:
+  - note: 'The whole connector is one table, audit_logs - users, groups, domains and policies stay in Atlassian.'
+    link: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/atlassian-audit-logs-limits#:~:text=It%20doesn%27t%20ingest%20other%20Atlassian%20Admin%20API%20resources
+  - note: 'Leave the start date empty and the first sync reaches back exactly 180 days, which is also as long as Atlassian keeps the events.'
+    link: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/atlassian-audit-logs-pipeline#:~:text=the%20first%20sync%20starts%20180%20days%20before%20the%20pipeline%20runs
+  - note: 'The organization API key can live a year at most and never renews itself, so the connection needs a new key before its birthday.'
+    link: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/atlassian-audit-logs-source-setup#:~:text=Keys%20can%27t%20last%20longer%20than%20a%20year
+status:
+  value: active
+  link: https://docs.databricks.com/aws/en/release-notes/product/2026/august#:~:text=The%20Atlassian%20Audit%20Logs%20connector%20is%20now%20available%20in%20Lakeflow%20Connect
+  date: '2026-10-20'
+releases:
+  - type: beta
+    date: 2026-08
+    link: https://docs.databricks.com/aws/en/release-notes/product/2026/august#:~:text=The%20Atlassian%20Audit%20Logs%20connector%20is%20now%20available%20in%20Lakeflow%20Connect
+introducedAt:
+  date: 2026-08
+  link: https://docs.databricks.com/aws/en/release-notes/product/2026/august#:~:text=The%20Atlassian%20Audit%20Logs%20connector%20is%20now%20available%20in%20Lakeflow%20Connect
+limitations:
+  note: 'In Beta, switched on from the Previews page. Ingests only the audit_logs table, and Atlassian keeps events for up to 180 days, so nothing older can be backfilled. Atlassian only populates the log with a Guard Standard, Guard Premium or Cloud Enterprise subscription. No row filtering, SCD Type 2 or data type change evolution.'
+  link: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/atlassian-audit-logs-limits#:~:text=The%20connector%20ingests%20a%20single%20table%2C%20audit_logs
+  date: '2026-10-20'
+links:
+  - url: https://docs.databricks.com/aws/en/release-notes/product/2026/august
+    kind: official
+    label: 'Databricks release notes: Atlassian Audit Logs connector (Beta) (August 27, 2026)'
+  - url: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/atlassian-audit-logs-source-setup
+    kind: official
+    label: 'Databricks docs: Configure authentication to Atlassian'
+  - url: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/atlassian-audit-logs-limits
+    kind: official
+    label: 'Databricks docs: Atlassian Audit Logs connector limitations'
+source: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/atlassian-audit-logs
+verified: '2026-10-20'

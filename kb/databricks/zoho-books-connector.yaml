@@ -1,0 +1,38 @@
+id: zoho-books-connector
+name: Zoho Books connector
+aliases:
+  - Zoho Books
+  - Zoho
+  - Lakeflow Connect for Zoho Books
+category: Data engineering
+what:
+  note: 'A managed Lakeflow Connect connector that ingests Zoho Books accounting data such as invoices, bills, contacts and bank transactions into Databricks.'
+  link: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/zoho-books#:~:text=ingests%20accounting%20data%20such%20as%20invoices%2C%20bills%2C%20contacts%2C%20and%20bank%20transactions
+fact:
+  - note: 'It brings the books into the lakehouse literally: invoices, bills, contacts and bank transactions.'
+    link: https://docs.databricks.com/aws/en/release-notes/product/2026/june#:~:text=The%20connector%20ingests%20accounting%20data%20such%20as%20invoices%2C%20bills%2C%20contacts%2C%20and%20bank%20transactions
+  - note: 'Authentication is machine to machine only - OAuth client credentials, with OAuth U2M and username/password both marked not supported.'
+    link: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/zoho-books#:~:text=OAuth%20M2M%20%28OAuth%20Client%20Credentials%29%20Supported
+  - note: 'It keeps history (SCD Type 2 is supported) but a renamed column still costs you a full refresh.'
+    link: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/zoho-books#:~:text=Column%20renames%20Not%20supported%20Requires%20a%20full%20refresh
+status:
+  value: active
+  link: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/zoho-books#:~:text=This%20feature%20is%20in%20Beta
+  date: '2026-10-20'
+releases:
+  - type: beta
+    date: 2026-06
+    link: https://docs.databricks.com/aws/en/release-notes/product/2026/june#:~:text=The%20Zoho%20Books%20connector%20in%20Lakeflow%20Connect%20is%20now%20available%20in%20Beta
+introducedAt:
+  date: 2026-06
+  link: https://docs.databricks.com/aws/en/release-notes/product/2026/june#:~:text=The%20Zoho%20Books%20connector%20in%20Lakeflow%20Connect%20is%20now%20available%20in%20Beta
+limitations:
+  note: 'Beta, enabled by a workspace admin from the Previews page. No API-based row filtering, no schema evolution for data type changes, and column renames require a full refresh. OAuth M2M (client credentials) is the only supported authentication.'
+  link: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/zoho-books#:~:text=a%20workspace%20admin%20must%20turn%20on%20Lakeflow%20Connect%20for%20Zoho%20Books
+  date: '2026-10-20'
+links:
+  - url: https://docs.databricks.com/aws/en/release-notes/product/2026/june
+    kind: official
+    label: 'Databricks release notes: Zoho Books managed ingestion connector (Beta), June 8, 2026'
+source: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/zoho-books
+verified: '2026-10-20'

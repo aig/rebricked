@@ -1,0 +1,37 @@
+id: netskope-logs-connector
+name: Netskope Logs connector
+aliases:
+  - 'Netskope Logs'
+  - 'Netskope'
+category: Data engineering
+what:
+  note: 'A managed Lakeflow Connect connector that ingests Netskope event and alert logs into Databricks.'
+  link: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/netskope-logs#:~:text=allows%20you%20to%20ingest%20event%20and%20alert%20logs%20from%20Netskope%20into%20Databricks
+fact:
+  - note: 'Setup advises minting the token for a service account, because if the person who made it leaves, the integration might leave with them.'
+    link: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/netskope-logs-source-setup#:~:text=If%20the%20individual%20user%20leaves%20your%20organization%2C%20this%20integration%20might%20break
+  - note: 'Netskope shows the REST API v2 token exactly once - close the dialog without copying it and you start over.'
+    link: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/netskope-logs-source-setup#:~:text=Netskope%20does%20not%20display%20the%20token%20again%20after%20you%20close%20the%20dialog
+  - note: 'Databricks recommends a 12-month token expiry, which makes the security log connector itself a yearly security chore.'
+    link: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/netskope-logs-source-setup#:~:text=Databricks%20recommends%20a%20token%20expiry%20of%2012%20months
+status:
+  value: active
+  link: https://docs.databricks.com/aws/en/release-notes/product/2026/june#:~:text=The%20Netskope%20Logs%20connector%20in%20Lakeflow%20Connect%20is%20now%20available%20in%20Beta
+  date: '2026-10-20'
+releases:
+  - type: beta
+    date: 2026-06
+    link: https://docs.databricks.com/aws/en/release-notes/product/2026/june#:~:text=The%20Netskope%20Logs%20connector%20in%20Lakeflow%20Connect%20is%20now%20available%20in%20Beta
+introducedAt:
+  date: 2026-06
+  link: https://docs.databricks.com/aws/en/release-notes/product/2026/june#:~:text=The%20Netskope%20Logs%20connector%20in%20Lakeflow%20Connect%20is%20now%20available%20in%20Beta
+limitations:
+  note: 'Beta, enabled by a workspace admin from the Previews page. Netskope REST API v2 token only (no OAuth), no SCD type 2 since logs are append-only, no data type changes, and a column rename requires a full refresh.'
+  link: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/netskope-logs#:~:text=Netskope%20event%20and%20alert%20logs%20are%20append-only
+  date: '2026-10-20'
+links:
+  - url: https://docs.databricks.com/aws/en/release-notes/product/2026/june
+    kind: official
+    label: 'Databricks release notes: Netskope Logs managed ingestion connector (Beta) (June 20, 2026)'
+source: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/netskope-logs
+verified: '2026-10-20'

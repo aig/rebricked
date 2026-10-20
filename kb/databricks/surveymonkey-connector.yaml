@@ -1,0 +1,39 @@
+id: surveymonkey-connector
+name: SurveyMonkey connector
+aliases:
+  - SurveyMonkey
+category: Data engineering
+what:
+  note: 'The managed Lakeflow Connect connector that ingests SurveyMonkey surveys, survey structure, collectors, responses and contacts into Databricks over OAuth U2M.'
+  link: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/surveymonkey#:~:text=ingests%20surveys%2C%20survey%20structure%2C%20collectors%2C%20survey%20responses
+fact:
+  - note: 'On a Basic plan during the app''s 90-day draft period it quietly stops at the first 25 responses per survey - no error, just fewer answers.'
+    link: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/surveymonkey-limits#:~:text=ingests%20only%20the%20first%2025%20responses%20for%20each%20survey
+  - note: 'Canada gets no folders: the survey folders endpoint is unavailable for Canadian users, so a pipeline with survey_folders fails on a ca connection.'
+    link: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/surveymonkey-limits#:~:text=The%20SurveyMonkey%20survey%20folders%20endpoint%20is%20unavailable%20for%20Canadian%20users
+  - note: 'A survey with more than 1,000 questions is simply skipped, while the rest sync normally.'
+    link: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/surveymonkey-limits#:~:text=such%20as%20surveys%20with%20more%20than%201%2C000%20questions
+status:
+  value: active
+  link: https://docs.databricks.com/aws/en/release-notes/product/2026/october#:~:text=Use%20the%20connector%20to%20ingest%20surveys%2C%20survey%20structure%2C%20collectors
+  date: '2026-10-20'
+releases:
+  - type: beta
+    date: 2026-10
+    link: https://docs.databricks.com/aws/en/release-notes/product/2026/october#:~:text=Use%20the%20connector%20to%20ingest%20surveys%2C%20survey%20structure%2C%20collectors
+introducedAt:
+  date: 2026-10
+  link: https://docs.databricks.com/aws/en/release-notes/product/2026/october#:~:text=Use%20the%20connector%20to%20ingest%20surveys%2C%20survey%20structure%2C%20collectors
+limitations:
+  note: 'Only 11 prebuilt tables; eight are re-read in full each run and can use most of the app''s daily request limit. Deletes are not captured for surveys, survey_details and survey_responses (full refresh to remove them). start_datetime defaults to 365 days before the first sync. Deploying the required private app needs a SurveyMonkey Enterprise plan.'
+  link: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/surveymonkey-limits#:~:text=doesn%27t%20capture%20deletes%20for%20its%20incremental%20tables
+  date: '2026-10-20'
+links:
+  - url: https://docs.databricks.com/aws/en/release-notes/product/2026/october
+    kind: official
+    label: 'Databricks release notes: SurveyMonkey connector is available in Beta, October 20, 2026'
+  - url: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/surveymonkey-limits
+    kind: official
+    label: 'Databricks docs: SurveyMonkey connector limitations'
+source: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/surveymonkey
+verified: '2026-10-20'

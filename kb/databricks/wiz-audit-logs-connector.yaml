@@ -1,0 +1,40 @@
+id: wiz-audit-logs-connector
+name: Wiz Audit Logs connector
+aliases:
+  - Wiz Audit Logs
+  - Wiz
+category: Data engineering
+what:
+  note: 'The managed Lakeflow Connect connector that ingests Wiz audit log entries, issues and vulnerability findings into Databricks, using OAuth M2M with a Wiz service account.'
+  link: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/wiz-audit-logs#:~:text=ingest%20audit%20log%20entries%2C%20issues%2C%20and%20vulnerability%20findings%20from%20Wiz
+fact:
+  - note: 'Being tidy backfires: scope the service account to any Wiz project and it can no longer read audit logs, because admin:audit only exists with no project selected.'
+    link: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/wiz-audit-logs-source-setup#:~:text=Selecting%20one%20or%20more%20projects%20prevents%20the%20service%20account%20from%20querying%20audit%20logs
+  - note: 'The look-back is capped by Wiz, which keeps audit logs for up to 180 days.'
+    link: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/wiz-audit-logs-limits#:~:text=Wiz%20retains%20audit%20logs%20for%20up%20to%20180%20days
+  - note: 'Issues are captured at birth only - later status or severity changes are not re-ingested.'
+    link: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/wiz-audit-logs-limits#:~:text=Status%20or%20severity%20changes%20to%20issues%20that%20were%20already%20ingested%20are%20not%20re%2Dingested
+status:
+  value: active
+  link: https://docs.databricks.com/aws/en/release-notes/product/2026/june#:~:text=The%20Wiz%20Audit%20Logs%20connector%20in%20Lakeflow%20Connect%20is%20now%20available%20in%20Beta
+  date: '2026-10-20'
+releases:
+  - type: beta
+    date: 2026-06
+    link: https://docs.databricks.com/aws/en/release-notes/product/2026/june#:~:text=The%20Wiz%20Audit%20Logs%20connector%20in%20Lakeflow%20Connect%20is%20now%20available%20in%20Beta
+introducedAt:
+  date: 2026-06
+  link: https://docs.databricks.com/aws/en/release-notes/product/2026/june#:~:text=The%20Wiz%20Audit%20Logs%20connector%20in%20Lakeflow%20Connect%20is%20now%20available%20in%20Beta
+limitations:
+  note: 'Append-only feed, so no SCD type 2. A fixed set of Wiz tables. Issues are tracked by creation time, so later status or severity changes are not re-ingested. Nothing older than Wiz''s 180-day audit log retention.'
+  link: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/wiz-audit-logs-limits#:~:text=The%20connector%20makes%20available%20a%20fixed%20set%20of%20Wiz%20tables
+  date: '2026-10-20'
+links:
+  - url: https://docs.databricks.com/aws/en/release-notes/product/2026/june
+    kind: official
+    label: 'Databricks release notes: Wiz Audit Logs managed ingestion connector (Beta), June 22, 2026'
+  - url: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/wiz-audit-logs-limits
+    kind: official
+    label: 'Databricks docs: Wiz Audit Logs connector limitations'
+source: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/wiz-audit-logs
+verified: '2026-10-20'

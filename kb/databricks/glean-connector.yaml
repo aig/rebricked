@@ -1,0 +1,43 @@
+id: glean-connector
+name: Glean connector
+aliases:
+  - 'Glean'
+  - 'Lakeflow Connect for Glean'
+category: Data engineering
+what:
+  note: 'A managed Lakeflow Connect connector that ingests Glean insights (company-wide usage of search, Assistant and agents) and shortcuts into Databricks.'
+  link: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/glean#:~:text=Insights%20provide%20company%2Dwide%20usage%20summaries%20for%20search
+fact:
+  - note: 'Half of what it ingests is your company''s go links - Glean shortcuts land as their own table.'
+    link: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/glean#:~:text=Shortcuts%20are%20the%20go%20links%20defined%20in%20your%20Glean%20deployment
+  - note: 'No cursor, no memory: every sync replaces the table with the current state, so daily history is something you materialize yourself.'
+    link: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/glean-limits#:~:text=the%20connector%20does%20not%20retain%20historical%20snapshots
+  - note: 'One token rules both tables - the Glean Client API token must carry both the Insights and Shortcuts scopes.'
+    link: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/glean#:~:text=The%20token%20must%20carry%20both%20the%20Insights%20and%20Shortcuts%20scopes
+status:
+  value: active
+  link: https://docs.databricks.com/aws/en/release-notes/product/2026/august#:~:text=The%20connector%20ingests%20company%2Dwide%20usage%20insights%20for%20search
+  date: '2026-10-20'
+releases:
+  - type: beta
+    date: 2026-08
+    link: https://docs.databricks.com/aws/en/release-notes/product/2026/august#:~:text=The%20connector%20ingests%20company%2Dwide%20usage%20insights%20for%20search
+introducedAt:
+  date: 2026-08
+  link: https://docs.databricks.com/aws/en/release-notes/product/2026/august#:~:text=The%20connector%20ingests%20company%2Dwide%20usage%20insights%20for%20search
+limitations:
+  note: 'In Beta, switched on from the Previews page. Two tables, insights and shortcuts, both ingested as full-refresh snapshots with no incremental ingestion, no SCD Type 2 and no retained history. One connection uses one token, which needs both the Insights and Shortcuts scopes.'
+  link: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/glean-limits#:~:text=Incremental%20ingestion%20isn%27t%20supported
+  date: '2026-10-20'
+links:
+  - url: https://docs.databricks.com/aws/en/release-notes/product/2026/august
+    kind: official
+    label: 'Databricks release notes: Glean connector in Lakeflow Connect (Beta) (August 12, 2026)'
+  - url: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/glean-source-setup
+    kind: official
+    label: 'Databricks docs: Configure Glean for ingestion'
+  - url: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/glean-limits
+    kind: official
+    label: 'Databricks docs: Glean connector limitations'
+source: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/glean
+verified: '2026-10-20'

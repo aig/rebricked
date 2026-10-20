@@ -1,0 +1,39 @@
+id: anthropic-connector
+name: 'Anthropic connector'
+aliases:
+  - 'Anthropic'
+category: Data engineering
+what:
+  note: 'A managed Lakeflow Connect connector that ingests Anthropic Compliance API data - audit activity, organizations, users, roles, groups, settings, and Claude chats and messages - into Databricks.'
+  link: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/anthropic#:~:text=ingest%20compliance%20and%20Claude%20usage%20data%20from%20Anthropic%20into%20Databricks
+fact:
+  - note: 'Your Claude conversations become tables: chats and messages land in Databricks next to audit activity, users, roles and groups.'
+    link: https://docs.databricks.com/aws/en/release-notes/product/2026/july#:~:text=settings%2C%20and%20Claude%20chats%20and%20messages
+  - note: 'SCD Type 2 is off the table because several of its tables carry VARIANT columns, which SCD Type 2 does not support.'
+    link: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/anthropic#:~:text=Several%20tables%20contain%20VARIANT%20columns%2C%20which%20SCD%20type%202
+  - note: 'The key it needs is not an ordinary API key but an Anthropic Compliance Access Key.'
+    link: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/anthropic#:~:text=Anthropic%20Compliance%20Access%20Key
+status:
+  value: active
+  link: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/anthropic#:~:text=Lakeflow%20Connect%20for%20Anthropic%20from%20the%20Previews%20page
+  date: '2026-10-20'
+releases:
+  - type: beta
+    date: 2026-07
+    link: https://docs.databricks.com/aws/en/release-notes/product/2026/july#:~:text=The%20Anthropic%20connector%20in%20Lakeflow%20Connect%20is%20now%20available%20in%20Beta
+introducedAt:
+  date: 2026-07
+  link: https://docs.databricks.com/aws/en/release-notes/product/2026/july#:~:text=The%20Anthropic%20connector%20in%20Lakeflow%20Connect%20is%20now%20available%20in%20Beta
+limitations:
+  note: 'Compliance Access Key authentication only; no SCD Type 2 (VARIANT columns), no API-based row filtering, no data type changes in schema evolution, a column rename requires a full refresh, and directory tables are full snapshots every update.'
+  link: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/anthropic
+  date: '2026-10-20'
+links:
+  - url: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/anthropic
+    kind: official
+    label: 'Databricks docs: Anthropic connector'
+  - url: https://docs.databricks.com/aws/en/release-notes/product/2026/july
+    kind: official
+    label: 'Databricks release notes: Anthropic connector (Beta, July 17, 2026)'
+source: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/anthropic
+verified: '2026-10-20'

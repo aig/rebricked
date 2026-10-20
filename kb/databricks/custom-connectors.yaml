@@ -1,0 +1,26 @@
+id: custom-connectors
+name: Custom connectors
+aliases:
+  - Build a custom connector
+  - Custom connector for Lakeflow Connect
+  - LakeflowConnect interface
+category: Data engineering
+what:
+  note: 'Your own Lakeflow Connect connector for a source with no managed one: implement the LakeflowConnect Python interface from the community connectors repository, then deploy and run it in your workspace without contributing it anywhere.'
+  link: https://docs.databricks.com/aws/en/ingestion/custom-connectors#:~:text=Custom%20connectors%20let%20you%20ingest%20data%20from%20a%20source%20that%20Lakeflow%20Connect%20doesn%27t%20support
+fact:
+  - note: The template repository ships AI-powered development tools, so building one starts with a /develop-connector command.
+    link: https://docs.databricks.com/aws/en/ingestion/custom-connectors#:~:text=The%20repository%20includes%20AI%2Dpowered%20development%20tools
+  - note: The whole contract is a handful of methods - list the tables, describe a schema, then yield records as plain Python dictionaries along with the next offset.
+    link: https://docs.databricks.com/aws/en/ingestion/custom-connectors#:~:text=Yields%20records%20as%20Python%20dictionaries%20and%20returns%20the%20next%20offset
+  - note: Its recommended write-back tests actually write to your real source, then read it back to prove incremental reads and deletes work.
+    link: https://docs.databricks.com/aws/en/ingestion/custom-connectors#:~:text=Write%2Dback%20testing%20runs%20write%2Dread%2Dverify%20cycles
+status:
+  value: active
+  link: https://docs.databricks.com/aws/en/ingestion/custom-connectors#:~:text=You%20don%27t%20need%20to%20register%20it%20with%20the%20community
+  date: '2026-10-20'
+introducedAt:
+  date: 2026-05
+  link: https://docs.databricks.com/aws/en/release-notes/product/2026/may#:~:text=Use%20a%20registered%20connector%20or%20create%20your%20own
+source: https://docs.databricks.com/aws/en/ingestion/custom-connectors
+verified: '2026-10-20'

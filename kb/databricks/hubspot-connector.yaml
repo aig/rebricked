@@ -1,0 +1,50 @@
+id: hubspot-connector
+name: HubSpot connector
+aliases:
+  - HubSpot
+  - HubSpot Marketing Hub
+  - HubSpot CRM Hub
+category: Data engineering
+what:
+  note: 'The managed Lakeflow Connect connector that ingests data from HubSpot Marketing Hub and CRM Hub into Databricks.'
+  link: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/hubspot-overview#:~:text=ingest%20data%20from%20HubSpot%20Marketing%20Hub%20and%20CRM%20Hub%20into%20Databricks
+fact:
+  - note: 'The marketing_campaign_asset table costs 24 API calls per campaign, so 5,000 campaigns can take roughly four to six hours to sync.'
+    link: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/hubspot-limits#:~:text=requires%2024%20separate%20API%20calls%20per%20campaign
+  - note: 'The connector is GA, but its CRM Hub half is still in Beta behind its own workspace preview.'
+    link: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/hubspot-overview#:~:text=Ingestion%20from%20HubSpot%20CRM%20Hub%20is%20in%20Beta
+  - note: 'Nested fields with custom attributes, like a form''s displayOptions, land as plain strings.'
+    link: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/hubspot-limits#:~:text=such%20fields%20are%20represented%20as%20strings
+status:
+  value: active
+  link: https://docs.databricks.com/aws/en/release-notes/product/2026/may#:~:text=The%20managed%20HubSpot%20connector%20in%20Lakeflow%20Connect%20is%20now%20generally%20available
+  date: '2026-10-20'
+releases:
+  - type: beta
+    date: 2026-02
+    link: https://docs.databricks.com/aws/en/release-notes/product/2026/february#:~:text=allows%20you%20to%20ingest%20data%20from%20HubSpot%20Marketing%20Hub%20into%20Databricks
+  - type: ga
+    date: 2026-05
+    link: https://docs.databricks.com/aws/en/release-notes/product/2026/may#:~:text=The%20managed%20HubSpot%20connector%20in%20Lakeflow%20Connect%20is%20now%20generally%20available
+introducedAt:
+  date: 2026-02
+  link: https://docs.databricks.com/aws/en/release-notes/product/2026/february#:~:text=allows%20you%20to%20ingest%20data%20from%20HubSpot%20Marketing%20Hub%20into%20Databricks
+limitations:
+  note: 'Marketing Hub and CRM Hub only (CRM Hub is Beta); other hubs need the account team. HubSpot API rate limits apply (for example 100 requests per 10 seconds for free apps), some tables need many API calls and sync slowly, nested fields are stored as strings, and tables without a cursor are fully refreshed on each update.'
+  link: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/hubspot-limits#:~:text=HubSpot%20enforces%20API%20rate%20limits
+  date: '2026-10-20'
+links:
+  - url: https://docs.databricks.com/aws/en/release-notes/product/2026/february
+    kind: official
+    label: 'Databricks release notes: February 2026'
+  - url: https://docs.databricks.com/aws/en/release-notes/product/2026/may
+    kind: official
+    label: 'Databricks release notes: May 2026'
+  - url: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/hubspot-overview
+    kind: official
+    label: 'Databricks docs: HubSpot connector'
+  - url: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/hubspot-limits
+    kind: official
+    label: 'Databricks docs: HubSpot connector limitations'
+source: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/hubspot-overview
+verified: '2026-10-20'

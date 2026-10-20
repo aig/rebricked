@@ -1,0 +1,38 @@
+id: postgresql-connector
+name: PostgreSQL connector
+aliases:
+  - Postgres connector
+  - PostgreSQL ingestion connector
+  - Lakeflow Connect PostgreSQL
+category: Data engineering
+what:
+  note: 'A managed Lakeflow Connect database connector that incrementally ingests PostgreSQL 13+ tables (RDS, Aurora, Azure, Cloud SQL, on-premises) into Databricks using logical replication and an ingestion gateway.'
+  link: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/postgresql-source-setup#:~:text=The%20PostgreSQL%20connector%20uses%20logical%20replication%20to%20track%20changes
+fact:
+  - note: It handles the full PostgreSQL date range, including BC dates, using astronomical year numbering - so 1 BC lands in Databricks as year 0 and 2 BC as year -1.
+    link: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/postgresql-limits#:~:text=BC%20dates%20are%20stored%20using%20astronomical%20year%20numbering
+  - note: Deleting a pipeline does not delete its replication slot, so a forgotten slot keeps holding WAL on the source until someone cleans it up by hand.
+    link: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/postgresql-limits#:~:text=Replication%20slots%20are%20not%20automatically%20removed%20when%20you%20delete%20pipelines
+  - note: Money is just text to it - MONEY columns arrive as strings, along with TIME, TIMETZ and plain TIMESTAMP values.
+    link: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/postgresql-limits#:~:text=MONEY%20values%20are%20ingested%20as%20strings
+status:
+  value: active
+  link: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/postgresql-source-setup#:~:text=The%20PostgreSQL%20connector%20for%20Lakeflow%20Connect%20is%20in%20Public%20Preview
+  date: '2026-10-20'
+releases:
+  - type: public-preview
+    date: 2025-12
+    link: https://docs.databricks.com/aws/en/release-notes/product/2025/december#:~:text=PostgreSQL%20connector%20in%20Lakeflow%20Connect%20%28Public%20Preview%29
+introducedAt:
+  date: 2025-12
+  link: https://docs.databricks.com/aws/en/release-notes/product/2025/december#:~:text=The%20fully%2Dmanaged%20PostgreSQL%20connector%20in%20Lakeflow%20Connect%20is%20in%20Public%20Preview
+limitations:
+  note: PostgreSQL 13 or later and primary instances only, username and password authentication only, the ingestion gateway must run continuously on classic compute, 250 or fewer tables per pipeline is recommended, and a failover that loses the replication slot forces a full refresh of every table.
+  link: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/postgresql-limits#:~:text=The%20connector%20only%20supports%20replication%20from%20primary%20PostgreSQL%20instances
+  date: '2026-10-20'
+links:
+  - url: https://docs.databricks.com/aws/en/release-notes/product/2025/december#:~:text=PostgreSQL%20connector%20in%20Lakeflow%20Connect%20%28Public%20Preview%29
+    kind: official
+    label: 'Release note: PostgreSQL connector Public Preview (December 2025)'
+source: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/postgresql-source-setup
+verified: '2026-10-20'

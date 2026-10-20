@@ -1,0 +1,37 @@
+id: monday-com-connector
+name: Monday.com connector
+aliases:
+  - 'Monday.com'
+  - 'monday connector'
+category: Data engineering
+what:
+  note: 'A managed Lakeflow Connect connector that ingests Monday.com work management data such as boards, users, teams and activity logs into Databricks.'
+  link: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/monday-com#:~:text=ingests%20work%20management%20data%20such%20as%20boards%2C%20users%2C%20teams
+fact:
+  - note: 'The token sees only what its owner sees, so getting account-wide data and every board''s activity log means asking an account admin for theirs.'
+    link: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/monday-com-source-setup#:~:text=The%20API%20token%20reads%20only%20what%20its%20user%20can%20see
+  - note: 'It authenticates with a plain personal API token - OAuth in both flavours is marked not supported.'
+    link: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/monday-com#:~:text=Monday.com%20API%20token
+  - note: 'The pipeline exposes 7 source tables in the default schema - boards, users, teams and activity logs among them.'
+    link: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/monday-com-pipeline#:~:text=makes%20available%207%20source%20tables%20in%20the%20default%20source%20schema
+status:
+  value: active
+  link: https://docs.databricks.com/aws/en/release-notes/product/2026/june#:~:text=The%20Monday.com%20connector%20in%20Lakeflow%20Connect%20is%20now%20available%20in%20Beta
+  date: '2026-10-20'
+releases:
+  - type: beta
+    date: 2026-06
+    link: https://docs.databricks.com/aws/en/release-notes/product/2026/june#:~:text=The%20Monday.com%20connector%20in%20Lakeflow%20Connect%20is%20now%20available%20in%20Beta
+introducedAt:
+  date: 2026-06
+  link: https://docs.databricks.com/aws/en/release-notes/product/2026/june#:~:text=The%20Monday.com%20connector%20in%20Lakeflow%20Connect%20is%20now%20available%20in%20Beta
+limitations:
+  note: 'Beta, enabled by a workspace admin from the Previews page. API token authentication only, no row filtering, no data type changes under schema evolution, and a column rename requires a full refresh.'
+  link: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/monday-com#:~:text=To%20use%20it%2C%20a%20workspace%20admin%20must%20turn%20on%20Lakeflow%20Connect%20for%20Monday.com
+  date: '2026-10-20'
+links:
+  - url: https://docs.databricks.com/aws/en/release-notes/product/2026/june
+    kind: official
+    label: 'Databricks release notes: Monday.com managed ingestion connector (Beta) (June 8, 2026)'
+source: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/monday-com
+verified: '2026-10-20'

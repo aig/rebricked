@@ -1,0 +1,51 @@
+id: microsoft-dynamics-365-connector
+name: Microsoft Dynamics 365 connector
+aliases:
+  - 'Microsoft Dynamics 365'
+  - 'Dynamics 365'
+  - 'D365'
+  - 'Lakeflow Connect for Dynamics 365'
+category: Data engineering
+what:
+  note: 'A managed Lakeflow Connect connector that ingests Dynamics 365 CRM and ERP data into Databricks from the CSV or Parquet exports Azure Synapse Link writes to ADLS Gen2.'
+  link: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/d365#:~:text=The%20connector%20accesses%20data%20through%20Azure%20Synapse%20Link
+fact:
+  - note: 'It never calls Dynamics directly - it reads what Azure Synapse Link exports, so a change shows up after Synapse Link''s export interval, typically 5 to 15 minutes.'
+    link: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/d365-limits#:~:text=which%20is%20typically%205%20to%2015%20minutes
+  - note: 'Picklists arrive as bare integers and multi-select picklists as comma-separated integer strings, so the labels are a downstream join.'
+    link: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/d365-limits#:~:text=Ingested%20as%20comma%2Dseparated%20integer%20strings
+  - note: 'Finance & Operations virtual entities can take their time - a documented known issue says to wait up to 30 minutes for them to appear.'
+    link: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/d365-limits#:~:text=Virtual%20entities%20sometimes%20take%20longer%20than%2015%20minutes%20to%20synchronize
+status:
+  value: active
+  link: https://docs.databricks.com/aws/en/release-notes/product/2026/june#:~:text=The%20managed%20Microsoft%20Dynamics%20365%20connector%20in%20Lakeflow%20Connect%20is%20now%20generally%20available
+  date: '2026-10-20'
+releases:
+  - type: public-preview
+    date: 2025-12
+    link: https://docs.databricks.com/aws/en/release-notes/product/2025/december#:~:text=ingest%20data%20from%20Dynamics%20365%20applications%20like%20Sales%2C%20Customer%20Service
+  - type: ga
+    date: 2026-06
+    link: https://docs.databricks.com/aws/en/release-notes/product/2026/june#:~:text=The%20managed%20Microsoft%20Dynamics%20365%20connector%20in%20Lakeflow%20Connect%20is%20now%20generally%20available
+introducedAt:
+  date: 2025-12
+  link: https://docs.databricks.com/aws/en/release-notes/product/2025/december#:~:text=ingest%20data%20from%20Dynamics%20365%20applications%20like%20Sales%2C%20Customer%20Service
+limitations:
+  note: 'Needs Azure Synapse Link for Dataverse exporting continuously, with versionnumber in changelogs for incremental ingestion; missing or deleted export folders or Synapse Link downtime need a full refresh. Deletes arrive only if Synapse Link exports them, attachment file contents are not ingested, Parquet export is Beta, and a pipeline holds at most 250 tables.'
+  link: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/d365-limits#:~:text=A%20single%20pipeline%20can%20ingest%20a%20maximum%20of%20250%20tables
+  date: '2026-10-20'
+links:
+  - url: https://docs.databricks.com/aws/en/release-notes/product/2025/december
+    kind: official
+    label: 'Databricks release notes: Microsoft Dynamics 365 connector (Public Preview) (December 10, 2025)'
+  - url: https://docs.databricks.com/aws/en/release-notes/product/2026/june
+    kind: official
+    label: 'Databricks release notes: Microsoft Dynamics 365 connector (GA) (June 26, 2026)'
+  - url: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/d365-source-setup
+    kind: official
+    label: 'Databricks docs: Configure data source for Microsoft Dynamics 365 ingestion'
+  - url: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/d365-limits
+    kind: official
+    label: 'Databricks docs: Microsoft Dynamics 365 connector limitations'
+source: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/d365
+verified: '2026-10-20'

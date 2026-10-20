@@ -1,0 +1,43 @@
+id: gitlab-connector
+name: GitLab connector
+aliases:
+  - 'GitLab'
+  - 'Lakeflow Connect for GitLab'
+category: Data engineering
+what:
+  note: 'A managed Lakeflow Connect connector that ingests repository, project, group, CI/CD and security data from gitlab.com into Databricks over OAuth U2M.'
+  link: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/gitlab#:~:text=The%20managed%20GitLab%20connector%20in%20Lakeflow%20Connect%20ingests%20repository
+fact:
+  - note: 'It offers 28 source tables in the default schema.'
+    link: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/gitlab-pipeline#:~:text=The%20GitLab%20connector%20makes%2028%20source%20tables%20available
+  - note: 'Some tables come with a price tag: vulnerabilities and compliance_frameworks ingest only from GitLab Ultimate, epics only from Premium or Ultimate.'
+    link: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/gitlab-limits#:~:text=tables%20ingest%20only%20from%20GitLab%20Ultimate%20groups%20and%20projects
+  - note: 'It sees what its user sees - only the groups and projects the authenticating user is a member of, and only on gitlab.com.'
+    link: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/gitlab-limits#:~:text=It%20does%20not%20ingest%20from%20self%2Dmanaged%20GitLab%20instances
+status:
+  value: active
+  link: https://docs.databricks.com/aws/en/release-notes/product/2026/october#:~:text=Use%20the%20connector%20to%20ingest%20repository%2C%20project%2C%20group
+  date: '2026-10-20'
+releases:
+  - type: beta
+    date: 2026-10
+    link: https://docs.databricks.com/aws/en/release-notes/product/2026/october#:~:text=Use%20the%20connector%20to%20ingest%20repository%2C%20project%2C%20group
+introducedAt:
+  date: 2026-10
+  link: https://docs.databricks.com/aws/en/release-notes/product/2026/october#:~:text=Use%20the%20connector%20to%20ingest%20repository%2C%20project%2C%20group
+limitations:
+  note: 'In Beta, switched on from the Previews page. GitLab SaaS (gitlab.com) only, no self-managed instances. Ingests only the groups and projects the authenticating user belongs to, and epics, iterations, vulnerabilities and compliance frameworks need a paid GitLab tier.'
+  link: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/gitlab-limits#:~:text=The%20connector%20ingests%20only%20the%20groups%20and%20projects%20that%20the%20authenticating%20user%20is%20a%20member%20of
+  date: '2026-10-20'
+links:
+  - url: https://docs.databricks.com/aws/en/release-notes/product/2026/october
+    kind: official
+    label: 'Databricks release notes: GitLab connector is available in Beta (October 1, 2026)'
+  - url: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/gitlab-source-setup
+    kind: official
+    label: 'Databricks docs: Configure authentication to GitLab'
+  - url: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/gitlab-limits
+    kind: official
+    label: 'Databricks docs: GitLab connector limitations'
+source: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/gitlab
+verified: '2026-10-20'

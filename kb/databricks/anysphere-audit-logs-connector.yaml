@@ -1,0 +1,40 @@
+id: anysphere-audit-logs-connector
+name: 'Anysphere Audit Logs connector'
+aliases:
+  - 'Anysphere Audit Logs'
+  - 'Cursor audit logs'
+category: Data engineering
+what:
+  note: 'A managed Lakeflow Connect connector that incrementally ingests team audit-log events from Anysphere (Cursor) into Databricks through the Cursor Admin API.'
+  link: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/anysphere-audit-logs#:~:text=ingest%20audit%20logs%20from%20Anysphere%20%28Cursor%29%20into%20Databricks
+fact:
+  - note: 'Anysphere is the company behind Cursor, so this is the Cursor audit log connector wearing its corporate name.'
+    link: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/anysphere-audit-logs#:~:text=audit%20logs%20from%20Anysphere%20%28Cursor%29%20into%20Databricks
+  - note: 'Fittingly, Cursor''s logs are read incrementally with a cursor - the timestamp cursor field on the audit_logs table.'
+    link: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/anysphere-audit-logs#:~:text=timestamp%20cursor%20field
+  - note: 'No SCD Type 2: the docs say audit log event data does not support it.'
+    link: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/anysphere-audit-logs#:~:text=Audit%20log%20event%20data%20does%20not%20support%20SCD%20type%202
+status:
+  value: active
+  link: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/anysphere-audit-logs#:~:text=Lakeflow%20Connect%20for%20Anysphere%20Audit%20Logs%20from%20the%20Previews%20page
+  date: '2026-10-20'
+releases:
+  - type: beta
+    date: 2026-08
+    link: https://docs.databricks.com/aws/en/release-notes/product/2026/august#:~:text=The%20Anysphere%20Audit%20Logs%20connector%20is%20now%20available%20in%20Lakeflow%20Connect
+introducedAt:
+  date: 2026-08
+  link: https://docs.databricks.com/aws/en/release-notes/product/2026/august#:~:text=The%20Anysphere%20Audit%20Logs%20connector%20is%20now%20available%20in%20Lakeflow%20Connect
+limitations:
+  note: 'Admin API key authentication only; no SCD Type 2, no API-based row filtering, no data type changes in schema evolution, and a column rename requires a full refresh.'
+  link: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/anysphere-audit-logs
+  date: '2026-10-20'
+links:
+  - url: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/anysphere-audit-logs
+    kind: official
+    label: 'Databricks docs: Anysphere Audit Logs connector'
+  - url: https://docs.databricks.com/aws/en/release-notes/product/2026/august
+    kind: official
+    label: 'Databricks release notes: Anysphere Audit Logs connector (Beta, August 25, 2026)'
+source: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/anysphere-audit-logs
+verified: '2026-10-20'

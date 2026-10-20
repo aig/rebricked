@@ -1,0 +1,46 @@
+id: netsuite-connector
+name: NetSuite connector
+aliases:
+  - 'NetSuite'
+  - 'Oracle NetSuite connector'
+category: Data engineering
+what:
+  note: 'A managed Lakeflow Connect connector that ingests ERP and financial data from Oracle NetSuite into Databricks over SuiteAnalytics Connect with token-based authentication.'
+  link: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/netsuite#:~:text=allows%20you%20to%20ingest%20data%20from%20NetSuite%20into%20Databricks
+fact:
+  - note: 'It speaks only the NetSuite2.com data source - the legacy netsuite.com one is not supported, so the 2 is load-bearing.'
+    link: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/netsuite-source-setup#:~:text=The%20legacy%20netsuite.com%20data%20source%20is%20not%20supported
+  - note: 'NetSuite shows the consumer secret once; lose it and the documented fix is to create a whole new integration.'
+    link: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/netsuite-source-setup#:~:text=If%20you%20lose%20it%2C%20you%20must%20create%20a%20new%20integration
+  - note: 'Table width sets the row budget: 100 million records for tables of 100+ columns, 150 million for narrow ones, and nothing at 300 columns or more.'
+    link: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/netsuite-limits#:~:text=Tables%20with%20300%20or%20more%20columns
+status:
+  value: active
+  link: https://docs.databricks.com/aws/en/release-notes/product/2026/august#:~:text=The%20managed%20NetSuite%20connector%20in%20Lakeflow%20Connect%20is%20now%20generally%20available
+  date: '2026-10-20'
+releases:
+  - type: public-preview
+    date: 2025-12
+    link: https://docs.databricks.com/aws/en/release-notes/product/2025/december#:~:text=You%20can%20now%20ingest%20data%20from%20the%20NetSuite2.com%20data%20source%20programmatically
+  - type: ga
+    date: 2026-08
+    link: https://docs.databricks.com/aws/en/release-notes/product/2026/august#:~:text=The%20managed%20NetSuite%20connector%20in%20Lakeflow%20Connect%20is%20now%20generally%20available
+introducedAt:
+  date: 2025-12
+  link: https://docs.databricks.com/aws/en/release-notes/product/2025/december#:~:text=You%20can%20now%20ingest%20data%20from%20the%20NetSuite2.com%20data%20source%20programmatically
+limitations:
+  note: 'NetSuite2.com data source and token-based authentication only, the DeletedRecords table is not supported, up to 200 tables per pipeline, record caps by table width and no tables of 300+ columns, and driver 8.10.147.0 times out on long-running queries.'
+  link: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/netsuite-limits#:~:text=A%20NetSuite%20ingestion%20pipeline%20supports%20a%20maximum%20of%20200%20tables
+  date: '2026-10-20'
+links:
+  - url: https://docs.databricks.com/aws/en/release-notes/product/2025/december
+    kind: official
+    label: 'Databricks release notes: NetSuite connector (Public Preview) (December 10, 2025)'
+  - url: https://docs.databricks.com/aws/en/release-notes/product/2026/august
+    kind: official
+    label: 'Databricks release notes: NetSuite connector (GA) (August 4, 2026)'
+  - url: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/netsuite-limits
+    kind: official
+    label: 'Databricks docs: NetSuite connector limitations'
+source: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/netsuite
+verified: '2026-10-20'

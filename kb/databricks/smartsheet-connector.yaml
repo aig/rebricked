@@ -1,0 +1,40 @@
+id: smartsheet-connector
+name: Smartsheet connector
+aliases:
+  - Smartsheet
+  - Smartsheet managed ingestion connector
+category: Data engineering
+what:
+  note: 'The managed Lakeflow Connect connector that ingests Smartsheet sheets and reports into Databricks, authenticating with OAuth U2M.'
+  link: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/smartsheet-overview#:~:text=Use%20the%20managed%20Smartsheet%20connector%20in%20Lakeflow%20Connect%20to%20ingest%20data
+fact:
+  - note: 'Smartsheet column names can contain spaces, commas and parentheses, so the connector turns on Delta column mapping - and the price is that its tables can''t be read as streaming sources or carry a change data feed.'
+    link: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/smartsheet-limits#:~:text=uses%20Delta%20Lake%20column%20mapping%20to%20support%20Smartsheet%20column%20names
+  - note: 'There is no incremental mode at all: every pipeline run is a full refresh of the destination table.'
+    link: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/smartsheet-limits#:~:text=This%20connector%20does%20not%20support%20incremental%20syncing
+  - note: 'Before any OAuth app exists, Smartsheet itself has to approve your Developer Tools registration - and if it says no, the docs send you to your Customer Success Manager.'
+    link: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/smartsheet-source-setup#:~:text=After%20Smartsheet%20approves%20the%20request
+status:
+  value: active
+  link: https://docs.databricks.com/aws/en/release-notes/product/2026/may#:~:text=The%20Smartsheet%20connector%20in%20Lakeflow%20Connect%20is%20now%20available%20in%20Beta
+  date: '2026-10-20'
+releases:
+  - type: beta
+    date: 2026-05
+    link: https://docs.databricks.com/aws/en/release-notes/product/2026/may#:~:text=The%20Smartsheet%20connector%20in%20Lakeflow%20Connect%20is%20now%20available%20in%20Beta
+introducedAt:
+  date: 2026-05
+  link: https://docs.databricks.com/aws/en/release-notes/product/2026/may#:~:text=The%20Smartsheet%20connector%20in%20Lakeflow%20Connect%20is%20now%20available%20in%20Beta
+limitations:
+  note: 'No incremental sync - every run is a full refresh. Delta column mapping means no streaming reads, no change data feed, and readers need Databricks Runtime 10.4 LTS or above. Up to 250 tables per pipeline.'
+  link: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/smartsheet-limits#:~:text=Streaming%20reads%20are%20not%20supported
+  date: '2026-10-20'
+links:
+  - url: https://docs.databricks.com/aws/en/release-notes/product/2026/may
+    kind: official
+    label: 'Databricks release notes: Smartsheet managed ingestion connector (Beta), May 5, 2026'
+  - url: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/smartsheet-limits
+    kind: official
+    label: 'Databricks docs: Smartsheet connector limitations'
+source: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/smartsheet-overview
+verified: '2026-10-20'

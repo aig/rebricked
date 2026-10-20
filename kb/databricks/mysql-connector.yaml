@@ -1,0 +1,41 @@
+id: mysql-connector
+name: MySQL connector
+aliases:
+  - MySQL ingestion connector
+  - Lakeflow Connect MySQL
+  - MySQL CDC connector
+category: Data engineering
+what:
+  note: 'A managed Lakeflow Connect database connector that incrementally ingests MySQL tables (RDS, Aurora, Azure, Cloud SQL, EC2) into Databricks by replaying the binary log through an ingestion gateway.'
+  link: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/mysql-source-setup#:~:text=uses%20binary%20log%20%28binlog%29%20replication%20to%20capture%20changes
+fact:
+  - note: Turn on PARTIAL_JSON binlog row values and any UPDATE to a JSON column makes the connector skip that whole table until you switch it off and run a full refresh.
+    link: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/mysql-limits#:~:text=MySQL%20logs%20updates%20to%20JSON%20columns%20as%20partial%20changes
+  - note: Its checkpoint is a binlog file name and position, which only means something on the server that wrote it - point the pipeline at another replica and the gateway refuses to resume until you refresh every table.
+    link: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/mysql-limits#:~:text=Those%20coordinates%20are%20only%20meaningful%20on%20the%20server%20that%20wrote%20them
+  - note: In October 2026 MySQL also got an integrated CDC pipeline that needs no separate ingestion gateway, and it reached GA while the gateway-based connector docs still say Public Preview.
+    link: https://docs.databricks.com/aws/en/release-notes/product/2026/october#:~:text=MySQL%20integrated%20CDC%20pipeline%20is%20now%20generally%20available
+status:
+  value: active
+  link: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/mysql-source-setup#:~:text=The%20MySQL%20connector%20is%20in%20Public%20Preview
+  date: '2026-10-20'
+releases:
+  - type: public-preview
+    date: 2025-12
+    link: https://docs.databricks.com/aws/en/release-notes/product/2025/december#:~:text=MySQL%20connector%20in%20Lakeflow%20Connect%20%28Public%20Preview%29
+introducedAt:
+  date: 2025-12
+  link: https://docs.databricks.com/aws/en/release-notes/product/2025/december#:~:text=The%20fully%2Dmanaged%20MySQL%20connector%20in%20Lakeflow%20Connect%20is%20in%20Public%20Preview
+limitations:
+  note: The ingestion gateway runs continuously on classic compute (one gateway per pipeline), 250 or fewer tables per pipeline is recommended, spatial types and six character sets are not supported, MariaDB is not supported, Aurora read replicas cannot be used, and a purged binlog forces a full refresh (7 days of binlog retention recommended).
+  link: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/mysql-limits#:~:text=doesn%27t%20support%20MariaDB%20or%20other%20MySQL%2Dcompatible%20databases
+  date: '2026-10-20'
+links:
+  - url: https://docs.databricks.com/aws/en/release-notes/product/2025/december#:~:text=MySQL%20connector%20in%20Lakeflow%20Connect%20%28Public%20Preview%29
+    kind: official
+    label: 'Release note: MySQL connector Public Preview (December 2025)'
+  - url: https://docs.databricks.com/aws/en/release-notes/product/2026/october#:~:text=MySQL%20integrated%20CDC%20pipeline%20is%20now%20generally%20available
+    kind: official
+    label: 'Release note: MySQL integrated CDC pipeline GA (October 2026)'
+source: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/mysql-source-setup
+verified: '2026-10-20'

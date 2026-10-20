@@ -1,0 +1,34 @@
+id: notion-connector
+name: Notion connector
+aliases:
+  - 'Notion'
+category: Data engineering
+what:
+  note: 'A managed Lakeflow Connect connector that ingests Notion pages, data sources, databases, blocks, comments and users into Databricks.'
+  link: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/notion#:~:text=ingests%20pages%2C%20data%20sources%2C%20databases%2C%20blocks%2C%20comments%2C%20and%20users
+fact:
+  - note: 'Notion has no OAuth scopes to pick at registration: you choose which pages to share with a page-picker when you create the connection.'
+    link: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/notion-source-setup#:~:text=Notion%20uses%20a%20page-picker%20permission%20model%20instead%20of%20OAuth%20scopes
+  - note: 'Your wiki arrives as seven source tables, blocks and comments included.'
+    link: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/notion-pipeline#:~:text=makes%20available%20seven%20source%20tables%20in%20the%20default%20source%20schema
+status:
+  value: active
+  link: https://docs.databricks.com/aws/en/release-notes/product/2026/august#:~:text=The%20managed%20Notion%20connector%20in%20Lakeflow%20Connect%20is%20now%20available%20in%20Beta
+  date: '2026-10-20'
+releases:
+  - type: beta
+    date: 2026-08
+    link: https://docs.databricks.com/aws/en/release-notes/product/2026/august#:~:text=The%20managed%20Notion%20connector%20in%20Lakeflow%20Connect%20is%20now%20available%20in%20Beta
+introducedAt:
+  date: 2026-08
+  link: https://docs.databricks.com/aws/en/release-notes/product/2026/august#:~:text=The%20managed%20Notion%20connector%20in%20Lakeflow%20Connect%20is%20now%20available%20in%20Beta
+limitations:
+  note: 'Beta, opted into from the Previews page. OAuth U2M only, no row filtering, no data type changes under schema evolution, and a column rename requires a full refresh.'
+  link: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/notion#:~:text=Workspace%20admins%20can%20control%20access%20to%20this%20feature%20from%20the%20Previews%20page
+  date: '2026-10-20'
+links:
+  - url: https://docs.databricks.com/aws/en/release-notes/product/2026/august
+    kind: official
+    label: 'Databricks release notes: Notion connector (Beta) (August 10, 2026)'
+source: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/notion
+verified: '2026-10-20'

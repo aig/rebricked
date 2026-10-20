@@ -1,0 +1,38 @@
+id: productboard-connector
+name: Productboard connector
+aliases:
+  - Productboard
+  - Lakeflow Connect for Productboard
+category: Data engineering
+what:
+  note: 'The managed Lakeflow Connect connector that ingests Productboard product hierarchy, roadmap, objectives, customer feedback notes and workspace members into Databricks.'
+  link: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/productboard#:~:text=ingests%20product%20hierarchy%2C%20roadmap%2C%20objectives%2C%20customer%20feedback%20notes
+fact:
+  - note: 'Only the notes table syncs incrementally, and it only notices deletes through the archived field - a note permanently deleted in Productboard lives on in Databricks.'
+    link: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/productboard-limits#:~:text=It%20doesn%27t%20detect%20notes%20that%20are%20permanently%20deleted%20in%20Productboard
+  - note: 'There is no tags table: feature tags hide in the fields column of features, with their definitions in field_definitions.'
+    link: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/productboard-limits#:~:text=The%20connector%20doesn%27t%20have%20a%20separate%20tags%20table
+status:
+  value: active
+  link: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/productboard#:~:text=a%20workspace%20admin%20must%20turn%20on%20Lakeflow%20Connect%20for%20Productboard
+  date: '2026-10-20'
+releases:
+  - type: beta
+    date: 2026-10
+    link: https://docs.databricks.com/aws/en/release-notes/product/2026/october#:~:text=Use%20the%20connector%20to%20ingest%20product%20hierarchy%2C%20roadmap%2C%20objectives
+introducedAt:
+  date: 2026-10
+  link: https://docs.databricks.com/aws/en/release-notes/product/2026/october#:~:text=Use%20the%20connector%20to%20ingest%20product%20hierarchy%2C%20roadmap%2C%20objectives
+limitations:
+  note: 'Only the notes table syncs incrementally; every other table is reingested in full. Deletes are caught only for archived notes. Full relationship data exists only for features and components, Jira and plugin integration configuration is not ingested, and tables with VARIANT columns do not support SCD type 2.'
+  link: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/productboard-limits#:~:text=Only%20the%20notes%20table%20syncs%20incrementally
+  date: '2026-10-20'
+links:
+  - url: https://docs.databricks.com/aws/en/release-notes/product/2026/october
+    kind: official
+    label: 'Databricks release notes: Productboard connector is available in Beta (October 8, 2026)'
+  - url: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/productboard-limits
+    kind: official
+    label: 'Databricks docs: Productboard connector limitations'
+source: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/productboard
+verified: '2026-10-20'

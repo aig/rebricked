@@ -1,0 +1,44 @@
+id: salesforce-marketing-cloud-connector
+name: Salesforce Marketing Cloud connector
+aliases:
+  - SFMC connector
+  - Salesforce Marketing Cloud
+  - Marketing Cloud connector
+category: Data engineering
+what:
+  note: 'The managed Lakeflow Connect connector that ingests Salesforce Marketing Cloud campaigns, journeys, email engagement events and data extensions into Databricks over Server-to-Server OAuth.'
+  link: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/sfmc-overview#:~:text=allows%20you%20to%20ingest%20data%20from%20Salesforce%20Marketing%20Cloud%20into%20Databricks
+fact:
+  - note: 'A data extension must be named by its External Key (Customer Key) - use its friendly display name and the pipeline fails.'
+    link: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/sfmc-concepts#:~:text=Using%20the%20display%20name%20instead%20of%20the%20External%20Key%20will%20cause%20the%20pipeline%20to%20fail
+  - note: 'When a data extension has no primary key, the connector invents one: __databricks_id, a hash of every column - which also rules out SCD type 2 for that table.'
+    link: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/sfmc-concepts#:~:text=which%20is%20a%20hash%20of%20all%20columns%20and%20is%20used%20as%20the%20primary%20key
+  - note: 'For Salesforce data extensions the docs point you at the sibling Salesforce connector instead, because this one cannot ingest them incrementally.'
+    link: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/sfmc-concepts#:~:text=The%20Salesforce%20Marketing%20Cloud%20connector%20cannot%20ingest%20these%20data%20extensions%20incrementally
+status:
+  value: active
+  link: https://docs.databricks.com/aws/en/release-notes/product/2026/june#:~:text=The%20Salesforce%20Marketing%20Cloud%20connector%20in%20Lakeflow%20Connect%20is%20now%20available%20in%20Beta
+  date: '2026-10-20'
+releases:
+  - type: beta
+    date: 2026-06
+    link: https://docs.databricks.com/aws/en/release-notes/product/2026/june#:~:text=The%20Salesforce%20Marketing%20Cloud%20connector%20in%20Lakeflow%20Connect%20is%20now%20available%20in%20Beta
+introducedAt:
+  date: 2026-06
+  link: https://docs.databricks.com/aws/en/release-notes/product/2026/june#:~:text=The%20Salesforce%20Marketing%20Cloud%20connector%20in%20Lakeflow%20Connect%20is%20now%20available%20in%20Beta
+limitations:
+  note: 'No SFTP export workflow and no direct data views (write them to a data extension first). Deletes to emails and campaigns need a full refresh. Each connection covers one business unit (and its children), so several business units need separate connections and API integration packages. Tables keyed by __databricks_id cannot use SCD type 2.'
+  link: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/sfmc-limits#:~:text=The%20connector%20doesn%27t%20currently%20support%20the%20SFTP%2Dbased%20export%20workflow
+  date: '2026-10-20'
+links:
+  - url: https://docs.databricks.com/aws/en/release-notes/product/2026/june
+    kind: official
+    label: 'Databricks release notes: Salesforce Marketing Cloud managed ingestion connector (Beta) (June 18, 2026)'
+  - url: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/sfmc-limits
+    kind: official
+    label: 'Databricks docs: Salesforce Marketing Cloud connector limitations'
+  - url: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/sfmc-concepts
+    kind: official
+    label: 'Databricks docs: Salesforce Marketing Cloud connector concepts'
+source: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/sfmc-overview
+verified: '2026-10-20'

@@ -1,0 +1,46 @@
+id: jira-connector
+name: Jira connector
+aliases:
+  - Jira
+  - Atlassian Jira
+category: Data engineering
+what:
+  note: 'The managed Lakeflow Connect connector that ingests Jira issues, comments, attachment metadata and related tables from Jira Cloud or on-premises into Databricks.'
+  link: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/jira#:~:text=allows%20you%20to%20ingest%20data%20from%20Jira%20into%20Databricks
+fact:
+  - note: 'However many projects you have, everything lands in the same 27 tables.'
+    link: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/jira-limits#:~:text=The%20connector%20provides%20access%20to%2027%20tables%20in%20total
+  - note: 'Delete an issue and restore it later, and the connector will not bring it back.'
+    link: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/jira-limits#:~:text=the%20connector%20does%20not%20reingest%20the%20restored%20issue
+  - note: 'On-premises Jira works too, as long as it is version 8.22.x or later.'
+    link: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/jira-source-setup#:~:text=Jira%20on%2Dpremises%20environment%20with%20version%208.22.x%20or%20later
+status:
+  value: active
+  link: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/jira#:~:text=This%20feature%20is%20in%20Beta
+  date: '2026-10-20'
+releases:
+  - type: beta
+    date: 2025-12
+    link: https://docs.databricks.com/aws/en/release-notes/product/2025/december#:~:text=enables%20you%20to%20ingest%20Jira%20issues%2C%20comments%2C%20and%20attachments%20metadata
+introducedAt:
+  date: 2025-12
+  link: https://docs.databricks.com/aws/en/release-notes/product/2025/december#:~:text=enables%20you%20to%20ingest%20Jira%20issues%2C%20comments%2C%20and%20attachments%20metadata
+limitations:
+  note: 'Deleted issues stay in the destination unless use_audit_logs is on, which needs a paid Jira plan and a global admin connection user; comment and worklog deletes need a full refresh, and restored issues are not reingested. Only some tables sync incrementally, project filtering needs exact project keys, and some tables use internal Jira IDs that need joins.'
+  link: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/jira-limits#:~:text=the%20Jira%20connector%20does%20not%20track%20deletes%20for%20the%20issues%20table
+  date: '2026-10-20'
+links:
+  - url: https://docs.databricks.com/aws/en/release-notes/product/2025/december
+    kind: official
+    label: 'Databricks release notes: December 2025'
+  - url: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/jira
+    kind: official
+    label: 'Databricks docs: Jira connector'
+  - url: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/jira-source-setup
+    kind: official
+    label: 'Databricks docs: Configure Jira for ingestion'
+  - url: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/jira-limits
+    kind: official
+    label: 'Databricks docs: Jira connector limitations'
+source: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/jira
+verified: '2026-10-20'

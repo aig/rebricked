@@ -1,0 +1,46 @@
+id: google-drive-connector
+name: Google Drive connector
+aliases:
+  - Google Drive
+  - Google Drive managed connector
+  - Google Drive managed ingestion connector
+category: Data engineering
+what:
+  note: 'The managed Lakeflow Connect connector that ingests files from Google Drive into Databricks as binary data, parsed Delta tables or file metadata only; a separate standard connector reads Drive with read_files, spark.read and Auto Loader.'
+  link: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/google-drive#:~:text=The%20managed%20Google%20Drive%20connector%20in%20Lakeflow%20Connect%20allows%20you%20to%20ingest%20files%20from%20Google%20Drive
+fact:
+  - note: 'You can ingest a Drive without reading a single file - it can capture file metadata without loading file contents.'
+    link: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/google-drive#:~:text=capture%20file%20metadata%20without%20loading%20file%20contents
+  - note: 'There are two Google Drive connectors: the standard one went Beta in January 2026, the managed one in May, and they reached GA together in August 2026.'
+    link: https://docs.databricks.com/aws/en/release-notes/product/2026/august#:~:text=Both%20Google%20Drive%20connectors%20in%20Lakeflow%20Connect%20are%20now%20generally%20available
+  - note: 'With Databricks-managed OAuth, no Google Cloud project or app registration is required - if your workspace has that option switched on.'
+    link: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/google-drive#:~:text=No%20Google%20Cloud%20project%20or%20app%20registration%20required
+status:
+  value: active
+  link: https://docs.databricks.com/aws/en/release-notes/product/2026/august#:~:text=Both%20Google%20Drive%20connectors%20in%20Lakeflow%20Connect%20are%20now%20generally%20available
+  date: '2026-10-20'
+releases:
+  - type: beta
+    date: 2026-05
+    link: https://docs.databricks.com/aws/en/release-notes/product/2026/may#:~:text=The%20Google%20Drive%20connector%20in%20Lakeflow%20Connect%20is%20now%20available%20in%20Beta
+  - type: ga
+    date: 2026-08
+    link: https://docs.databricks.com/aws/en/release-notes/product/2026/august#:~:text=Both%20Google%20Drive%20connectors%20in%20Lakeflow%20Connect%20are%20now%20generally%20available
+introducedAt:
+  date: 2026-05
+  link: https://docs.databricks.com/aws/en/release-notes/product/2026/may#:~:text=The%20Google%20Drive%20connector%20in%20Lakeflow%20Connect%20is%20now%20available%20in%20Beta
+links:
+  - url: https://docs.databricks.com/aws/en/release-notes/product/2026/may
+    kind: official
+    label: 'Databricks release notes: Google Drive managed ingestion connector (Beta), May 27, 2026'
+  - url: https://docs.databricks.com/aws/en/release-notes/product/2026/august
+    kind: official
+    label: 'Databricks release notes: Google Drive connector (GA), August 4, 2026'
+  - url: https://docs.databricks.com/aws/en/release-notes/product/2026/january
+    kind: official
+    label: 'Databricks release notes: Google Drive connector (Beta), January 23, 2026 - the standard connector'
+  - url: https://docs.databricks.com/aws/en/ingestion/google-drive
+    kind: official
+    label: 'Databricks docs: Ingest files from Google Drive (standard connector)'
+source: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/google-drive
+verified: '2026-10-20'

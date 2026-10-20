@@ -1,0 +1,39 @@
+id: verkada-connector
+name: Verkada connector
+aliases:
+  - Verkada
+category: Data engineering
+what:
+  note: 'The managed Lakeflow Connect connector that ingests Verkada organization audit logs and access users into Databricks with a Verkada organization API key.'
+  link: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/verkada#:~:text=ingests%20organization%20audit%20logs%20and%20access%20users%20from%20Verkada
+fact:
+  - note: 'History starts on a specific day: the audit_log table only has events from August 12, 2025 onward, because the Verkada API offers nothing earlier.'
+    link: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/verkada-limits#:~:text=ingests%20events%20recorded%20on%20or%20after%20August%2012
+  - note: 'A Verkada API key is tied to its region for life - it works only where its organization was created, and the region can''t be changed.'
+    link: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/verkada-source-setup#:~:text=An%20API%20key%20works%20only%20in%20the%20region%20its%20organization%20was%20created%20in
+  - note: 'You hand over a long-lived API key and the connector trades it for a short-lived API token by itself.'
+    link: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/verkada-source-setup#:~:text=The%20connector%20exchanges%20the%20API%20key%20for%20a%20short%2Dlived%20API%20token%20automatically
+status:
+  value: active
+  link: https://docs.databricks.com/aws/en/release-notes/product/2026/august#:~:text=The%20Verkada%20connector%20is%20now%20available%20in%20Lakeflow%20Connect
+  date: '2026-10-20'
+releases:
+  - type: beta
+    date: 2026-08
+    link: https://docs.databricks.com/aws/en/release-notes/product/2026/august#:~:text=The%20Verkada%20connector%20is%20now%20available%20in%20Lakeflow%20Connect
+introducedAt:
+  date: 2026-08
+  link: https://docs.databricks.com/aws/en/release-notes/product/2026/august#:~:text=The%20Verkada%20connector%20is%20now%20available%20in%20Lakeflow%20Connect
+limitations:
+  note: 'Incremental ingestion only for audit_log; the users table is a full snapshot every update. Audit events before August 12, 2025 are not available. Column renames or data type changes need a full refresh.'
+  link: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/verkada-limits#:~:text=The%20connector%20supports%20incremental%20ingestion%20only%20for%20the%20audit_log%20table
+  date: '2026-10-20'
+links:
+  - url: https://docs.databricks.com/aws/en/release-notes/product/2026/august
+    kind: official
+    label: 'Databricks release notes: Verkada connector (Beta), August 24, 2026'
+  - url: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/verkada-limits
+    kind: official
+    label: 'Databricks docs: Verkada connector limitations'
+source: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/verkada
+verified: '2026-10-20'

@@ -1,0 +1,37 @@
+id: rabbitmq-connector
+name: RabbitMQ connector
+aliases:
+  - Managed RabbitMQ connector
+  - Lakeflow Connect RabbitMQ
+category: Data engineering
+what:
+  note: 'A managed Lakeflow Connect streaming connector that continuously consumes messages from RabbitMQ classic queues into Unity Catalog streaming tables on serverless compute.'
+  link: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/rabbitmq#:~:text=stream%20messages%20from%20RabbitMQ%20classic%20queues%20into%20streaming%20tables
+fact:
+  - note: Exactly-once is off the table - classic queues have no broker-assigned unique message ID, so it promises at-least-once and leaves deduplication to you.
+    link: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/rabbitmq-faq#:~:text=Can%20the%20connector%20guarantee%20exactly%2Donce%20delivery
+  - note: Unlike Kafka, a classic queue forgets a message once it is acknowledged, so anything another consumer already took before the pipeline started is gone for good.
+    link: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/rabbitmq-faq#:~:text=Unlike%20Kafka%2C%20RabbitMQ%20classic%20queues%20do%20not%20retain%20messages
+  - note: It does not even peek inside - the message body lands as raw binary, and decoding JSON, Avro or Protobuf is your job downstream.
+    link: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/rabbitmq-limits#:~:text=The%20message%20body%20is%20ingested%20as%20binary
+status:
+  value: active
+  link: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/rabbitmq#:~:text=The%20managed%20RabbitMQ%20connector%20in%20Lakeflow%20Connect
+  date: '2026-10-20'
+releases:
+  - type: beta
+    date: 2026-06
+    link: https://docs.databricks.com/aws/en/release-notes/product/2026/june#:~:text=Managed%20RabbitMQ%20connector%20%28Beta%29
+introducedAt:
+  date: 2026-06
+  link: https://docs.databricks.com/aws/en/release-notes/product/2026/june#:~:text=The%20managed%20RabbitMQ%20connector%20in%20Lakeflow%20Connect%20is%20now%20available%20in%20Beta
+limitations:
+  note: Classic queues only (no RabbitMQ Streams), username and password authentication only, append-only destination tables with no SCD type 1 or 2, one broker per pipeline, serverless only, continuous runs only, duplicates possible after redelivery and per-queue order is best-effort.
+  link: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/rabbitmq-limits#:~:text=Destination%20tables%20are%20append%2Donly
+  date: '2026-10-20'
+links:
+  - url: https://docs.databricks.com/aws/en/release-notes/product/2026/june#:~:text=Managed%20RabbitMQ%20connector%20%28Beta%29
+    kind: official
+    label: 'Release note: Managed RabbitMQ connector Beta (June 2026)'
+source: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/rabbitmq
+verified: '2026-10-20'

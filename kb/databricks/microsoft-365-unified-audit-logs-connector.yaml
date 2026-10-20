@@ -1,0 +1,38 @@
+id: microsoft-365-unified-audit-logs-connector
+name: Microsoft 365 Unified Audit Logs connector
+aliases:
+  - 'Microsoft 365 Unified Audit Logs'
+  - 'M365 audit logs connector'
+  - 'Office 365 audit logs'
+category: Data engineering
+what:
+  note: 'A managed Lakeflow Connect connector that ingests unified audit events from Microsoft Entra ID, Exchange, SharePoint and other Microsoft 365 workloads into Databricks.'
+  link: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/microsoft-365#:~:text=ingests%20unified%20audit%20events%20from%20Microsoft%20Entra%20ID
+fact:
+  - note: 'It reads the audit trail, not the mail: the connector explicitly does not ingest Outlook messages or SharePoint files, only who did what to them.'
+    link: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/microsoft-365#:~:text=It%20doesn%27t%20ingest%20Outlook%20messages%20or%20SharePoint%20files
+  - note: 'Five source tables come out of it - Entra ID, Exchange, SharePoint, general and data loss prevention audit events.'
+    link: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/microsoft-365-pipeline#:~:text=The%20following%20examples%20ingest%20Entra%20ID%2C%20Exchange%2C%20SharePoint
+  - note: 'Setup says to give the Entra client secret a 24-month expiry, so the pipeline comes with a built-in two-year reminder to rotate it.'
+    link: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/microsoft-365-source-setup#:~:text=select%2024%20months%20for%20Expires
+status:
+  value: active
+  link: https://docs.databricks.com/aws/en/release-notes/product/2026/september#:~:text=Unified%20Audit%20Logs%20connector%20is%20now%20available%20in%20Beta
+  date: '2026-10-20'
+releases:
+  - type: beta
+    date: 2026-09
+    link: https://docs.databricks.com/aws/en/release-notes/product/2026/september#:~:text=Unified%20Audit%20Logs%20connector%20is%20now%20available%20in%20Beta
+introducedAt:
+  date: 2026-09
+  link: https://docs.databricks.com/aws/en/release-notes/product/2026/september#:~:text=Unified%20Audit%20Logs%20connector%20is%20now%20available%20in%20Beta
+limitations:
+  note: 'Beta, enabled by a workspace admin from the Previews page. API and bundle authoring only (no UI), OAuth M2M only, no row filtering, no SCD type 2 (events are append-only), and no data type changes under schema evolution.'
+  link: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/microsoft-365#:~:text=Microsoft%20365%20unified%20audit%20events%20are%20append-only
+  date: '2026-10-20'
+links:
+  - url: https://docs.databricks.com/aws/en/release-notes/product/2026/september
+    kind: official
+    label: 'Databricks release notes: Microsoft 365 Unified Audit Logs connector is available in Beta (September 28, 2026)'
+source: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/microsoft-365
+verified: '2026-10-20'

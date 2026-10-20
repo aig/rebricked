@@ -1,0 +1,40 @@
+id: sendgrid-connector
+name: SendGrid connector
+aliases:
+  - SendGrid
+  - Lakeflow Connect for SendGrid
+category: Data engineering
+what:
+  note: 'The managed Lakeflow Connect connector that ingests SendGrid subusers, IP access activity, suppression lists, unsubscribe groups, Marketing Campaigns data and email templates into Databricks.'
+  link: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/sendgrid#:~:text=ingests%20subusers%2C%20IP%20access%2Dmanagement%20activity%2C%20suppression%20lists%2C%20unsubscribe%20groups
+fact:
+  - note: 'SendGrid hands over only the 20 most recent access attempts per account and keeps the rest to itself, so access history beyond that is a downstream accumulate-and-dedupe job.'
+    link: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/sendgrid-limits#:~:text=return%20at%20most%20the%2020%20most%2Drecent%20access%20attempts
+  - note: 'Bounces, spam reports, blocks and other suppression tables have no primary key, because SendGrid gives suppression entries none - expect rows that look duplicated.'
+    link: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/sendgrid-limits#:~:text=These%20tables%20can%20contain%20rows%20that%20appear%20duplicated
+  - note: 'It authenticates with a SendGrid parent-account API key and works against both the global and the EU data-residency endpoints.'
+    link: https://docs.databricks.com/aws/en/release-notes/product/2026/august#:~:text=with%20support%20for%20both%20the%20global%20and%20EU%20data%2Dresidency%20endpoints
+status:
+  value: active
+  link: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/sendgrid#:~:text=a%20workspace%20admin%20must%20turn%20on%20Lakeflow%20Connect%20for%20SendGrid
+  date: '2026-10-20'
+releases:
+  - type: beta
+    date: 2026-08
+    link: https://docs.databricks.com/aws/en/release-notes/product/2026/august#:~:text=The%20SendGrid%20connector%20is%20now%20available%20in%20Lakeflow%20Connect%20in%20Beta
+introducedAt:
+  date: 2026-08
+  link: https://docs.databricks.com/aws/en/release-notes/product/2026/august#:~:text=The%20SendGrid%20connector%20is%20now%20available%20in%20Lakeflow%20Connect%20in%20Beta
+limitations:
+  note: 'No incremental ingestion - every table is a full snapshot on each sync, and SCD type 2 is not supported. Access-attempt tables return at most the latest 20 entries, suppression tables have no primary key and can show duplicate-looking rows, and data type changes or column renames need a full refresh.'
+  link: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/sendgrid-limits#:~:text=The%20connector%20ingests%20full%20snapshots%20of%20each%20table%20on%20every%20sync
+  date: '2026-10-20'
+links:
+  - url: https://docs.databricks.com/aws/en/release-notes/product/2026/august
+    kind: official
+    label: 'Databricks release notes: SendGrid connector (Beta) (August 13, 2026)'
+  - url: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/sendgrid-limits
+    kind: official
+    label: 'Databricks docs: SendGrid connector limitations'
+source: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/sendgrid
+verified: '2026-10-20'

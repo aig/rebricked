@@ -1,0 +1,37 @@
+id: asana-connector
+name: 'Asana connector'
+aliases:
+  - 'Asana'
+category: Data engineering
+what:
+  note: 'A managed Lakeflow Connect connector that ingests Asana work management data such as workspaces, projects, tasks, portfolios and goals into Databricks.'
+  link: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/asana#:~:text=ingests%20work%20management%20data%20such%20as%20workspaces%2C%20projects%2C%20tasks%2C%20portfolios%2C%20and%20goals
+fact:
+  - note: 'There is no incremental mode yet: it reingests every record in every table on each pipeline update.'
+    link: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/asana#:~:text=reingests%20all%20records%20in%20every%20table%20on%20each%20pipeline%20update
+  - note: 'It signs in with OAuth user-to-machine (U2M) - API keys and passwords are not on the list.'
+    link: https://docs.databricks.com/aws/en/release-notes/product/2026/october#:~:text=The%20connector%20uses%20OAuth%20user%2Dto%2Dmachine%20%28U2M%29%20authentication
+status:
+  value: active
+  link: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/asana#:~:text=Lakeflow%20Connect%20for%20Asana%20from%20the%20Previews%20page
+  date: '2026-10-20'
+releases:
+  - type: beta
+    date: 2026-10
+    link: https://docs.databricks.com/aws/en/release-notes/product/2026/october#:~:text=The%20managed%20Asana%20connector%20is%20now%20available%20in%20Lakeflow%20Connect
+introducedAt:
+  date: 2026-10
+  link: https://docs.databricks.com/aws/en/release-notes/product/2026/october#:~:text=The%20managed%20Asana%20connector%20is%20now%20available%20in%20Lakeflow%20Connect
+limitations:
+  note: 'OAuth U2M authentication only; no incremental ingestion (every update reingests all records), no SCD Type 2, no API-based row filtering, no data type changes in schema evolution, and a column rename requires a full refresh.'
+  link: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/asana
+  date: '2026-10-20'
+links:
+  - url: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/asana
+    kind: official
+    label: 'Databricks docs: Asana connector'
+  - url: https://docs.databricks.com/aws/en/release-notes/product/2026/october
+    kind: official
+    label: 'Databricks release notes: Asana connector (Beta, October 20, 2026)'
+source: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/asana
+verified: '2026-10-20'

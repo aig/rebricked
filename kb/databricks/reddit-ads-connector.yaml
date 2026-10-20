@@ -1,0 +1,40 @@
+id: reddit-ads-connector
+name: Reddit Ads connector
+aliases:
+  - Reddit Ads
+  - Lakeflow Connect for Reddit Ads
+category: Data engineering
+what:
+  note: 'The managed Lakeflow Connect connector that ingests Reddit Ads campaign entities and performance reports, including custom reports, into Databricks.'
+  link: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/reddit-ads#:~:text=allows%20you%20to%20ingest%20data%20from%20Reddit%20Ads%20into%20Databricks
+fact:
+  - note: 'Reddit only serves about the last 24 months of report data, so no sync_start_date can reach further back - Reddit rejects the request.'
+    link: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/reddit-ads-limits#:~:text=only%20serves%20report%20data%20from%20approximately%20the%20last%2024%20months
+  - note: 'A custom report must break down by at least one time dimension (DATE or HOUR), or the pipeline fails at planning time.'
+    link: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/reddit-ads-limits#:~:text=must%20include%20at%20least%20one%20time%20dimension
+  - note: 'The lookback window tops out at 30 days - lookback_window_days accepts 1 to 30 and nothing longer.'
+    link: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/reddit-ads-limits#:~:text=parameter%20accepts%20values%20from%201%20to%2030
+status:
+  value: active
+  link: https://docs.databricks.com/aws/en/release-notes/product/2026/july#:~:text=The%20managed%20Reddit%20Ads%20connector%20in%20Lakeflow%20Connect%20is%20now%20available%20in%20Beta
+  date: '2026-10-20'
+releases:
+  - type: beta
+    date: 2026-07
+    link: https://docs.databricks.com/aws/en/release-notes/product/2026/july#:~:text=The%20managed%20Reddit%20Ads%20connector%20in%20Lakeflow%20Connect%20is%20now%20available%20in%20Beta
+introducedAt:
+  date: 2026-07
+  link: https://docs.databricks.com/aws/en/release-notes/product/2026/july#:~:text=The%20managed%20Reddit%20Ads%20connector%20in%20Lakeflow%20Connect%20is%20now%20available%20in%20Beta
+limitations:
+  note: 'Entity tables (ad_account, campaign, ad_group, ad) are fully refreshed on every update and keep no SCD type 2 history; only report tables are incremental. Report data reaches back about 24 months, the lookback window caps at 30 days, and custom reports need an explicit destination_table and a DATE or HOUR breakdown. Authentication is OAuth U2M only.'
+  link: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/reddit-ads-limits#:~:text=Only%20report%20tables%20support%20incremental%20ingestion
+  date: '2026-10-20'
+links:
+  - url: https://docs.databricks.com/aws/en/release-notes/product/2026/july
+    kind: official
+    label: 'Databricks release notes: Reddit Ads connector is now available in Beta (July 21, 2026)'
+  - url: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/reddit-ads-limits
+    kind: official
+    label: 'Databricks docs: Reddit Ads connector limitations'
+source: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/reddit-ads
+verified: '2026-10-20'

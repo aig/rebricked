@@ -1,0 +1,40 @@
+id: outlook-connector
+name: Outlook connector
+aliases:
+  - 'Outlook'
+  - 'Microsoft Outlook connector'
+category: Data engineering
+what:
+  note: 'A managed Lakeflow Connect connector that ingests email data from Microsoft Outlook into Databricks through the Microsoft Graph API.'
+  link: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/outlook-overview#:~:text=allows%20you%20to%20ingest%20email%20data%20from%20Microsoft%20Outlook%20into%20Databricks
+fact:
+  - note: 'The whole inbox lands in one table, email_messages - and deleting an email afterwards does not delete it from Databricks.'
+    link: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/outlook-limits#:~:text=The%20connector%20does%20not%20capture%20email%20deletions
+  - note: 'A misspelled folder in include_folders is skipped silently, with no error or warning.'
+    link: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/outlook-limits#:~:text=the%20connector%20silently%20skips%20that%20folder%20without%20raising%20an%20error%20or%20warning
+  - note: 'A folder literally named Q1/Q2 has to be written as Q1\/Q2, because the slash is the path separator.'
+    link: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/outlook-limits#:~:text=a%20top-level%20folder%20literally%20named%20Q1%2FQ2%20is%20specified%20as
+status:
+  value: active
+  link: https://docs.databricks.com/aws/en/release-notes/product/2026/may#:~:text=The%20Outlook%20connector%20in%20Lakeflow%20Connect%20is%20now%20available%20in%20Beta
+  date: '2026-10-20'
+releases:
+  - type: beta
+    date: 2026-05
+    link: https://docs.databricks.com/aws/en/release-notes/product/2026/may#:~:text=The%20Outlook%20connector%20in%20Lakeflow%20Connect%20is%20now%20available%20in%20Beta
+introducedAt:
+  date: 2026-05
+  link: https://docs.databricks.com/aws/en/release-notes/product/2026/may#:~:text=The%20Outlook%20connector%20in%20Lakeflow%20Connect%20is%20now%20available%20in%20Beta
+limitations:
+  note: 'Beta. A single email_messages table, no capture of email deletions, no SCD type 2, no generic row filter (use the outlook_options filters), and misspelled include_folders entries are skipped silently.'
+  link: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/outlook-limits#:~:text=The%20connector%20supports%20a%20single%20table%2C%20email_messages
+  date: '2026-10-20'
+links:
+  - url: https://docs.databricks.com/aws/en/release-notes/product/2026/may
+    kind: official
+    label: 'Databricks release notes: Outlook managed ingestion connector (Beta) (May 5, 2026)'
+  - url: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/outlook-limits
+    kind: official
+    label: 'Databricks docs: Outlook connector limitations'
+source: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/outlook-overview
+verified: '2026-10-20'

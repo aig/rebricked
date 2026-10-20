@@ -1,0 +1,50 @@
+id: confluence-connector
+name: Confluence connector
+aliases:
+  - 'Confluence'
+  - 'Atlassian Confluence connector'
+  - 'Lakeflow Connect for Confluence'
+category: Data engineering
+what:
+  note: 'A managed Lakeflow Connect connector that ingests Confluence Cloud spaces, pages, blogposts, attachments, labels and classification levels into Databricks.'
+  link: https://docs.databricks.com/aws/en/release-notes/product/2025/december#:~:text=ingest%20Confluence%20spaces%2C%20pages%2C%20attachments%2C%20blogposts%2C%20labels%2C%20and%20classification%20levels
+fact:
+  - note: 'Attachments arrive as a description, not a file - filename, size, content type and upload date, but never the attachment itself.'
+    link: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/confluence-limits#:~:text=Only%20attachment%20metadata%20%28filename%2C%20size%2C%20content%20type%2C%20upload%20date%29
+  - note: 'Filtering by space is ignored for labels and attachments, because the Confluence API does not say which space they come from.'
+    link: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/confluence-pipeline#:~:text=Space%20filtering%20is%20not%20supported%20for%20the%20labels%20and%20attachments%20tables
+  - note: 'Move a page to another space and the destination keeps its old spaceId; restore a deleted page and it is not reingested at all.'
+    link: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/confluence-limits#:~:text=the%20corresponding%20spaceId%20is%20not%20updated
+status:
+  value: active
+  link: https://docs.databricks.com/aws/en/release-notes/product/2026/april#:~:text=The%20Confluence%20connector%20in%20Lakeflow%20Connect%20is%20now%20Generally%20Available
+  date: '2026-10-20'
+releases:
+  - type: beta
+    date: 2025-12
+    link: https://docs.databricks.com/aws/en/release-notes/product/2025/december#:~:text=The%20fully%2Dmanaged%20Confluence%20connector%20in%20Lakeflow%20Connect%20enables%20you
+  - type: ga
+    date: 2026-04
+    link: https://docs.databricks.com/aws/en/release-notes/product/2026/april#:~:text=The%20Confluence%20connector%20in%20Lakeflow%20Connect%20is%20now%20Generally%20Available
+introducedAt:
+  date: 2025-12
+  link: https://docs.databricks.com/aws/en/release-notes/product/2025/december#:~:text=The%20fully%2Dmanaged%20Confluence%20connector%20in%20Lakeflow%20Connect%20enables%20you
+limitations:
+  note: 'Confluence Cloud only, with OAuth U2M only. Does not ingest ACLs, page comments, archived spaces or attachment file contents. Hard deletes (purges) and space deletions need a full refresh, moved pages keep their old spaceId, and restored records are not reingested. Up to 250 tables per pipeline.'
+  link: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/confluence-limits#:~:text=The%20connector%20only%20supports%20Confluence%20Cloud
+  date: '2026-10-20'
+links:
+  - url: https://docs.databricks.com/aws/en/release-notes/product/2025/december
+    kind: official
+    label: 'Databricks release notes: Confluence connector (Beta) (December 16, 2025)'
+  - url: https://docs.databricks.com/aws/en/release-notes/product/2026/april
+    kind: official
+    label: 'Databricks release notes: Confluence connector (GA) (April 25, 2026)'
+  - url: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/confluence-source-setup
+    kind: official
+    label: 'Databricks docs: Configure OAuth U2M for Confluence ingestion'
+  - url: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/confluence-limits
+    kind: official
+    label: 'Databricks docs: Confluence connector limitations'
+source: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/confluence
+verified: '2026-10-20'

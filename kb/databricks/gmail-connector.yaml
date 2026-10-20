@@ -1,0 +1,43 @@
+id: gmail-connector
+name: Gmail connector
+aliases:
+  - 'Gmail'
+  - 'Lakeflow Connect for Gmail'
+category: Data engineering
+what:
+  note: 'A managed Lakeflow Connect connector that ingests messages, labels, drafts, filters and profile data from one Gmail mailbox, using a Google service account with domain-wide delegation.'
+  link: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/gmail#:~:text=ingests%20messages%2C%20labels%2C%20drafts%2C%20and%20filters%20from%20a%20Gmail%20mailbox
+fact:
+  - note: 'Strictly look, don''t touch: it is read-only with the gmail.readonly scope and never modifies the source mailbox.'
+    link: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/gmail#:~:text=It%20never%20modifies%20the%20source%20mailbox
+  - note: 'Gmail only remembers about a week of history, so a pipeline that runs less than weekly loses its historyId cursor and falls back to a full refresh.'
+    link: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/gmail-limits#:~:text=Gmail%20retains%20history%20for%20a%20limited%20window%2C%20typically%20about%20seven%20days
+  - note: 'Deeply nested email is cut off: MIME parts are materialized up to 8 levels deep, and anything deeper stays unexpanded.'
+    link: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/gmail-limits#:~:text=materialized%20up%20to%208%20levels%20of%20nesting
+status:
+  value: active
+  link: https://docs.databricks.com/aws/en/release-notes/product/2026/august#:~:text=The%20connector%20ingests%20messages%2C%20labels%2C%20drafts%2C%20filters%2C%20and%20profile%20data
+  date: '2026-10-20'
+releases:
+  - type: beta
+    date: 2026-08
+    link: https://docs.databricks.com/aws/en/release-notes/product/2026/august#:~:text=The%20connector%20ingests%20messages%2C%20labels%2C%20drafts%2C%20filters%2C%20and%20profile%20data
+introducedAt:
+  date: 2026-08
+  link: https://docs.databricks.com/aws/en/release-notes/product/2026/august#:~:text=The%20connector%20ingests%20messages%2C%20labels%2C%20drafts%2C%20filters%2C%20and%20profile%20data
+limitations:
+  note: 'In Beta. One mailbox per connection, and domain-wide delegation needs a Google Workspace super administrator. Only messages and message_labels sync incrementally, and they do not support SCD Type 2; every other table is fully re-ingested each run. Run at least weekly or the history cursor expires and forces a full refresh.'
+  link: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/gmail-limits#:~:text=Each%20connection%20ingests%20a%20single%20mailbox
+  date: '2026-10-20'
+links:
+  - url: https://docs.databricks.com/aws/en/release-notes/product/2026/august
+    kind: official
+    label: 'Databricks release notes: Gmail connector in Lakeflow Connect (Beta) (August 13, 2026)'
+  - url: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/gmail-source-setup
+    kind: official
+    label: 'Databricks docs: Configure Gmail for Databricks ingestion'
+  - url: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/gmail-limits
+    kind: official
+    label: 'Databricks docs: Gmail connector limitations'
+source: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/gmail
+verified: '2026-10-20'

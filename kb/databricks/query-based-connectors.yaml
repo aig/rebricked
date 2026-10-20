@@ -1,0 +1,43 @@
+id: query-based-connectors
+name: Query-based connectors
+aliases:
+  - Query-based ingestion
+  - Lakeflow Connect query-based connector
+category: Data engineering
+what:
+  note: 'Lakeflow Connect connectors that ingest from databases (Oracle, Teradata, SQL Server, MySQL, MariaDB, PostgreSQL and any Lakehouse Federation source) by querying the source on a schedule with a cursor column, with no CDC setup and no ingestion gateway.'
+  link: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/query-based-overview#:~:text=ingest%20data%20from%20databases%20by%20querying%20the%20source%20directly
+fact:
+  - note: To catch rows committed late by a long-running source transaction, each run quietly re-reads a short window just below the previous high-water mark.
+    link: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/query-based-overview#:~:text=re%2Dreads%20a%20short%20window%20of%20rows%20just%20below%20the%20high%2Dwater%20mark
+  - note: It only sees the latest state of each changed row - if a row changes five times between runs, the four in-between versions never existed as far as it knows.
+    link: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/query-based-overview#:~:text=They%20don%27t%20capture%20every%20intermediate%20row%20state%20between%20runs
+  - note: Through foreign catalog ingestion it can read any Lakehouse Federation source, so anything Databricks can federate it can also ingest.
+    link: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/query-based-overview#:~:text=All%20Lakehouse%20Federation%20data%20sources%20are%20supported%20using%20foreign%20catalog%20ingestion
+status:
+  value: active
+  link: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/query-based-overview#:~:text=Query%2Dbased%20connectors%20in%20Lakeflow%20Connect%20ingest%20data%20from%20databases
+  date: '2026-10-20'
+releases:
+  - type: public-preview
+    date: 2026-04
+    link: https://docs.databricks.com/aws/en/release-notes/product/2026/april#:~:text=Query%2Dbased%20connectors%20for%20Lakeflow%20Connect%20%28Public%20Preview%29
+  - type: ga
+    date: 2026-05
+    link: https://docs.databricks.com/aws/en/release-notes/product/2026/may#:~:text=Query%2Dbased%20connectors%20for%20Lakeflow%20Connect%20are%20now%20generally%20available
+introducedAt:
+  date: 2026-04
+  link: https://docs.databricks.com/aws/en/release-notes/product/2026/april#:~:text=Query%2Dbased%20connectors%20for%20Lakeflow%20Connect%20%28Public%20Preview%29
+limitations:
+  note: Queries run directly against source tables, so they can be slower and add load compared with CDC connectors; runs are scheduled rather than continuous, deletion tracking needs API configuration (hard-delete tracking is in Beta), and the cursor column must be monotonically increasing.
+  link: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/query-based-overview#:~:text=can%20place%20more%20load%20on%20the%20source%20database
+  date: '2026-10-20'
+links:
+  - url: https://docs.databricks.com/aws/en/release-notes/product/2026/april#:~:text=Query%2Dbased%20connectors%20for%20Lakeflow%20Connect%20%28Public%20Preview%29
+    kind: official
+    label: 'Release note: Query-based connectors Public Preview (April 2026)'
+  - url: https://docs.databricks.com/aws/en/release-notes/product/2026/may#:~:text=Query%2Dbased%20connectors%20for%20Lakeflow%20Connect%20are%20now%20generally%20available
+    kind: official
+    label: 'Release note: Query-based connectors GA (May 2026)'
+source: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/query-based-overview
+verified: '2026-10-20'

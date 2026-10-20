@@ -1,0 +1,38 @@
+id: tiktok-ads-connector
+name: TikTok Ads connector
+aliases:
+  - TikTok Ads
+  - TikTok
+category: Data engineering
+what:
+  note: 'The managed Lakeflow Connect connector that ingests TikTok Ads data, including ad reports, into Databricks.'
+  link: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/tiktok-ads#:~:text=connector%20in%20Lakeflow%20Connect%20allows%20you%20to%20ingest%20data%20from%20TikTok%20Ads
+fact:
+  - note: 'Go viral and lose rows: reports with 20,000 or more ads come back truncated, because TikTok''s synchronous reporting API cuts the results.'
+    link: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/tiktok-ads-limits#:~:text=synchronous%20reporting%20API%20truncates%20the%20results
+  - note: 'SKAN metrics are off the table for hourly reports.'
+    link: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/tiktok-ads-limits#:~:text=SKAN%20metrics%20aren%27t%20supported%20for%20hourly%20reports
+status:
+  value: active
+  link: https://docs.databricks.com/aws/en/release-notes/product/2026/february#:~:text=Lakeflow%20Connect%20now%20supports%20a%20managed%20connector%20for%20ingestion%20from%20TikTok%20Ads
+  date: '2026-10-20'
+releases:
+  - type: beta
+    date: 2026-02
+    link: https://docs.databricks.com/aws/en/release-notes/product/2026/february#:~:text=Lakeflow%20Connect%20now%20supports%20a%20managed%20connector%20for%20ingestion%20from%20TikTok%20Ads
+introducedAt:
+  date: 2026-02
+  link: https://docs.databricks.com/aws/en/release-notes/product/2026/february#:~:text=Lakeflow%20Connect%20now%20supports%20a%20managed%20connector%20for%20ingestion%20from%20TikTok%20Ads
+limitations:
+  note: 'Some tables can''t be ingested incrementally and are refreshed on every update. Report data is complete only for reports with fewer than 20,000 ads. No SKAN metrics in hourly reports. Up to 250 tables per pipeline, and column renames need a full refresh.'
+  link: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/tiktok-ads-limits#:~:text=Report%20data%20is%20only%20supported%20for%20reports%20with%20fewer%20than%2020%2C000%20ads
+  date: '2026-10-20'
+links:
+  - url: https://docs.databricks.com/aws/en/release-notes/product/2026/february
+    kind: official
+    label: 'Databricks release notes: TikTok Ads connector (Beta), February 18, 2026'
+  - url: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/tiktok-ads-limits
+    kind: official
+    label: 'Databricks docs: TikTok Ads connector limitations'
+source: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/tiktok-ads
+verified: '2026-10-20'

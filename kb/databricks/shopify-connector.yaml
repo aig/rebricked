@@ -1,0 +1,40 @@
+id: shopify-connector
+name: Shopify connector
+aliases:
+  - Shopify
+  - Lakeflow Connect for Shopify
+category: Data engineering
+what:
+  note: 'The managed Lakeflow Connect connector that ingests Shopify e-commerce data - products, orders, customers, inventory, fulfillments and discounts - into Databricks, using the Shopify OAuth client credentials grant.'
+  link: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/shopify#:~:text=The%20managed%20Shopify%20connector%20in%20Lakeflow%20Connect%20ingests%20e%2Dcommerce%20data
+fact:
+  - note: 'Your order history has a 60-day horizon unless Shopify approves the read_all_orders scope for your app - without it, older orders simply never arrive.'
+    link: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/shopify-source-setup#:~:text=Without%20it%2C%20the%20connector%20ingests%20only%20orders%20from%20the%20last%2060%20days
+  - note: 'It notices the things you throw away too, capturing deletions of products, variants, collections, articles, pages, blogs and draft orders.'
+    link: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/shopify#:~:text=It%20also%20captures%20deletions%20of%20products
+  - note: 'The menu is fixed at 39 prebuilt tables - no custom metafields and no Shopify reports.'
+    link: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/shopify-limits#:~:text=The%20connector%20makes%20available%2039%20prebuilt%20Shopify%20tables
+status:
+  value: active
+  link: https://docs.databricks.com/aws/en/release-notes/product/2026/september#:~:text=The%20Shopify%20connector%20is%20now%20available%20in%20Lakeflow%20Connect
+  date: '2026-10-20'
+releases:
+  - type: beta
+    date: 2026-09
+    link: https://docs.databricks.com/aws/en/release-notes/product/2026/september#:~:text=The%20Shopify%20connector%20is%20now%20available%20in%20Lakeflow%20Connect
+introducedAt:
+  date: 2026-09
+  link: https://docs.databricks.com/aws/en/release-notes/product/2026/september#:~:text=The%20Shopify%20connector%20is%20now%20available%20in%20Lakeflow%20Connect
+limitations:
+  note: 'Only the 39 prebuilt tables (no other objects, custom metafields or reports). The locations, shop, collects, disputes, countries, collection_product and inventory_level tables are re-ingested in full every run. Tables with VARIANT columns don''t support SCD type 2, and column renames or data type changes need a full refresh.'
+  link: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/shopify-limits#:~:text=Each%20pipeline%20run%20re%2Dingests%20all%20records%20for%20these%20tables
+  date: '2026-10-20'
+links:
+  - url: https://docs.databricks.com/aws/en/release-notes/product/2026/september
+    kind: official
+    label: 'Databricks release notes: Shopify connector (Beta), September 22, 2026'
+  - url: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/shopify-limits
+    kind: official
+    label: 'Databricks docs: Shopify connector limitations'
+source: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/shopify
+verified: '2026-10-20'

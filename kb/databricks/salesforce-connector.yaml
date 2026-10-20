@@ -1,0 +1,50 @@
+id: salesforce-connector
+name: Salesforce connector
+aliases:
+  - Salesforce ingestion connector
+  - Salesforce
+  - Lakeflow Connect for Salesforce
+category: Data engineering
+what:
+  note: 'The managed Lakeflow Connect connector that incrementally ingests objects from the Salesforce Platform into Databricks, with SCD type 2, row filtering and up to 250 objects per pipeline.'
+  link: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/salesforce-concepts#:~:text=a%20built%2Din%20connector%20for%20ingesting%20data%20directly%20from%20the%20Salesforce%20Platform
+fact:
+  - note: 'Salesforce NUMBER and CURRENCY values can carry 18 digits before the decimal point; in Databricks they keep 15, so three digits of precision fall off on the way in.'
+    link: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/salesforce-limits#:~:text=loses%20three%20digits%20of%20precision%20when%20ingested
+  - note: 'Formula fields are snapshotted in full by default, because Salesforce does not bump the cursor column when a formula result changes - incremental formula ingestion is a separate opt-in.'
+    link: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/salesforce-limits#:~:text=formula%20fields%20can%20silently%20change%20without%20being%20picked%20up
+  - note: 'A pipeline takes at most 250 objects, but the docs promise no limit on rows or columns inside them.'
+    link: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/salesforce-limits#:~:text=There%20is%20a%20maximum%20of%20250%20objects%20per%20pipeline
+status:
+  value: active
+  link: https://docs.databricks.com/aws/en/release-notes/product/2025/april#:~:text=Salesforce%20ingestion%20and%20Workday%20Reports%20connectors%20are%20GA
+  date: '2026-10-20'
+releases:
+  - type: public-preview
+    date: 2024-07
+    link: https://docs.databricks.com/aws/en/release-notes/product/2024/july#:~:text=Salesforce%2C%20Microsoft%20Azure%20SQL%20Database%2C%20Amazon%20RDS%20for%20SQL%20Server%2C%20and%20Workday%20are%20currently%20supported
+  - type: ga
+    date: 2025-04
+    link: https://docs.databricks.com/aws/en/release-notes/product/2025/april#:~:text=Salesforce%20ingestion%20and%20Workday%20Reports%20connectors%20are%20GA
+introducedAt:
+  date: 2024-07
+  link: https://docs.databricks.com/aws/en/release-notes/product/2024/july#:~:text=Salesforce%2C%20Microsoft%20Azure%20SQL%20Database%2C%20Amazon%20RDS%20for%20SQL%20Server%2C%20and%20Workday%20are%20currently%20supported
+limitations:
+  note: 'At most 250 objects per pipeline. NUMBER and CURRENCY lose three digits of precision, base64 fields are skipped, and compound address and location fields land as separate columns. Formula fields need full snapshots unless incremental formula ingestion is enabled. Hard deletes need a full refresh, and big objects (__b), external objects (__x), historical-data objects (__hd) and real-time event monitoring objects are not supported.'
+  link: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/salesforce-limits#:~:text=Databricks%20doesn%27t%20support%20hard%20deletions%20automatically
+  date: '2026-10-20'
+links:
+  - url: https://docs.databricks.com/aws/en/release-notes/product/2024/july
+    kind: official
+    label: 'Databricks release notes: Lakeflow Connect (gated Public Preview) with Salesforce (July 31, 2024)'
+  - url: https://docs.databricks.com/aws/en/release-notes/product/2025/april
+    kind: official
+    label: 'Databricks release notes: Salesforce ingestion and Workday Reports connectors are GA (April 2, 2025)'
+  - url: https://docs.databricks.com/aws/en/release-notes/product/2026/august
+    kind: official
+    label: 'Databricks release notes: Salesforce connector mTLS authentication is now generally available (August 2026)'
+  - url: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/salesforce-limits
+    kind: official
+    label: 'Databricks docs: Salesforce ingestion connector limitations'
+source: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/salesforce-concepts
+verified: '2026-10-20'

@@ -1,0 +1,44 @@
+id: celigo-connector
+name: Celigo connector
+aliases:
+  - 'Celigo'
+  - 'Celigo integrator.io'
+  - 'Lakeflow Connect for Celigo'
+category: Data engineering
+what:
+  note: 'A managed Lakeflow Connect connector that ingests Celigo integrator.io audit log events, such as resource create, update and delete operations, into Databricks.'
+  link: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/celigo#:~:text=ingests%20audit%20log%20events%2C%20such%20as%20resource%20create%2C%20update%2C%20and%20delete%20operations
+fact:
+  - note: 'SCD Type 2 is listed as supported, with a wink - the audit_logs table only records immutable, append-only events, so there is no history to rewrite.'
+    link: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/celigo#:~:text=The%20audit_logs%20table%20records%20immutable%20events%20%28append%2Donly%29
+  - note: 'The US and the EU are separate worlds: each connection targets one data region, so both regions means two connections.'
+    link: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/celigo-limits#:~:text=Each%20connection%20targets%20one%20data%20region
+  - note: 'Without a start date the first sync backfills a full year, 365 days of audit history.'
+    link: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/celigo-pipeline#:~:text=Defaults%20to%20365%20days%20before%20the%20first%20sync
+status:
+  value: active
+  link: https://docs.databricks.com/aws/en/release-notes/product/2026/september#:~:text=The%20Celigo%20connector%20is%20now%20available%20in%20Lakeflow%20Connect
+  date: '2026-10-20'
+releases:
+  - type: beta
+    date: 2026-09
+    link: https://docs.databricks.com/aws/en/release-notes/product/2026/september#:~:text=The%20Celigo%20connector%20is%20now%20available%20in%20Lakeflow%20Connect
+introducedAt:
+  date: 2026-09
+  link: https://docs.databricks.com/aws/en/release-notes/product/2026/september#:~:text=The%20Celigo%20connector%20is%20now%20available%20in%20Lakeflow%20Connect
+limitations:
+  note: 'In Beta, switched on from the Previews page. Ingests only the audit_logs table, one data region per connection, and needs a full-access integrator.io API token from an account owner or administrator. Column renames need a full refresh, data type changes are not evolved, and row filtering is not supported.'
+  link: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/celigo-limits#:~:text=Each%20connection%20targets%20one%20data%20region
+  date: '2026-10-20'
+links:
+  - url: https://docs.databricks.com/aws/en/release-notes/product/2026/september
+    kind: official
+    label: 'Databricks release notes: Celigo connector (Beta) (September 9, 2026)'
+  - url: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/celigo-source-setup
+    kind: official
+    label: 'Databricks docs: Configure authentication to Celigo'
+  - url: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/celigo-limits
+    kind: official
+    label: 'Databricks docs: Celigo connector limitations'
+source: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/celigo
+verified: '2026-10-20'

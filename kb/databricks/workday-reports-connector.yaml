@@ -1,0 +1,50 @@
+id: workday-reports-connector
+name: Workday Reports connector
+aliases:
+  - Workday Reports
+  - Workday RaaS
+  - Workday Report-as-a-Service
+category: Data engineering
+what:
+  note: 'A managed Lakeflow Connect connector that ingests data from Workday custom reports into Databricks through the report web service URL.'
+  link: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/workday-reports#:~:text=The%20managed%20Workday%20Reports%20connector%20in%20Lakeflow%20Connect%20allows%20you%20to%20ingest%20data%20from%20Workday%20reports
+fact:
+  - note: 'The whole integration hangs on a URL you copy out of Workday, and the docs plead with you not to lose its tail - do not truncate format=json at the end.'
+    link: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/workday-reports-source-setup#:~:text=truncate%20format%3Djson%20at%20the%20end%20of%20the%20URL
+  - note: 'The recommended Workday user is barred from the Workday UI on purpose - tick Do Not Allow UI Sessions, because it will only ever talk to the RaaS API.'
+    link: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/workday-reports-source-setup#:~:text=This%20user%20will%20only%20access%20the%20RaaS%20API
+  - note: 'It ingested whole reports until June 2026, when incremental ingestion arrived in Beta - give a report a cursor column and only changed rows come through.'
+    link: https://docs.databricks.com/aws/en/release-notes/product/2026/june#:~:text=If%20you%20configure%20a%20cursor%20column%20for%20a%20report
+status:
+  value: active
+  link: https://docs.databricks.com/aws/en/release-notes/product/2025/april#:~:text=Salesforce%20ingestion%20and%20Workday%20Reports%20connectors%20are%20GA
+  date: '2026-10-20'
+releases:
+  - type: public-preview
+    date: 2024-07
+    link: https://docs.databricks.com/aws/en/release-notes/product/2024/july#:~:text=Amazon%20RDS%20for%20SQL%20Server%2C%20and%20Workday%20are%20currently%20supported
+  - type: ga
+    date: 2025-04
+    link: https://docs.databricks.com/aws/en/release-notes/product/2025/april#:~:text=Salesforce%20ingestion%20and%20Workday%20Reports%20connectors%20are%20GA
+introducedAt:
+  date: 2024-07
+  link: https://docs.databricks.com/aws/en/release-notes/product/2024/july#:~:text=Amazon%20RDS%20for%20SQL%20Server%2C%20and%20Workday%20are%20currently%20supported
+limitations:
+  note: 'Up to 250 tables per pipeline. No automated schema evolution for data type changes, and column renames arrive as a new column plus a deleted one. Authentication is OAuth with a manual refresh token or username/password; OAuth U2M and M2M are not supported. Incremental ingestion is Beta and needs a cursor column plus two prompts set up on the report.'
+  link: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/workday-reports#:~:text=Maximum%20number%20of%20tables%20per%20pipeline%20250
+  date: '2026-10-20'
+links:
+  - url: https://docs.databricks.com/aws/en/release-notes/product/2024/july
+    kind: official
+    label: 'Databricks release notes: Lakeflow Connect (gated Public Preview) with Workday, July 31, 2024'
+  - url: https://docs.databricks.com/aws/en/release-notes/product/2025/april
+    kind: official
+    label: 'Databricks release notes: Salesforce ingestion and Workday Reports connectors are GA, April 2, 2025'
+  - url: https://docs.databricks.com/aws/en/release-notes/product/2026/june
+    kind: official
+    label: 'Databricks release notes: Incremental ingestion for Workday Reports (Beta), June 18, 2026'
+  - url: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/workday-reports-source-setup
+    kind: official
+    label: 'Databricks docs: Configure Workday reports for ingestion'
+source: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/workday-reports
+verified: '2026-10-20'

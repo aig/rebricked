@@ -1,0 +1,38 @@
+id: pagerduty-connector
+name: PagerDuty connector
+aliases:
+  - PagerDuty
+  - Lakeflow Connect for PagerDuty
+category: Data engineering
+what:
+  note: 'The managed Lakeflow Connect connector that ingests PagerDuty incident, on-call, service and audit data into Databricks.'
+  link: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/pagerduty#:~:text=ingests%20incident%2C%20on%2Dcall%2C%20service%2C%20and%20audit%20data%20from%20PagerDuty
+fact:
+  - note: 'The incidents table captures inserts only - PagerDuty filters it by created_at, so an incident resolved after it landed stays unresolved in Databricks until a full refresh.'
+    link: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/pagerduty-limits#:~:text=The%20incidents%20table%20captures%20inserts%20only
+  - note: 'The oncalls table is a snapshot of who was on call at each sync, so "who was paged at 3am last Tuesday" is history you have to keep yourself.'
+    link: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/pagerduty-limits#:~:text=It%20is%20not%20an%20incremental%20change%20log
+status:
+  value: active
+  link: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/pagerduty#:~:text=a%20workspace%20admin%20must%20turn%20on%20Lakeflow%20Connect%20for%20PagerDuty
+  date: '2026-10-20'
+releases:
+  - type: beta
+    date: 2026-08
+    link: https://docs.databricks.com/aws/en/release-notes/product/2026/august#:~:text=The%20managed%20PagerDuty%20connector%20in%20Lakeflow%20Connect%20is%20now%20available%20in%20Beta
+introducedAt:
+  date: 2026-08
+  link: https://docs.databricks.com/aws/en/release-notes/product/2026/august#:~:text=The%20managed%20PagerDuty%20connector%20in%20Lakeflow%20Connect%20is%20now%20available%20in%20Beta
+limitations:
+  note: 'Incidents capture inserts only (no updates or deletes between syncs), and services, users, teams, priorities, escalation policies, schedules and oncalls reload in full on every sync. Authentication is OAuth M2M only. General SaaS connector limits apply: no automatic backfill for newly selected columns, renamed tables make the pipeline API-only, and deleted source tables are not dropped downstream.'
+  link: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/pagerduty-limits#:~:text=The%20connector%20ingests%20services%2C%20users%2C%20teams%2C%20priorities
+  date: '2026-10-20'
+links:
+  - url: https://docs.databricks.com/aws/en/release-notes/product/2026/august
+    kind: official
+    label: 'Databricks release notes: PagerDuty connector (Beta) (August 4, 2026)'
+  - url: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/pagerduty-limits
+    kind: official
+    label: 'Databricks docs: PagerDuty connector limitations'
+source: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/pagerduty
+verified: '2026-10-20'

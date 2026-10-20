@@ -1,0 +1,37 @@
+id: openai-connector
+name: OpenAI connector
+aliases:
+  - 'OpenAI'
+  - 'OpenAI Admin API connector'
+category: Data engineering
+what:
+  note: 'A managed Lakeflow Connect connector that uses the OpenAI Organization Admin API to ingest users, projects, API keys, usage, costs and audit logs into Databricks.'
+  link: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/openai#:~:text=ingests%20organization%20administration%20data%2C%20such%20as%20users%2C%20projects%2C%20API%20keys
+fact:
+  - note: 'It ingests what you spend on OpenAI, not what OpenAI says: usage, costs and audit logs, never the chat itself.'
+    link: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/openai#:~:text=such%20as%20users%2C%20projects%2C%20API%20keys%2C%20usage%2C%20costs%2C%20and%20audit%20logs
+  - note: 'Turning on OpenAI audit logging to feed the audit_logs table is a one-way door - switching it off again means contacting OpenAI support.'
+    link: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/openai-source-setup#:~:text=audit%20logging%20cannot%20be%20disabled%20without%20contacting%20OpenAI%20support
+  - note: 'One Admin API key with Read Only permission unlocks 20 source tables.'
+    link: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/openai-pipeline#:~:text=makes%20available%2020%20source%20tables%20in%20the%20default%20source%20schema
+status:
+  value: active
+  link: https://docs.databricks.com/aws/en/release-notes/product/2026/july#:~:text=The%20OpenAI%20connector%20is%20now%20available%20in%20Lakeflow%20Connect%20in%20Beta
+  date: '2026-10-20'
+releases:
+  - type: beta
+    date: 2026-07
+    link: https://docs.databricks.com/aws/en/release-notes/product/2026/july#:~:text=The%20OpenAI%20connector%20is%20now%20available%20in%20Lakeflow%20Connect%20in%20Beta
+introducedAt:
+  date: 2026-07
+  link: https://docs.databricks.com/aws/en/release-notes/product/2026/july#:~:text=The%20OpenAI%20connector%20is%20now%20available%20in%20Lakeflow%20Connect%20in%20Beta
+limitations:
+  note: 'Beta, enabled by a workspace admin from the Previews page. OpenAI Admin API key only (needs an Organization Owner to create), no row filtering, no data type changes, and a column rename requires a full refresh.'
+  link: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/openai#:~:text=To%20use%20it%2C%20a%20workspace%20admin%20must%20turn%20on%20Lakeflow%20Connect%20for%20OpenAI
+  date: '2026-10-20'
+links:
+  - url: https://docs.databricks.com/aws/en/release-notes/product/2026/july
+    kind: official
+    label: 'Databricks release notes: OpenAI connector (Beta) (July 31, 2026)'
+source: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/openai
+verified: '2026-10-20'

@@ -1,0 +1,37 @@
+id: amplitude-connector
+name: 'Amplitude connector'
+aliases:
+  - 'Amplitude'
+category: Data engineering
+what:
+  note: 'A managed Lakeflow Connect connector that ingests Amplitude product analytics event data, plus event, cohort and annotation metadata, into Databricks.'
+  link: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/amplitude-overview#:~:text=ingests%20product%20analytics%20event%20data%20along%20with%20event%2C%20cohort%2C%20and%20annotation%20metadata
+fact:
+  - note: 'It moves your product analytics out of the product analytics tool: raw events plus the event, cohort and annotation metadata around them.'
+    link: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/amplitude-overview#:~:text=event%20data%20along%20with%20event%2C%20cohort%2C%20and%20annotation%20metadata
+  - note: 'It authenticates with a pair of keys from one Amplitude project - the API Key and the Secret Key.'
+    link: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/amplitude-overview#:~:text=Amplitude%20project%20API%20Key%20and%20Secret%20Key
+status:
+  value: active
+  link: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/amplitude-overview#:~:text=Lakeflow%20Connect%20for%20Amplitude%20from%20the%20Previews%20page
+  date: '2026-10-20'
+releases:
+  - type: beta
+    date: 2026-08
+    link: https://docs.databricks.com/aws/en/release-notes/product/2026/august#:~:text=The%20Amplitude%20connector%20in%20Lakeflow%20Connect%20is%20now%20in%20Beta
+introducedAt:
+  date: 2026-08
+  link: https://docs.databricks.com/aws/en/release-notes/product/2026/august#:~:text=The%20Amplitude%20connector%20in%20Lakeflow%20Connect%20is%20now%20in%20Beta
+limitations:
+  note: 'API key and secret authentication only; no API-based row filtering, no data type changes in schema evolution, and a column rename requires a full refresh.'
+  link: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/amplitude-overview
+  date: '2026-10-20'
+links:
+  - url: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/amplitude-overview
+    kind: official
+    label: 'Databricks docs: Amplitude connector'
+  - url: https://docs.databricks.com/aws/en/release-notes/product/2026/august
+    kind: official
+    label: 'Databricks release notes: Amplitude connector (Beta, August 12, 2026)'
+source: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/amplitude-overview
+verified: '2026-10-20'

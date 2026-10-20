@@ -1,0 +1,41 @@
+id: google-ads-connector
+name: Google Ads connector
+aliases:
+  - Google Ads
+  - Lakeflow Connect for Google Ads
+category: Data engineering
+what:
+  note: 'The managed Lakeflow Connect connector that ingests Google Ads resources and reports into Databricks.'
+  link: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/google-ads#:~:text=allows%20you%20to%20ingest%20data%20from%20Google%20Ads%20into%20Databricks
+fact:
+  - note: 'Beyond the predefined tables you can define your own custom report tables out of Google Ads resource fields, segments and metrics.'
+    link: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/google-ads-limits#:~:text=custom%20report%20tables%20that%20you%20define%20using%20Google%20Ads%20resource%20fields
+  - note: 'Only the report tables load incrementally - resource tables such as campaign and ad are fully refreshed on every update, so they keep no history of their own.'
+    link: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/google-ads#:~:text=Resource%20tables%20are%20fully%20refreshed%20on%20each%20update
+status:
+  value: active
+  link: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/google-ads#:~:text=This%20feature%20is%20in%20Beta
+  date: '2026-10-20'
+releases:
+  - type: beta
+    date: 2026-02
+    link: https://docs.databricks.com/aws/en/release-notes/product/2026/february#:~:text=The%20managed%20Google%20Ads%20connector%20in%20Lakeflow%20Connect%20allows%20you%20to%20ingest%20data%20from%20Google%20Ads
+introducedAt:
+  date: 2026-02
+  link: https://docs.databricks.com/aws/en/release-notes/product/2026/february#:~:text=The%20managed%20Google%20Ads%20connector%20in%20Lakeflow%20Connect%20allows%20you%20to%20ingest%20data%20from%20Google%20Ads
+limitations:
+  note: 'Beta and API-only (no UI pipeline authoring); OAuth U2M is the only authentication. Resource tables are fully refreshed on each update and keep no SCD type 2 history; only report tables load incrementally. No row filtering or automated schema evolution, and up to 250 tables per pipeline.'
+  link: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/google-ads-limits#:~:text=Only%20report%20tables%20support%20incremental%20ingestion
+  date: '2026-10-20'
+links:
+  - url: https://docs.databricks.com/aws/en/release-notes/product/2026/february
+    kind: official
+    label: 'Databricks release notes: February 2026'
+  - url: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/google-ads
+    kind: official
+    label: 'Databricks docs: Google Ads connector'
+  - url: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/google-ads-limits
+    kind: official
+    label: 'Databricks docs: Google Ads connector limitations'
+source: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/google-ads
+verified: '2026-10-20'

@@ -1,0 +1,54 @@
+id: google-analytics-raw-data-connector
+name: Google Analytics Raw Data connector
+aliases:
+  - Google Analytics
+  - Google Analytics connector
+  - GA4 connector
+  - Google Analytics 4
+category: Data engineering
+what:
+  note: 'The managed Lakeflow Connect connector that ingests raw, event-level Google Analytics 4 data into Databricks through the GA4 BigQuery export.'
+  link: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/google-analytics#:~:text=into%20Databricks%20using%20BigQuery%20export
+fact:
+  - note: 'It never talks to Google Analytics directly: you export GA4 to BigQuery first, and the connector reads the export.'
+    link: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/google-analytics#:~:text=Export%20your%20GA4%20data%20to%20BigQuery
+  - note: 'Name your own BigQuery tables events-anything and the connector will mistake them for GA4 event tables, which can fail the pipeline.'
+    link: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/google-analytics-source-setup#:~:text=whose%20names%20begin%20with%20events%20in%20the%20source%20BigQuery%20dataset
+  - note: 'Universal Analytics is not invited - only GA4 properties, and only one per pipeline.'
+    link: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/google-analytics-limits#:~:text=Ingestion%20from%20Universal%20Analytics
+status:
+  value: active
+  link: https://docs.databricks.com/aws/en/release-notes/product/2025/september#:~:text=The%20Google%20Analytics%20Raw%20Data%20connector%20in%20Lakeflow%20Connect%20is%20now%20generally%20available
+  date: '2026-10-20'
+releases:
+  - type: public-preview
+    date: 2025-04
+    link: https://docs.databricks.com/aws/en/release-notes/product/2025/april#:~:text=You%20can%20now%20ingest%20raw%2C%20event%2Dlevel%20data%20from%20Google%20Analytics
+  - type: ga
+    date: 2025-09
+    link: https://docs.databricks.com/aws/en/release-notes/product/2025/september#:~:text=The%20Google%20Analytics%20Raw%20Data%20connector%20in%20Lakeflow%20Connect%20is%20now%20generally%20available
+introducedAt:
+  date: 2025-04
+  link: https://docs.databricks.com/aws/en/release-notes/product/2025/april#:~:text=You%20can%20now%20ingest%20raw%2C%20event%2Dlevel%20data%20from%20Google%20Analytics
+limitations:
+  note: 'One GA4 property per pipeline, no Universal Analytics, and GA4 updates and deletes are not ingested. BigQuery date-partitioned tables over 150 GB are not reliably ingested, history is limited to what GA4 exports to BigQuery, and events_intraday data is not guaranteed to be retained. OAuth connections fetch in a single Spark task; only service account JSON (API-only) fetches in parallel.'
+  link: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/google-analytics-limits#:~:text=can%27t%20reliably%20ingest%20BigQuery%20date%2Dpartitioned%20tables
+  date: '2026-10-20'
+links:
+  - url: https://docs.databricks.com/aws/en/release-notes/product/2025/april
+    kind: official
+    label: 'Databricks release notes: April 2025'
+  - url: https://docs.databricks.com/aws/en/release-notes/product/2025/september
+    kind: official
+    label: 'Databricks release notes: September 2025'
+  - url: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/google-analytics
+    kind: official
+    label: 'Databricks docs: Google Analytics Raw Data connector'
+  - url: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/google-analytics-limits
+    kind: official
+    label: 'Databricks docs: Google Analytics Raw Data connector limitations'
+  - url: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/google-analytics-source-setup
+    kind: official
+    label: 'Databricks docs: Set up Google Analytics 4 and Google BigQuery for Databricks ingestion'
+source: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/google-analytics
+verified: '2026-10-20'

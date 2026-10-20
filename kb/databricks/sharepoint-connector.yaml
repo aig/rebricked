@@ -1,0 +1,53 @@
+id: sharepoint-connector
+name: SharePoint connector
+aliases:
+  - Microsoft SharePoint connector
+  - Managed SharePoint connector
+  - SharePoint
+category: Data engineering
+what:
+  note: 'The managed Lakeflow Connect file connector that ingests SharePoint files into Delta tables - unstructured files as binary, structured formats parsed into tables, or file metadata only - plus SharePoint list data.'
+  link: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/sharepoint#:~:text=allows%20you%20to%20ingest%20files%20from%20SharePoint%20into%20Databricks
+fact:
+  - note: 'Unstructured files load into memory as one record each, so a file over 100 MB can sink the update; the docs suggest a row_filter on length to skip the big ones.'
+    link: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/sharepoint-limits#:~:text=files%20larger%20than%20100%20MB%20can%20cause%20the%20update%20to%20fail
+  - note: 'It is all or nothing per folder: there is no picking individual files, only a folder, drive, subsite or site.'
+    link: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/sharepoint-limits#:~:text=The%20connector%20does%20not%20support%20individual%20file%20selection
+  - note: 'It has a sibling - the standard SharePoint connector for hand-built Spark and SQL pipelines - and both reached GA in the same release note.'
+    link: https://docs.databricks.com/aws/en/release-notes/product/2026/august#:~:text=Both%20SharePoint%20connectors%20in%20Lakeflow%20Connect%20are%20now%20generally%20available
+status:
+  value: active
+  link: https://docs.databricks.com/aws/en/release-notes/product/2026/august#:~:text=Both%20SharePoint%20connectors%20in%20Lakeflow%20Connect%20are%20now%20generally%20available
+  date: '2026-10-20'
+releases:
+  - type: beta
+    date: 2025-06
+    link: https://docs.databricks.com/aws/en/release-notes/product/2025/june#:~:text=The%20fully%2Dmanaged%20Microsoft%20SharePoint%20connector%20in%20Lakeflow%20Connect%20allows%20you%20to%20ingest%20data%20from%20SharePoint
+  - type: ga
+    date: 2026-08
+    link: https://docs.databricks.com/aws/en/release-notes/product/2026/august#:~:text=Both%20SharePoint%20connectors%20in%20Lakeflow%20Connect%20are%20now%20generally%20available
+introducedAt:
+  date: 2025-06
+  link: https://docs.databricks.com/aws/en/release-notes/product/2025/june#:~:text=The%20fully%2Dmanaged%20Microsoft%20SharePoint%20connector%20in%20Lakeflow%20Connect%20allows%20you%20to%20ingest%20data%20from%20SharePoint
+limitations:
+  note: 'No SCD type 2: unstructured ingestion is SCD type 1 only and structured ingestion is append-only, so updates and deletes to existing structured files are missed. No individual file selection, no file-level ACLs, no files linked from another document library, and files over 100 MB risk failing. List ingestion (Beta) is not tenant-wide, skips OneDrive and attachments, and has no UI authoring.'
+  link: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/sharepoint-limits#:~:text=The%20connector%20does%20not%20support%20ingesting%20file%2Dlevel%20access%20control%20lists
+  date: '2026-10-20'
+links:
+  - url: https://docs.databricks.com/aws/en/release-notes/product/2025/june
+    kind: official
+    label: 'Databricks release notes: Microsoft SharePoint connector (Beta) (June 11, 2025)'
+  - url: https://docs.databricks.com/aws/en/release-notes/product/2026/june
+    kind: official
+    label: 'Databricks release notes: Managed SharePoint connector adds structured file ingestion and file metadata support (June 2026)'
+  - url: https://docs.databricks.com/aws/en/release-notes/product/2026/august
+    kind: official
+    label: 'Databricks release notes: SharePoint connector (GA) (August 4, 2026)'
+  - url: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/sharepoint-limits
+    kind: official
+    label: 'Databricks docs: Microsoft SharePoint connector limitations'
+  - url: https://docs.databricks.com/aws/en/ingestion/sharepoint
+    kind: official
+    label: 'Databricks docs: Ingest files from SharePoint (standard connector)'
+source: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/sharepoint
+verified: '2026-10-20'

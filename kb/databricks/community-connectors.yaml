@@ -1,0 +1,35 @@
+id: community-connectors
+name: Community connectors
+aliases:
+  - Lakeflow Community Connectors
+  - Community connectors in Lakeflow Connect
+category: Data engineering
+what:
+  note: 'Open-source Lakeflow Connect connectors, built and maintained by the community, that ingest from sources without a managed connector into Lakeflow pipelines.'
+  link: https://docs.databricks.com/aws/en/ingestion/community-connectors#:~:text=open%2Dsource%20connectors%20that%20extend%20Lakeflow%20Connect%20to%20sources%20without%20managed%20connector%20support
+fact:
+  - note: Pick one and Databricks literally clones the connector's source code from GitHub into a folder in your workspace, and the pipeline runs that code.
+    link: https://docs.databricks.com/aws/en/ingestion/community-connectors#:~:text=Databricks%20clones%20the%20connector%20source%20code%20from%20a%20GitHub%20repository
+  - note: Under the hood each one is a LakeflowConnect interface wrapped around the Spark Python Data Source API.
+    link: https://docs.databricks.com/aws/en/ingestion/community-connectors#:~:text=which%20wraps%20the%20Spark%20Python%20Data%20Source%20API
+status:
+  value: active
+  link: https://docs.databricks.com/aws/en/ingestion/community-connectors#:~:text=The%20community%20builds%20and%20maintains%20them
+  date: '2026-10-20'
+releases:
+  - type: beta
+    date: 2026-05
+    link: https://docs.databricks.com/aws/en/release-notes/product/2026/may#:~:text=Community%20connectors%20%28Beta%29
+introducedAt:
+  date: 2026-05
+  link: https://docs.databricks.com/aws/en/release-notes/product/2026/may#:~:text=Open%2Dsource%20connectors%20extend%20Lakeflow%20Connect%20to%20sources%20without%20managed%20connector%20support
+limitations:
+  note: Databricks does not maintain them, they are not backed by Databricks SLAs or forward-compatibility guarantees, and their interfaces and behavior are still subject to change.
+  link: https://docs.databricks.com/aws/en/ingestion/community-connectors#:~:text=They%27re%20not%20backed%20by%20Databricks%20SLAs
+  date: '2026-10-20'
+links:
+  - url: https://docs.databricks.com/aws/en/release-notes/product/2026/may#:~:text=Community%20connectors%20%28Beta%29
+    kind: official
+    label: 'Release note: Community connectors Beta (May 2026)'
+source: https://docs.databricks.com/aws/en/ingestion/community-connectors
+verified: '2026-10-20'

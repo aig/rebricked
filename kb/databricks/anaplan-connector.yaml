@@ -1,0 +1,39 @@
+id: anaplan-connector
+name: 'Anaplan connector'
+aliases:
+  - 'Anaplan'
+category: Data engineering
+what:
+  note: 'A managed Lakeflow Connect connector that ingests audit trail events and user account records from an Anaplan tenant into Databricks.'
+  link: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/anaplan#:~:text=ingests%20audit%20trail%20events%20and%20user%20account%20records%20from%20Anaplan
+fact:
+  - note: 'It skips the planning models entirely and brings in who did what: audit trail events and user accounts.'
+    link: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/anaplan#:~:text=ingests%20audit%20trail%20events%20and%20user%20account%20records%20from%20Anaplan
+  - note: 'No API key here - it signs in with an Anaplan CA certificate in PEM form and its paired private key.'
+    link: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/anaplan#:~:text=Anaplan%20CA%20certificate%20%28PEM%29%20and%20paired%20private%20key
+  - note: 'Only audit events are incremental; the users table is re-fetched as a full snapshot on every pipeline update.'
+    link: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/anaplan#:~:text=refreshes%20the%20users%20table%20with%20a%20full%20snapshot%20on%20each%20pipeline%20update
+status:
+  value: active
+  link: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/anaplan#:~:text=opting%20into%20the%20Anaplan%20connector%20preview
+  date: '2026-10-20'
+releases:
+  - type: beta
+    date: 2026-09
+    link: https://docs.databricks.com/aws/en/release-notes/product/2026/september#:~:text=The%20Anaplan%20connector%20is%20now%20available%20in%20Lakeflow%20Connect
+introducedAt:
+  date: 2026-09
+  link: https://docs.databricks.com/aws/en/release-notes/product/2026/september#:~:text=The%20Anaplan%20connector%20is%20now%20available%20in%20Lakeflow%20Connect
+limitations:
+  note: 'Certificate authentication only; no API-based row filtering, no SCD Type 2, no data type changes in schema evolution, a column rename requires a full refresh, and the users table is a full snapshot every update.'
+  link: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/anaplan
+  date: '2026-10-20'
+links:
+  - url: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/anaplan
+    kind: official
+    label: 'Databricks docs: Anaplan connector'
+  - url: https://docs.databricks.com/aws/en/release-notes/product/2026/september
+    kind: official
+    label: 'Databricks release notes: Anaplan connector (Beta, September 9, 2026)'
+source: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/anaplan
+verified: '2026-10-20'

@@ -1,0 +1,37 @@
+id: workiva-connector
+name: Workiva connector
+aliases:
+  - Workiva
+  - Lakeflow Connect for Workiva
+category: Data engineering
+what:
+  note: 'A managed Lakeflow Connect connector that ingests audit activity, users and roles from a Workiva organization into Databricks.'
+  link: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/workiva#:~:text=allows%20you%20to%20ingest%20audit%20activity%2C%20users%2C%20and%20roles%20from%20Workiva
+fact:
+  - note: 'Only one table is incremental: activities streams in as it changes, while users and roles are re-read as full snapshots every time.'
+    link: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/workiva#:~:text=users%20and%20roles%20are%20ingested%20as%20full%20snapshots
+  - note: 'It is a compliance tool feeding a compliance trail - what it pulls from Workiva is audit activity, plus who the users are and what roles they hold.'
+    link: https://docs.databricks.com/aws/en/release-notes/product/2026/august#:~:text=The%20connector%20ingests%20audit%20activity%2C%20users%2C%20and%20roles%20from%20your%20Workiva%20organization
+  - note: 'Rename a column and there is no clever handling - the docs simply say it requires a full refresh.'
+    link: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/workiva#:~:text=Column%20renames%20Not%20supported%20Requires%20a%20full%20refresh
+status:
+  value: active
+  link: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/workiva#:~:text=This%20feature%20is%20in%20Beta
+  date: '2026-10-20'
+releases:
+  - type: beta
+    date: 2026-08
+    link: https://docs.databricks.com/aws/en/release-notes/product/2026/august#:~:text=The%20Workiva%20connector%20is%20now%20available%20in%20Lakeflow%20Connect
+introducedAt:
+  date: 2026-08
+  link: https://docs.databricks.com/aws/en/release-notes/product/2026/august#:~:text=The%20Workiva%20connector%20is%20now%20available%20in%20Lakeflow%20Connect
+limitations:
+  note: 'Beta, opted into from the Previews page. Incremental ingestion for the activities table only. No API-based column selection or row filtering, no SCD Type 2, no schema evolution for data type changes, and column renames require a full refresh. Workiva OAuth2 client credentials are the only supported authentication.'
+  link: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/workiva#:~:text=Workiva%20OAuth2%20client%20credentials%20%28client%20ID%20and%20client%20secret%29
+  date: '2026-10-20'
+links:
+  - url: https://docs.databricks.com/aws/en/release-notes/product/2026/august
+    kind: official
+    label: 'Databricks release notes: Workiva connector (Beta), August 14, 2026'
+source: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/workiva
+verified: '2026-10-20'

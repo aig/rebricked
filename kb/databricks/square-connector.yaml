@@ -1,0 +1,40 @@
+id: square-connector
+name: Square connector
+aliases:
+  - Square
+  - Square managed ingestion connector
+category: Data engineering
+what:
+  note: 'The managed Lakeflow Connect connector that ingests Square point-of-sale data - payments, orders, customers, catalog items and inventory - into Databricks with a Square access token.'
+  link: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/square#:~:text=ingests%20point%2Dof%2Dsale%20data%20such%20as%20payments
+fact:
+  - note: 'No Square subscription tier is required, because the Square APIs are free for developers to use.'
+    link: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/square-source-setup#:~:text=The%20Square%20APIs%20are%20free%20for%20developers%20to%20use
+  - note: 'It offers 17 prebuilt tables, and nine of them - including customers, inventory, loyalty and cash_drawers - are re-read in full on every run.'
+    link: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/square-limits#:~:text=The%20connector%20makes%20available%2017%20prebuilt%20Square%20tables
+  - note: 'Unless told otherwise, the first sync reaches back exactly one year: start_datetime defaults to 365 days before the first sync.'
+    link: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/square-pipeline#:~:text=Defaults%20to%20365%20days%20before%20the%20first%20sync
+status:
+  value: active
+  link: https://docs.databricks.com/aws/en/release-notes/product/2026/june#:~:text=The%20Square%20connector%20in%20Lakeflow%20Connect%20is%20now%20available%20in%20Beta
+  date: '2026-10-20'
+releases:
+  - type: beta
+    date: 2026-06
+    link: https://docs.databricks.com/aws/en/release-notes/product/2026/june#:~:text=The%20Square%20connector%20in%20Lakeflow%20Connect%20is%20now%20available%20in%20Beta
+introducedAt:
+  date: 2026-06
+  link: https://docs.databricks.com/aws/en/release-notes/product/2026/june#:~:text=The%20Square%20connector%20in%20Lakeflow%20Connect%20is%20now%20available%20in%20Beta
+limitations:
+  note: 'Only the 17 prebuilt tables (no other objects, custom attributes or reports). The locations, customers, team_member_wages, bank_accounts, shifts, team_members, inventory, loyalty and cash_drawers tables are re-ingested in full every run. Column renames or data type changes need a full refresh.'
+  link: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/square-limits#:~:text=Each%20pipeline%20run%20re%2Dingests%20all%20records%20for%20these%20tables
+  date: '2026-10-20'
+links:
+  - url: https://docs.databricks.com/aws/en/release-notes/product/2026/june
+    kind: official
+    label: 'Databricks release notes: Square managed ingestion connector (Beta), June 22, 2026'
+  - url: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/square-limits
+    kind: official
+    label: 'Databricks docs: Square connector limitations'
+source: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/square
+verified: '2026-10-20'

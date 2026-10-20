@@ -1,0 +1,44 @@
+id: google-workspace-connector
+name: Google Workspace connector
+aliases:
+  - Google Workspace
+  - Google Workspace audit logs
+  - Lakeflow Connect for Google Workspace
+category: Data engineering
+what:
+  note: 'The managed Lakeflow Connect connector that ingests audit activity from Google Workspace applications and services into Databricks.'
+  link: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/google-workspace#:~:text=ingests%20audit%20activity%20from%20Google%20Workspace%20applications%20and%20services
+fact:
+  - note: 'Google keeps activity logs for 180 days, and the first sync politely backfills 179 of them.'
+    link: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/google-workspace-limits#:~:text=the%20connector%20backfills%20the%20previous%20179%20days%20of%20audit%20activity
+  - note: 'Each Workspace app reports on its own lag, and the Takeout process finished event can trail by up to several days.'
+    link: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/google-workspace-limits#:~:text=event%20can%20lag%20by%20up%20to%20several%20days
+  - note: 'It reads only the Admin SDK Reports API - the audit trail, not your Docs or Gmail.'
+    link: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/google-workspace-limits#:~:text=The%20connector%20ingests%20audit%20activity%20from%20the%20Admin%20SDK%20Reports%20API
+status:
+  value: active
+  link: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/google-workspace#:~:text=a%20workspace%20admin%20must%20turn%20on%20Lakeflow%20Connect%20for%20Google%20Workspace
+  date: '2026-10-20'
+releases:
+  - type: beta
+    date: 2026-10
+    link: https://docs.databricks.com/aws/en/release-notes/product/2026/october#:~:text=Use%20the%20connector%20to%20ingest%20audit%20activity%20from%20Google%20Workspace%20applications
+introducedAt:
+  date: 2026-10
+  link: https://docs.databricks.com/aws/en/release-notes/product/2026/october#:~:text=Use%20the%20connector%20to%20ingest%20audit%20activity%20from%20Google%20Workspace%20applications
+limitations:
+  note: 'Beta behind a workspace preview. Ingests only audit activity from the Admin SDK Reports API, with no SCD type 2 (records have VARIANT columns and are append-only). Events older than the 180-day Google retention window cannot be ingested, and very large Takeout exports finishing beyond the per-application lookback may be missed.'
+  link: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/google-workspace-limits#:~:text=It%20doesn%27t%20ingest%20other%20Google%20Workspace%20API%20resources
+  date: '2026-10-20'
+links:
+  - url: https://docs.databricks.com/aws/en/release-notes/product/2026/october
+    kind: official
+    label: 'Databricks release notes: October 2026'
+  - url: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/google-workspace
+    kind: official
+    label: 'Databricks docs: Google Workspace connector'
+  - url: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/google-workspace-limits
+    kind: official
+    label: 'Databricks docs: Google Workspace connector limitations'
+source: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/google-workspace
+verified: '2026-10-20'
