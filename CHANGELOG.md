@@ -9,6 +9,25 @@ shows the what. Plain, simple English: short sentences, common words, no jargon 
 and product names themselves. Some older entries have no `Why:` line - the reason was never
 recorded, and a made-up reason is worse than none.
 
+## 2026-10-22
+
+### Changed
+- **AI Runtime is now marked GA, and two of its citations that a docs rewrite broke point at real
+  text again.**
+
+  **Why:** a refresh of the release-notes mirror found one new item since the October 20 sweep
+  that changes a card: the October 21 blog post "AI Runtime is Generally Available". The card still
+  showed Public Preview as its current stage. The same refresh showed the AI Runtime overview page
+  was rewritten on October 20, and the quotes behind the card's description and status no longer
+  exist on it, so both links looked sourced but highlighted nothing.
+
+  **What:** `ai-runtime` gets a `ga` stage (2026-10, cited to the blog, since the release notes do
+  not list the GA yet). `what.link` and `status.link` now quote the overview's new opening line,
+  "AI Runtime is serverless GPU compute on Databricks for deep learning workloads". The limitations
+  were re-read from the live page and still match. The other new items (three Lakeflow Connect
+  connectors on October 20, already carded, and a Jailbreak guardrail option for MCP tool calls in
+  Unity Gateway on October 21) needed no new card.
+
 ## 2026-10-20
 
 ### Added
