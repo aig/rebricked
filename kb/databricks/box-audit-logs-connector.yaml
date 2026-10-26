@@ -1,0 +1,38 @@
+id: box-audit-logs-connector
+name: 'Box Audit Logs connector'
+aliases:
+  - 'Box Audit Logs'
+  - 'Box'
+category: Data engineering
+what:
+  note: 'A managed Lakeflow Connect connector that ingests enterprise audit events from Box into Databricks.'
+  link: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/box-audit-logs#:~:text=ingests%20enterprise%20audit%20events
+fact:
+  - note: 'It only signs in as a server: Box Server Authentication with Client Credentials Grant is the one supported method, and user OAuth is not on the list.'
+    link: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/box-audit-logs#:~:text=Client%20Credentials%20Grant
+  - note: 'Rename a column and it records a breakup: the new name arrives as a new column and the old name is treated as deleted.'
+    link: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/box-audit-logs#:~:text=Treated%20as%20a%20new%20column
+status:
+  value: active
+  link: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/box-audit-logs#:~:text=Lakeflow%20Connect%20for%20Box%20Audit%20Logs
+  date: '2026-10-26'
+releases:
+  - type: beta
+    date: 2026-10
+    link: https://docs.databricks.com/aws/en/release-notes/product/2026/october#:~:text=The%20Box%20Audit%20Logs%20connector%20in%20Lakeflow%20Connect%20is%20now%20available%20in%20Beta
+introducedAt:
+  date: 2026-10
+  link: https://docs.databricks.com/aws/en/release-notes/product/2026/october#:~:text=The%20Box%20Audit%20Logs%20connector%20in%20Lakeflow%20Connect%20is%20now%20available%20in%20Beta
+limitations:
+  note: 'Beta. OAuth M2M (Box Client Credentials Grant) only; no SCD Type 2, no API-based row filtering, no schema evolution for data type changes, and a column rename lands as a new column plus a deleted one.'
+  link: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/box-audit-logs
+  date: '2026-10-26'
+links:
+  - url: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/box-audit-logs
+    kind: official
+    label: 'Databricks docs: Box Audit Logs connector'
+  - url: https://docs.databricks.com/aws/en/release-notes/product/2026/october
+    kind: official
+    label: 'Databricks release notes: Box Audit Logs connector (Beta, October 23, 2026)'
+source: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/box-audit-logs
+verified: '2026-10-26'

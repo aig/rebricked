@@ -1,0 +1,43 @@
+id: files-api-3-0
+name: Files API 3.0
+aliases:
+  - Files API
+  - Files REST API
+  - /api/3.0/fs
+  - multipart upload
+category: Data governance
+what:
+  note: The 3.0 version of the Files API, the HTTP API for reading, writing, listing and deleting files in Unity Catalog volumes, adding multipart uploads for files larger than 5000 MiB and conditional requests on a file's ETag or Last-Modified time.
+  link: https://docs.databricks.com/aws/en/volumes/files-api/versions#:~:text=The%20Files%20API%20has%20two%20versions
+fact:
+  - note: It moves house - 3.0 answers at /api/3.0/fs on your workspace's regional hostname rather than the usual workspace hostname, which brings network requirements of its own.
+    link: https://docs.databricks.com/aws/en/volumes/files-api/versions#:~:text=regional%20hostname
+  - note: Deleting a file that does not exist now succeeds - DELETE is idempotent and returns 204 No Content, unless you send If-Match with an asterisk to get your 404 back.
+    link: https://docs.databricks.com/aws/en/volumes/files-api/versions#:~:text=idempotent
+status:
+  value: active
+  link: https://docs.databricks.com/aws/en/release-notes/product/2026/october#:~:text=Files%20API%203.0%20is%20in
+  date: '2026-10-26'
+releases:
+  - type: beta
+    date: 2026-10
+    link: https://docs.databricks.com/aws/en/release-notes/product/2026/october#:~:text=Files%20API%203.0%20is%20in
+introducedAt:
+  date: 2026-10
+  link: https://docs.databricks.com/aws/en/release-notes/product/2026/october#:~:text=Files%20API%203.0%20is%20in
+limitations:
+  note: Beta. Requests go to the workspace's regional hostname and need network connectivity to both Databricks and your storage; uploads require a Content-Length header; and Files API use may incur Databricks data transfer charges.
+  link: https://docs.databricks.com/aws/en/volumes/files-api/versions
+  date: '2026-10-26'
+links:
+  - url: https://docs.databricks.com/aws/en/volumes/files-api/
+    kind: official
+    label: 'Databricks docs: What is Files API?'
+  - url: https://docs.databricks.com/aws/en/release-notes/product/2026/october
+    kind: official
+    label: 'Databricks release notes: Files API 3.0 for Unity Catalog volumes (Beta, October 23, 2026)'
+prediction:
+  - Files API 4.0
+  - Volumes API
+source: https://docs.databricks.com/aws/en/volumes/files-api/
+verified: '2026-10-26'

@@ -1,0 +1,50 @@
+id: shared-serverless
+name: Shared Serverless
+aliases:
+  - Shared Serverless for Git Folders
+  - Shared Serverless for Asset Bundles
+  - Project-Scoped Shared Compute
+  - shared serverless compute for Git folders
+  - pyproject.toml environment
+category: Developer experience
+what:
+  note: One serverless compute resource and Python environment shared by every notebook and file in a Git folder or bundle in the editor, with the environment defined by an optional pyproject.toml at the root instead of per notebook.
+  link: https://docs.databricks.com/aws/en/compute/serverless/notebooks/shared-serverless#:~:text=notebooks%20and%20files%20in%20the%20same%20Git%20folder%20or%20bundle%20share%20serverless%20compute
+fact:
+  - note: Shared compute, separate brains - notebooks on the same resource share the environment and even a web terminal, but a Python variable defined in one notebook is not available in another.
+    link: https://docs.databricks.com/aws/en/compute/serverless/notebooks/shared-serverless#:~:text=Python%20variables%20defined%20in%20one%20notebook%20are%20not%20available%20in%20another%20notebook
+  - note: Shared, but not with you - only the user who first attaches a notebook or file to the compute can run workloads on it, so the documented way to collaborate is for everyone to clone their own copy of the repository.
+    link: https://docs.databricks.com/aws/en/compute/serverless/notebooks/shared-serverless#:~:text=Only%20the%20user%20who%20first%20attaches%20a%20notebook%20or%20file
+  - note: The preview toggle an admin has to find is not called Shared Serverless at all - it is Project-Scoped Shared Compute, on the Previews page.
+    link: https://docs.databricks.com/aws/en/compute/serverless/notebooks/shared-serverless#:~:text=Project%2DScoped%20Shared%20Compute
+status:
+  value: active
+  link: https://docs.databricks.com/aws/en/compute/serverless/notebooks/shared-serverless#:~:text=This%20feature%20is%20in%20Beta
+  date: '2026-10-26'
+releases:
+  - type: beta
+    date: 2026-09
+    link: https://docs.databricks.com/aws/en/release-notes/product/2026/september#:~:text=Shared%20Serverless%20for%20Git%20Folders%20is%20in%20Beta
+from:
+  date: 2026-10
+  link: https://docs.databricks.com/aws/en/release-notes/product/2026/october#:~:text=notebooks%20and%20files%20in%20the%20same%20bundle%20can%20share%20serverless%20compute
+limitations:
+  note: Beta, behind the Project-Scoped Shared Compute preview. Compute sharing is scoped to a serverless usage policy, so notebooks and files in the same Git folder or bundle under different usage policies get separate compute; requires serverless environment version 5 or above; only the user who first attaches can run workloads; Python variables are not shared between notebooks.
+  link: https://docs.databricks.com/aws/en/compute/serverless/notebooks/shared-serverless#:~:text=Compute%20sharing%20is%20scoped%20to%20a%20serverless%20usage%20policy
+  date: '2026-10-26'
+links:
+  - url: https://docs.databricks.com/aws/en/release-notes/product/2026/october
+    kind: official
+    label: 'Databricks release notes: Shared Serverless for Asset Bundles (Beta, October 22, 2026)'
+  - url: https://docs.databricks.com/aws/en/release-notes/product/2026/september
+    kind: official
+    label: 'Databricks release notes: Shared Serverless for Git Folders is in Beta (September 2, 2026)'
+  - url: https://learn.microsoft.com/en-us/azure/databricks/compute/serverless/notebooks/shared-serverless
+    kind: official
+    label: 'Microsoft Learn: Use Shared Serverless for Git folders and bundles'
+prediction:
+  - Shared Serverless for Everything
+  - Project Serverless
+  - Lakeflow Project Compute
+source: https://docs.databricks.com/aws/en/compute/serverless/notebooks/shared-serverless
+verified: '2026-10-26'

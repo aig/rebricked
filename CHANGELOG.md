@@ -9,6 +9,34 @@ shows the what. Plain, simple English: short sentences, common words, no jargon 
 and product names themselves. Some older entries have no `Why:` line - the reason was never
 recorded, and a made-up reason is worse than none.
 
+## 2026-10-26
+
+### Added
+- **Git Folder Serverless is now Shared Serverless, and the four other new items since the
+  October 22 sweep get cards.**
+
+  **Why:** a refresh of the release-notes mirror turned up a rename the docs never call a rename.
+  On October 22 the Git Folder Serverless page was retitled "Use Shared Serverless for Git folders
+  and bundles", gained bundle support, and the September 2 release note was reworded after the
+  fact to read "Shared Serverless for Git Folders is in Beta". No live official sentence uses the
+  old name any more. Only the URL slug and a screenshot filename still do. So the card's own
+  quotes had quietly stopped matching anything. The same refresh found four October 22-23 items
+  with no card: two Lakeflow Connect connectors (we card every connector), Files API 3.0, and
+  DataFrame caching on serverless.
+
+  **What:** new `shared-serverless` (`active`, Beta since 2026-09, `from` 2026-10, Developer
+  experience, Workspace section). It takes the umbrella name plus the two console labels and the
+  Project-Scoped Shared Compute preview toggle as aliases. `git-folder-serverless` becomes
+  `renamed` (2026-09 to 2026-10, `successorId` `shared-serverless`). Its dead quotes are re-pointed
+  at text that still exists, and it gains a fact about where the old name survives. The rename
+  month is the earliest dated use of the new name (the October 22 bundles note). The exact day of
+  the docs rename can't be pinned down, because the September note was reworded with no date.
+  Also new, all Beta from 2026-10 unless noted: `google-analytics-aggregated-connector` and
+  `box-audit-logs-connector` (Data Ingestion), `files-api-3-0` (Catalog, next to Volumes; the
+  version is the card, since no official page dates the original Files API), and
+  `dataframe-caching-on-serverless-compute` (Public Preview, Compute). `check_anchors.py`
+  passes for all six (63 URLs, 0 dead).
+
 ## 2026-10-22
 
 ### Changed

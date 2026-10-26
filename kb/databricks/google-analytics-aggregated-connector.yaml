@@ -1,0 +1,38 @@
+id: google-analytics-aggregated-connector
+name: 'Google Analytics Aggregated connector'
+aliases:
+  - 'Google Analytics Aggregated'
+  - 'GA4 aggregated reports'
+category: Data engineering
+what:
+  note: 'A managed Lakeflow Connect connector that ingests aggregated Google Analytics 4 (GA4) report data, such as user activity, acquisition, engagement and demographics reports, into Databricks.'
+  link: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/google-analytics-aggregated#:~:text=ingests%20aggregated%20Google%20Analytics%204%20%28GA4%29%20report%20data
+fact:
+  - note: 'It is the summary-only sibling: for raw, event-level GA4 data from the BigQuery export, the docs send you to a different connector.'
+    link: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/google-analytics-aggregated#:~:text=raw%2C%20event%2Dlevel%20GA4%20data
+  - note: 'Bring your own report: besides the prebuilt ones, you can define custom reports with your own dimensions, metrics and aggregation level.'
+    link: https://docs.databricks.com/aws/en/release-notes/product/2026/october#:~:text=define%20custom%20reports%20with%20your%20own%20dimensions%2C%20metrics%2C%20and%20aggregation%20level
+status:
+  value: active
+  link: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/google-analytics-aggregated#:~:text=This%20feature%20is%20in%20Beta
+  date: '2026-10-26'
+releases:
+  - type: beta
+    date: 2026-10
+    link: https://docs.databricks.com/aws/en/release-notes/product/2026/october#:~:text=Google%20Analytics%20Aggregated%20connector%20is%20available%20in%20Beta
+introducedAt:
+  date: 2026-10
+  link: https://docs.databricks.com/aws/en/release-notes/product/2026/october#:~:text=Google%20Analytics%20Aggregated%20connector%20is%20available%20in%20Beta
+limitations:
+  note: 'Beta. Service account (recommended) or OAuth U2M authentication only; no UI-based pipeline authoring, no API-based row filtering, no schema evolution for data type changes, and a column rename requires a full refresh.'
+  link: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/google-analytics-aggregated
+  date: '2026-10-26'
+links:
+  - url: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/google-analytics-aggregated
+    kind: official
+    label: 'Databricks docs: Google Analytics Aggregated connector'
+  - url: https://docs.databricks.com/aws/en/release-notes/product/2026/october
+    kind: official
+    label: 'Databricks release notes: Google Analytics Aggregated connector (Beta, October 23, 2026)'
+source: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/google-analytics-aggregated
+verified: '2026-10-26'

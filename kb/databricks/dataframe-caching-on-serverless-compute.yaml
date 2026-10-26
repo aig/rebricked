@@ -1,0 +1,41 @@
+id: dataframe-caching-on-serverless-compute
+name: DataFrame caching on serverless compute
+aliases:
+  - df.cache()
+  - df.persist()
+  - serverless DataFrame cache
+category: Compute / BI
+what:
+  note: Caching a DataFrame with df.cache() or df.persist() on serverless compute, which computes it once and saves the result as a session-local snapshot in cloud storage to reuse for the rest of the session.
+  link: https://docs.databricks.com/aws/en/compute/serverless/dataframe-cache#:~:text=you%20can%20cache%20a%20DataFrame
+fact:
+  - note: Ask for MEMORY_ONLY and you get disk anyway - serverless accepts any storage level, ignores it, and reports DISK_ONLY once the DataFrame is cached.
+    link: https://docs.databricks.com/aws/en/compute/serverless/dataframe-cache#:~:text=accepts%20any%20storage%20level%20and%20ignores%20it
+  - note: It is eager, not lazy - the DataFrame is computed the moment you call cache(), not on the next action.
+    link: https://docs.databricks.com/aws/en/compute/serverless/dataframe-cache#:~:text=computes%20the%20DataFrame%20when%20you%20call
+  - note: The snapshot is private and perishable - only the session that cached it can read it, and it lasts until the session ends, for at most seven days.
+    link: https://docs.databricks.com/aws/en/compute/serverless/dataframe-cache#:~:text=for%20at%20most%20seven%20days
+status:
+  value: active
+  link: https://docs.databricks.com/aws/en/compute/serverless/dataframe-cache#:~:text=This%20feature%20is%20in%20Public%20Preview
+  date: '2026-10-26'
+releases:
+  - type: public-preview
+    date: 2026-10
+    link: https://docs.databricks.com/aws/en/release-notes/product/2026/october#:~:text=DataFrame%20caching%20on%20serverless%20compute%20is%20now%20in
+introducedAt:
+  date: 2026-10
+  link: https://docs.databricks.com/aws/en/release-notes/product/2026/october#:~:text=DataFrame%20caching%20on%20serverless%20compute%20is%20now%20in
+limitations:
+  note: Public Preview, on by default. Not available with the compliance security profile or in AWS GovCloud; needs serverless environment version 5 or above (Databricks Connect Python 18.1.8+ or Scala 18.1.5+); CACHE TABLE and the spark.catalog cache methods are unsupported; DataFrames with duplicate or special-character column names, interval columns, or no columns cannot be cached; the persist storage level and the unpersist blocking flag are ignored.
+  link: https://docs.databricks.com/aws/en/compute/serverless/dataframe-cache
+  date: '2026-10-26'
+links:
+  - url: https://docs.databricks.com/aws/en/release-notes/product/2026/october
+    kind: official
+    label: 'Databricks release notes: DataFrame caching on serverless compute (Public Preview, October 23, 2026)'
+prediction:
+  - Serverless Snapshot Cache
+  - Lakehouse Cache
+source: https://docs.databricks.com/aws/en/compute/serverless/dataframe-cache
+verified: '2026-10-26'
