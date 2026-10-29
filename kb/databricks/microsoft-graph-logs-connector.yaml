@@ -1,0 +1,40 @@
+id: microsoft-graph-logs-connector
+name: 'Microsoft Graph Logs connector'
+aliases:
+  - 'Microsoft Graph Logs'
+  - 'Microsoft Graph security API'
+  - 'Microsoft Defender XDR alerts'
+  - 'Microsoft Sentinel alerts'
+category: Data engineering
+what:
+  note: 'A managed Lakeflow Connect connector that ingests security alerts from the Microsoft Graph security API, including alerts from Microsoft Defender XDR and Microsoft Sentinel, into Databricks.'
+  link: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/microsoft-graph-logs#:~:text=ingests%20security%20alerts%20from%20the%20Microsoft%20Graph%20security%20API
+fact:
+  - note: 'Despite the name, it does not ingest the Graph: it reads one corner of it, the security API, and lands the alerts as tables.'
+    link: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/microsoft-graph-logs#:~:text=ingests%20security%20alerts%20from%20the%20Microsoft%20Graph%20security%20API
+  - note: 'No human ever signs in: the only supported method is OAuth M2M with the client ID and secret of a Microsoft Entra ID application.'
+    link: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/microsoft-graph-logs#:~:text=Client%20ID%20and%20client%20secret%20of%20a%20Microsoft%20Entra%20ID%20application
+status:
+  value: active
+  link: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/microsoft-graph-logs#:~:text=Lakeflow%20Connect%20for%20Microsoft%20Graph%20Logs
+  date: '2026-10-30'
+releases:
+  - type: beta
+    date: 2026-10
+    link: https://docs.databricks.com/aws/en/release-notes/product/2026/october#:~:text=The%20managed%20Microsoft%20Graph%20Logs%20connector%20is%20now%20available%20in%20Beta%20in%20Databricks%20Lakeflow%20Connect
+introducedAt:
+  date: 2026-10
+  link: https://docs.databricks.com/aws/en/release-notes/product/2026/october#:~:text=The%20managed%20Microsoft%20Graph%20Logs%20connector%20is%20now%20available%20in%20Beta%20in%20Databricks%20Lakeflow%20Connect
+limitations:
+  note: 'Beta, turned on from the Previews page. OAuth M2M (Microsoft Entra ID app) only; no SCD Type 2, no API-based row filtering, no schema evolution for data type changes, and a column rename lands as a new column plus a deleted one.'
+  link: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/microsoft-graph-logs
+  date: '2026-10-30'
+links:
+  - url: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/microsoft-graph-logs
+    kind: official
+    label: 'Databricks docs: Microsoft Graph Logs connector'
+  - url: https://docs.databricks.com/aws/en/release-notes/product/2026/october
+    kind: official
+    label: 'Databricks release notes: Microsoft Graph Logs connector (Beta, October 30, 2026)'
+source: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/microsoft-graph-logs
+verified: '2026-10-30'

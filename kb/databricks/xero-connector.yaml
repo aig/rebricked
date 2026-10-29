@@ -1,0 +1,37 @@
+id: xero-connector
+name: 'Xero connector'
+aliases:
+  - 'Xero'
+category: Data engineering
+what:
+  note: 'A managed Lakeflow Connect connector that ingests accounting data such as invoices, payments, contacts, and bank transactions from Xero into Databricks.'
+  link: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/xero#:~:text=ingests%20accounting%20data%20such%20as%20invoices%2C%20payments%2C%20contacts%2C%20and%20bank%20transactions
+fact:
+  - note: 'The tables about money are the ones without a past: invoices, payments, bank transactions and five other VARIANT-column tables skip SCD Type 2, so history covers 15 of its 23 tables.'
+    link: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/xero#:~:text=Supported%20for%2015%20of%2023%20tables
+  - note: 'Bring your own app: the only way in is OAuth user-to-machine, through a Xero OAuth 2.0 app that you create yourself.'
+    link: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/xero#:~:text=Uses%20a%20Xero%20OAuth%202.0%20app%20that%20you%20create
+status:
+  value: active
+  link: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/xero#:~:text=Lakeflow%20Connect%20for%20Xero
+  date: '2026-10-30'
+releases:
+  - type: beta
+    date: 2026-10
+    link: https://docs.databricks.com/aws/en/release-notes/product/2026/october#:~:text=The%20managed%20Xero%20connector%20is%20now%20available%20in%20Beta%20in%20Databricks%20Lakeflow%20Connect
+introducedAt:
+  date: 2026-10
+  link: https://docs.databricks.com/aws/en/release-notes/product/2026/october#:~:text=The%20managed%20Xero%20connector%20is%20now%20available%20in%20Beta%20in%20Databricks%20Lakeflow%20Connect
+limitations:
+  note: 'Beta, turned on from the Previews page. OAuth U2M only (no M2M, username/password, or API key); no API-based row filtering; SCD Type 2 on 15 of 23 tables only; no schema evolution for data type changes, and a column rename needs a full refresh.'
+  link: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/xero
+  date: '2026-10-30'
+links:
+  - url: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/xero
+    kind: official
+    label: 'Databricks docs: Xero connector'
+  - url: https://docs.databricks.com/aws/en/release-notes/product/2026/october
+    kind: official
+    label: 'Databricks release notes: Xero connector (Beta, October 29, 2026)'
+source: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/xero
+verified: '2026-10-30'

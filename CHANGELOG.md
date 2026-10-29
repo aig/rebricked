@@ -9,6 +9,41 @@ shows the what. Plain, simple English: short sentences, common words, no jargon 
 and product names themselves. Some older entries have no `Why:` line - the reason was never
 recorded, and a made-up reason is worse than none.
 
+## 2026-10-30
+
+### Added
+- **Three new Lakeflow Connect connectors get cards: QuickBooks, Xero, and Microsoft Graph Logs.**
+
+  **Why:** a refresh of the release-notes mirror found three managed connectors shipped since the
+  October 26 sweep (October 26, 29 and 30), and we card every connector. A reader searching
+  "QuickBooks", "Xero" or "Defender XDR" found nothing.
+
+  **What:** `quickbooks-connector`, `xero-connector` and `microsoft-graph-logs-connector`, all
+  `active`, Beta from 2026-10, Data engineering, in the Data Ingestion section. Limitations come
+  from each connector page's feature and authentication tables: the two accounting connectors are
+  OAuth U2M only with SCD Type 2 on part of their tables (14 of 37, 15 of 23); Graph Logs is
+  OAuth M2M only with no SCD Type 2. The rest of the window (Unity Gateway usage dashboard and
+  spend APIs, several GAs of sub-features, dashboard relationships GA, a new model) changed no
+  name and needed no card.
+
+### Fixed
+- **`real-time-mode` pointed at three quotes that no longer exist, and its limitations said
+  Lakeflow pipelines can't run it - the week real-time mode went GA in Lakeflow pipelines.**
+
+  **Why:** the real-time mode concepts page was rewritten on October 13 and the setup page on
+  October 19, so the card's description, status and limitations links all highlighted nothing.
+  The limitations line ("Lakeflow pipelines and serverless clusters are not supported") is gone
+  from the setup page, which now sends serverless users to real-time mode in Lakeflow pipelines,
+  and the October 29 blog announced that path GA on classic and serverless compute. Left alone,
+  the card stated a hard limit that is no longer true.
+
+  **What:** `what` re-quotes the concepts page's new opening ("up to 100x faster than micro-batch
+  mode") and `status` its new usage line. `limitations` is rewritten from the live setup and
+  reference pages: the classic-compute requirements now apply to direct Structured Streaming
+  queries, with serverless routed through Lakeflow pipelines; claims that could not be re-found
+  on the reference page were dropped rather than kept. The SDP GA blog joins `links`.
+  `check_anchors.py` passes for all four touched cards (47 URLs, 0 dead).
+
 ## 2026-10-26
 
 ### Added

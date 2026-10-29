@@ -1,0 +1,38 @@
+id: quickbooks-connector
+name: 'QuickBooks connector'
+aliases:
+  - 'QuickBooks'
+  - 'QuickBooks Online'
+category: Data engineering
+what:
+  note: 'A managed Lakeflow Connect connector that ingests accounting data such as accounts, customers, invoices, bills, and payments from QuickBooks into Databricks.'
+  link: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/quickbooks#:~:text=ingests%20accounting%20data%20such%20as%20accounts%2C%20customers%2C%20invoices%2C%20bills%2C%20and%20payments
+fact:
+  - note: 'Its history tracking keeps a short memory: SCD Type 2 works on only 14 of its 37 tables, because most transaction tables carry a VARIANT column and sit it out.'
+    link: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/quickbooks#:~:text=Supported%20for%2014%20of%2037%20tables
+  - note: 'A deleted invoice does not haunt the lakehouse: the connector ingests incrementally with delete capture.'
+    link: https://docs.databricks.com/aws/en/release-notes/product/2026/october#:~:text=supports%20incremental%20ingestion%20with%20delete%20capture
+status:
+  value: active
+  link: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/quickbooks#:~:text=Lakeflow%20Connect%20for%20QuickBooks
+  date: '2026-10-30'
+releases:
+  - type: beta
+    date: 2026-10
+    link: https://docs.databricks.com/aws/en/release-notes/product/2026/october#:~:text=The%20managed%20QuickBooks%20connector%20is%20now%20available%20in%20Beta%20in%20Databricks%20Lakeflow%20Connect
+introducedAt:
+  date: 2026-10
+  link: https://docs.databricks.com/aws/en/release-notes/product/2026/october#:~:text=The%20managed%20QuickBooks%20connector%20is%20now%20available%20in%20Beta%20in%20Databricks%20Lakeflow%20Connect
+limitations:
+  note: 'Beta, turned on from the Previews page. OAuth U2M only; no API-based row filtering; SCD Type 2 on 14 of 37 tables only; no schema evolution for data type changes, and a column rename needs a full refresh.'
+  link: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/quickbooks
+  date: '2026-10-30'
+links:
+  - url: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/quickbooks
+    kind: official
+    label: 'Databricks docs: QuickBooks connector'
+  - url: https://docs.databricks.com/aws/en/release-notes/product/2026/october
+    kind: official
+    label: 'Databricks release notes: QuickBooks connector (Beta, October 26, 2026)'
+source: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/quickbooks
+verified: '2026-10-30'

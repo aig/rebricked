@@ -7,8 +7,8 @@ aliases:
   - real-time trigger
 category: Data engineering
 what:
-  note: A trigger type for Apache Spark Structured Streaming that swaps periodic micro-batches for continuous processing, giving operational workloads such as fraud detection end-to-end latency as low as five milliseconds on the same Spark APIs.
-  link: https://docs.databricks.com/aws/en/structured-streaming/real-time/concepts#:~:text=Real%2Dtime%20mode%20is%20a%20trigger%20type%20for%20Structured%20Streaming%20that%20enables%20ultra%2Dlow%20latency%20data%20processing%20with%20end%2Dto%2Dend%20latency%20as%20low%20as%20five%20milliseconds
+  note: A trigger type for Apache Spark Structured Streaming that swaps periodic micro-batches for long-running batches processed as data arrives, up to 100x faster than micro-batch mode, for operational workloads such as fraud detection on the same Spark APIs.
+  link: https://docs.databricks.com/aws/en/structured-streaming/real-time/concepts#:~:text=is%20a%20trigger%20type%20for%20Structured%20Streaming%20that%20is%20up%20to%20100x%20faster%20than%20micro%2Dbatch%20mode
 fact:
   - note: 'Its route to millisecond latency is, paradoxically, longer batches: each one runs for five minutes by default, processing data the moment it lands instead of waiting for the next micro-batch.'
     link: https://docs.databricks.com/aws/en/structured-streaming/real-time/concepts#:~:text=Executing%20long%2Drunning%20batches%20%28the%20default%20is%20five%20minutes%29
@@ -18,8 +18,8 @@ fact:
     link: https://www.databricks.com/blog/announcing-general-availability-real-time-mode-apache-spark-structured-streaming-databricks#:~:text=RTM%20for%20stateless%20transformations%20is%20now%20available%20in%20open%2Dsource%20Apache%20Spark%204.1
 status:
   value: active
-  link: https://docs.databricks.com/aws/en/structured-streaming/real-time/concepts#:~:text=Use%20real%2Dtime%20mode%20for%20operational%20workloads%20that%20require%20immediate%20response%20to%20streaming%20data
-  date: '2026-09-27'
+  link: https://docs.databricks.com/aws/en/structured-streaming/real-time/concepts#:~:text=Use%20RTM%20for%20operational%20workloads%20that%20require%20immediate%20response%20to%20streaming%20data
+  date: '2026-10-30'
 releases:
   - type: public-preview
     date: 2025-07
@@ -35,9 +35,9 @@ occasion:
   link: https://www.databricks.com/blog/announcing-general-availability-real-time-mode-apache-spark-structured-streaming-databricks#:~:text=Real%2DTime%20Mode%20%28RTM%29%20in%20Apache%20Spark%20Structured%20Streaming%20is%20now%20Generally%20Available
   note: GA announced March 19, 2026
 limitations:
-  note: Classic compute only on Databricks Runtime 16.4 LTS and above (dedicated access mode, or standard access mode for Python only) - serverless and Lakeflow pipelines can't run it as Structured Streaming - with autoscaling, Photon, and spot instances turned off, and enough task slots to schedule every stage at once. Update output mode only. Sources are Kafka, Event Hubs (Kafka connector), Kinesis, and AWS MSK; sinks are Kafka, Event Hubs, and forEach writers, so Delta is supported as neither. No session windows, forEachBatch, (flat)MapGroupsWithState, transformWithStateInPandas, Python UDTFs, or stream-to-stream outer joins; stream-to-table joins need a broadcast table of 10 MB or less.
-  link: https://docs.databricks.com/aws/en/structured-streaming/real-time/setup#:~:text=Lakeflow%20pipelines%20and%20serverless%20clusters%20are%20not%20supported
-  date: '2026-09-27'
+  note: Direct Structured Streaming queries need classic compute on Databricks Runtime 16.4 LTS and above (dedicated access mode, or standard access mode for Python only) with autoscaling, Photon, and spot instances turned off; serverless notebooks and jobs can't run them, so serverless real-time processing goes through Lakeflow pipelines instead. Update output mode only. Sources are Kafka, Event Hubs (Kafka connector), Kinesis, and AWS MSK; Delta is supported as neither a source nor a sink. Stream-to-stream outer joins aren't supported, and stream-to-table joins need a broadcast table of 10 MB or less.
+  link: https://docs.databricks.com/aws/en/structured-streaming/real-time/setup#:~:text=For%20serverless%20real%2Dtime%20processing%2C%20use%20real%2Dtime%20mode%20in%20Lakeflow%20pipelines
+  date: '2026-10-30'
 links:
   - url: https://docs.databricks.com/aws/en/structured-streaming/real-time/reference
     kind: official
@@ -54,9 +54,12 @@ links:
   - url: https://www.databricks.com/blog/announcing-general-availability-real-time-mode-apache-spark-structured-streaming-databricks
     kind: community
     label: 'Databricks Blog: Real-Time Mode GA (March 2026)'
+  - url: https://www.databricks.com/blog/announcing-general-availability-real-time-mode-spark-declarative-pipelines-databricks
+    kind: community
+    label: 'Databricks Blog: Real-Time Mode GA in Spark Declarative Pipelines (October 2026)'
 prediction:
   - Lakeflow Real-Time
   - Spark Instant Mode
   - Genie Streaming
 source: https://docs.databricks.com/aws/en/structured-streaming/real-time/concepts
-verified: '2026-09-27'
+verified: '2026-10-30'
