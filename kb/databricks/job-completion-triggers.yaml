@@ -1,0 +1,38 @@
+id: job-completion-triggers
+name: 'Job completion triggers'
+aliases:
+  - 'Upstream job completion'
+  - 'Trigger jobs when upstream jobs complete'
+  - 'job_completion'
+category: Data engineering
+what:
+  note: 'A Lakeflow Jobs trigger that runs a job when one or more upstream jobs finish, including jobs in other workspaces on the same Unity Catalog metastore, configured on the downstream job alone.'
+  link: https://docs.databricks.com/aws/en/jobs/job-completion-triggers#:~:text=Use%20job%20completion%20triggers%20to%20run%20a%20Lakeflow%20Job%20when%20one%20or%20more%20upstream%20jobs%20finish
+fact:
+  - note: 'It waits for everyone: if A finishes twice before B finishes once, you get one downstream run, built from A''s latest completion.'
+    link: https://docs.databricks.com/aws/en/jobs/job-completion-triggers#:~:text=if%20A%20completes%20twice%20and%20then%20B%20completes
+  - note: 'It does not care what day it is: completions are not matched by business date or data batch.'
+    link: https://docs.databricks.com/aws/en/jobs/job-completion-triggers#:~:text=Completions%20are%20not%20matched%20by%20business%20date%20or%20data%20batch
+  - note: 'The upstream jobs never find out - the whole dependency lives on the downstream job.'
+    link: https://docs.databricks.com/aws/en/jobs/job-completion-triggers#:~:text=without%20changing%20the%20upstream%20jobs
+status:
+  value: active
+  link: https://docs.databricks.com/aws/en/jobs/job-completion-triggers#:~:text=Job%20completion%20triggers%20are%20in
+  date: '2026-11-05'
+releases:
+  - type: beta
+    date: 2026-11
+    link: https://docs.databricks.com/aws/en/release-notes/product/2026/november#:~:text=You%20can%20now%20run%20a%20Lakeflow%20Job%20when%20one%20or%20more%20upstream%20jobs%20complete
+introducedAt:
+  date: 2026-11
+  link: https://docs.databricks.com/aws/en/release-notes/product/2026/november#:~:text=You%20can%20now%20run%20a%20Lakeflow%20Job%20when%20one%20or%20more%20upstream%20jobs%20complete
+limitations:
+  note: 'Beta, enabled from the Previews page in the downstream workspace and every upstream one, all attached to the same metastore. A trigger watches 1 to 10 workspace-and-job pairs that share one result filter, and a workspace supports up to 1,000 active job completion triggers, counted toward its 12,000 active triggers. Historical completions do not start runs.'
+  link: https://docs.databricks.com/aws/en/jobs/job-completion-triggers#:~:text=A%20workspace%20supports%20up%20to%201%2C000%20active%20job%20completion%20triggers
+  date: '2026-11-05'
+links:
+  - url: https://docs.databricks.com/aws/en/release-notes/product/2026/november
+    kind: official
+    label: 'Databricks release notes: Trigger Lakeflow Jobs when upstream jobs complete (Beta, November 3, 2026)'
+source: https://docs.databricks.com/aws/en/jobs/job-completion-triggers
+verified: '2026-11-05'

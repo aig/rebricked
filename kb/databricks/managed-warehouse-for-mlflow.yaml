@@ -1,0 +1,35 @@
+id: managed-warehouse-for-mlflow
+name: 'Managed warehouse for MLflow'
+aliases:
+  - 'MLflow Managed Warehouse'
+  - 'Managed warehouse for MLflow traces'
+category: AI / ML
+what:
+  note: 'Lets the MLflow UI show traces stored in Unity Catalog without you picking a SQL warehouse: MLflow runs the trace queries on a warehouse it creates and manages, or on serverless compute.'
+  link: https://docs.databricks.com/aws/en/mlflow3/genai/tracing/managed-warehouse#:~:text=With%20managed%20warehouse%2C%20MLflow%20manages%20an%20optimized%20warehouse
+fact:
+  - note: 'The warehouse it creates is literally named MLflow Managed Warehouse, and it is MLflow''s alone: users need no permissions on it, and cannot use it for anything else.'
+    link: https://docs.databricks.com/aws/en/mlflow3/genai/tracing/managed-warehouse#:~:text=Users%20don%27t%20need%20explicit%20permissions%20on%20the%20MLflow%20Managed%20Warehouse
+  - note: 'Admins can edit or delete that warehouse, and Databricks recommends, in so many words, that they don''t.'
+    link: https://docs.databricks.com/aws/en/mlflow3/genai/tracing/managed-warehouse#:~:text=Admins%20can%20edit%20or%20delete%20it%2C%20but%20Databricks%20recommends%20against%20it
+status:
+  value: active
+  link: https://docs.databricks.com/aws/en/mlflow3/genai/tracing/managed-warehouse#:~:text=This%20feature%20is%20in
+  date: '2026-11-05'
+releases:
+  - type: beta
+    date: 2026-11
+    link: https://docs.databricks.com/aws/en/release-notes/product/2026/november#:~:text=With%20managed%20warehouse%2C%20users%20can%20view%20traces%20stored%20in%20Unity%20Catalog
+introducedAt:
+  date: 2026-11
+  link: https://docs.databricks.com/aws/en/release-notes/product/2026/november#:~:text=With%20managed%20warehouse%2C%20users%20can%20view%20traces%20stored%20in%20Unity%20Catalog
+limitations:
+  note: 'Beta, turned on from the Previews page. Works only in the MLflow UI - the MLflow Python SDK still needs a SQL warehouse. Traces must be stored in Unity Catalog, the workspace must be in a serverless region, and the dedicated warehouse needs the Lakehouse//RT Beta; without it, queries run on serverless compute.'
+  link: https://docs.databricks.com/aws/en/mlflow3/genai/tracing/managed-warehouse#:~:text=Managed%20warehouse%20works%20only%20in%20the%20MLflow%20UI
+  date: '2026-11-05'
+links:
+  - url: https://docs.databricks.com/aws/en/release-notes/product/2026/november
+    kind: official
+    label: 'Databricks release notes: Managed warehouse for MLflow (Beta, November 2, 2026)'
+source: https://docs.databricks.com/aws/en/mlflow3/genai/tracing/managed-warehouse
+verified: '2026-11-05'

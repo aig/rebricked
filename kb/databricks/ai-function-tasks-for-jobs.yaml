@@ -1,0 +1,38 @@
+id: ai-function-tasks-for-jobs
+name: 'AI Function tasks for jobs'
+aliases:
+  - 'AI Function task'
+  - 'ai_function_task'
+  - 'Lakeflow AI Function Task'
+category: AI / ML
+what:
+  note: 'A Lakeflow Jobs task type that runs ai_parse_document, ai_extract or ai_classify on every file in a volume or every row of a table, incrementally and without writing SQL, and writes the results to a Unity Catalog table it manages.'
+  link: https://docs.databricks.com/aws/en/jobs/tasks/ai-functions/#:~:text=Use%20an%20AI%20Function%20task%20to%20run%20an
+fact:
+  - note: 'Skip the Table name and it names its own output table, starting with parsed, extracted or classified - and keeps that name across runs.'
+    link: https://docs.databricks.com/aws/en/jobs/tasks/ai-functions/#:~:text=the%20task%20generates%20one%20that%20starts%20with
+  - note: 'Strictly one at a time: start a second run while the first is still going and the newcomer fails.'
+    link: https://docs.databricks.com/aws/en/jobs/tasks/ai-functions/#:~:text=A%20task%20can%20have%20only%20one%20active%20run
+  - note: 'Change the labels or the fields to extract and only new inputs see it; to redo everything, you give it a new table name.'
+    link: https://docs.databricks.com/aws/en/jobs/tasks/ai-functions/#:~:text=To%20apply%20them%20to%20all%20inputs%2C%20enter%20a%20new
+status:
+  value: active
+  link: https://docs.databricks.com/aws/en/jobs/tasks/ai-functions/#:~:text=This%20feature%20is%20in
+  date: '2026-11-05'
+releases:
+  - type: beta
+    date: 2026-11
+    link: https://docs.databricks.com/aws/en/release-notes/product/2026/november#:~:text=You%20can%20now%20add%20AI%20Function%20tasks%20to%20your%20Databricks%20jobs
+introducedAt:
+  date: 2026-11
+  link: https://docs.databricks.com/aws/en/release-notes/product/2026/november#:~:text=You%20can%20now%20add%20AI%20Function%20tasks%20to%20your%20Databricks%20jobs
+limitations:
+  note: 'Beta, turned on from the Previews page. Only one active run per task, and all runs in a workspace share its AI Functions capacity (Databricks suggests about 20 or fewer active at once). Input tables need change data feed (and row tracking, unless you set an ID column or use a FILE column), the output schema must already exist, and changing the input or output table reprocesses every input.'
+  link: https://docs.databricks.com/aws/en/jobs/tasks/ai-functions/#:~:text=A%20task%20can%20have%20only%20one%20active%20run
+  date: '2026-11-05'
+links:
+  - url: https://docs.databricks.com/aws/en/release-notes/product/2026/november
+    kind: official
+    label: 'Databricks release notes: AI Function tasks for jobs (Beta, November 4, 2026)'
+source: https://docs.databricks.com/aws/en/jobs/tasks/ai-functions/
+verified: '2026-11-05'

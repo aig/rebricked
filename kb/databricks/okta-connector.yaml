@@ -1,0 +1,38 @@
+id: okta-connector
+name: 'Okta connector'
+aliases:
+  - 'Okta'
+  - 'Lakeflow Connect for Okta'
+category: Data engineering
+what:
+  note: 'A managed Lakeflow Connect connector that ingests identity and access data - users, groups, app integrations, devices, policies and administrator roles - from an Okta organization into Databricks.'
+  link: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/okta#:~:text=ingests%20identity%20and%20access%20data%20from%20your%20Okta%20organization%20into%20Databricks
+fact:
+  - note: 'Its authentication table lists four methods and supports exactly one: an Okta API token using the SSWS scheme. OAuth, in either direction, is a no.'
+    link: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/okta#:~:text=An%20Okta%20API%20token%20that%20authenticates%20with%20the
+  - note: 'It pulls in administrator roles too, so the list of who can change Okta lands in a table you can query.'
+    link: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/okta#:~:text=policies%2C%20authenticators%2C%20and%20administrator%20roles
+status:
+  value: active
+  link: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/okta#:~:text=Lakeflow%20Connect%20for%20Okta
+  date: '2026-11-05'
+releases:
+  - type: beta
+    date: 2026-11
+    link: https://docs.databricks.com/aws/en/release-notes/product/2026/november#:~:text=Okta%20connector%20is%20available%20in%20Beta
+introducedAt:
+  date: 2026-11
+  link: https://docs.databricks.com/aws/en/release-notes/product/2026/november#:~:text=Okta%20connector%20is%20available%20in%20Beta
+limitations:
+  note: 'Beta, turned on from the Previews page. SSWS API token only (no OAuth U2M or M2M, no username/password); no API-based row filtering; no SCD Type 2; no schema evolution for data type changes, and a column rename needs a full refresh.'
+  link: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/okta
+  date: '2026-11-05'
+links:
+  - url: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/okta
+    kind: official
+    label: 'Databricks docs: Okta connector'
+  - url: https://docs.databricks.com/aws/en/release-notes/product/2026/november
+    kind: official
+    label: 'Databricks release notes: Okta connector (Beta, November 3, 2026)'
+source: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/okta
+verified: '2026-11-05'

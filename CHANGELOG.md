@@ -9,6 +9,42 @@ shows the what. Plain, simple English: short sentences, common words, no jargon 
 and product names themselves. Some older entries have no `Why:` line - the reason was never
 recorded, and a made-up reason is worse than none.
 
+## 2026-11-05
+
+### Added
+- **Four new November items get cards: the Okta connector, AI Function tasks for jobs, job
+  completion triggers, and managed warehouse for MLflow.**
+
+  **Why:** a refresh of the release-notes mirror found the first November page (November 1-4).
+  We card every connector, and the other three are new capabilities with their own doc pages. A
+  reader searching "Okta" found only the System Logs connector, which ingests a different thing.
+
+  **What:** `okta-connector` (Data engineering, Data Ingestion), `ai-function-tasks-for-jobs`
+  (AI / ML) and `job-completion-triggers` (Data engineering), both in Jobs & Pipelines, and
+  `managed-warehouse-for-mlflow` (AI / ML, Agents, next to `mlflow-tracing`). All `active`, Beta
+  from 2026-11, with limitations taken from each page's own tables and lists. The rest of the
+  window (Lakehouse//RT access control, Lakebase merge strategies, Zerobus default storage GA, a
+  JDBC patch release, AI Functions in Unity Gateway budgets, Genie Agents volume files) changed no
+  name and needed no new card.
+
+### Fixed
+- **Three cards stated limits that November removed: Unity Catalog secrets quotas and BROWSE, and
+  Lakehouse//RT's lack of ABAC.**
+
+  **Why:** on November 2 the secret quotas went up tenfold (1,000 per schema, 10,000 per
+  metastore) and `BROWSE` started applying to secrets. On November 3 Lakehouse//RT began
+  enforcing row filters, column masks and ABAC policies on reads. `secrets-in-unity-catalog`
+  still said "BROWSE on a catalog doesn't apply" and "up to 100 per schema",
+  `external-secrets-in-unity-catalog` repeated the old quotas, and `lakehouse-real-time` listed
+  ABAC and the ADBC driver as unsupported. All four claims stopped being true this week.
+
+  **What:** both secrets cards now give the new quotas as raisable defaults (the resource-limits
+  page marks them not fixed), and the BROWSE line is gone. `lakehouse-real-time` limitations are
+  rewritten from the live page: policies are enforced on reads but must be managed elsewhere, CDF
+  reads of protected tables and ABAC on views are unsupported, connections must use the Statement
+  Execution API (no Simba or Databricks ODBC; the OSS ODBC driver works), plus the network and
+  function gaps. `check_anchors.py` passes for all seven touched cards (74 URLs, 0 dead).
+
 ## 2026-10-30
 
 ### Added
