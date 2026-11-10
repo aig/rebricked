@@ -1,0 +1,48 @@
+id: genie-search
+name: Genie Search
+aliases:
+  - Genie Search index
+  - Genie Ontology search index
+  - Connected sources
+category: AI / BI
+what:
+  note: A Genie Ontology component that builds and maintains a permission-aware search index over the places an organization keeps its knowledge - Google Drive, Jira Cloud, Confluence Cloud, and Workday - so Genie One can search documents, tickets, and people in one place and only show each user what they could already open at the source.
+  link: https://docs.databricks.com/aws/en/genie/genie-ontology/search-index#:~:text=Genie%20Search%20builds%20and%20maintains%20a%20search%20index%20across%20the%20sources%20where%20your%20organization%20keeps%20its%20knowledge
+fact:
+  - note: It is Genie One's search, not Genie's - the docs are explicit that Genie Code doesn't use its content, so the coding agent and the chat agent have different ideas of what the company knows.
+    link: https://docs.databricks.com/aws/en/genie/genie-ontology/search-index#:~:text=Genie%20Search%20content%20is%20available%20in%20Genie%20One%20only.%20Genie%20Code%20doesn%27t%20use%20it
+  - note: Permissions are indexed alongside each document and refreshed on the same schedule as the content, and for non-public documents Genie rechecks access against the source at query time, through a short cache.
+    link: https://docs.databricks.com/aws/en/genie/genie-ontology/search-index#:~:text=Genie%20Search%20also%20rechecks%20access%20against%20the%20source%20at%20query%20time
+  - note: Indexing is free for now and can take hours or days for a first pass, and there is no API for any of it - every source is wired up by hand in the account console.
+    link: https://docs.databricks.com/aws/en/genie/genie-ontology/search-index#:~:text=There%20is%20no%20API%20for%20managing%20sources.%20Setup%20is%20in%20the%20account%20console
+status:
+  value: active
+  link: https://docs.databricks.com/aws/en/release-notes/product/2026/november#:~:text=Genie%20Search%20is%20now%20generally%20available
+  date: '2026-11-10'
+releases:
+  - type: ga
+    date: 2026-11
+    link: https://docs.databricks.com/aws/en/release-notes/product/2026/november#:~:text=Genie%20Search%20is%20now%20generally%20available
+introducedAt:
+  date: 2026-11
+  link: https://docs.databricks.com/aws/en/release-notes/product/2026/november#:~:text=Genie%20Search%20is%20now%20generally%20available
+limitations:
+  note: Account admin only, set up in the account console with no API, and every source in an account shares one geo (changing it means removing and reconnecting them all). Content is used by Genie One only, not Genie Code, and isn't available in AWS GovCloud regions. Nothing can be excluded from a source, Google Drive files over 100 MB are skipped and over 10 MB keep metadata only, PDFs are indexed without OCR, and only Jira Cloud and Confluence Cloud are supported, not on-premises.
+  link: https://docs.databricks.com/aws/en/genie/genie-ontology/search-index#:~:text=Genie%20Search%20isn%27t%20available%20in%20AWS%20GovCloud%20regions
+  date: '2026-11-10'
+links:
+  - url: https://docs.databricks.com/aws/en/genie-one/search
+    kind: official
+    label: 'Databricks docs: Use Genie Search in Genie One'
+  - url: https://docs.databricks.com/aws/en/genie-one/people
+    kind: official
+    label: 'Databricks docs: Browse org directories in Genie One (powered by the Workday source)'
+  - url: https://docs.databricks.com/aws/en/release-notes/product/2026/november#:~:text=Genie%20Search%20is%20now%20generally%20available
+    kind: official
+    label: 'Databricks release notes: Genie Search is now generally available (November 9, 2026)'
+prediction:
+  - Genie Enterprise Search
+  - Unity Search
+  - Genie Ontology Index
+source: https://docs.databricks.com/aws/en/genie/genie-ontology/search-index
+verified: '2026-11-10'

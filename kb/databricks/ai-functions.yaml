@@ -23,7 +23,7 @@ fact:
 status:
   value: active
   link: https://docs.databricks.com/aws/en/large-language-models/ai-functions#:~:text=AI%20Functions%20are%20built-in%20functions%20that%20you%20can%20use%20to%20apply%20LLMs%20or%20state-of-the-art%20research%20techniques
-  date: '2026-09-20'
+  date: '2026-11-09'
 releases:
   - type: public-preview
     date: 2023-04
@@ -35,9 +35,9 @@ introducedAt:
   date: 2023-04
   link: https://www.databricks.com/blog/2023/04/18/introducing-ai-functions-integrating-large-language-models-databricks-sql.html#:~:text=announce%20the%20public%20preview%20of%20AI%20Functions
 limitations:
-  note: Not available on Classic SQL warehouses; Databricks Runtime 15.4 LTS or above is required (18.2 or above recommended). Beta members carry their own hard caps - ai_transcribe accepts at most 1 hour of audio and a 512 MB file per call and does not transcribe video; ai_search takes up to 10 knowledge sources per call and a 4,000-character instructions argument.
+  note: Not available on Classic SQL warehouses; Databricks Runtime 15.4 LTS or above is required today (18.2 or above recommended), and from January 2027 SQL calls on runtimes below 17.3 LTS return an error - the AI Functions REST API and ai_similarity are unaffected. Beta members carry their own hard caps - ai_transcribe accepts at most 1 hour of audio and a 512 MB file per call and does not transcribe video; ai_search takes up to 10 knowledge sources per call and a 4,000-character instructions argument.
   link: https://docs.databricks.com/aws/en/large-language-models/ai-functions#:~:text=AI%20Functions%20are%20not%20available%20on%20Classic%20SQL%20warehouses
-  date: '2026-09-20'
+  date: '2026-11-09'
 links:
   - url: https://www.databricks.com/blog/2023/04/18/introducing-ai-functions-integrating-large-language-models-databricks-sql.html
     kind: official
@@ -51,6 +51,9 @@ links:
   - url: https://docs.databricks.com/aws/en/release-notes/product/2026/august#:~:text=ai_search%20function%20%28Beta%29
     kind: official
     label: 'Databricks release notes: ai_search function (Beta, August 7, 2026) and ai_transcribe function (Beta, August 29, 2026)'
+  - url: https://docs.databricks.com/aws/en/release-notes/product/2026/november#:~:text=Starting%20in%20January%202027
+    kind: official
+    label: 'Databricks release notes: Upcoming removal of AI Functions support on runtimes below 17.3 LTS (November 5, 2026)'
   - url: https://docs.databricks.com/aws/en/sql/language-manual/functions/ai_query
     kind: official
     label: 'Databricks SQL reference: ai_query function - the general-purpose member, GA since June 15, 2026'
@@ -62,4 +65,4 @@ prediction:
   - Lakeflow AI Functions
   - Agent Bricks Functions
 source: https://docs.databricks.com/aws/en/large-language-models/ai-functions
-verified: '2026-09-20'
+verified: '2026-11-09'

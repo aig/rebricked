@@ -1,0 +1,45 @@
+id: unity-catalog-wikis
+name: Unity Catalog wikis
+aliases:
+  - wikis
+  - table wiki
+  - Catalog Explorer wiki
+category: Data governance
+what:
+  note: A Catalog Explorer feature that documents one table's meaning, intended use, and sources as a rich-text wiki the team can comment on, suggest edits to, and upvote or downvote - stored as metadata on the table, so the table's own Unity Catalog privileges decide who can read or manage it.
+  link: https://docs.databricks.com/aws/en/uc-semantics/wikis#:~:text=A%20wiki%20lets%20your%20team%20document%20a%20table%27s%20meaning%2C%20intended%20use%2C%20and%20sources
+fact:
+  - note: A wiki isn't a securable object - it hangs off its table as metadata, so there is no GRANT for it; whoever can MANAGE the table manages its wiki.
+    link: https://docs.databricks.com/aws/en/uc-semantics/wikis#:~:text=A%20wiki%20isn%27t%20a%20securable%20object
+  - note: Create a wiki and the table's old comment is quietly copied in as the first draft - after that the two never speak again, so editing one leaves the other exactly where it was.
+    link: https://docs.databricks.com/aws/en/uc-semantics/wikis#:~:text=After%20that%2C%20the%20wiki%20and%20the%20comment%20are%20independent
+  - note: The team wiki about your data is the one place Databricks asks you to keep data out of - no PII, no regulated data, and no customer-managed keys either.
+    link: https://docs.databricks.com/aws/en/uc-semantics/wikis#:~:text=Do%20not%20include%20PII%2C%20regulated%20data%2C%20or%20other%20sensitive%20information
+status:
+  value: active
+  link: https://docs.databricks.com/aws/en/uc-semantics/wikis#:~:text=This%20feature%20is%20in%20Beta
+  date: '2026-11-09'
+releases:
+  - type: beta
+    date: 2026-11
+    link: https://docs.databricks.com/aws/en/release-notes/product/2026/november#:~:text=Unity%20Catalog%20wikis%20are%20in%20Beta
+introducedAt:
+  date: 2026-11
+  link: https://docs.databricks.com/aws/en/release-notes/product/2026/november#:~:text=Unity%20Catalog%20wikis%20are%20in%20Beta
+limitations:
+  note: Beta, enabled by account admins from the account console Previews page. Tables only - no wikis on columns, schemas, catalogs, or other securable objects - and one wiki per table. Not available in GovCloud regions, no customer-managed key encryption, and Databricks says not to put PII or regulated data in a wiki.
+  link: https://docs.databricks.com/aws/en/uc-semantics/wikis#:~:text=Wikis%20are%20available%20only%20on%20tables
+  date: '2026-11-09'
+links:
+  - url: https://docs.databricks.com/aws/en/release-notes/product/2026/november#:~:text=Unity%20Catalog%20wikis%20are%20in%20Beta
+    kind: official
+    label: 'Databricks release notes: Unity Catalog wikis are in Beta (November 6, 2026)'
+  - url: https://docs.databricks.com/aws/en/uc-semantics/pages
+    kind: official
+    label: 'Databricks docs: Pages - the sibling for shared business definitions that span many assets'
+prediction:
+  - Genie Wikis
+  - Unity Catalog Pages for Tables
+  - Lakehouse Encyclopedia
+source: https://docs.databricks.com/aws/en/uc-semantics/wikis
+verified: '2026-11-09'

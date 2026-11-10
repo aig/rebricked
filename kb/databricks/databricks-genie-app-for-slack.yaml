@@ -1,0 +1,48 @@
+id: databricks-genie-app-for-slack
+name: Databricks Genie app for Slack
+aliases:
+  - Genie for Slack
+  - Genie Slack app
+  - '@Genie'
+category: AI / BI
+what:
+  note: The Databricks-built Slack app that brings Genie into Slack - DM it or mention @Genie in a channel to ask a data question and get the answer in the thread, routed through Genie One or through a Genie Agent a channel owner has pinned.
+  link: https://docs.databricks.com/aws/en/genie-one/genie-slack#:~:text=The%20Databricks%20Genie%20app%20for%20Slack%20brings%20Genie%20into%20Slack
+fact:
+  - note: Wherever your workspace lives, the app's central service runs in us-west-2 - so an IP access list has to admit the outbound IPs of that region's control plane, not your own.
+    link: https://docs.databricks.com/aws/en/genie-one/genie-slack#:~:text=The%20central%20service%20runs%20in%20the%20us%2Dwest%2D2%20region%2C%20regardless%20of%20your%20workspace%27s%20region
+  - note: A pinned Genie Agent gets the new conversations, but the thumbs up and thumbs down always go to Genie One - whichever agent actually wrote the answer.
+    link: https://docs.databricks.com/aws/en/genie-one/genie-slack#:~:text=Feedback%20%28thumbs%20up%20or%20thumbs%20down%29%20is%20always%20sent%20to%20Genie%20One
+  - note: Since November 2026 the approval prompt for a connected tool shows up right in the Slack reply, and only the person who asked the question can press Allow or Deny.
+    link: https://docs.databricks.com/aws/en/genie-one/genie-slack#:~:text=Only%20the%20user%20who%20asked%20the%20question%20can%20approve%20or%20deny%20the%20request
+status:
+  value: active
+  link: https://docs.databricks.com/aws/en/release-notes/product/2026/november#:~:text=The%20Databricks%20Genie%20app%20for%20Slack%20is%20now%20generally%20available
+  date: '2026-11-10'
+releases:
+  - type: public-preview
+    date: 2026-06
+    link: https://docs.databricks.com/aws/en/release-notes/product/2026/june#:~:text=The%20Databricks%20Genie%20app%20for%20Slack%20is%20now%20available%20in%20Public%20Preview
+  - type: ga
+    date: 2026-11
+    link: https://docs.databricks.com/aws/en/release-notes/product/2026/november#:~:text=The%20Databricks%20Genie%20app%20for%20Slack%20is%20now%20generally%20available
+introducedAt:
+  date: 2026-06
+  link: https://docs.databricks.com/aws/en/release-notes/product/2026/june#:~:text=The%20Databricks%20Genie%20app%20for%20Slack%20is%20now%20available%20in%20Public%20Preview
+limitations:
+  note: You can't choose the SQL warehouse - Databricks picks one the user is authorized to use. A pinned Genie Agent only receives new conversations (existing ones stay on Genie One, and Genie One may rewrite the question before it reaches the agent), feedback always goes to Genie One, and you can't create Genie Agents from Slack. Workspaces with an IP access list must allow the us-west-2 control plane IPs, and Private Link workspaces need a context-based ingress rule for the app.
+  link: https://docs.databricks.com/aws/en/genie-one/genie-slack#:~:text=You%20cannot%20specify%20which%20compute%20%28SQL%20warehouse%29%20the%20Databricks%20Genie%20app%20for%20Slack%20uses
+  date: '2026-11-10'
+links:
+  - url: https://docs.databricks.com/aws/en/release-notes/product/2026/november#:~:text=The%20Databricks%20Genie%20app%20for%20Slack%20is%20now%20generally%20available
+    kind: official
+    label: 'Databricks release notes: Databricks Genie app for Slack is now generally available (November 9, 2026)'
+  - url: https://docs.databricks.com/aws/en/release-notes/product/2026/june#:~:text=The%20Databricks%20Genie%20app%20for%20Slack%20is%20now%20available%20in%20Public%20Preview
+    kind: official
+    label: 'Databricks release notes: Databricks Genie app for Slack (Public Preview, June 2026)'
+prediction:
+  - Genie One for Slack
+  - Slack Genie Agent
+  - Databricks Genie Slackbot
+source: https://docs.databricks.com/aws/en/genie-one/genie-slack
+verified: '2026-11-10'

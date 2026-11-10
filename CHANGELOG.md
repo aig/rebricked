@@ -9,6 +9,86 @@ shows the what. Plain, simple English: short sentences, common words, no jargon 
 and product names themselves. Some older entries have no `Why:` line - the reason was never
 recorded, and a made-up reason is worse than none.
 
+## 2026-11-10
+
+### Added
+- **November 9 was a Genie GA day: Genie Search gets a card, and so do the Genie apps for
+  Slack and Microsoft Teams.**
+
+  **Why:** a refresh of the release-notes mirror found the November page had grown again
+  (November 5-9 on the platform notes, plus matching Unity Gateway and AI/BI items). Four things
+  went generally available on November 9, and three of them had no card. Genie Search is a named
+  Genie Ontology component with its own doc page that indexes Google Drive, Jira, Confluence, and
+  Workday for Genie One - someone searching "Genie Search" or "Confluence" found nothing. The
+  Slack and Teams apps had been living as a single fact on `genie-agents` since July; now that
+  each has a full Beta/Preview/GA timeline and its own limitations page, a fact can't carry
+  them. Everything else in the window changed no name: UNDROP VOLUME, date arithmetic in Lakeflow
+  Jobs parameters, Claude desktop provisioning through Unity Gateway, the Smart Routing change,
+  UCDataset for AI Runtime, and the GLM 5.2 retirement (models aren't carded here).
+
+  **What:** three new `active` entries in AI / BI, all wired into the Genie Agents section:
+  `genie-search` (GA November 2026, first and only release-note appearance, so `introducedAt` is
+  the GA month; limitations from the page's own list - GovCloud, Genie One only, no exclusions, no
+  API, one geo per account, Cloud-only Jira and Confluence), `databricks-genie-app-for-slack`
+  (Public Preview June 2026, GA November) and `databricks-genie-app-in-microsoft-teams` (Beta
+  June, Public Preview July, GA November), each with the limitations and the odd regional detail
+  from its own page (the central services run in us-west-2 and East US 2 regardless of your
+  workspace). `check_anchors.py` confirms all 53 URLs and quotes across the four touched cards.
+
+### Fixed
+- **`genie-ontology` still said Public Preview, and its definition quote had rotted.**
+
+  **Why:** Genie Ontology went GA on November 9, so the card's `limitations` opener ("Still
+  Public Preview") was wrong, and the preview pill was stale. Separately, the live page now opens
+  "gives AI agents a business-aware map" rather than "gives the Genie family of AI experiences",
+  so the `what.link` text fragment no longer matched - a card that looked sourced and wasn't.
+
+  **What:** added a `ga` November 2026 stage, repointed `status.link` at the GA release note,
+  rewrote `what` to the page's current wording (modeled knowledge from Unity Catalog semantics
+  plus learned knowledge from assets and usage), reworded `limitations` to the two things the page
+  still says (snippets follow Unity Catalog permissions, except External knowledge source
+  snippets which are account-wide; curation is free for now), added the GA note under `links`,
+  and bumped `status.date`, `limitations.date`, and `verified` to today.
+
+## 2026-11-09
+
+### Added
+- **Two new November items get cards: Unity Catalog wikis and External knowledge sources.**
+
+  **Why:** a refresh of the release-notes mirror found the November page had grown past the
+  November 1-4 sweep (November 5-9). Two of the new items are named features with their own doc
+  pages: a wiki is a new kind of Unity Catalog object a team will search for by name, and External
+  knowledge sources is the first time Genie reads definitions out of another vendor's BI tool. A
+  reader searching "wiki" or "Power BI" found nothing about either.
+
+  **What:** `unity-catalog-wikis` (Data governance, Catalog section) and
+  `external-knowledge-sources` (AI / BI, Genie Agents section). Both `active`, Beta from 2026-11,
+  with limitations taken from each page's own lists (tables only and one wiki per table; Power BI
+  only, no compliance security profile, snippets visible account-wide). The rest of the window
+  (metastore restore, JDBC drivers from Maven, partner platforms in ingress policies, metric view
+  listings GA, DeepSeek V4 Flash retired, Kimi K3.1 Pro, jobs compute defaulting to Auto, Genie
+  traces in the unified trace table) changed no name and needed no new card; models are not
+  carded here.
+
+### Fixed
+- **The SSH tunnel card cited a sentence the doc no longer has, and two cards missed November
+  changes to their own feature.**
+
+  **Why:** `ssh-tunnel` claimed the docs warn that the IDE extension and the tunnel "are not yet
+  compatible". That sentence is gone from the live page, so the fact and the matching limitation
+  were unsourced. `ai-functions` still gave Databricks Runtime 15.4 LTS as the only requirement,
+  although from January 2027 SQL calls below 17.3 LTS will error. `unity-gateway-skills` did not
+  know skills can now be published from GitHub.
+
+  **What:** `ssh-tunnel` swaps the dead fact for the November 5 addition (Claude Code and Codex run
+  in the tunnel, authenticating with the SSH session's credentials), drops the IDE-extension
+  limitation and adds the ones the page lists now (no launch from another remote environment or
+  Docker; CLI 1.23.0 or above for agents, whose home directory is lost when serverless compute
+  shuts down). `ai-functions` limitations carry the January 2027 runtime change with the REST API
+  and `ai_similarity` exempt. `unity-gateway-skills` gets a GitHub Action fact (the folder name,
+  not `SKILL.md`, sets the identifier; the examples reference the action at `main`). All three
+  re-verified today with a release-note link added, and the `ssh-tunnel` description is re-anchored to a sentence the page still has (its old intro quote had gone too).
+
 ## 2026-11-05
 
 ### Added

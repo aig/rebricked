@@ -1,0 +1,45 @@
+id: external-knowledge-sources
+name: External knowledge sources
+aliases:
+  - External knowledge
+  - Power BI knowledge source
+  - Genie Power BI metadata
+category: AI / BI
+what:
+  note: A Genie Ontology feature that pulls metadata from external BI tools - so far Power BI semantic models - and turns their measures, calculated columns, and relationships into Ontology Snippets, so Genie answers with the definitions a team already wrote instead of asking for them again.
+  link: https://docs.databricks.com/aws/en/release-notes/product/2026/november#:~:text=You%20can%20pull%20metadata%20from%20Power%20BI%20semantic%20models%20into%20Databricks
+fact:
+  - note: Databricks reads your Power BI model through the Fabric Get Semantic Model Definition API and refreshes it every 7 days - so a measure you fix on Monday can keep steering Genie until the following week.
+    link: https://docs.databricks.com/aws/en/genie/genie-ontology/external-knowledge-sources/power-bi#:~:text=Databricks%20refreshes%20this%20metadata%20every%207%20days
+  - note: It imports your DAX measure formulas, calculated columns, and Power Query (M) expressions, but pointedly leaves the row-level security roles and the asset owners' email addresses behind.
+    link: https://docs.databricks.com/aws/en/genie/genie-ontology/external-knowledge-sources/power-bi#:~:text=Power%20BI%20asset%20owner%20email%20addresses
+  - note: Snippets made from Power BI metadata are visible to every user in the account and can't be scoped to a group - only the tables underneath stay behind Unity Catalog permissions.
+    link: https://docs.databricks.com/aws/en/genie/genie-ontology/external-knowledge-sources/power-bi#:~:text=You%20can%27t%20limit%20Ontology%20Snippets%20to%20specific%20users%20or%20groups
+status:
+  value: active
+  link: https://docs.databricks.com/aws/en/genie/genie-ontology/external-knowledge-sources/#:~:text=This%20feature%20is%20in%20Beta
+  date: '2026-11-09'
+releases:
+  - type: beta
+    date: 2026-11
+    link: https://docs.databricks.com/aws/en/release-notes/product/2026/november#:~:text=External%20knowledge%20sources%20are%20in%20Beta
+introducedAt:
+  date: 2026-11
+  link: https://docs.databricks.com/aws/en/release-notes/product/2026/november#:~:text=External%20knowledge%20sources%20are%20in%20Beta
+limitations:
+  note: Beta, switched on by an account admin from the account console Previews page, plus the Genie Ontology snippets preview and serverless compute in each workspace. Power BI is the only source so far, and it needs a Unity Catalog Power BI connection used by a Power BI job task, with the connection's service principal added as at least Contributor to each Power BI workspace. Not available in workspaces with the compliance security profile; snippets are created only for semantic models that read from Unity Catalog objects, usage activity such as report views isn't captured, and snippets can't be limited to specific users or groups.
+  link: https://docs.databricks.com/aws/en/genie/genie-ontology/external-knowledge-sources/power-bi#:~:text=External%20knowledge%20isn%27t%20available%20in%20workspaces%20with%20the%20compliance%20security%20profile
+  date: '2026-11-09'
+links:
+  - url: https://docs.databricks.com/aws/en/genie/genie-ontology/external-knowledge-sources/power-bi
+    kind: official
+    label: 'Databricks docs: Pull in metadata from Power BI (Beta)'
+  - url: https://docs.databricks.com/aws/en/release-notes/product/2026/november#:~:text=External%20knowledge%20sources%20are%20in%20Beta
+    kind: official
+    label: 'Databricks release notes: External knowledge sources are in Beta (November 5, 2026)'
+prediction:
+  - Genie Knowledge Connect
+  - External Ontology Sources
+  - Lakeflow Connect for Semantics
+source: https://docs.databricks.com/aws/en/genie/genie-ontology/external-knowledge-sources/
+verified: '2026-11-09'

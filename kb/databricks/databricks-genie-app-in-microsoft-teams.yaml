@@ -1,0 +1,54 @@
+id: databricks-genie-app-in-microsoft-teams
+name: Databricks Genie app in Microsoft Teams
+aliases:
+  - Genie for Teams
+  - Genie Teams app
+  - '@Databricks Genie'
+category: AI / BI
+what:
+  note: The Databricks-built Microsoft Teams app that brings Genie into Teams - DM it or mention @Databricks Genie in a channel or group chat to ask a data question and get the answer without leaving Teams, routed through Genie One or a pinned Genie Agent.
+  link: https://docs.databricks.com/aws/en/integrations/msft-teams#:~:text=The%20Databricks%20Genie%20app%20in%20Microsoft%20Teams%20brings%20Genie%20into%20Microsoft%20Teams
+fact:
+  - note: Whatever region your workspace is in, the app's central service runs in East US 2 - and the docs promise it doesn't persist or log any request or answer content on the way through.
+    link: https://docs.databricks.com/aws/en/integrations/msft-teams#:~:text=The%20central%20service%20doesn%27t%20persist%20or%20log%20any%20request%20or%20answer%20content
+  - note: You can upload PDF, Word, and CSV files for Genie to read, but only in a direct message with no agent pinned - in a channel it politely declines and tells you where uploads work.
+    link: https://docs.databricks.com/aws/en/integrations/msft-teams#:~:text=File%20upload%20is%20supported%20only%20in%20direct%20messages%20without%20a%20pinned%20Genie%20Agent
+  - note: It went Beta in June 2026, Public Preview in July, and generally available in November - and somewhere in between learned to accept a plain workspace URL at sign-in instead of a server hostname.
+    link: https://docs.databricks.com/aws/en/release-notes/product/2026/august#:~:text=you%20can%20now%20enter%20your%20workspace%20URL%20instead%20of%20a%20server%20hostname
+status:
+  value: active
+  link: https://docs.databricks.com/aws/en/release-notes/product/2026/november#:~:text=The%20Databricks%20Genie%20app%20in%20Microsoft%20Teams%20is%20now%20generally%20available
+  date: '2026-11-10'
+releases:
+  - type: beta
+    date: 2026-06
+    link: https://docs.databricks.com/aws/en/release-notes/product/2026/june#:~:text=The%20Databricks%20Genie%20app%20in%20Microsoft%20Teams%20is%20now%20available%20in%20Beta
+  - type: public-preview
+    date: 2026-07
+    link: https://docs.databricks.com/aws/en/release-notes/product/2026/july#:~:text=The%20Databricks%20Genie%20app%20in%20Microsoft%20Teams%20is%20now%20in%20Public%20Preview
+  - type: ga
+    date: 2026-11
+    link: https://docs.databricks.com/aws/en/release-notes/product/2026/november#:~:text=The%20Databricks%20Genie%20app%20in%20Microsoft%20Teams%20is%20now%20generally%20available
+introducedAt:
+  date: 2026-06
+  link: https://docs.databricks.com/aws/en/release-notes/product/2026/june#:~:text=The%20Databricks%20Genie%20app%20in%20Microsoft%20Teams%20is%20now%20available%20in%20Beta
+limitations:
+  note: You can't choose the SQL warehouse - Databricks picks one the user is authorized to use. A pinned Genie Agent only receives new conversations. File upload works only in direct messages with no pinned agent, takes PDF, Word (.docx), and CSV files of 20 MiB or smaller, up to five per message, and needs OneDrive for Business plus app version 1.0.17 or above; saving answers as PDFs is direct-message only too. Workspaces with an IP access list must allow the East US 2 control plane IPs, and Private Link workspaces need a context-based ingress rule for the app.
+  link: https://docs.databricks.com/aws/en/integrations/msft-teams#:~:text=You%20cannot%20specify%20which%20compute%20%28SQL%20warehouse%29%20the%20Databricks%20Genie%20app%20in%20Microsoft%20Teams%20uses
+  date: '2026-11-10'
+links:
+  - url: https://docs.databricks.com/aws/en/release-notes/product/2026/november#:~:text=The%20Databricks%20Genie%20app%20in%20Microsoft%20Teams%20is%20now%20generally%20available
+    kind: official
+    label: 'Databricks release notes: Databricks Genie app in Microsoft Teams is now generally available (November 9, 2026)'
+  - url: https://docs.databricks.com/aws/en/release-notes/product/2026/june#:~:text=The%20Databricks%20Genie%20app%20in%20Microsoft%20Teams%20is%20now%20available%20in%20Beta
+    kind: official
+    label: 'Databricks release notes: Databricks Genie app in Microsoft Teams (Beta, June 2026)'
+  - url: https://learn.microsoft.com/en-us/azure/databricks/integrations/msft-teams
+    kind: official
+    label: 'Microsoft Learn: Databricks Genie app in Microsoft Teams'
+prediction:
+  - Genie One for Teams
+  - Databricks Genie Copilot agent
+  - Teams Genie Agent
+source: https://docs.databricks.com/aws/en/integrations/msft-teams
+verified: '2026-11-10'

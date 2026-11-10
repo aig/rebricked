@@ -12,14 +12,14 @@ what:
 fact:
   - note: Your coding agent reaches the registry through an MCP server literally named databricks-skill-registry, which the Unity Gateway CLI registers for you when it signs you in.
     link: https://docs.databricks.com/aws/en/agents/uc-skills/create-share-uc-skills#:~:text=registers%20the%20Databricks%20Skills%20MCP%20server
-  - note: 'The whole setup is three commands, and the docs even hand you a prompt so your coding agent can type them itself: install the ug CLI, run ug configure, then ug skills.'
-    link: https://docs.databricks.com/aws/en/agents/uc-skills/create-share-uc-skills#:~:text=Have%20your%20agent%20install%20and%20connect%20the%20Unity%20Gateway%20CLI%20for%20you
+  - note: Since November 2026 a GitHub Action publishes skills on merge - the folder name, not the name field in SKILL.md, decides the Unity Catalog identifier, and the docs' own examples reference the action at main so they pick up its latest updates, pinned to nothing.
+    link: https://docs.databricks.com/aws/en/agents/uc-skills/create-share-uc-skills#:~:text=so%20they%20pick%20up%20its%20latest%20updates
   - note: For all the new branding underneath it is still a Unity Catalog object - the docs call a skill a first-class Unity Catalog securable.
     link: https://docs.databricks.com/aws/en/agents/uc-skills/#:~:text=a%20skill%20is%20a%20first%2Dclass%20Unity%20Catalog%20securable
 status:
   value: active
   link: https://docs.databricks.com/aws/en/agents/uc-skills/#:~:text=Unity%20Gateway%20Skills%20give%20you%20a%20central%20location
-  date: '2026-09-27'
+  date: '2026-11-09'
 releases:
   - type: beta
     date: 2026-08
@@ -30,11 +30,14 @@ from:
 limitations:
   note: Beta, and an account admin has to enable the Unity AI preview from the account console Previews page before anyone can create or use a skill. The schema must sit in a standard Unity Catalog catalog and resolve to a managed storage location or skill creation fails, and workspaces enforcing the Compliance Security Profile can read existing skills but cannot create, update, or delete them.
   link: https://docs.databricks.com/aws/en/ai-gateway/govern-skills#:~:text=creating%2C%20updating%2C%20and%20deleting%20skills%20is%20blocked
-  date: '2026-09-27'
+  date: '2026-11-09'
 links:
   - url: https://docs.databricks.com/aws/en/agents/uc-skills/create-share-uc-skills
     kind: official
     label: 'Databricks docs: Create and share Unity Gateway Skills'
+  - url: https://docs.databricks.com/aws/en/release-notes/product/2026/november#:~:text=Publish%20Git%2Dmanaged%20skills%20to%20Unity%20Catalog%20with%20a%20GitHub%20Action
+    kind: official
+    label: 'Databricks release notes: Publish Unity Gateway Skills with a GitHub Action (Beta, November 4, 2026)'
   - url: https://docs.databricks.com/aws/en/ai-gateway/govern-skills
     kind: official
     label: 'Databricks docs: Govern skills'
@@ -46,4 +49,4 @@ prediction:
   - Unity Gateway Skills One
   - Agent Bricks Skills
 source: https://docs.databricks.com/aws/en/agents/uc-skills/
-verified: '2026-09-27'
+verified: '2026-11-09'
