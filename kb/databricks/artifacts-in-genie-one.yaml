@@ -1,0 +1,43 @@
+id: artifacts-in-genie-one
+name: Artifacts in Genie One
+aliases:
+  - Genie One artifacts
+  - Genie artifacts
+  - Slides in Genie One
+  - Genie One slides
+category: AI / BI
+what:
+  note: Slide decks and other custom visual pages that Genie One builds from your data and saves to your workspace, where you edit, present, and share them - and anyone viewing can Ask Genie about the data behind a chart or number.
+  link: https://docs.databricks.com/aws/en/genie-one/artifacts#:~:text=Artifacts%20are%20slide%20decks%20and%20other%20custom%20visual%20pages%20that%20Genie%20One%20builds%20from%20your%20data
+fact:
+  - note: An artifact carries a snapshot of its query results around with it, so anyone who can view the artifact can see its data, source-table access or not - and the snapshot never updates when the source data changes.
+    link: https://docs.databricks.com/aws/en/genie-one/artifacts#:~:text=Anyone%20who%20can%20view%20the%20artifact%20can%20see%20its%20data
+  - note: The name was already taken in-house, so the docs stop to clarify that Genie One artifacts are unrelated to MLflow artifacts, the files MLflow logs with a model run.
+    link: https://docs.databricks.com/aws/en/genie-one/artifacts#:~:text=unrelated%20to%20MLflow%20artifacts
+  - note: Slide decks come with speaker notes and a Presenter view, and when the audience asks about a number you can select it, Ask Genie, and carry on - the presentation keeps running while Genie works on the answer.
+    link: https://docs.databricks.com/aws/en/genie-one/slides#:~:text=The%20presentation%20keeps%20running%20while%20Genie%20works%20on%20the%20answer
+status:
+  value: active
+  link: https://docs.databricks.com/aws/en/ai-bi/release-notes/2026#:~:text=Artifacts%20and%20slides%20in%20Genie%20One
+  date: '2026-11-13'
+releases:
+  - type: beta
+    date: 2026-11
+    link: https://docs.databricks.com/aws/en/ai-bi/release-notes/2026#:~:text=Artifacts%20and%20slides%20in%20Genie%20One
+introducedAt:
+  date: 2026-11
+  link: https://docs.databricks.com/aws/en/ai-bi/release-notes/2026#:~:text=Artifacts%20and%20slides%20in%20Genie%20One
+limitations:
+  note: Beta, turned on by a workspace admin through the Artifacts preview. Each stored file has a size limit - 5 MB for data, 5 MB for pages and components, 10 MB for images - and printing or saving as PDF allows at most 50 MB across all files. Artifacts run in a sandbox without network access, so they can't load external scripts, fonts, or images or write data back to tables or external systems, and their data is a snapshot that does not refresh.
+  link: https://docs.databricks.com/aws/en/genie-one/artifacts#:~:text=Artifacts%20run%20in%20a%20sandbox%20without%20network%20access
+  date: '2026-11-13'
+links:
+  - url: https://docs.databricks.com/aws/en/genie-one/slides
+    kind: official
+    label: 'Databricks docs: Slides in Genie One (Beta)'
+prediction:
+  - Genie Slides
+  - Genie Canvas
+  - Genie One Decks
+source: https://docs.databricks.com/aws/en/genie-one/artifacts
+verified: '2026-11-13'

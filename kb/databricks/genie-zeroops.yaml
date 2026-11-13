@@ -5,23 +5,26 @@ aliases:
   - Genie background agent
 category: Data engineering
 what:
-  note: A background agent in the Genie family that monitors your jobs, pipelines and tables, detects failures and data quality issues, identifies the root cause and downstream impact, and proposes a fix in an inbox of insights.
+  note: A background agent in the Genie family that monitors your jobs, pipelines and tables, detects failures and data quality issues, identifies the root cause, and proposes a fix in an inbox of insights.
   link: https://docs.databricks.com/aws/en/zeroops/#:~:text=background%20agent%20that%20monitors%20your%20jobs%2C%20pipelines%2C%20and%20tables
 fact:
-  - note: It is discreet about things you are not allowed to see - if the root cause is an asset you lack access to, it will not name it and just reports that an upstream job or pipeline failed.
-    link: https://docs.databricks.com/aws/en/zeroops/#:~:text=reports%20that%20an%20upstream%20job%20or%20pipeline%20failed
-  - note: One root cause, one ticket - when a single problem breaks several assets, it rolls them into one insight instead of reporting each casualty separately.
-    link: https://docs.databricks.com/aws/en/zeroops/#:~:text=groups%20them%20into%20one%20insight
-  - note: 'Zero ops does not mean zero hands: it proposes the fix and links you to the source, but you generate the fix yourself or by prompting Genie Code.'
-    link: https://docs.databricks.com/aws/en/zeroops/#:~:text=you%20generate%20the%20fix%20yourself
+  - note: It does not wait to be asked - where a prompt-driven assistant responds when you call it, this one runs continuously without a prompt and surfaces issues for you to act on.
+    link: https://docs.databricks.com/aws/en/zeroops/#:~:text=runs%20continuously%20without%20a%20prompt
+  - note: 'Zero ops does not mean zero review: for a job that runs code from Git it will prepare the change, but it pushes a fix to a new branch only after you explicitly ask it to and confirm the push.'
+    link: https://docs.databricks.com/aws/en/zeroops/#:~:text=pushes%20a%20fix%20only%20after%20you%20explicitly%20ask%20it%20to%20and%20confirm%20the%20push
+  - note: Before an insight's title or summary goes out in a notification, it checks the text for sensitive information such as names and email addresses and masks what it finds.
+    link: https://docs.databricks.com/aws/en/zeroops/#:~:text=checks%20that%20text%20for%20sensitive%20information
 status:
   value: active
-  link: https://docs.databricks.com/aws/en/zeroops/#:~:text=This%20feature%20is%20in%20Private%20Preview
-  date: '2026-09-27'
+  link: https://docs.databricks.com/aws/en/release-notes/product/2026/november#:~:text=Genie%20ZeroOps%20is%20available%20in%20Beta
+  date: '2026-11-13'
 releases:
   - type: private-preview
     date: '2026'
-    link: https://docs.databricks.com/aws/en/zeroops/#:~:text=This%20feature%20is%20in%20Private%20Preview
+    link: https://www.databricks.com/blog/introducing-genie-zeroops#:~:text=entering%20private%20preview%20in%20the%20coming%20weeks
+  - type: beta
+    date: 2026-11
+    link: https://docs.databricks.com/aws/en/release-notes/product/2026/november#:~:text=Genie%20ZeroOps%20is%20available%20in%20Beta
 introducedAt:
   date: 2026-06
   link: https://www.databricks.com/blog/introducing-genie-zeroops#:~:text=an%20autonomous%20background%20agent%20that%20monitors%20your%20data%20and%20AI%20assets
@@ -30,10 +33,13 @@ occasion:
   link: https://www.databricks.com/blog/whats-new-genie-code-data-ai-summit-2026#:~:text=introduced%20Genie%20ZeroOps
   note: Data + AI Summit 2026
 limitations:
-  note: Private Preview (free, but detecting data quality issues needs data quality monitoring, billed separately). Monitors only jobs, pipelines and tables - not models or apps - and detects failures and data quality issues, not performance or cost regressions. It does not validate fixes in a production sandbox, works per workspace rather than per account, keeps its configuration and insights private to the user who set it up, and is not HIPAA compliant.
-  link: https://docs.databricks.com/aws/en/zeroops/#:~:text=does%20not%20validate%20fixes%20in%20a%20production%20sandbox
-  date: '2026-09-27'
+  note: Beta, turned on by a workspace admin from the Previews page. Monitors only jobs, pipelines and tables - not models or apps - and detects failures and data quality issues, not performance or cost regressions. It works per workspace rather than per account, a configuration can be shared with up to 25 individual workspace users but not with groups or service principals, it is not HIPAA compliant, and detecting data quality issues needs separately billed data quality monitoring.
+  link: https://docs.databricks.com/aws/en/zeroops/#:~:text=It%20does%20not%20detect%20performance%20or%20cost%20regressions
+  date: '2026-11-13'
 links:
+  - url: https://docs.databricks.com/aws/en/release-notes/product/2026/november
+    kind: official
+    label: 'Databricks release notes: Genie ZeroOps is available in Beta (November 12, 2026)'
   - url: https://www.databricks.com/blog/introducing-genie-zeroops
     kind: official
     label: 'Databricks blog: Introducing Genie ZeroOps (June 16, 2026)'
@@ -45,4 +51,4 @@ prediction:
   - Genie NoOps
   - Lakeflow Autopilot
 source: https://docs.databricks.com/aws/en/zeroops/
-verified: '2026-09-27'
+verified: '2026-11-13'

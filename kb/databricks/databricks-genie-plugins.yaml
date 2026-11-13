@@ -1,0 +1,39 @@
+id: databricks-genie-plugins
+name: Databricks Genie plugins
+aliases:
+  - Databricks Genie plugin
+  - Databricks Genie connector
+  - Genie plugin for ChatGPT
+  - Genie connector for Claude
+  - Genie plugin for Cursor
+category: AI / BI
+what:
+  note: Plugins that connect ChatGPT, Claude, and Grok Bot/Cursor to the Genie One MCP, so users can ask questions about their data from those tools - an admin sets the plugin up once, then each user connects and signs in with their Databricks account.
+  link: https://docs.databricks.com/aws/en/agents/mcp-tools/genie-mcp#:~:text=The%20Databricks%20Genie%20plugins%20connect%20ChatGPT%2C%20Claude%2C%20and
+fact:
+  - note: Nobody has to register an OAuth app first - the plugins ride on default OAuth apps, so users simply sign in with their Databricks account.
+    link: https://docs.databricks.com/aws/en/agents/mcp-tools/genie-mcp#:~:text=They%20use%20default%20OAuth%20apps
+  - note: One product, two nouns - it is a plugin in ChatGPT and Cursor, but in Claude the same thing is the Databricks Genie connector, set up from Customize.
+    link: https://docs.databricks.com/aws/en/release-notes/product/2026/november#:~:text=The%20Databricks%20Genie%20connector%20connects%20Claude%20to%20the%20Genie%20One%20MCP
+  - note: A locked-down workspace will quietly refuse them - if inbound network access is restricted, a Databricks admin has to allow ChatGPT or Claude traffic as a partner platform before the plugin can connect.
+    link: https://docs.databricks.com/aws/en/agents/mcp-tools/genie-mcp#:~:text=a%20Databricks%20admin%20must%20allow%20ChatGPT%20or%20Claude%20traffic
+status:
+  value: active
+  link: https://docs.databricks.com/aws/en/release-notes/product/2026/november#:~:text=The%20Databricks%20Genie%20plugin%20connects%20ChatGPT%20to%20the%20Genie%20One%20MCP
+  date: '2026-11-13'
+introducedAt:
+  date: 2026-11
+  link: https://docs.databricks.com/aws/en/release-notes/product/2026/november#:~:text=The%20Databricks%20Genie%20plugin%20connects%20ChatGPT%20to%20the%20Genie%20One%20MCP
+links:
+  - url: https://docs.databricks.com/aws/en/security/network/front-end/partner-platforms
+    kind: official
+    label: 'Databricks docs: Allow partner platforms in context-based ingress policies'
+  - url: https://www.databricks.com/blog/bring-your-business-context-chatgpt-claude-microsoft-copilot-cowork-and-grok-bot
+    kind: official
+    label: 'Databricks blog: Bring your business context to ChatGPT, Claude, Microsoft Copilot Cowork and Grok Bot (November 11, 2026)'
+prediction:
+  - Genie Everywhere
+  - Databricks Genie plugins One
+  - Genie Connect
+source: https://docs.databricks.com/aws/en/agents/mcp-tools/genie-mcp
+verified: '2026-11-13'

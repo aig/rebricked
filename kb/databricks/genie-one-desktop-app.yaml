@@ -1,0 +1,52 @@
+id: genie-one-desktop-app
+name: Genie One desktop app
+aliases:
+  - Genie One for macOS
+  - Genie One for Windows
+  - Genie desktop app
+  - Genie One on desktop
+category: AI / BI
+what:
+  note: A native app for macOS and Windows that opens Genie One in its own window instead of a browser tab, with the same capabilities as the web experience plus window navigation controls, automatic updates and, on macOS, a dock badge for unread activity.
+  link: https://docs.databricks.com/aws/en/genie-one/desktop#:~:text=native%20app%20for%20macOS%20and%20Windows
+fact:
+  - note: There is no admin switch for it - Databricks provides no control to enable, disable, or restrict the app, so an organization that wants a say takes it up with its mobile device management.
+    link: https://docs.databricks.com/aws/en/genie-one/desktop#:~:text=does%20not%20provide%20an%20admin%20control%20to%20enable%2C%20disable%2C%20or%20restrict%20the%20desktop%20app
+  - note: It keeps only Genie One for itself - links to the rest of the workspace, such as settings, SQL, jobs, or compute, are shown the door and open in your default browser.
+    link: https://docs.databricks.com/aws/en/genie-one/desktop#:~:text=open%20in%20your%20default%20browser
+  - note: Signing out is partly ceremonial - it clears your session in the app, but the workspace session stays valid until it expires.
+    link: https://docs.databricks.com/aws/en/genie-one/desktop#:~:text=your%20workspace%20session%20remains%20valid%20until%20it%20expires
+status:
+  value: active
+  link: https://docs.databricks.com/aws/en/ai-bi/release-notes/2026#:~:text=The%20Genie%20One%20desktop%20app%20is%20now%20generally%20available%20on%20macOS
+  date: '2026-11-13'
+releases:
+  - type: beta
+    date: 2026-08
+    link: https://docs.databricks.com/aws/en/release-notes/product/2026/august#:~:text=The%20Genie%20One%20desktop%20app%20for%20macOS%20is%20in%20Beta
+  - type: ga
+    date: 2026-11
+    link: https://docs.databricks.com/aws/en/ai-bi/release-notes/2026#:~:text=The%20Genie%20One%20desktop%20app%20is%20now%20generally%20available%20on%20macOS
+introducedAt:
+  date: 2026-08
+  link: https://docs.databricks.com/aws/en/release-notes/product/2026/august#:~:text=The%20Genie%20One%20desktop%20app%20for%20macOS%20is%20in%20Beta
+limitations:
+  note: Generally available on macOS only - the Windows app is still in Beta, and the unread-activity badge and Clear notifications option are macOS only. Databricks provides no admin control to enable, disable, or restrict the app (manage it through your MDM), and signing out clears the app session while the workspace session stays valid until it expires.
+  link: https://docs.databricks.com/aws/en/genie-one/desktop#:~:text=The%20macOS%20app%20is%20generally%20available
+  date: '2026-11-13'
+links:
+  - url: https://docs.databricks.com/aws/en/release-notes/product/2026/august
+    kind: official
+    label: 'Databricks release notes: the Genie One desktop app for macOS is in Beta (August 2026)'
+  - url: https://docs.databricks.com/aws/en/release-notes/product/2026/november
+    kind: official
+    label: 'Databricks release notes: the Genie One desktop app for Windows is in Beta (November 11, 2026)'
+  - url: https://docs.databricks.com/aws/en/ai-bi/release-notes/2026
+    kind: official
+    label: 'AI/BI and Genie One release notes: Genie One desktop app is generally available on macOS (November 12, 2026)'
+prediction:
+  - Genie One Desktop One
+  - Genie Workstation
+  - Genie One for Linux
+source: https://docs.databricks.com/aws/en/genie-one/desktop
+verified: '2026-11-13'

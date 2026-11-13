@@ -9,6 +9,62 @@ shows the what. Plain, simple English: short sentences, common words, no jargon 
 and product names themselves. Some older entries have no `Why:` line - the reason was never
 recorded, and a made-up reason is worse than none.
 
+## 2026-11-13
+
+### Added
+- **November 10-13 put Genie One on the desktop, in the browser's new tab, and inside other
+  vendors' chat apps: four new cards.**
+
+  **Why:** a refresh of the release-notes mirror found the November pages had grown again
+  (November 10-13 on the platform notes, a November 12 block on the AI/BI notes, and a run of
+  November 11 launch blogs). Four named things had no card. The Genie One desktop app has been in
+  Beta on macOS since August and was never carded; it went GA on macOS and Beta on Windows this
+  week. The Genie One Chrome extension and Artifacts in Genie One (slide decks included) are new
+  Beta features with their own doc pages. The Databricks Genie plugins for ChatGPT, Claude, and
+  Grok Bot/Cursor have three release notes and a launch blog - someone searching "Genie plugin"
+  or "Genie connector" found nothing. Everything else in the window changed no name: OAuth
+  on-behalf-of for service principals going GA, Python service policies, ABAC DENY on AI
+  securables, budget webhooks, bring-your-own ChatGPT subscription, GitHub Copilot through Unity
+  Gateway, the Auto access mode default for jobs compute, and the Gemini model churn (models
+  aren't carded here).
+
+  **What:** four new `active` entries in AI / BI, all wired into the Genie Agents section:
+  `genie-one-desktop-app` (Beta August 2026, GA November - the GA is macOS only, and the
+  limitations say the Windows app is still Beta), `genie-one-chrome-extension` (Beta November
+  2026), `artifacts-in-genie-one` (Beta November 2026, with "Slides in Genie One" as an alias
+  because slides are one type of artifact and share its preview), and `databricks-genie-plugins`
+  (November 2026, no `releases` because the notes give no maturity stage). Each carries the
+  limitations from its own page except the plugins, whose page lists none.
+
+### Fixed
+- **Three cards were a maturity stage behind, and the docs had rewritten most of their quotes.**
+
+  **Why:** Genie ZeroOps went from Private Preview to Beta on November 12, Pages went GA on
+  November 11, and standalone pipelines on serverless general compute went GA the same day. All
+  three cards still showed the old stage. The pages behind them had also been reworded: every
+  ZeroOps fact quoted a sentence that is no longer there, two Pages quotes were gone (the "stored
+  in plain text" warning now says the data is encrypted with Databricks-managed keys), and the
+  standalone pipelines docs moved from `/ldp/dbsql/` to `/sql/mv-st/`.
+
+  **What:** `genie-zeroops` gets a `beta` November 2026 stage, three new facts from the live page,
+  and limitations rewritten to what the page now lists (sharing with up to 25 individual users is
+  new; the "no production sandbox" line is gone). Its Private Preview stage now cites the launch
+  blog, since the docs page no longer says Private Preview. `pages` gets a `ga` stage, two
+  re-sourced facts, and limitations that add the compliance-profile and GovCloud rules and drop
+  the Beta gate. `standalone-pipelines` gets a `ga` stage and its links repointed to the new
+  paths. `status.date`, `limitations.date`, and `verified` bumped to today on all three.
+
+- **`genie-one-mcp-server` gave the wrong date for the Beta endpoint's shutdown.**
+
+  **Why:** the card said `/api/2.0/mcp/genie` would be sunset on October 31, 2026. The live page
+  now says it reaches end of life on November 30, 2026, so the card was telling people the
+  endpoint was already dead. The `status.link` quote ("is generally available") had also dropped
+  off the page.
+
+  **What:** the fact and the limitations now say November 30, 2026, and `status.link` points at
+  the September GA release note. `check_anchors.py` confirms all 95 URLs and quotes across the
+  eight touched cards.
+
 ## 2026-11-10
 
 ### Added

@@ -1,0 +1,42 @@
+id: genie-one-chrome-extension
+name: Genie One Chrome extension
+aliases:
+  - Genie One extension
+  - Genie One new tab page
+  - Genie One Chrome new tab
+category: AI / BI
+what:
+  note: A Chrome extension that replaces the new tab page with the Genie One home page from one chosen Databricks workspace, using your existing Databricks sign-in and permissions.
+  link: https://docs.databricks.com/aws/en/genie-one/chrome-extension#:~:text=replaces%20the%20Chrome%20new%20tab%20page%20with%20Genie%20One
+fact:
+  - note: Chrome only, version 102 or above - the docs take the trouble to name Firefox and Safari, as not supported.
+    link: https://docs.databricks.com/aws/en/genie-one/chrome-extension#:~:text=Firefox%20and%20Safari%20are%20not%20supported
+  - note: Clicking a link to a site outside Databricks from the new tab does nothing at all - the documented workaround is to hold Cmd or Ctrl while you click.
+    link: https://docs.databricks.com/aws/en/genie-one/chrome-extension#:~:text=Clicking%20a%20link%20to%20a%20site%20outside%20Databricks%20has%20no%20effect
+  - note: It remembers up to five recent workspaces but shows exactly one at a time, and there is no Databricks admin setting for it - blocking or force-installing it is a job for Chrome browser management policies.
+    link: https://docs.databricks.com/aws/en/genie-one/chrome-extension#:~:text=The%20extension%20remembers%20up%20to%20five%20recent%20workspaces
+status:
+  value: active
+  link: https://docs.databricks.com/aws/en/release-notes/product/2026/november#:~:text=The%20Genie%20One%20Chrome%20extension%20is%20in%20Beta
+  date: '2026-11-13'
+releases:
+  - type: beta
+    date: 2026-11
+    link: https://docs.databricks.com/aws/en/release-notes/product/2026/november#:~:text=The%20Genie%20One%20Chrome%20extension%20is%20in%20Beta
+introducedAt:
+  date: 2026-11
+  link: https://docs.databricks.com/aws/en/release-notes/product/2026/november#:~:text=The%20Genie%20One%20Chrome%20extension%20is%20in%20Beta
+limitations:
+  note: Beta, and Chrome 102 or above only. Some workspaces can't be displayed inside the new tab and open as a full page after a short countdown, links to sites outside Databricks do nothing unless you hold Cmd or Ctrl, only one extension can control the Chrome new tab page at a time, there is no Databricks admin setting to turn it on or off, and it is not supported for workspaces in AWS GovCloud.
+  link: https://docs.databricks.com/aws/en/genie-one/chrome-extension#:~:text=Only%20one%20extension%20can%20control%20the%20Chrome%20new%20tab%20page%20at%20a%20time
+  date: '2026-11-13'
+links:
+  - url: https://docs.databricks.com/aws/en/ai-bi/release-notes/2026
+    kind: official
+    label: 'AI/BI and Genie One release notes: Use Genie One as your Chrome new tab page (Beta), November 12, 2026'
+prediction:
+  - Genie One for Firefox
+  - Genie Tab
+  - Genie One Browser
+source: https://docs.databricks.com/aws/en/genie-one/chrome-extension
+verified: '2026-11-13'
