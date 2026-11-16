@@ -1,0 +1,41 @@
+id: flows-in-unity-catalog
+name: Flows in Unity Catalog
+aliases:
+  - pipeline flows
+  - FLOW securable
+  - READ FLOW
+  - REFRESH FLOW
+  - WRITE FLOW
+  - CREATE FLOW
+category: Data governance
+what:
+  note: Each Lakeflow pipeline flow as its own Unity Catalog securable object, living in a schema beside the tables it writes to under a three-level catalog.schema.flow_name, so you can grant someone the right to read, refresh, or reset one flow without handing over the pipeline or the target table.
+  link: https://docs.databricks.com/aws/en/data-governance/unity-catalog/flows#:~:text=each%20flow%20is%20a%20securable%20object%20that%20lives%20in%20a%20schema
+fact:
+  - note: WRITE FLOW writes no data - the privilege with the most alarming name is the one that lets you reset or rewind the flow's streaming checkpoint.
+    link: https://docs.databricks.com/aws/en/data-governance/unity-catalog/flows#:~:text=Reset%20or%20rewind%20the%20flow%27s%20streaming%20checkpoint.
+  - note: You can be granted everything on a flow and still never own it - the pipeline that defines the flow manages its ownership.
+    link: https://docs.databricks.com/aws/en/data-governance/unity-catalog/flows#:~:text=The%20pipeline%20manages%20the%20flow%27s%20ownership.
+  - note: Most flows never need the CREATE FLOW privilege - a flow created implicitly along with a new target table is covered by CREATE TABLE, and CREATE FLOW only applies when the flow is defined explicitly.
+    link: https://docs.databricks.com/aws/en/data-governance/unity-catalog/flows#:~:text=when%20the%20flow%20is%20created%20implicitly%20with%20a%20new%20target%20table
+status:
+  value: active
+  link: https://docs.databricks.com/aws/en/data-governance/unity-catalog/flows#:~:text=This%20feature%20is%20in%20Beta
+  date: '2026-11-16'
+releases:
+  - type: beta
+    date: 2026-11
+    link: https://docs.databricks.com/aws/en/release-notes/product/2026/november#:~:text=Pipeline%20flows%20are%20now%20securable%20objects%20in%20Unity%20Catalog
+introducedAt:
+  date: 2026-11
+  link: https://docs.databricks.com/aws/en/release-notes/product/2026/november#:~:text=Pipeline%20flows%20are%20now%20securable%20objects%20in%20Unity%20Catalog
+links:
+  - url: https://docs.databricks.com/aws/en/release-notes/product/2026/november#:~:text=Pipeline%20flows%20are%20now%20securable%20objects%20in%20Unity%20Catalog
+    kind: official
+    label: 'Databricks release notes: Flows are securable objects in Unity Catalog (Beta, November 12, 2026)'
+prediction:
+  - Lakeflow Flows
+  - Unity Flows
+  - Genie Flows
+source: https://docs.databricks.com/aws/en/data-governance/unity-catalog/flows
+verified: '2026-11-16'

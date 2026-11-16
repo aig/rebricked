@@ -11,6 +11,28 @@ recorded, and a made-up reason is worse than none.
 
 ## 2026-11-16
 
+### Added
+- **Pipeline flows became a Unity Catalog securable on November 12, and nothing here said so:
+  `flows-in-unity-catalog`.**
+
+  **Why:** a refresh of the release-notes mirror showed the November page had two items the
+  November 13 sweep did not cover. "Flows are securable objects in Unity Catalog (Beta)" adds a
+  new securable type with its own doc page and five new privilege names (`READ FLOW`,
+  `REFRESH FLOW`, `WRITE FLOW`, `CREATE FLOW`, plus `MANAGE`). Someone searching "WRITE FLOW" or
+  "flow securable" found nothing. The other item, AI Function task support in Declarative
+  Automation Bundles (Beta, November 13), changes no name, but the card for that task did not
+  mention bundles at all. Everything else new in the window changed no name: Postgres 18.7,
+  17.12, and 16.16 on Lakebase, links opening in the Genie mobile app, scheduled tasks emailing
+  other users, the Connectors section in Genie Agent settings, and the dashboard pivot-table
+  fixes. Two new blog posts were mirrored (a Spark vs Flink explainer and a guide to skills in
+  Genie One); neither names anything new.
+
+  **What:** one new `active` entry, `flows-in-unity-catalog` (Data governance, Beta November
+  2026), wired into both the Catalog and the Jobs & Pipelines sections. No `limitations`,
+  because the page lists none. `ai-function-tasks-for-jobs` gets a link to the bundle
+  `ai_function_task` reference and `verified` bumped to today. `check_anchors.py` confirms all
+  20 URLs and quotes across the two cards.
+
 ### Changed
 - **One RSS feed per vendor: Snowflake moved out of `feed.xml` into `feed.snowflake.xml`.**
 

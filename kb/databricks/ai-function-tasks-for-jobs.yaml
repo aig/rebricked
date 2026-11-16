@@ -34,5 +34,8 @@ links:
   - url: https://docs.databricks.com/aws/en/release-notes/product/2026/november
     kind: official
     label: 'Databricks release notes: AI Function tasks for jobs (Beta, November 4, 2026)'
+  - url: https://docs.databricks.com/aws/en/dev-tools/bundles/job-task-types#:~:text=including%20support%20in%20Declarative%20Automation%20Bundles%2C%20is%20in%20Beta
+    kind: official
+    label: 'Databricks docs: the ai_function_task key in Declarative Automation Bundles (Beta, November 13, 2026)'
 source: https://docs.databricks.com/aws/en/jobs/tasks/ai-functions/
-verified: '2026-11-05'
+verified: '2026-11-16'
