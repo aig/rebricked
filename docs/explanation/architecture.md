@@ -9,7 +9,7 @@ assembles data. This page is about why that line sits exactly where it does.
 ```
 kb/<vendor>/*.yaml   ──build_features.py──> www/<vendor>.features.json ──fetch()──> www/app.js
 kb/posts/<slug>/     ──build_posts.py─────> www/learn/, www/posts.json
-        (both)       ──build_entries.py───> www/<vendor>/, sitemap.xml, feed.xml
+        (both)       ──build_entries.py───> www/<vendor>/, sitemap.xml, feed*.xml
      (templates)     ──build_badges.py────> www/badges/          [committed, needs a browser]
 ```
 

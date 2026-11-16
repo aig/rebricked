@@ -22,7 +22,7 @@ What each build step gets you:
 |---|---|
 | `build_features.py` | anything at all - the app fetches its output |
 | `build_posts.py` | `/learn/` and `/learn/<slug>/` |
-| `build_entries.py` | `/databricks/`, `/databricks/<id>/`, `sitemap.xml`, `feed.xml` |
+| `build_entries.py` | `/databricks/`, `/databricks/<id>/`, `sitemap.xml`, `feed.xml`, `feed.snowflake.xml` |
 | `build_badges.py` | `/badges/<n>-of-5/` (already committed; only rerun if you changed them) |
 
 ## The pre-commit checklist

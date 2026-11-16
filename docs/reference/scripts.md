@@ -1,6 +1,6 @@
 # Scripts
 
-Eight scripts in [`scripts/`](../../scripts/). All are run as `python scripts/<name>.py` from the repo
+Nine scripts in [`scripts/`](../../scripts/). All are run as `python scripts/<name>.py` from the repo
 root. PyYAML is the only dependency, and only for the ones marked below; the site itself ships with
 none.
 
@@ -61,13 +61,16 @@ never copied.
 | | |
 |---|---|
 | Reads | `www/*.features.json` (one per vendor), `www/posts.json` |
-| Writes | `www/{vendor}/index.html` (hub), `www/{vendor}/{id}/index.html`, `www/sitemap.xml`, `www/feed.xml` - all gitignored |
+| Writes | `www/{vendor}/index.html` (hub), `www/{vendor}/{id}/index.html`, `www/sitemap.xml`, `www/feed.xml`, `www/feed.<vendor>.xml` - all gitignored |
 | Needs | nothing beyond the standard library; imports `chrome.py` (and through it `build_badges.py`) for the per-vendor chrome. No browser |
 | Flags | none |
 
 Each entry page gets a unique `<title>`, description, canonical URL, Open Graph and Twitter tags,
-JSON-LD, the full content, and internal links to related entries. `feed.xml` is RSS 2.0, newest
-tracked change first, with one `[Guide]` item per post. Vendor comes from the optional `vendor`
+JSON-LD, the full content, and internal links to related entries. There is one RSS 2.0 feed per
+vendor, newest tracked change first, and a feed never mixes vendors: `feed.xml` is the default
+vendor's (Databricks) and also carries one `[Guide]` item per post; every other vendor gets
+`feed.<vendor>.xml` (`feed.snowflake.xml`) with its entries only. Each generated page's
+`<link rel="alternate">` points at its own vendor's feed. Vendor comes from the optional `vendor`
 field, default `databricks`, and is stamped on `<html data-vendor="...">` so the stylesheet can
 swap a whole console palette from one attribute.
 
@@ -211,6 +214,26 @@ Incremental: ETag and Last-Modified per page go into the manifest and come back 
 one URL or a list, `include`/`exclude`, `urls`, `refresh`, `content`, `keep_html`) and the current
 source ids are listed in [how-to/refresh-the-reference-mirror.md](../how-to/refresh-the-reference-mirror.md#track-another-site).
 Add a source by editing `sources.json` - no code change.
+
+## fetch_extension.py
+
+**The extension fetcher.** Downloads a Chrome Web Store extension package and unpacks it, for the
+entries whose subject ships as a browser extension rather than a docs page. The manifest is the
+primary source for what such an extension asks for (permissions, host patterns, version).
+
+| | |
+|---|---|
+| Reads | nothing local |
+| Writes | `reference/extensions/<id>/<id>-<version>.crx` (as served), `<id>-<version>.zip` (CRX header stripped), and `<version>/` (the unpacked files) - all gitignored |
+| Needs | network access. Standard library only |
+| Flags | `--out DIR` (write under another directory), `--no-unpack` (keep the `.crx` and `.zip` only), `--prodversion X` (the Chrome version to ask as) |
+| Args | one Chrome Web Store URL or a bare 32-character extension id |
+
+It asks the store's update service, the endpoint Chrome itself uses, which only answers for a
+Chrome version it considers current: an empty reply usually means `--prodversion` needs raising.
+Nothing downloaded is executed - the package is saved and unzipped, and a member whose path would
+escape the target directory aborts the run. Prints the manifest's name, version, `permissions`, and
+`host_permissions` when it finishes.
 
 ## What CI runs
 

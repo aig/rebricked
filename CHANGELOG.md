@@ -9,6 +9,27 @@ shows the what. Plain, simple English: short sentences, common words, no jargon 
 and product names themselves. Some older entries have no `Why:` line - the reason was never
 recorded, and a made-up reason is worse than none.
 
+## 2026-11-16
+
+### Changed
+- **One RSS feed per vendor: Snowflake moved out of `feed.xml` into `feed.snowflake.xml`.**
+
+  **Why:** `feed.xml` carried every vendor's entries, so people who subscribed for Databricks
+  renames started getting Snowflake ones too, in a feed the subscribe page still describes as
+  Databricks. And a Snowflake reader had no feed of their own: the Snowflake hub's pages
+  advertised the mixed feed.
+
+  **What:** `build_entries.py` now writes one feed per vendor folder. `feed.xml` keeps its URL
+  and is Databricks only, plus the `[Guide]` items (existing subscribers are not moved). Every
+  other vendor gets `feed.<vendor>.xml`, so Snowflake is at `/feed.snowflake.xml` with its own
+  title, description, and a channel link to `/snowflake/`; guides are not repeated there. Each
+  generated page's `<link rel="alternate">` now points at its own vendor's feed (`HEAD` takes a
+  `feed_link` value; `feed_name()`, `feed_title()`, and `feed_link()` derive everything from the
+  vendor, so a new `kb/<vendor>/` folder gets a feed with no code change). `index.html`'s feed
+  title is Databricks only again, the subscribe page links the Snowflake feed, and
+  `/www/feed.*.xml` is gitignored. Docs updated: `AGENTS.md`, `docs/reference/scripts.md`,
+  `docs/reference/generated-output.md`, `docs/explanation/the-seo-layer.md`.
+
 ## 2026-11-13
 
 ### Added
@@ -35,6 +56,18 @@ recorded, and a made-up reason is worse than none.
   because slides are one type of artifact and share its preview), and `databricks-genie-plugins`
   (November 2026, no `releases` because the notes give no maturity stage). Each carries the
   limitations from its own page except the plugins, whose page lists none.
+
+- **A script to download a Chrome Web Store extension: `scripts/fetch_extension.py`.**
+
+  **Why:** the Genie One Chrome extension is the first thing tracked here that ships as a store
+  package, not a docs page. The docs describe it; the package says what it really asks the browser
+  for. There was no way to get that package without installing the extension.
+
+  **What:** `python scripts/fetch_extension.py <store URL or id>` saves the `.crx`, a plain `.zip`
+  with the CRX header stripped, and the unpacked files under `reference/extensions/<id>/`
+  (gitignored, like the rest of the mirror), then prints the manifest's name, version, and
+  permissions. Standard library only, and nothing downloaded is run. Documented in
+  `docs/reference/scripts.md`, `docs/reference/generated-output.md`, and `AGENTS.md`.
 
 ### Fixed
 - **Three cards were a maturity stage behind, and the docs had rewritten most of their quotes.**

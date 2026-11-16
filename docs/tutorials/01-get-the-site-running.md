@@ -81,7 +81,7 @@ Confirm each of these works, because each one is a contract you can break later:
 ```
 kb/databricks/*.yaml  --build_features.py-->  www/databricks.features.json  --fetched by--> www/app.js
 kb/posts/<slug>/      --build_posts.py----->  www/learn/, www/posts.json
-        (both)        --build_entries.py--->  www/databricks/, sitemap.xml, feed.xml
+        (both)        --build_entries.py--->  www/databricks/, sitemap.xml, feed*.xml
 ```
 
 Everything on the right of an arrow is generated and gitignored. Everything on the left is

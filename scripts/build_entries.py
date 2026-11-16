@@ -16,7 +16,8 @@ The vendor segment is what keeps the namespaces apart: every www/<vendor>.featur
 read, each entry is stamped with the vendor it was built from (or its own `vendor` field), and
 each vendor gets its own top-level namespace (/databricks/..., /snowflake/...). Adding a vendor
 is a new kb/ folder and a VENDOR_LABEL entry, not a code change. It also (re)writes sitemap.xml
-and feed.xml (an RSS 2.0 feed of every entry, newest tracked change first).
+and one RSS 2.0 feed per vendor, newest tracked change first (feed.xml for Databricks,
+feed.<vendor>.xml for every other vendor).
 
 The visible chrome (sidebar rail + topbar) is reused verbatim from build_badges.py, with its
 root-relative `../../` rewritten to match each page's depth.
@@ -53,7 +54,6 @@ DATA_GLOB = "*.features.json"
 # the two builds stay independently runnable.
 POSTS = WWW / "posts.json"
 SITEMAP = WWW / "sitemap.xml"
-FEED = WWW / "feed.xml"
 TOTAL_BADGES = 5
 
 # The vendor an entry belongs to when it carries no `vendor` field. Only the databricks
@@ -146,6 +146,25 @@ def vendor_of(d):
 
 def vendor_name(v):
     return VENDOR_LABEL.get(v, v.replace("-", " ").title())
+
+
+def feed_name(v=DEFAULT_VENDOR):
+    """One RSS feed per vendor. The default vendor keeps the original /feed.xml (existing
+    subscribers must not be moved); every other vendor gets /feed.<vendor>.xml."""
+    return "feed.xml" if v == DEFAULT_VENDOR else f"feed.{v}.xml"
+
+
+def feed_title(v=DEFAULT_VENDOR):
+    return f"REbricked - {vendor_name(v)} renames, deprecations & new features"
+
+
+def feed_link(v=DEFAULT_VENDOR):
+    """The <link rel="alternate"> a page head carries, so a reader's feed auto-discovery
+    finds the feed of the vendor the page is about."""
+    return (
+        f'<link rel="alternate" type="application/rss+xml" title="{attr(feed_title(v))}" '
+        f'href="/{feed_name(v)}" />'
+    )
 
 
 def status_value(d):
@@ -637,7 +656,7 @@ HEAD = """<!DOCTYPE html>
   <title>{title}</title>
   <meta name="description" content="{desc}" />
   <link rel="canonical" href="{url}" />
-  <link rel="alternate" type="application/rss+xml" title="REbricked - Databricks &amp; Snowflake renames, deprecations &amp; new features" href="/feed.xml" />
+  {feed_link}
   <meta name="robots" content="index, follow, max-image-preview:large" />
   <meta property="og:type" content="{og_type}" />
   <meta property="og:site_name" content="REbricked" />
@@ -765,6 +784,7 @@ def render_entry(d, by_id, data, posts=()):
     rail, topbar, js = chrome(root, v)
     head = HEAD.format(
         htmlattr=f' data-vendor="{attr(v)}"',
+        feed_link=feed_link(v),
         title=attr(title),
         desc=attr(desc),
         url=url,
@@ -1135,6 +1155,7 @@ def render_hub(v, entries):
     rail, topbar, js = chrome(root, v)
     head = HEAD.format(
         htmlattr=f' data-vendor="{attr(v)}"',
+        feed_link=feed_link(v),
         title=attr(title),
         desc=attr(desc),
         url=url,
@@ -1199,14 +1220,16 @@ def write_sitemap(data, posts=()):
     return vendors
 
 
-# feed.xml carries every vendor's entries (and the guides), so its title has to name them -
-# it announced itself as Databricks-only for as long as it was, and stopped being true the
-# day kb/snowflake/ shipped. Adding a vendor means adding it here.
-FEED_TITLE = "REbricked - Databricks & Snowflake renames, deprecations & new features"
-FEED_DESC = (
-    "Databricks and Snowflake product and feature renames, deprecations, new features, and "
-    "release milestones (Private Preview through GA) - sourced and dated, newest first."
-)
+# One feed per vendor (see feed_name): someone following Databricks renames did not sign up
+# for Snowflake's, and the reverse. Title and description are derived from the vendor, so a
+# new kb/<vendor>/ folder gets its own feed with no change here.
+def feed_desc(v):
+    return (
+        f"{vendor_name(v)} product and feature renames, deprecations, new features, and "
+        "release milestones (Private Preview through GA) - sourced and dated, newest first."
+    )
+
+
 _WDAYS = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"]
 _MONS = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
 
@@ -1284,11 +1307,13 @@ def release_feed_items(d):
         yield (dt, f"{d['id']}#release-{rtype}", title, guid, False, desc)
 
 
-def write_feed(data, by_id, posts=()):
-    """RSS 2.0 feed of every entry, newest tracked change first. Each entry contributes
-    its primary lifecycle change plus one item per dated release-maturity milestone, and each
-    guide contributes one item tagged [Guide] - subscribers already following rename news get
-    the writing in the same reader."""
+def write_feed(vendor, data, by_id, posts=()):
+    """RSS 2.0 feed of one vendor's entries, newest tracked change first, written to
+    www/<feed_name(vendor)>. Each entry contributes its primary lifecycle change plus one item
+    per dated release-maturity milestone, and each guide passed in contributes one item tagged
+    [Guide] - subscribers already following rename news get the writing in the same reader.
+    `data` is every vendor's entries (meta_for needs the whole set); only `vendor`'s are
+    published."""
     # Each item: (dt, sort_id, title, guid, is_permalink, description, category).
     items = []
     for p in posts:
@@ -1303,6 +1328,8 @@ def write_feed(data, by_id, posts=()):
             (dt, f"learn-{p['slug']}", f"[Guide] {p['title']}", url, True, desc, p.get("category", ""))
         )
     for d in data:
+        if vendor_of(d) != vendor:
+            continue
         cat = d.get("category", "")
         dt = feed_date(d)
         if dt is not None:
@@ -1333,16 +1360,18 @@ def write_feed(data, by_id, posts=()):
             "    </item>"
         )
 
-    FEED.write_text(
+    name = feed_name(vendor)
+    home = f"{BASE_URL}/" if vendor == DEFAULT_VENDOR else f"{BASE_URL}/{vendor}/"
+    (WWW / name).write_text(
         '<?xml version="1.0" encoding="UTF-8"?>\n'
         '<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">\n'
         "  <channel>\n"
-        f"    <title>{esc(FEED_TITLE)}</title>\n"
-        f"    <link>{BASE_URL}/</link>\n"
-        f"    <description>{esc(FEED_DESC)}</description>\n"
+        f"    <title>{esc(feed_title(vendor))}</title>\n"
+        f"    <link>{home}</link>\n"
+        f"    <description>{esc(feed_desc(vendor))}</description>\n"
         "    <language>en</language>\n"
         f"    <lastBuildDate>{built}</lastBuildDate>\n"
-        f'    <atom:link href="{BASE_URL}/feed.xml" rel="self" type="application/rss+xml" />\n'
+        f'    <atom:link href="{BASE_URL}/{name}" rel="self" type="application/rss+xml" />\n'
         f"{chr(10).join(body)}\n"
         "  </channel>\n"
         "</rss>\n",
@@ -1395,13 +1424,18 @@ def main():
             )
 
     vendors = write_sitemap(data, posts)
-    feed_items = write_feed(data, by_id, posts)
+    # One feed per vendor. Guides ride in the default vendor's feed only, so a post is
+    # announced once, not once per feed.
+    feeds = ", ".join(
+        f"{feed_name(v)} has {write_feed(v, data, by_id, posts if v == DEFAULT_VENDOR else ())} items"
+        for v in sorted(by_vendor)
+    )
     total = len(data) + len(vendors) + TOTAL_BADGES + 2 + (len(posts) + 1 if posts else 0)
     linked = sum(1 for d in data if any(d["id"] in (p.get("entries") or []) for p in posts))
     print(
         f"OK: wrote {len(data)} entry pages across {len(vendors)} vendor hub(s) "
         f"({', '.join(vendors)}); sitemap.xml has {total} URLs; "
-        f"feed.xml has {feed_items} items"
+        f"{feeds}"
         + (f"; {len(posts)} guide(s) reverse-linked from {linked} entry page(s)." if posts else ".")
     )
 

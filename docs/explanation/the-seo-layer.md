@@ -27,7 +27,8 @@ A real HTML document per entry, plus a hub:
 | `/{vendor}/` | Hub listing every entry grouped by category. A strong landing page, and it guarantees no entry page is orphaned |
 | `/{vendor}/{id}/` | One page per entry: unique `<title>`, description, canonical URL, Open Graph and Twitter tags, JSON-LD, the full content, and internal links to related entries |
 | `/sitemap.xml` | Every entry page and guide |
-| `/feed.xml` | RSS 2.0, newest tracked change first, with one `[Guide]` item per post |
+| `/feed.xml` | RSS 2.0, Databricks entries only, newest tracked change first, with one `[Guide]` item per post |
+| `/feed.<vendor>.xml` | The same feed for every other vendor (`/feed.snowflake.xml`), that vendor's entries only, no guides |
 
 The visible chrome is reused verbatim from `build_badges.py`, with its root-relative paths rewritten per
 depth, so a generated page looks like a screen of the app rather than a stripped-down mirror.

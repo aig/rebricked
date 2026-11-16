@@ -56,6 +56,7 @@ from build_entries import (
     HEAD,
     attr,
     esc,
+    feed_link,
     fmt_date,
     load_data,
     vendor_of,
@@ -894,6 +895,7 @@ def render_post(post, idx, posts, by_id, entry_count, today):
     rail, topbar, js = chrome(root)
     head = HEAD.format(
         htmlattr="",
+        feed_link=feed_link(),
         title=attr(title),
         desc=attr(desc),
         url=url,
@@ -1016,6 +1018,7 @@ def render_index(posts, by_id):
     rail, topbar, js = chrome(root)
     head = HEAD.format(
         htmlattr="",
+        feed_link=feed_link(),
         title=attr(title),
         desc=attr(desc),
         url=url,

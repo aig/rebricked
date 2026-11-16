@@ -20,8 +20,9 @@ the next build and never reaches the site.
 | `www/<vendor>.features.json` | output, gitignored - one per `kb/<vendor>/` folder | `build_features.py` |
 | `www/learn/`, `www/posts.json` | output, gitignored | `build_posts.py` |
 | `www/<vendor>/` | output, gitignored - one namespace per vendor | `build_entries.py` |
-| `www/sitemap.xml`, `www/feed.xml` | output, gitignored | `build_entries.py` |
+| `www/sitemap.xml`, `www/feed.xml`, `www/feed.<vendor>.xml` | output, gitignored | `build_entries.py` |
 | `reference/` | output, gitignored | `fetch_reference.py` |
+| `reference/extensions/` | output, gitignored - one folder per extension id | `fetch_extension.py` |
 
 **`www/badges/` is the deliberate exception.** Rendering its `og.png` files needs a Chromium-based
 browser, which CI does not have, so the generated pages are committed instead. Everything else is
@@ -49,7 +50,8 @@ Base: `https://rebricked.org`
 | `/learn/<slug>/` | One guide | `build_posts.py` |
 | `/badges/<n>-of-5/` | Quiz-result share page, with an absolute `og:image` | `build_badges.py` |
 | `/sitemap.xml` | Every entry page and guide | `build_entries.py` |
-| `/feed.xml` | RSS 2.0, newest tracked change first, one `[Guide]` item per post | `build_entries.py` |
+| `/feed.xml` | RSS 2.0, Databricks entries only, newest tracked change first, one `[Guide]` item per post | `build_entries.py` |
+| `/feed.<vendor>.xml` | RSS 2.0 for every other vendor (`/feed.snowflake.xml`): that vendor's entries only, no guides | `build_entries.py` |
 | `/disclaimer/`, `/subscribe/` | Static pages | hand-written |
 
 **The `/{vendor}/` segment is what keeps vendors apart.** `build_entries.py` reads every
