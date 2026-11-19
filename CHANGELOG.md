@@ -30,6 +30,17 @@ recorded, and a made-up reason is worse than none.
   stub so old links still work. Docs: `docs/reference/frontend.md` and
   `docs/reference/generated-output.md`.
 
+- **The top bar is now as wide as the page content.**
+
+  **Why:** the search box started left of the content and the icons ended wherever they
+  happened to fit, so the header and the page under it had different edges. On a wide screen
+  the icons ran past the content's right edge.
+
+  **What:** `.topbar` in `www/styles.css` uses the same box as `.content` (940px wide, 32px
+  gutters), and `.topsearch` lost its 522px cap so it fills the space between the two edges.
+  On phones the bar uses the content's 18px gutter. The `?` About icon moved to the far right,
+  after the theme toggle, in both `www/index.html` and `TOPBAR` in `build_badges.py`.
+
 ## 2026-11-16
 
 ### Added

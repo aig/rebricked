@@ -383,7 +383,9 @@ body {
   display: flex;
   align-items: center;
   gap: 16px;
-  padding: 10px 22px;
+  /* Same box as .content (940px wide, 32px gutters), so the search starts on the content's
+     left edge and the last icon ends on its right edge instead of floating mid-bar. */
+  padding: 10px max(32px, calc(100% - 908px)) 10px 32px;
   background: var(--panel);
   border-bottom: 1px solid var(--line);
 }
@@ -394,7 +396,6 @@ body {
   gap: 10px;
   flex: 1;
   min-width: 0;
-  max-width: 522px;
   background: var(--panel);
   border: 1px solid var(--line);
   border-radius: 8px;
@@ -544,12 +545,12 @@ body {
   .topbar {
     flex-wrap: wrap;
     gap: 10px 12px;
+    padding: 10px 18px;
   }
 
   .topsearch {
     order: 3;
     flex-basis: 100%;
-    max-width: none;
   }
 
   /* Card-header reflow for narrow screens lives at the end of the file, after the base
