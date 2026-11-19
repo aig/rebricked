@@ -41,6 +41,17 @@ recorded, and a made-up reason is worse than none.
   On phones the bar uses the content's 18px gutter. The `?` About icon moved to the far right,
   after the theme toggle, in both `www/index.html` and `TOPBAR` in `build_badges.py`.
 
+### Fixed
+- **A failed Pages deploy could not be re-run.**
+
+  **Why:** GitHub Pages answered one deploy with a 502. Re-running the job uploaded a second
+  artifact named `github-pages` into the same run, and `deploy-pages` stops when it finds two
+  with that name. Every further re-run added one more, so the run could never go green.
+
+  **What:** `.github/workflows/static.yml` names the artifact
+  `github-pages-<run attempt>` and passes the same name to `deploy-pages` as `artifact_name`.
+  Each attempt now has its own artifact, so "Re-run failed jobs" works.
+
 ## 2026-11-16
 
 ### Added
