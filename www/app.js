@@ -1767,18 +1767,23 @@
     }
     lastRouletteId = rows[target].dataset.id;
 
-    // a short beat of fake suspense, then land on the pre-chosen target
-    let ticks = 6 + Math.floor(rows.length * 0.7);
+    // A short beat of fake suspense, then land on the pre-chosen target. The beat is a fixed
+    // number of ticks (about half a second in all): it used to scale with the row count, which
+    // was fine at 30 entries and meant a wait of several seconds at 300.
+    const TICKS = 8;
+    let ticks = Math.min(TICKS, rows.length);
     let i = 0;
+    let lit = null;
     const spin = () => {
-      rows.forEach((r) => r.classList.remove("flash"));
-      const pick = rows[i % rows.length];
-      pick.classList.add("flash");
+      if (lit) lit.classList.remove("flash");
+      lit = rows[i % rows.length];
+      lit.classList.add("flash");
       i++;
       if (ticks-- > 0) {
-        setTimeout(spin, 60 + (1 - ticks / 12) * 40);
+        // 40ms at the start, easing out to about 95ms on the last tick.
+        setTimeout(spin, 40 + (1 - ticks / TICKS) * 55);
       } else {
-        rows.forEach((r) => r.classList.remove("flash"));
+        lit.classList.remove("flash");
         const winner = rows[target];
         winner.classList.add("flash");
         winner.scrollIntoView({ behavior: "smooth", block: "center" });

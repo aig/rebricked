@@ -52,6 +52,15 @@ recorded, and a made-up reason is worse than none.
   `github-pages-<run attempt>` and passes the same name to `deploy-pages` as `artifact_name`.
   Each attempt now has its own artifact, so "Re-run failed jobs" works.
 
+- **The random-entry button took seconds to pick.**
+
+  **Why:** the "suspense" before the pick ran one tick per 0.7 rows on the page. That was a
+  short beat when the list had 30 entries. With over 300 it was more than 200 ticks, and each
+  tick walked every row to clear the highlight, so a click meant a long wait.
+
+  **What:** `roulette()` in `www/app.js` now runs a fixed 8 ticks (about half a second in
+  all) and clears only the one row it lit, not every row.
+
 ## 2026-11-16
 
 ### Added
