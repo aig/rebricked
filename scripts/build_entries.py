@@ -1192,6 +1192,7 @@ def write_sitemap(data, posts=()):
     urls = [(f"{BASE_URL}/", "weekly", "1.0")]
     urls.append((f"{BASE_URL}/subscribe/", "monthly", "0.5"))
     urls.append((f"{BASE_URL}/disclaimer/", "yearly", "0.3"))
+    urls.append((f"{BASE_URL}/authors/", "yearly", "0.3"))
     if posts:
         urls.append((f"{BASE_URL}/learn/", "weekly", "0.9"))
         for p in posts:
@@ -1398,7 +1399,26 @@ def load_data():
     return data
 
 
+def refresh_authors_chrome():
+    """Keep the hand-written authors page in sync with the shared Databricks shell."""
+    path = WWW / "authors" / "index.html"
+    if not path.exists():
+        return
+    page = path.read_text(encoding="utf-8")
+    rail, topbar, js = chrome_for("databricks", "../")
+    for name, content in (("rail", rail), ("topbar", topbar), ("script", js)):
+        start = f"<!-- authors-{name}:start -->"
+        end = f"<!-- authors-{name}:end -->"
+        if start not in page or end not in page:
+            raise SystemExit(f"FATAL: missing authors {name} chrome markers")
+        before, rest = page.split(start, 1)
+        _, after = rest.split(end, 1)
+        page = before + start + "\n" + content + "\n" + end + after
+    path.write_text(page, encoding="utf-8")
+
+
 def main():
+    refresh_authors_chrome()
     data = load_data()
     by_id = {d["id"]: d for d in data}
     posts = load_posts()
@@ -1430,7 +1450,7 @@ def main():
         f"{feed_name(v)} has {write_feed(v, data, by_id, posts if v == DEFAULT_VENDOR else ())} items"
         for v in sorted(by_vendor)
     )
-    total = len(data) + len(vendors) + TOTAL_BADGES + 2 + (len(posts) + 1 if posts else 0)
+    total = len(data) + len(vendors) + TOTAL_BADGES + 3 + (len(posts) + 1 if posts else 0)
     linked = sum(1 for d in data if any(d["id"] in (p.get("entries") or []) for p in posts))
     print(
         f"OK: wrote {len(data)} entry pages across {len(vendors)} vendor hub(s) "

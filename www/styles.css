@@ -464,6 +464,7 @@ body {
   border: 1px solid var(--line);
   border-radius: 999px;
   padding: 5px 12px;
+  line-height: 1.2;
   white-space: nowrap;
   max-width: 320px;
   overflow: hidden;
@@ -471,6 +472,24 @@ body {
 }
 
 .counter b {
+  color: var(--accent);
+}
+
+.authors-button {
+  display: inline-flex;
+  align-items: center;
+  min-height: 34px;
+  padding: 0 12px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  color: var(--ink);
+  font-size: 13px;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.authors-button:hover {
+  border-color: var(--accent);
   color: var(--accent);
 }
 

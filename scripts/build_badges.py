@@ -270,6 +270,7 @@ TOPBAR = (
     '<a class="quiz-cta" href="../../?startQuiz=1"><svg viewBox="0 0 24 24" width="16" height="16" class="ic">'
     '<path d="M9.2 9a2.8 2.8 0 1 1 3.9 2.6c-.9.4-1.6 1.1-1.6 2.1v.4" /><path d="M12 17.5h.01" /></svg>'
     '<span>Take the quiz</span></a>'
+    '<a class="authors-button" href="../../authors/">Authors</a>'
     # Same GitHub / RSS pair the app shell carries, so a reader who lands on a guide or an
     # entry page from search has the source repo and the feed where they expect them.
     '<a class="icon-btn" id="gh-top" href="https://github.com/aig/rebricked" target="_blank" '

@@ -1368,7 +1368,7 @@
     const el = $("#counter-text");
     if (!el) return;
     if (EGG) {
-      el.innerHTML = "<b>0</b> days since the last rename";
+      el.innerHTML = "<b>0</b> days since<br>the last rename";
       return;
     }
     // days since the most recent change (rename or deprecation) anywhere in the dataset
@@ -1382,7 +1382,7 @@
       el.textContent = "change date unknown";
       return;
     }
-    el.innerHTML = `<b>${days}</b> day${days === 1 ? "" : "s"} since the last change`;
+    el.innerHTML = `<b>${days}</b> day${days === 1 ? "" : "s"} since<br>the last change`;
   }
 
   // The footer's freshness line comes from the data itself: the newest `verified` date.
