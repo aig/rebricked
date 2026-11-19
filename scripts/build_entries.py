@@ -1192,7 +1192,7 @@ def write_sitemap(data, posts=()):
     urls = [(f"{BASE_URL}/", "weekly", "1.0")]
     urls.append((f"{BASE_URL}/subscribe/", "monthly", "0.5"))
     urls.append((f"{BASE_URL}/disclaimer/", "yearly", "0.3"))
-    urls.append((f"{BASE_URL}/authors/", "yearly", "0.3"))
+    urls.append((f"{BASE_URL}/about/", "yearly", "0.3"))
     if posts:
         urls.append((f"{BASE_URL}/learn/", "weekly", "0.9"))
         for p in posts:
@@ -1399,18 +1399,18 @@ def load_data():
     return data
 
 
-def refresh_authors_chrome():
-    """Keep the hand-written authors page in sync with the shared Databricks shell."""
-    path = WWW / "authors" / "index.html"
+def refresh_about_chrome():
+    """Keep the hand-written about page in sync with the shared Databricks shell."""
+    path = WWW / "about" / "index.html"
     if not path.exists():
         return
     page = path.read_text(encoding="utf-8")
     rail, topbar, js = chrome_for("databricks", "../")
     for name, content in (("rail", rail), ("topbar", topbar), ("script", js)):
-        start = f"<!-- authors-{name}:start -->"
-        end = f"<!-- authors-{name}:end -->"
+        start = f"<!-- about-{name}:start -->"
+        end = f"<!-- about-{name}:end -->"
         if start not in page or end not in page:
-            raise SystemExit(f"FATAL: missing authors {name} chrome markers")
+            raise SystemExit(f"FATAL: missing about {name} chrome markers")
         before, rest = page.split(start, 1)
         _, after = rest.split(end, 1)
         page = before + start + "\n" + content + "\n" + end + after
@@ -1418,7 +1418,7 @@ def refresh_authors_chrome():
 
 
 def main():
-    refresh_authors_chrome()
+    refresh_about_chrome()
     data = load_data()
     by_id = {d["id"]: d for d in data}
     posts = load_posts()

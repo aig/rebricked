@@ -9,6 +9,27 @@ shows the what. Plain, simple English: short sentences, common words, no jargon 
 and product names themselves. Some older entries have no `Why:` line - the reason was never
 recorded, and a made-up reason is worse than none.
 
+## 2026-11-19
+
+### Changed
+- **The "Authors" button is now a `?` icon, and the page behind it is an About page.**
+
+  **Why:** the top bar had one text button among icons, and it led to a page that only showed
+  two author cards. A first-time visitor had no place that said what the site is, why its
+  entries can be trusted, or how to report a mistake. "Who made this" is one part of that
+  answer, not the whole of it.
+
+  **What:** `www/authors/` moved to `www/about/` and was rewritten in short, plain
+  sentences. It opens with why the site exists,
+  then answers eight questions: why a name matters, what is here, why to trust it, what is
+  made up, what else is here, whether it is official, how to fix a mistake, and who makes it
+  (the same two author cards). The top bar link is an `icon-btn` with id `about-top`
+  in both `www/index.html` and `TOPBAR` in `build_badges.py`; the `.authors-button` style is
+  gone. `build_entries.py` now refreshes the `about-*` chrome markers
+  (`refresh_about_chrome`) and lists `/about/` in the sitemap. `/authors/` stays as a redirect
+  stub so old links still work. Docs: `docs/reference/frontend.md` and
+  `docs/reference/generated-output.md`.
+
 ## 2026-11-16
 
 ### Added

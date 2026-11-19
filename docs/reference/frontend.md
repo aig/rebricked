@@ -142,4 +142,6 @@ value: `--c-active` (green), `--c-renamed` (slate), `--c-deprecated` (amber). Th
 - **Analytics can never throw into a user path.** New tracking goes behind the guarded `track()`
   helper; see [analytics-events.md](analytics-events.md).
 
-The shared top bar on generated pages links to `/authors/`, as does the app top bar.
+The shared top bar on generated pages links to `/about/` through a `?` icon button
+(`#about-top`), as does the app top bar. The markup lives in two places that must match:
+`TOPBAR` in `build_badges.py` and the hand-written `www/index.html`.
