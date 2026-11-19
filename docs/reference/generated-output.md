@@ -15,7 +15,9 @@ the next build and never reaches the site.
 | `www/index.html` | **source**, tracked | you - the app shell |
 | `www/app.js`, `www/styles.css` | **source**, tracked | you |
 | `www/assets/`, `www/robots.txt`, `www/CNAME`, `www/site.webmanifest` | **source**, tracked | you |
-| `www/disclaimer/`, `www/subscribe/` | **source**, tracked - static pages no generator owns | you |
+| `www/disclaimer/`, `www/subscribe/` | **source**, tracked - static pages no generator owns | you
+| `www/about/` | **source**, tracked - the about copy, author cards, and photos are hand-written; `build_entries.py` refreshes the shared chrome between the `about-rail` / `about-topbar` / `about-script` markers | you + `build_entries.py` |
+| `www/authors/` | **source**, tracked - a redirect stub to `/about/`, kept so the page's old URL still resolves | you |
 | `www/badges/` | **output, but tracked** | `build_badges.py` |
 | `www/<vendor>.features.json` | output, gitignored - one per `kb/<vendor>/` folder | `build_features.py` |
 | `www/learn/`, `www/posts.json` | output, gitignored | `build_posts.py` |
@@ -52,7 +54,8 @@ Base: `https://rebricked.org`
 | `/sitemap.xml` | Every entry page and guide | `build_entries.py` |
 | `/feed.xml` | RSS 2.0, Databricks entries only, newest tracked change first, one `[Guide]` item per post | `build_entries.py` |
 | `/feed.<vendor>.xml` | RSS 2.0 for every other vendor (`/feed.snowflake.xml`): that vendor's entries only, no guides | `build_entries.py` |
-| `/disclaimer/`, `/subscribe/` | Static pages | hand-written |
+| `/disclaimer/`, `/subscribe/`, `/about/` | Static pages | hand-written |
+| `/authors/` | Redirect to `/about/` (the page's former URL); not in the sitemap | hand-written |
 
 **The `/{vendor}/` segment is what keeps vendors apart.** `build_entries.py` reads every
 `www/<vendor>.features.json`, stamps each entry with the vendor it was built from (or its own

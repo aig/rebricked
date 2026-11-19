@@ -464,6 +464,7 @@ body {
   border: 1px solid var(--line);
   border-radius: 999px;
   padding: 5px 12px;
+  line-height: 1.2;
   white-space: nowrap;
   max-width: 320px;
   overflow: hidden;

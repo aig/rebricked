@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>About | REbricked</title>
+  <meta name="description" content="Why REbricked exists, why you can trust it, who makes it, and how to fix a mistake." />
+  <link rel="canonical" href="https://rebricked.org/about/" />
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="REbricked" />
+  <meta property="og:title" content="About | REbricked" />
+  <meta property="og:description" content="Why REbricked exists, why you can trust it, who makes it, and how to fix a mistake." />
+  <meta property="og:url" content="https://rebricked.org/about/" />
+  <link rel="stylesheet" href="../styles.css" />
+  <link rel="icon" href="/assets/favicon.ico" sizes="any" />
+  <link rel="manifest" href="/site.webmanifest" />
+  <script>try { var t = localStorage.getItem("rebricked-theme"); document.documentElement.dataset.theme = t || "dark"; } catch (_) { document.documentElement.dataset.theme = "dark"; }</script>
+  <style>
+    .about-page { max-width: 960px; margin: 0 auto; padding: 8px 4px 48px; }
+    .about-crumb { color: var(--muted); font-size: 12px; margin-bottom: 24px; }
+    .about-crumb a { color: inherit; }
+    .about-page h1 { font-size: clamp(28px, 4vw, 40px); line-height: 1.15; margin: 0 0 14px; }
+    .about-page p { color: var(--muted); line-height: 1.6; margin: 0 0 10px; max-width: 62ch; }
+    .about-page p:last-child { margin-bottom: 0; }
+    .about-page p.about-lead { color: var(--ink); font-size: 17px; line-height: 1.55; margin-bottom: 36px; }
+    .about-page p a { color: var(--accent-ink); font-weight: 600; text-decoration: none; }
+    .about-page p a:hover, .about-page p a:focus-visible { text-decoration: underline; }
+    .about-qa { display: grid; grid-template-columns: 250px minmax(0, 1fr); gap: 8px 36px; padding: 22px 0; border-top: 1px solid var(--line); }
+    .about-qa h2 { font-size: 17px; line-height: 1.35; margin: 0; color: var(--ink); }
+    .authors-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px; margin-top: 4px; }
+    .author-card { position: relative; overflow: hidden; min-height: 310px; padding: 28px; border: 1px solid var(--line); border-radius: 14px; background: #fff; color: #11171c; }
+    .author-copy { position: relative; z-index: 1; width: 60%; }
+    .author-copy h3 { font-size: 22px; line-height: 1.2; margin: 0 0 10px; }
+    .author-copy p { color: #5a6472; line-height: 1.5; margin: 0; font-size: 14px; }
+    .author-badges { display: flex; align-items: center; gap: 8px; margin-top: 20px; }
+    .author-badges img { width: 62px; height: 62px; object-fit: contain; }
+    .author-portrait { position: absolute; right: 0; bottom: 0; width: 44%; height: 92%; object-fit: contain; object-position: bottom right; }
+    .author-link { position: absolute; z-index: 1; left: 28px; bottom: 28px; color: #c4260f; font-weight: 600; font-size: 14px; }
+    @media (max-width: 800px) { .about-qa { grid-template-columns: 1fr; } }
+    @media (max-width: 700px) { .authors-grid { grid-template-columns: 1fr; } }
+  </style>
+</head>
+<body>
+  <div class="app">
+    <!-- about-rail:start -->
+<aside class="sidebar" aria-label="Primary"><a class="side-brand" href="../"><span class="brand-re">RE</span><span class="brand-tail"><span class="brand-word">bricked</span><span class="brand-edition">latest edition</span></span></a><a class="side-new" href="../"><svg viewBox="0 0 24 24" width="18" height="18" class="ic"><path d="M12 5v14M5 12h14" /></svg><span>New</span></a><nav class="nav" aria-label="Databricks navigation"><a class="nav-item" href="../"><span class="ic-wrap"><svg class="ic" viewBox="0 0 24 24" width="18" height="18"><path d="M3 11.5 12 4l9 7.5"/><path d="M5 10v10h14V10"/></svg></span><span class="label">Home</span></a><a class="nav-item" href="../learn/"><span class="ic-wrap"><svg class="ic" viewBox="0 0 24 24" width="18" height="18"><path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H20v15H6.5A2.5 2.5 0 0 0 4 20.5z"/><path d="M4 20.5A2.5 2.5 0 0 1 6.5 18H20"/></svg></span><span class="label">Learn</span></a><a class="nav-item is-renamed" href="../?s=Workspace"><span class="ic-wrap"><svg class="ic" viewBox="0 0 24 24" width="18" height="18"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 9h18M9 9v11"/></svg></span><span class="label">Workspace</span><span class="renamed-dot"></span></a><a class="nav-item" href="../"><span class="ic-wrap"><svg class="ic" viewBox="0 0 24 24" width="18" height="18"><circle cx="12" cy="12" r="8"/><path d="M12 8v4l3 2"/></svg></span><span class="label">Recents</span></a><a class="nav-item is-renamed" href="../?s=Catalog"><span class="ic-wrap"><svg class="ic" viewBox="0 0 24 24" width="18" height="18"><ellipse cx="12" cy="6" rx="7" ry="3"/><path d="M5 6v6c0 1.7 3.1 3 7 3s7-1.3 7-3V6"/><path d="M5 12v6c0 1.7 3.1 3 7 3s7-1.3 7-3v-6"/></svg></span><span class="label">Catalog</span><span class="renamed-dot"></span></a><a class="nav-item is-renamed" href="../?s=Jobs%20%26%20Pipelines"><span class="ic-wrap"><svg class="ic" viewBox="0 0 24 24" width="18" height="18"><circle cx="6" cy="6" r="2.3"/><circle cx="18" cy="6" r="2.3"/><circle cx="12" cy="18" r="2.3"/><path d="M6 8.3v1.7a3 3 0 0 0 3 3h.5M18 8.3v1.7a3 3 0 0 1-3 3h-.5M12 13v2.7"/></svg></span><span class="label">Jobs &amp; Pipelines</span><span class="renamed-dot"></span></a><a class="nav-item is-renamed" href="../?s=Compute"><span class="ic-wrap"><svg class="ic" viewBox="0 0 24 24" width="18" height="18"><rect x="6" y="6" width="12" height="12" rx="2"/><path d="M9 2v3M15 2v3M9 19v3M15 19v3M2 9h3M2 15h3M19 9h3M19 15h3"/></svg></span><span class="label">Compute</span><span class="renamed-dot"></span></a><a class="nav-item is-renamed" href="../?s=Discover"><span class="ic-wrap"><svg class="ic" viewBox="0 0 24 24" width="18" height="18"><circle cx="12" cy="12" r="8.5"/><path d="m15.5 8.5-2.2 4.8-4.8 2.2 2.2-4.8z"/></svg></span><span class="label">Discover</span><span class="renamed-dot"></span></a><a class="nav-item" href="../"><span class="ic-wrap"><svg class="ic" viewBox="0 0 24 24" width="18" height="18"><path d="M4 9h16l-1-4H5z"/><path d="M4.5 9v10h15V9"/><path d="M9 19v-5h6v5"/></svg></span><span class="label">Marketplace</span></a><a class="nav-item is-renamed" href="../?s=Apps"><span class="ic-wrap"><svg class="ic" viewBox="0 0 24 24" width="18" height="18"><circle cx="6" cy="6" r="1.6"/><circle cx="12" cy="6" r="1.6"/><circle cx="18" cy="6" r="1.6"/><circle cx="6" cy="12" r="1.6"/><circle cx="12" cy="12" r="1.6"/><circle cx="18" cy="12" r="1.6"/><circle cx="6" cy="18" r="1.6"/><circle cx="12" cy="18" r="1.6"/><circle cx="18" cy="18" r="1.6"/></svg></span><span class="label">Apps</span><span class="renamed-dot"></span></a><div class="nav-group-label">SQL</div><a class="nav-item is-renamed" href="../?s=SQL%20Editor"><span class="ic-wrap"><svg class="ic" viewBox="0 0 24 24" width="18" height="18"><path d="m8 8-4 4 4 4M16 8l4 4-4 4M13.5 6l-3 12"/></svg></span><span class="label">SQL Editor</span><span class="renamed-dot"></span></a><a class="nav-item" href="../"><span class="ic-wrap"><svg class="ic" viewBox="0 0 24 24" width="18" height="18"><path d="M8 6h12M8 12h12M8 18h12M4 6h.01M4 12h.01M4 18h.01"/></svg></span><span class="label">Queries</span></a><a class="nav-item is-renamed" href="../?s=Dashboards"><span class="ic-wrap"><svg class="ic" viewBox="0 0 24 24" width="18" height="18"><rect x="3" y="3" width="7" height="9" rx="1.4"/><rect x="14" y="3" width="7" height="5" rx="1.4"/><rect x="14" y="12" width="7" height="9" rx="1.4"/><rect x="3" y="16" width="7" height="5" rx="1.4"/></svg></span><span class="label">Dashboards</span><span class="renamed-dot"></span></a><a class="nav-item is-renamed" href="../?s=Genie%20Agents"><span class="ic-wrap"><svg class="ic" viewBox="0 0 24 24" width="18" height="18"><path d="M12 3l1.9 5.1L19 10l-5.1 1.9L12 17l-1.9-5.1L5 10l5.1-1.9z"/><path d="M18.5 14.5l.7 1.8 1.8.7-1.8.7-.7 1.8-.7-1.8-1.8-.7 1.8-.7z"/></svg></span><span class="label">Genie Agents</span><span class="renamed-dot"></span></a><a class="nav-item is-renamed" href="../?s=Alerts"><span class="ic-wrap"><svg class="ic" viewBox="0 0 24 24" width="18" height="18"><path d="M18 9a6 6 0 0 0-12 0c0 6-2.5 7-2.5 7h17S18 15 18 9"/><path d="M10.3 20a2 2 0 0 0 3.4 0"/></svg></span><span class="label">Alerts</span><span class="renamed-dot"></span></a><a class="nav-item" href="../"><span class="ic-wrap"><svg class="ic" viewBox="0 0 24 24" width="18" height="18"><path d="M3.5 12a8.5 8.5 0 1 0 2.8-6.3L3 8"/><path d="M3 4v4h4"/><path d="M12 8v4l3 2"/></svg></span><span class="label">Query History</span></a><a class="nav-item is-renamed" href="../?s=SQL%20Warehouses"><span class="ic-wrap"><svg class="ic" viewBox="0 0 24 24" width="18" height="18"><rect x="3" y="4.5" width="18" height="6.5" rx="1.4"/><rect x="3" y="13" width="18" height="6.5" rx="1.4"/><path d="M6.5 7.7h.01M6.5 16.2h.01"/></svg></span><span class="label">SQL Warehouses</span><span class="renamed-dot"></span></a><div class="nav-group-label">Data Engineering</div><a class="nav-item" href="../"><span class="ic-wrap"><svg class="ic" viewBox="0 0 24 24" width="18" height="18"><path d="M6 4l13 8-13 8z"/></svg></span><span class="label">Runs</span></a><a class="nav-item is-renamed" href="../?s=Data%20Ingestion"><span class="ic-wrap"><svg class="ic" viewBox="0 0 24 24" width="18" height="18"><path d="M12 3v10m0 0 4-4m-4 4-4-4"/><path d="M4 16v3a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-3"/></svg></span><span class="label">Data Ingestion</span><span class="renamed-dot"></span></a><a class="nav-item is-renamed" href="../?s=Visual%20Data%20Prep"><span class="ic-wrap"><svg class="ic" viewBox="0 0 24 24" width="18" height="18"><path d="m12 3 9 5-9 5-9-5z"/><path d="m3 13 9 5 9-5"/></svg></span><span class="label">Visual Data Prep</span><span class="renamed-dot"></span></a><div class="nav-group-label">AI/ML</div><a class="nav-item" href="../"><span class="ic-wrap"><svg class="ic" viewBox="0 0 24 24" width="18" height="18"><path d="M9 3l1.6 4.4L15 9l-4.4 1.6L9 15l-1.6-4.4L3 9l4.4-1.6z"/><path d="M17.5 13l.8 2 2 .8-2 .8-.8 2-.8-2-2-.8 2-.8z"/></svg></span><span class="label">Playground</span></a><a class="nav-item is-renamed" href="../?s=Agents"><span class="ic-wrap"><svg class="ic" viewBox="0 0 24 24" width="18" height="18"><rect x="5" y="8" width="14" height="10" rx="2.5"/><path d="M12 8V4.5M9 13h.01M15 13h.01"/><circle cx="12" cy="3.2" r="1.1"/></svg></span><span class="label">Agents</span><span class="renamed-dot"></span></a><a class="nav-item is-renamed" href="../?s=Unity%20Gateway"><span class="ic-wrap"><svg class="ic" viewBox="0 0 24 24" width="18" height="18"><path d="M12 3 5 6v5c0 4.4 3 8 7 9 4-1 7-4.6 7-9V6z"/></svg></span><span class="label">Unity Gateway</span><span class="renamed-dot"></span></a><a class="nav-item" href="../"><span class="ic-wrap"><svg class="ic" viewBox="0 0 24 24" width="18" height="18"><path d="M9.5 3h5M10.5 3v5.5l-5.2 8.7A2 2 0 0 0 7 20h10a2 2 0 0 0 1.7-2.8L13.5 8.5V3"/><path d="M8 15h8"/></svg></span><span class="label">Experiments</span></a><a class="nav-item is-renamed" href="../?s=Features"><span class="ic-wrap"><svg class="ic" viewBox="0 0 24 24" width="18" height="18"><circle cx="7" cy="7" r="2.1"/><circle cx="17" cy="7" r="2.1"/><circle cx="7" cy="17" r="2.1"/><circle cx="17" cy="17" r="2.1"/></svg></span><span class="label">Features</span><span class="renamed-dot"></span></a><a class="nav-item is-renamed" href="../?s=Models"><span class="ic-wrap"><svg class="ic" viewBox="0 0 24 24" width="18" height="18"><path d="M12 3 21 8v8l-9 5-9-5V8z"/><path d="m3 8 9 5 9-5M12 13v8"/></svg></span><span class="label">Models</span><span class="renamed-dot"></span></a><a class="nav-item is-renamed" href="../?s=Serving"><span class="ic-wrap"><svg class="ic" viewBox="0 0 24 24" width="18" height="18"><circle cx="12" cy="12" r="2.2"/><path d="M7.5 7.5a6.5 6.5 0 0 0 0 9M16.5 7.5a6.5 6.5 0 0 1 0 9M4.8 4.8a10 10 0 0 0 0 14.4M19.2 4.8a10 10 0 0 1 0 14.4"/></svg></span><span class="label">Serving</span><span class="renamed-dot"></span></a><a class="nav-item is-renamed" href="../?s=Training"><span class="ic-wrap"><svg class="ic" viewBox="0 0 24 24" width="18" height="18"><path d="M12 3 21 8v8l-9 5-9-5V8z"/><path d="m3 8 9 5 9-5M12 13v8"/></svg></span><span class="label">Training</span><span class="renamed-dot"></span></a></nav><div class="side-foot"><span class="dot-legend"><i class="renamed-dot"></i> renamed or deprecated - open in the app</span></div></aside>
+<!-- about-rail:end -->
+    <main class="main">
+      <!-- about-topbar:start -->
+<header class="topbar"><button class="icon-btn menu-btn" id="menu-toggle" title="Open navigation" aria-label="Open navigation" aria-expanded="false"><svg viewBox="0 0 24 24" width="18" height="18" class="ic"><path d="M4 6h16M4 12h16M4 18h16" /></svg></button><div class="topsearch"><svg viewBox="0 0 24 24" width="16" height="16" class="ic"><circle cx="11" cy="11" r="7" /><path d="m21 21-4.3-4.3" /></svg><input type="text" id="search" class="search-input" placeholder="Search an old name - press Enter" aria-label="Search old Databricks names" autocomplete="off" spellcheck="false" /><kbd class="slash">/</kbd></div><div class="topactions"><a class="quiz-cta" href="../?startQuiz=1"><svg viewBox="0 0 24 24" width="16" height="16" class="ic"><path d="M9.2 9a2.8 2.8 0 1 1 3.9 2.6c-.9.4-1.6 1.1-1.6 2.1v.4" /><path d="M12 17.5h.01" /></svg><span>Take the quiz</span></a><a class="icon-btn" id="about-top" href="../about/" title="About REbricked" aria-label="About REbricked"><svg viewBox="0 0 24 24" width="18" height="18" class="ic"><circle cx="12" cy="12" r="9" /><path d="M9.6 9.4a2.5 2.5 0 1 1 3.5 2.3c-.7.4-1.1.9-1.1 1.7v.3" /><path d="M12 16.8h.01" /></svg></a><a class="icon-btn" id="gh-top" href="https://github.com/aig/rebricked" target="_blank" rel="noopener" title="View the project on GitHub" aria-label="View the project on GitHub"><svg class="gh-icon" viewBox="0 0 16 16" width="18" height="18" aria-hidden="true"><path fill="currentColor" fill-rule="evenodd" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0016 8c0-4.42-3.58-8-8-8z" /></svg></a><a class="icon-btn" id="rss-top" href="../subscribe/" title="Subscribe via RSS" aria-label="Subscribe via RSS"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path fill="currentColor" d="M6.18 15.64a2.18 2.18 0 0 1 2.18 2.18A2.18 2.18 0 0 1 6.18 20 2.18 2.18 0 0 1 4 17.82a2.18 2.18 0 0 1 2.18-2.18M4 4.44A15.56 15.56 0 0 1 19.56 20h-2.83A12.73 12.73 0 0 0 4 7.27V4.44m0 5.66a9.9 9.9 0 0 1 9.9 9.9H11.07A7.07 7.07 0 0 0 4 12.93V10.1Z" /></svg></a><button class="icon-btn" id="theme-toggle" title="Toggle light / dark" aria-label="Toggle theme"><svg viewBox="0 0 24 24" width="18" height="18" class="ic"><path d="M12 3a9 9 0 1 0 9 9c-4.97 0-9-4.03-9-9Z" /></svg></button></div></header>
+<!-- about-topbar:end -->
+      <div class="content"><div class="about-page">
+    <nav class="about-crumb" aria-label="Breadcrumb"><a href="../">REbricked</a> <span aria-hidden="true">/</span> About</nav>
+    <h1>Why does this site exist?</h1>
+    <p class="about-lead">Databricks renames its products often. The old names stay in blogs, courses, and people's heads. You search for one and get lost. REbricked tells you what it is called now.</p>
+
+    <section class="about-qa">
+      <h2>Why does a name matter?</h2>
+      <div>
+        <p>A wrong name costs more than time. You may build on something that is already deprecated. You may miss the feature that replaced it.</p>
+      </div>
+    </section>
+
+    <section class="about-qa">
+      <h2>What can I find here?</h2>
+      <div>
+        <p>Renames, deprecations, and new features. The name says it: <b>re</b>named or de<b>pre</b>cated.</p>
+        <p>Search an old name. You get the new name, the date, and the proof. Every name a product ever had gets its own card.</p>
+      </div>
+    </section>
+
+    <section class="about-qa">
+      <h2>Why can I trust it?</h2>
+      <div>
+        <p>Every entry links to an official Databricks or Microsoft Learn page. Each one shows the date we last checked it. No source, no entry.</p>
+      </div>
+    </section>
+
+    <section class="about-qa">
+      <h2>Is anything made up?</h2>
+      <div>
+        <p>The fun facts are true, and each has a source. Only the predicted next names are made up. They are always labelled.</p>
+      </div>
+    </section>
+
+    <section class="about-qa">
+      <h2>What else is here?</h2>
+      <div>
+        <p>The <a href="../learn/">guides</a> explain what to do about a change. The <a href="../?startQuiz=1">quiz</a> tests how many new names you know. The <a href="../subscribe/">RSS feed</a> sends you each new change. There is a <a href="../snowflake/">Snowflake edition</a> too.</p>
+      </div>
+    </section>
+
+    <section class="about-qa">
+      <h2>Is this an official Databricks site?</h2>
+      <div>
+        <p>No. REbricked is an independent, educational project. It is not affiliated with Databricks. The console look is an homage. Read the <a href="../disclaimer/">full disclaimer</a>.</p>
+      </div>
+    </section>
+
+    <section class="about-qa">
+      <h2>How do I fix a mistake?</h2>
+      <div>
+        <p>Found an old name, a missing rename, or a dead link? Open an issue or a pull request on <a href="https://github.com/aig/rebricked" target="_blank" rel="noopener">GitHub ↗</a>. Each entry is one small file, so fixes are easy.</p>
+      </div>
+    </section>
+
+    <section class="about-qa">
+      <h2>Who makes it?</h2>
+      <div>
+        <p>Databricks community experts build REbricked. See the <a href="https://github.com/aig/rebricked/graphs/contributors" target="_blank" rel="noopener">full list of contributors on GitHub ↗</a>.</p>
+      </div>
+    </section>
+    <div class="authors-grid">
+      <article class="author-card">
+        <div class="author-copy"><h3>Ilya Aniskovets</h3><p>Databricks Solutions Architect Champion</p>
+          <div class="author-badges"><img src="images/champion.png" alt="Databricks Solutions Architect Champion badge" /></div>
+        </div>
+        <img class="author-portrait" src="images/ilya.png" alt="Ilya Aniskovets" />
+        <a class="author-link" href="https://www.linkedin.com/in/aniskovets" target="_blank" rel="noopener">LinkedIn profile ↗</a>
+      </article>
+      <article class="author-card">
+        <div class="author-copy"><h3>Maksim Pachkouski</h3><p>Databricks MVP &amp; Databricks Solutions Architect Champion</p>
+          <div class="author-badges"><img src="images/champion.png" alt="Databricks Solutions Architect Champion badge" /><img src="images/mvp.png" alt="Databricks MVP badge" /></div>
+        </div>
+        <img class="author-portrait" src="images/maksim.png" alt="Maksim Pachkouski" />
+        <a class="author-link" href="https://www.linkedin.com/in/protmaks" target="_blank" rel="noopener">LinkedIn profile ↗</a>
+      </article>
+    </div>
+  </div></div></main></div>
+  <div class="scrim" id="scrim" hidden></div>
+  <!-- about-script:start -->
+<script>
+(function () {
+  // Same guarded wrapper as app.js's track(): a blocked or absent goatcounter script must never
+  // throw into a user path. Event names match app.js so the SPA and the static pages report
+  // into the same funnel instead of two half-datasets.
+  function track(name, data) {
+    try { if (window.goatcounter && window.goatcounter.count) window.goatcounter.count({ path: name, title: data ? JSON.stringify(data) : name, event: true }); } catch (e) {}
+  }
+  // Which kind of static page this is, so one event name can be sliced by surface.
+  var surface = document.querySelector('.post-doc') ? 'guide'
+    : document.querySelector('.learn-doc') ? 'learn-index'
+    : document.querySelector('.entry-doc') ? 'entry'
+    : document.querySelector('.hub-doc') ? 'hub'
+    : document.querySelector('.badge-card') ? 'badge' : 'other';
+  // The page's own identity: the slug of /learn/<slug>/ or /databricks/<id>/, '' at an index.
+  var slug = (location.pathname.replace(/\/+$/, '').split('/').pop() || '');
+  // Dark by default, a saved choice wins - the same rule as the app, so clicking Learn or an
+  // entry never flips the theme. THEME_BOOT already did this before first paint; this is the
+  // fallback for a template that forgot to include it.
+  try { var t = localStorage.getItem('rebricked-theme'); document.documentElement.dataset.theme = t || 'dark'; } catch (e) { document.documentElement.dataset.theme = 'dark'; }
+  var tt = document.getElementById('theme-toggle');
+  if (tt) tt.addEventListener('click', function () {
+    var r = document.documentElement, c = r.dataset.theme || 'dark', n = c === 'dark' ? 'light' : 'dark';
+    r.dataset.theme = n; try { localStorage.setItem('rebricked-theme', n); } catch (e) {}
+    track('theme-toggle', { theme: n, surface: surface });
+  });
+  var s = document.getElementById('search');
+  if (s) s.addEventListener('keydown', function (e) {
+    if (e.key === 'Enter') {
+      var v = s.value.trim();
+      if (v) track('search', { term: v, surface: surface });
+      location.href = '../' + (v ? ('?q=' + encodeURIComponent(v)) : '');
+    }
+  });
+  // One delegated listener for every link that says something about intent. Cheaper than
+  // per-element handlers and it survives template changes, since it matches on the classes
+  // the generators already emit.
+  document.addEventListener('click', function (e) {
+    var a = e.target.closest && e.target.closest('a');
+    if (!a) return;
+    var href = a.getAttribute('href') || '';
+    if (a.closest('.post-toc')) return track('guide-toc', { slug: slug, to: href });
+    if (a.closest('.entry-sources')) return track('source-click', { surface: surface, slug: slug, url: href });
+    if (a.closest('.entry-related')) return track('related-click', { surface: surface, slug: slug, to: href });
+    if (a.closest('.post-prevnext')) return track('guide-prevnext', { slug: slug, to: href });
+    if (a.closest('.learn-row')) return track('guide-open', { to: href, source: 'learn-index' });
+    if (a.classList.contains('hub-link')) return track('hub-entry-open', { to: href });
+    if (a.classList.contains('entry-cta')) return track('cta-click', { surface: surface, slug: slug, to: href });
+    if (a.classList.contains('quiz-cta')) return track('quiz-open', { source: surface });
+    if (a.classList.contains('badge-intro-cta')) return track('quiz-open', { source: 'badge-page' });
+    if (a.id === 'gh-top') return track('github-click', { surface: surface });
+    if (a.id === 'rss-top') return track('rss-click', { surface: surface });
+    // The inline 🔗 citation chips on an entry card - the entry-page equivalent of a
+    // guide's prose link, and the signal for which sourced claim readers go verify.
+    if (a.classList.contains('date-src')) return track('source-click', { surface: surface, slug: slug, url: href });
+    // Anything else leaving for an official doc: the citations readers actually follow.
+    if (a.closest('.post-body') && /^https?:/i.test(href)) {
+      return track('guide-outbound', { slug: slug, url: href });
+    }
+  });
+  // Read depth, guides only - the one metric that tells a blog post from a bounce. Fires each
+  // quarter once, on a passive listener so it cannot cost scroll performance.
+  if (surface === 'guide') {
+    var seen = {};
+    window.addEventListener('scroll', function () {
+      var h = document.documentElement, max = h.scrollHeight - h.clientHeight;
+      if (max <= 0) return;
+      var pct = Math.min(100, Math.round(((window.scrollY || h.scrollTop) / max) * 100));
+      [25, 50, 75, 100].forEach(function (m) {
+        if (pct >= m && !seen[m]) { seen[m] = 1; track('guide-read-depth', { slug: slug, percent: m }); }
+      });
+    }, { passive: true });
+  }
+  var mb = document.getElementById('menu-toggle'), sb = document.querySelector('.sidebar'), sc = document.getElementById('scrim');
+  function setOpen(o) { if (sb) sb.classList.toggle('open', o); if (sc) sc.hidden = !o; if (mb) mb.setAttribute('aria-expanded', String(o)); }
+  if (mb) mb.addEventListener('click', function () { setOpen(!(sb && sb.classList.contains('open'))); });
+  if (sc) sc.addEventListener('click', function () { setOpen(false); });
+  var p = new URLSearchParams(location.search);
+  // Current links carry a single ?name; older shared links used ?first/?last.
+  var name = (p.get('name') || '').trim(), first = (p.get('first') || '').trim(), last = (p.get('last') || '').trim();
+  var recipient = (name || [first, last].filter(Boolean).join(' ')).replace(/\s+/g, ' ').slice(0, 101);
+  var recipientEl = document.getElementById('badge-recipient'), recipientName = document.getElementById('badge-recipient-name');
+  if (recipient && recipientEl && recipientName) { recipientName.textContent = recipient; recipientEl.hidden = false; }
+  var share = document.getElementById('badge-share');
+  if (share) share.addEventListener('click', function () {
+    // LinkedIn's crawler cannot reach localhost, so always share the public canonical
+    // URL while preserving the path and the recipient's query parameters.
+    var url = 'https://rebricked.org' + location.pathname + location.search;
+    track('badge-share', { badge: slug, named: !!recipient });
+    window.open('https://www.linkedin.com/sharing/share-offsite/?url=' + encodeURIComponent(url), '_blank', 'noopener,noreferrer');
+  });
+  var pdf = document.getElementById('badge-export-pdf');
+  if (pdf) pdf.addEventListener('click', function () { track('badge-export', { badge: slug, format: 'pdf' }); window.print(); });
+  function loadImage(src) { return new Promise(function (resolve, reject) { var i = new Image(); i.onload = function () { resolve(i); }; i.onerror = reject; i.src = src; }); }
+  function wrap(ctx, text, x, y, width, lineHeight) {
+    var words = text.split(/\s+/), line = '', lines = [];
+    words.forEach(function (word) { var test = line ? line + ' ' + word : word; if (ctx.measureText(test).width > width && line) { lines.push(line); line = word; } else { line = test; } });
+    if (line) lines.push(line); lines.forEach(function (line, n) { ctx.fillText(line, x, y + n * lineHeight); });
+    return y + lines.length * lineHeight;
+  }
+  var jpg = document.getElementById('badge-export-jpg');
+  if (jpg) jpg.addEventListener('click', async function () {
+    var card = document.querySelector('.badge-card'), emblem = document.querySelector('.badge-emblem svg');
+    if (!card || !emblem) return;
+    track('badge-export', { badge: slug, format: 'jpg' });
+    var canvas = document.createElement('canvas'), ctx = canvas.getContext('2d'), tier = getComputedStyle(card).getPropertyValue('--tier').trim() || '#FF3621';
+    canvas.width = 1200; canvas.height = 630;
+    ctx.fillStyle = '#F7F8FA'; ctx.fillRect(0, 0, 1200, 630);
+    ctx.fillStyle = '#FFFFFF'; ctx.strokeStyle = tier; ctx.lineWidth = 4;
+    ctx.beginPath(); ctx.roundRect(40, 40, 1120, 550, 24); ctx.fill(); ctx.stroke();
+    try {
+      var svg = new XMLSerializer().serializeToString(emblem), image = await loadImage('data:image/svg+xml;charset=utf-8,' + encodeURIComponent(svg));
+      ctx.drawImage(image, 115, 165, 190, 228);
+    } catch (e) {}
+    var title = document.querySelector('.badge-name').textContent.trim(), recipient = document.getElementById('badge-recipient-name').textContent.trim(), score = document.querySelector('.badge-score').textContent.trim(), blurb = document.querySelector('.badge-blurb').textContent.trim();
+    ctx.fillStyle = tier; ctx.font = '800 44px system-ui, sans-serif'; wrap(ctx, title, 375, 155, 700, 52);
+    ctx.font = '30px system-ui, sans-serif'; ctx.fillStyle = '#18212B'; if (recipient) ctx.fillText(recipient, 375, 245);
+    ctx.font = '32px system-ui, sans-serif'; ctx.fillStyle = tier; ctx.fillText(document.querySelectorAll('.badge-stars .on').length ? '★★★★★' : '☆☆☆☆☆', 375, 315);
+    ctx.font = '700 18px system-ui, sans-serif'; ctx.fillText(score.toUpperCase(), 375, 355);
+    ctx.font = '24px system-ui, sans-serif'; ctx.fillStyle = '#5F6B7A'; wrap(ctx, blurb, 375, 410, 650, 34);
+    canvas.toBlob(function (blob) { if (!blob) return; var a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = 'rebricked-badge.jpg'; a.click(); URL.revokeObjectURL(a.href); }, 'image/jpeg', .95);
+  });
+})();
+</script>
+<!-- about-script:end -->
+  <script data-goatcounter="https://s.rebricked.org/count" async src="//s.rebricked.org/count.js"></script>
+</body>
+</html>
